@@ -12,28 +12,29 @@ import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrl: './app.component.css',
+  // templateUrl: './app.component.html',
+  template: `<app-side-menu-nav></app-side-menu-nav>`
 })
 export class AppComponent implements OnInit {
   // public forecasts: WeatherForecast[] = [];
   // title = 'material-responsive-sidenav';
-  @ViewChild(MatSidenav)
-  sidenav!: MatSidenav;
-  isMobile = true;
-  isCollapsed = true;
+  
+  // @ViewChild(MatSidenav)
+  // sidenav!: MatSidenav;
+  // isMobile = true;
+  // isCollapsed = true;
 
-  constructor(private http: HttpClient, private observer: BreakpointObserver) {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
     // this.getForecasts();
-    this.observer.observe(['(max-width: 800px)']).subscribe((screenSize) => {
-      if (screenSize.matches) {
-        this.isMobile = true;
-      } else {
-        this.isMobile = false;
-      }
-    });
+    // this.observer.observe(['(max-width: 800px)']).subscribe((screenSize) => {
+    //   if (screenSize.matches) {
+    //     this.isMobile = true;
+    //   } else {
+    //     this.isMobile = false;
+    //   }
+    // });
   }
 
   // getForecasts() {
@@ -46,10 +47,10 @@ export class AppComponent implements OnInit {
   //     }
   //   );
   // }
-  toggleMenu() {
-    this.sidenav.open(); // On desktop/tablet, the menu can never be fully closed
-    this.isCollapsed = !this.isCollapsed;
-  }
+  // toggleMenu() {
+  //   this.sidenav.open(); // On desktop/tablet, the menu can never be fully closed
+  //   this.isCollapsed = !this.isCollapsed;
+  // }
 
-  title = 'onetrack_v2.client';
+  title = 'onetrack_v2';
 }
