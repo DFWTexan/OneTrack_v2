@@ -1,0 +1,23 @@
+{
+  "Version": 1,
+  "Hash": "Ljng1yropQahgTcouDERDDCL6VNCsKxFVOq7HT7CdaA=",
+  "Source": "OneTrak_v2.Server",
+  "BasePath": "_content/OneTrak_v2.Server",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [
+    {
+      "Identity": "U:\\Development\\Repos\\OneTrack_v2\\onetrack_v2.client\\OneTrak_v2.Client.esproj",
+      "Version": 2,
+      "Source": "OneTrak_v2.Client",
+      "GetPublishAssetsTargets": "GetCurrentProjectPublishStaticWebAssetItems",
+      "AdditionalPublishProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalPublishPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained",
+      "GetBuildAssetsTargets": "GetCurrentProjectBuildStaticWebAssetItems",
+      "AdditionalBuildProperties": "Configuration=Debug;Platform=AnyCPU",
+      "AdditionalBuildPropertiesToRemove": "WebPublishProfileFile;TargetFramework;RuntimeIdentifier;SelfContained"
+    }
+  ],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

@@ -1,0 +1,33 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.8.34601.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneTrak_v2.Server", "OneTrack_v2.Server\OneTrak_v2.Server.csproj", "{1E9B4342-2E09-4C49-83E0-10E647F8FD1C}"
+EndProject
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "OneTrak_v2.Client", "onetrack_v2.client\OneTrak_v2.Client.esproj", "{DB143298-B20A-4F5D-9621-D853935B0332}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1E9B4342-2E09-4C49-83E0-10E647F8FD1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E9B4342-2E09-4C49-83E0-10E647F8FD1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1E9B4342-2E09-4C49-83E0-10E647F8FD1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E9B4342-2E09-4C49-83E0-10E647F8FD1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB143298-B20A-4F5D-9621-D853935B0332}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DB143298-B20A-4F5D-9621-D853935B0332}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DB143298-B20A-4F5D-9621-D853935B0332}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{DB143298-B20A-4F5D-9621-D853935B0332}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DB143298-B20A-4F5D-9621-D853935B0332}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DB143298-B20A-4F5D-9621-D853935B0332}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C90996A5-009D-45A4-AFC2-C657D0945E13}
+	EndGlobalSection
+EndGlobal

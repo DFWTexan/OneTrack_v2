@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\OneTrak_v2.Server.props" />
+</Project>

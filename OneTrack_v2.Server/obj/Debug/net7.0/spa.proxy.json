@@ -1,0 +1,8 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "https://localhost:4200",
+"LaunchCommand": "npm start",
+"WorkingDirectory": "U:\\Development\\Repos\\OneTrack_v2\\OneTrack_v2.Server\\..\\onetrack_v2.client",
+"MaxTimeoutInSeconds": "120"
+}
+}
