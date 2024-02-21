@@ -21,6 +21,21 @@ import { SideMenuNavComponent } from './side-menu-nav/side-menu-nav/side-menu-na
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { CompanyEditComponent } from './admin/company-edit/company-edit.component';
 import { CompanyRequirementsComponent } from './admin/company-requirements/company-requirements.component';
+import { ContinueEducationEditComponent } from './admin/continue-education-edit/continue-education-edit.component';
+import { DropdownListEditComponent } from './admin/dropdown-list-edit/dropdown-list-edit.component';
+import { ExamEditComponent } from './admin/exam-edit/exam-edit.component';
+import { JobTitleLicenseComponent } from './admin/job-title-license/job-title-license.component';
+import { LicenseEditComponent } from './admin/license-edit/license-edit.component';
+import { LicenseTechEditComponent } from './admin/license-tech-edit/license-tech-edit.component';
+import { PreEducationEditComponent } from './admin/pre-education-edit/pre-education-edit.component';
+import { ProductEditComponent } from './admin/product-edit/product-edit.component';
+import { StateLicenseRequirementsComponent } from './admin/state-license-requirements/state-license-requirements.component';
+import { StateProvinceEditComponent } from './admin/state-province-edit/state-province-edit.component';
+import { XborLicRequirementsComponent } from './admin/xbor-lic-requirements/xbor-lic-requirements.component';
+import { AddTeamMemberComponent } from './team-member/add-team-member/add-team-member.component';
+import { SearchTeamMemberComponent } from './team-member/search-team-member/search-team-member.component';
+import { ReportsComponent } from './reports/reports/reports.component';
+import { WorkListComponent } from './work-list/work-list/work-list.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +43,22 @@ import { CompanyRequirementsComponent } from './admin/company-requirements/compa
     SideMenuNavComponent,
     DashboardComponent,
     CompanyEditComponent,
-    CompanyRequirementsComponent
+    CompanyRequirementsComponent,
+    ContinueEducationEditComponent,
+    DropdownListEditComponent,
+    ExamEditComponent,
+    JobTitleLicenseComponent,
+    LicenseEditComponent,
+    LicenseTechEditComponent,
+    PreEducationEditComponent,
+    ProductEditComponent,
+    StateLicenseRequirementsComponent,
+    StateProvinceEditComponent,
+    XborLicRequirementsComponent,
+    AddTeamMemberComponent,
+    SearchTeamMemberComponent,
+    ReportsComponent,
+    WorkListComponent
   ],
   imports: [
     BrowserModule, 
