@@ -45,7 +45,7 @@
     class="app-sidenav"
   >
     <mat-nav-list>
-      <mat-list-item routerLink="#">
+      <mat-list-item routerLink="/">
         <mat-icon>dashboard</mat-icon><span>Dashboard</span>
       </mat-list-item>
       <mat-expansion-panel [class.mat-elevation-z0]="true">
@@ -53,8 +53,8 @@
           Administration
         </mat-expansion-panel-header>
         <mat-nav-list>
-          <a mat-list-item routerLink="#">Company Edit</a>
-          <a mat-list-item routerLink="#">Company Requirements</a>
+          <a mat-list-item routerLink="/admin/company-edit">Company Edit</a>
+          <a mat-list-item routerLink="/admin/company-requirements">Company Requirements</a>
           <a mat-list-item routerLink="#">Con-Education Edit</a>
           <a mat-list-item routerLink="#">DropDown List Edit</a>
           <a mat-list-item routerLink="#">Exam Edit</a>
@@ -88,8 +88,8 @@
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
-    <router-outlet>
-      <div class="app-sidenav-content">Components open here</div>
-    </router-outlet>
+    <div class="app-sidenav-content">
+      <router-outlet></router-outlet>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>

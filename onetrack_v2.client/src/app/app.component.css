@@ -59,3 +59,18 @@ mat-sidenav-content{
         padding-top: 4rem;
     }
 }
+
+.app-sidenav-content {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+} 
+
+/* .app-sidenav-item-text {
+    font-size: smaller;
+} */
+
+a[mat-list-item][routerLink] {
+    font-size: smaller;
+}

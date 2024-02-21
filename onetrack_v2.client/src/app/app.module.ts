@@ -18,11 +18,17 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { SideMenuNavComponent } from './side-menu-nav/side-menu-nav/side-menu-nav.component';
+import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
+import { CompanyEditComponent } from './admin/company-edit/company-edit.component';
+import { CompanyRequirementsComponent } from './admin/company-requirements/company-requirements.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SideMenuNavComponent
+    SideMenuNavComponent,
+    DashboardComponent,
+    CompanyEditComponent,
+    CompanyRequirementsComponent
   ],
   imports: [
     BrowserModule, 
