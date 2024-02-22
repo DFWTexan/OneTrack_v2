@@ -14,6 +14,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule, Routes }   from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 
+
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -36,6 +37,7 @@ import { AddTeamMemberComponent } from './team-member/add-team-member/add-team-m
 import { SearchTeamMemberComponent } from './team-member/search-team-member/search-team-member.component';
 import { ReportsComponent } from './reports/reports/reports.component';
 import { WorkListComponent } from './work-list/work-list/work-list.component';
+import { AgentInformationComponent } from './team-member/agent-information/agent-information.component';
 
 @NgModule({
   declarations: [
@@ -58,7 +60,8 @@ import { WorkListComponent } from './work-list/work-list/work-list.component';
     AddTeamMemberComponent,
     SearchTeamMemberComponent,
     ReportsComponent,
-    WorkListComponent
+    WorkListComponent,
+    AgentInformationComponent
   ],
   imports: [
     BrowserModule, 

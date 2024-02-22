@@ -19,6 +19,7 @@ import { AddTeamMemberComponent } from './team-member/add-team-member/add-team-m
 import { SearchTeamMemberComponent } from './team-member/search-team-member/search-team-member.component';
 import { ReportsComponent } from './reports/reports/reports.component';
 import { WorkListComponent } from './work-list/work-list/work-list.component';
+import { AgentInformationComponent } from './team-member/agent-information/agent-information.component';
 
 const routes: Routes = [
   // Dashboard
@@ -40,6 +41,8 @@ const routes: Routes = [
   // Team Member
   { path: 'team/add-member', component: AddTeamMemberComponent },
   { path: 'team/search-members', component: SearchTeamMemberComponent },
+  { path: 'team/agent-info', component: AgentInformationComponent },
+  // Reports
   // Reports
   { path: 'reports', component: ReportsComponent },
   // Work List
