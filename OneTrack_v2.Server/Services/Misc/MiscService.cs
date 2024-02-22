@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using OneTrack_v2.DataModel;
 using OneTrack_v2.DbData;
 
-namespace OneTrack_v2.Services.Misc
+namespace OneTrack_v2.Services
 {
     public class MiscService : IMiscService
     {

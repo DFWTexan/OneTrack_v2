@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace wcfOnOneTrack_v2eTrack_API.DbData.Models;
+namespace OneTrack_v2.DbData.Models;
 
 public partial class LineOfAuthority
 {
