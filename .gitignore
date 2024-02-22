@@ -361,3 +361,5 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+OneTrack_v2.Server/obj/Debug/net8.0/OneTrak_v2.Server.AssemblyInfo.cs
+OneTrack_v2.Server/obj/Debug/net8.0/OneTrak_v2.Server.AssemblyInfoInputs.cache
