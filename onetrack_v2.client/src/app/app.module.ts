@@ -17,6 +17,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { ModalComponent } from './_components';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { SideMenuNavComponent } from './side-menu-nav/side-menu-nav/side-menu-nav.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
@@ -42,6 +43,7 @@ import { AgentInformationComponent } from './team-member/agent-information/agent
 @NgModule({
   declarations: [
     AppComponent,
+    ModalComponent,
     SideMenuNavComponent,
     DashboardComponent,
     CompanyEditComponent,

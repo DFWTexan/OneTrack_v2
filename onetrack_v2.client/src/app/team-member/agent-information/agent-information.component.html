@@ -5,34 +5,104 @@
     </div>
     <div class="row">
       <div class="col-12">
-        <button class="btn btn-primary" (click)="openModal()">Open Modal</button>
+        <button class="btn btn-primary" (click)="openModal()">
+          Open Modal
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <p>{{ bodyText }}</p>
+        <button
+          class="btn btn-primary me-2"
+          (click)="modalService.open('modal-1')"
+        >
+          Open Modal 1
+        </button>
+        <button class="btn btn-primary" (click)="modalService.open('modal-2')">
+          Open Modal 2
+        </button>
       </div>
     </div>
   </div>
 </div>
 
-
 <!-- The Modal -->
 <div class="modal" id="myModal">
-    <div class="modal-dialog">
-      <div class="modal-content">
-  
-        <!-- Modal Header -->
-        <div class="modal-header">
-          <h4 class="modal-title">EMF Modal Heading</h4>
-          <button type="button" class="btn-close" (click)="closeModal()" data-bs-dismiss="modal"></button>
-        </div>
-  
-        <!-- Modal body -->
-        <div class="modal-body">
-          EMF body..
-        </div>
-  
-        <!-- Modal footer -->
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
-        </div>
-  
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">EMF Modal Heading</h4>
+        <button
+          type="button"
+          class="btn-close"
+          (click)="closeModal()"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">EMF body..</div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          Close
+        </button>
       </div>
     </div>
   </div>
+
+  <modal id="modal-1">
+    <div class="modal-header">
+      <h5 class="modal-title">Angular + Bootstrap Modal #1</h5>
+      <button
+        type="button"
+        class="btn-close"
+        (click)="modalService.close()"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <p>This bootstrap modal was opened with Angular!</p>
+      <p>
+        <label class="form-label">Page text:</label>
+        <input type="text" class="form-control" [(ngModel)]="bodyText" />
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="modalService.close()"
+      >
+        Close
+      </button>
+    </div>
+  </modal>
+
+  <modal id="modal-2">
+    <div class="modal-header">
+      <h5 class="modal-title">Angular + Bootstrap Modal #2</h5>
+      <button
+        type="button"
+        class="btn-close"
+        (click)="modalService.close()"
+      ></button>
+    </div>
+    <div class="modal-body">
+      <p style="padding-bottom: 500px">
+        This is a tall modal to demonstrate scrolling modal content.
+      </p>
+    </div>
+    <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="modalService.close()"
+      >
+        Close
+      </button>
+    </div>
+  </modal>
+</div>
