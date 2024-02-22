@@ -98,6 +98,7 @@
               "src/assets"
             ],
             "styles": [
+              "node_modeles/bootstrap/dist/css/bootstrap.min.css",
               "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"
             ],
