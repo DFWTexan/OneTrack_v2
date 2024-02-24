@@ -18,7 +18,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ModalComponent } from './_components';
-import { NultiSelectDropdownComponent } from './_components/multi-select/nulti-select-dropdown/nulti-select-dropdown.component';
+import { MultiSelectDdlComponent } from './_components';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { SideMenuNavComponent } from './side-menu-nav/side-menu-nav/side-menu-nav.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
@@ -42,12 +42,12 @@ import { WorkListComponent } from './work-list/work-list/work-list.component';
 import { AgentInformationComponent } from './team-member/agent-information/agent-information.component';
 
 
+
 @NgModule({
   declarations: [
     AppComponent,
     ModalComponent,
     SideMenuNavComponent,
-    NultiSelectDropdownComponent,
     DashboardComponent,
     CompanyEditComponent,
     CompanyRequirementsComponent,
@@ -66,7 +66,8 @@ import { AgentInformationComponent } from './team-member/agent-information/agent
     SearchTeamMemberComponent,
     ReportsComponent,
     WorkListComponent,
-    AgentInformationComponent
+    AgentInformationComponent,
+    MultiSelectDdlComponent
   ],
   imports: [
     BrowserModule, 
