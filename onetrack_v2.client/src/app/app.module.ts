@@ -1,6 +1,6 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
@@ -10,6 +10,8 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule, Routes }   from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
@@ -17,10 +19,10 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { SideMenuNavComponent } from './_components';
 import { ModalComponent } from './_components';
 import { MultiSelectDdlComponent } from './_components';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { SideMenuNavComponent } from './side-menu-nav/side-menu-nav/side-menu-nav.component';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { CompanyEditComponent } from './admin/company-edit/company-edit.component';
 import { CompanyRequirementsComponent } from './admin/company-requirements/company-requirements.component';
@@ -40,6 +42,7 @@ import { SearchTeamMemberComponent } from './team-member/search-team-member/sear
 import { ReportsComponent } from './reports/reports/reports.component';
 import { WorkListComponent } from './work-list/work-list/work-list.component';
 import { AgentInformationComponent } from './team-member/agent-information/agent-information.component';
+
 
 
 
@@ -67,13 +70,15 @@ import { AgentInformationComponent } from './team-member/agent-information/agent
     ReportsComponent,
     WorkListComponent,
     AgentInformationComponent,
-    MultiSelectDdlComponent
+    
   ],
   imports: [
     BrowserModule, 
     HttpClientModule,
     AppRoutingModule,
+    MultiSelectDdlComponent,
     FormsModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatSidenavModule,
     MatMenuModule,
@@ -82,6 +87,8 @@ import { AgentInformationComponent } from './team-member/agent-information/agent
     MatListModule,
     RouterModule,
     MatExpansionModule,
+    MatFormFieldModule, 
+    MatSelectModule,
     MatTooltipModule,
     RouterModule.forRoot([])
   ],
