@@ -1,1 +1,67 @@
-<p>search-team-member works!</p>
+<div class="container">
+  <h1>Search for Team Member</h1>
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <div class="row">
+      <div class="col-md-4">
+        <div
+          id="search-filter"
+          ngModelGroup="searchFilter"
+          #searchFilter="ngModelGroup"
+        >
+          <div class="form-group">
+            <label for="search">Social Security #</label>
+            <input
+              type="text"
+              class="form-control"
+              id="sociatlSecurityNumber"
+              ngModel
+              name="socialSecurityNumber"
+              placeholder="####"
+            />
+            <label for="search">Team Member ID</label>
+            <input
+              type="text"
+              class="form-control"
+              id="teamMemberId"
+              ngModel
+              name="teamMemberId"
+            />
+            <label for="search">National Producer #</label>
+            <input
+              type="text"
+              class="form-control"
+              id="nationalProducerNumber"
+              ngModel
+              name="nationalProducerNumber"
+            />
+            <label for="search">Last Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="lastName"
+              ngModel
+              name="lastName"
+            />
+            <label for="search">First Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="firstName"
+              ngModel
+              name="firstName"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4"></div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <button type="submit" class="btn btn-primary">Search</button>
+      </div>
+    </div>
+  </form>
+</div>
+<div class="row">
+  <div class="col-md-12"></div>
+</div>
