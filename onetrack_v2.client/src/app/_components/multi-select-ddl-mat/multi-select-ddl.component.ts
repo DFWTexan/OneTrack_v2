@@ -12,6 +12,6 @@ import {MatFormFieldModule} from '@angular/material/form-field';
   imports: [MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule],
 })
 export class MultiSelectDdlComponent {
-  toppings = new FormControl('');
-  toppingList: string[] = ['Extra cheese', 'Mushroom', 'Onion', 'Pepperoni', 'Sausage', 'Tomato'];
+  agentStatuses = new FormControl('');
+  statusList: string[] = ['ALL', 'Active', 'Pending', 'In-Active', 'Leave', 'Terminated'];
 }
