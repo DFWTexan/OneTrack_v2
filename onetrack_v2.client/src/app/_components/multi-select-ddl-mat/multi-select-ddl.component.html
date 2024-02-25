@@ -1,8 +1,0 @@
-<mat-form-field>
-  <mat-label>{{labelName}}</mat-label>
-  <mat-select [formControl]="agentStatuses" multiple>
-    @for (value of valueList; track value) {
-    <mat-option [value]="value">{{ value }}</mat-option>
-    }
-  </mat-select>
-</mat-form-field>

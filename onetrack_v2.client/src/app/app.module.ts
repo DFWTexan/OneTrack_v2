@@ -20,7 +20,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { SideMenuNavComponent } from './_components';
 import { ModalComponent } from './_components';
-import { MultiSelectDdlComponent } from './_components';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
 import { CompanyEditComponent } from './admin/company-edit/company-edit.component';
@@ -41,7 +40,6 @@ import { SearchTeamMemberComponent } from './team-member/search-team-member/sear
 import { ReportsComponent } from './reports/reports/reports.component';
 import { WorkListComponent } from './work-list/work-list/work-list.component';
 import { AgentInformationComponent } from './team-member/agent-information/agent-information.component';
-import { DropdownListComponent } from './_components/dropdown-list/dropdown-list.component';
 import { ConstantsService } from './_services/constants.service';
 
 @NgModule({
@@ -68,13 +66,11 @@ import { ConstantsService } from './_services/constants.service';
     ReportsComponent,
     WorkListComponent,
     AgentInformationComponent,
-    DropdownListComponent,
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    MultiSelectDdlComponent,
     FormsModule,
     ReactiveFormsModule,
     MatButtonModule,
