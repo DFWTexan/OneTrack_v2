@@ -13,9 +13,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { RouterModule, Routes }   from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
-
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -42,9 +41,8 @@ import { SearchTeamMemberComponent } from './team-member/search-team-member/sear
 import { ReportsComponent } from './reports/reports/reports.component';
 import { WorkListComponent } from './work-list/work-list/work-list.component';
 import { AgentInformationComponent } from './team-member/agent-information/agent-information.component';
-
-
-
+import { DropdownListComponent } from './_components/dropdown-list/dropdown-list.component';
+import { ConstantsService } from './_services/constants.service';
 
 @NgModule({
   declarations: [
@@ -70,10 +68,10 @@ import { AgentInformationComponent } from './team-member/agent-information/agent
     ReportsComponent,
     WorkListComponent,
     AgentInformationComponent,
-    
+    DropdownListComponent,
   ],
   imports: [
-    BrowserModule, 
+    BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     MultiSelectDdlComponent,
@@ -87,14 +85,12 @@ import { AgentInformationComponent } from './team-member/agent-information/agent
     MatListModule,
     RouterModule,
     MatExpansionModule,
-    MatFormFieldModule, 
+    MatFormFieldModule,
     MatSelectModule,
     MatTooltipModule,
-    RouterModule.forRoot([])
+    RouterModule.forRoot([]),
   ],
-  providers: [
-    provideAnimationsAsync()
-  ],
-  bootstrap: [AppComponent]
+  providers: [provideAnimationsAsync(), ConstantsService],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

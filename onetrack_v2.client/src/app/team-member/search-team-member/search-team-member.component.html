@@ -54,8 +54,11 @@
         </div>
       </div>
       <div class="col-md-4">
-        <label for="agentStatus">Agent Status</label>
-            <app-multi-select-ddl></app-multi-select-ddl>
+        <!-- <label for="agentStatus">Agent Status</label> -->
+            <app-multi-select-ddl
+              [valueList]=agentStatuses
+              labelName="Agent Status"
+            ></app-multi-select-ddl>
       </div>
     </div>
     <div class="row">
