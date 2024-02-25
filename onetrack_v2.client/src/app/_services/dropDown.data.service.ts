@@ -6,12 +6,18 @@ import { Injectable } from '@angular/core';
 })
 
 export class DropdownDataService {
+    private branchNames: string[] = [];
     private scoreNumbers: string[] = [];
     private employerAgencies: string[] = [];
     private licenseStatuses: string[] = [];
     private licenseNames: string[] = [];
 
     constructor(private http: HttpClient) {}
+
+    getBranchNames() {
+        // return this.http.get<string[]>('/api/branchnames');
+        return this.branchNames;
+    }
 
     getScoreNumbers() {
         // return this.http.get<string[]>('/api/agentstatuses');

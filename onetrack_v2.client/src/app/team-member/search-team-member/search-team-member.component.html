@@ -52,37 +52,37 @@
             />
             <label for="search">Resident State:</label><br />
             <mat-form-field>
-              <mat-select ngModel name="residentState" placeholder="State">
+              <mat-select ngModel name="residentState" placeholder="Select Res State">
                 <mat-option>None</mat-option>
                 <mat-option
                   *ngFor="let state of stateProvinces"
                   [value]="state"
                   >{{ state }}</mat-option
                 >
-              </mat-select>
-            </mat-form-field><br />
+              </mat-select> </mat-form-field
+            ><br />
             <label for="search">Work State:</label><br />
             <mat-form-field>
-              <mat-select ngModel name="workState" placeholder="State">
+              <mat-select ngModel name="workState" placeholder="Select Work State">
                 <mat-option>None</mat-option>
                 <mat-option
                   *ngFor="let state of stateProvinces"
                   [value]="state"
                   >{{ state }}</mat-option
                 >
-              </mat-select>
-            </mat-form-field><br />
+              </mat-select> </mat-form-field
+            ><br />
             <label for="search">Branch Name:</label><br />
             <mat-form-field>
-              <mat-select ngModel name="workState" placeholder="State">
+              <mat-select ngModel name="branchName" placeholder="Select Branch Name">
                 <mat-option>None</mat-option>
                 <mat-option
-                  *ngFor="let state of stateProvinces"
-                  [value]="state"
-                  >{{ state }}</mat-option
+                  *ngFor="let branchName of branchNames"
+                  [value]="branchName"
+                  >{{ branchName }}</mat-option
                 >
-              </mat-select>
-            </mat-form-field><br />
+              </mat-select> </mat-form-field
+            ><br />
           </div>
         </div>
         <div class="col-md-6 app-multi-select-ddl">
@@ -92,64 +92,63 @@
               @for (value of agentStatuses; track value) {
               <mat-option [value]="value">{{ value }}</mat-option>
               }
+            </mat-select> </mat-form-field
+          ><br />
+          <label for="search">Score Number:</label><br />
+          <mat-form-field>
+            <mat-select ngModel name="scoreNumber" placeholder="Select Score Num">
+              <mat-option>None</mat-option>
+              <mat-option
+                *ngFor="let scoreNumber of scoreNumbers"
+                [value]="scoreNumber"
+                >{{ scoreNumber }}</mat-option
+              >
+            </mat-select> </mat-form-field
+          ><br />
+          <label for="search">Employer/Agency:</label><br />
+          <mat-form-field>
+            <mat-select ngModel name="employerAgency" placeholder="Select Emp-Agency">
+              <mat-option>None</mat-option>
+              <mat-option
+                *ngFor="let employerAgency of employerAgencies"
+                [value]="employerAgency"
+                >{{ employerAgency }}</mat-option
+              >
+            </mat-select> </mat-form-field
+          ><br /><br />
+          <label for="search">License Status:</label><br />
+          <mat-form-field>
+            <mat-select ngModel name="licenseStatus" placeholder="Select License Status">
+              <mat-option>None</mat-option>
+              <mat-option
+                *ngFor="let licenseStatus of licenseStatuses"
+                [value]="licenseStatus"
+                >{{ licenseStatus }}</mat-option
+              >
+            </mat-select> </mat-form-field
+          ><br />
+          <label for="search">License State:</label><br />
+          <mat-form-field>
+            <mat-select ngModel name="licenseState" placeholder="Select License State">
+              <mat-option>None</mat-option>
+              <mat-option
+                *ngFor="let state of states"
+                [value]="state"
+                >{{ state }}</mat-option
+              >
+            </mat-select> </mat-form-field
+          ><br />
+          <label for="search">License Name:</label><br />
+          <mat-form-field>
+            <mat-select ngModel name="licenseName" placeholder="Select License Name">
+              <mat-option>None</mat-option>
+              <mat-option
+                *ngFor="let licenseName of licenseNames"
+                [value]="licenseName"
+                >{{ licenseName }}</mat-option
+              >
             </mat-select>
-          </mat-form-field><br />
-          
-            <label for="search">Score Number:</label><br /><br />
-            <mat-form-field>
-              <mat-select ngModel name="workState" placeholder="State">
-                <mat-option>None</mat-option>
-                <mat-option
-                  *ngFor="let state of stateProvinces"
-                  [value]="state"
-                  >{{ state }}</mat-option
-                >
-              </mat-select>
-            </mat-form-field><br />
-            <label for="search">Employer/Agency:</label><br />
-            <mat-form-field>
-              <mat-select ngModel name="workState" placeholder="State">
-                <mat-option>None</mat-option>
-                <mat-option
-                  *ngFor="let state of stateProvinces"
-                  [value]="state"
-                  >{{ state }}</mat-option
-                >
-              </mat-select>
-            </mat-form-field><br />
-            <label for="search">License Status:</label><br />
-            <mat-form-field>
-              <mat-select ngModel name="workState" placeholder="State">
-                <mat-option>None</mat-option>
-                <mat-option
-                  *ngFor="let state of stateProvinces"
-                  [value]="state"
-                  >{{ state }}</mat-option
-                >
-              </mat-select>
-            </mat-form-field><br />
-            <label for="search">License State:</label><br />
-            <mat-form-field>
-              <mat-select ngModel name="workState" placeholder="State">
-                <mat-option>None</mat-option>
-                <mat-option
-                  *ngFor="let state of stateProvinces"
-                  [value]="state"
-                  >{{ state }}</mat-option
-                >
-              </mat-select>
-            </mat-form-field><br />
-            <label for="search">License Name:</label><br />
-            <mat-form-field>
-              <mat-select ngModel name="workState" placeholder="State">
-                <mat-option>None</mat-option>
-                <mat-option
-                  *ngFor="let state of stateProvinces"
-                  [value]="state"
-                  >{{ state }}</mat-option
-                >
-              </mat-select>
-            </mat-form-field>
+          </mat-form-field>
         </div>
       </div>
     </div>

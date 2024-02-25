@@ -18,6 +18,7 @@ export class SearchTeamMemberComponent implements OnInit{
   stateProvinces: string[] = [];
   
   // Dropdown-Data-Service
+  branchNames: string[] = [];
   scoreNumbers: string[] = [];
   employerAgencies: string[] = [];
   licenseStatuses: string[] = [];
@@ -29,6 +30,8 @@ export class SearchTeamMemberComponent implements OnInit{
     this.agentStatuses = this.conService.getAgentStatuses();
     this.states = this.conService.getStates();
     this.stateProvinces = this.conService.getStateProvinces();
+    
+    this.branchNames = this.drpdwnDataService.getBranchNames();
     this.scoreNumbers = this.drpdwnDataService.getScoreNumbers();
     this.employerAgencies = this.drpdwnDataService.getEmployerAgencies();
     this.licenseStatuses = this.drpdwnDataService.getLicenseStatuses();
