@@ -13,12 +13,16 @@ import { ConstantsService } from '../../_services/constants.service';
 export class SearchTeamMemberComponent implements OnInit{
   // @ViewChild('f') searchForm: NgForm;
   agentStatuses: string[] = [];
+  states: string[] = [];
+  stateProvinces: string[] = [];
   frmCtrlAgentStatus: FormControl = new FormControl('');
   
   constructor(private conService: ConstantsService) {}
 
   ngOnInit() {
     this.agentStatuses = this.conService.getAgentStatuses();
+    this.states = this.conService.getStates();
+    this.stateProvinces = this.conService.getStateProvinces();
   }
 
   onSubmit(form: NgForm) {

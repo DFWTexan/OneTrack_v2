@@ -1,5 +1,5 @@
 <div class="container">
-  <h1>Search for Team Member</h1>
+  <!-- <h1>Search for Team Member</h1> -->
   <form (ngSubmit)="onSubmit(f)" #f="ngForm">
     <div class="row">
       <div class="col-md-4">
@@ -50,15 +50,33 @@
               ngModel
               name="firstName"
             />
+            <label for="search">Resident State</label>
+            <mat-form-field>
+              <mat-select ngModel name="residentState" placeholder="State">
+                <mat-option>None</mat-option>
+                <mat-option *ngFor="let state of stateProvinces" [value]="state">{{
+                  state
+                }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <label for="search">Work State</label>
+            <mat-form-field>
+              <mat-select ngModel name="workState" placeholder="State">
+                <mat-option>None</mat-option>
+                <mat-option *ngFor="let state of stateProvinces" [value]="state">{{
+                  state
+                }}</mat-option>
+              </mat-select>
+            </mat-form-field>
           </div>
         </div>
       </div>
       <div class="col-md-4">
         <!-- <label for="agentStatus">Agent Status</label> -->
-            <app-multi-select-ddl
-              [valueList]=agentStatuses
-              labelName="Agent Status"
-            ></app-multi-select-ddl>
+        <app-multi-select-ddl
+          [valueList]="agentStatuses"
+          labelName="Agent Status"
+        ></app-multi-select-ddl>
       </div>
     </div>
     <div class="row">

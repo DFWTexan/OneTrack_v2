@@ -134,7 +134,7 @@ export class ConstantsService {
     return this.states.sort();
   }
 
-  getStateProvince() {
+  getStateProvinces() {
     return this.stateProvince.sort();
   }
 }
