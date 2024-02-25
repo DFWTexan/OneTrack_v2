@@ -1,13 +1,13 @@
 <div class="container">
   <!-- <h1>Search for Team Member</h1> -->
   <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-    <div class="row">
-      <div class="col-md-4">
-        <div
-          id="search-filter"
-          ngModelGroup="searchFilter"
-          #searchFilter="ngModelGroup"
-        >
+    <div
+      id="search-filter"
+      ngModelGroup="searchFilter"
+      #searchFilter="ngModelGroup"
+    >
+      <div class="row">
+        <div class="col-md-4">
           <div class="form-group">
             <label for="search">Social Security #</label>
             <input
@@ -54,29 +54,36 @@
             <mat-form-field>
               <mat-select ngModel name="residentState" placeholder="State">
                 <mat-option>None</mat-option>
-                <mat-option *ngFor="let state of stateProvinces" [value]="state">{{
-                  state
-                }}</mat-option>
+                <mat-option
+                  *ngFor="let state of stateProvinces"
+                  [value]="state"
+                  >{{ state }}</mat-option
+                >
               </mat-select>
             </mat-form-field>
             <label for="search">Work State</label>
             <mat-form-field>
               <mat-select ngModel name="workState" placeholder="State">
                 <mat-option>None</mat-option>
-                <mat-option *ngFor="let state of stateProvinces" [value]="state">{{
-                  state
-                }}</mat-option>
+                <mat-option
+                  *ngFor="let state of stateProvinces"
+                  [value]="state"
+                  >{{ state }}</mat-option
+                >
               </mat-select>
             </mat-form-field>
           </div>
         </div>
-      </div>
-      <div class="col-md-4">
-        <!-- <label for="agentStatus">Agent Status</label> -->
-        <app-multi-select-ddl
-          [valueList]="agentStatuses"
-          labelName="Agent Status"
-        ></app-multi-select-ddl>
+        <div class="col-md-4">
+          <mat-form-field>
+            <mat-label>Agent Status</mat-label>
+            <mat-select ngModel name="agentStatus" multiple>
+              @for (value of agentStatuses; track value) {
+              <mat-option [value]="value">{{ value }}</mat-option>
+              }
+            </mat-select>
+          </mat-form-field>
+        </div>
       </div>
     </div>
     <div class="row">
