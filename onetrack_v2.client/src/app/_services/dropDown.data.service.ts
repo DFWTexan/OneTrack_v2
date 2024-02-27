@@ -1,41 +1,48 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
+import { environment } from '../environments/environment';
 
 @Injectable({
-    providedIn: 'root'
+  providedIn: 'root',
 })
-
 export class DropdownDataService {
-    private branchNames: string[] = [];
-    private scoreNumbers: string[] = [];
-    private employerAgencies: string[] = [];
-    private licenseStatuses: string[] = [];
-    private licenseNames: string[] = [];
+  private branchNames: string[] = [];
+  private scoreNumbers: string[] = [];
+  private employerAgencies: string[] = [];
+  private licenseStatuses: string[] = [];
+  private licenseNames: string[] = [];
 
-    constructor(private http: HttpClient) {}
+  private url: string = environment.apiUrl + 'Misc/';
 
-    getBranchNames() {
-        // return this.http.get<string[]>('/api/branchnames');
-        return this.branchNames;
-    }
+  constructor(private http: HttpClient) {}
 
-    getScoreNumbers() {
-        // return this.http.get<string[]>('/api/agentstatuses');
-        return this.scoreNumbers;
-    }
-
-    getEmployerAgencies() {
-        // return this.http.get<string[]>('/api/states');
-        return this.employerAgencies;
-    }
-
-    getLicenseStatuses() {
-        // return this.http.get<string[]>('/api/stateprovinces');
-        return this.licenseStatuses;
-    }
-
-    getLicenseNames() {
-        // return this.http.get<string[]>('/api/stateprovinces');
-        return this.licenseNames;
-    }
+  fetchDropdownData(vEndpoint: string) {
+    const url = this.url + vEndpoint;
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: { key: string; value: string }[];
+        errMessage: string;
+      }>(url)
+      .pipe(
+        map((response) => {
+          // Check if the response is successful and has data
+          if (response.success && response.objData) {
+            // Map the objData to the desired format
+            return response.objData.map((item) => ({
+              value: item.key, // Assuming you want to map 'key' to 'value'
+              label: item.value, // 'value' is mapped to 'label'
+            }));
+          } else {
+            // Handle the case where response is not successful or objData is not available
+            // This can be adjusted based on how you want to handle errors or empty data
+            return [];
+          }
+        })
+      );
+  }
 }

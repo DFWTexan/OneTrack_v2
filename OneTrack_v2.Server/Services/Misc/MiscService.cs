@@ -18,10 +18,10 @@ namespace OneTrack_v2.Services
             {
                 var stateProvincses = _db.StateProvinces
                                     .OrderBy(_db => _db.StateProvinceName)
-                                    .Select(_db => new OputVarDropDownList
+                                    .Select(_db => new OputVarDropDownList_v2
                                     {
-                                        Value = _db.StateProvinceAbv,
-                                        Label = _db.StateProvinceAbv
+                                        Key = _db.StateProvinceAbv,
+                                        Value = _db.StateProvinceAbv
                                     });
 
                 result.Success = true;
@@ -43,8 +43,8 @@ namespace OneTrack_v2.Services
             {
 
                 var sql = @"SELECT 
-                                BranchCode as Value
-                                , TRIM(ISNULL(b.Name,CONCAT('ZZ', BranchCode))) AS Label
+                                BranchCode as [Key]
+                                , TRIM(ISNULL(b.Name,CONCAT('ZZ', BranchCode))) AS Value
                             FROM 
                                 (SELECT h.EmploymentID, BranchCode 
                                  FROM dbo.TransferHistory h
@@ -61,7 +61,7 @@ namespace OneTrack_v2.Services
                             ORDER BY 
                                 TRIM(ISNULL(b.Name,CONCAT('ZZ', BranchCode)))";
 
-                var queryResult = _db.Set<OputVarDropDownList>()
+                var queryResult = _db.Set<OputVarDropDownList_v2>()
                                       .FromSqlRaw(sql)
                                       .ToList();
 
@@ -84,8 +84,8 @@ namespace OneTrack_v2.Services
             try
             {
                 var sql = @"SELECT 
-                                 ISNULL(ScoreNumber,'0000') AS Value
-                                 , ISNULL(ScoreNumber,'0000') AS Label
+                                 ISNULL(ScoreNumber,'0000') AS [Key]
+                                 , ISNULL(ScoreNumber,'0000') AS Value
                             FROM 
                                  (SELECT h.EmploymentID, BranchCode 
                                   FROM dbo.TransferHistory h
@@ -102,7 +102,7 @@ namespace OneTrack_v2.Services
                             ORDER BY 
                                  ScoreNumber";
 
-                var queryResult = _db.Set<OputVarDropDownList>()
+                var queryResult = _db.Set<OputVarDropDownList_v2>()
                                       .FromSqlRaw(sql)
                                       .ToList();
 

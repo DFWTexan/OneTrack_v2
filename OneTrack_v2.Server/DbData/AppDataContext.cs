@@ -141,6 +141,7 @@ namespace OneTrack_v2.DbData
 
         #region // Raw SQL Queries
         public virtual DbSet<OputVarDropDownList> OputVarDropDownList { get; set; }
+        public virtual DbSet<OputVarDropDownList_v2> OputVarDropDownList_v2 { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -4008,7 +4009,8 @@ namespace OneTrack_v2.DbData
             #endregion
 
             #region Raw SQL Queries
-            modelBuilder.Entity<OputVarDropDownList>().ToSqlQuery("OputVarDropDownList").HasNoKey();   
+            modelBuilder.Entity<OputVarDropDownList>().ToSqlQuery("OputVarDropDownList").HasNoKey();
+            modelBuilder.Entity<OputVarDropDownList_v2>().ToSqlQuery("OputVarDropDownList_v2").HasNoKey();
             #endregion
 
             OnModelCreatingPartial(modelBuilder);

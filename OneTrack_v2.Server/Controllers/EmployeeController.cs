@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OneTrack_v2.DataModel;
 using OneTrack_v2.Services;
 
 namespace OneTrack_v2.Controllers
@@ -20,10 +21,10 @@ namespace OneTrack_v2.Controllers
             _employeeService = employeeService;
         }
                     
-        [HttpGet]
+        [HttpPut]
         public async Task<IActionResult> SearchEmployee(int CompanyID = 0, string? EmployeeSSN = null, string? GEID = null, string? SCORENumber = null, 
             int NationalProducerNumber = 0, string? LastName = null, string? FirstName = null,
-            string? AgentStatus = null, string? ResState = null, string? WrkState = null, string? BranchCode = null, int EmployeeLicenseID = 0, 
+            List<string>? AgentStatus = null, string? ResState = null, string? WrkState = null, string? BranchCode = null, int EmployeeLicenseID = 0, 
             string? LicStatus = null, string? LicState = null, string? LicenseName = null, int EmploymentID = 0)
         {
             var result = await Task.Run(() => _employeeService.SearchEmployee(CompanyID, EmployeeSSN, GEID, SCORENumber,  NationalProducerNumber, LastName, FirstName,
@@ -31,6 +32,15 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        //[HttpPut]
+        //public async Task<IActionResult> SearchEmployee_v2([FromBody] EmployeeSearch vInput)
+        //{
+        //    var result = await Task.Run(() => _employeeService.SearchEmployee(vInput.CompanyID, vInput.EmployeeSSN, vInput.GEID, vInput.SCORENumber, vInput.NationalProducerNumber, vInput.LastName, vInput.FirstName,
+        //       vInput.AgentStatus, vInput.ResState, vInput.WrkState, vInput.BranchCode, vInput.EmployeeLicenseID, vInput.LicStatus, vInput.LicState, vInput.LicenseName, vInput.EmploymentID));
+
+        //    return StatusCode(result.StatusCode, result);
+        //}
 
         //public async Task<ActionResult<IEnumerable<Employee>>> SearchEmployee_GEN(string searchString)
         //{

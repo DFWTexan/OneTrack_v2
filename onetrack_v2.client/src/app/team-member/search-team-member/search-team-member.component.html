@@ -78,8 +78,8 @@
                 <mat-option>None</mat-option>
                 <mat-option
                   *ngFor="let branchName of branchNames"
-                  [value]="branchName"
-                  >{{ branchName }}</mat-option
+                  [value]="branchName.value"
+                  >{{ branchName.label }}</mat-option
                 >
               </mat-select> </mat-form-field
             ><br />
@@ -100,8 +100,8 @@
               <mat-option>None</mat-option>
               <mat-option
                 *ngFor="let scoreNumber of scoreNumbers"
-                [value]="scoreNumber"
-                >{{ scoreNumber }}</mat-option
+                [value]="scoreNumber.value"
+                >{{ scoreNumber.label }}</mat-option
               >
             </mat-select> </mat-form-field
           ><br />
@@ -111,8 +111,8 @@
               <mat-option>None</mat-option>
               <mat-option
                 *ngFor="let employerAgency of employerAgencies"
-                [value]="employerAgency"
-                >{{ employerAgency }}</mat-option
+                [value]="employerAgency.value"
+                >{{ employerAgency.label }}</mat-option
               >
             </mat-select> </mat-form-field
           ><br /><br />

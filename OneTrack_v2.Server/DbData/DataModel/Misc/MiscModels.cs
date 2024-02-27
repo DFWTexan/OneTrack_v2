@@ -11,4 +11,10 @@
         public int Value { get; set; } = 0;
         public string? Label { get; set; } = null;
     }
+
+    public class OputVarDropDownList_v2
+    {
+        public string? Key { get; set; } = null;
+        public string? Value { get; set; } = null;
+    }
 }

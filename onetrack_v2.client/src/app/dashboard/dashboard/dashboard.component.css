@@ -1,4 +1,6 @@
 .h1-title {
+    margin: 3rem;
+    padding: 3rem;
     color: primary;
     font-size: 4rem;
     font-weight: 700;
