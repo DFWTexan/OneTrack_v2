@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-import { Subject } from 'rxjs';
+// import { Subject } from 'rxjs';
 
 import { environment } from '../environments/environment';
 
@@ -9,11 +9,11 @@ import { environment } from '../environments/environment';
   providedIn: 'root',
 })
 export class DropdownDataService {
-  private branchNames: string[] = [];
-  private scoreNumbers: string[] = [];
-  private employerAgencies: string[] = [];
-  private licenseStatuses: string[] = [];
-  private licenseNames: string[] = [];
+  // private branchNames: string[] = [];
+  // private scoreNumbers: string[] = [];
+  // private employerAgencies: string[] = [];
+  // private licenseStatuses: string[] = [];
+  // private licenseNames: string[] = [];
 
   private url: string = environment.apiUrl + 'Misc/';
 
