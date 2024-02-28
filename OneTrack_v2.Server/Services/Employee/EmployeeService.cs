@@ -3,6 +3,9 @@ using System.Data;
 using OneTrack_v2.DbData;
 using OneTrack_v2.DataModel.StoredProcedures;
 using DataModel.Response;
+using OneTrak_v2.DataModel;
+using System;
+using NuGet.Packaging;
 
 namespace OneTrack_v2.Services
 {
@@ -59,10 +62,9 @@ namespace OneTrack_v2.Services
         ///            State = "  "
         ///        }
         /// </returns>
-        public async Task<ReturnResult> SearchEmployee(int vCompanyID, string? vEmployeeSSN, string? vGEID, string? vSCORENumber, 
-            int vNationalProducerNumber, string? vLastName, string? vFirstName,
-            List<string>? vAgentStatus, string? vResState, string? vWrkState, string? vBranchCode, 
-            int vEmployeeLicenseID, string? vLicStatus, string? vLicState, string? vLicenseName, int vEmploymentID)
+        public async Task<ReturnResult> SearchEmployee(string? vEmployeeSSN = null, string? vGEID = null, string? vSCORENumber = null,
+            string? vLastName = null, string? vFirstName = null, List<string>? vAgentStatus = null, string? vResState = null, string? vWrkState = null, string? vBranchCode = null, 
+            int? vEmployeeLicenseID = 0, string? vLicStatus = null, string? vLicState = null, string? vLicenseName = null, int? vNationalProducerNumber = 0)
         {
 
             var result = new ReturnResult();
@@ -91,14 +93,14 @@ namespace OneTrack_v2.Services
                         from l in lel.DefaultIfEmpty()
                         //let agentStatusValues = StringToTable(vAgentStatus, ',', true) // This assumes you have a method to split strings
                         //let licStatusValues = StringToTable(vLicStatus, ',', true) // This assumes you have a method to split strings
-                        where (m.CompanyId == vCompanyID || vCompanyID == 0) &&
-                              (ss.EmployeeSsn1 == vEmployeeSSN || vEmployeeSSN == null) &&
-                              (e.Geid == vGEID || vGEID == null) &&
-                              (th.Scorenumber == vSCORENumber || vSCORENumber == null) &&
-                              (e.NationalProducerNumber == vNationalProducerNumber || vNationalProducerNumber == 0) &&
-                              (e.LastName == vLastName || vLastName == null) &&
-                              (e.FirstName == vFirstName || vFirstName == null) &&
-                              (el.EmploymentId == vEmploymentID || vEmploymentID == 0) //&&
+                        where (vEmployeeSSN == null || ss.EmployeeSsn1 == vEmployeeSSN) &&
+                              (vGEID == null || e.Geid == vGEID) &&
+                              (vSCORENumber == "" || th.Scorenumber == vSCORENumber) &&
+                              (vNationalProducerNumber == 0 || e.NationalProducerNumber == vNationalProducerNumber) &&
+                              (vLastName == "" || e.LastName == vLastName) &&
+                              (vFirstName == "" || e.FirstName == vFirstName)
+                              //(vEmploymentID == 0 || el.EmploymentId == vEmploymentID) //&&
+                              //(vCompanyID == 0 || m.CompanyId == vCompanyID) &&
                               // ... Continue with other conditions
                               //agentStatusValues.Any(rs => m.EmployeeStatus == vAgentStatus || vAgentStatus == "All") &&
                               //licStatusValues.Any(rs1 => el.LicenseStatus == vLicStatus || vLicStatus == "All")
@@ -126,7 +128,7 @@ namespace OneTrack_v2.Services
                             x.EmploymentId,
                             x.State
                         })
-                        .Select(x => new SPOUT_uspEmployeeGridSearchNew
+                        .Select(x => new OputEmployeeSearchResult
                         {
                             EmployeeID = x.Key.EmployeeId,
                             GEID = x.Key.Geid,

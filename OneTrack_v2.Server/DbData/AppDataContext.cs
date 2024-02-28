@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OneTrack_v2.DbData.Models;
 using OneTrack_v2.DataModel;
-using OneTrack_v2.DataModel.StoredProcedures;
 
 namespace OneTrack_v2.DbData
 {
@@ -134,7 +133,7 @@ namespace OneTrack_v2.DbData
             => optionsBuilder.UseSqlServer("Server=FTSQLDVLP2;Database=License;Trusted_Connection=True;");
 
         #region STORED PROCEDURES
-        public virtual DbSet<SPOUT_uspEmployeeGridSearchNew> SPOUT_SearchEmployees { get; set; }
+        //public virtual DbSet<OputEmployeeSearchResult> SPOUT_SearchEmployees { get; set; }
         //public virtual DbSet<UspAgentDetails_Result> UspAgentDetails_Results { get; set; }
         public virtual DbSet<OputAgentHiearchy> OputAgentHiearchy { get; set; }
         #endregion
@@ -4004,7 +4003,7 @@ namespace OneTrack_v2.DbData
 
             #region STORED PROCEDURES
             //modelBuilder.Entity<SPOUT_uspEmployeeGridSearchNew>().ToView("SPOUT_SearchEmployee", "dbo").HasNoKey();
-            modelBuilder.Entity<SPOUT_uspEmployeeGridSearchNew>().ToTable("SPOUT_SearchEmployee").HasNoKey();
+            //modelBuilder.Entity<OputEmployeeSearchResult>().ToTable("SPOUT_SearchEmployee").HasNoKey();
             modelBuilder.Entity<OputAgentHiearchy>().ToSqlQuery("OputAgentHiearchy").HasNoKey();
             #endregion
 

@@ -1,42 +1,41 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 // import { Subject } from 'rxjs';
 
 import { environment } from '../environments/environment';
+import { SearchEmployee, EmployeeSearchResult } from '../_Models';
 
 @Injectable({
   providedIn: 'root',
 })
-export class DropdownDataService {
-  private url: string = environment.apiUrl + 'Employee/';
+export class EmployeeService {
+  private apiUrl: string = environment.apiUrl + 'Employee/SearchEmployee_v2';
 
   constructor(private http: HttpClient) {}
 
-  fetchEmployeeSearch(){
-    const url = this.url + 'SearchEmployee';
-    return this.http
-      .get<{
-        success: boolean;
-        statusCode: number;
-        objData: { key: string; value: string }[];
-        errMessage: string;
-      }>(url)
-      .pipe(
-        map((response) => {
-          // Check if the response is successful and has data
-          if (response.success && response.objData) {
-            // Map the objData to the desired format
-            return response.objData.map((item) => ({
-              value: item.key, // Assuming you want to map 'key' to 'value'
-              label: item.value, // 'value' is mapped to 'label'
-            }));
-          } else {
-            // Handle the case where response is not successful or objData is not available
-            // This can be adjusted based on how you want to handle errors or empty data
-            return [];
-          }
-        })
-      );
+//   fetchEmployeeSearch(searchCriteria: SearchEmployee): Observable<EmployeeSearchResult[]> {
+//     return this.http.put<EmployeeSearchResult[]>(this.apiUrl, searchCriteria);
+//   }
+fetchEmployeeSearch(vSearchEmployee: SearchEmployee): Observable<EmployeeSearchResult[]> {
+    return this.http.put<{
+      success: boolean;
+      statusCode: number;
+      objData: EmployeeSearchResult[];
+      errMessage: string;
+    }>(this.apiUrl, vSearchEmployee)
+    .pipe(
+      map((response) => {
+        if (response.success && response.statusCode === 200) {
+          return response.objData;
+        } else {
+          throw new Error(response.errMessage || 'Unknown error');
+        }
+      })
+    );
   }
+
 }
+
+

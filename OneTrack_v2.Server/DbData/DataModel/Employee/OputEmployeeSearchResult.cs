@@ -1,7 +1,7 @@
-﻿namespace OneTrack_v2.DataModel.StoredProcedures
+﻿namespace OneTrak_v2.DataModel
 {
 
-    public class SPOUT_uspEmployeeGridSearchNew
+    public class OputEmployeeSearchResult
     {
         public int EmployeeID { get; set; }
         public string? GEID { get; set; }

@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Moq;
-using OneTrack_v2.DataModel.StoredProcedures;
 using OneTrack_v2.Controllers;
 using OneTrack_v2.Services;
 using DataModel.Response;
+using OneTrak_v2.Server.DbData.DataModel.Employee;
 
 namespace wcfOneTrak_API.Test
 {
@@ -55,9 +55,9 @@ namespace wcfOneTrak_API.Test
             {
                 Success = true,
                 StatusCode = 200,
-                ObjData = new List<SPOUT_uspEmployeeGridSearchNew>
+                ObjData = new List<OputEmployeeSearchResult>
                 {
-                    new SPOUT_uspEmployeeGridSearchNew
+                    new OputEmployeeSearchResult
                     {
                         EmployeeID = 49282,
                         GEID = "3303627",
@@ -92,7 +92,7 @@ namespace wcfOneTrak_API.Test
             var returnResult = Assert.IsType<ReturnResult>(result.Value);
             Assert.True(returnResult.Success);
             Assert.Equal(200, returnResult.StatusCode);
-            Assert.NotEmpty((IEnumerable<SPOUT_uspEmployeeGridSearchNew>)returnResult.ObjData);
+            Assert.NotEmpty((IEnumerable<OputEmployeeSearchResult>)returnResult.ObjData);
         }
     }
 }
