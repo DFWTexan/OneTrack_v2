@@ -1,11 +1,11 @@
 export interface EmployeeSearchResult {
-    EmployeeID: number;
-    GEID: string;
-    Name: string;
-    ResStateAbv: string;
-    WorkStateAbv: string;
-    ScoreNumber: string;
-    BranchName: string;
-    EmploymentID: number;
+    employeeID: number;
+    geid: string;
+    name: string;
+    resStateAbv: string;
+    workStateAbv: string;
+    scoreNumber: string;
+    branchName: string;
+    employmentID: number;
     State: string;
   }

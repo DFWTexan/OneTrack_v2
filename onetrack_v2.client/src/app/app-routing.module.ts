@@ -41,7 +41,7 @@ const routes: Routes = [
   // Team Member
   { path: 'team/add-member', component: AddTeamMemberComponent },
   { path: 'team/search-members', component: SearchTeamMemberComponent },
-  { path: 'team/agent-info', component: AgentInformationComponent },
+  { path: 'team/agent-info/:id', component: AgentInformationComponent },
   // Reports
   // Reports
   { path: 'reports', component: ReportsComponent },

@@ -10,7 +10,7 @@ import { EmployeeService } from '../../../_services/employee.service';
   styleUrl: './search-list.component.css',
 })
 export class SearchListComponent implements OnInit, OnDestroy{
-  searchEmployeeResult: EmployeeSearchResult[] = [];
+  searchEmployeeResults: EmployeeSearchResult[] = [];
   subscription: Subscription = new Subscription;
 
   constructor(private emplyService: EmployeeService) {}
@@ -19,7 +19,10 @@ export class SearchListComponent implements OnInit, OnDestroy{
     this.subscription = this.emplyService.employeeSearchResultsChanged
     .subscribe(
         (employeeSearchResults: EmployeeSearchResult[]) => {
-          this.searchEmployeeResult = employeeSearchResults;
+
+console.log('EMFTest - employeeSearchResults: ', employeeSearchResults);
+
+          this.searchEmployeeResults = employeeSearchResults;
         }
       );
   }

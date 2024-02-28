@@ -52,7 +52,11 @@
             />
             <label for="search">Resident State:</label><br />
             <mat-form-field>
-              <mat-select ngModel name="residentState" placeholder="Select Res State">
+              <mat-select
+                ngModel
+                name="residentState"
+                placeholder="Select Res State"
+              >
                 <mat-option>None</mat-option>
                 <mat-option
                   *ngFor="let state of stateProvinces"
@@ -63,7 +67,11 @@
             ><br />
             <label for="search">Work State:</label><br />
             <mat-form-field>
-              <mat-select ngModel name="workState" placeholder="Select Work State">
+              <mat-select
+                ngModel
+                name="workState"
+                placeholder="Select Work State"
+              >
                 <mat-option>None</mat-option>
                 <mat-option
                   *ngFor="let state of stateProvinces"
@@ -74,7 +82,11 @@
             ><br />
             <label for="search">Branch Name:</label><br />
             <mat-form-field>
-              <mat-select ngModel name="branchName" placeholder="Select Branch Name">
+              <mat-select
+                ngModel
+                name="branchName"
+                placeholder="Select Branch Name"
+              >
                 <mat-option>None</mat-option>
                 <mat-option
                   *ngFor="let branchName of branchNames"
@@ -96,7 +108,11 @@
           ><br />
           <label for="search">Score Number:</label><br />
           <mat-form-field>
-            <mat-select ngModel name="scoreNumber" placeholder="Select Score Num">
+            <mat-select
+              ngModel
+              name="scoreNumber"
+              placeholder="Select Score Num"
+            >
               <mat-option>None</mat-option>
               <mat-option
                 *ngFor="let scoreNumber of scoreNumbers"
@@ -107,7 +123,11 @@
           ><br />
           <label for="search">Employer/Agency:</label><br />
           <mat-form-field>
-            <mat-select ngModel name="employerAgency" placeholder="Select Emp-Agency">
+            <mat-select
+              ngModel
+              name="employerAgency"
+              placeholder="Select Emp-Agency"
+            >
               <mat-option>None</mat-option>
               <mat-option
                 *ngFor="let employerAgency of employerAgencies"
@@ -118,7 +138,11 @@
           ><br /><br />
           <label for="search">License Status:</label><br />
           <mat-form-field>
-            <mat-select ngModel name="licenseStatus" placeholder="Select License Status">
+            <mat-select
+              ngModel
+              name="licenseStatus"
+              placeholder="Select License Status"
+            >
               <mat-option>None</mat-option>
               <mat-option
                 *ngFor="let licenseStatus of licenseStatuses"
@@ -129,18 +153,24 @@
           ><br />
           <label for="search">License State:</label><br />
           <mat-form-field>
-            <mat-select ngModel name="licenseState" placeholder="Select License State">
+            <mat-select
+              ngModel
+              name="licenseState"
+              placeholder="Select License State"
+            >
               <mat-option>None</mat-option>
-              <mat-option
-                *ngFor="let state of states"
-                [value]="state"
-                >{{ state }}</mat-option
-              >
+              <mat-option *ngFor="let state of states" [value]="state">{{
+                state
+              }}</mat-option>
             </mat-select> </mat-form-field
           ><br />
           <label for="search">License Name:</label><br />
           <mat-form-field>
-            <mat-select ngModel name="licenseName" placeholder="Select License Name">
+            <mat-select
+              ngModel
+              name="licenseName"
+              placeholder="Select License Name"
+            >
               <mat-option>None</mat-option>
               <mat-option
                 *ngFor="let licenseName of licenseNames"
@@ -162,8 +192,6 @@
 <div class="row">
   <div class="col-md-12">
     <hr *ngIf="isSubmitted" />
-    <app-search-list
-      *ngIf="isSubmitted"
-    ></app-search-list>
+    <app-search-list *ngIf="isSubmitted"></app-search-list>
   </div>
 </div>

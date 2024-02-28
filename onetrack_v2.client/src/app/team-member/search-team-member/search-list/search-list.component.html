@@ -1,1 +1,42 @@
-<p>search-list works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>&nbsp;</th>
+                            <th>Employee ID</th>
+                            <th>Team #</th>
+                            <th>Name</th>
+                            <th>Res State</th>
+                            <th>Work State</th>
+                            <th>Branch Name</th>
+                            <th>Score #</th>
+                            <th>Employment ID</th>
+                            <th>Tickle</th>
+                            <th>Indexer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let teamMember of searchEmployeeResults">
+                            <td>
+                                <a [routerLink]="['../../team/agent-info', teamMember.employeeID]">View</a>
+                            </td>
+                            <td>{{teamMember.employeeID}}</td>
+                            <td>{{teamMember.geid}}</td>
+                            <td>{{teamMember.name}}</td>
+                            <td>{{teamMember.resStateAbv}}</td>
+                            <td>{{teamMember.workStateAbv}}</td>
+                            <td>{{teamMember.branchName}}</td>
+                            <td>{{teamMember.scoreNumber}}</td>
+                            <td>{{teamMember.employmentID}}</td>
+                            
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+    </div>
+</div>
+
