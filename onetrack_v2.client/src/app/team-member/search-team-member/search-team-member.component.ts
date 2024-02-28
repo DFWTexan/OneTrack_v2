@@ -23,6 +23,7 @@ import { EmployeeSearchResult, SearchEmployee } from '../../_Models';
 @Injectable()
 export class SearchTeamMemberComponent implements OnInit {
   // @ViewChild('f') searchForm: NgForm;
+  isSubmitted = false;
   agentStatuses: string[] = [];
   states: string[] = [];
   stateProvinces: string[] = [];
@@ -75,6 +76,7 @@ export class SearchTeamMemberComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
+    this.isSubmitted = true;
     const searchFilter: SearchEmployee = {
       NationalProducerNumber: 0,
       AgentStatus: ['All'], // if NationalProducerNumber is not part of the form, you can set it manually
@@ -83,12 +85,12 @@ export class SearchTeamMemberComponent implements OnInit {
       // Other criteria as needed
     };
 
-    console.log('EMFTest - searchFilter => \n ', searchFilter);
+    // console.log('EMFTest - searchFilter => \n ', searchFilter);
 
     this.emplyService
       .fetchEmployeeSearch(searchFilter)
       .subscribe((results) => {
-        console.log('EMFTest - EmpSearchResults => \n', results); // Do something with the results
+        // console.log('EMFTest - EmpSearchResults => \n', results); // Do something with the results
         this.searchEmployeeResult = results;
       });
   }

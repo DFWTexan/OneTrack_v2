@@ -160,5 +160,10 @@
   </form>
 </div>
 <div class="row">
-  <div class="col-md-12"></div>
+  <div class="col-md-12">
+    <hr *ngIf="isSubmitted" />
+    <app-search-list
+      *ngIf="isSubmitted"
+    ></app-search-list>
+  </div>
 </div>
