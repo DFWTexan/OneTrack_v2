@@ -20,6 +20,7 @@ import { SearchTeamMemberComponent } from './team-member/search-team-member/sear
 import { ReportsComponent } from './reports/reports/reports.component';
 import { WorkListComponent } from './work-list/work-list/work-list.component';
 import { AgentInformationComponent } from './team-member/agent-information/agent-information.component';
+import { EmfTestPageComponent } from './emf-test/emf-test-page.component';
 
 const routes: Routes = [
   // Dashboard
@@ -47,6 +48,8 @@ const routes: Routes = [
   { path: 'reports', component: ReportsComponent },
   // Work List
   { path: 'work-lists', component: WorkListComponent },
+  // Test page 
+  { path: 'emf-test', component: EmfTestPageComponent },
 
   // Redirect to dashboard or any other component as the default route
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },

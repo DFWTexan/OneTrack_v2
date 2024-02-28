@@ -42,6 +42,7 @@ import { WorkListComponent } from './work-list/work-list/work-list.component';
 import { AgentInformationComponent } from './team-member/agent-information/agent-information.component';
 import { ConstantsService } from './_services/constants.service';
 import { SearchListComponent } from './team-member/search-team-member/search-list/search-list.component';
+import { EmfTestPageComponent } from './emf-test/emf-test-page.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +69,7 @@ import { SearchListComponent } from './team-member/search-team-member/search-lis
     WorkListComponent,
     AgentInformationComponent,
     SearchListComponent,
+    EmfTestPageComponent,
   ],
   imports: [
     BrowserModule,
