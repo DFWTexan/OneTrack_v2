@@ -20,9 +20,6 @@ export class SearchListComponent implements OnInit, OnDestroy{
     this.subscription = this.emplyService.employeeSearchResultsChanged
     .subscribe(
         (employeeSearchResults: EmployeeSearchResult[]) => {
-
-console.log('EMFTest - employeeSearchResults: ', employeeSearchResults);
-
           this.searchEmployeeResults = employeeSearchResults;
         }
       );

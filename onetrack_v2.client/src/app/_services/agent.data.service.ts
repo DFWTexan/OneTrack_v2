@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 // import { Subject } from 'rxjs';
 
 import { environment } from '../environments/environment';
+import { AgentInfo } from '../_Models';
 
 @Injectable({
   providedIn: 'root',
@@ -15,9 +16,23 @@ export class AgentDataService {
 
     constructor(private http: HttpClient) {}
 
-    fetchAgentInformation(employeeID: number): Observable<any> {
+    fetchAgentInformation(employeeID: number): Observable<AgentInfo> {
       this.apiUrl = environment.apiUrl + 'Agent/GetAgentByEmployeeID/';
-
-      return this.http.get(this.apiUrl + employeeID);
+    
+      return this.http.get<{
+        success: boolean;
+        statusCode: number;
+        objData: AgentInfo;
+        errMessage: string;
+      }>(this.apiUrl + employeeID)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
     }
 }
