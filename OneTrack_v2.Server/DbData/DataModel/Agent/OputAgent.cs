@@ -19,6 +19,7 @@
         public string? Zip { get; set; }
         public string? Phone { get; set; }
         public string? Email { get; set; }
+        public int? NationalProdercerNumber { get; set; }   
         public bool? CERequired { get; set; }
         public bool? ExcludeFromReports { get; set; }
         public DateTime? DateOfBirth { get; set; }

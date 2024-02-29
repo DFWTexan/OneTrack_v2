@@ -78,8 +78,8 @@ export class SearchTeamMemberComponent implements OnInit {
   onSubmit(form: NgForm) {
     this.isSubmitted = true;
     const searchFilter: SearchEmployee = {
-      NationalProducerNumber: 0,
-      AgentStatus: ['All'], // if NationalProducerNumber is not part of the form, you can set it manually
+      // NationalProducerNumber: 0,
+      // AgentStatus: ['All'], // if NationalProducerNumber is not part of the form, you can set it manually
       ...form.value.searchFilter
       // AgentStatus: ['Active', 'Inactive'], // if AgentStatus is not part of the form, you can set it manually
       // Other criteria as needed

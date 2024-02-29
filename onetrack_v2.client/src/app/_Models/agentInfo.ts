@@ -1,0 +1,41 @@
+import { ManagerHierarchy } from './managerHierarchy';
+
+export interface AgentInfo {
+  employeeID: number;
+  employmentID: number;
+  employeeStatus: string;
+  lastName: string;
+  firstName: string;
+  middleName: string | null;
+  jobTitle: string | null;
+  jobDate: string | null;
+  employeeSSN: string;
+  soeid: string | null;
+  address1: string;
+  address2: string | null;
+  city: string;
+  state: string;
+  zip: string;
+  phone: string | null;
+  email: string;
+  nationalProducerNumber: string | null;
+  ceRequired: boolean;
+  excludeFromReports: boolean;
+  dateOfBirth: string;
+  diaryEntryName: string | null;
+  diaryEntryDate: string | null;
+  diaryEntryDescription: string | null;
+  licenseIncentive: string;
+  licenseLevel: string;
+  isLicenseincentiveSecondChance: boolean;
+  branchDeptScoreNumber: string | null;
+  branchDeptNumber: string | null;
+  branchDeptName: string | null;
+  branchDeptStreet1: string | null;
+  branchDeptStreet2: string | null;
+  branchDeptStreet3: string | null;
+  branchDeptStreetCity: string | null;
+  branchDeptStreetState: string | null;
+  branchDeptStreetZip: string | null;
+  mgrHiearchy: ManagerHierarchy[];
+}

@@ -17,9 +17,6 @@ export class EmployeeService {
 
   constructor(private http: HttpClient) {}
 
-  //   fetchEmployeeSearch(searchCriteria: SearchEmployee): Observable<EmployeeSearchResult[]> {
-  //     return this.http.put<EmployeeSearchResult[]>(this.apiUrl, searchCriteria);
-  //   }
   fetchEmployeeSearch(
     vSearchEmployee: SearchEmployee
   ): Observable<EmployeeSearchResult[]> {

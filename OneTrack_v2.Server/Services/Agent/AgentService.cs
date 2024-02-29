@@ -83,6 +83,7 @@ namespace OneTrack_v2.Services
                                 LicenseIncentive = employment.LicenseIncentive,
                                 LicenseLevel = employment.LicenseLevel,
                                 IsLicenseincentiveSecondChance = employment.SecondChance,
+                                NationalProdercerNumber = employee.NationalProducerNumber
                                 //DiaryEntryName = employee.DiaryEntryName,        TBD: Need to fix this when DiaryEntryName location is known
                                 //DiaryEntryDate = employee.DiaryEntryDate,        TBD: Need to fix this when DiaryEntryDate location is known
                                 //DiaryEntryDescription = employee.DiaryEntryDescription        TBD: Need to fix this when DiaryEntryDescription location is known
