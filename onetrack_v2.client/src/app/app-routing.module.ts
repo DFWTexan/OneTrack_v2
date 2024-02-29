@@ -22,6 +22,12 @@ import { WorkListComponent } from './work-list/work-list/work-list.component';
 import { AgentInformationComponent } from './team-member/agent-information/agent-information.component';
 import { EmfTestPageComponent } from './emf-test/emf-test-page.component';
 import { TmInformationComponent } from './team-member/agent-information/tm-information/tm-information.component';
+import { TmDetailComponent } from './team-member/agent-information/tm-detail/tm-detail.component';
+import { TmEmptransHistoryComponent } from './team-member/agent-information/tm-emptrans-history/tm-emptrans-history.component';
+import { TmContinuingEduComponent } from './team-member/agent-information/tm-continuing-edu/tm-continuing-edu.component';
+import { TmDiaryComponent } from './team-member/agent-information/tm-diary/tm-diary.component';
+import { TmEmailComponent } from './team-member/agent-information/tm-email/tm-email.component';
+import { TmCommunicationsComponent } from './team-member/agent-information/tm-communications/tm-communications.component';
 
 const routes: Routes = [
   // Dashboard
@@ -48,6 +54,12 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'tm-info', pathMatch: 'full' },
       { path: 'tm-info', component: TmInformationComponent },
+      { path: 'tm-detail', component: TmDetailComponent },
+      { path: 'tm-emp-tran-his', component: TmEmptransHistoryComponent },
+      { path: 'tm-con-ed', component: TmContinuingEduComponent },
+      { path: 'tm-diary', component: TmDiaryComponent },
+      { path: 'tm-email', component: TmEmailComponent },
+      { path: 'tm-communications', component: TmCommunicationsComponent },
       // other child routes...
     ]
   },

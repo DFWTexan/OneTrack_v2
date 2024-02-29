@@ -45,6 +45,12 @@ import { ConstantsDataService } from './_services/';
 import { SearchListComponent } from './team-member/search-team-member/search-list/search-list.component';
 import { EmfTestPageComponent } from './emf-test/emf-test-page.component';
 import { TmInformationComponent } from './team-member/agent-information/tm-information/tm-information.component';
+import { TmDetailComponent } from './team-member/agent-information/tm-detail/tm-detail.component';
+import { TmEmptransHistoryComponent } from './team-member/agent-information/tm-emptrans-history/tm-emptrans-history.component';
+import { TmContinuingEduComponent } from './team-member/agent-information/tm-continuing-edu/tm-continuing-edu.component';
+import { TmDiaryComponent } from './team-member/agent-information/tm-diary/tm-diary.component';
+import { TmEmailComponent } from './team-member/agent-information/tm-email/tm-email.component';
+import { TmCommunicationsComponent } from './team-member/agent-information/tm-communications/tm-communications.component';
 
 @NgModule({
   declarations: [
@@ -73,6 +79,12 @@ import { TmInformationComponent } from './team-member/agent-information/tm-infor
     SearchListComponent,
     EmfTestPageComponent,
     TmInformationComponent,
+    TmDetailComponent,
+    TmEmptransHistoryComponent,
+    TmContinuingEduComponent,
+    TmDiaryComponent,
+    TmEmailComponent,
+    TmCommunicationsComponent,
   ],
   imports: [
     BrowserModule,
