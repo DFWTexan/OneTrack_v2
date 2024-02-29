@@ -13,6 +13,7 @@ import { AgentInfo } from '../_Models';
 export class AgentDataService {
   private apiUrl: string = environment.apiUrl;
   agentInformation: any = [];
+  agentInfoChanged = new Subject<AgentInfo>();
 
   constructor(private http: HttpClient) {}
 
@@ -29,6 +30,7 @@ export class AgentDataService {
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
+            this.agentInfoChanged.next(response.objData);
             return response.objData;
           } else {
             throw new Error(response.errMessage || 'Unknown error');

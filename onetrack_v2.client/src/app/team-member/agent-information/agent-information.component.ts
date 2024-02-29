@@ -11,7 +11,7 @@ import { AgentDataService } from '../../_services';
 @Injectable()
 export class AgentInformationComponent implements OnInit{
   id: number = 0;
-  agentInfo: AgentInfo = {} as AgentInfo;
+  agentInfo: AgentInfo = {} as AgentInfo;  
 
   constructor(private agentService: AgentDataService, 
               private route: ActivatedRoute, 
