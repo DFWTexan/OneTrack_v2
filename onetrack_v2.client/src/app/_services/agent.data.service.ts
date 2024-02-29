@@ -9,13 +9,15 @@ import { environment } from '../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class AgentService {
-    private apiUrl: string = environment.apiUrl + 'Employee/SearchEmployee_v2';
+export class AgentDataService {
+    private apiUrl: string = environment.apiUrl;
     agentInformation: any = [];
 
     constructor(private http: HttpClient) {}
 
-    fetchAgentInformation(): Observable<any> {
-        return this.http.get(this.apiUrl);
+    fetchAgentInformation(employeeID: number): Observable<any> {
+      this.apiUrl = environment.apiUrl + 'Agent/GetAgentByEmployeeID/';
+
+      return this.http.get(this.apiUrl + employeeID);
     }
 }

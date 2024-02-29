@@ -10,9 +10,10 @@ import {
 } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { ConstantsService } from '../../_services/constants.data.service';
-import { DropdownDataService } from '../../_services/dropDown.data.service';
-import { EmployeeService } from '../../_services/employee.data.service';
+import { EmployeeDataService, 
+  DropdownDataService, 
+  ConstantsDataService 
+} from '../../_services';
 import { EmployeeSearchResult, SearchEmployee } from '../../_Models';
 
 @Component({
@@ -39,9 +40,9 @@ export class SearchTeamMemberComponent implements OnInit {
   searchEmployeeResult: EmployeeSearchResult[] = [];
 
   constructor(
-    private conService: ConstantsService,
+    private conService: ConstantsDataService,
     private drpdwnDataService: DropdownDataService,
-    private emplyService: EmployeeService
+    private emplyService: EmployeeDataService
   ) {}
 
   ngOnInit() {
@@ -94,9 +95,6 @@ export class SearchTeamMemberComponent implements OnInit {
       LicState: form.value.searchFilter.LicState || null,
       LicenseName: form.value.searchFilter.LicenseName || null,
     };
-
-    console.log('EMFTest - form => \n ', form);
-    console.log('EMFTest - searchFilter => \n ', searchFilter);
 
     this.emplyService
       .fetchEmployeeSearch(searchFilter)

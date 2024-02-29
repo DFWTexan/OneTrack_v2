@@ -10,7 +10,7 @@ import { SearchEmployee, EmployeeSearchResult } from '../_Models';
 @Injectable({
   providedIn: 'root',
 })
-export class EmployeeService {
+export class EmployeeDataService {
   private apiUrl: string = environment.apiUrl + 'Employee/SearchEmployee_v2';
   employeeSearchResults: EmployeeSearchResult[] = [];
   employeeSearchResultsChanged = new Subject<EmployeeSearchResult[]>();

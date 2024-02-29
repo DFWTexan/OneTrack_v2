@@ -1,4 +1,4 @@
-export class ConstantsService {
+export class ConstantsDataService {
   private readonly agentStatuses = [
     'ALL',
     'Active',

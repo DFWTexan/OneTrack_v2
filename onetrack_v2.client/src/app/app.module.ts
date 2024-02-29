@@ -40,7 +40,7 @@ import { SearchTeamMemberComponent } from './team-member/search-team-member/sear
 import { ReportsComponent } from './reports/reports/reports.component';
 import { WorkListComponent } from './work-list/work-list/work-list.component';
 import { AgentInformationComponent } from './team-member/agent-information/agent-information.component';
-import { ConstantsService } from './_services/constants.data.service';
+import { ConstantsDataService } from './_services/';
 import { SearchListComponent } from './team-member/search-team-member/search-list/search-list.component';
 import { EmfTestPageComponent } from './emf-test/emf-test-page.component';
 
@@ -90,7 +90,7 @@ import { EmfTestPageComponent } from './emf-test/emf-test-page.component';
     MatTooltipModule,
     RouterModule.forRoot([]),
   ],
-  providers: [provideAnimationsAsync(), ConstantsService],
+  providers: [provideAnimationsAsync(), ConstantsDataService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
