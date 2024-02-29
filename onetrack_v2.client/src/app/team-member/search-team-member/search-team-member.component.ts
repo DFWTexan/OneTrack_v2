@@ -27,6 +27,7 @@ export class SearchTeamMemberComponent implements OnInit {
   agentStatuses: string[] = [];
   states: string[] = [];
   stateProvinces: string[] = [];
+  defaultAgentStatus = 'ALL';
 
   // Dropdown-Data-Service
   branchNames: { value: string; label: string }[] = [];
@@ -78,14 +79,24 @@ export class SearchTeamMemberComponent implements OnInit {
   onSubmit(form: NgForm) {
     this.isSubmitted = true;
     const searchFilter: SearchEmployee = {
-      // NationalProducerNumber: 0,
-      // AgentStatus: ['All'], // if NationalProducerNumber is not part of the form, you can set it manually
-      ...form.value.searchFilter
-      // AgentStatus: ['Active', 'Inactive'], // if AgentStatus is not part of the form, you can set it manually
-      // Other criteria as needed
+      EmployeeSSN: form.value.searchFilter.EmployeeSSN || null,
+      TeamMemberGEID: form.value.searchFilter.TeamMemberGEID || 0,
+      NationalProducerNumber: form.value.searchFilter.NationalProducerNumber || 0,
+      LastName: form.value.searchFilter.LastName || null,
+      FirstName: form.value.searchFilter.FirstName || null,
+      ResState: form.value.searchFilter.ResState || null,
+      WrkState: form.value.searchFilter.WrkState || null,
+      BranchCode: form.value.searchFilter.BranchCode || null,
+      AgentStatus: form.value.searchFilter.AgentStatus || ['All'],
+      ScoreNumber: form.value.searchFilter.ScoreNumber || null,
+      EmployerAgency: form.value.searchFilter.EmployerAgency || null,
+      LicStatus: form.value.searchFilter.LicStatus || null,
+      LicState: form.value.searchFilter.LicState || null,
+      LicenseName: form.value.searchFilter.LicenseName || null,
     };
 
-    // console.log('EMFTest - searchFilter => \n ', searchFilter);
+    console.log('EMFTest - form => \n ', form);
+    console.log('EMFTest - searchFilter => \n ', searchFilter);
 
     this.emplyService
       .fetchEmployeeSearch(searchFilter)

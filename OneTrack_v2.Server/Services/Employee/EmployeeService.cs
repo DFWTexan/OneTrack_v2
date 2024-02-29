@@ -95,10 +95,10 @@ namespace OneTrack_v2.Services
                         //let licStatusValues = StringToTable(vLicStatus, ',', true) // This assumes you have a method to split strings
                         where (vEmployeeSSN == null || ss.EmployeeSsn1 == vEmployeeSSN) &&
                               (vGEID == null || e.Geid == vGEID) &&
-                              (vSCORENumber == "" || th.Scorenumber == vSCORENumber) &&
+                              (vSCORENumber == null || th.Scorenumber == vSCORENumber) &&
                               (vNationalProducerNumber == 0 || e.NationalProducerNumber == vNationalProducerNumber) &&
-                              (vLastName == "" || e.LastName == vLastName) &&
-                              (vFirstName == "" || e.FirstName == vFirstName)
+                              (vLastName == null || e.LastName == vLastName) &&
+                              (vFirstName == null || e.FirstName == vFirstName)
                               //(vEmploymentID == 0 || el.EmploymentId == vEmploymentID) //&&
                               //(vCompanyID == 0 || m.CompanyId == vCompanyID) &&
                               // ... Continue with other conditions

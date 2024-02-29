@@ -13,48 +13,48 @@
             <input
               type="text"
               class="form-control"
-              id="sociatlSecurityNumber"
+              id="EmployeeSSN"
               ngModel
-              name="socialSecurityNumber"
+              name="EmployeeSSN"
               placeholder="####"
             />
             <label for="search">Team Member ID:</label>
             <input
               type="text"
               class="form-control"
-              id="teamMemberId"
+              id="TeamMemberGEID"
               ngModel
-              name="teamMemberId"
+              name="TeamMemberGEID"
             />
             <label for="search">National Producer #:</label>
             <input
               type="text"
               class="form-control"
-              id="nationalProducerNumber"
+              id="NationalProducerNumber"
               ngModel
-              name="nationalProducerNumber"
+              name="NationalProducerNumber"
             />
             <label for="search">Last Name:</label>
             <input
               type="text"
               class="form-control"
-              id="lastName"
+              id="LastName"
               ngModel
-              name="lastName"
+              name="LastName"
             />
             <label for="search">First Name:</label>
             <input
               type="text"
               class="form-control"
-              id="firstName"
+              id="FirstName"
               ngModel
-              name="firstName"
+              name="FirstName"
             />
             <label for="search">Resident State:</label><br />
             <mat-form-field>
               <mat-select
                 ngModel
-                name="residentState"
+                name="ResState"
                 placeholder="Select Res State"
               >
                 <mat-option>None</mat-option>
@@ -69,7 +69,7 @@
             <mat-form-field>
               <mat-select
                 ngModel
-                name="workState"
+                name="WrkState"
                 placeholder="Select Work State"
               >
                 <mat-option>None</mat-option>
@@ -84,7 +84,7 @@
             <mat-form-field>
               <mat-select
                 ngModel
-                name="branchName"
+                name="BranchCode"
                 placeholder="Select Branch Name"
               >
                 <mat-option>None</mat-option>
@@ -100,17 +100,20 @@
         <div class="col-md-6 app-multi-select-ddl">
           <mat-form-field>
             <mat-label>Agent Status</mat-label>
-            <mat-select ngModel name="agentStatus" multiple>
+            <!-- <mat-select ngModel name="agentStatus" multiple>
               @for (value of agentStatuses; track value) {
               <mat-option [value]="value">{{ value }}</mat-option>
               }
-            </mat-select> </mat-form-field
-          ><br />
+            </mat-select>  -->
+            <mat-select [(value)]="defaultAgentStatus" ngModel name="AgentStatus" multiple>
+              <mat-option *ngFor="let value of agentStatuses" [value]="value">{{ value }}</mat-option>
+            </mat-select>
+            </mat-form-field><br />
           <label for="search">Score Number:</label><br />
           <mat-form-field>
             <mat-select
               ngModel
-              name="scoreNumber"
+              name="ScoreNumber"
               placeholder="Select Score Num"
             >
               <mat-option>None</mat-option>
@@ -125,7 +128,7 @@
           <mat-form-field>
             <mat-select
               ngModel
-              name="employerAgency"
+              name="EmployerAgency"
               placeholder="Select Emp-Agency"
             >
               <mat-option>None</mat-option>
@@ -140,7 +143,7 @@
           <mat-form-field>
             <mat-select
               ngModel
-              name="licenseStatus"
+              name="LicStatus"
               placeholder="Select License Status"
             >
               <mat-option>None</mat-option>
@@ -155,7 +158,7 @@
           <mat-form-field>
             <mat-select
               ngModel
-              name="licenseState"
+              name="LicState"
               placeholder="Select License State"
             >
               <mat-option>None</mat-option>
@@ -168,7 +171,7 @@
           <mat-form-field>
             <mat-select
               ngModel
-              name="licenseName"
+              name="LicenseName"
               placeholder="Select License Name"
             >
               <mat-option>None</mat-option>
