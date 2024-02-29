@@ -10,9 +10,9 @@ import {
 } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { ConstantsService } from '../../_services/constants.service';
+import { ConstantsService } from '../../_services/constants.data.service';
 import { DropdownDataService } from '../../_services/dropDown.data.service';
-import { EmployeeService } from '../../_services/employee.service';
+import { EmployeeService } from '../../_services/employee.data.service';
 import { EmployeeSearchResult, SearchEmployee } from '../../_Models';
 
 @Component({
