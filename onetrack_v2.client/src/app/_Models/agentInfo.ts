@@ -19,8 +19,13 @@ export interface AgentInfo {
   phone: string | null;
   email: string;
   nationalProducerNumber: string | null;
+  residentState: string | null;
+  workState: string | null;
+  scoreNumber: string | null;
+  employerAgency: string | null;
   ceRequired: boolean;
   excludeFromReports: boolean;
+  teamMemberGEID: string | null;
   dateOfBirth: string;
   diaryEntryName: string | null;
   diaryEntryDate: string | null;

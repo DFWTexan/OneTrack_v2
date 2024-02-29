@@ -3,8 +3,6 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 
 import { AgentInfo } from '../../_Models';
 import { AgentDataService } from '../../_services';
-import { NgIf } from '@angular/common';
-
 @Component({
   selector: 'app-agent-information',
   templateUrl: './agent-information.component.html',
@@ -22,14 +20,8 @@ export class AgentInformationComponent implements OnInit{
   ngOnInit() {
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
-
-console.log('EMFTest - AgentInformationComponent.ngOnInit: this.id = ' + this.id);
-
       this.agentService.fetchAgentInformation(this.id)
         .subscribe((agentInfo: AgentInfo) => {
-
-console.log('EMFTest - AgentInformationComponent.ngOnInit: agentInfo = ' + JSON.stringify(agentInfo));
-
           this.agentInfo = agentInfo;
         });
     });

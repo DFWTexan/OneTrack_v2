@@ -11,15 +11,16 @@ import { AgentInfo } from '../_Models';
   providedIn: 'root',
 })
 export class AgentDataService {
-    private apiUrl: string = environment.apiUrl;
-    agentInformation: any = [];
+  private apiUrl: string = environment.apiUrl;
+  agentInformation: any = [];
 
-    constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-    fetchAgentInformation(employeeID: number): Observable<AgentInfo> {
-      this.apiUrl = environment.apiUrl + 'Agent/GetAgentByEmployeeID/';
-    
-      return this.http.get<{
+  fetchAgentInformation(employeeID: number): Observable<AgentInfo> {
+    this.apiUrl = environment.apiUrl + 'Agent/GetAgentByEmployeeID/';
+
+    return this.http
+      .get<{
         success: boolean;
         statusCode: number;
         objData: AgentInfo;
@@ -34,5 +35,5 @@ export class AgentDataService {
           }
         })
       );
-    }
+  }
 }

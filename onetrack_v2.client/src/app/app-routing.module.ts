@@ -21,6 +21,7 @@ import { ReportsComponent } from './reports/reports/reports.component';
 import { WorkListComponent } from './work-list/work-list/work-list.component';
 import { AgentInformationComponent } from './team-member/agent-information/agent-information.component';
 import { EmfTestPageComponent } from './emf-test/emf-test-page.component';
+import { TmInformationComponent } from './team-member/agent-information/tm-information/tm-information.component';
 
 const routes: Routes = [
   // Dashboard
@@ -42,7 +43,14 @@ const routes: Routes = [
   // Team Member
   { path: 'team/add-member', component: AddTeamMemberComponent },
   { path: 'team/search-members', component: SearchTeamMemberComponent },
-  { path: 'team/agent-info/:id', component: AgentInformationComponent },
+  { path: 'team/agent-info/:id', 
+    component: AgentInformationComponent,
+    children: [
+      { path: '', redirectTo: 'tm-info', pathMatch: 'full' },
+      { path: 'tm-info', component: TmInformationComponent },
+      // other child routes...
+    ]
+  },
   // Reports
   // Reports
   { path: 'reports', component: ReportsComponent },

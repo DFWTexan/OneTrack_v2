@@ -1,7 +1,78 @@
 <div class="container">
   <div class="row">
     <div class="col-md-12">
-      <h1>Agent Information {{ agentInfo.firstName }}</h1>
-      <div>{{ agentInfo.firstName }}</div>
+      <h1>Agent Information</h1>
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col">
+              <p>
+                <strong>Name:</strong> {{ agentInfo.firstName }}
+                {{ agentInfo.middleName }} {{ agentInfo.lastName }}
+              </p>
+              <p><strong>Employee ID:</strong> {{ agentInfo.employeeID }}</p>
+              <!-- <p>
+                <strong>Employment ID:</strong> {{ agentInfo.employmentID }}
+              </p> -->
+              <p>
+                <strong>Team Member ID:</strong>
+                {{ agentInfo.teamMemberGEID || "N/A" }}
+              </p>
+
+              <!-- <p>
+                <strong>Job Title:</strong> {{ agentInfo.jobTitle || "N/A" }}
+              </p> -->
+              <!-- <p>
+                <strong>Job Start Date:</strong>
+                {{ agentInfo.jobDate || "N/A" }}
+              </p> -->
+            </div>
+            <div class="col">
+              <p>
+                <strong>Employer/Agency:</strong>
+                {{ agentInfo.employerAgency || "N/A" }}
+              </p>
+              <p>
+                <strong>Res State:</strong>
+                {{ agentInfo.residentState || "N/A" }}
+              </p>
+              <p>
+                <strong>Work State:</strong> {{ agentInfo.workState || "N/A" }}
+              </p>
+              <!-- <p><strong>Phone:</strong> {{ agentInfo.phone || "N/A" }}</p> -->
+            </div>
+            <div class="col">
+              <p>
+                <strong>Branch/Dept:</strong>
+                {{ agentInfo.branchDeptNumber || "N/A" }}
+              </p>
+              <p>
+                <strong>Score:</strong>
+                {{ agentInfo.scoreNumber || "N/A" }}
+              </p>
+              <p>
+                <strong>National Producer Number:</strong>
+                {{ agentInfo.nationalProducerNumber || "N/A" }}
+              </p>
+
+              <!-- <p>
+                <strong>Exclude From Reports:</strong>
+                {{ agentInfo.excludeFromReports ? "Yes" : "No" }}
+              </p> -->
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
+  <hr />
+  <mat-tab-group>
+    <mat-tab label="TM Information"> <app-tm-information></app-tm-information> </mat-tab>
+    <mat-tab label="TM Detail"> Content 2 </mat-tab>
+    <mat-tab label="TM Emp/Trans History"> Content 3 </mat-tab>
+    <mat-tab label="TM Continuing Edu."> Content 4 </mat-tab>
+    <mat-tab label="TM Diary"> Content 5 </mat-tab>
+    <mat-tab label="TM Email"> Content 6 </mat-tab>
+    <mat-tab label="TM Communications"> Content 7 </mat-tab>
+  </mat-tab-group>
 </div>
