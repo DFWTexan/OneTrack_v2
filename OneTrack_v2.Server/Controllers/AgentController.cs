@@ -54,6 +54,14 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
+        [HttpGet("{employmentID}")]
+        public async Task<ActionResult> GetLicenseAppointments(int employmentID)
+        {
+            var result = await Task.Run(() => _agentService.GetLicenseAppointments(employmentID));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
         [HttpPut]
         public async Task<ActionResult> GetEmploymentTransferHistory([FromBody] IputAgentEmploymentTransferHistory Input)
         {

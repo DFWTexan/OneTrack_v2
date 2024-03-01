@@ -2,7 +2,7 @@
 {
     public class OputAgentLicenses
     {
-        public int? LicenseID { get; set; }
+        public int? EmployeeLicenseId { get; set; }
         public string? LicenseState { get; set; }
         public string? LineOfAuthority { get; set; }
         public string? LicenseStatus { get; set; }

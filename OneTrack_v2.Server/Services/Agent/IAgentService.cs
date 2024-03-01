@@ -9,6 +9,7 @@ namespace OneTrack_v2.Services
         public ReturnResult GetAgentByEmployeeID(int vEmployeeID);
         public ReturnResult GetLicenses(int vEmploymentID);
         public ReturnResult GetAppointments(int vEmploymentID);
+        public ReturnResult GetLicenseAppointments(int vEmploymentID);
         public ReturnResult GetEmploymentTransferHistory(int vEmploymentID, int vEmploymentHistoryID = 0, int vTransferHistoryID = 0, int vEmploymentJobTitleID = 0);
         public ReturnResult GetContEducationRequired(int vEmploymentID);
         public ReturnResult GetDiary(int vEmploymentID = 0);

@@ -6,6 +6,9 @@ using OneTrack_v2.DataModel;
 using Microsoft.Data.SqlClient;
 using OneTrack_v2.DbData.Models;
 using Microsoft.AspNetCore.Mvc;
+using OneTrak_v2.DataModel;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
+using System.Linq;
 
 namespace OneTrack_v2.Services
 {
@@ -381,6 +384,99 @@ namespace OneTrack_v2.Services
 
                 result.Success = true;
                 result.ObjData = appointments;
+                result.StatusCode = 200;
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+                return result;
+            }
+        }
+
+        /// <summary>
+        ///  <param name="@vchEmploymentID" int>606709</param>   
+        ///  <returns>
+        ///     "licenseID": null,
+        ///     "licenseState": "MO",
+        ///     "lineOfAuthority": "CL",
+        ///     "licenseStatus": "Active",
+        ///     "employmentID": 606709,
+        ///     "licenseName": "CREDIT",
+        ///     "licenseNumber": "3002117601",
+        ///     "resNoneRes": null,
+        ///     "originalIssueDate": "2022-08-30T00:00:00",
+        ///     "lineOfAuthIssueDate": "2022-08-30T00:00:00",
+        ///     "licenseEffectiveDate": "2022-08-30T00:00:00",
+        ///     "licenseExpirationDate": "2025-05-30T00:00:00"
+        /// </returns>
+        public ReturnResult GetLicenseAppointments(int vEmploymentID)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var queryEmployeeLicenses = from employeeLicense in _db.EmployeeLicenses
+                            join license in _db.Licenses on employeeLicense.LicenseId equals license.LicenseId
+                            join lineOfAuthority in _db.LineOfAuthorities on license.LineOfAuthorityId equals lineOfAuthority.LineOfAuthorityId
+                            where employeeLicense.EmploymentId == vEmploymentID
+                            select new OputAgentLicenseAppointments
+                            {
+                                EmployeeLicenseId = (int)employeeLicense.EmployeeLicenseId == 0 ? 0 : employeeLicense.EmployeeLicenseId,
+                                LicenseState = license.StateProvinceAbv,
+                                LineOfAuthority = lineOfAuthority.LineOfAuthorityAbv,
+                                LicenseStatus = employeeLicense.LicenseStatus,
+                                EmploymentID = employeeLicense.EmploymentId,
+                                LicenseName = license.LicenseName,
+                                LicenseNumber = employeeLicense.LicenseNumber,
+                                //ResNoneRes = (bool)employeeLicense.NonResident ? "Res" : "None",
+                                OriginalIssueDate = employeeLicense.LicenseIssueDate,
+                                LineOfAuthIssueDate = employeeLicense.LineOfAuthorityIssueDate,
+                                LicenseEffectiveDate = employeeLicense.LicenseEffectiveDate,
+                                LicenseExpirationDate = employeeLicense.LicenseExpireDate
+                            };
+
+                var licenses = queryEmployeeLicenses.AsNoTracking().ToList();
+
+                var employeeLicenses = _db.EmployeeLicenses
+                       .Where(x => x.EmploymentId == vEmploymentID)
+                       .Select(x => x.EmployeeLicenseId)
+                       .ToList();
+
+                var queryAppointments = from appointment in _db.EmployeeAppointments
+                            where employeeLicenses.Contains((int)appointment.EmployeeLicenseId)
+                            select new OputAgentAppointments
+                            {
+                                LicenseID = (int)appointment.EmployeeLicenseId,
+                                EmployeeAppointmentID = appointment.EmployeeAppointmentId,
+                                EmployeeLicenseID = (int)appointment.EmployeeLicenseId,
+                                AppointmentEffectiveDate = appointment.AppointmentEffectiveDate,
+                                AppointmentStatus = appointment.AppointmentStatus,
+                                CarrierDate = appointment.CarrierDate,
+                                AppointmentExpireDate = appointment.AppointmentExpireDate,
+                                AppointmentTerminationDate = appointment.AppointmentTerminationDate,
+                                CompanyID = appointment.CompanyId,
+                                RetentionDate = appointment.RetentionDate
+                            };
+
+                var appointments = queryAppointments.AsNoTracking().ToList();
+
+                var licenseAppointments = new List<OputAgentLicenseAppointments>();
+                foreach (var license in licenses)
+                {
+                    foreach (var appointment in appointments)
+                    {
+                        if (appointment.EmployeeLicenseID == license.EmployeeLicenseId)
+                        {
+                            license.LicenseAppointments.Add(appointment);
+                        }
+                    }
+                    licenseAppointments.Add(license);
+                }
+
+                result.Success = true;
+                result.ObjData = licenseAppointments;
                 result.StatusCode = 200;
 
                 return result;

@@ -2,6 +2,7 @@
 {
     public class OputAgentAppointments
     {
+        public int LicenseID { get; set; }
         public int EmployeeAppointmentID { get; set; }
         public DateTime? AppointmentEffectiveDate { get; set; }
         public string? AppointmentStatus { get; set; }
