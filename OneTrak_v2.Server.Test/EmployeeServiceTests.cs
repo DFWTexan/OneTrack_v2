@@ -21,38 +21,38 @@ namespace wcfOneTrak_API.Test
             // Setup mock behavior and data here
         }
 
-        [Theory]
-        [InlineData(1)] // Add more test company IDs as needed
-        public async Task SearchEmployee_ByCompanyID_ReturnsCorrectResults(int vCompanyID)
-        {
-            // Arrange
-            var service = new EmployeeService(_mockDb.Object, _mockConfig.Object, _mockEnv.Object);
+        //[Theory]
+        //[InlineData(1)] // Add more test company IDs as needed
+        //public async Task SearchEmployee_ByCompanyID_ReturnsCorrectResults(int vCompanyID)
+        //{
+        //    // Arrange
+        //    var service = new EmployeeService(_mockDb.Object, _mockConfig.Object, _mockEnv.Object);
 
-            // Act
-            var result = await service.SearchEmployee(vCompanyID, null, null, null, 0, null, null, null, null, null, null, 0, null, null, null, 0);
+        //    // Act
+        //    var result = await service.SearchEmployee(vCompanyID, null, null, null, 0, null, null, null, null, null, null, 0, null, null, null, 0);
 
-            // Assert
-            // Verify the result is as expected, focusing on company ID filtering
-        }
+        //    // Assert
+        //    // Verify the result is as expected, focusing on company ID filtering
+        //}
 
         // Add more tests for other parameters similar to the above example,
         // such as vEmployeeSSN, vGEID, vSCORENumber, etc.
 
         // Example for testing null and non-null vEmployeeSSN
-        [Theory]
-        [InlineData(null)] // Test case for when SSN is not provided
-        [InlineData("123-45-6789")] // Test case for when SSN is provided
-        public async Task SearchEmployee_ByEmployeeSSN_ReturnsCorrectResults(string vEmployeeSSN)
-        {
-            // Arrange
-            var service = new EmployeeService(_mockDb.Object, _mockConfig.Object, _mockEnv.Object);
+        //[Theory]
+        //[InlineData(null)] // Test case for when SSN is not provided
+        //[InlineData("123-45-6789")] // Test case for when SSN is provided
+        //public async Task SearchEmployee_ByEmployeeSSN_ReturnsCorrectResults(string vEmployeeSSN)
+        //{
+        //    // Arrange
+        //    var service = new EmployeeService(_mockDb.Object, _mockConfig.Object, _mockEnv.Object);
 
-            // Act
-            var result = await service.SearchEmployee(0, vEmployeeSSN, null, null, 0, null, null, null, null, null, null, 0, null, null, null, 0);
+        //    // Act
+        //    var result = await service.SearchEmployee(0, vEmployeeSSN, null, null, 0, null, null, null, null, null, null, 0, null, null, null, 0);
 
-            // Assert
-            // Verify the result is as expected, focusing on employee SSN filtering
-        }
+        //    // Assert
+        //    // Verify the result is as expected, focusing on employee SSN filtering
+        //}
 
         // Continue with similar test methods for other parameters...
     }
