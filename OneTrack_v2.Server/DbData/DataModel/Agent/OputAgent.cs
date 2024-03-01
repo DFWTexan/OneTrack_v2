@@ -1,4 +1,6 @@
-﻿namespace OneTrack_v2.DataModel
+﻿using OneTrak_v2.DataModel;
+
+namespace OneTrack_v2.DataModel
 {
     public class OputAgent
     {
@@ -40,13 +42,13 @@
         public string? BranchDeptStreetState { get; set; }
         public string? BranchDeptStreetZip { get; set; }
 
-        //public List<int> EmployeeLicenses { get; set; }
         public List<OputAgentHiearchy> MgrHiearchy { get; set; }
+        public List<OputAgentLicenseAppointments> AgentLicenseAppointments { get; set; }
 
         public OputAgent()
         {
-            //EmployeeLicenses = new List<int>();
             MgrHiearchy = new List<OputAgentHiearchy>();
+            AgentLicenseAppointments = new List<OputAgentLicenseAppointments>();
         }
     }
 }

@@ -1,3 +1,4 @@
+import { AgentLicenseAppointments } from './agentLicenseAppointments';
 import { ManagerHierarchy } from './managerHierarchy';
 
 export interface AgentInfo {
@@ -43,4 +44,5 @@ export interface AgentInfo {
   branchDeptStreetState: string | null;
   branchDeptStreetZip: string | null;
   mgrHiearchy: ManagerHierarchy[];
+  agentLicenseAppointments: AgentLicenseAppointments[];
 }

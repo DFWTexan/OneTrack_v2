@@ -1,3 +1,11 @@
 .row-1rem-top-margin {
-    margin-top: 1rem;
-  }
+  margin-top: 1rem;
+}
+
+.mat-title {
+  font-size: 2rem;
+}
+
+.mat-description {
+  font-size: 1.2rem;
+}

@@ -12,7 +12,8 @@ import { ModalService } from '../../../_services';
 })
 @Injectable()
 export class TmInformationComponent implements OnInit, OnDestroy {
-  subscription: Subscription;
+  subscribeAgentInfo: Subscription;
+  subscribeAgentLicenseAppointments: Subscription;
   agentInfo: AgentInfo = {} as AgentInfo;
   bodyText = 'This text can be updated in modal 1';
 
@@ -20,12 +21,16 @@ export class TmInformationComponent implements OnInit, OnDestroy {
     private agentService: AgentDataService,
     protected modalService: ModalService
   ) {
-    this.subscription = new Subscription();
+    this.subscribeAgentInfo = new Subscription();
+    this.subscribeAgentLicenseAppointments = new Subscription();
   }
 
   ngOnInit() {
-    this.subscription = this.agentService.agentInfoChanged.subscribe(
+    this.subscribeAgentInfo = this.agentService.agentInfoChanged.subscribe(
       (agentInfo: any) => {
+
+console.log('EMFTest - TmInformationComponent - ngOnInit - agentInfo: ', agentInfo);
+
         this.agentInfo = agentInfo;
       }
     );
@@ -45,6 +50,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscription.unsubscribe();
+    this.subscribeAgentInfo.unsubscribe();
+    this.subscribeAgentLicenseAppointments.unsubscribe();
   }
 }
