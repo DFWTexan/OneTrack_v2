@@ -25,3 +25,27 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   .modal-body {
     overflow-y: auto; /* Add scroll to the modal body if content is too long */
   }
+
+  .input-size-small {
+    width: 150px;
+  }
+  
+  .input-size-medium {
+    width: 300px;
+  }
+  
+  .input-size-large {
+    width: 500px;
+  }
+
+  .select-size-small {
+    width: 150px;
+  }
+
+  .select-size-medium {
+    width: 300px;
+  }
+
+  .select-size-large {
+    width: 500px;
+  }

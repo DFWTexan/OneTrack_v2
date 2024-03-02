@@ -1,11 +1,11 @@
-<form [formGroup]="form" (ngSubmit)="onSubmit()" class="container mt-4">
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="container app-edit-tm-information">
   <div class="row">
     <div class="col">
       <div class="mb-3">
         <label for="employerAgency" class="form-label">Employer/Agency</label>
         <select
           id="employerAgency"
-          class="form-select"
+          class="form-select select-size-large"
           formControlName="employerAgency"
         >
           <option value="active">Active</option>
@@ -17,7 +17,7 @@
         <input
           type="text"
           id="preferredName"
-          class="form-control"
+          class="form-control input-size-large"
           formControlName="preferredName"
         />
       </div>
@@ -26,7 +26,7 @@
         <input
           type="text"
           id="teamMemberID"
-          class="form-control"
+          class="form-control input-size-small"
           formControlName="teamMemberID"
         />
       </div>
@@ -37,7 +37,7 @@
         <input
           type="text"
           id="nationalProducerNbr"
-          class="form-control"
+          class="form-control input-size-small"
           formControlName="nationalProducerNbr"
         />
       </div>
@@ -45,7 +45,7 @@
         <label for="agentStatus" class="form-label">Agent Status</label>
         <select
           id="agentStatus"
-          class="form-select"
+          class="form-select select-size-small"
           formControlName="agentStatus"
         >
           <option value="active">Active</option>
@@ -56,7 +56,7 @@
         <label for="residentSate" class="form-label">Resident State</label>
         <select
           id="residentSate"
-          class="form-select"
+          class="form-select select-size-small"
           formControlName="residentSate"
         >
           <option value="active">Active</option>
