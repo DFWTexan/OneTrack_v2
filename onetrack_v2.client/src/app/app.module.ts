@@ -51,6 +51,7 @@ import { TmContinuingEduComponent } from './team-member/agent-information/tm-con
 import { TmDiaryComponent } from './team-member/agent-information/tm-diary/tm-diary.component';
 import { TmEmailComponent } from './team-member/agent-information/tm-email/tm-email.component';
 import { TmCommunicationsComponent } from './team-member/agent-information/tm-communications/tm-communications.component';
+import { EditTmInformationComponent } from './team-member/agent-information/tm-information/edit-tm-information/edit-tm-information.component';
 
 @NgModule({
   declarations: [
@@ -85,6 +86,7 @@ import { TmCommunicationsComponent } from './team-member/agent-information/tm-co
     TmDiaryComponent,
     TmEmailComponent,
     TmCommunicationsComponent,
+    EditTmInformationComponent,
   ],
   imports: [
     BrowserModule,

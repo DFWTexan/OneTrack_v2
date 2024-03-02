@@ -29,7 +29,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
     this.subscribeAgentInfo = this.agentService.agentInfoChanged.subscribe(
       (agentInfo: any) => {
 
-console.log('EMFTest - TmInformationComponent - ngOnInit - agentInfo: ', agentInfo);
+// console.log('EMFTest - TmInformationComponent - ngOnInit - agentInfo: ', agentInfo);
 
         this.agentInfo = agentInfo;
       }

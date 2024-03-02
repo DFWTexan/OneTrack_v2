@@ -4,7 +4,7 @@
       <div class="row d-flex justify-content-start">
         <button
           class="btn btn-primary me-2"
-          (click)="modalService.open('modal-2')"
+          (click)="modalService.open('modal-edit-tm-info')"
         >
           Edit
         </button>
@@ -52,7 +52,6 @@
           <p><strong>Agent License & Appointments:</strong></p>
           <mat-expansion-panel
             *ngFor="let license of agentInfo.agentLicenseAppointments"
-            hideToggle
           >
             <mat-expansion-panel-header>
               <mat-panel-title>
@@ -118,11 +117,6 @@
                 </div>
               </div>
               <div class="row">
-                <!-- <ul>
-                  <li *ngFor="let appointment of license.licenseAppointments">
-                    {{ appointment.employeeAppointmentID }}
-                  </li>
-                </ul> -->
                 <table class="table">
                   <thead>
                     <tr>
@@ -170,10 +164,10 @@
     </div>
   </div>
 
-  <!-- The Modal -->
-  <modal id="modal-2">
+  <!-- Modal: TM-INFO -->
+  <modal id="modal-edit-tm-info">
     <div class="modal-header">
-      <h5 class="modal-title">Angular + Bootstrap Modal #2</h5>
+      <h1 class="modal-title">Edit TM Information</h1>
       <button
         type="button"
         class="btn-close"
@@ -181,9 +175,12 @@
       ></button>
     </div>
     <div class="modal-body">
-      <p style="padding-bottom: 500px">
-        This is a tall modal to demonstrate scrolling modal content.
-      </p>
+      <div style="padding-bottom: 500px">
+        <div class="container-flud">
+          <app-edit-tm-information></app-edit-tm-information>
+        </div>
+        
+      </div>
     </div>
     <div class="modal-footer">
       <button

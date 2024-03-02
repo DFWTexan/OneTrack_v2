@@ -49,8 +49,6 @@ export class AgentDataService {
   fetchAgentLicenseAppointments(employmentID: number) {
     this.apiUrl = environment.apiUrl + 'Agent/GetLicenseAppointments/';
 
-console.log('EMFTest - fetchAgentLicenseAppointments - employmentID: ', employmentID);    
-
     return this.http
       .get<{
         success: boolean;
@@ -61,9 +59,6 @@ console.log('EMFTest - fetchAgentLicenseAppointments - employmentID: ', employme
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
-
-console.log('EMFTest - fetchAgentLicenseAppointments - response.objData =>\n ', response.objData);
-
             this.agentInformation.agentLicenseAppointments = response.objData;
             this.agentLicenseAppointmentsChanged.next(this.agentInformation.agentLicenseAppointments);
             return response.objData;

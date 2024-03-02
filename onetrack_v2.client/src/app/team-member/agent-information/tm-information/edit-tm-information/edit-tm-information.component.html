@@ -1,0 +1,28 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="container mt-4">
+    <div class="mb-3">
+      <label for="preferredName" class="form-label">Preferred Name</label>
+      <input type="text" id="preferredName" class="form-control" formControlName="preferredName">
+    </div>
+    <!-- Repeat the above block for each field, adjusting formControlName accordingly -->
+    <div class="mb-3">
+      <label for="licenseStatus" class="form-label">License Status</label>
+      <select id="licenseStatus" class="form-select" formControlName="licenseStatus">
+        <option value="active">Active</option>
+        <option value="inactive">Inactive</option>
+      </select>
+    </div>
+    <!-- Add other form controls here -->
+    <div class="mb-3">
+      <label for="note" class="form-label">Note</label>
+      <textarea id="note" class="form-control" formControlName="note"></textarea>
+    </div>
+    <div class="mb-3 form-check">
+      <!-- <input type="checkbox" id="required" class="form-check-input" formControlName="isRequired">
+      <label for="required" class="form-check-label">Required</label> -->
+    </div>
+    <!-- Repeat the above block for other checkboxes -->
+    <button type="submit" class="btn btn-primary">Update</button>
+    <button type="button" class="btn btn-danger">Delete</button>
+    <button type="button" class="btn btn-secondary">Cancel</button>
+  </form>
+  
