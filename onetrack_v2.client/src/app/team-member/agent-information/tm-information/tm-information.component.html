@@ -97,19 +97,24 @@
                 </div>
                 <div class="col">
                   <strong>Org Issue Date:</strong> <br />
-                  {{ license.originalIssueDate | date: "MM/dd/yyyy" }}
+                  {{ license.originalIssueDate | date : "MM/dd/yyyy" }}
                 </div>
                 <div class="col">
                   <strong>LOA Issue Date:</strong> <br />
-                  {{ license.lineOfAuthIssueDate | date: "MM/dd/yyyy" }}
+                  {{ license.lineOfAuthIssueDate | date : "MM/dd/yyyy" }}
                 </div>
                 <div class="col">
                   <strong>Effective Date:</strong> <br />
-                  {{ license.licenseEffectiveDate | date: "MM/dd/yyyy" }}
+                  {{ license.licenseEffectiveDate | date : "MM/dd/yyyy" }}
                 </div>
                 <div class="col">
                   <strong>Expire Date:</strong> <br />
-                  {{ license.licenseExpirationDate | date: "MM/dd/yyyy" }}
+                  {{ license.licenseExpirationDate | date : "MM/dd/yyyy" }}
+                </div>
+                <div class="col d-flex justify-content-end">
+                  <button class="edit-button appointment-edit-button">
+                    <span class="material-symbols-outlined"> edit </span>
+                  </button>
                 </div>
               </div>
               <div class="row">
@@ -118,10 +123,47 @@
                     {{ appointment.employeeAppointmentID }}
                   </li>
                 </ul> -->
-                
+                <table class="table">
+                  <thead>
+                    <tr>
+                      <th>License ID</th>
+                      <th>Appt ID</th>
+                      <th>Appointment Status</th>
+                      <th>Company ID</th>
+                      <th>Co. Abv.</th>
+                      <th>Carrier Date</th>
+                      <th>Eff. Date</th>
+                      <th>Exp. Date</th>
+                      <th>Term Date</th>
+                      <th>ACTTION</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let license of license.licenseAppointments">
+                      <td>{{ license.licenseID }}</td>
+                      <td>{{ license.employeeAppointmentID }}</td>
+                      <td>{{ license.appointmentStatus }}</td>
+                      <td>{{ license.companyID }}</td>
+                      <td>TBD...</td>
+                      <td>TBD...</td>
+                      <td>TBD...</td>
+                      <td>TBD...</td>
+                      <td>TBD...</td>
+                      <td>
+                        <button class="edit-button">
+                          <span class="material-symbols-outlined"> edit </span>
+                        </button>
+                        <button class="edit-button">
+                          <span class="material-symbols-outlined">
+                            delete
+                          </span>
+                        </button>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
               </div>
             </div>
-            
           </mat-expansion-panel>
         </div>
       </div>
