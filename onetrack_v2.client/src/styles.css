@@ -2,3 +2,26 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Custom modal size */
+.modal-dialog {
+    max-width: 80%;
+    margin: 1.75rem auto;
+  }
+  
+  /* Ensure form content fits within the modal */
+  .modal-content {
+    overflow: hidden; /* This will keep the content within the modal */
+  }
+  
+  /* Optionally, if you want the modal to take up 75% width on all screen sizes */
+  @media (min-width: 600px) {
+    .modal-dialog {
+      max-width: 90%;
+    }
+  }
+  
+  /* Ensure the form controls do not overflow the modal boundaries */
+  .modal-body {
+    overflow-y: auto; /* Add scroll to the modal body if content is too long */
+  }

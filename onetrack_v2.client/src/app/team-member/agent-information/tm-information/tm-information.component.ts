@@ -1,7 +1,7 @@
 import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import { AgentDataService } from '../../../_services';
-import { Subscription } from 'rxjs';
 import { AgentInfo } from '../../../_Models';
 import { ModalService } from '../../../_services';
 

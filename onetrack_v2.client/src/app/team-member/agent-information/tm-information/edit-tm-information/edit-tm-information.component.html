@@ -1,28 +1,97 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="container mt-4">
-    <div class="mb-3">
-      <label for="preferredName" class="form-label">Preferred Name</label>
-      <input type="text" id="preferredName" class="form-control" formControlName="preferredName">
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        <label for="employerAgency" class="form-label">Employer/Agency</label>
+        <select
+          id="employerAgency"
+          class="form-select"
+          formControlName="employerAgency"
+        >
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="preferredName" class="form-label">Preferred Name</label>
+        <input
+          type="text"
+          id="preferredName"
+          class="form-control"
+          formControlName="preferredName"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="teamMemberID" class="form-label">Team Member ID</label>
+        <input
+          type="text"
+          id="teamMemberID"
+          class="form-control"
+          formControlName="teamMemberID"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="nationalProducerNbr" class="form-label"
+          >National Producer #</label
+        >
+        <input
+          type="text"
+          id="nationalProducerNbr"
+          class="form-control"
+          formControlName="nationalProducerNbr"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="agentStatus" class="form-label">Agent Status</label>
+        <select
+          id="agentStatus"
+          class="form-select"
+          formControlName="agentStatus"
+        >
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="residentSate" class="form-label">Resident State</label>
+        <select
+          id="residentSate"
+          class="form-select"
+          formControlName="residentSate"
+        >
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+      </div>
+      <div class="mb-3 form-check">
+        <input
+          type="checkbox"
+          id="requiresContEdu"
+          class="form-check-input"
+          formControlName="requiresContEdu"
+        />
+        <label for="requiresContEdu" class="form-check-label"
+          >Requires Cont. Education</label
+        >
+      </div>
+      <div class="mb-3 form-check">
+        <input
+          type="checkbox"
+          id="excludeFromReports"
+          class="form-check-input"
+          formControlName="excludeFromReports"
+        />
+        <label for="excludeFromReports" class="form-check-label"
+          >Exclude from Reports</label
+        >
+      </div>
     </div>
-    <!-- Repeat the above block for each field, adjusting formControlName accordingly -->
-    <div class="mb-3">
-      <label for="licenseStatus" class="form-label">License Status</label>
-      <select id="licenseStatus" class="form-select" formControlName="licenseStatus">
-        <option value="active">Active</option>
-        <option value="inactive">Inactive</option>
-      </select>
+  </div>
+<div class="row">
+    <div class="col d-flex justify-content-end">
+      <button type="button" class="btn btn-secondary">Cancel</button>
+      <button type="button" class="btn btn-danger">Delete</button>
+      <button type="submit" class="btn btn-primary">Update</button>
     </div>
-    <!-- Add other form controls here -->
-    <div class="mb-3">
-      <label for="note" class="form-label">Note</label>
-      <textarea id="note" class="form-control" formControlName="note"></textarea>
-    </div>
-    <div class="mb-3 form-check">
-      <!-- <input type="checkbox" id="required" class="form-check-input" formControlName="isRequired">
-      <label for="required" class="form-check-label">Required</label> -->
-    </div>
-    <!-- Repeat the above block for other checkboxes -->
-    <button type="submit" class="btn btn-primary">Update</button>
-    <button type="button" class="btn btn-danger">Delete</button>
-    <button type="button" class="btn btn-secondary">Cancel</button>
-  </form>
-  
+  </div>
+</form>
