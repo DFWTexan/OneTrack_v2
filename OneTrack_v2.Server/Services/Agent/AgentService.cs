@@ -101,14 +101,6 @@ namespace OneTrack_v2.Services
                                 DiaryEntryDate = diary != null ? diary.DiaryDate : null,
                                 DiaryNotes = diary != null ? diary.Notes : null,
                                 BranchCode = transferHistory != null ? transferHistory.BranchCode : null,
-                                //BranchDeptNumber = employment.BranchDeptNumber     TBD: Need to fix this when BranchDeptNumber location is known
-                                //BranchDeptName = employment.BranchDeptName     TBD: Need to fix this when BranchDeptName location is known
-                                //BranchDeptStreet1 = employment.BranchDeptStreet1     TBD: Need to fix this when BranchDeptStreet1 location is known
-                                //BranchDeptStreet2 = employment.BranchDeptStreet2     TBD: Need to fix this when BranchDeptStreet2 location is known
-                                //BranchDeptStreet3 = employment.BranchDeptStreet3     TBD: Need to fix this when BranchDeptStreet3 location is known
-                                //BranchDeptStreetCity = employment.BranchDeptStreetCity     TBD: Need to fix this when BranchDeptStreetCity location is known
-                                //BranchDeptStreetState = employment.BranchDeptStreetState     TBD: Need to fix this when BranchDeptStreetState location is known
-                                //BranchDeptStreetZip = employment.BranchDeptStreetZip     TBD: Need to fix this when BranchDeptStreetZip location is known
                             };
 
                 var agent = query.AsNoTracking().Single();
