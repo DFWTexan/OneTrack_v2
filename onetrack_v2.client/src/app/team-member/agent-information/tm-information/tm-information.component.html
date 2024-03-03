@@ -2,21 +2,27 @@
   <div class="row">
     <div class="col-md-12">
       <div class="row d-flex justify-content-start">
-        <button
-          class="btn btn-primary me-2"
-          (click)="modalService.open('modal-edit-tm-info')"
-        >
-          Edit
-        </button>
+        <div class="col d-flex justify-content-center">
+          <button class="btn btn-danger">Delete</button>
+        </div>
+        <div class="col d-flex justify-content-center">
+          <button
+            class="btn btn-primary me-2"
+            (click)="modalService.open('modal-edit-tm-info')"
+          >
+            Edit
+          </button>
+        </div>
       </div>
+      <hr>
       <div class="row row-1rem-top-margin">
         <div class="col">
           <p>
-            <strong>Job Title:</strong>
+            <strong>Job Title:</strong><br/>
             {{ agentInfo.jobTitle || "N/A" }}
           </p>
           <p>
-            <strong>Job Date:</strong>
+            <strong>Job Date:</strong><br/>
             {{ agentInfo.jobDate || "N/A" }}
           </p>
           <div>
@@ -24,21 +30,21 @@
             <div>
               {{ agentInfo.diaryEntryName }} - {{ agentInfo.diaryEntryDate
               }}<br />
-              {{ agentInfo.diaryEntryDescription }}
+              {{ agentInfo.diaryNotes }}
             </div>
           </div>
         </div>
         <div class="col">
           <p>
-            <strong>Team Member Status:</strong>
+            <strong>Team Member Status:</strong><br/>
             {{ agentInfo.employeeStatus || "N/A" }}
           </p>
           <p>
-            <strong>Requires Cont. Edu.:</strong>
+            <strong>Requires Cont. Edu.:</strong><br/>
             {{ agentInfo.ceRequired ? "Yes" : "No" }}
           </p>
           <p>
-            <strong>Exclude From Reports:</strong>
+            <strong>Exclude From Reports:</strong><br/>
             {{ agentInfo.excludeFromReports ? "Yes" : "No" }}
           </p>
         </div>

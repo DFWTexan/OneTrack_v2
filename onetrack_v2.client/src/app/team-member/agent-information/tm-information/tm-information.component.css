@@ -23,7 +23,4 @@
   padding-bottom: 2.5rem;
 }
 
-.app-edit-tm-information {
-  max-width: 100%; /* Ensure the width doesn't exceed 100% */
-  overflow-x: auto; /* Add horizontal scrollbars if the content overflows the container */
-}
+

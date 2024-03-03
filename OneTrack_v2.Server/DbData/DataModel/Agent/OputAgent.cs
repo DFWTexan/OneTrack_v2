@@ -6,7 +6,10 @@ namespace OneTrack_v2.DataModel
     {
         public int EmployeeID { get; set; }
         public int EmploymentID { get; set; }
+        public string? GEID { get; set; }
         public string? EmployeeStatus { get; set; }
+        public int? CompanyID { get; set; }
+        public string? CompanyName { get; set; }
         public string? LastName { get; set; }
         public string? FirstName { get; set; }
         public string? MiddleName { get; set; }
@@ -25,22 +28,25 @@ namespace OneTrack_v2.DataModel
         public bool? CERequired { get; set; }
         public bool? ExcludeFromReports { get; set; }
         public DateTime? DateOfBirth { get; set; }
+        public string? DiarySOEID { get; set; }
         public string? DiaryEntryName { get; set; }
         public DateTime? DiaryEntryDate { get; set; }
-        public string? DiaryEntryDescription { get; set; }
+        public string? DiaryNotes { get; set; }
         public string? LicenseIncentive { get; set; }
         public string? LicenseLevel { get; set; }
         public bool? IsLicenseincentiveSecondChance { get; set; }
-        
-        public int? BranchDeptScoreNumber { get; set; }
-        public int? BranchDeptNumber { get; set; }
+        public string? BranchCode { get; set; }
+        public string? BranchDeptScoreNumber { get; set; }
+        public string? BranchDeptNumber { get; set; }
         public string? BranchDeptName { get; set; } 
         public string? BranchDeptStreet1 { get; set; }
         public string? BranchDeptStreet2 { get; set; }
-        public string? BranchDeptStreet3 { get; set; }
         public string? BranchDeptStreetCity { get; set; }
         public string? BranchDeptStreetState { get; set; }
         public string? BranchDeptStreetZip { get; set; }
+        public string? BranchDeptPhone { get; set; }
+        public string? BranchDeptFax { get; set; }
+        public string? BranchDeptEmail { get; set; }
 
         public List<OputAgentHiearchy> MgrHiearchy { get; set; }
         public List<OputAgentLicenseAppointments> AgentLicenseAppointments { get; set; }

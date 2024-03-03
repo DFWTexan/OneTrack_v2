@@ -57,20 +57,29 @@ namespace OneTrack_v2.Services
             {
                 var query = from employee in _db.Employees
                             join employment in _db.Employments on employee.EmployeeId equals employment.EmployeeId
+                            join company in _db.Companies on employment.CompanyId equals company.CompanyId
                             join address in _db.Addresses on employee.AddressId equals address.AddressId
                             join employeeSSN in _db.EmployeeSsns on employee.EmployeeSsnid equals employeeSSN.EmployeeSsnid into employeeSSNJoin
+                            where employee.EmployeeId == vEmployeeID
                             from employeeSSN in employeeSSNJoin.DefaultIfEmpty()
                             where employee.EmployeeId == vEmployeeID
+                            let transferHistory = _db.TransferHistories.Where(th => th.EmploymentId == employment.EmploymentId && th.IsCurrent).FirstOrDefault()
+                            let employmentJobTitle = _db.EmploymentJobTitles.FirstOrDefault(ejt => ejt.EmploymentId == employment.EmploymentId && ejt.IsCurrent)
+                            let jobTitle = _db.JobTitles.FirstOrDefault(jt => jt.JobTitleId == employmentJobTitle.JobTitleId)
+                            let diary = _db.Diaries.Where(d => d.DiaryName == "Agent" && d.EmploymentId == employment.EmploymentId).OrderByDescending(d => d.DiaryDate).FirstOrDefault()
                             select new OputAgent
                             {
                                 EmployeeID = employee.EmployeeId,
                                 EmploymentID = employment.EmploymentId,
                                 EmployeeStatus = employment.EmployeeStatus,
+                                CompanyID = employment.CompanyId,
+                                CompanyName = company.CompanyName,
+                                GEID = employee.Geid,
                                 LastName = employee.LastName,
                                 FirstName = employee.FirstName,
                                 MiddleName = employee.MiddleName,
-                                JobTitle = employment.JobTitle,
-                                //JobDate = employment.JobDate,        TBD: Need to fix this when JobDate location is known
+                                JobTitle = jobTitle.JobTitle1,
+                                JobDate = employmentJobTitle.JobTitleDate,
                                 EmployeeSSN = employeeSSN != null ? employeeSSN.EmployeeSsn1 : "",
                                 Soeid = employee.Soeid,
                                 Address1 = address.Address1,
@@ -86,11 +95,11 @@ namespace OneTrack_v2.Services
                                 LicenseIncentive = employment.LicenseIncentive,
                                 LicenseLevel = employment.LicenseLevel,
                                 IsLicenseincentiveSecondChance = employment.SecondChance,
-                                NationalProdercerNumber = employee.NationalProducerNumber
-                                //DiaryEntryName = employee.DiaryEntryName,        TBD: Need to fix this when DiaryEntryName location is known
-                                //DiaryEntryDate = employee.DiaryEntryDate,        TBD: Need to fix this when DiaryEntryDate location is known
-                                //DiaryEntryDescription = employee.DiaryEntryDescription        TBD: Need to fix this when DiaryEntryDescription location is known
-
+                                NationalProdercerNumber = employee.NationalProducerNumber,
+                                DiaryEntryName = diary != null ? diary.DiaryName : null,       
+                                DiaryEntryDate = diary != null ? diary.DiaryDate : null,
+                                DiaryNotes = diary != null ? diary.Notes : null,
+                                BranchCode = transferHistory != null ? transferHistory.BranchCode : null,
                                 //BranchDeptNumber = employment.BranchDeptNumber     TBD: Need to fix this when BranchDeptNumber location is known
                                 //BranchDeptName = employment.BranchDeptName     TBD: Need to fix this when BranchDeptName location is known
                                 //BranchDeptStreet1 = employment.BranchDeptStreet1     TBD: Need to fix this when BranchDeptStreet1 location is known
@@ -108,26 +117,13 @@ namespace OneTrack_v2.Services
                         rtrim(e1.lastname) + ', ' + e1.FirstName AS MgrName, j.JobTitle AS MgrTitle,
                         h1.BranchCode AS MgrDeptCode, b1.Name AS MgrDeptName, b1.Address1 AS MgrDeptAddress1, b1.Address2 AS MgrDeptAddress2, 
                         b1.City AS MgrDeptCity, b1.State AS MgrDeptState, b1.Zip_Code AS MgrDeptZip, b1.Phone AS MgrDeptPhone, b1.Fax AS MgrDeptFax, m1.Email AS MgrEmail
-                        FROM
-                        [dbo].[Employment] m
-                        INNER JOIN
-                        [dbo].[Employment] m1
-                        ON m.H1EmploymentID = m1.EmploymentID AND m.EmploymentID = @EmploymentID
-                        INNER JOIN
-                        [dbo].[EmploymentJobTitle] ej
-                        ON m1.EmploymentID = ej.EmploymentID AND ej.[IsCurrent] = 1
-                        INNER JOIN
-                        [dbo].[JobTitles] j
-                        ON ej.JobTitleID = j.JobTitleID
-                        INNER JOIN
-                        [dbo].[Employee] e1
-                        ON m1.EmployeeID = e1.EmployeeID 
-                        INNER JOIN
-                        [dbo].[TransferHistory] h1
-                        ON m1.EmploymentID = h1.EmploymentID AND h1.IsCurrent = 1
-                        LEFT OUTER JOIN
-                        [dbo].[BIF] b1
-                        ON RIGHT(h1.BranchCode,8) = RIGHT(b1.HR_Department_ID,8)
+                        FROM [dbo].[Employment] m
+                        INNER JOIN [dbo].[Employment] m1 ON m.H1EmploymentID = m1.EmploymentID AND m.EmploymentID = @EmploymentID
+                        INNER JOIN [dbo].[EmploymentJobTitle] ej ON m1.EmploymentID = ej.EmploymentID AND ej.[IsCurrent] = 1
+                        INNER JOIN [dbo].[JobTitles] j ON ej.JobTitleID = j.JobTitleID
+                        INNER JOIN [dbo].[Employee] e1 ON m1.EmployeeID = e1.EmployeeID 
+                        INNER JOIN [dbo].[TransferHistory] h1 ON m1.EmploymentID = h1.EmploymentID AND h1.IsCurrent = 1
+                        LEFT OUTER JOIN [dbo].[BIF] b1 ON RIGHT(h1.BranchCode,8) = RIGHT(b1.HR_Department_ID,8)
 
                         UNION
 
@@ -135,26 +131,13 @@ namespace OneTrack_v2.Services
                         rtrim(e1.lastname) + ', ' + e1.FirstName AS MgrName, j.JobTitle AS MgrTitle,
                         h1.BranchCode AS MgrDeptCode, b1.Name AS MgrDeptName, b1.Address1 AS MgrDeptAddress1, b1.Address2 AS MgrDeptAddress2, 
                         b1.City AS MgrDeptCity, b1.State AS MgrDeptState, b1.Zip_Code AS MgrDeptZip, b1.Phone AS MgrDeptPhone, b1.Fax AS MgrDeptFax, m1.Email AS MgrEmail
-                        FROM
-                        [dbo].[Employment] m
-                        INNER JOIN
-                        [dbo].[Employment] m1
-                        ON m.H2EmploymentID = m1.EmploymentID AND m.EmploymentID = @EmploymentID
-                        INNER JOIN
-                        [dbo].[EmploymentJobTitle] ej
-                        ON m1.EmploymentID = ej.EmploymentID AND ej.[IsCurrent] = 1
-                        INNER JOIN
-                        [dbo].[JobTitles] j
-                        ON ej.JobTitleID = j.JobTitleID
-                        INNER JOIN
-                        [dbo].[Employee] e1
-                        ON m1.EmployeeID = e1.EmployeeID 
-                        INNER JOIN
-                        [dbo].[TransferHistory] h1
-                        ON m1.EmploymentID = h1.EmploymentID AND h1.IsCurrent = 1
-                        LEFT OUTER JOIN
-                        [dbo].[BIF] b1
-                        ON RIGHT(h1.BranchCode,8) = RIGHT(b1.HR_Department_ID,8)
+                        FROM [dbo].[Employment] m
+                        INNER JOIN [dbo].[Employment] m1 ON m.H2EmploymentID = m1.EmploymentID AND m.EmploymentID = @EmploymentID
+                        INNER JOIN [dbo].[EmploymentJobTitle] ej ON m1.EmploymentID = ej.EmploymentID AND ej.[IsCurrent] = 1
+                        INNER JOIN [dbo].[JobTitles] j ON ej.JobTitleID = j.JobTitleID
+                        INNER JOIN [dbo].[Employee] e1 ON m1.EmployeeID = e1.EmployeeID 
+                        INNER JOIN [dbo].[TransferHistory] h1 ON m1.EmploymentID = h1.EmploymentID AND h1.IsCurrent = 1
+                        LEFT OUTER JOIN [dbo].[BIF] b1 ON RIGHT(h1.BranchCode,8) = RIGHT(b1.HR_Department_ID,8)
 
                         UNION
 
@@ -162,26 +145,14 @@ namespace OneTrack_v2.Services
                         rtrim(e1.lastname) + ', ' + e1.FirstName AS MgrName, j.JobTitle AS MgrTitle,
                         h1.BranchCode AS MgrDeptCode, b1.Name AS MgrDeptName, b1.Address1 AS MgrDeptAddress1, b1.Address2 AS MgrDeptAddress2, 
                         b1.City AS MgrDeptCity, b1.State AS MgrDeptState, b1.Zip_Code AS MgrDeptZip, b1.Phone AS MgrDeptPhone, b1.Fax AS MgrDeptFax, m1.Email AS MgrEmail
-                        FROM
-                        [dbo].[Employment] m
-                        INNER JOIN
-                        [dbo].[Employment] m1
-                        ON m.H3EmploymentID = m1.EmploymentID AND m.EmploymentID = @EmploymentID
-                        INNER JOIN
-                        [dbo].[EmploymentJobTitle] ej
-                        ON m1.EmploymentID = ej.EmploymentID AND ej.[IsCurrent] = 1
-                        INNER JOIN
-                        [dbo].[JobTitles] j
-                        ON ej.JobTitleID = j.JobTitleID
-                        INNER JOIN
-                        [dbo].[Employee] e1
-                        ON m1.EmployeeID = e1.EmployeeID 
-                        INNER JOIN
-                        [dbo].[TransferHistory] h1
-                        ON m1.EmploymentID = h1.EmploymentID AND h1.IsCurrent = 1
-                        LEFT OUTER JOIN
-                        [dbo].[BIF] b1
-                        ON RIGHT(h1.BranchCode,8) = RIGHT(b1.HR_Department_ID,8)
+                        FROM [dbo].[Employment] m
+                        INNER JOIN [dbo].[Employment] m1 ON m.H3EmploymentID = m1.EmploymentID AND m.EmploymentID = @EmploymentID
+                        INNER JOIN [dbo].[EmploymentJobTitle] ej ON m1.EmploymentID = ej.EmploymentID AND ej.[IsCurrent] = 1
+                        INNER JOIN [dbo].[JobTitles] j ON ej.JobTitleID = j.JobTitleID
+                        INNER JOIN [dbo].[Employee] e1 ON m1.EmployeeID = e1.EmployeeID 
+                        INNER JOIN [dbo].[TransferHistory] h1 ON m1.EmploymentID = h1.EmploymentID AND h1.IsCurrent = 1
+                        LEFT OUTER JOIN [dbo].[BIF] b1 ON RIGHT(h1.BranchCode,8) = RIGHT(b1.HR_Department_ID,8)
+
                         UNION
 
                         SELECT TOP 1 4 AS Hierarchy,
@@ -271,6 +242,34 @@ namespace OneTrack_v2.Services
 
                 agent.MgrHiearchy = queryHierarchyResults;
                 agent.AgentLicenseAppointments = FillAgentLicenseAppointment(agent.EmploymentID);
+
+                var queryBranchInfo = from bif in _db.Bifs
+                                      where bif.HrDepartmentId == agent.BranchCode.Substring(agent.BranchCode.Length - 8)
+                                      select new
+                                      {
+                                          HrDeptmentID = bif.HrDepartmentId != null ? bif.HrDepartmentId : "",
+                                          OfficeName = bif.Name,
+                                          ScoreNumber = bif.ScoreNumber != null ? bif.ScoreNumber : "",
+                                          StreetAddress1 = bif.Address1,
+                                          StreetAddress2 = bif.Address2,
+                                          StreetZip = bif.ZipCode,
+                                          CustomerPhone = bif.Phone,
+                                          FaxNumber = bif.Fax,
+                                          Email = bif.HrDepartmentId != null ? bif.HrDepartmentId.Substring(bif.HrDepartmentId.Length - 8) + "@xxx.onemainfinancial.com" : ""
+                                      };
+                var branchInfo = queryBranchInfo.AsNoTracking().FirstOrDefault();
+
+                agent.BranchDeptScoreNumber = branchInfo.ScoreNumber != null ? branchInfo.ScoreNumber : "";
+                agent.BranchDeptNumber = branchInfo.HrDeptmentID != null ? branchInfo.HrDeptmentID : "";
+                agent.BranchDeptName = branchInfo.OfficeName;
+                agent.BranchDeptStreet1 = branchInfo.StreetAddress1;
+                agent.BranchDeptStreet2 = branchInfo.StreetAddress2;
+                agent.BranchDeptStreetZip = branchInfo.StreetZip;
+                agent.BranchDeptStreetCity = agent.City;
+                agent.BranchDeptStreetState = agent.State;
+                agent.BranchDeptPhone = branchInfo.CustomerPhone;
+                agent.BranchDeptFax = branchInfo.FaxNumber;
+                agent.BranchDeptEmail = branchInfo.Email;
 
                 result.Success = true;
                 result.ObjData = agent;
