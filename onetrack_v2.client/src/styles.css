@@ -49,3 +49,8 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   .select-size-large {
     width: 500px;
   }
+
+  .app-modal-container {
+    max-width: 100%; /* Ensure the width doesn't exceed 100% */
+    overflow-x: auto; /* Add horizontal scrollbars if the content overflows the container */
+  }
