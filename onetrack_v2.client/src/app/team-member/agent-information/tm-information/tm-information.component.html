@@ -151,7 +151,10 @@
                       <td>TBD...</td>
                       <td>TBD...</td>
                       <td>
-                        <button class="edit-button">
+                        <button
+                          class="edit-button"
+                          (click)="modalService.open('modal-edit-license-appt')"
+                        >
                           <span class="material-symbols-outlined"> edit </span>
                         </button>
                         <button class="edit-button">
@@ -210,7 +213,7 @@
   </div>
   <div class="modal-body">
     <div>
-      <div class=""app-edit-modal>
+      <div>
         <app-edit-license-appointment></app-edit-license-appointment>
       </div>
     </div>
