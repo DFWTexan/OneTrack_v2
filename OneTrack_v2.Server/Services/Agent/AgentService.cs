@@ -96,6 +96,7 @@ namespace OneTrack_v2.Services
                                 LicenseLevel = employment.LicenseLevel,
                                 IsLicenseincentiveSecondChance = employment.SecondChance,
                                 NationalProdercerNumber = employee.NationalProducerNumber,
+                                DiarySOEID = diary != null ? diary.Soeid : null,
                                 DiaryEntryName = diary != null ? diary.DiaryName : null,       
                                 DiaryEntryDate = diary != null ? diary.DiaryDate : null,
                                 DiaryNotes = diary != null ? diary.Notes : null,

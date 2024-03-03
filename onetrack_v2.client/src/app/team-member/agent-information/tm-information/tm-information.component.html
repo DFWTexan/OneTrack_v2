@@ -3,48 +3,49 @@
     <div class="col-md-12">
       <div class="row d-flex justify-content-start">
         <div class="col d-flex justify-content-center">
-          <button class="btn btn-danger">Delete</button>
+          <button class="btn btn-danger w-100">Delete</button>
         </div>
         <div class="col d-flex justify-content-center">
           <button
-            class="btn btn-primary me-2"
+            class="btn btn-primary w-100"
             (click)="modalService.open('modal-edit-tm-info')"
           >
             Edit
           </button>
         </div>
       </div>
-      <hr>
+      <hr />
       <div class="row row-1rem-top-margin">
         <div class="col">
           <p>
-            <strong>Job Title:</strong><br/>
+            <strong>Job Title:</strong><br />
             {{ agentInfo.jobTitle || "N/A" }}
           </p>
           <p>
-            <strong>Job Date:</strong><br/>
-            {{ agentInfo.jobDate || "N/A" }}
+            <strong>Job Date:</strong><br />
+            {{ agentInfo.jobDate | date : "MM/dd/yyyy" }}
           </p>
           <div>
             <strong>Diary:</strong>
             <div>
-              {{ agentInfo.diaryEntryName }} - {{ agentInfo.diaryEntryDate
-              }}<br />
+              {{ agentInfo.diarySOEID }} -
+              {{ agentInfo.diaryEntryDate | date : 'MMM dd yyyy  h:mm a' }}
+              <br />
               {{ agentInfo.diaryNotes }}
             </div>
           </div>
         </div>
         <div class="col">
           <p>
-            <strong>Team Member Status:</strong><br/>
+            <strong>Team Member Status:</strong><br />
             {{ agentInfo.employeeStatus || "N/A" }}
           </p>
           <p>
-            <strong>Requires Cont. Edu.:</strong><br/>
+            <strong>Requires Cont. Edu.:</strong><br />
             {{ agentInfo.ceRequired ? "Yes" : "No" }}
           </p>
           <p>
-            <strong>Exclude From Reports:</strong><br/>
+            <strong>Exclude From Reports:</strong><br />
             {{ agentInfo.excludeFromReports ? "Yes" : "No" }}
           </p>
         </div>
