@@ -13,8 +13,8 @@ import { LicenseAppointment } from '../../../../_Models';
 @Injectable()
 export class EditLicenseAppointmentComponent implements OnInit, OnDestroy {
   form = new FormGroup({
-    licenseID: new FormControl(''),
-    employeeAppointmentID: new FormControl(''),
+    licenseID: new FormControl({ value: '', disabled: true }),
+    employeeAppointmentID: new FormControl({ value: '', disabled: true }),
     appointmentEffectiveDate: new FormControl(''),
     appointmentStatus: new FormControl(''),
     employeeLicenseID: new FormControl(''),
