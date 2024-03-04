@@ -1,7 +1,7 @@
 import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { AgentDataService } from '../../../_services';
+import { AgentComService, AgentDataService } from '../../../_services';
 import { AgentInfo } from '../../../_Models';
 import { ModalService } from '../../../_services';
 
@@ -15,10 +15,10 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   subscribeAgentInfo: Subscription;
   subscribeAgentLicenseAppointments: Subscription;
   agentInfo: AgentInfo = {} as AgentInfo;
-  bodyText = 'This text can be updated in modal 1';
-
+  
   constructor(
     private agentService: AgentDataService,
+    private agentComService: AgentComService,
     protected modalService: ModalService
   ) {
     this.subscribeAgentInfo = new Subscription();
@@ -34,12 +34,11 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   }
 
   storeLicAppointment(appointment: any) {
-    console.log(
-      'EMFTEST - (app-tm-information) storeLicAppointment => \n',
-      appointment
-    );
-
     this.agentService.storeLicenseAppointment(appointment);
+  }
+
+  toggleLicenseMgmt() {
+    this.agentComService.showLicenseMgmt();
   }
 
   openModal() {

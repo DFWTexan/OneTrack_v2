@@ -118,7 +118,7 @@
                   {{ license.licenseExpirationDate | date : "MM/dd/yyyy" }}
                 </div>
                 <div class="col d-flex justify-content-end">
-                  <button class="edit-button appointment-edit-button">
+                  <button class="edit-button appointment-edit-button" (click)="toggleLicenseMgmt()">
                     <span class="material-symbols-outlined"> pageview </span>
                   </button>
                 </div>
@@ -129,7 +129,7 @@
                     <tr>
                       <th>License ID</th>
                       <th>Appt ID</th>
-                      <th>Appointment Status</th>
+                      <th>Status</th>
                       <th>Company ID</th>
                       <th>Co. Abv.</th>
                       <th>Carrier Date</th>

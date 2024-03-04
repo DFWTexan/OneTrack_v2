@@ -7,52 +7,44 @@
           <div class="row">
             <div class="col">
               <p>
-                <strong>Name:</strong><br/>
+                <strong>Name:</strong><br />
                 {{ agentInfo.firstName }}
                 {{ agentInfo.middleName }} {{ agentInfo.lastName }}
               </p>
-              <p><strong>Employee ID:</strong><br/> {{ agentInfo.employeeID }}</p>
-              <!-- <p>
-                <strong>Employment ID:</strong> {{ agentInfo.employmentID }}
-              </p> -->
               <p>
-                <strong>Team Member ID:</strong><br/>
+                <strong>Employee ID:</strong><br />
+                {{ agentInfo.employeeID }}
+              </p>
+              <p>
+                <strong>Team Member ID:</strong><br />
                 {{ agentInfo.geid || "N/A" }}
               </p>
-
-              <!-- <p>
-                <strong>Job Title:</strong> {{ agentInfo.jobTitle || "N/A" }}
-              </p> -->
-              <!-- <p>
-                <strong>Job Start Date:</strong>
-                {{ agentInfo.jobDate || "N/A" }}
-              </p> -->
             </div>
             <div class="col">
               <p>
-                <strong>Employer/Agency:</strong><br/>
+                <strong>Employer/Agency:</strong><br />
                 {{ agentInfo.companyName || "N/A" }}
               </p>
               <p>
-                <strong>Res State:</strong><br/>
+                <strong>Res State:</strong><br />
                 {{ agentInfo.state || "N/A" }}
               </p>
               <p>
-                <strong>Work State:</strong><br/> {{ agentInfo.branchDeptStreetState || "N/A" }}
+                <strong>Work State:</strong><br />
+                {{ agentInfo.branchDeptStreetState || "N/A" }}
               </p>
-              <!-- <p><strong>Phone:</strong> {{ agentInfo.phone || "N/A" }}</p> -->
             </div>
             <div class="col">
               <p>
-                <strong>Branch/Dept:</strong><br/>
+                <strong>Branch/Dept:</strong><br />
                 {{ agentInfo.branchDeptNumber || "N/A" }}
               </p>
               <p>
-                <strong>Score:</strong><br/>
+                <strong>Score:</strong><br />
                 {{ agentInfo.branchDeptScoreNumber || "N/A" }}
               </p>
               <p>
-                <strong>National Producer Number:</strong><br/>
+                <strong>National Producer Number:</strong><br />
                 {{ agentInfo.nationalProdercerNumber || "N/A" }}
               </p>
             </div>
@@ -61,42 +53,50 @@
       </div>
     </div>
   </div>
-  <hr />
-  <mat-tab-group>
-    <mat-tab label="TM Information">
-      <div style="margin: 3.5rem;">
-        <app-tm-information></app-tm-information>
-      </div>
-    </mat-tab>
-    <mat-tab label="TM Detail">
-      <div style="margin: 3.5rem;">
-        <app-tm-detail></app-tm-detail>
-      </div>
-    </mat-tab>
-    <mat-tab label="TM Emp/Trans History">
-      <div style="margin: 3.5rem;">
-        <app-tm-emptrans-history></app-tm-emptrans-history>
-      </div>
-    </mat-tab>
-    <mat-tab label="TM Continuing Edu.">
-      <div style="margin: 3.5rem;">
-        <app-tm-continuing-edu> </app-tm-continuing-edu>
-      </div>
-    </mat-tab>
-    <mat-tab label="TM Diary">
-      <div style="margin: 3.5rem;">
-        <app-tm-diary></app-tm-diary>
-      </div>
-    </mat-tab>
-    <mat-tab label="TM Email">
-      <div style="margin: 3.5rem;">
-        <app-tm-email></app-tm-email>
-      </div>
-    </mat-tab>
-    <mat-tab label="TM Communications">
-      <div style="margin: 3.5rem;">
-        <app-tm-communications></app-tm-communications>
-      </div>
-    </mat-tab>
-  </mat-tab-group>
+  <div class="row" *ngIf="!isShowLicenseMgmt">
+    <div class="col">
+      <mat-tab-group>
+        <mat-tab label="TM Information">
+          <div style="margin: 3.5rem">
+            <app-tm-information></app-tm-information>
+          </div>
+        </mat-tab>
+        <mat-tab label="TM Detail">
+          <div style="margin: 3.5rem">
+            <app-tm-detail></app-tm-detail>
+          </div>
+        </mat-tab>
+        <mat-tab label="TM Emp/Trans History">
+          <div style="margin: 3.5rem">
+            <app-tm-emptrans-history></app-tm-emptrans-history>
+          </div>
+        </mat-tab>
+        <mat-tab label="TM Continuing Edu.">
+          <div style="margin: 3.5rem">
+            <app-tm-continuing-edu> </app-tm-continuing-edu>
+          </div>
+        </mat-tab>
+        <mat-tab label="TM Diary">
+          <div style="margin: 3.5rem">
+            <app-tm-diary></app-tm-diary>
+          </div>
+        </mat-tab>
+        <mat-tab label="TM Email">
+          <div style="margin: 3.5rem">
+            <app-tm-email></app-tm-email>
+          </div>
+        </mat-tab>
+        <mat-tab label="TM Communications">
+          <div style="margin: 3.5rem">
+            <app-tm-communications></app-tm-communications>
+          </div>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+  <div class="row" *ngIf="isShowLicenseMgmt">
+    <div class="col">
+      <app-tm-license-management></app-tm-license-management>
+    </div>
+  </div>
 </div>
