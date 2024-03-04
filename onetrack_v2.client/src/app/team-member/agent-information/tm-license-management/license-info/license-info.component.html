@@ -1,10 +1,17 @@
 <div class="container app-component-container">
   <div class="row">
-    <div class="col d-flex justify-content-center mb-4">
-      <button class="page-button" *ngIf="isDisplayPrevious()" (click)="previousPage()">
+    <div class="col d-flex justify-content-start mb-4">
+      <button
+        class="page-button"
+        *ngIf="isDisplayPrevious()"
+        (click)="previousPage()"
+      >
         <span class="material-symbols-outlined"> arrow_back_ios </span></button
       ><span class="page-info">{{ getPageInfo() }}</span>
-      <button class="page-button" (click)="nextPage()">
+      <button 
+        class="page-button" 
+        *ngIf="isDisplayNext()"
+        (click)="nextPage()">
         <span class="material-symbols-outlined"> arrow_forward_ios </span>
       </button>
     </div>
