@@ -58,7 +58,7 @@
         <div class="col-md-12">
           <p><strong>Agent License & Appointments:</strong></p>
           <mat-expansion-panel
-            *ngFor="let license of agentInfo.agentLicenseAppointments"
+            *ngFor="let license of agentInfo.agentLicenseAppointments ; let i = index"
           >
             <mat-expansion-panel-header>
               <mat-panel-title>
@@ -118,7 +118,7 @@
                   {{ license.licenseExpirationDate | date : "MM/dd/yyyy" }}
                 </div>
                 <div class="col d-flex justify-content-end">
-                  <button class="edit-button appointment-edit-button" (click)="toggleLicenseMgmt(license)">
+                  <button class="edit-button appointment-edit-button" (click)="toggleLicenseMgmt(i)">
                     <span class="material-symbols-outlined"> pageview </span>
                   </button>
                 </div>

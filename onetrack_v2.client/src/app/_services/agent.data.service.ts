@@ -22,6 +22,10 @@ export class AgentDataService {
   agentLicenseAppointmentsChanged = new Subject<AgentLicenseAppointments[]>();
   licenseAppointment: LicenseAppointment = {} as LicenseAppointment;
   licenseAppointmentChanged = new Subject<LicenseAppointment>();
+  licenseMgmtData: AgentLicenseAppointments = {} as AgentLicenseAppointments;
+  licenseMgmtDataChanged = new Subject<AgentLicenseAppointments>();
+  licenseMgmtDataIndex: number = 0;
+  licenseMgmtDataIndexChanged = new Subject<number>();
 
   constructor(private http: HttpClient) {
     this.agentLicenseAppointments = [];
@@ -79,5 +83,13 @@ export class AgentDataService {
   storeLicenseAppointment(appointment: LicenseAppointment) {
     this.licenseAppointment = appointment;
     this.licenseAppointmentChanged.next(appointment);
+  }
+
+  storeLicenseMgmtData(index: number) {
+
+console.log('EMFTEST - (AgentDataService) storeLicenseMgmtData index: ', index);
+
+    this.licenseMgmtDataIndex = index;
+    this.licenseMgmtDataIndexChanged.next(index);
   }
 }

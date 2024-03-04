@@ -37,9 +37,10 @@ export class TmInformationComponent implements OnInit, OnDestroy {
     this.agentService.storeLicenseAppointment(appointment);
   }
 
-  toggleLicenseMgmt(license: any) {
+  toggleLicenseMgmt(index: number) {
+    this.agentService.storeLicenseMgmtData(index);
     this.agentComService.showLicenseMgmt();
-  }
+  }  
 
   openModal() {
     const modalDiv = document.getElementById('myModal');

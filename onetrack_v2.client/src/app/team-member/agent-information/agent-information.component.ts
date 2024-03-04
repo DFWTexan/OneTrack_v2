@@ -25,8 +25,6 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    console.log('EMFTEST - (AgentInformationComponent) ngOnInit()');
-
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
       this.agentDataService
