@@ -54,6 +54,10 @@ import { TmCommunicationsComponent } from './team-member/agent-information/tm-co
 import { EditTmInformationComponent } from './team-member/agent-information/tm-information/edit-tm-information/edit-tm-information.component';
 import { EditLicenseAppointmentComponent } from './team-member/agent-information/tm-information/edit-license-appointment/edit-license-appointment.component';
 import { TmLicenseManagementComponent } from './team-member/agent-information/tm-license-management/tm-license-management.component';
+import { LicenseInfoComponent } from './team-member/agent-information/tm-license-management/license-info/license-info.component';
+import { LicenseApplicationComponent } from './team-member/agent-information/tm-license-management/license-application/license-application.component';
+import { LicenseRenewalComponent } from './team-member/agent-information/tm-license-management/license-renewal/license-renewal.component';
+import { LicenseIncentiveComponent } from './team-member/agent-information/tm-license-management/license-incentive/license-incentive.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +95,10 @@ import { TmLicenseManagementComponent } from './team-member/agent-information/tm
     EditTmInformationComponent,
     EditLicenseAppointmentComponent,
     TmLicenseManagementComponent,
+    LicenseInfoComponent,
+    LicenseApplicationComponent,
+    LicenseRenewalComponent,
+    LicenseIncentiveComponent,
   ],
   imports: [
     BrowserModule,

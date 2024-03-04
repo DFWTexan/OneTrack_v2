@@ -8,7 +8,7 @@ import { AgentLicenseAppointments } from '../../../_Models';
   styleUrl: './tm-license-management.component.css'
 })
 export class TmLicenseManagementComponent implements OnInit{
-  licenseData: AgentLicenseAppointments = {} as AgentLicenseAppointments;
+  
 
   constructor() {}
 
