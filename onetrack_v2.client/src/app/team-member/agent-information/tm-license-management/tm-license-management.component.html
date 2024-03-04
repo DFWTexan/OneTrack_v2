@@ -1,1 +1,62 @@
-<p>tm-license-management works!</p>
+<div class="container">
+    <div class="row">
+        <div class="col">
+          <strong>License ID:</strong> <br />
+          {{ licenseData.employeeLicenseId }}
+        </div>
+        <div class="col">
+          <strong>Number:</strong> <br />
+          {{ licenseData.licenseNumber }}
+        </div>
+        <div class="col">
+          <strong>Res:</strong> <br />
+          {{ licenseData.resNoneRes ? "Yes" : "No" }}
+        </div>
+        <div class="col">
+          <strong>Org Issue Date:</strong> <br />
+          {{ licenseData.originalIssueDate | date : "MM/dd/yyyy" }}
+        </div>
+        <div class="col">
+          <strong>LOA Issue Date:</strong> <br />
+          {{ licenseData.lineOfAuthIssueDate | date : "MM/dd/yyyy" }}
+        </div>
+        <div class="col">
+          <strong>Effective Date:</strong> <br />
+          {{ licenseData.licenseEffectiveDate | date : "MM/dd/yyyy" }}
+        </div>
+        <div class="col">
+          <strong>Expire Date:</strong> <br />
+          {{ licenseData.licenseExpirationDate | date : "MM/dd/yyyy" }}
+        </div>
+      </div>
+      <div class="row">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>License ID</th>
+              <th>Appt ID</th>
+              <th>Effective Date</th>
+              <th>Status</th>
+              <th>Carrier Date</th>
+              <th>Expire Date</th>
+              <th>Termination Date</th>
+              <th>Company ID</th>
+              <th>Retention Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let appointment of licenseData.licenseAppointments">
+              <td>{{ appointment.licenseID }}</td>
+              <td>{{ appointment.employeeAppointmentID }}</td>
+              <td>{{ appointment.appointmentEffectiveDate | date : "MM/dd/yyyy" }}</td>
+              <td>{{ appointment.appointmentStatus }}</td>
+              <td>{{ appointment.carrierDate | date : "MM/dd/yyyy" }}</td>
+              <td>{{ appointment.appointmentExpireDate | date : "MM/dd/yyyy" }}</td>
+              <td>{{ appointment.appointmentTerminationDate | date : "MM/dd/yyyy" }}</td>
+              <td>{{ appointment.companyID }}</td>
+              <td>{{ appointment.retentionDate | date : "MM/dd/yyyy" }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+</div>

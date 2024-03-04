@@ -37,7 +37,10 @@ export class TmInformationComponent implements OnInit, OnDestroy {
     this.agentService.storeLicenseAppointment(appointment);
   }
 
-  toggleLicenseMgmt() {
+  toggleLicenseMgmt(license: any) {
+
+console.log('EMFTEST - (app-tm-information) toggleLicenseMgmt', license);
+
     this.agentComService.showLicenseMgmt();
   }
 
