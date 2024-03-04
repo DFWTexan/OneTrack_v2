@@ -32,4 +32,16 @@ export class LicenseInfoComponent implements OnInit {
       this.currentIndex--;
     }
   }
+
+  getPageInfo(): string {
+    return `${this.currentIndex + 1} of ${this.licenseMgmtData.length}`;
+  }
+
+  isDisplayPrevious(): boolean {
+    return this.currentIndex > 0;
+  }
+
+  isDisplayNext(): boolean {
+    return this.currentIndex < this.licenseMgmtData.length - 1;
+  }
 }

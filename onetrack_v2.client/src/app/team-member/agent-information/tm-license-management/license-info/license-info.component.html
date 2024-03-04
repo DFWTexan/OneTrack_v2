@@ -1,8 +1,12 @@
-<div class="container">
+<div class="container app-component-container">
   <div class="row">
-    <div class="col">
-      <button (click)="previousPage()">Previous</button>
-      <button (click)="nextPage()">Next</button>
+    <div class="col d-flex justify-content-center mb-4">
+      <button class="page-button" *ngIf="isDisplayPrevious()" (click)="previousPage()">
+        <span class="material-symbols-outlined"> arrow_back_ios </span></button
+      ><span class="page-info">{{ getPageInfo() }}</span>
+      <button class="page-button" (click)="nextPage()">
+        <span class="material-symbols-outlined"> arrow_forward_ios </span>
+      </button>
     </div>
   </div>
   <div class="row">
@@ -20,7 +24,9 @@
     </div>
     <div class="col">
       <strong>Org Issue Date:</strong> <br />
-      {{ licenseMgmtData[currentIndex].originalIssueDate | date : "MM/dd/yyyy" }}
+      {{
+        licenseMgmtData[currentIndex].originalIssueDate | date : "MM/dd/yyyy"
+      }}
     </div>
     <div class="col">
       <strong>LOA Issue Date:</strong> <br />
@@ -37,7 +43,8 @@
     <div class="col">
       <strong>Expire Date:</strong> <br />
       {{
-        licenseMgmtData[currentIndex].licenseExpirationDate | date : "MM/dd/yyyy"
+        licenseMgmtData[currentIndex].licenseExpirationDate
+          | date : "MM/dd/yyyy"
       }}
     </div>
   </div>
@@ -79,5 +86,4 @@
       </tbody>
     </table>
   </div>
-  
 </div>

@@ -73,3 +73,14 @@ body {
   max-width: 100%; /* Ensure the width doesn't exceed 100% */
   overflow-x: auto; /* Add horizontal scrollbars if the content overflows the container */
 }
+
+.app-component-container {
+  max-width: 100%; /* Ensure the width doesn't exceed 100% */
+  overflow-x: auto; /* Add horizontal scrollbars if the content overflows the container */
+}
+
+.app-tab-container {
+  margin-top: 0.5rem;
+  max-width: 100%; /* Ensure the width doesn't exceed 100% */
+  overflow-x: auto; /* Add horizontal scrollbars if the content overflows the container */
+}
