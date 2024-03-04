@@ -5,7 +5,11 @@ import { map } from 'rxjs/operators';
 // import { Subject } from 'rxjs';
 
 import { environment } from '../environments/environment';
-import { AgentInfo, AgentLicenseAppointments, LicenseAppointment } from '../_Models';
+import {
+  AgentInfo,
+  AgentLicenseAppointments,
+  LicenseAppointment,
+} from '../_Models';
 
 @Injectable({
   providedIn: 'root',
@@ -61,7 +65,9 @@ export class AgentDataService {
         map((response) => {
           if (response.success && response.statusCode === 200) {
             this.agentInformation.agentLicenseAppointments = response.objData;
-            this.agentLicenseAppointmentsChanged.next(this.agentInformation.agentLicenseAppointments);
+            this.agentLicenseAppointmentsChanged.next(
+              this.agentInformation.agentLicenseAppointments
+            );
             return response.objData;
           } else {
             throw new Error(response.errMessage || 'Unknown error');
@@ -71,9 +77,6 @@ export class AgentDataService {
   }
 
   storeLicenseAppointment(appointment: LicenseAppointment) {
-
-console.log('EMFTEST - (agent.data.service) storeLicenseAppointment => \n', appointment);
-
     this.licenseAppointment = appointment;
     this.licenseAppointmentChanged.next(appointment);
   }

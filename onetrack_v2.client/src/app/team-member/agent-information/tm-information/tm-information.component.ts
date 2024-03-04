@@ -15,7 +15,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   subscribeAgentInfo: Subscription;
   subscribeAgentLicenseAppointments: Subscription;
   agentInfo: AgentInfo = {} as AgentInfo;
-  
+
   constructor(
     private agentService: AgentDataService,
     private agentComService: AgentComService,
@@ -38,9 +38,6 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   }
 
   toggleLicenseMgmt(license: any) {
-
-console.log('EMFTEST - (app-tm-information) toggleLicenseMgmt', license);
-
     this.agentComService.showLicenseMgmt();
   }
 
