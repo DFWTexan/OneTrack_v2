@@ -33,9 +33,6 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscribeAgentInfo = this.agentService.agentInfoChanged.subscribe(
       (agentInfo: any) => {
-
-console.log('EMFTest - (EditTmInformationComponent) agentInfo => \n', agentInfo);
-
         this.agentInfo = agentInfo;
         this.form.patchValue({
           employerAgency: agentInfo.employerAgency,

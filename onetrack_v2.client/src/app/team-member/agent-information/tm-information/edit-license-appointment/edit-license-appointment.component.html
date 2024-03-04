@@ -1,1 +1,130 @@
-<p>edit-license-appointment works!</p>
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  class="container app-modal-container"
+>
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        <label for="licenseID" class="form-label">License ID</label>
+        <input
+          [disabled]="true"
+          class="form-control input-size-small disabled"
+          type="text"
+          id="licenseID"
+          formControlName="licenseID"
+        />
+      </div>
+
+      <!-- <div class="mb-3">
+        <label for="employeeAppointmentID" class="form-label"
+          >Employee Appointment ID</label
+        >
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="employeeAppointmentID"
+          formControlName="employeeAppointmentID"
+        />
+      </div> -->
+
+      <div class="mb-3">
+        <label for="appointmentStatus" class="form-label"> Status</label>
+        <input
+          class="form-select form-select-lg select-size-small"
+          type="text"
+          id="appointmentStatus"
+          formControlName="appointmentStatus"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="employeeAppointmentID" class="form-label">License ID</label>
+        <input
+          [disabled]="true"
+          class="form-control input-size-small disabled"
+          type="text"
+          id="employeeAppointmentID"
+          formControlName="employeeAppointmentID"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="companyAbbr" class="form-label"> Co. Abv</label>
+        <input
+          class="form-select form-select-lg select-size-small"
+          type="text"
+          id="companyAbbr"
+          formControlName="companyAbbr"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="carrierDate" class="form-label">Carrier Date</label>
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="carrierDate"
+          formControlName="carrierDate"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="appointmentEffectiveDate" class="form-label"
+          >Effective Date</label
+        >
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="appointmentEffectiveDate"
+          formControlName="appointmentEffectiveDate"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="appointmentExpireDate" class="form-label"
+          >Expire Date</label
+        >
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="appointmentExpireDate"
+          formControlName="appointmentExpireDate"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="appointmentTerminationDate" class="form-label"
+          >Termination Date</label
+        >
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="appointmentTerminationDate"
+          formControlName="appointmentTerminationDate"
+        />
+      </div>
+
+      <!-- <div class="mb-3">
+        <label for="companyID" class="form-label">Company ID</label>
+        <input type="text" id="companyID" formControlName="companyID" />
+      </div> -->
+
+      <!-- <div class="mb-3">
+        <label for="retentionDate" class="form-label">Retention Date</label>
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="retentionDate"
+          formControlName="retentionDate"
+        />
+      </div> -->
+    </div>
+  </div>
+  <div class="row">
+    <div class="col d-flex justify-content-end">
+      <button type="button" class="btn btn-secondary me-3">Cancel</button>
+      <button type="submit" class="btn btn-primary">Update</button>
+    </div>
+  </div>
+</form>

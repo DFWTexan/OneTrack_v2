@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 // import { Subject } from 'rxjs';
 
 import { environment } from '../environments/environment';
-import { AgentInfo, AgentLicenseAppointments } from '../_Models';
+import { AgentInfo, AgentLicenseAppointments, LicenseAppointment } from '../_Models';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +16,8 @@ export class AgentDataService {
   agentInfoChanged = new Subject<AgentInfo>();
   agentLicenseAppointments: AgentLicenseAppointments[];
   agentLicenseAppointmentsChanged = new Subject<AgentLicenseAppointments[]>();
-
+  licenseAppointment: LicenseAppointment = {} as LicenseAppointment;
+  licenseAppointmentChanged = new Subject<LicenseAppointment>();
 
   constructor(private http: HttpClient) {
     this.agentLicenseAppointments = [];
@@ -67,5 +68,13 @@ export class AgentDataService {
           }
         })
       );
+  }
+
+  storeLicenseAppointment(appointment: LicenseAppointment) {
+
+console.log('EMFTEST - (agent.data.service) storeLicenseAppointment => \n', appointment);
+
+    this.licenseAppointment = appointment;
+    this.licenseAppointmentChanged.next(appointment);
   }
 }
