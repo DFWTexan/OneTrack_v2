@@ -1,56 +1,75 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 /* Custom modal size */
 .modal-dialog {
-    max-width: 80%;
-    margin: 1.75rem auto;
-  }
-  
-  /* Ensure form content fits within the modal */
-  .modal-content {
-    overflow: hidden; /* This will keep the content within the modal */
-  }
-  
-  /* Optionally, if you want the modal to take up 75% width on all screen sizes */
-  @media (min-width: 600px) {
-    .modal-dialog {
-      max-width: 90%;
-    }
-  }
-  
-  /* Ensure the form controls do not overflow the modal boundaries */
-  .modal-body {
-    overflow-y: auto; /* Add scroll to the modal body if content is too long */
-  }
+  max-width: 80%;
+  margin: 1.75rem auto;
+}
 
-  .input-size-small {
-    width: 150px;
-  }
-  
-  .input-size-medium {
-    width: 300px;
-  }
-  
-  .input-size-large {
-    width: 500px;
-  }
+/* Ensure form content fits within the modal */
+.modal-content {
+  overflow: hidden; /* This will keep the content within the modal */
+}
 
-  .select-size-small {
-    width: 150px;
+/* Optionally, if you want the modal to take up 75% width on all screen sizes */
+@media (min-width: 600px) {
+  .modal-dialog {
+    max-width: 90%;
   }
+}
 
-  .select-size-medium {
-    width: 300px;
-  }
+/* Ensure the form controls do not overflow the modal boundaries */
+.modal-body {
+  overflow-y: auto; /* Add scroll to the modal body if content is too long */
+}
 
-  .select-size-large {
-    width: 500px;
-  }
+.h1-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
 
-  .app-modal-container {
-    max-width: 100%; /* Ensure the width doesn't exceed 100% */
-    overflow-x: auto; /* Add horizontal scrollbars if the content overflows the container */
-  }
+.h2-title {
+  color: gray;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.input-size-small {
+  width: 150px;
+}
+
+.input-size-medium {
+  width: 300px;
+}
+
+.input-size-large {
+  width: 500px;
+}
+
+.select-size-small {
+  width: 150px;
+}
+
+.select-size-medium {
+  width: 300px;
+}
+
+.select-size-large {
+  width: 500px;
+}
+
+.app-modal-container {
+  max-width: 100%; /* Ensure the width doesn't exceed 100% */
+  overflow-x: auto; /* Add horizontal scrollbars if the content overflows the container */
+}
