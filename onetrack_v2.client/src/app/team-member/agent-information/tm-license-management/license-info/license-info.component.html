@@ -40,19 +40,37 @@
         {{ licenseMgmtData[currentIndex].licenseStatus }}
       </p>
       <p>
-        <strong>Affilliated License:</strong> <br />
-        <!-- {{ licenseMgmtData[currentIndex].licenseStatus }} -->
-        TBD...
+        <strong>Number:</strong> <br />
+        {{ licenseMgmtData[currentIndex].licenseNumber }}
       </p>
     </div>
     
     <div class="col">
       <p>
-        <strong>Number:</strong> <br />
-        {{ licenseMgmtData[currentIndex].licenseNumber }}
+        <strong>Affilliated License:</strong> <br />
+        <!-- {{ licenseMgmtData[currentIndex].licenseStatus }} -->
+        TBD...
       </p>
       <p>
-        <strong>Res:</strong> <br />
+        <strong>Notes:</strong> <br />
+        <!-- {{ licenseMgmtData[currentIndex].licenseStatus }} -->
+        TBD...
+      </p>
+    </div>
+
+    <div class="col">
+      <p>
+        <strong>Required:</strong> <br />
+        <!-- {{ licenseMgmtData[currentIndex].resNoneRes ? "Yes" : "No" }} -->
+        TBD...
+      </p>
+      <p>
+        <strong>Reinstatement:</strong> <br />
+        <!-- {{ licenseMgmtData[currentIndex].resNoneRes ? "Yes" : "No" }} -->
+        TBD...
+      </p>
+      <p>
+        <strong>Non-Resident:</strong> <br />
         {{ licenseMgmtData[currentIndex].resNoneRes ? "Yes" : "No" }}
       </p>
     </div>
