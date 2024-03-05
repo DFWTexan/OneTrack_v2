@@ -1,4 +1,4 @@
-<div class="contain">
+<div class="contain app-component-container">
   <div class="row">
     <div class="col-md-12">
       <div class="row d-flex justify-content-start">
@@ -15,7 +15,7 @@
         </div>
       </div>
       <hr />
-      <div class="row row-1rem-top-margin">
+      <div class="row  bg-body p-3 rounded mt-4 ms-2">
         <div class="col">
           <p>
             <strong>Job Title:</strong><br />
@@ -52,7 +52,7 @@
       </div>
     </div>
   </div>
-  <div class="row row-1rem-top-margin">
+  <div class="row mt-4">
     <div class="col-md-12">
       <div class="row">
         <div class="col-md-12">
@@ -118,7 +118,7 @@
                   {{ license.licenseExpirationDate | date : "MM/dd/yyyy" }}
                 </div>
                 <div class="col d-flex justify-content-end">
-                  <button class="edit-button appointment-edit-button" (click)="toggleLicenseMgmt(i)">
+                  <button class="page-button appointment-edit-button" (click)="toggleLicenseMgmt(i)">
                     <span class="material-symbols-outlined"> pageview </span>
                   </button>
                 </div>
