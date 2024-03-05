@@ -1,1 +1,30 @@
-<p>edit-license-info works!</p>
+<form [formGroup]="licenseForm">
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        <label for="employeeLicenseId" class="form-label">
+          License ID:
+          <input
+            type="text"
+            id="employeeLicenseId"
+            class="form-control input-size-medium"
+            formControlName="employeeLicenseId"
+          />
+        </label>
+      </div>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button type="button" class="btn btn-secondary me-3">Cancel</button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="!licenseForm.valid"
+      >
+        Update
+      </button>
+    </div>
+  </div>
+</form>
