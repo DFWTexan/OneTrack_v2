@@ -21,7 +21,7 @@
       >{{ licenseMgmtData[currentIndex].licenseName }}
     </div>
     <div class="col d-flex justify-content-end me-5">
-      <button class="edit-button">
+      <button class="edit-button" (click)="modalService.open('modal-edit-license-info')">
         <span class="material-symbols-outlined"> edit </span>
       </button>
       <button class="edit-button">

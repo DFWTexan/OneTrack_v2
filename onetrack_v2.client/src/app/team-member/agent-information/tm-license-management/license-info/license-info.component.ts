@@ -1,7 +1,7 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 
 import { AgentLicenseAppointments } from '../../../../_Models';
-import { AgentDataService } from '../../../../_services';
+import { AgentDataService, ModalService } from '../../../../_services';
 
 @Component({
   selector: 'app-license-info',
@@ -13,7 +13,10 @@ export class LicenseInfoComponent implements OnInit {
   licenseMgmtData: AgentLicenseAppointments[] = [];
   currentIndex: number = 0;
 
-  constructor(private agentDataService: AgentDataService) {}
+  constructor(
+    private agentDataService: AgentDataService,
+    protected modalService: ModalService
+  ) {}
 
   ngOnInit() {
     this.currentIndex = this.agentDataService.licenseMgmtDataIndex;
@@ -21,6 +24,7 @@ export class LicenseInfoComponent implements OnInit {
       this.agentDataService.agentInformation.agentLicenseAppointments;
   }
 
+  // Pagination
   nextPage() {
     if (this.currentIndex < this.licenseMgmtData.length - 1) {
       this.currentIndex++;

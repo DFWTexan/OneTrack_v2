@@ -42,19 +42,6 @@ export class TmInformationComponent implements OnInit, OnDestroy {
     this.agentComService.showLicenseMgmt();
   }  
 
-  openModal() {
-    const modalDiv = document.getElementById('myModal');
-    if (modalDiv != null) {
-      modalDiv.style.display = 'block';
-    }
-  }
-  closeModal() {
-    const modalDiv = document.getElementById('myModal');
-    if (modalDiv != null) {
-      modalDiv.style.display = 'none';
-    }
-  }
-
   ngOnDestroy() {
     this.subscribeAgentInfo.unsubscribe();
     this.subscribeAgentLicenseAppointments.unsubscribe();
