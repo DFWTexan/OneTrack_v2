@@ -58,6 +58,7 @@ import { LicenseInfoComponent } from './team-member/agent-information/tm-license
 import { LicenseApplicationComponent } from './team-member/agent-information/tm-license-management/license-application/license-application.component';
 import { LicenseRenewalComponent } from './team-member/agent-information/tm-license-management/license-renewal/license-renewal.component';
 import { LicenseIncentiveComponent } from './team-member/agent-information/tm-license-management/license-incentive/license-incentive.component';
+import { EditLicenseInfoComponent } from './team-member/agent-information/tm-license-management/license-info/edit-license-info/edit-license-info.component';
 
 @NgModule({
   declarations: [
@@ -99,6 +100,7 @@ import { LicenseIncentiveComponent } from './team-member/agent-information/tm-li
     LicenseApplicationComponent,
     LicenseRenewalComponent,
     LicenseIncentiveComponent,
+    EditLicenseInfoComponent,
   ],
   imports: [
     BrowserModule,

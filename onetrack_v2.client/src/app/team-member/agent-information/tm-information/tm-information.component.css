@@ -10,9 +10,9 @@
 .page-button {
   border-style: none;
   background-color: transparent;
-  height: 1.7rem;
-  width: 1.7rem;
-  margin: 1rem;
+  height: 3rem;
+  width: 3rem;
+  margin-right: 2rem;
 }
 
 .edit-button {
