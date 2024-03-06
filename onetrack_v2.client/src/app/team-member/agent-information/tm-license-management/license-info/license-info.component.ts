@@ -14,7 +14,7 @@ export class LicenseInfoComponent implements OnInit {
   currentIndex: number = 0;
 
   constructor(
-    private agentDataService: AgentDataService,
+    protected agentDataService: AgentDataService,
     protected modalService: ModalService
   ) {}
 

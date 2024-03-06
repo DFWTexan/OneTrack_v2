@@ -86,9 +86,6 @@ export class AgentDataService {
   }
 
   storeLicenseMgmtData(index: number) {
-
-console.log('EMFTEST - (AgentDataService) storeLicenseMgmtData index: ', index);
-
     this.licenseMgmtDataIndex = index;
     this.licenseMgmtDataIndexChanged.next(index);
   }
