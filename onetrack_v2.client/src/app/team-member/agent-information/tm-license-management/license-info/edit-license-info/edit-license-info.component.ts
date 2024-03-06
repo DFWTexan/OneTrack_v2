@@ -19,19 +19,22 @@ export class EditLicenseInfoComponent implements OnInit {
     private fb: FormBuilder
   ) {
     this.licenseForm = this.fb.group({
+      agentName: [{ value: '', disabled: true }],
       employeeLicenseId: [{ value: '', disabled: true }, Validators.required],
       licenseState: ['', Validators.required],
-      lineOfAuthority: ['', Validators.required],
-      licenseStatus: ['', Validators.required],
-      employmentID: ['', Validators.required],
       licenseName: ['', Validators.required],
       licenseNumber: ['', Validators.required],
-      resNoneRes: [''],
+      licenseStatus: ['', Validators.required],
+      affiliatedLicense: [''],
       originalIssueDate: ['', Validators.required],
       lineOfAuthIssueDate: ['', Validators.required],
       licenseEffectiveDate: ['', Validators.required],
       licenseExpirationDate: ['', Validators.required],
-    });
+      licenseNotes: [''],
+      required: [''],
+      reinstatementDate: [''],
+      resNoneRes: [''],
+      employmentID: ['', Validators.required],});
   }
 
   ngOnInit(): void {
@@ -39,18 +42,22 @@ export class EditLicenseInfoComponent implements OnInit {
     this.licenseMgmtData =
       this.agentDataService.agentInformation.agentLicenseAppointments;
       this.licenseForm.patchValue({
+        agentName: this.agentDataService.agentInformation.lastName + ', ' + this.agentDataService.agentInformation.firstName,
         employeeLicenseId: this.licenseMgmtData[this.currentIndex].employeeLicenseId,
-        licenseState: 'MO',
-        lineOfAuthority: 'CL',
-        licenseStatus: 'Active',
-        employmentID: '606709',
-        licenseName: 'CREDIT',
-        licenseNumber: '3002117601',
-        resNoneRes: null,
-        originalIssueDate: '2022-08-30T00:00:00',
-        lineOfAuthIssueDate: '2022-08-30T00:00:00',
-        licenseEffectiveDate: '2022-08-30T00:00:00',
-        licenseExpirationDate: '2025-05-30T00:00:00',
+        licenseState: this.licenseMgmtData[this.currentIndex].licenseState,
+        licenseName: this.licenseMgmtData[this.currentIndex].employeeLicenseId,
+        licenseNumber: this.licenseMgmtData[this.currentIndex].licenseNumber,
+        licenseStatus: this.licenseMgmtData[this.currentIndex].licenseStatus,
+        affiliatedLicense: 'SELECT-TBD...',
+        originalIssueDate: this.licenseMgmtData[this.currentIndex].originalIssueDate,
+        lineOfAuthIssueDate: this.licenseMgmtData[this.currentIndex].lineOfAuthIssueDate,
+        licenseEffectiveDate: this.licenseMgmtData[this.currentIndex].licenseEffectiveDate,
+        licenseExpirationDate: this.licenseMgmtData[this.currentIndex].licenseExpirationDate,
+        licenseNotes: 'TBD...',
+        required: 'Yes',
+        reinstatementDate: 'TBD...',
+        resNoneRes: this.licenseMgmtData[this.currentIndex].resNoneRes,
+        employmentID: this.licenseMgmtData[this.currentIndex].employmentID,
       });
   }
 }
