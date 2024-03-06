@@ -4,8 +4,8 @@ import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 // import { Subject } from 'rxjs';
 
-import { environment } from '../environments/environment';
-import { SearchEmployee, EmployeeSearchResult } from '../_Models';
+import { environment } from '../../environments/environment';
+import { SearchEmployee, EmployeeSearchResult } from '../../_Models';
 
 @Injectable({
   providedIn: 'root',

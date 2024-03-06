@@ -1,6 +1,6 @@
 ﻿import { Injectable } from '@angular/core';
 
-import { ModalComponent } from '../_components';
+import { ModalComponent } from '../../_components';
 
 @Injectable({ providedIn: 'root' })
 export class ModalService {

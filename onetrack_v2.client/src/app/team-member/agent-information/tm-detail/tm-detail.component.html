@@ -1,1 +1,124 @@
-<p>tm-detail works!</p>
+<div class="container app-component-container">
+  <div class="row">
+    <div class="col-md-12"></div>
+  </div>
+  <div class="row bg-body p-3">
+    <div class="col">
+      <p>
+        <strong>EmploymentID:</strong><br />
+        {{ agentInfo.employmentID || "N/A" }}
+      </p>
+      <p>
+        <strong>Social Security #:</strong><br />
+        {{ agentInfo.employeeSSN || "N/A" }}
+      </p>
+      <p>
+        <strong>Birth Date:</strong><br />
+        {{
+          agentInfo.dateOfBirth === "1900-01-01T00:00:00"
+            ? "N/A"
+            : (agentInfo.dateOfBirth | date : "MM/dd/yyyy")
+        }}
+      </p>
+    </div>
+    <div class="col">
+      <p>
+        <strong>Email:</strong><br />
+        {{ agentInfo.email || "N/A" }}
+      </p>
+      <p>
+        <strong>Home Phone:</strong><br />
+        {{ agentInfo.phone || "N/A" }}
+      </p>
+      <p>
+        <strong>Work Phone:</strong><br />
+        <!-- {{ agentInfo.phone || "N/A" }} -->
+        TBD...
+      </p>
+      <p>
+        <strong>Fax Phone:</strong><br />
+        <!-- {{ agentInfo.phone || "N/A" }} -->
+        TBD...
+      </p>
+    </div>
+    <div class="col">
+      <p>
+        <strong>Streat Address1:</strong><br />
+        {{ agentInfo.address1 || "N/A" }}
+      </p>
+      <p>
+        <strong>Streat Address2:</strong><br />
+        {{ agentInfo.address2 || "N/A" }}
+      </p>
+      <p>
+        <strong>City:</strong><br />
+        {{ agentInfo.city || "N/A" }}
+      </p>
+      <p>
+        <strong>Zip:</strong><br />
+        {{ agentInfo.zip || "N/A" }}
+      </p>
+    </div>
+    <div class="col">
+      <p>
+        <strong>License Level:</strong><br />
+        {{ agentInfo.licenseLevel || "N/A" }}
+      </p>
+      <p>
+        <strong>License Incentive:</strong><br />
+        {{ agentInfo.licenseIncentive || "N/A" }}
+      </p>
+      <p>
+        <strong>License Incentive Second Chance:</strong><br />
+        {{ agentInfo.isLicenseincentiveSecondChance ? "Yes" : "No" }}
+      </p>
+    </div>
+  </div>
+  <div class="row bg-body p-3">
+    <div class="col">
+      <p style="font-size: larger; color: lightgrey">
+        <strong>BRANCH/DEPARTMENT</strong>
+      </p>
+      <p>
+        <strong>Name:</strong><br />
+        {{ agentInfo.branchDeptName || "N/A" }}
+      </p>
+      <div class="mb-3">
+        <strong>Address:</strong>
+        <div>
+          {{ agentInfo.branchDeptStreet1 || "N/A" }}
+          <br />
+          {{ agentInfo.branchDeptStreet2 || "N/A" }}
+        </div>
+      </div>
+      <p>
+        <strong>City:</strong><br />
+        {{ agentInfo.branchDeptStreetCity || "N/A" }}
+      </p>
+      <p>
+        <strong>State:</strong><br />
+        {{ agentInfo.branchDeptStreetState || "N/A" }}
+      </p>
+    </div>
+    <div class="col">
+      <p style="font-size: larger; color: lightgrey">
+        <strong>HIERARCHY</strong>
+      </p>
+      <table class="table">
+        <thead>
+          <tr style="background-color: whitesmoke">
+            <th>Mgr. Name</th>
+            <th>Mgr. Title</th>
+            <th>Mgr. Dept Phone</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let manager of agentInfo.mgrHiearchy">
+            <td>{{ manager.mgrName || "N/A" }}</td>
+            <td>{{ manager.mgrTitle || "N/A" }}</td>
+            <td>{{ manager.mgrDeptPhone === "0000000000" ? "N/A" : (manager.mgrDeptPhone | PhoneFormat) }}</td>
+          </tr>
+      </table>
+    </div>
+  </div>
+</div>
