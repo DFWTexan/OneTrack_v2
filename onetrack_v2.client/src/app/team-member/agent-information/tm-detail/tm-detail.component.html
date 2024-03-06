@@ -60,6 +60,16 @@
       </p>
     </div>
     <div class="col">
+      <div class="d-flex me-5 justify-content-end">
+        <button
+          class="edit-button"
+          (click)="modalService.open('modal-edit-tm-detail')"
+        >
+          <span class="material-symbols-outlined" style="font-size: 45px">
+            edit
+          </span>
+        </button>
+      </div>
       <p>
         <strong>License Level:</strong><br />
         {{ agentInfo.licenseLevel || "N/A" }}
@@ -104,7 +114,10 @@
       <p style="font-size: larger; color: lightgrey">
         <strong>HIERARCHY</strong>
       </p>
-      <table class="table">
+      <p class="p-5" *ngIf="agentInfo.mgrHiearchy.length == 0">
+        No Heirarchy Information Available
+      </p>
+      <table class="table" *ngIf="agentInfo.mgrHiearchy.length > 0">
         <thead>
           <tr style="background-color: whitesmoke">
             <th>Mgr. Name</th>
@@ -116,9 +129,43 @@
           <tr *ngFor="let manager of agentInfo.mgrHiearchy">
             <td>{{ manager.mgrName || "N/A" }}</td>
             <td>{{ manager.mgrTitle || "N/A" }}</td>
-            <td>{{ manager.mgrDeptPhone === "0000000000" ? "N/A" : (manager.mgrDeptPhone | PhoneFormat) }}</td>
+            <td>
+              {{
+                manager.mgrDeptPhone === "0000000000"
+                  ? "N/A"
+                  : (manager.mgrDeptPhone | PhoneFormat)
+              }}
+            </td>
           </tr>
+        </tbody>
       </table>
     </div>
   </div>
 </div>
+<!-- Modal: EDIT-TM-INFO -->
+<modal id="modal-edit-tm-detail">
+    <div class="modal-header">
+      <h1 class="modal-title">Edit - Team Member Details</h1>
+      <!-- <button
+          type="button"
+          class="btn-close"
+          (click)="modalService.close()"
+        ></button> -->
+    </div>
+    <div class="modal-body">
+      <div>
+        <div>
+          <app-edit-tm-detail></app-edit-tm-detail>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="modalService.close()"
+        >
+          Close
+        </button>
+      </div> -->
+  </modal>

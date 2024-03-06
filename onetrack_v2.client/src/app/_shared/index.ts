@@ -1,1 +1,1 @@
-export * from './PipePhone';
+export * from './Pipe-Phone-Format';
