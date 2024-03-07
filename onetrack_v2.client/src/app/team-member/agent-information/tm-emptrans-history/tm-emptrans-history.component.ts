@@ -1,7 +1,7 @@
 import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { AgentInfo } from '../../../_Models';
+import { AgentInfo, CompanyRequirementsHistory, EmploymentHistory, EmploymentJobTitleHistory, TransferHistory } from '../../../_Models';
 import { AgentDataService, ModalService } from '../../../_services';
 
 @Component({
@@ -13,6 +13,11 @@ import { AgentDataService, ModalService } from '../../../_services';
 export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
   agentInfo: AgentInfo = {} as AgentInfo;
   subscribeAgentInfo: Subscription;
+
+  employmentHistory: EmploymentHistory[] = [];
+  transferHistory: TransferHistory[] = [];
+  companyRequirementsHistory: CompanyRequirementsHistory[] = [];
+  employmentJobTitleHistory: EmploymentJobTitleHistory[] = [];
   
   constructor(
     private agentService: AgentDataService,
@@ -24,7 +29,11 @@ export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscribeAgentInfo = this.agentService.agentInfoChanged.subscribe(
       (agentInfo: any) => {
-        this.agentInfo = agentInfo;
+        // this.agentInfo = agentInfo;
+        this.employmentHistory = agentInfo.employmentHistory;
+        this.transferHistory = agentInfo.transferHistory;
+        this.companyRequirementsHistory = agentInfo.compayRequirementsHistory;
+        this.employmentJobTitleHistory = agentInfo.employmentJobTitleHistory;
       }
     );
   }

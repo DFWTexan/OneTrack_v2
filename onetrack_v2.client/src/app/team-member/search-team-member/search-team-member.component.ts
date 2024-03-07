@@ -14,7 +14,7 @@ import { EmployeeDataService,
   DropdownDataService, 
   ConstantsDataService 
 } from '../../_services';
-import { EmployeeSearchResult, SearchEmployee } from '../../_Models';
+import { EmployeeSearchResult, SearchEmployeeFilter } from '../../_Models';
 
 @Component({
   selector: 'app-search-team-member',
@@ -79,7 +79,7 @@ export class SearchTeamMemberComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     this.isSubmitted = true;
-    const searchFilter: SearchEmployee = {
+    const searchFilter: SearchEmployeeFilter = {
       EmployeeSSN: form.value.searchFilter.EmployeeSSN || null,
       TeamMemberGEID: form.value.searchFilter.TeamMemberGEID || 0,
       NationalProducerNumber: form.value.searchFilter.NationalProducerNumber || 0,

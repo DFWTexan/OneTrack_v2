@@ -7,7 +7,7 @@
         </div>
       </mat-panel-title>
       <mat-panel-description>
-        Employment History - description
+        {{employmentHistory.length}} - record(s) found
       </mat-panel-description>
     </mat-expansion-panel-header>
     BODY - Employment History
@@ -21,7 +21,7 @@
         </div>
       </mat-panel-title>
       <mat-panel-description>
-        Transfer History - description
+        {{transferHistory.length}} - record(s) found
       </mat-panel-description>
     </mat-expansion-panel-header>
     BODY - Transfer History
@@ -35,7 +35,7 @@
         </div>
       </mat-panel-title>
       <mat-panel-description>
-        Company Requirements - description
+        {{companyRequirementsHistory.length}} - record(s) found
       </mat-panel-description>
     </mat-expansion-panel-header>
     BODY - Company Requirements History
@@ -48,7 +48,9 @@
           <h2>Job Title History</h2>
         </div>
       </mat-panel-title>
-      <mat-panel-description> Job Title - description </mat-panel-description>
+      <mat-panel-description> 
+        {{employmentJobTitleHistory.length}} - record(s) found
+      </mat-panel-description>
     </mat-expansion-panel-header>
     BODY - Job Title History
   </mat-expansion-panel>

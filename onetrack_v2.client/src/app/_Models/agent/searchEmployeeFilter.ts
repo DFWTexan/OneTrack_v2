@@ -1,4 +1,4 @@
-export interface SearchEmployee {
+export interface SearchEmployeeFilter {
   EmployeeSSN: string | null;
   TeamMemberGEID: number | 0;
   NationalProducerNumber: number | 0;

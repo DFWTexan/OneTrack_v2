@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 // import { Subject } from 'rxjs';
 
 import { environment } from '../../environments/environment';
-import { SearchEmployee, EmployeeSearchResult } from '../../_Models';
+import { SearchEmployeeFilter, EmployeeSearchResult } from '../../_Models';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +18,7 @@ export class EmployeeDataService {
   constructor(private http: HttpClient) {}
 
   fetchEmployeeSearch(
-    vSearchEmployee: SearchEmployee
+    vSearchEmployee: SearchEmployeeFilter
   ): Observable<EmployeeSearchResult[]> {
     return this.http
       .put<{
