@@ -7,10 +7,43 @@
         </div>
       </mat-panel-title>
       <mat-panel-description>
-        {{employmentHistory.length}} - record(s) found
+        {{ employmentHistory.length }} - record(s) found
       </mat-panel-description>
     </mat-expansion-panel-header>
-    BODY - Employment History
+    <div class="mat-description">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">History ID</th>
+            <th scope="col">Hire Date</th>
+            <th scope="col">Rehire Date</th>
+            <th scope="col">Notified Term Date</th>
+            <th scope="col">HR Term Date</th>
+            <th scope="col">For Cause</th>
+            <th scope="col">Background Check Status</th>
+            <th scope="col">Background Check Notes</th>
+            <th scope="col">Is Current</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let emp of employmentHistory">
+            <td>{{ emp.employmentHistoryID }}</td>
+            <td>{{ emp.hireDate | date : "MM/dd/yyyy" }}</td>
+            <td>{{ emp.rehireDate | date : "MM/dd/yyyy" }}</td>
+            <td>{{ emp.notifiedTermDate | date : "MM/dd/yyyy" }}</td>
+            <td>{{ emp.hrTermDate | date : "MM/dd/yyyy" }}</td>
+            <!-- <td>{{ emp.forCause ? "Yes" : "No" }}</td> -->
+            <td>TBD...</td>
+            <td>{{ emp.backgroundCheckStatus }}</td>
+            <!-- <td>{{ emp.backgroundCheckNotes }}</td> -->
+            <td>TBD...</td>
+            <td>{{ emp.isCurrent ? "Yes" : "No" }}</td>
+            <td>TBD...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </mat-expansion-panel>
 
   <mat-expansion-panel class="mat-elevation-z4 mb-3">
@@ -21,7 +54,7 @@
         </div>
       </mat-panel-title>
       <mat-panel-description>
-        {{transferHistory.length}} - record(s) found
+        {{ transferHistory.length }} - record(s) found
       </mat-panel-description>
     </mat-expansion-panel-header>
     BODY - Transfer History
@@ -35,7 +68,7 @@
         </div>
       </mat-panel-title>
       <mat-panel-description>
-        {{companyRequirementsHistory.length}} - record(s) found
+        {{ companyRequirementsHistory.length }} - record(s) found
       </mat-panel-description>
     </mat-expansion-panel-header>
     BODY - Company Requirements History
@@ -48,8 +81,8 @@
           <h2>Job Title History</h2>
         </div>
       </mat-panel-title>
-      <mat-panel-description> 
-        {{employmentJobTitleHistory.length}} - record(s) found
+      <mat-panel-description>
+        {{ employmentJobTitleHistory.length }} - record(s) found
       </mat-panel-description>
     </mat-expansion-panel-header>
     BODY - Job Title History
