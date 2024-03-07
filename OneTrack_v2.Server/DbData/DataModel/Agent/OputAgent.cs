@@ -50,11 +50,19 @@ namespace OneTrack_v2.DataModel
 
         public List<OputAgentHiearchy> MgrHiearchy { get; set; }
         public List<OputAgentLicenseAppointments> AgentLicenseAppointments { get; set; }
+        public List<AgentEmploymentItem> EmploymentHistory { get; set; }
+        public List<AgentTransferItem> TransferHistory { get; set; }
+        public List<CompayRequirementsItem> CompayRequirementsHistory { get; set; }
+        public List<EmploymentJobTitleItem> EmploymentJobTitleHistory { get; set; }
 
         public OputAgent()
         {
             MgrHiearchy = new List<OputAgentHiearchy>();
             AgentLicenseAppointments = new List<OputAgentLicenseAppointments>();
+            EmploymentHistory = new List<AgentEmploymentItem>();
+            TransferHistory = new List<AgentTransferItem>();
+            CompayRequirementsHistory = new List<CompayRequirementsItem>();
+            EmploymentJobTitleHistory = new List<EmploymentJobTitleItem>();
         }
     }
 }

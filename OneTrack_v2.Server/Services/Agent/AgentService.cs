@@ -264,6 +264,14 @@ namespace OneTrack_v2.Services
                 agent.BranchDeptFax = branchInfo.FaxNumber;
                 agent.BranchDeptEmail = branchInfo.Email;
 
+                // Employment History
+                var agentEmpTransHistory = GetEmploymentHistoryInfo(agent.EmploymentID);
+
+                agent.EmploymentHistory = agentEmpTransHistory.AgentEmploymentItems;
+                agent.TransferHistory = agentEmpTransHistory.AgentTransferItems;
+                agent.CompayRequirementsHistory = agentEmpTransHistory.CompayRequirementsItems;
+                agent.EmploymentJobTitleHistory = agentEmpTransHistory.EmploymentJobTitleItems;
+
                 result.Success = true;
                 result.ObjData = agent;
                 result.StatusCode = 200;
@@ -1027,6 +1035,85 @@ namespace OneTrack_v2.Services
             }
 
             return licenseAppointments;
+        }
+        private OputAgentEmploymentTranserHistory GetEmploymentHistoryInfo (int vEmploymentID)
+        {
+            var employmentTransferHistory = new OputAgentEmploymentTranserHistory();
+
+            var queryEmplymentHistories = _db.EmploymentHistories
+                                        .Where(h => h.EmploymentId == vEmploymentID)
+                                        .OrderByDescending(h => h.HireDate)
+                                        .Select(h => new AgentEmploymentItem
+                                        {
+                                            EmploymentHistoryID = h.EmploymentHistoryId,
+                                            HireDate = h.HireDate,
+                                            RehireDate = h.RehireDate,
+                                            NotifiedTermDate = h.NotifiedTermDate,
+                                            HRTermDate = h.HrtermDate,
+                                            HRTermCode = h.HrtermCode,
+                                            IsForCause = h.ForCause,
+                                            BackgroundCheckStatus = h.BackgroundCheckStatus,
+                                            BackGroundCheckNotes = h.BackGroundCheckNotes,
+                                            IsCurrent = h.IsCurrent
+                                        });
+
+
+            var emplymentHistories = queryEmplymentHistories.AsNoTracking().ToList();
+            employmentTransferHistory.AgentEmploymentItems = emplymentHistories;
+
+            var queryTransferHistories = from th in _db.TransferHistories
+                                         join m in _db.Employments on th.EmploymentId equals m.EmploymentId
+                                         join e in _db.Employees on m.EmployeeId equals e.EmployeeId
+                                         join a in _db.Addresses on e.AddressId equals a.AddressId into ea
+                                         from a in ea.DefaultIfEmpty()
+                                         where (th.EmploymentId == vEmploymentID || vEmploymentID == 0)
+                                         orderby th.TransferHistoryId descending
+                                         select new AgentTransferItem
+                                         {
+                                             TransferHistoryID = th.TransferHistoryId,
+                                             BranchCode = th.BranchCode,
+                                             WorkStateAbv = th.WorkStateAbv,
+                                             ResStateAbv = th.ResStateAbv ?? a.State,
+                                             TransferDate = th.TransferDate,
+                                             IsCurrent = th.IsCurrent,
+                                             //State = a != null ? a.State : null // Handling the case where 'a' might be null due to the left outer join
+                                         };
+
+            var transferHistories = queryTransferHistories.AsNoTracking().ToList();
+            employmentTransferHistory.AgentTransferItems = transferHistories;
+
+            var queryCompanyRequirementHistories = _db.EmploymentCompanyRequirements
+                                                .Where(ecr => ecr.EmploymentId == vEmploymentID)
+                                                .Select(ecr => new CompayRequirementsItem
+                                                {
+                                                    EmploymentCompanyRequirementID = ecr.EmploymentCompanyRequirementId,
+                                                    AssetIdString = ecr.AssetId,
+                                                    LearningProgramStatus = ecr.LearningProgramStatus,
+                                                    LearningProgramEnrollmentDate = ecr.LearningProgramEnrollmentDate,
+                                                    LearningProgramCompletionDate = ecr.LearningProgramCompletionDate
+                                                });
+
+            var companyRequirementHistories = queryCompanyRequirementHistories.AsNoTracking().ToList();
+            employmentTransferHistory.CompayRequirementsItems = companyRequirementHistories;
+
+            var queryJobTitleHistories = from ej in _db.EmploymentJobTitles
+                                         join j in _db.JobTitles on ej.JobTitleId equals j.JobTitleId
+                                         where (ej.EmploymentId == vEmploymentID || vEmploymentID == 0)
+                                         orderby ej.IsCurrent descending, ej.JobTitleDate descending
+                                         select new EmploymentJobTitleItem
+                                         {
+                                             EmploymentJobTitleID = ej.EmploymentJobTitleId,
+                                             EmploymentID = ej.EmploymentId,
+                                             JobTitleDate = ej.JobTitleDate,
+                                             JobCode = j.JobCode,
+                                             JobTitle = j.JobTitle1,
+                                             IsCurrent = ej.IsCurrent
+                                         };
+
+            var jobTitleHistories = queryJobTitleHistories.AsNoTracking().ToList();
+            employmentTransferHistory.EmploymentJobTitleItems = jobTitleHistories;
+
+            return employmentTransferHistory;
         }
     }
 }
