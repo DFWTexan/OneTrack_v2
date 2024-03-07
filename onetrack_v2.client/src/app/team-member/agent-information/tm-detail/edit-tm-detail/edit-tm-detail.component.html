@@ -1,1 +1,191 @@
-<p>edit-tm-detail works!</p>
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  class="container app-modal-container"
+>
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        <label for="employeeID" class="form-label"> Employee ID: </label>
+        <input
+          type="text"
+          class="form-control input-size-small"
+          formControlName="employeeID"
+        />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">
+          Team Member ID:
+          <input
+            type="text"
+            class="form-control input-size-small"
+            formControlName="geid"
+          />
+        </label>
+      </div>
+      <div class="mb-3">
+        <label for="lastName" class="form-label">
+          Last Name:
+          <input
+            type="text"
+            class="form-control input-size-small"
+            formControlName="lastName"
+          />
+        </label>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">
+          First Name:
+          <input
+            type="text"
+            class="form-control input-size-small"
+            formControlName="firstName"
+          />
+        </label>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">
+          Middle Name:
+          <input
+            type="text"
+            class="form-control input-size-small"
+            formControlName="middleName"
+          />
+        </label>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">
+          Employee SSN:
+          <input
+            type="text"
+            class="form-control input-size-small"
+            formControlName="employeeSSN"
+          />
+        </label>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">
+          Date of Birth:
+          <input
+            type="date"
+            class="form-control input-size-small"
+            formControlName="dateOfBirth"
+          />
+        </label>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">
+          License Level:
+          <input
+            type="text"
+            class="form-control input-size-small"
+            formControlName="licenseLevel"
+          />
+        </label>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">
+          Is License Incentive Second Chance:
+          <input
+            type="checkbox"
+            class="form-control input-size-small"
+            formControlName="isLicenseincentiveSecondChance"
+          />
+        </label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="mb-3">
+        <label class="form-label">
+          Address 1:
+          <input
+            type="text"
+            class="form-control input-size-medium"
+            formControlName="address1"
+          />
+        </label>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">
+          Address 2:
+          <input
+            type="text"
+            class="form-control input-size-medium"
+            formControlName="address2"
+          />
+        </label>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">
+          City:
+          <input
+            type="text"
+            class="form-control input-size-small"
+            formControlName="city"
+          />
+        </label>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">
+          State:
+          <input
+            type="text"
+            class="form-control input-size-small"
+            formControlName="state"
+          />
+        </label>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">
+          Zip:
+          <input
+            type="text"
+            class="form-control input-size-small"
+            formControlName="zip"
+          />
+        </label>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">
+          Phone:
+          <input
+            type="text"
+            class="form-control input-size-small"
+            formControlName="phone"
+          />
+        </label>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">
+          Email:
+          <input
+            type="email"
+            class="form-control input-size-small"
+            formControlName="email"
+          />
+        </label>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">
+          License Incentive:
+          <input
+            type="text"
+            class="form-control input-size-small"
+            formControlName="licenseIncentive"
+          />
+        </label>
+      </div>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button type="button" class="btn btn-secondary me-3">Cancel</button>
+      <button type="submit" class="btn btn-primary" [disabled]="!form.valid">
+        Update
+      </button>
+    </div>
+  </div>
+</form>

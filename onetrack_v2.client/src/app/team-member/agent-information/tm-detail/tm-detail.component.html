@@ -114,10 +114,10 @@
       <p style="font-size: larger; color: lightgrey">
         <strong>HIERARCHY</strong>
       </p>
-      <p class="p-5" *ngIf="agentInfo.mgrHiearchy.length == 0">
+      <p class="p-5" *ngIf="agentInfo?.mgrHiearchy?.length === 0">
         No Heirarchy Information Available
       </p>
-      <table class="table" *ngIf="agentInfo.mgrHiearchy.length > 0">
+      <table class="table" *ngIf="agentInfo && agentInfo.mgrHiearchy && agentInfo.mgrHiearchy.length > 0">
         <thead>
           <tr style="background-color: whitesmoke">
             <th>Mgr. Name</th>
@@ -145,7 +145,7 @@
 <!-- Modal: EDIT-TM-INFO -->
 <modal id="modal-edit-tm-detail">
     <div class="modal-header">
-      <h1 class="modal-title">Edit - Team Member Details</h1>
+      <h1 class="modal-title">Edit - Team Member Detail</h1>
       <!-- <button
           type="button"
           class="btn-close"
