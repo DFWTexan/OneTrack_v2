@@ -3,14 +3,16 @@
     <div class="col-md-12">
       <div class="row d-flex justify-content-start">
         <div class="col d-flex justify-content-center">
-          <button class="btn btn-danger w-100">Delete</button>
+          <button class="btn btn-danger w-100">
+            <span style="font-size: larger">Delete</span>
+          </button>
         </div>
         <div class="col d-flex justify-content-center">
           <button
             class="btn btn-primary w-100"
             (click)="modalService.open('modal-edit-tm-info')"
           >
-            Edit
+            <span style="font-size: larger">Edit</span>
           </button>
         </div>
       </div>
@@ -54,6 +56,18 @@
   </div>
   <div class="row mt-4">
     <div class="col-md-12">
+      <div class="row">
+        <div class="col d-flex justify-content-end">
+          <button class="btn btn-success">
+            <span style="font-size: larger"> Insert - New License </span>
+          </button>
+        </div>
+        <div class="col d-flex `justify-content-start">
+          <button class="btn btn-success">
+            <span style="font-size: larger"> Insert - Incentive License </span>
+          </button>
+        </div>
+      </div>
       <div class="row">
         <div class="col-md-12">
           <p><strong>Agent License & Appointments:</strong></p>
