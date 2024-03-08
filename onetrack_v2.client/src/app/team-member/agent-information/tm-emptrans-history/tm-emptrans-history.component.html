@@ -51,7 +51,10 @@
             <td class="align-middle">{{ emp.isCurrent ? "Yes" : "No" }}</td>
             <td>
               <div class="d-flex justify-content-between mb-3 me-4">
-                <button class="edit-button">
+                <button
+                  class="edit-button"
+                  (click)="modalService.open('modal-edit-emp-tran-history')"
+                >
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
                 <button class="edit-button">
@@ -106,8 +109,11 @@
             </td>
             <td class="align-middle">{{ emp.isCurrent ? "Yes" : "NO" }}</td>
             <td>
-              <div class="d-flex justify-content-between mb-3 me-4" style="max-width: 10rem;">
-                <button class="edit-button">
+              <div
+                class="d-flex justify-content-between mb-3 me-4"
+                style="max-width: 10rem"
+              >
+                <button class="edit-button" (click)="modalService.open('modal-edit-tran-history')">
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
                 <button class="edit-button">
@@ -157,10 +163,12 @@
             <td class="align-middle">
               {{ coReq.learningProgramCompletionDate | date : "MM/dd/yyyy" }}
             </td>
-
             <td>
-              <div class="d-flex justify-content-between mb-3 me-4" style="max-width: 10rem;">
-                <button class="edit-button">
+              <div
+                class="d-flex justify-content-between mb-3 me-4"
+                style="max-width: 10rem"
+              >
+                <button class="edit-button" (click)="modalService.open('modal-edit-co-req-history')">
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
                 <button class="edit-button">
@@ -214,8 +222,11 @@
             {{ jobTitle.isCurrent ? "Yes" : "No" }}
           </td>
           <td>
-            <div class="d-flex justify-content-between mb-3 me-4" style="max-width: 10rem;">
-              <button class="edit-button">
+            <div
+              class="d-flex justify-content-between mb-3 me-4"
+              style="max-width: 10rem"
+            >
+              <button class="edit-button" (click)="modalService.open('modal-edit-jobTitle-history')">
                 <span class="material-symbols-outlined"> edit </span>
               </button>
               <button class="edit-button">
@@ -228,3 +239,79 @@
     </table>
   </mat-expansion-panel>
 </div>
+
+<!-- Modal: EDIT-EMP-TRAN-HISTORY -->
+<modal id="modal-edit-emp-tran-history">
+  <div class="modal-header">
+    <h1 class="modal-title">Edit - Employment History</h1>
+    <!-- <button
+          type="button"
+          class="btn-close"
+          (click)="modalService.close()"
+        ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <!-- <app-edit-tm-information></app-edit-tm-information> -->
+      </div>
+    </div>
+  </div>
+</modal>
+
+<!-- Modal: EDIT-TRAN-HISTORY -->
+<modal id="modal-edit-tran-history">
+  <div class="modal-header">
+    <h1 class="modal-title">Edit - Transfer History</h1>
+    <!-- <button
+          type="button"
+          class="btn-close"
+          (click)="modalService.close()"
+        ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <!-- <app-edit-tm-information></app-edit-tm-information> -->
+      </div>
+    </div>
+  </div>
+</modal>
+
+<!-- Modal: EDIT-CO-REQ-HISTORY -->
+<modal id="modal-edit-co-req-history">
+  <div class="modal-header">
+    <h1 class="modal-title">Edit - Company Requirement History</h1>
+    <!-- <button
+          type="button"
+          class="btn-close"
+          (click)="modalService.close()"
+        ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <!-- <app-edit-tm-information></app-edit-tm-information> -->
+      </div>
+    </div>
+  </div>
+</modal>
+
+<!-- Modal: EDIT-JOBTITLE-HISORY -->
+<modal id="modal-edit-jobTitle-history">
+  <div class="modal-header">
+    <h1 class="modal-title">Edit - Job Title History</h1>
+    <!-- <button
+          type="button"
+          class="btn-close"
+          (click)="modalService.close()"
+        ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <!-- <app-edit-tm-information></app-edit-tm-information> -->
+      </div>
+    </div>
+  </div>
+</modal>
