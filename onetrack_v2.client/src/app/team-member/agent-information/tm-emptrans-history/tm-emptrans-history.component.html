@@ -11,60 +11,71 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
     <div class="mat-description">
-      <table class="table">
-        <thead>
-          <tr style="background-color: whitesmoke">
-            <th scope="col">History ID</th>
-            <th scope="col">Hire Date</th>
-            <th scope="col">Rehire Date</th>
-            <th scope="col">Notified Term Date</th>
-            <th scope="col">HR Term Date</th>
-            <th scope="col">HR Term Code</th>
-            <th scope="col">For Cause</th>
-            <th scope="col">Background Check Status</th>
-            <th scope="col">Background Check Notes</th>
-            <th scope="col">Is Current</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let emp of employmentHistory">
-            <td class="align-middle">{{ emp.employmentHistoryID }}</td>
-            <td class="align-middle">
-              {{ emp.hireDate | date : "MM/dd/yyyy" }}
-            </td>
-            <td class="align-middle">
-              {{ emp.rehireDate | date : "MM/dd/yyyy" }}
-            </td>
-            <td class="align-middle">
-              {{ emp.notifiedTermDate | date : "MM/dd/yyyy" }}
-            </td>
-            <td class="align-middle">
-              {{ emp.hrTermDate | date : "MM/dd/yyyy" }}
-            </td>
-            <td class="align-middle">{{ emp.hrTermCode }}</td>
-            <!-- <td>{{ emp.forCause ? "Yes" : "No" }}</td> -->
-            <td class="align-middle">TBD...</td>
-            <td class="align-middle">{{ emp.backgroundCheckStatus }}</td>
-            <!-- <td>{{ emp.backgroundCheckNotes }}</td> -->
-            <td class="align-middle">TBD...</td>
-            <td class="align-middle">{{ emp.isCurrent ? "Yes" : "No" }}</td>
-            <td>
-              <div class="d-flex justify-content-between mb-3 me-4">
-                <button
-                  class="edit-button"
-                  (click)="modalService.open('modal-edit-emp-tran-history')"
-                >
-                  <span class="material-symbols-outlined"> edit </span>
-                </button>
-                <button class="edit-button">
-                  <span class="material-symbols-outlined"> delete </span>
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="row mb-3">
+        <div class="col">
+          <button class="btn btn-success">
+            <span> Insert - Employment History </span>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">
+          <table class="table">
+            <thead>
+              <tr style="background-color: whitesmoke">
+                <th scope="col">History ID</th>
+                <th scope="col">Hire Date</th>
+                <th scope="col">Rehire Date</th>
+                <th scope="col">Notified Term Date</th>
+                <th scope="col">HR Term Date</th>
+                <th scope="col">HR Term Code</th>
+                <th scope="col">For Cause</th>
+                <th scope="col">Background Check Status</th>
+                <th scope="col">Background Check Notes</th>
+                <th scope="col">Is Current</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let emp of employmentHistory">
+                <td class="align-middle">{{ emp.employmentHistoryID }}</td>
+                <td class="align-middle">
+                  {{ emp.hireDate | date : "MM/dd/yyyy" }}
+                </td>
+                <td class="align-middle">
+                  {{ emp.rehireDate | date : "MM/dd/yyyy" }}
+                </td>
+                <td class="align-middle">
+                  {{ emp.notifiedTermDate | date : "MM/dd/yyyy" }}
+                </td>
+                <td class="align-middle">
+                  {{ emp.hrTermDate | date : "MM/dd/yyyy" }}
+                </td>
+                <td class="align-middle">{{ emp.hrTermCode }}</td>
+                <!-- <td>{{ emp.forCause ? "Yes" : "No" }}</td> -->
+                <td class="align-middle">TBD...</td>
+                <td class="align-middle">{{ emp.backgroundCheckStatus }}</td>
+                <!-- <td>{{ emp.backgroundCheckNotes }}</td> -->
+                <td class="align-middle">TBD...</td>
+                <td class="align-middle">{{ emp.isCurrent ? "Yes" : "No" }}</td>
+                <td>
+                  <div class="d-flex justify-content-between mb-3 me-4">
+                    <button
+                      class="edit-button"
+                      (click)="modalService.open('modal-edit-emp-tran-history')"
+                    >
+                      <span class="material-symbols-outlined"> edit </span>
+                    </button>
+                    <button class="edit-button">
+                      <span class="material-symbols-outlined"> delete </span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </mat-expansion-panel>
 
@@ -80,50 +91,62 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
     <div class="mat-description">
-      <table class="table">
-        <thead>
-          <tr style="background-color: whitesmoke">
-            <th scope="col">Trans. ID</th>
-            <th scope="col">Branch Code</th>
-            <th scope="col">Res. St. Code</th>
-            <th scope="col">Work St. Code</th>
-            <th scope="col">Trans. Date</th>
-            <th scope="col">Is Current</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let emp of transferHistory">
-            <td class="align-middle">{{ emp.transferHistoryID }}</td>
-            <td class="align-middle">
-              {{ emp.branchCode }}
-            </td>
-            <td class="align-middle">
-              {{ emp.resStateAbv }}
-            </td>
-            <td class="align-middle">
-              {{ emp.workStateAbv }}
-            </td>
-            <td class="align-middle">
-              {{ emp.transferDate | date : "MM/dd/yyyy" }}
-            </td>
-            <td class="align-middle">{{ emp.isCurrent ? "Yes" : "NO" }}</td>
-            <td>
-              <div
-                class="d-flex justify-content-between mb-3 me-4"
-                style="max-width: 10rem"
-              >
-                <button class="edit-button" (click)="modalService.open('modal-edit-tran-history')">
-                  <span class="material-symbols-outlined"> edit </span>
-                </button>
-                <button class="edit-button">
-                  <span class="material-symbols-outlined"> delete </span>
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="row mb-3">
+        <div class="col">
+          <button class="btn btn-success">
+            <span> Insert - Transfer History </span>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <table class="table">
+          <thead>
+            <tr style="background-color: whitesmoke">
+              <th scope="col">Trans. ID</th>
+              <th scope="col">Branch Code</th>
+              <th scope="col">Res. St. Code</th>
+              <th scope="col">Work St. Code</th>
+              <th scope="col">Trans. Date</th>
+              <th scope="col">Is Current</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let emp of transferHistory">
+              <td class="align-middle">{{ emp.transferHistoryID }}</td>
+              <td class="align-middle">
+                {{ emp.branchCode }}
+              </td>
+              <td class="align-middle">
+                {{ emp.resStateAbv }}
+              </td>
+              <td class="align-middle">
+                {{ emp.workStateAbv }}
+              </td>
+              <td class="align-middle">
+                {{ emp.transferDate | date : "MM/dd/yyyy" }}
+              </td>
+              <td class="align-middle">{{ emp.isCurrent ? "Yes" : "NO" }}</td>
+              <td>
+                <div
+                  class="d-flex justify-content-between mb-3 me-4"
+                  style="max-width: 10rem"
+                >
+                  <button
+                    class="edit-button"
+                    (click)="modalService.open('modal-edit-tran-history')"
+                  >
+                    <span class="material-symbols-outlined"> edit </span>
+                  </button>
+                  <button class="edit-button">
+                    <span class="material-symbols-outlined"> delete </span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </mat-expansion-panel>
 
@@ -139,46 +162,58 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
     <div class="mat-description">
-      <table class="table">
-        <thead>
-          <tr style="background-color: whitesmoke">
-            <th scope="col">Emp. Co. Req. ID</th>
-            <th scope="col">Asset ID</th>
-            <th scope="col">Status</th>
-            <th scope="col">Comp. Date</th>
-            <th scope="col">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let coReq of companyRequirementsHistory">
-            <td class="align-middle">
-              {{ coReq.employmentCompanyRequirementID }}
-            </td>
-            <td class="align-middle">
-              {{ coReq.assetIdString }}
-            </td>
-            <td class="align-middle">
-              {{ coReq.learningProgramStatus }}
-            </td>
-            <td class="align-middle">
-              {{ coReq.learningProgramCompletionDate | date : "MM/dd/yyyy" }}
-            </td>
-            <td>
-              <div
-                class="d-flex justify-content-between mb-3 me-4"
-                style="max-width: 10rem"
-              >
-                <button class="edit-button" (click)="modalService.open('modal-edit-co-req-history')">
-                  <span class="material-symbols-outlined"> edit </span>
-                </button>
-                <button class="edit-button">
-                  <span class="material-symbols-outlined"> delete </span>
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      <div class="row mb-3">
+        <div class="col">
+          <button class="btn btn-success">
+            <span> Insert - Co. Requirement</span>
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <table class="table">
+          <thead>
+            <tr style="background-color: whitesmoke">
+              <th scope="col">Emp. Co. Req. ID</th>
+              <th scope="col">Asset ID</th>
+              <th scope="col">Status</th>
+              <th scope="col">Comp. Date</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let coReq of companyRequirementsHistory">
+              <td class="align-middle">
+                {{ coReq.employmentCompanyRequirementID }}
+              </td>
+              <td class="align-middle">
+                {{ coReq.assetIdString }}
+              </td>
+              <td class="align-middle">
+                {{ coReq.learningProgramStatus }}
+              </td>
+              <td class="align-middle">
+                {{ coReq.learningProgramCompletionDate | date : "MM/dd/yyyy" }}
+              </td>
+              <td>
+                <div
+                  class="d-flex justify-content-between mb-3 me-4"
+                  style="max-width: 10rem"
+                >
+                  <button
+                    class="edit-button"
+                    (click)="modalService.open('modal-edit-co-req-history')"
+                  >
+                    <span class="material-symbols-outlined"> edit </span>
+                  </button>
+                  <button class="edit-button">
+                    <span class="material-symbols-outlined"> delete </span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </mat-expansion-panel>
 
@@ -193,50 +228,62 @@
         {{ employmentJobTitleHistory.length }} - record(s) found
       </mat-panel-description>
     </mat-expansion-panel-header>
-    <table class="table">
-      <thead>
-        <tr style="background-color: whitesmoke">
-          <th scope="col">Emp. JobTitle ID</th>
-          <th scope="col">JobTitle Date</th>
-          <th scope="col">Job Title</th>
-          <th scope="col">Job Code</th>
-          <th scope="col">Is Current</th>
-          <th scope="col">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let jobTitle of employmentJobTitleHistory">
-          <td class="align-middle">
-            {{ jobTitle.employmentJobTitleID }}
-          </td>
-          <td class="align-middle">
-            {{ jobTitle.jobTitleDate | date : "MM/dd/yyyy" }}
-          </td>
-          <td class="align-middle">
-            {{ jobTitle.jobTitle }}
-          </td>
-          <td class="align-middle">
-            {{ jobTitle.jobCode }}
-          </td>
-          <td class="align-middle">
-            {{ jobTitle.isCurrent ? "Yes" : "No" }}
-          </td>
-          <td>
-            <div
-              class="d-flex justify-content-between mb-3 me-4"
-              style="max-width: 10rem"
-            >
-              <button class="edit-button" (click)="modalService.open('modal-edit-jobTitle-history')">
-                <span class="material-symbols-outlined"> edit </span>
-              </button>
-              <button class="edit-button">
-                <span class="material-symbols-outlined"> delete </span>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="row mb-3">
+      <div class="col">
+        <button class="btn btn-success">
+          <span> Insert - Job Title </span>
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <table class="table">
+        <thead>
+          <tr style="background-color: whitesmoke">
+            <th scope="col">Emp. JobTitle ID</th>
+            <th scope="col">JobTitle Date</th>
+            <th scope="col">Job Title</th>
+            <th scope="col">Job Code</th>
+            <th scope="col">Is Current</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let jobTitle of employmentJobTitleHistory">
+            <td class="align-middle">
+              {{ jobTitle.employmentJobTitleID }}
+            </td>
+            <td class="align-middle">
+              {{ jobTitle.jobTitleDate | date : "MM/dd/yyyy" }}
+            </td>
+            <td class="align-middle">
+              {{ jobTitle.jobTitle }}
+            </td>
+            <td class="align-middle">
+              {{ jobTitle.jobCode }}
+            </td>
+            <td class="align-middle">
+              {{ jobTitle.isCurrent ? "Yes" : "No" }}
+            </td>
+            <td>
+              <div
+                class="d-flex justify-content-between mb-3 me-4"
+                style="max-width: 10rem"
+              >
+                <button
+                  class="edit-button"
+                  (click)="modalService.open('modal-edit-jobTitle-history')"
+                >
+                  <span class="material-symbols-outlined"> edit </span>
+                </button>
+                <button class="edit-button">
+                  <span class="material-symbols-outlined"> delete </span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </mat-expansion-panel>
 </div>
 
