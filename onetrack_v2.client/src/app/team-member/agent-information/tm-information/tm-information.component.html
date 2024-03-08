@@ -15,7 +15,7 @@
         </div>
       </div>
       <hr />
-      <div class="row  bg-body p-3 rounded mt-4 ms-2">
+      <div class="row bg-body p-3 rounded mt-4 ms-2">
         <div class="col">
           <p>
             <strong>Job Title:</strong><br />
@@ -57,8 +57,12 @@
       <div class="row">
         <div class="col-md-12">
           <p><strong>Agent License & Appointments:</strong></p>
-          <mat-expansion-panel class="mat-elevation-z4 mb-3"
-            *ngFor="let license of agentInfo.agentLicenseAppointments ; let i = index"
+          <mat-expansion-panel
+            class="mat-elevation-z4 mb-3"
+            *ngFor="
+              let license of agentInfo.agentLicenseAppointments;
+              let i = index
+            "
           >
             <mat-expansion-panel-header>
               <mat-panel-title>
@@ -118,15 +122,23 @@
                   {{ license.licenseExpirationDate | date : "MM/dd/yyyy" }}
                 </div>
                 <div class="col d-flex justify-content-end">
-                  <button class="page-button appointment-edit-button" (click)="toggleLicenseMgmt(i)">
-                    <span class="material-symbols-outlined" style="font-size: 35px;"> pageview </span>
+                  <button
+                    class="page-button appointment-edit-button"
+                    (click)="toggleLicenseMgmt(i)"
+                  >
+                    <span
+                      class="material-symbols-outlined"
+                      style="font-size: 35px"
+                    >
+                      pageview
+                    </span>
                   </button>
                 </div>
               </div>
               <div class="row">
                 <table class="table">
                   <thead>
-                    <tr style="background-color: whitesmoke;">
+                    <tr style="background-color: whitesmoke">
                       <th>License ID</th>
                       <th>Appt ID</th>
                       <th>Status</th>
@@ -151,17 +163,24 @@
                       <td>TBD...</td>
                       <td>TBD...</td>
                       <td>
-                        <button
-                          class="edit-button"
-                          (click)="storeLicAppointment(appointment); modalService.open('modal-edit-license-appt')"
-                        >
-                          <span class="material-symbols-outlined"> edit </span>
-                        </button>
-                        <button class="edit-button">
-                          <span class="material-symbols-outlined">
-                            delete
-                          </span>
-                        </button>
+                        <div class="d-flex justify-content-between mb-3 me-4">
+                          <button
+                            class="edit-button"
+                            (click)="
+                              storeLicAppointment(appointment);
+                              modalService.open('modal-edit-license-appt')
+                            "
+                          >
+                            <span class="material-symbols-outlined">
+                              edit
+                            </span>
+                          </button>
+                          <button class="edit-button">
+                            <span class="material-symbols-outlined">
+                              delete
+                            </span>
+                          </button>
+                        </div>
                       </td>
                     </tr>
                   </tbody>

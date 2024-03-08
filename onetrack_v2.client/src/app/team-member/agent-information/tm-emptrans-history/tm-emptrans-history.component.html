@@ -50,7 +50,7 @@
             <td class="align-middle">TBD...</td>
             <td class="align-middle">{{ emp.isCurrent ? "Yes" : "No" }}</td>
             <td>
-              <div class="d-flex justify-content-center mb-3">
+              <div class="d-flex justify-content-between mb-3 me-4">
                 <button class="edit-button">
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
@@ -93,20 +93,20 @@
           <tr *ngFor="let emp of transferHistory">
             <td class="align-middle">{{ emp.transferHistoryID }}</td>
             <td class="align-middle">
-              {{ emp.branchCode | date : "MM/dd/yyyy" }}
+              {{ emp.branchCode }}
             </td>
             <td class="align-middle">
-              {{ emp.resStateAbv | date : "MM/dd/yyyy" }}
+              {{ emp.resStateAbv }}
             </td>
             <td class="align-middle">
-              {{ emp.workStateAbv | date : "MM/dd/yyyy" }}
+              {{ emp.workStateAbv }}
             </td>
             <td class="align-middle">
               {{ emp.transferDate | date : "MM/dd/yyyy" }}
             </td>
             <td class="align-middle">{{ emp.isCurrent ? "Yes" : "NO" }}</td>
             <td>
-              <div class="d-flex justify-content-center mb-3">
+              <div class="d-flex justify-content-between mb-3 me-4" style="max-width: 10rem;">
                 <button class="edit-button">
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
@@ -132,7 +132,46 @@
         {{ companyRequirementsHistory.length }} - record(s) found
       </mat-panel-description>
     </mat-expansion-panel-header>
-    BODY - Company Requirements History
+    <div class="mat-description">
+      <table class="table">
+        <thead>
+          <tr style="background-color: whitesmoke">
+            <th scope="col">Emp. Co. Req. ID</th>
+            <th scope="col">Asset ID</th>
+            <th scope="col">Status</th>
+            <th scope="col">Comp. Date</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let coReq of companyRequirementsHistory">
+            <td class="align-middle">
+              {{ coReq.employmentCompanyRequirementID }}
+            </td>
+            <td class="align-middle">
+              {{ coReq.assetIdString }}
+            </td>
+            <td class="align-middle">
+              {{ coReq.learningProgramStatus }}
+            </td>
+            <td class="align-middle">
+              {{ coReq.learningProgramCompletionDate | date : "MM/dd/yyyy" }}
+            </td>
+
+            <td>
+              <div class="d-flex justify-content-between mb-3 me-4" style="max-width: 10rem;">
+                <button class="edit-button">
+                  <span class="material-symbols-outlined"> edit </span>
+                </button>
+                <button class="edit-button">
+                  <span class="material-symbols-outlined"> delete </span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </mat-expansion-panel>
 
   <mat-expansion-panel class="mat-elevation-z4 mb-3">
@@ -146,6 +185,46 @@
         {{ employmentJobTitleHistory.length }} - record(s) found
       </mat-panel-description>
     </mat-expansion-panel-header>
-    BODY - Job Title History
+    <table class="table">
+      <thead>
+        <tr style="background-color: whitesmoke">
+          <th scope="col">Emp. JobTitle ID</th>
+          <th scope="col">JobTitle Date</th>
+          <th scope="col">Job Title</th>
+          <th scope="col">Job Code</th>
+          <th scope="col">Is Current</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let jobTitle of employmentJobTitleHistory">
+          <td class="align-middle">
+            {{ jobTitle.employmentJobTitleID }}
+          </td>
+          <td class="align-middle">
+            {{ jobTitle.jobTitleDate | date : "MM/dd/yyyy" }}
+          </td>
+          <td class="align-middle">
+            {{ jobTitle.jobTitle }}
+          </td>
+          <td class="align-middle">
+            {{ jobTitle.jobCode }}
+          </td>
+          <td class="align-middle">
+            {{ jobTitle.isCurrent ? "Yes" : "No" }}
+          </td>
+          <td>
+            <div class="d-flex justify-content-between mb-3 me-4" style="max-width: 10rem;">
+              <button class="edit-button">
+                <span class="material-symbols-outlined"> edit </span>
+              </button>
+              <button class="edit-button">
+                <span class="material-symbols-outlined"> delete </span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </mat-expansion-panel>
 </div>
