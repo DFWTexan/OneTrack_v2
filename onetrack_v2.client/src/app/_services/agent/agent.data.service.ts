@@ -23,6 +23,7 @@ export class AgentDataService {
   private apiUrl: string = environment.apiUrl;
   agentInformation: AgentInfo = {} as AgentInfo;
   agentInfoChanged = new Subject<AgentInfo>();
+  // AGENT LICENSE APPOINTMENTS
   agentLicenseAppointments: AgentLicenseAppointments[];
   agentLicenseAppointmentsChanged = new Subject<AgentLicenseAppointments[]>();
   licenseAppointment: LicenseAppointment = {} as LicenseAppointment;
@@ -31,6 +32,7 @@ export class AgentDataService {
   licenseMgmtDataChanged = new Subject<AgentLicenseAppointments>();
   licenseMgmtDataIndex: number = 0;
   licenseMgmtDataIndexChanged = new Subject<number>();
+  // EMP TRANSFER HISTORY
   employmentTransferHistItem: any = {};
   employmentTransferHistItemChanged = new Subject<any>();
   transferHistItem: any = {};

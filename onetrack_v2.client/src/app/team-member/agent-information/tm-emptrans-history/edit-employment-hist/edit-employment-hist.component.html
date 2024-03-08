@@ -1,1 +1,6 @@
-<p>edit-employment-hist works!</p>
+<form [formGroup]="employmentHistoryForm">
+    <label for="employmentHistoryID">Employment History ID</label>
+    <input id="employmentHistoryID" type="number" formControlName="employmentHistoryID">
+    <!-- Repeat for other fields -->
+    <button type="submit">Submit</button>
+  </form>
