@@ -53,4 +53,8 @@ export class EditEmploymentHistComponent implements OnInit {
       }
     });
   }
+
+  onSubmit() {
+    console.log('EMFTest - (app-edit-employment-hist) onSubmit => \n', this.employmentHistoryForm.value);
+  }
 }

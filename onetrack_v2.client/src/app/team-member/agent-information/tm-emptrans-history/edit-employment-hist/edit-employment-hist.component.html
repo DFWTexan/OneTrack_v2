@@ -1,6 +1,121 @@
-<form [formGroup]="employmentHistoryForm">
-    <label for="employmentHistoryID">Employment History ID</label>
-    <input id="employmentHistoryID" type="number" formControlName="employmentHistoryID">
-    <!-- Repeat for other fields -->
-    <button type="submit">Submit</button>
-  </form>
+<form
+  [formGroup]="employmentHistoryForm"
+  (ngSubmit)="onSubmit()"
+  class="container app-modal-container"
+>
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        <label for="employmentHistoryID" class="form-label">Employment History ID</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="employmentHistoryID"
+          formControlName="employmentHistoryID"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="hireDate" class="form-label">Hire Date:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="hireDate"
+          formControlName="hireDate"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="rehireDate" class="form-label">Rehire Date:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="rehireDate"
+          formControlName="rehireDate"
+        />
+      </div>
+      
+
+      <div class="mb-3">
+        <label for="backgroundCheckStatus" class="form-label">Background Check Status:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="backgroundCheckStatus"
+          formControlName="backgroundCheckStatus"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="backGroundCheckNotes" class="form-label">Background Check Notes:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="backGroundCheckNotes"
+          formControlName="backGroundCheckNotes"
+        />
+      </div>
+
+      
+
+    </div>
+    <div class="col">
+      <div class="mb-3">
+        <label for="notifiedTermDate" class="form-label">Notified Term Date:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="notifiedTermDate"
+          formControlName="notifiedTermDate"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="hrTermDate" class="form-label">HR Term Date:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="hrTermDate"
+          formControlName="hrTermDate"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="hrTermCode" class="form-label">HR Term Code:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="hrTermCode"
+          formControlName="hrTermCode"
+        />
+      </div>
+      
+      <div class="mb-3">
+        <label for="isForCause" class="form-label">ForCause:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="isForCause"
+          formControlName="isForCause"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="isCurrent" class="form-label">Is Current Record:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="isCurrent"
+          formControlName="isCurrent"
+        />
+      </div>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button type="button" class="btn btn-secondary me-3 cancel-button">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary save-button">Save</button>
+    </div>
+  </div>
+</form>
