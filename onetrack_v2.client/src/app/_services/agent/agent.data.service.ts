@@ -40,7 +40,10 @@ export class AgentDataService {
   employmentJobTitleHistItem: any = {};
   employmentJobTitleHistItemChanged = new Subject<any>();
 
-  constructor(private http: HttpClient, private agentComService: AgentComService) {
+  constructor(
+    private http: HttpClient,
+    private agentComService: AgentComService
+  ) {
     this.agentLicenseAppointments = [];
   }
 
@@ -116,24 +119,32 @@ export class AgentDataService {
     );
   }
 
-  storeTransferHistory(transferHistory: TransferHistory) {
-    this.transferHistItem = transferHistory;
+  storeTransferHistory(
+    mode: string | '',
+    transferHistory: TransferHistory | null
+  ) {
+    this.agentComService.modeTransferHistModal(mode);
+    this.transferHistItem = transferHistory || {};
     this.transferHistItemChanged.next(this.transferHistItem);
   }
 
   storeCompanyRequirementsHistory(
-    companyRequirementsHistory: CompanyRequirementsHistory
+    mode: string | '',
+    companyRequirementsHistory: CompanyRequirementsHistory | null
   ) {
-    this.companyRequirementsHistItem = companyRequirementsHistory;
+    this.agentComService.modeCompanyRequirementsHistModal(mode);
+    this.companyRequirementsHistItem = companyRequirementsHistory || {};
     this.companyRequirementsHistItemChanged.next(
       this.companyRequirementsHistItem
     );
   }
 
   storeEmploymentJobTitleHistory(
-    employmentJobTitleHistory: EmploymentJobTitleHistory
+    mode: string | '',
+    employmentJobTitleHistory: EmploymentJobTitleHistory | null
   ) {
-    this.employmentJobTitleHistItem = employmentJobTitleHistory;
+    this.agentComService.modeEmploymentJobTitleHistModal(mode);
+    this.employmentJobTitleHistItem = employmentJobTitleHistory || {};
     this.employmentJobTitleHistItemChanged.next(
       this.employmentJobTitleHistItem
     );

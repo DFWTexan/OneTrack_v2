@@ -105,7 +105,13 @@
     <div class="mat-description">
       <div class="row mb-3">
         <div class="col">
-          <button class="btn btn-success">
+          <button
+            class="btn btn-success"
+            (click)="
+              agentService.storeTransferHistory('INSERT', null);
+              modalService.open('modal-edit-tran-history')
+            "
+          >
             <span style="font-size: larger"> Insert - Transfer History </span>
           </button>
         </div>
@@ -149,7 +155,7 @@
                   <button
                     class="edit-button"
                     (click)="
-                      agentService.storeTransferHistory(transfer);
+                      agentService.storeTransferHistory('EDIT', transfer);
                       modalService.open('modal-edit-tran-history')
                     "
                   >
@@ -181,7 +187,13 @@
     <div class="mat-description">
       <div class="row mb-3">
         <div class="col">
-          <button class="btn btn-success">
+          <button
+            class="btn btn-success"
+            (click)="
+              agentService.storeCompanyRequirementsHistory('INSERT', null);
+              modalService.open('modal-edit-co-req-history')
+            "
+          >
             <span style="font-size: larger"> Insert - Co. Requirement</span>
           </button>
         </div>
@@ -219,7 +231,10 @@
                   <button
                     class="edit-button"
                     (click)="
-                      agentService.storeCompanyRequirementsHistory(coReq);
+                      agentService.storeCompanyRequirementsHistory(
+                        'EDIT',
+                        coReq
+                      );
                       modalService.open('modal-edit-co-req-history')
                     "
                   >
@@ -250,7 +265,13 @@
     </mat-expansion-panel-header>
     <div class="row mb-3">
       <div class="col">
-        <button class="btn btn-success">
+        <button
+          class="btn btn-success"
+          (click)="
+            agentService.storeEmploymentJobTitleHistory('INSERT', null);
+            modalService.open('modal-edit-jobTitle-history')
+          "
+        >
           <span style="font-size: larger"> Insert - Job Title </span>
         </button>
       </div>
@@ -292,7 +313,7 @@
                 <button
                   class="edit-button"
                   (click)="
-                    agentService.storeEmploymentJobTitleHistory(jobTitle);
+                    agentService.storeEmploymentJobTitleHistory('EDIT', jobTitle);
                     modalService.open('modal-edit-jobTitle-history')
                   "
                 >
@@ -334,7 +355,7 @@
 <!-- Modal: EDIT-TRAN-HISTORY -->
 <modal id="modal-edit-tran-history">
   <div class="modal-header">
-    <h1 class="modal-title">Edit - Transfer History</h1>
+    <h1 class="modal-title">{{ agentComService.modeTransferHist }} - Transfer History</h1>
     <!-- <button
           type="button"
           class="btn-close"
@@ -353,7 +374,7 @@
 <!-- Modal: EDIT-CO-REQ-HISTORY -->
 <modal id="modal-edit-co-req-history">
   <div class="modal-header">
-    <h1 class="modal-title">Edit - Company Requirement History</h1>
+    <h1 class="modal-title">{{ agentComService.modeCompanyRequirementsHist }} - Company Requirement History</h1>
     <!-- <button
           type="button"
           class="btn-close"
@@ -372,7 +393,7 @@
 <!-- Modal: EDIT-JOBTITLE-HISORY -->
 <modal id="modal-edit-jobTitle-history">
   <div class="modal-header">
-    <h1 class="modal-title">Edit - Job Title History</h1>
+    <h1 class="modal-title">{{ agentComService.modeEmploymentJobTitleHist }} - Job Title History</h1>
     <!-- <button
           type="button"
           class="btn-close"
