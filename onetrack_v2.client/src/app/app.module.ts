@@ -61,6 +61,7 @@ import { LicenseIncentiveComponent } from './team-member/agent-information/tm-li
 import { EditLicenseInfoComponent } from './team-member/agent-information/tm-license-management/license-info/edit-license-info/edit-license-info.component';
 import { EditTmDetailComponent } from './team-member/agent-information/tm-detail/edit-tm-detail/edit-tm-detail.component';
 import { PhoneFormatPipe } from './_shared/';
+import { EditEmploymentHistComponent } from './team-member/agent-information/tm-emptrans-history/edit-employment-hist/edit-employment-hist.component';
 
 @NgModule({
   declarations: [
@@ -105,6 +106,7 @@ import { PhoneFormatPipe } from './_shared/';
     EditLicenseInfoComponent,
     EditTmDetailComponent,
     PhoneFormatPipe,
+    EditEmploymentHistComponent,
   ],
   imports: [
     BrowserModule,
