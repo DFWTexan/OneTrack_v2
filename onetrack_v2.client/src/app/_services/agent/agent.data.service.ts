@@ -26,6 +26,14 @@ export class AgentDataService {
   licenseMgmtDataChanged = new Subject<AgentLicenseAppointments>();
   licenseMgmtDataIndex: number = 0;
   licenseMgmtDataIndexChanged = new Subject<number>();
+  employmentTransferHistItem: any = {};
+  employmentTransferHistItemChanged = new Subject<any>();
+  transferHistItem: any = {};
+  transferHistItemChanged = new Subject<any>();
+  companyRequirementsHistItem: any = {};
+  companyRequirementsHistItemChanged = new Subject<any>();
+  employmentJobTitleHistItem: any = {};
+  employmentJobTitleHistItemChanged = new Subject<any>();
 
   constructor(private http: HttpClient) {
     this.agentLicenseAppointments = [];
@@ -79,14 +87,36 @@ export class AgentDataService {
         })
       );
   }
-
+  
+  // LICENSE APPOINTMENT MANAGEMENT
   storeLicenseAppointment(appointment: LicenseAppointment) {
     this.licenseAppointment = appointment;
     this.licenseAppointmentChanged.next(appointment);
-  }
-
+  } 
+  
   storeLicenseMgmtData(index: number) {
     this.licenseMgmtDataIndex = index;
     this.licenseMgmtDataIndexChanged.next(index);
+  }
+
+  // TM EMPLOYMENT TRANSFER HISTORY
+  storeEmploymentTransferHistory(employmentTransferHistory: any) {
+    this.employmentTransferHistItem = employmentTransferHistory;
+    this.employmentTransferHistItemChanged.next(this.employmentTransferHistItem);
+  }  
+
+  storeTransferHistory(transferHistory: any) {
+    this.transferHistItem = transferHistory;
+    this.transferHistItemChanged.next(this.transferHistItem);
+  }
+
+  storeCompanyRequirementsHistory(companyRequirementsHistory: any) {
+    this.companyRequirementsHistItem = companyRequirementsHistory;
+    this.companyRequirementsHistItemChanged.next(this.companyRequirementsHistItem);
+  }
+
+  storeEmploymentJobTitleHistory(employmentJobTitleHistory: any) {
+    this.employmentJobTitleHistItem = employmentJobTitleHistory;
+    this.employmentJobTitleHistItemChanged.next(this.employmentJobTitleHistItem);
   }
 }

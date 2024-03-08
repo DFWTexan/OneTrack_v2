@@ -20,7 +20,7 @@ export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
   employmentJobTitleHistory: EmploymentJobTitleHistory[] = [];
   
   constructor(
-    private agentService: AgentDataService,
+    public agentService: AgentDataService,
     protected modalService: ModalService
   ) {
     this.subscribeAgentInfo = new Subscription();

@@ -62,7 +62,7 @@
                   <div class="d-flex justify-content-between mb-3 me-4">
                     <button
                       class="edit-button"
-                      (click)="modalService.open('modal-edit-emp-tran-history')"
+                      (click)="agentService.storeEmploymentTransferHistory(emp); modalService.open('modal-edit-emp-tran-history')"
                     >
                       <span class="material-symbols-outlined"> edit </span>
                     </button>
@@ -112,21 +112,21 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let emp of transferHistory">
-              <td class="align-middle">{{ emp.transferHistoryID }}</td>
+            <tr *ngFor="let transfer of transferHistory">
+              <td class="align-middle">{{ transfer.transferHistoryID }}</td>
               <td class="align-middle">
-                {{ emp.branchCode }}
+                {{ transfer.branchCode }}
               </td>
               <td class="align-middle">
-                {{ emp.resStateAbv }}
+                {{ transfer.resStateAbv }}
               </td>
               <td class="align-middle">
-                {{ emp.workStateAbv }}
+                {{ transfer.workStateAbv }}
               </td>
               <td class="align-middle">
-                {{ emp.transferDate | date : "MM/dd/yyyy" }}
+                {{ transfer.transferDate | date : "MM/dd/yyyy" }}
               </td>
-              <td class="align-middle">{{ emp.isCurrent ? "Yes" : "NO" }}</td>
+              <td class="align-middle">{{ transfer.isCurrent ? "Yes" : "NO" }}</td>
               <td>
                 <div
                   class="d-flex justify-content-between mb-3 me-4"
@@ -134,7 +134,7 @@
                 >
                   <button
                     class="edit-button"
-                    (click)="modalService.open('modal-edit-tran-history')"
+                    (click)="agentService.storeTransferHistory(transfer); modalService.open('modal-edit-tran-history')"
                   >
                     <span class="material-symbols-outlined"> edit </span>
                   </button>
@@ -201,7 +201,7 @@
                 >
                   <button
                     class="edit-button"
-                    (click)="modalService.open('modal-edit-co-req-history')"
+                    (click)="agentService.storeCompanyRequirementsHistory(coReq); modalService.open('modal-edit-co-req-history')"
                   >
                     <span class="material-symbols-outlined"> edit </span>
                   </button>
@@ -271,7 +271,7 @@
               >
                 <button
                   class="edit-button"
-                  (click)="modalService.open('modal-edit-jobTitle-history')"
+                  (click)="agentService.storeEmploymentJobTitleHistory(jobTitle); modalService.open('modal-edit-jobTitle-history')"
                 >
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
