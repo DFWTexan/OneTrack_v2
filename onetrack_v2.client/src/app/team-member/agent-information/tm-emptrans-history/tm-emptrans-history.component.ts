@@ -2,7 +2,7 @@ import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { AgentInfo, CompanyRequirementsHistory, EmploymentHistory, EmploymentJobTitleHistory, TransferHistory } from '../../../_Models';
-import { AgentDataService, ModalService } from '../../../_services';
+import { AgentComService, AgentDataService, ModalService } from '../../../_services';
 
 @Component({
   selector: 'app-tm-emptrans-history',
@@ -21,6 +21,7 @@ export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
   
   constructor(
     public agentService: AgentDataService,
+    public agentComService: AgentComService,
     protected modalService: ModalService
   ) {
     this.subscribeAgentInfo = new Subscription();

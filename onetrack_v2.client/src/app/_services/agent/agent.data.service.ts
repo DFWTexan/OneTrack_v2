@@ -8,8 +8,13 @@ import { environment } from '../../environments/environment';
 import {
   AgentInfo,
   AgentLicenseAppointments,
+  CompanyRequirementsHistory,
+  EmploymentHistory,
+  EmploymentJobTitleHistory,
   LicenseAppointment,
+  TransferHistory,
 } from '../../_Models';
+import { AgentComService } from './agentInfo.com.service';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +40,7 @@ export class AgentDataService {
   employmentJobTitleHistItem: any = {};
   employmentJobTitleHistItemChanged = new Subject<any>();
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private agentComService: AgentComService) {
     this.agentLicenseAppointments = [];
   }
 
@@ -87,36 +92,50 @@ export class AgentDataService {
         })
       );
   }
-  
+
   // LICENSE APPOINTMENT MANAGEMENT
   storeLicenseAppointment(appointment: LicenseAppointment) {
     this.licenseAppointment = appointment;
     this.licenseAppointmentChanged.next(appointment);
-  } 
-  
+  }
+
   storeLicenseMgmtData(index: number) {
     this.licenseMgmtDataIndex = index;
     this.licenseMgmtDataIndexChanged.next(index);
   }
 
   // TM EMPLOYMENT TRANSFER HISTORY
-  storeEmploymentTransferHistory(employmentTransferHistory: any) {
-    this.employmentTransferHistItem = employmentTransferHistory;
-    this.employmentTransferHistItemChanged.next(this.employmentTransferHistItem);
-  }  
+  storeEmploymentTransferHistory(
+    mode: string | '',
+    employmentTransferHistory: EmploymentHistory | null
+  ) {
+    this.agentComService.modeEmploymentHistModal(mode);
+    this.employmentTransferHistItem = employmentTransferHistory || {};
+    this.employmentTransferHistItemChanged.next(
+      this.employmentTransferHistItem
+    );
+  }
 
-  storeTransferHistory(transferHistory: any) {
+  storeTransferHistory(transferHistory: TransferHistory) {
     this.transferHistItem = transferHistory;
     this.transferHistItemChanged.next(this.transferHistItem);
   }
 
-  storeCompanyRequirementsHistory(companyRequirementsHistory: any) {
+  storeCompanyRequirementsHistory(
+    companyRequirementsHistory: CompanyRequirementsHistory
+  ) {
     this.companyRequirementsHistItem = companyRequirementsHistory;
-    this.companyRequirementsHistItemChanged.next(this.companyRequirementsHistItem);
+    this.companyRequirementsHistItemChanged.next(
+      this.companyRequirementsHistItem
+    );
   }
 
-  storeEmploymentJobTitleHistory(employmentJobTitleHistory: any) {
+  storeEmploymentJobTitleHistory(
+    employmentJobTitleHistory: EmploymentJobTitleHistory
+  ) {
     this.employmentJobTitleHistItem = employmentJobTitleHistory;
-    this.employmentJobTitleHistItemChanged.next(this.employmentJobTitleHistItem);
+    this.employmentJobTitleHistItemChanged.next(
+      this.employmentJobTitleHistItem
+    );
   }
 }

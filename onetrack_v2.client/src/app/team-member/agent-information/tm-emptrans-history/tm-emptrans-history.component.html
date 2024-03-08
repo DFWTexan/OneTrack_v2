@@ -13,7 +13,13 @@
     <div class="mat-description">
       <div class="row mb-3">
         <div class="col">
-          <button class="btn btn-success">
+          <button
+            class="btn btn-success"
+            (click)="
+              agentService.storeEmploymentTransferHistory('INSERT', null);
+              modalService.open('modal-edit-emp-history')
+            "
+          >
             <span style="font-size: larger"> Insert - Employment History </span>
           </button>
         </div>
@@ -62,7 +68,13 @@
                   <div class="d-flex justify-content-between mb-3 me-4">
                     <button
                       class="edit-button"
-                      (click)="agentService.storeEmploymentTransferHistory(emp); modalService.open('modal-edit-emp-tran-history')"
+                      (click)="
+                        agentService.storeEmploymentTransferHistory(
+                          'EDIT',
+                          emp
+                        );
+                        modalService.open('modal-edit-emp-history')
+                      "
                     >
                       <span class="material-symbols-outlined"> edit </span>
                     </button>
@@ -126,7 +138,9 @@
               <td class="align-middle">
                 {{ transfer.transferDate | date : "MM/dd/yyyy" }}
               </td>
-              <td class="align-middle">{{ transfer.isCurrent ? "Yes" : "NO" }}</td>
+              <td class="align-middle">
+                {{ transfer.isCurrent ? "Yes" : "NO" }}
+              </td>
               <td>
                 <div
                   class="d-flex justify-content-between mb-3 me-4"
@@ -134,7 +148,10 @@
                 >
                   <button
                     class="edit-button"
-                    (click)="agentService.storeTransferHistory(transfer); modalService.open('modal-edit-tran-history')"
+                    (click)="
+                      agentService.storeTransferHistory(transfer);
+                      modalService.open('modal-edit-tran-history')
+                    "
                   >
                     <span class="material-symbols-outlined"> edit </span>
                   </button>
@@ -201,7 +218,10 @@
                 >
                   <button
                     class="edit-button"
-                    (click)="agentService.storeCompanyRequirementsHistory(coReq); modalService.open('modal-edit-co-req-history')"
+                    (click)="
+                      agentService.storeCompanyRequirementsHistory(coReq);
+                      modalService.open('modal-edit-co-req-history')
+                    "
                   >
                     <span class="material-symbols-outlined"> edit </span>
                   </button>
@@ -271,7 +291,10 @@
               >
                 <button
                   class="edit-button"
-                  (click)="agentService.storeEmploymentJobTitleHistory(jobTitle); modalService.open('modal-edit-jobTitle-history')"
+                  (click)="
+                    agentService.storeEmploymentJobTitleHistory(jobTitle);
+                    modalService.open('modal-edit-jobTitle-history')
+                  "
                 >
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
@@ -288,9 +311,11 @@
 </div>
 
 <!-- Modal: EDIT-EMP-TRAN-HISTORY -->
-<modal id="modal-edit-emp-tran-history">
+<modal id="modal-edit-emp-history">
   <div class="modal-header">
-    <h1 class="modal-title">Edit - Employment History</h1>
+    <h1 class="modal-title">
+      {{ agentComService.modeEmploymentHist }} - Employment History
+    </h1>
     <!-- <button
           type="button"
           class="btn-close"
