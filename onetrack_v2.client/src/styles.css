@@ -45,6 +45,14 @@ body {
   font-weight: 400;
 }
 
+.save-button {
+  font-size: larger;
+}
+
+.cancel-button {
+  font-size: larger;
+} 
+
 .input-size-small {
   width: 150px;
 }
