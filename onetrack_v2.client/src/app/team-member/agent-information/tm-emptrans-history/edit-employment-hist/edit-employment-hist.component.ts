@@ -18,7 +18,7 @@ export class EditEmploymentHistComponent implements OnInit {
 
   ngOnInit(): void {
     this.employmentHistoryForm = new FormGroup({
-      employmentHistoryID: new FormControl(null),
+      employmentHistoryID: new FormControl({ value: '', disabled: true }),
       hireDate: new FormControl(null),
       rehireDate: new FormControl(null),
       notifiedTermDate: new FormControl(null),

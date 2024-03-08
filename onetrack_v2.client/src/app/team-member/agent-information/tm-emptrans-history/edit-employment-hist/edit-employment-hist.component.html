@@ -6,7 +6,9 @@
   <div class="row">
     <div class="col">
       <div class="mb-3">
-        <label for="employmentHistoryID" class="form-label">Employment History ID</label>
+        <label for="employmentHistoryID" class="form-label"
+          >Employment History ID</label
+        >
         <input
           class="form-control input-size-small"
           type="text"
@@ -18,7 +20,7 @@
         <label for="hireDate" class="form-label">Hire Date:</label>
         <input
           class="form-control input-size-small"
-          type="text"
+          type="date"
           id="hireDate"
           formControlName="hireDate"
         />
@@ -27,83 +29,86 @@
         <label for="rehireDate" class="form-label">Rehire Date:</label>
         <input
           class="form-control input-size-small"
-          type="text"
+          type="date"
           id="rehireDate"
           formControlName="rehireDate"
         />
       </div>
-      
 
       <div class="mb-3">
-        <label for="backgroundCheckStatus" class="form-label">Background Check Status:</label>
+        <label for="backgroundCheckStatus" class="form-label"
+          >Background Check Status:</label
+        >
         <input
-          class="form-control input-size-small"
+          class="form-select form-select-lg select-size-small"
           type="text"
           id="backgroundCheckStatus"
           formControlName="backgroundCheckStatus"
         />
       </div>
-
       <div class="mb-3">
-        <label for="backGroundCheckNotes" class="form-label">Background Check Notes:</label>
-        <input
-          class="form-control input-size-small"
+        <label for="backGroundCheckNotes" class="form-label"
+          >Background Check Notes:</label
+        >
+        <textarea
+          class="form-control input-size-medium"
           type="text"
           id="backGroundCheckNotes"
           formControlName="backGroundCheckNotes"
-        />
+        ></textarea>
       </div>
-
-      
-
     </div>
     <div class="col">
       <div class="mb-3">
-        <label for="notifiedTermDate" class="form-label">Notified Term Date:</label>
+        <label for="notifiedTermDate" class="form-label"
+          >Notified Term Date:</label
+        >
         <input
           class="form-control input-size-small"
-          type="text"
+          type="date"
           id="notifiedTermDate"
           formControlName="notifiedTermDate"
         />
       </div>
+      
       <div class="mb-3">
         <label for="hrTermDate" class="form-label">HR Term Date:</label>
         <input
           class="form-control input-size-small"
-          type="text"
+          type="date"
           id="hrTermDate"
           formControlName="hrTermDate"
         />
       </div>
+      
       <div class="mb-3">
         <label for="hrTermCode" class="form-label">HR Term Code:</label>
         <input
           class="form-control input-size-small"
-          type="text"
+          type="date"
           id="hrTermCode"
           formControlName="hrTermCode"
         />
       </div>
       
       <div class="mb-3">
-        <label for="isForCause" class="form-label">ForCause:</label>
         <input
-          class="form-control input-size-small"
-          type="text"
+          class="form-check-input me-2"
+          type="checkbox"
           id="isForCause"
           formControlName="isForCause"
         />
+        <label for="isForCause" class="form-label">ForCause</label>
       </div>
 
       <div class="mb-3">
-        <label for="isCurrent" class="form-label">Is Current Record:</label>
         <input
-          class="form-control input-size-small"
-          type="text"
+          class="form-check-input me-2"
+          type="checkbox"
           id="isCurrent"
           formControlName="isCurrent"
         />
+        <label for="isCurrent" class="form-label">Is Current Record</label>
       </div>
     </div>
   </div>
