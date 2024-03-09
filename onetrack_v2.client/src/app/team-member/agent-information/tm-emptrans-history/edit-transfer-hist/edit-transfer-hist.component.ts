@@ -12,8 +12,9 @@ import { AgentComService, AgentDataService } from '../../../../_services';
 @Injectable()
 export class EditTransferHistComponent implements OnInit, OnDestroy {
   transferHistoryForm!: FormGroup;
-  subscription: Subscription = new Subscription;
-
+  subscriptionMode: Subscription = new Subscription;
+  subscriptionData: Subscription = new Subscription;
+  
   constructor(
     public agentService: AgentDataService,
     public agentComService: AgentComService
@@ -30,9 +31,9 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
       isCurrent: new FormControl(null),
     });
 
-    this.subscription = this.agentComService.modeTransferHistChanged.subscribe((mode: string) => {
+    this.subscriptionMode = this.agentComService.modeTransferHistChanged.subscribe((mode: string) => {
       if (mode === 'EDIT') {
-        this.agentService.transferHistItemChanged.subscribe(
+        this.subscriptionData = this.agentService.transferHistItemChanged.subscribe(
           (transferHistory: any) => {
             this.transferHistoryForm.patchValue({
               transferHistoryID: transferHistory.transferHistoryID,
@@ -56,6 +57,7 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscriptionMode.unsubscribe();
+    this.subscriptionData.unsubscribe();
   }
 }

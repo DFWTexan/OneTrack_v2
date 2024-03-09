@@ -13,8 +13,8 @@ import { AgentComService, AgentDataService } from '../../../../_services';
 @Injectable()
 export class EditCorequirementHistComponent implements OnInit, OnDestroy {
   coRequirementsForm!: FormGroup;
-  subscriptionData: Subscription = new Subscription;
   subscriptionMode: Subscription = new Subscription;
+  subscriptionData: Subscription = new Subscription;
 
   constructor(
     public agentService: AgentDataService,
@@ -31,10 +31,10 @@ export class EditCorequirementHistComponent implements OnInit, OnDestroy {
       ]),
     });
 
-    this.subscriptionData = this.agentComService.modeCompanyRequirementsHistChanged.subscribe(
+    this.subscriptionMode = this.agentComService.modeCompanyRequirementsHistChanged.subscribe(
       (mode: string) => {
         if (mode === 'EDIT') {
-          this.subscriptionMode = this.agentService.companyRequirementsHistItemChanged.subscribe(
+          this.subscriptionData = this.agentService.companyRequirementsHistItemChanged.subscribe(
             (coRequirement: any) => {
               this.coRequirementsForm.patchValue({
                 assetIdString: coRequirement.assetIdString,
@@ -67,7 +67,7 @@ export class EditCorequirementHistComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscriptionData.unsubscribe();
     this.subscriptionMode.unsubscribe();
+    this.subscriptionData.unsubscribe();
   }
 }
