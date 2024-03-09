@@ -12,7 +12,8 @@ import { AgentComService, AgentDataService } from '../../../../_services';
 @Injectable()
 export class EditEmploymentHistComponent implements OnInit, OnDestroy {
   employmentHistoryForm!: FormGroup;
-  subscription: Subscription = new Subscription;
+  subscriptionData: Subscription = new Subscription;
+  subscriptionMode: Subscription = new Subscription;
 
   constructor(
     public agentService: AgentDataService,
@@ -33,9 +34,9 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
       isCurrent: new FormControl(null),
     });
 
-    this.subscription = this.agentComService.modeEmploymentHistChanged.subscribe((mode: string) => {
+    this.subscriptionData = this.agentComService.modeEmploymentHistChanged.subscribe((mode: string) => {
       if (mode === 'EDIT') {
-        this.agentService.employmentTransferHistItemChanged.subscribe(
+        this.subscriptionMode = this.agentService.employmentTransferHistItemChanged.subscribe(
           (employmentHistory: any) => {
             this.employmentHistoryForm.patchValue({
               employmentHistoryID: employmentHistory.employmentHistoryID,
@@ -62,6 +63,7 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+    this.subscriptionData.unsubscribe();
+    this.subscriptionMode.unsubscribe();
   }
 }

@@ -5,23 +5,13 @@
 >
   <div class="row">
     <div class="col">
-      <div class="mb-3" *ngIf="agentComService.modeTransferHist === 'EDIT'">
-        <label for="assetIdString" class="form-label">ID:</label>
-        <input
-          class="form-control input-size-small"
-          type="text"
-          id="assetIdString"
-          formControlName="assetIdString"
-        />
-      </div>
-
-      <div class="mb-3">
-        <label for="learningProgramStatus" class="form-label">Status:</label>
+      <div class="mb-3" *ngIf="agentComService.modeCompanyRequirementsHist === 'EDIT'">
+        <label for="assetIdString" class="form-label"> Asset ID:</label>
         <input
           class="form-select form-select-lg select-size-small"
           type="text"
-          id="learningProgramStatus"
-          formControlName="learningProgramStatus"
+          id="assetIdString"
+          formControlName="assetIdString"
         />
       </div>
 
@@ -36,6 +26,18 @@
           formControlName="learningProgramEnrollmentDate"
         />
       </div>
+
+      <div class="mb-3">
+        <label for="learningProgramStatus" class="form-label">Status:</label>
+        <input
+          class="form-select form-select-lg select-size-small"
+          type="text"
+          id="learningProgramStatus"
+          formControlName="learningProgramStatus"
+        />
+      </div>
+
+      
 
       <div class="mb-3">
         <label for="learningProgramCompletionDate" class="form-label">Completion Date:</label><br />
