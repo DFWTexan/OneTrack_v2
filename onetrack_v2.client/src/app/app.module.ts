@@ -14,6 +14,10 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatNativeDateModule } from '@angular/material/core';
+
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -63,6 +67,7 @@ import { EditTmDetailComponent } from './team-member/agent-information/tm-detail
 import { PhoneFormatPipe } from './_shared/';
 import { EditEmploymentHistComponent } from './team-member/agent-information/tm-emptrans-history/edit-employment-hist/edit-employment-hist.component';
 import { EditTransferHistComponent } from './team-member/agent-information/tm-emptrans-history/edit-transfer-hist/edit-transfer-hist.component';
+import { EditCorequirementHistComponent } from './team-member/agent-information/tm-emptrans-history/edit-corequirement-hist/edit-corequirement-hist.component';
 
 @NgModule({
   declarations: [
@@ -109,6 +114,7 @@ import { EditTransferHistComponent } from './team-member/agent-information/tm-em
     PhoneFormatPipe,
     EditEmploymentHistComponent,
     EditTransferHistComponent,
+    EditCorequirementHistComponent,
   ],
   imports: [
     BrowserModule,
@@ -128,6 +134,9 @@ import { EditTransferHistComponent } from './team-member/agent-information/tm-em
     MatTabsModule,
     MatSelectModule,
     MatTooltipModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatNativeDateModule,
     RouterModule.forRoot([]),
   ],
   providers: [provideAnimationsAsync(), ConstantsDataService],

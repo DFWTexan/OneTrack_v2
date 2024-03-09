@@ -1,0 +1,76 @@
+<form
+  [formGroup]="coRequirementsForm"
+  (ngSubmit)="onSubmit()"
+  class="container app-modal-container"
+>
+  <div class="row">
+    <div class="col">
+      <div class="mb-3" *ngIf="agentComService.modeTransferHist === 'EDIT'">
+        <label for="assetIdString" class="form-label">ID:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="assetIdString"
+          formControlName="assetIdString"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="learningProgramStatus" class="form-label">Status:</label>
+        <input
+          class="form-select form-select-lg select-size-small"
+          type="text"
+          id="learningProgramStatus"
+          formControlName="learningProgramStatus"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="learningProgramEnrollmentDate" class="form-label"
+          >Enrollment Date:</label
+        >
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="learningProgramEnrollmentDate"
+          formControlName="learningProgramEnrollmentDate"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="learningProgramCompletionDate" class="form-label">Completion Date:</label><br />
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="learningProgramCompletionDate"
+          formControlName="learningProgramCompletionDate"
+        />
+        <!-- <mat-form-field>
+          <mat-label>Choose a date</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="learningProgramCompletionDate"
+          />
+          <mat-hint>MM/DD/YYYY</mat-hint>
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field> -->
+      </div>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button type="button" class="btn btn-secondary me-3 cancel-button">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary save-button">Save</button>
+    </div>
+  </div>
+</form>

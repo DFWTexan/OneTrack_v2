@@ -1,5 +1,6 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 import { AgentComService, AgentDataService } from '../../../../_services';
 
@@ -9,8 +10,9 @@ import { AgentComService, AgentDataService } from '../../../../_services';
   styleUrl: './edit-employment-hist.component.css',
 })
 @Injectable()
-export class EditEmploymentHistComponent implements OnInit {
+export class EditEmploymentHistComponent implements OnInit, OnDestroy {
   employmentHistoryForm!: FormGroup;
+  subscription: Subscription = new Subscription;
 
   constructor(
     public agentService: AgentDataService,
@@ -31,7 +33,7 @@ export class EditEmploymentHistComponent implements OnInit {
       isCurrent: new FormControl(null),
     });
 
-    this.agentComService.modeEmploymentHistChanged.subscribe((mode: string) => {
+    this.subscription = this.agentComService.modeEmploymentHistChanged.subscribe((mode: string) => {
       if (mode === 'EDIT') {
         this.agentService.employmentTransferHistItemChanged.subscribe(
           (employmentHistory: any) => {
@@ -57,5 +59,9 @@ export class EditEmploymentHistComponent implements OnInit {
 
   onSubmit() {
     console.log('EMFTest - (app-edit-employment-hist) onSubmit => \n', this.employmentHistoryForm.value);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 }
