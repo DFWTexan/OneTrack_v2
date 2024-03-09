@@ -1,5 +1,6 @@
 import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 
 import { AgentComService, AgentDataService } from '../../../../_services';
@@ -40,7 +41,11 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
               branchCode: transferHistory.branchCode,
               workStateAbv: transferHistory.workStateAbv,
               resStateAbv: transferHistory.resStateAbv,
-              transferDate: transferHistory.transferDate,
+              transferDate: formatDate(
+                transferHistory.transferDate,
+                'yyyy-MM-dd',
+                'en-US'
+              ),
               state: transferHistory.state,
               isCurrent: transferHistory.isCurrent,
             });

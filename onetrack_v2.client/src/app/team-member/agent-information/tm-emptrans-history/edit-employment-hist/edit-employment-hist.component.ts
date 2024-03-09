@@ -1,5 +1,6 @@
 import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 
 import { AgentComService, AgentDataService } from '../../../../_services';
@@ -40,10 +41,26 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
           (employmentHistory: any) => {
             this.employmentHistoryForm.patchValue({
               employmentHistoryID: employmentHistory.employmentHistoryID,
-              hireDate: employmentHistory.hireDate,
-              rehireDate: employmentHistory.rehireDate,
-              notifiedTermDate: employmentHistory.notifiedTermDate,
-              hrTermDate: employmentHistory.hrTermDate,
+              hireDate: formatDate(
+                employmentHistory.hireDate,
+                'yyyy-MM-dd',
+                'en-US'
+              ),
+              rehireDate: formatDate(
+                employmentHistory.rehireDate,
+                'yyyy-MM-dd',
+                'en-US'
+              ),
+              notifiedTermDate: formatDate(
+                employmentHistory.notifiedTermDate,
+                'yyyy-MM-dd',
+                'en-US'
+              ),
+              hrTermDate: formatDate(
+                employmentHistory.hrTermDate,
+                'yyyy-MM-dd',
+                'en-US'
+              ),
               hrTermCode: employmentHistory.hrTermCode,
               isForCause: employmentHistory.isForCause,
               backgroundCheckStatus: employmentHistory.backgroundCheckStatus,
