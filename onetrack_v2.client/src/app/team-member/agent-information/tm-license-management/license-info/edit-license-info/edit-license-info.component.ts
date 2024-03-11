@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
 import { formatDate } from '@angular/common';
+import { Subscription } from 'rxjs';
 
 import { AgentComService, AgentDataService } from '../../../../../_services';
 import { AgentLicenseAppointments } from '../../../../../_Models';

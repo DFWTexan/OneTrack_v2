@@ -1,5 +1,6 @@
 import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 
 import { AgentDataService } from '../../../../_services';
@@ -43,6 +44,8 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
       this.subscribeAgentInfo = this.agentService.agentInfoChanged.subscribe(
       (agentInfo: any) => {
         this.agentInfo = agentInfo;
+        let dateOfBirth =
+            this.agentInfo.dateOfBirth;
         this.form.patchValue({
           employeeID: agentInfo.employeeID,
           lastName: agentInfo.lastName,
@@ -57,7 +60,9 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
           zip: agentInfo.zip,
           phone: agentInfo.phone,
           email: agentInfo.email,
-          dateOfBirth: agentInfo.dateOfBirth,
+          dateOfBirth: dateOfBirth
+          ? formatDate(dateOfBirth, 'yyyy-MM-dd', 'en-US')
+          : null,
           licenseLevel: agentInfo.licenseLevel,
           licenseIncentive: agentInfo.licenseIncentive,
           isLicenseincentiveSecondChance: agentInfo.isLicenseincentiveSecondChance,
