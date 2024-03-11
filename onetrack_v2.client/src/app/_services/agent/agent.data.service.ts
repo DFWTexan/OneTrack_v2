@@ -104,7 +104,7 @@ export class AgentDataService {
     this.licenseAppointmentChanged.next(appointment);
   }
 
-  storeLicenseMgmtData(index: number) {
+  storeLicenseMgmtDataIndex(index: number) {
     this.licenseMgmtDataIndex = index;
     this.licenseMgmtDataIndexChanged.next(index);
   }

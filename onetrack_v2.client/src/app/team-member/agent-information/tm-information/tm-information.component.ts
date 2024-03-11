@@ -18,7 +18,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
 
   constructor(
     private agentService: AgentDataService,
-    private agentComService: AgentComService,
+    public agentComService: AgentComService,
     protected modalService: ModalService
   ) {
     this.subscribeAgentInfo = new Subscription();
@@ -33,12 +33,16 @@ export class TmInformationComponent implements OnInit, OnDestroy {
     );
   }
 
+  setModeLicenseMgmt(mode: string) {
+    this.agentComService.modeLicenseMgmtModal(mode);
+  }
+
   storeLicAppointment(appointment: any) {
     this.agentService.storeLicenseAppointment(appointment);
   }
 
   toggleLicenseMgmt(index: number) {
-    this.agentService.storeLicenseMgmtData(index);
+    this.agentService.storeLicenseMgmtDataIndex(index);
     this.agentComService.showLicenseMgmt();
   }  
 

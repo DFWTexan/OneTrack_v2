@@ -22,8 +22,8 @@
     </div>
     <div class="col d-flex justify-content-end me-5">
       <button
-        class="edit-button"
-        (click)="modalService.open('modal-edit-license-info')"
+        class="edit-button me-5"
+        (click)="setModeLicenseMgmt('EDIT'); modalService.open('modal-edit-license-info')"
       >
         <span class="material-symbols-outlined"> edit </span>
       </button>
@@ -113,10 +113,15 @@
   </div>
   <div class="row">
     <div
-      class="col d-flex justify-content-start mt-2"
+      class="col d-flex justify-content-start mt-5"
       style="font-weight: 700; font-size: larger"
     >
       APPOINTMENTS
+    </div>
+    <div class="col d-flex justify-content-end mt-3 mb-3">
+      <button class="btn btn-success">
+        <span style="font-size: larger"> Add - Appointment </span>
+      </button>
     </div>
   </div>
   <div class="row">
@@ -154,19 +159,21 @@
           <td>
             {{ appointment.appointmentTerminationDate | date : "MM/dd/yyyy" }}
           </td>
-          <td>
-            <button
-              class="edit-button"
-              (click)="
-                agentDataService.storeLicenseAppointment(appointment);
-                modalService.open('modal-edit-license-appt')
-              "
-            >
-              <span class="material-symbols-outlined"> edit </span>
-            </button>
-            <button class="edit-button">
-              <span class="material-symbols-outlined"> delete </span>
-            </button>
+          <td style="min-width: 10rem">
+            <div class="d-flex justify-content-between me-4">
+              <button
+                class="edit-button"
+                (click)="
+                  agentDataService.storeLicenseAppointment(appointment);
+                  modalService.open('modal-edit-license-appt')
+                "
+              >
+                <span class="material-symbols-outlined"> edit </span>
+              </button>
+              <button class="edit-button">
+                <span class="material-symbols-outlined"> delete </span>
+              </button>
+            </div>
           </td>
           <!-- <td>{{ appointment.employeeAppointmentID }}</td>
           <td>{{ appointment.retentionDate | date : "MM/dd/yyyy" }}</td> -->
@@ -179,12 +186,7 @@
 <!-- Modal: EDIT-LICENSE-INFO -->
 <modal id="modal-edit-license-info">
   <div class="modal-header">
-    <h1 class="modal-title">Edit - License Information</h1>
-    <!-- <button
-        type="button"
-        class="btn-close"
-        (click)="modalService.close()"
-      ></button> -->
+    <h1 class="modal-title">{{ agentComService.modeLicenseMgmt }} - License Information</h1>
   </div>
   <div class="modal-body">
     <div>
@@ -193,16 +195,8 @@
       </div>
     </div>
   </div>
-  <!-- <div class="modal-footer">
-      <button
-        type="button"
-        class="btn btn-secondary"
-        (click)="modalService.close()"
-      >
-        Close
-      </button>
-    </div> -->
 </modal>
+
 <!-- Modal: EDIT-LICAPPT-INFO -->
 <modal id="modal-edit-license-appt">
   <div class="modal-header">

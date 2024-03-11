@@ -58,11 +58,11 @@
     <div class="col-md-12">
       <div class="row">
         <div class="col d-flex justify-content-end">
-          <button class="btn btn-success">
+          <button class="btn btn-success"(click)="setModeLicenseMgmt('ADD'); modalService.open('modal-edit-license-info');">
             <span style="font-size: larger"> Insert - New License </span>
           </button>
         </div>
-        <div class="col d-flex `justify-content-start">
+        <div class="col d-flex justify-content-start">
           <button class="btn btn-success">
             <span style="font-size: larger"> Insert - Incentive License </span>
           </button>
@@ -260,4 +260,17 @@
         Close
       </button>
     </div> -->
+</modal>
+<!-- Modal: EDIT-LICENSE-INFO -->
+<modal id="modal-edit-license-info">
+  <div class="modal-header">
+    <h1 class="modal-title">{{ agentComService.modeLicenseMgmt }} - License Information</h1>
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-edit-license-info></app-edit-license-info>
+      </div>
+    </div>
+  </div>
 </modal>

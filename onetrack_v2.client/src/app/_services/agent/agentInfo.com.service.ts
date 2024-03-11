@@ -5,6 +5,8 @@ import { Subject } from 'rxjs';
   providedIn: 'root',
 })
 export class AgentComService {
+  modeLicenseMgmt: string = '';
+  modeLicenseMgmtChanged = new Subject<string>();
   isShowLicenseMgmt: boolean = false;
   isShowLicenseMgmtChanged = new Subject<boolean>();
   modeEmploymentHist: string = '';
@@ -17,6 +19,11 @@ export class AgentComService {
   modeEmploymentJobTitleHistChanged = new Subject<string>();
 
   constructor() {}
+
+  modeLicenseMgmtModal(mode: string) {
+    this.modeLicenseMgmt = mode;
+    this.modeLicenseMgmtChanged.next(this.modeLicenseMgmt);
+  }
 
   showLicenseMgmt() {
     this.isShowLicenseMgmt = !this.isShowLicenseMgmt;

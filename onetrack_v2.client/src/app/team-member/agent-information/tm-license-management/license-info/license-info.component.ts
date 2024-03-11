@@ -1,7 +1,7 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 
 import { AgentLicenseAppointments } from '../../../../_Models';
-import { AgentDataService, ModalService } from '../../../../_services';
+import { AgentComService, AgentDataService, ModalService } from '../../../../_services';
 
 @Component({
   selector: 'app-license-info',
@@ -15,6 +15,7 @@ export class LicenseInfoComponent implements OnInit {
 
   constructor(
     protected agentDataService: AgentDataService,
+    public agentComService: AgentComService,
     protected modalService: ModalService
   ) {}
 
@@ -47,5 +48,9 @@ export class LicenseInfoComponent implements OnInit {
 
   isDisplayNext(): boolean {
     return this.currentIndex < this.licenseMgmtData.length - 1;
+  }
+
+  setModeLicenseMgmt(mode: string) {
+    this.agentComService.modeLicenseMgmtModal(mode);
   }
 }
