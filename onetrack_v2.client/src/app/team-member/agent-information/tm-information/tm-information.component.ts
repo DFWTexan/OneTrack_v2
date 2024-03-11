@@ -17,7 +17,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   agentInfo: AgentInfo = {} as AgentInfo;
 
   constructor(
-    private agentService: AgentDataService,
+    private agentDataService: AgentDataService,
     public agentComService: AgentComService,
     protected modalService: ModalService
   ) {
@@ -26,7 +26,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.subscribeAgentInfo = this.agentService.agentInfoChanged.subscribe(
+    this.subscribeAgentInfo = this.agentDataService.agentInfoChanged.subscribe(
       (agentInfo: any) => {
         this.agentInfo = agentInfo;
       }
@@ -38,11 +38,15 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   }
 
   storeLicAppointment(appointment: any) {
-    this.agentService.storeLicenseAppointment(appointment);
+    this.agentDataService.storeLicenseAppointment(appointment);
   }
 
   toggleLicenseMgmt(index: number) {
-    this.agentService.storeLicenseMgmtDataIndex(index);
+
+console.log('EMFTEST = TmInformationComponent.toggleLicenseMgmt index: ', index);
+
+    this.agentDataService.storeLicenseMgmtDataIndex(index);
+    this.agentDataService.licenseMgmtDataIndexChanged.next(index);
     this.agentComService.showLicenseMgmt();
   }  
 

@@ -101,12 +101,15 @@ export class AgentDataService {
   // LICENSE APPOINTMENT MANAGEMENT
   storeLicenseAppointment(appointment: LicenseAppointment) {
     this.licenseAppointment = appointment;
-    this.licenseAppointmentChanged.next(appointment);
+    this.licenseAppointmentChanged.next(this.licenseAppointment);
   }
 
   storeLicenseMgmtDataIndex(index: number) {
+
+console.log('EMFTEST = AgentDataService.storeLicenseMgmtDataIndex index: ', index);
+
     this.licenseMgmtDataIndex = index;
-    this.licenseMgmtDataIndexChanged.next(index);
+    this.licenseMgmtDataIndexChanged.next(this.licenseMgmtDataIndex);
   }
 
   // TM EMPLOYMENT TRANSFER HISTORY
