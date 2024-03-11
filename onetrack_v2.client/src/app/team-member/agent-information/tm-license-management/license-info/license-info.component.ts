@@ -29,12 +29,14 @@ export class LicenseInfoComponent implements OnInit {
   nextPage() {
     if (this.currentIndex < this.licenseMgmtData.length - 1) {
       this.currentIndex++;
+      this.agentDataService.licenseMgmtDataIndexChanged.next(this.currentIndex);
     }
   }
 
   previousPage() {
     if (this.currentIndex > 0) {
       this.currentIndex--;
+      this.agentDataService.licenseMgmtDataIndexChanged.next(this.currentIndex);
     }
   }
 

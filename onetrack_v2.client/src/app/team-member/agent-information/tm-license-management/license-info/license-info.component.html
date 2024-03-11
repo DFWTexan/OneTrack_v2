@@ -1,6 +1,14 @@
 <div class="container app-component-container">
   <div class="row">
-    <div class="col d-flex justify-content-start mb-3 mt-1">
+    <div
+      class="col d-flex justify-content-start mt-4"
+      style="font-size: larger"
+    >
+      <strong style="margin-right: 1rem">License Name:</strong
+      >{{ licenseMgmtData[currentIndex].licenseName }}
+    </div>
+
+    <div class="col d-flex justify-content-center mb-3 mt-1">
       <button
         class="btn btn-link page-button mb-5"
         *ngIf="isDisplayPrevious()"
@@ -16,14 +24,14 @@
         <span class="material-symbols-outlined"> arrow_forward_ios </span>
       </button>
     </div>
-    <div class="col d-flex justify-content-start" style="font-size: larger">
-      <strong style="margin-right: 1rem">License Name:</strong
-      >{{ licenseMgmtData[currentIndex].licenseName }}
-    </div>
+
     <div class="col d-flex justify-content-end me-5">
       <button
         class="edit-button me-5"
-        (click)="setModeLicenseMgmt('EDIT'); modalService.open('modal-edit-license-info')"
+        (click)="
+          setModeLicenseMgmt('EDIT');
+          modalService.open('modal-edit-license-info')
+        "
       >
         <span class="material-symbols-outlined"> edit </span>
       </button>
@@ -186,7 +194,9 @@
 <!-- Modal: EDIT-LICENSE-INFO -->
 <modal id="modal-edit-license-info">
   <div class="modal-header">
-    <h1 class="modal-title">{{ agentComService.modeLicenseMgmt }} - License Information</h1>
+    <h1 class="modal-title">
+      {{ agentComService.modeLicenseMgmt }} - License Information
+    </h1>
   </div>
   <div class="modal-body">
     <div>
