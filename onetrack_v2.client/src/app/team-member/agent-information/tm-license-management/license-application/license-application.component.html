@@ -61,6 +61,62 @@
               </button>
             </div>
           </div>
+          <div class="row">
+            <table class="table">
+              <thead>
+                <tr style="background-color: whitesmoke">
+                  <th scope="col">Application Status</th>
+                  <th scope="col">Application ID</th>
+                  <th scope="col">Set to Agent</th>
+                  <th scope="col">Rec. From Agent</th>
+                  <th scope="col">Sent to State</th>
+                  <th scope="col">Rec. From State</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <tr *ngFor="let jobTitle of employmentJobTitleHistory">
+                  <td class="align-middle">
+                    {{ jobTitle.employmentJobTitleID }}
+                  </td>
+                  <td class="align-middle">
+                    {{ jobTitle.jobTitleDate | date : "MM/dd/yyyy" }}
+                  </td>
+                  <td class="align-middle">
+                    {{ jobTitle.jobTitle }}
+                  </td>
+                  <td class="align-middle">
+                    {{ jobTitle.jobCode }}
+                  </td>
+                  <td class="align-middle">
+                    {{ jobTitle.isCurrent ? "Yes" : "No" }}
+                  </td>
+                  <td>
+                    <div
+                      class="d-flex justify-content-between mb-3 me-4"
+                      style="min-width: 10rem; max-width: 10rem"
+                    >
+                      <button
+                        class="edit-button"
+                        (click)="
+                          agentService.storeEmploymentJobTitleHistory(
+                            'EDIT',
+                            jobTitle
+                          );
+                          modalService.open('modal-edit-jobTitle-history')
+                        "
+                      >
+                        <span class="material-symbols-outlined"> edit </span>
+                      </button>
+                      <button class="edit-button">
+                        <span class="material-symbols-outlined"> delete </span>
+                      </button>
+                    </div>
+                  </td>
+                </tr> -->
+              </tbody>
+            </table>
+          </div>
         </mat-expansion-panel>
 
         <mat-expansion-panel
@@ -86,6 +142,62 @@
               </button>
             </div>
           </div>
+          <div class="row">
+            <table class="table">
+              <thead>
+                <tr style="background-color: whitesmoke">
+                  <th scope="col">PreEdu Status</th>
+                  <th scope="col">PreEdu ID</th>
+                  <th scope="col">Class Name</th>
+                  <th scope="col">Scheduled Date</th>
+                  <th scope="col">Taken Date</th>
+                  <th scope="col">PreEdu Notes</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <tr *ngFor="let jobTitle of employmentJobTitleHistory">
+                  <td class="align-middle">
+                    {{ jobTitle.employmentJobTitleID }}
+                  </td>
+                  <td class="align-middle">
+                    {{ jobTitle.jobTitleDate | date : "MM/dd/yyyy" }}
+                  </td>
+                  <td class="align-middle">
+                    {{ jobTitle.jobTitle }}
+                  </td>
+                  <td class="align-middle">
+                    {{ jobTitle.jobCode }}
+                  </td>
+                  <td class="align-middle">
+                    {{ jobTitle.isCurrent ? "Yes" : "No" }}
+                  </td>
+                  <td>
+                    <div
+                      class="d-flex justify-content-between mb-3 me-4"
+                      style="min-width: 10rem; max-width: 10rem"
+                    >
+                      <button
+                        class="edit-button"
+                        (click)="
+                          agentService.storeEmploymentJobTitleHistory(
+                            'EDIT',
+                            jobTitle
+                          );
+                          modalService.open('modal-edit-jobTitle-history')
+                        "
+                      >
+                        <span class="material-symbols-outlined"> edit </span>
+                      </button>
+                      <button class="edit-button">
+                        <span class="material-symbols-outlined"> delete </span>
+                      </button>
+                    </div>
+                  </td>
+                </tr> -->
+              </tbody>
+            </table>
+          </div>
         </mat-expansion-panel>
 
         <mat-expansion-panel
@@ -110,6 +222,62 @@
                 <span style="font-size: larger"> Insert - PreExams </span>
               </button>
             </div>
+          </div>
+          <div class="row">
+            <table class="table">
+              <thead>
+                <tr style="background-color: whitesmoke">
+                  <th scope="col">Status</th>
+                  <th scope="col">PreExam ID</th>
+                  <th scope="col">Exam Name</th>
+                  <th scope="col">Scheduled Date</th>
+                  <th scope="col">Taken Date</th>
+                  <th scope="col">Exam Notes</th>
+                  <th scope="col">Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <tr *ngFor="let jobTitle of employmentJobTitleHistory">
+                  <td class="align-middle">
+                    {{ jobTitle.employmentJobTitleID }}
+                  </td>
+                  <td class="align-middle">
+                    {{ jobTitle.jobTitleDate | date : "MM/dd/yyyy" }}
+                  </td>
+                  <td class="align-middle">
+                    {{ jobTitle.jobTitle }}
+                  </td>
+                  <td class="align-middle">
+                    {{ jobTitle.jobCode }}
+                  </td>
+                  <td class="align-middle">
+                    {{ jobTitle.isCurrent ? "Yes" : "No" }}
+                  </td>
+                  <td>
+                    <div
+                      class="d-flex justify-content-between mb-3 me-4"
+                      style="min-width: 10rem; max-width: 10rem"
+                    >
+                      <button
+                        class="edit-button"
+                        (click)="
+                          agentService.storeEmploymentJobTitleHistory(
+                            'EDIT',
+                            jobTitle
+                          );
+                          modalService.open('modal-edit-jobTitle-history')
+                        "
+                      >
+                        <span class="material-symbols-outlined"> edit </span>
+                      </button>
+                      <button class="edit-button">
+                        <span class="material-symbols-outlined"> delete </span>
+                      </button>
+                    </div>
+                  </td>
+                </tr> -->
+              </tbody>
+            </table>
           </div>
         </mat-expansion-panel>
       <!-- </mat-accordion> -->
