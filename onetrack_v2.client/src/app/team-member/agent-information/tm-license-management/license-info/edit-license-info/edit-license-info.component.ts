@@ -69,20 +69,11 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptionMode =
       this.agentComService.modeLicenseMgmtChanged.subscribe((mode: string) => {
-
-console.log('EMFTest - (app-edit-license-info) mode: ', mode);
-
         if (mode === 'EDIT') {
           // this.currentIndex = this.agentDataService.licenseMgmtDataIndex;
-
-console.log('EMFTest - (app-edit-license-info) licenseMgmtDataIndex: ', this.agentDataService.licenseMgmtDataIndex);
-
           this.subscriptionData =
             this.agentDataService.licenseMgmtDataIndexChanged.subscribe(
               (licenseMgmtDataIndex: any) => {
-
-console.log('EMFTest - (app-edit-license-info) licenseMgmtDataIndex: ', licenseMgmtDataIndex);
-
                 this.currentIndex = licenseMgmtDataIndex;
               }
             );
