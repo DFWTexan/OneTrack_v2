@@ -21,6 +21,12 @@ export class LicenseInfoComponent implements OnInit {
 
   ngOnInit() {
     this.currentIndex = this.agentDataService.licenseMgmtDataIndex;
+
+console.log('EMFTEST - license-info.component.ts - ngOnInit - this.currentIndex: ', this.currentIndex);
+
+    // this.agentDataService.licenseMgmtDataIndexChanged.subscribe((index: number) => {
+    //   this.currentIndex = index;
+    // });
     this.licenseMgmtData =
       this.agentDataService.agentInformation.agentLicenseAppointments;
   }

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
@@ -13,7 +13,7 @@ import { AgentLicenseAppointments } from '../../../../../_Models';
 })
 export class EditLicenseInfoComponent implements OnInit, OnDestroy {
   licenseForm: FormGroup;
-  currentIndex: number = 0;
+  @Input()currentIndex: number = 0;
   licenseMgmtData: AgentLicenseAppointments[] = [];
   subscriptionMode: Subscription = new Subscription();
   subscriptionData: Subscription = new Subscription();
