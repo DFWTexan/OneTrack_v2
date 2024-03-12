@@ -43,7 +43,6 @@ export class TmInformationComponent implements OnInit, OnDestroy {
 
   toggleLicenseMgmt(index: number) {
     this.agentDataService.storeLicenseMgmtDataIndex(index);
-    this.agentDataService.licenseMgmtDataIndexChanged.next(index);
     this.agentComService.showLicenseMgmt();
   }
 
