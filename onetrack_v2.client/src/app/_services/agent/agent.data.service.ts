@@ -30,7 +30,7 @@ export class AgentDataService {
   licenseAppointmentChanged = new Subject<LicenseAppointment>();
   licenseMgmtData: AgentLicenseAppointments = {} as AgentLicenseAppointments;
   licenseMgmtDataChanged = new Subject<AgentLicenseAppointments>();
-  licenseMgmtDataIndex: number = 0;
+  licenseMgmtDataIndex: any = 0;
   licenseMgmtDataIndexChanged = new Subject<number>();
   // EMP TRANSFER HISTORY
   employmentTransferHistItem: any = {};
