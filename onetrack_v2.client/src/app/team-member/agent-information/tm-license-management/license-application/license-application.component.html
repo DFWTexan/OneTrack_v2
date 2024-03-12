@@ -55,7 +55,11 @@
             <div class="col">
               <button
                 class="btn btn-success"
-                (click)="modalService.open('modal-edit-jobTitle-history')"
+                (click)="agentDataService.storeLicAppInfo(
+                  'INSERT',
+                  null
+                );
+                modalService.open('modal-edit-lic-appl-info')"
               >
                 <span style="font-size: larger"> Insert - Applications </span>
               </button>
