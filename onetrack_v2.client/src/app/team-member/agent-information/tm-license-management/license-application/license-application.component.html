@@ -41,15 +41,26 @@
   </div>
   <div class="row">
     <div class="col">
-      <mat-accordion>
+      <!-- <mat-accordion> -->
         <mat-expansion-panel class="mat-elevation-z4 mb-3">
           <mat-expansion-panel-header>
-            <mat-panel-title class="panel-title"> License Applications </mat-panel-title>
+            <mat-panel-title class="panel-title">
+              License Applications
+            </mat-panel-title>
             <mat-panel-description>
               ## - record(s) found
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <p>This is the primary content of the panel.</p>
+          <div class="row mb-3">
+            <div class="col">
+              <button
+                class="btn btn-success"
+                (click)="modalService.open('modal-edit-jobTitle-history')"
+              >
+                <span style="font-size: larger"> Insert - Applications </span>
+              </button>
+            </div>
+          </div>
         </mat-expansion-panel>
 
         <mat-expansion-panel
@@ -58,12 +69,23 @@
           (closed)="panelOpenState = false"
         >
           <mat-expansion-panel-header>
-            <mat-panel-title class="panel-title"> License PreEducation </mat-panel-title>
+            <mat-panel-title class="panel-title">
+              License PreEducation
+            </mat-panel-title>
             <mat-panel-description>
               ## - record(s) found
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <p>I'm visible because I am open</p>
+          <div class="row mb-3">
+            <div class="col">
+              <button
+                class="btn btn-success"
+                (click)="modalService.open('modal-edit-jobTitle-history')"
+              >
+                <span style="font-size: larger"> Insert - PreEducation </span>
+              </button>
+            </div>
+          </div>
         </mat-expansion-panel>
 
         <mat-expansion-panel
@@ -72,14 +94,25 @@
           (closed)="panelOpenState = false"
         >
           <mat-expansion-panel-header>
-            <mat-panel-title class="panel-title"> License PreExams </mat-panel-title>
+            <mat-panel-title class="panel-title">
+              License PreExams
+            </mat-panel-title>
             <mat-panel-description>
               ## - record(s) found
             </mat-panel-description>
           </mat-expansion-panel-header>
-          <p>I'm visible because I am open</p>
+          <div class="row mb-3">
+            <div class="col">
+              <button
+                class="btn btn-success"
+                (click)="modalService.open('modal-edit-jobTitle-history')"
+              >
+                <span style="font-size: larger"> Insert - PreExams </span>
+              </button>
+            </div>
+          </div>
         </mat-expansion-panel>
-      </mat-accordion>
+      <!-- </mat-accordion> -->
     </div>
   </div>
 </div>
