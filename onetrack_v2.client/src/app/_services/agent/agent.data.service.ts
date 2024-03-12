@@ -7,10 +7,12 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import {
   AgentInfo,
+  AgentLicApplicationInfo,
   AgentLicenseAppointments,
   CompanyRequirementsHistory,
   EmploymentHistory,
   EmploymentJobTitleHistory,
+  LicenseApplicationItem,
   LicenseAppointment,
   TransferHistory,
 } from '../../_Models';
@@ -41,6 +43,12 @@ export class AgentDataService {
   companyRequirementsHistItemChanged = new Subject<any>();
   employmentJobTitleHistItem: any = {};
   employmentJobTitleHistItemChanged = new Subject<any>();
+  // AGENT LICENSE APPLICATION INFO
+  agentLicApplicationInfo: AgentLicApplicationInfo =
+    {} as AgentLicApplicationInfo;
+  agentLicApplicationInfoChanged = new Subject<AgentLicApplicationInfo>();
+  licenseApplicationItem: any = {};
+  licenseApplicationItemChanged = new Subject<any>();
 
   constructor(
     private http: HttpClient,
@@ -89,6 +97,31 @@ export class AgentDataService {
             this.agentInformation.agentLicenseAppointments = response.objData;
             this.agentLicenseAppointmentsChanged.next(
               this.agentInformation.agentLicenseAppointments
+            );
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  fetchAgentLicApplicationInfo(employeeLicenseID: number) {
+    this.apiUrl = environment.apiUrl + 'Agent/GetLicenseApplcationInfo/';
+
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: AgentLicApplicationInfo;
+        errMessage: string;
+      }>(this.apiUrl + employeeLicenseID)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            this.agentLicApplicationInfo = response.objData;
+            this.agentLicApplicationInfoChanged.next(
+              this.agentLicApplicationInfo
             );
             return response.objData;
           } else {
@@ -150,5 +183,15 @@ export class AgentDataService {
     this.employmentJobTitleHistItemChanged.next(
       this.employmentJobTitleHistItem
     );
+  }
+
+  // TM LICENSE APPLICATION INFORMATION
+  storeLicAppInfo(
+    mode: string | '',
+    licenseApplicationItem: LicenseApplicationItem | null
+  ) {
+    this.agentComService.modeLicAppInfoModal(mode);
+    this.licenseApplicationItem = licenseApplicationItem || {};
+    this.licenseApplicationItemChanged.next(this.licenseApplicationItem);
   }
 }

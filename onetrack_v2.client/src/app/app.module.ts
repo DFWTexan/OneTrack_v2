@@ -70,6 +70,7 @@ import { EditEmploymentHistComponent } from './team-member/agent-information/tm-
 import { EditTransferHistComponent } from './team-member/agent-information/tm-emptrans-history/edit-transfer-hist/edit-transfer-hist.component';
 import { EditCorequirementHistComponent } from './team-member/agent-information/tm-emptrans-history/edit-corequirement-hist/edit-corequirement-hist.component';
 import { EditJobtitleHistComponent } from './team-member/agent-information/tm-emptrans-history/edit-jobtitle-hist/edit-jobtitle-hist.component';
+import { EditLicApplInfoComponent } from './team-member/agent-information/tm-license-management/license-application/edit-lic-appl-info/edit-lic-appl-info.component';
 
 @NgModule({
   declarations: [
@@ -118,6 +119,7 @@ import { EditJobtitleHistComponent } from './team-member/agent-information/tm-em
     EditTransferHistComponent,
     EditCorequirementHistComponent,
     EditJobtitleHistComponent,
+    EditLicApplInfoComponent,
   ],
   imports: [
     BrowserModule,

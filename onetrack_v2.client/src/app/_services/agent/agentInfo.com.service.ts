@@ -9,6 +9,7 @@ export class AgentComService {
   modeLicenseMgmtChanged = new Subject<string>();
   isShowLicenseMgmt: boolean = false;
   isShowLicenseMgmtChanged = new Subject<boolean>();
+  // Employment Transfer History
   modeEmploymentHist: string = '';
   modeEmploymentHistChanged = new Subject<string>();
   modeTransferHist: string = '';
@@ -17,6 +18,9 @@ export class AgentComService {
   modeCompanyRequirementsHistChanged = new Subject<string>();
   modeEmploymentJobTitleHist: string = '';
   modeEmploymentJobTitleHistChanged = new Subject<string>();
+  // License Application Information
+  modeLicAppInfo: string = '';
+  modeLicAppInfoChanged = new Subject<string>();
 
   constructor() {}
 
@@ -30,6 +34,7 @@ export class AgentComService {
     this.isShowLicenseMgmtChanged.next(this.isShowLicenseMgmt);
   }
 
+  // Employment Transfer History
   modeEmploymentHistModal(mode: string) {
     this.modeEmploymentHist = mode;
     this.modeEmploymentHistChanged.next(this.modeEmploymentHist);
@@ -48,5 +53,11 @@ export class AgentComService {
   modeEmploymentJobTitleHistModal(mode: string) {
     this.modeEmploymentJobTitleHist = mode;
     this.modeEmploymentJobTitleHistChanged.next(this.modeEmploymentJobTitleHist);
+  }
+
+  // Employment Application Information
+  modeLicAppInfoModal(mode: string) {
+    this.modeLicAppInfo = mode;
+    this.modeLicAppInfoChanged.next(this.modeLicAppInfo);
   }
 }

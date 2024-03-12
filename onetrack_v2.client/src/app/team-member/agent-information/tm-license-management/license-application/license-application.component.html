@@ -48,7 +48,7 @@
               License Applications
             </mat-panel-title>
             <mat-panel-description>
-              ## - record(s) found
+              {{ agentDataService.agentLicApplicationInfo.licenseApplicationItems.length }} - record(s) found
             </mat-panel-description>
           </mat-expansion-panel-header>
           <div class="row mb-3">
@@ -75,21 +75,24 @@
                 </tr>
               </thead>
               <tbody>
-                <!-- <tr *ngFor="let jobTitle of employmentJobTitleHistory">
+                <tr *ngFor="let licApplication of agentDataService.agentLicApplicationInfo.licenseApplicationItems">
                   <td class="align-middle">
-                    {{ jobTitle.employmentJobTitleID }}
+                    {{ licApplication.applicationStatus }}
                   </td>
                   <td class="align-middle">
-                    {{ jobTitle.jobTitleDate | date : "MM/dd/yyyy" }}
+                    {{ licApplication.licenseApplicationID }}
                   </td>
                   <td class="align-middle">
-                    {{ jobTitle.jobTitle }}
+                    {{ licApplication.sentToAgentDate | date : "MM/dd/yyyy" }}
                   </td>
                   <td class="align-middle">
-                    {{ jobTitle.jobCode }}
+                    {{ licApplication.recFromAgentDate| date : "MM/dd/yyyy" }}
                   </td>
                   <td class="align-middle">
-                    {{ jobTitle.isCurrent ? "Yes" : "No" }}
+                    {{ licApplication.sentToStateDate| date : "MM/dd/yyyy" }}
+                  </td>
+                  <td class="align-middle">
+                    {{ licApplication.recFromStateDate| date : "MM/dd/yyyy" }}
                   </td>
                   <td>
                     <div
@@ -99,11 +102,11 @@
                       <button
                         class="edit-button"
                         (click)="
-                          agentService.storeEmploymentJobTitleHistory(
+                          agentDataService.storeLicAppInfo(
                             'EDIT',
-                            jobTitle
+                            licApplication
                           );
-                          modalService.open('modal-edit-jobTitle-history')
+                          modalService.open('modal-edit-lic-appl-info')
                         "
                       >
                         <span class="material-symbols-outlined"> edit </span>
@@ -113,7 +116,7 @@
                       </button>
                     </div>
                   </td>
-                </tr> -->
+                </tr>
               </tbody>
             </table>
           </div>
@@ -284,3 +287,24 @@
     </div>
   </div>
 </div>
+
+<!-- Modal: EDIT-LIC-APPLICATION-INFO -->
+<modal id="modal-edit-lic-appl-info">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      <strong>{{ agentComService.modeLicAppInfo }}</strong> - License Application
+    </h1>
+    <!-- <button
+          type="button"
+          class="btn-close"
+          (click)="modalService.close()"
+        ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-edit-lic-appl-info></app-edit-lic-appl-info>
+      </div>
+    </div>
+  </div>
+</modal>
