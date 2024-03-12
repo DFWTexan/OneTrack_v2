@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OneTrack_v2.DataModel;
+using OneTrack_v2.DbData.Models;
 using OneTrack_v2.Services;
 
 namespace OneTrack_v2.Controllers
@@ -90,6 +91,14 @@ namespace OneTrack_v2.Controllers
         public async Task<ActionResult> GetCommunications(int employmentID)
         {
             var result = await Task.Run(() => _agentService.GetCommunications(employmentID));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpGet("{employeeLicenseID}")]
+        public async Task<ActionResult> GetLicenseApplcationInfo(int employeeLicenseID)
+        {
+            var result = await Task.Run(() => _agentService.GetLicenseApplcationInfo(employeeLicenseID));
 
             return StatusCode(result.StatusCode, result);
         }

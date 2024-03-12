@@ -16,5 +16,6 @@ namespace OneTrack_v2.Services
         public ReturnResult GetCommunications(int vEmploymentID);
         public ReturnResult InsertAgent([FromBody] IputAgentInsert Input);
         public ReturnResult InsertAgent_v2([FromBody] IputAgentInsert Input);
+        public ReturnResult GetLicenseApplcationInfo(int EmployeeLicenseID);
     }
 }

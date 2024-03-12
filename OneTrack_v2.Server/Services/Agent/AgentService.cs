@@ -784,6 +784,83 @@ namespace OneTrack_v2.Services
                 return result;
             }
         }
+        public ReturnResult GetLicenseApplcationInfo(int vEmployeeLicenseID)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var agentLicenseInformation = new OputAgentLicApplicationInfo();
+
+                var queryLicApplication = from licenseApplication in _db.LicenseApplications
+                                        where licenseApplication.ApplicationType == "Initial Application" && licenseApplication.EmployeeLicenseId == vEmployeeLicenseID
+                                        orderby licenseApplication.SentToAgentDate descending, licenseApplication.LicenseApplicationId ascending
+                                        select new AgentLicApplicationItem
+                                        {
+                                            LicenseApplicationID = licenseApplication.LicenseApplicationId,
+                                            SentToAgentDate = licenseApplication.SentToAgentDate,
+                                            RecFromAgentDate = licenseApplication.RecFromAgentDate,
+                                            SentToStateDate = licenseApplication.SentToStateDate,
+                                            RecFromStateDate = licenseApplication.RecFromStateDate,
+                                            ApplicationStatus = licenseApplication.ApplicationStatus,
+                                            ApplicationType = licenseApplication.ApplicationType
+                                        };
+
+                var licenseApplications = queryLicApplication.AsNoTracking().ToList();
+                agentLicenseInformation.LicenseApplicationItems = licenseApplications;
+
+                var queryPreEducations = from epe in _db.EmployeeLicenseePreEducations
+                                        join pe in _db.PreEducations on epe.PreEducationId equals pe.PreEducationId
+                                        where epe.EmployeeLicenseId == vEmployeeLicenseID
+                                        orderby epe.EducationStartDate descending, pe.EducationName ascending
+                                        select new AgentLicPreEducationItem
+                                        {
+                                            EmployeeLicensePreEducationID = epe.EmployeeLicensePreEducationId,
+                                            Status = epe.Status,
+                                            EducationStartDate = epe.EducationStartDate,
+                                            EducationEndDate = epe.EducationEndDate,
+                                            PreEducationID = epe.PreEducationId,
+                                            CompanyID = epe.CompanyId,
+                                            EducationName = pe.EducationName + " - " + (pe.DeliveryMethod ?? ""),
+                                            EmployeeLicenseID = epe.EmployeeLicenseId,
+                                            AdditionalNotes = epe.AdditionalNotes
+                                        };
+
+                var preEducations = queryPreEducations.AsNoTracking().ToList();
+                agentLicenseInformation.LicensePreEducationItems = preEducations;
+
+                var queryPreExams = from x in _db.EmployeeLicensePreExams
+                            join e in _db.Exams on x.ExamId equals e.ExamId into exams
+                            from e in exams.DefaultIfEmpty()
+                            where x.EmployeeLicenseId == vEmployeeLicenseID
+                            orderby x.ExamScheduleDate descending, x.EmployeeLicenseId ascending
+                            select new AgentLicPreExamItem
+                            {
+                                EmployeeLicensePreExamID = x.EmployeeLicensePreExamId,
+                                EmployeeLicenseID = x.EmployeeLicenseId,
+                                Status = x.Status,
+                                ExamID = x.ExamId,
+                                ExamName = e != null ? e.ExamName : null,
+                                ExamScheduleDate = x.ExamScheduleDate,
+                                ExamTakenDate = x.ExamTakenDate,
+                                AdditionalNotes = x.AdditionalNotes
+                            };
+
+                var preExams = queryPreExams.AsNoTracking().ToList();
+                agentLicenseInformation.LicensePreExamItems = preExams;
+
+                result.Success = true;
+                result.ObjData = agentLicenseInformation;
+                result.StatusCode = 200;
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+                return result;
+            }
+        }
 
         public ReturnResult InsertAgent([FromBody] IputAgentInsert vInput)
         {
