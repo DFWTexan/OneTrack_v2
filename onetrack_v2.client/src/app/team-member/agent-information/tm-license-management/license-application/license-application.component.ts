@@ -12,6 +12,7 @@ import { AgentComService, AgentDataService, ModalService } from '../../../../_se
 export class LicenseApplicationComponent implements OnInit {
   licenseMgmtData: AgentLicenseAppointments[] = [];
   currentIndex: number = 0;
+  panelOpenState = false;
 
   constructor(
     protected agentDataService: AgentDataService,

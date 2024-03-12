@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
@@ -124,6 +125,7 @@ import { EditJobtitleHistComponent } from './team-member/agent-information/tm-em
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    CommonModule,
     MatButtonModule,
     MatSidenavModule,
     MatMenuModule,
