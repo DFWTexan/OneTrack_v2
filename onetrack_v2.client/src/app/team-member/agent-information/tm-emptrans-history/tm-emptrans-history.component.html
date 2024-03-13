@@ -24,7 +24,14 @@
           </button>
         </div>
       </div>
-      <div class="row">
+      <div
+        class="div d-flex justify-content-center mt-5"
+        style="font-size: larger; color: gray"
+        *ngIf="employmentHistory.length === 0"
+      >
+        No records found
+      </div>
+      <div class="row" *ngIf="employmentHistory.length !== 0">
         <div class="col">
           <table class="table">
             <thead>
@@ -119,7 +126,14 @@
           </button>
         </div>
       </div>
-      <div class="row">
+      <div
+        class="div d-flex justify-content-center mt-5"
+        style="font-size: larger; color: gray"
+        *ngIf="transferHistory.length === 0"
+      >
+        No records found
+      </div>
+      <div class="row" *ngIf="transferHistory.length !== 0">
         <table class="table">
           <thead>
             <tr style="background-color: whitesmoke">
@@ -201,7 +215,14 @@
           </button>
         </div>
       </div>
-      <div class="row">
+      <div
+        class="div d-flex justify-content-center mt-5"
+        style="font-size: larger; color: gray"
+        *ngIf="companyRequirementsHistory.length === 0"
+      >
+        No records found
+      </div>
+      <div class="row" *ngIf="companyRequirementsHistory.length !== 0">
         <table class="table">
           <thead>
             <tr style="background-color: whitesmoke">
@@ -279,7 +300,14 @@
         </button>
       </div>
     </div>
-    <div class="row">
+    <div
+        class="div d-flex justify-content-center mt-5"
+        style="font-size: larger; color: gray"
+        *ngIf="employmentJobTitleHistory.length === 0"
+      >
+        No records found
+      </div>
+    <div class="row" *ngIf="employmentJobTitleHistory.length !== 0">
       <table class="table">
         <thead>
           <tr style="background-color: whitesmoke">
