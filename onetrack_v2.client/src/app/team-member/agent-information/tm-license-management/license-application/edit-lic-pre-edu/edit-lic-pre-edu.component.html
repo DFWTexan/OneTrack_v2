@@ -5,7 +5,16 @@
 >
   <div class="row">
     <div class="col">
-      <div class="mb-3" *ngIf="agentComService.modeLicAppInfo === 'EDIT'">
+        <div class="mb-3" *ngIf="agentComService.modeLicAppInfo === 'EDIT'">
+            <label for="preEducationID" class="form-label">Pre Edu ID:</label>
+            <input
+              class="form-control input-size-small"
+              type="text"
+              id="preEducationID"
+              formControlName="preEducationID"
+            />
+          </div>
+      <div class="mb-3">
         <label for="status" class="form-label">Status:</label>
         <input
           class="form-control input-size-small"
@@ -32,16 +41,7 @@
           formControlName="educationEndDate"
         />
       </div>
-      <div class="mb-3">
-        <label for="preEducationID" class="form-label">Pre Edu ID:</label>
-        <input
-          class="form-control input-size-small"
-          type="text"
-          id="preEducationID"
-          formControlName="preEducationID"
-        />
-      </div>
-
+      
       <div class="mb-3">
         <label for="companyID" class="form-label">Company ID:</label>
         <input

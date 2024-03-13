@@ -65,6 +65,8 @@ export class EditLicPreEduComponent implements OnInit, OnDestroy {
                 });
               }
             );
+        } else {
+          this.licPreEduForm.reset();
         }
       }
     );
