@@ -231,7 +231,11 @@
             <div class="col">
               <button
                 class="btn btn-success"
-                (click)="modalService.open('modal-edit-jobTitle-history')"
+                (click)="agentDataService.storeLicPreExam(
+                  'INSERT',
+                  null
+                );
+                modalService.open('modal-edit-lic-pre-exam')"
               >
                 <span style="font-size: larger"> Insert - PreExams </span>
               </button>
@@ -251,21 +255,24 @@
                 </tr>
               </thead>
               <tbody>
-                <!-- <tr *ngFor="let jobTitle of employmentJobTitleHistory">
+                 <tr *ngFor="let preExam of agentDataService.agentLicApplicationInfo.licensePreExamItems">
                   <td class="align-middle">
-                    {{ jobTitle.employmentJobTitleID }}
+                    {{ preExam.status }}
                   </td>
                   <td class="align-middle">
-                    {{ jobTitle.jobTitleDate | date : "MM/dd/yyyy" }}
+                    {{ preExam.employeeLicensePreExamID }}
                   </td>
                   <td class="align-middle">
-                    {{ jobTitle.jobTitle }}
+                    {{ preExam.examName }}
                   </td>
                   <td class="align-middle">
-                    {{ jobTitle.jobCode }}
+                    {{ preExam.examScheduleDate| date : "MM/dd/yyyy" }}
                   </td>
                   <td class="align-middle">
-                    {{ jobTitle.isCurrent ? "Yes" : "No" }}
+                    {{ preExam.examTakenDate| date : "MM/dd/yyyy" }}
+                  </td>
+                  <td class="align-middle">
+                    {{ preExam.additionalNotes }}
                   </td>
                   <td>
                     <div
@@ -275,11 +282,11 @@
                       <button
                         class="edit-button"
                         (click)="
-                          agentService.storeEmploymentJobTitleHistory(
+                          agentDataService.storeLicPreExam(
                             'EDIT',
-                            jobTitle
+                            preExam
                           );
-                          modalService.open('modal-edit-jobTitle-history')
+                          modalService.open('modal-edit-lic-pre-exam')
                         "
                       >
                         <span class="material-symbols-outlined"> edit </span>
@@ -288,8 +295,8 @@
                         <span class="material-symbols-outlined"> delete </span>
                       </button>
                     </div>
-                  </td>
-                </tr> -->
+                  </td> 
+                </tr> 
               </tbody>
             </table>
           </div>
@@ -336,6 +343,27 @@
     <div>
       <div>
         <app-edit-lic-pre-edu></app-edit-lic-pre-edu>
+      </div>
+    </div>
+  </div>
+</modal>
+
+<!-- Modal: EDIT-LIC-PRE-EXAM -->
+<modal id="modal-edit-lic-pre-exam">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      <strong>{{ agentComService.modeLicPreExam }}</strong> - Pre Exam
+    </h1>
+    <!-- <button
+          type="button"
+          class="btn-close"
+          (click)="modalService.close()"
+        ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-edit-lic-pre-exam></app-edit-lic-pre-exam>
       </div>
     </div>
   </div>
