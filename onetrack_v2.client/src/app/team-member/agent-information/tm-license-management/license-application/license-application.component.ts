@@ -28,7 +28,9 @@ export class LicenseApplicationComponent implements OnInit {
     public agentDataService: AgentDataService,
     public agentComService: AgentComService,
     protected modalService: ModalService
-  ) {}
+  ) {
+    this.agentDataService.agentLicApplicationInfo.licenseApplicationItems = [];
+  }
 
   ngOnInit(): void {
     this.currentIndex = this.agentDataService.licenseMgmtDataIndex;
