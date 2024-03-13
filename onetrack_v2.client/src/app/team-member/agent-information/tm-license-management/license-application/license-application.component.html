@@ -66,7 +66,10 @@
             </div>
           </div>
           <div class="row">
-            <table class="table">
+            <div class="div d-flex justify-content-center" style="font-size: larger; color: gray;" *ngIf="agentDataService.agentLicApplicationInfo.licenseApplicationItems.length === 0">
+              No records found
+            </div>
+            <table class="table" *ngIf="agentDataService.agentLicApplicationInfo.licenseApplicationItems.length !== 0">
               <thead>
                 <tr style="background-color: whitesmoke">
                   <th scope="col">Application Status</th>
@@ -154,7 +157,10 @@
             </div>
           </div>
           <div class="row">
-            <table class="table">
+            <div class="div d-flex justify-content-center" style="font-size: larger; color: gray;" *ngIf="agentDataService.agentLicApplicationInfo.licensePreEducationItems.length === 0">
+              No records found
+            </div>
+            <table class="table" *ngIf="agentDataService.agentLicApplicationInfo.licensePreEducationItems.length !== 0">
               <thead>
                 <tr style="background-color: whitesmoke">
                   <th scope="col">PreEdu Status</th>
@@ -242,7 +248,10 @@
             </div>
           </div>
           <div class="row">
-            <table class="table">
+            <div class="div d-flex justify-content-center" style="font-size: larger; color: gray;" *ngIf="agentDataService.agentLicApplicationInfo.licensePreExamItems.length === 0">
+              No records found
+            </div>
+            <table class="table" *ngIf="agentDataService.agentLicApplicationInfo.licensePreExamItems.length !== 0">
               <thead>
                 <tr style="background-color: whitesmoke">
                   <th scope="col">Status</th>
