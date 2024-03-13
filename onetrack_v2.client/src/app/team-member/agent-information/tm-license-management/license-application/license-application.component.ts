@@ -30,6 +30,8 @@ export class LicenseApplicationComponent implements OnInit {
     protected modalService: ModalService
   ) {
     this.agentDataService.agentLicApplicationInfo.licenseApplicationItems = [];
+    this.agentDataService.agentLicApplicationInfo.licensePreEducationItems = [];
+    this.agentDataService.agentLicApplicationInfo.licensePreExamItems = [];
   }
 
   ngOnInit(): void {
