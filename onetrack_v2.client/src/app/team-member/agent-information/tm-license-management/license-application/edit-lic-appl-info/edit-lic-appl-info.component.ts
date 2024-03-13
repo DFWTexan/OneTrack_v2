@@ -2,6 +2,7 @@ import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
+
 import { AgentComService, AgentDataService } from '../../../../../_services';
 
 @Component({
@@ -9,6 +10,7 @@ import { AgentComService, AgentDataService } from '../../../../../_services';
   templateUrl: './edit-lic-appl-info.component.html',
   styleUrl: './edit-lic-appl-info.component.css',
 })
+@Injectable()
 export class EditLicApplInfoComponent implements OnInit, OnDestroy {
   licApplicationForm!: FormGroup;
   subscriptionMode: Subscription = new Subscription();
