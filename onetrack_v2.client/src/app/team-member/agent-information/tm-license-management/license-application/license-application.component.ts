@@ -20,7 +20,6 @@ export class LicenseApplicationComponent implements OnInit {
   licenseMgmtData: AgentLicenseAppointments[] = [];
   currentIndex: number = 0;
   panelOpenState = false;
-  // @Input() employeeLicenseID!: number;
   agentLicApplicationInfo: AgentLicApplicationInfo =
     {} as AgentLicApplicationInfo;
 
