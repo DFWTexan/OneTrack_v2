@@ -16,7 +16,7 @@
           </button>
         </div>
       </div>
-      
+
       <div class="row bg-body p-3 rounded mt-4 ms-2">
         <div class="col">
           <p>
@@ -58,7 +58,13 @@
     <div class="col-md-12">
       <div class="row">
         <div class="col d-flex justify-content-end">
-          <button class="btn btn-success"(click)="setModeLicenseMgmt('ADD'); modalService.open('modal-edit-license-info');">
+          <button
+            class="btn btn-success"
+            (click)="
+              setModeLicenseMgmt('ADD');
+              modalService.open('modal-edit-license-info')
+            "
+          >
             <span style="font-size: larger"> Insert - New License </span>
           </button>
         </div>
@@ -68,9 +74,18 @@
           </button>
         </div>
       </div>
-      <div class="row">
+      <p style="font-size: larger; font-weight: 600;">
+        Agent License & Appointments:
+      </p>
+      <div
+        class="div d-flex justify-content-center mt-5"
+        style="font-size: larger; color: gray"
+        *ngIf="agentInfo.agentLicenseAppointments.length === 0"
+      >
+        No License records found
+      </div>
+      <div class="row" *ngIf="agentInfo.agentLicenseAppointments.length !== 0">
         <div class="col-md-12">
-          <p><strong>Agent License & Appointments:</strong></p>
           <mat-expansion-panel
             class="mat-elevation-z4 mb-3"
             *ngFor="
@@ -264,7 +279,9 @@
 <!-- Modal: EDIT-LICENSE-INFO -->
 <modal id="modal-edit-license-info">
   <div class="modal-header">
-    <h1 class="modal-title">{{ agentComService.modeLicenseMgmt }} - License Information</h1>
+    <h1 class="modal-title">
+      {{ agentComService.modeLicenseMgmt }} - License Information
+    </h1>
   </div>
   <div class="modal-body">
     <div>
