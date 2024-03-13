@@ -14,6 +14,8 @@ import {
   EmploymentJobTitleHistory,
   LicenseApplicationItem,
   LicenseAppointment,
+  LicensePreEducationItem,
+  LicensePreExamItem,
   TransferHistory,
 } from '../../_Models';
 import { AgentComService } from './agentInfo.com.service';
@@ -49,6 +51,10 @@ export class AgentDataService {
   agentLicApplicationInfoChanged = new Subject<AgentLicApplicationInfo>();
   licenseApplicationItem: any = {};
   licenseApplicationItemChanged = new Subject<any>();
+  licensePreEducationItem: any = {};
+  licensePreEducationItemChanged = new Subject<any>();
+  licensePreExamItem: any = {};
+  licensePreExamItemChanged = new Subject<any>();
 
   constructor(
     private http: HttpClient,
@@ -193,5 +199,23 @@ export class AgentDataService {
     this.agentComService.modeLicAppInfoModal(mode);
     this.licenseApplicationItem = licenseApplicationItem || {};
     this.licenseApplicationItemChanged.next(this.licenseApplicationItem);
+  }
+
+  storeLicPreEdu(
+    mode: string | '',
+    licensePreEducationItem: LicensePreEducationItem | null
+  ) {
+    this.agentComService.modeLicPreEduModal(mode);
+    this.licensePreEducationItem = licensePreEducationItem || {};
+    this.licensePreEducationItemChanged.next(this.licensePreEducationItem);
+  }
+
+  storeLicPreExam(
+    mode: string | '',
+    licensePreExamItem: LicensePreExamItem | null
+  ) {
+    this.agentComService.modeLicPreExamModal(mode);
+    this.licensePreExamItem = licensePreExamItem || {};
+    this.licensePreExamItemChanged.next(this.licensePreExamItem);
   }
 }

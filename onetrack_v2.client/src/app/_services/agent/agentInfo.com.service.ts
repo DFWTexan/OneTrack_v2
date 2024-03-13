@@ -21,6 +21,10 @@ export class AgentComService {
   // License Application Information
   modeLicAppInfo: string = '';
   modeLicAppInfoChanged = new Subject<string>();
+  modeLicPreEdu: string = '';
+  modeLicPreEduChanged = new Subject<string>();
+  modeLicPreExam: string = '';
+  modeLicPreExamChanged = new Subject<string>();
 
   constructor() {}
 
@@ -59,5 +63,15 @@ export class AgentComService {
   modeLicAppInfoModal(mode: string) {
     this.modeLicAppInfo = mode;
     this.modeLicAppInfoChanged.next(this.modeLicAppInfo);
+  }
+
+  modeLicPreEduModal(mode: string) {
+    this.modeLicPreEdu = mode;
+    this.modeLicPreEduChanged.next(this.modeLicPreEdu);
+  }
+
+  modeLicPreExamModal(mode: string) {
+    this.modeLicPreExam = mode;
+    this.modeLicPreExamChanged.next(this.modeLicPreExam);
   }
 }

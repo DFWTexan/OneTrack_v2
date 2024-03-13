@@ -71,6 +71,8 @@ import { EditTransferHistComponent } from './team-member/agent-information/tm-em
 import { EditCorequirementHistComponent } from './team-member/agent-information/tm-emptrans-history/edit-corequirement-hist/edit-corequirement-hist.component';
 import { EditJobtitleHistComponent } from './team-member/agent-information/tm-emptrans-history/edit-jobtitle-hist/edit-jobtitle-hist.component';
 import { EditLicApplInfoComponent } from './team-member/agent-information/tm-license-management/license-application/edit-lic-appl-info/edit-lic-appl-info.component';
+import { EditLicPreEduComponent } from './team-member/agent-information/tm-license-management/license-application/edit-lic-pre-edu/edit-lic-pre-edu.component';
+import { EditLicPreExamComponent } from './team-member/agent-information/tm-license-management/license-application/edit-lic-pre-exam/edit-lic-pre-exam.component';
 
 @NgModule({
   declarations: [
@@ -120,6 +122,8 @@ import { EditLicApplInfoComponent } from './team-member/agent-information/tm-lic
     EditCorequirementHistComponent,
     EditJobtitleHistComponent,
     EditLicApplInfoComponent,
+    EditLicPreEduComponent,
+    EditLicPreExamComponent,
   ],
   imports: [
     BrowserModule,
