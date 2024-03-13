@@ -25,6 +25,8 @@ export class AgentComService {
   modeLicPreEduChanged = new Subject<string>();
   modeLicPreExam: string = '';
   modeLicPreExamChanged = new Subject<string>();
+  modeLicRenewal: string = '';
+  modeLicRenewalChanged = new Subject<string>();
 
   constructor() {}
 
@@ -73,5 +75,10 @@ export class AgentComService {
   modeLicPreExamModal(mode: string) {
     this.modeLicPreExam = mode;
     this.modeLicPreExamChanged.next(this.modeLicPreExam);
+  }
+
+  modeLicRenewalModal(mode: string) {
+    this.modeLicRenewal = mode;
+    this.modeLicRenewalChanged.next(this.modeLicRenewal);
   }
 }

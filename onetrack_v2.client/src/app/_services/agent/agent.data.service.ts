@@ -16,6 +16,7 @@ import {
   LicenseAppointment,
   LicensePreEducationItem,
   LicensePreExamItem,
+  LicenseRenewalItem,
   TransferHistory,
 } from '../../_Models';
 import { AgentComService } from './agentInfo.com.service';
@@ -55,6 +56,8 @@ export class AgentDataService {
   licensePreEducationItemChanged = new Subject<any>();
   licensePreExamItem: any = {};
   licensePreExamItemChanged = new Subject<any>();
+  licenseRenewalItem: any = {};
+  licenseRenewalItemChanged = new Subject<any>();  
 
   constructor(
     private http: HttpClient,
@@ -217,5 +220,14 @@ export class AgentDataService {
     this.agentComService.modeLicPreExamModal(mode);
     this.licensePreExamItem = licensePreExamItem || {};
     this.licensePreExamItemChanged.next(this.licensePreExamItem);
+  }
+
+  storeLicRenewal(
+    mode: string | '',
+    licenseRenewalItem: LicenseRenewalItem | null
+  ) {
+    this.agentComService.modeLicRenewalModal(mode);
+    this.licenseRenewalItem = licenseRenewalItem || {};
+    this.licenseRenewalItemChanged.next(this.licenseRenewalItem);
   }
 }

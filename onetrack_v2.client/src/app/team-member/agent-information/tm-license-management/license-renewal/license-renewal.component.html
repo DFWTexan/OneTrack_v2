@@ -44,8 +44,8 @@
       <button
         class="btn btn-success"
         (click)="
-          agentDataService.storeLicPreEdu('INSERT', null);
-          modalService.open('modal-edit-lic-pre-edu')
+          agentDataService.storeLicRenewal('INSERT', null);
+          modalService.open('modal-edit-lic-renewal')
         "
       >
         <span style="font-size: larger"> Insert - Renewal </span>
@@ -57,92 +57,94 @@
       class="div d-flex justify-content-center"
       style="font-size: larger; color: gray"
       *ngIf="
-        agentDataService.agentLicApplicationInfo.licensePreEducationItems
-          .length === 0
+        agentDataService.agentLicApplicationInfo.licenseRenewalItems.length ===
+        0
       "
     >
       No records found
     </div>
-    <!-- <table
-      class="table"
+    <div
+      class="row"
       *ngIf="
-        agentDataService.agentLicApplicationInfo.licensePreEducationItems
-          .length !== 0
+        agentDataService.agentLicApplicationInfo.licenseRenewalItems.length !==
+        0
       "
     >
-      <thead>
-        <tr style="background-color: whitesmoke">
-          <th scope="col">PreEdu Status</th>
-          <th scope="col">PreEdu ID</th>
-          <th scope="col">Class Name</th>
-          <th scope="col">Scheduled Date</th>
-          <th scope="col">Taken Date</th>
-          <th scope="col">PreEdu Notes</th>
-          <th scope="col">Action</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr
-          *ngFor="
-            let licPreEdu of agentDataService.agentLicApplicationInfo
-              .licensePreEducationItems
-          "
-        >
-          <td class="align-middle">
-            {{ licPreEdu.status }}
-          </td>
-          <td class="align-middle">
-            {{ licPreEdu.employeeLicensePreEducationID }}
-          </td>
-          <td class="align-middle">
-            {{ licPreEdu.educationName }}
-          </td>
-          <td class="align-middle">
-            {{ licPreEdu.educationStartDate | date : "MM/dd/yyyy" }}
-          </td>
-          <td class="align-middle">
-            {{ licPreEdu.educationEndDate | date : "MM/dd/yyyy" }}
-          </td>
-          <td class="align-middle">
-            {{ licPreEdu.additionalNotes }}
-          </td>
-          <td>
-            <div
-              class="d-flex justify-content-between mb-3 me-4"
-              style="min-width: 10rem; max-width: 10rem"
-            >
-              <button
-                class="edit-button"
-                (click)="
-                  agentDataService.storeLicPreEdu('EDIT', licPreEdu);
-                  modalService.open('modal-edit-lic-pre-edu')
-                "
+      <table class="table">
+        <thead>
+          <tr style="background-color: gainsboro; border-radius: 5rem">
+            <th>Renewal ID</th>
+            <th>Sent to Agent</th>
+            <th>Rec. From Agent</th>
+            <th>Sent to State</th>
+            <th>Renewal Date</th>
+            <th>Renewal Method</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody class="bg-body">
+          <tr
+            *ngFor="
+              let licRenewal of agentDataService.agentLicApplicationInfo
+                .licenseRenewalItems
+            "
+          >
+            <td class="align-middle">
+              {{ licRenewal.licenseApplicationID }}
+            </td>
+            <td class="align-middle">
+              {{ licRenewal.sentToAgentDate | date : "MM/dd/yyyy" }}
+            </td>
+            <td class="align-middle">
+              {{ licRenewal.recFromAgentDate | date : "MM/dd/yyyy" }}
+            </td>
+            <td class="align-middle">
+              {{ licRenewal.sentToStateDate | date : "MM/dd/yyyy" }}
+            </td>
+            <td class="align-middle">
+              {{ licRenewal.recFromStateDate | date : "MM/dd/yyyy" }}
+            </td>
+            <td class="align-middle">
+              {{ licRenewal.applicationType }}
+            </td>
+            <td>
+              <div
+                class="d-flex justify-content-between mb-3 me-4"
+                style="min-width: 10rem; max-width: 10rem"
               >
-                <span class="material-symbols-outlined"> edit </span>
-              </button>
-              <button class="edit-button">
-                <span class="material-symbols-outlined"> delete </span>
-              </button>
-            </div>
-          </td>
-        </tr>
-      </tbody>
-    </table> -->
+                <button
+                  class="edit-button"
+                  (click)="
+                    agentDataService.storeLicRenewal('EDIT', licRenewal);
+                    modalService.open('modal-edit-lic-renewal')
+                  "
+                >
+                  <span class="material-symbols-outlined"> edit </span>
+                </button>
+                <button class="edit-button">
+                  <span class="material-symbols-outlined"> delete </span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 
-<!-- Modal: EDIT-LIC-PRE-EXAM -->
-<!-- <modal id="modal-edit-lic-pre-exam">
-    <div class="modal-header">
-      <h1 class="modal-title">
-        <strong>{{ agentComService.modeLicPreExam }}</strong> - Pre Exam
-      </h1>
-    </div>
-    <div class="modal-body">
+<!-- Modal: EDIT-LIC-RENEWAL -->
+<modal id="modal-edit-lic-renewal">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      <strong>{{ agentComService.modeLicRenewal }}</strong> - Renewal
+    </h1>
+  </div>
+  <div class="modal-body">
+    <div>
       <div>
-        <div>
-          <app-edit-lic-pre-exam></app-edit-lic-pre-exam>
-        </div>
+        <app-edit-lic-pre-exam></app-edit-lic-pre-exam>
       </div>
     </div>
-  </modal> -->
+  </div>
+</modal>

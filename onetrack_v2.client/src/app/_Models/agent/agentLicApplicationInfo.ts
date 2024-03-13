@@ -2,6 +2,7 @@ export interface AgentLicApplicationInfo {
   licenseApplicationItems: LicenseApplicationItem[];
   licensePreEducationItems: LicensePreEducationItem[];
   licensePreExamItems: LicensePreExamItem[];
+  licenseRenewalItems: LicenseRenewalItem[];
 }
 
 export interface LicenseApplicationItem {
@@ -35,4 +36,17 @@ export interface LicensePreExamItem {
   examScheduleDate: string;
   examTakenDate: string | null;
   additionalNotes: string | null;
+}
+
+export interface LicenseRenewalItem {
+  employeeLicenseID: number;
+  licenseApplicationID: number;
+  sentToAgentDate: string;
+  recFromAgentDate: string;
+  sentToStateDate: string;
+  recFromStateDate: string | null;
+  applicationStatus: string;
+  applicationType: string;
+  renewalDate: string;
+  renewalMethod: string;
 }

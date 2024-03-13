@@ -97,7 +97,7 @@ namespace OneTrack_v2.Services
                                 IsLicenseincentiveSecondChance = employment.SecondChance,
                                 NationalProdercerNumber = employee.NationalProducerNumber,
                                 DiarySOEID = diary != null ? diary.Soeid : null,
-                                DiaryEntryName = diary != null ? diary.DiaryName : null,       
+                                DiaryEntryName = diary != null ? diary.DiaryName : null,
                                 DiaryEntryDate = diary != null ? diary.DiaryDate : null,
                                 DiaryNotes = diary != null ? diary.Notes : null,
                                 BranchCode = transferHistory != null ? transferHistory.BranchCode : null,
@@ -792,61 +792,81 @@ namespace OneTrack_v2.Services
                 var agentLicenseInformation = new OputAgentLicApplicationInfo();
 
                 var queryLicApplication = from licenseApplication in _db.LicenseApplications
-                                        where licenseApplication.ApplicationType == "Initial Application" && licenseApplication.EmployeeLicenseId == vEmployeeLicenseID
-                                        orderby licenseApplication.SentToAgentDate descending, licenseApplication.LicenseApplicationId ascending
-                                        select new AgentLicApplicationItem
-                                        {
-                                            LicenseApplicationID = licenseApplication.LicenseApplicationId,
-                                            SentToAgentDate = licenseApplication.SentToAgentDate,
-                                            RecFromAgentDate = licenseApplication.RecFromAgentDate,
-                                            SentToStateDate = licenseApplication.SentToStateDate,
-                                            RecFromStateDate = licenseApplication.RecFromStateDate,
-                                            ApplicationStatus = licenseApplication.ApplicationStatus,
-                                            ApplicationType = licenseApplication.ApplicationType
-                                        };
+                                          where licenseApplication.ApplicationType == "Initial Application" && licenseApplication.EmployeeLicenseId == vEmployeeLicenseID
+                                          orderby licenseApplication.SentToAgentDate descending, licenseApplication.LicenseApplicationId ascending
+                                          select new AgentLicApplicationItem
+                                          {
+                                              LicenseApplicationID = licenseApplication.LicenseApplicationId,
+                                              SentToAgentDate = licenseApplication.SentToAgentDate,
+                                              RecFromAgentDate = licenseApplication.RecFromAgentDate,
+                                              SentToStateDate = licenseApplication.SentToStateDate,
+                                              RecFromStateDate = licenseApplication.RecFromStateDate,
+                                              ApplicationStatus = licenseApplication.ApplicationStatus,
+                                              ApplicationType = licenseApplication.ApplicationType
+                                          };
 
                 var licenseApplications = queryLicApplication.AsNoTracking().ToList();
                 agentLicenseInformation.LicenseApplicationItems = licenseApplications;
 
                 var queryPreEducations = from epe in _db.EmployeeLicenseePreEducations
-                                        join pe in _db.PreEducations on epe.PreEducationId equals pe.PreEducationId
-                                        where epe.EmployeeLicenseId == vEmployeeLicenseID
-                                        orderby epe.EducationStartDate descending, pe.EducationName ascending
-                                        select new AgentLicPreEducationItem
-                                        {
-                                            EmployeeLicensePreEducationID = epe.EmployeeLicensePreEducationId,
-                                            Status = epe.Status,
-                                            EducationStartDate = epe.EducationStartDate,
-                                            EducationEndDate = epe.EducationEndDate,
-                                            PreEducationID = epe.PreEducationId,
-                                            CompanyID = epe.CompanyId,
-                                            EducationName = pe.EducationName + " - " + (pe.DeliveryMethod ?? ""),
-                                            EmployeeLicenseID = epe.EmployeeLicenseId,
-                                            AdditionalNotes = epe.AdditionalNotes
-                                        };
+                                         join pe in _db.PreEducations on epe.PreEducationId equals pe.PreEducationId
+                                         where epe.EmployeeLicenseId == vEmployeeLicenseID
+                                         orderby epe.EducationStartDate descending, pe.EducationName ascending
+                                         select new AgentLicPreEducationItem
+                                         {
+                                             EmployeeLicensePreEducationID = epe.EmployeeLicensePreEducationId,
+                                             Status = epe.Status,
+                                             EducationStartDate = epe.EducationStartDate,
+                                             EducationEndDate = epe.EducationEndDate,
+                                             PreEducationID = epe.PreEducationId,
+                                             CompanyID = epe.CompanyId,
+                                             EducationName = pe.EducationName + " - " + (pe.DeliveryMethod ?? ""),
+                                             EmployeeLicenseID = epe.EmployeeLicenseId,
+                                             AdditionalNotes = epe.AdditionalNotes
+                                         };
 
                 var preEducations = queryPreEducations.AsNoTracking().ToList();
                 agentLicenseInformation.LicensePreEducationItems = preEducations;
 
                 var queryPreExams = from x in _db.EmployeeLicensePreExams
-                            join e in _db.Exams on x.ExamId equals e.ExamId into exams
-                            from e in exams.DefaultIfEmpty()
-                            where x.EmployeeLicenseId == vEmployeeLicenseID
-                            orderby x.ExamScheduleDate descending, x.EmployeeLicenseId ascending
-                            select new AgentLicPreExamItem
-                            {
-                                EmployeeLicensePreExamID = x.EmployeeLicensePreExamId,
-                                EmployeeLicenseID = x.EmployeeLicenseId,
-                                Status = x.Status,
-                                ExamID = x.ExamId,
-                                ExamName = e != null ? e.ExamName : null,
-                                ExamScheduleDate = x.ExamScheduleDate,
-                                ExamTakenDate = x.ExamTakenDate,
-                                AdditionalNotes = x.AdditionalNotes
-                            };
+                                    join e in _db.Exams on x.ExamId equals e.ExamId into exams
+                                    from e in exams.DefaultIfEmpty()
+                                    where x.EmployeeLicenseId == vEmployeeLicenseID
+                                    orderby x.ExamScheduleDate descending, x.EmployeeLicenseId ascending
+                                    select new AgentLicPreExamItem
+                                    {
+                                        EmployeeLicensePreExamID = x.EmployeeLicensePreExamId,
+                                        EmployeeLicenseID = x.EmployeeLicenseId,
+                                        Status = x.Status,
+                                        ExamID = x.ExamId,
+                                        ExamName = e != null ? e.ExamName : null,
+                                        ExamScheduleDate = x.ExamScheduleDate,
+                                        ExamTakenDate = x.ExamTakenDate,
+                                        AdditionalNotes = x.AdditionalNotes
+                                    };
 
                 var preExams = queryPreExams.AsNoTracking().ToList();
                 agentLicenseInformation.LicensePreExamItems = preExams;
+
+                var queryRenewals = from licenseApplication in _db.LicenseApplications
+                                    where licenseApplication.ApplicationType == "Renewal Application"
+                                          && licenseApplication.EmployeeLicenseId == vEmployeeLicenseID
+                                    select new AgentLicRenewalItem
+                                    {
+                                        EmployeeLicenseID = (int)licenseApplication.EmployeeLicenseId,
+                                        LicenseApplicationID = licenseApplication.LicenseApplicationId,
+                                        SentToAgentDate = licenseApplication.SentToAgentDate,
+                                        RecFromAgentDate = licenseApplication.RecFromAgentDate,
+                                        SentToStateDate = licenseApplication.SentToStateDate,
+                                        RecFromStateDate = licenseApplication.RecFromStateDate,
+                                        ApplicationStatus = licenseApplication.ApplicationStatus,
+                                        ApplicationType = licenseApplication.ApplicationType,
+                                        RenewalDate = licenseApplication.RenewalDate,
+                                        RenewalMethod = licenseApplication.RenewalMethod
+                                    };
+
+                var renewals = queryRenewals.AsNoTracking().ToList();
+                agentLicenseInformation.LicenseRenewalItems = renewals;
 
                 result.Success = true;
                 result.ObjData = agentLicenseInformation;
@@ -1113,7 +1133,7 @@ namespace OneTrack_v2.Services
 
             return licenseAppointments;
         }
-        private OputAgentEmploymentTranserHistory GetEmploymentHistoryInfo (int vEmploymentID)
+        private OputAgentEmploymentTranserHistory GetEmploymentHistoryInfo(int vEmploymentID)
         {
             var employmentTransferHistory = new OputAgentEmploymentTranserHistory();
 
