@@ -668,7 +668,7 @@
           "lib/netstandard2.0/Microsoft.AspNetCore.Razor.Language.dll": {}
         }
       },
-      "Microsoft.AspNetCore.SpaProxy/7.0.16": {
+      "Microsoft.AspNetCore.SpaProxy/7.0.17": {
         "type": "package",
         "compile": {
           "lib/net7.0/Microsoft.AspNetCore.SpaProxy.dll": {}
@@ -3733,10 +3733,10 @@
         "microsoft.aspnetcore.razor.language.nuspec"
       ]
     },
-    "Microsoft.AspNetCore.SpaProxy/7.0.16": {
-      "sha512": "7FULMIscoqnMbgqot77mVpnsWxNpV0qHluCsNJRcx9io4POELJ/hIGZa71cbIUImEpKQoaJZe7Wzh3h0IFvdRw==",
+    "Microsoft.AspNetCore.SpaProxy/7.0.17": {
+      "sha512": "omBfnS+x1JO1fvxERtgRofQsHaGlFT8MdCMqK4ia1wv61ON/962kr9a4zu5b5F/+xhL4DPT6BmDn+oysSJq1AQ==",
       "type": "package",
-      "path": "microsoft.aspnetcore.spaproxy/7.0.16",
+      "path": "microsoft.aspnetcore.spaproxy/7.0.17",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -3744,7 +3744,7 @@
         "THIRD-PARTY-NOTICES.TXT",
         "build/Microsoft.AspNetCore.SpaProxy.targets",
         "lib/net7.0/Microsoft.AspNetCore.SpaProxy.dll",
-        "microsoft.aspnetcore.spaproxy.7.0.16.nupkg.sha512",
+        "microsoft.aspnetcore.spaproxy.7.0.17.nupkg.sha512",
         "microsoft.aspnetcore.spaproxy.nuspec"
       ]
     },
@@ -8434,6 +8434,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -8490,7 +8495,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.102/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.202/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

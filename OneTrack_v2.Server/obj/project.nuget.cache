@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "9BL1e3jT3Wh/dTS3Hpr6lAZXpjO7tmthIMhKKm5Ghy9uPzhpP9rMuqWoSX8FZzaU3SkbWHe01f+JP1eyOXrJSg==",
+  "dgSpecHash": "o32lKIzw+FxcnWvsXbSd96euzMbx03TbIMZL3FHvXVjpwTsMToh04AdCRS8PX+K1oik915MP090pKJ5J/Fqs9Q==",
   "success": true,
   "projectFilePath": "U:\\Development\\Repos\\OneTrack_v2\\OneTrack_v2.Server\\OneTrak_v2.Server.csproj",
   "expectedPackageFiles": [
@@ -58,7 +58,7 @@
     "C:\\Users\\T2229513\\.nuget\\packages\\humanizer.core.zh-hant\\2.14.1\\humanizer.core.zh-hant.2.14.1.nupkg.sha512",
     "C:\\Users\\T2229513\\.nuget\\packages\\microsoft.aspnetcore.openapi\\7.0.15\\microsoft.aspnetcore.openapi.7.0.15.nupkg.sha512",
     "C:\\Users\\T2229513\\.nuget\\packages\\microsoft.aspnetcore.razor.language\\6.0.24\\microsoft.aspnetcore.razor.language.6.0.24.nupkg.sha512",
-    "C:\\Users\\T2229513\\.nuget\\packages\\microsoft.aspnetcore.spaproxy\\7.0.16\\microsoft.aspnetcore.spaproxy.7.0.16.nupkg.sha512",
+    "C:\\Users\\T2229513\\.nuget\\packages\\microsoft.aspnetcore.spaproxy\\7.0.17\\microsoft.aspnetcore.spaproxy.7.0.17.nupkg.sha512",
     "C:\\Users\\T2229513\\.nuget\\packages\\microsoft.bcl.asyncinterfaces\\7.0.0\\microsoft.bcl.asyncinterfaces.7.0.0.nupkg.sha512",
     "C:\\Users\\T2229513\\.nuget\\packages\\microsoft.build\\17.8.3\\microsoft.build.17.8.3.nupkg.sha512",
     "C:\\Users\\T2229513\\.nuget\\packages\\microsoft.build.framework\\17.8.3\\microsoft.build.framework.17.8.3.nupkg.sha512",

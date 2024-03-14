@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OneTrak_v2.Server.Test")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+76d0dfc0c2c7db1de642f20833efc6de669cb235")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3f540736c7f0be3d6b925836232459e36739de90")]
 [assembly: System.Reflection.AssemblyProductAttribute("OneTrak_v2.Server.Test")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OneTrak_v2.Server.Test")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

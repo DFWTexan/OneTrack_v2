@@ -54,7 +54,7 @@
   </div>
   <div class="row">
     <div
-      class="div d-flex justify-content-center"
+      class="div d-flex justify-content-center mt-3 mb-3"
       style="font-size: larger; color: gray"
       *ngIf="
         agentDataService.agentLicApplicationInfo.licenseRenewalItems.length ===
@@ -63,7 +63,8 @@
     >
       No records found
     </div>
-    <div
+  </div>
+  <div
       class="row"
       *ngIf="
         agentDataService.agentLicApplicationInfo.licenseRenewalItems.length !==
@@ -73,7 +74,7 @@
       <table class="table">
         <thead>
           <tr style="background-color: gainsboro; border-radius: 5rem">
-            <th>Renewal ID</th>
+            <th class="ms-2">Renewal ID</th>
             <th>Sent to Agent</th>
             <th>Rec. From Agent</th>
             <th>Sent to State</th>
@@ -130,7 +131,6 @@
         </tbody>
       </table>
     </div>
-  </div>
 </div>
 
 <!-- Modal: EDIT-LIC-RENEWAL -->

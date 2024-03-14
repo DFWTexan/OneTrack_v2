@@ -881,7 +881,6 @@ namespace OneTrack_v2.Services
                 return result;
             }
         }
-
         public ReturnResult InsertAgent([FromBody] IputAgentInsert vInput)
         {
             var result = new ReturnResult();
@@ -989,6 +988,7 @@ namespace OneTrack_v2.Services
                 return result;
             }
         }
+        #region Private Methods
         private bool ExecuteAddressInsert(IputAgentInsert vInput, string? vCountry = null)
         {
             try
@@ -1023,7 +1023,6 @@ namespace OneTrack_v2.Services
                 return false;
             }
         }
-
         private bool ExecuteEmploymentInsert(IputAgentInsert vInput, int vEmployeeId)
         {
             try
@@ -1212,5 +1211,6 @@ namespace OneTrack_v2.Services
 
             return employmentTransferHistory;
         }
+        #endregion
     }
 }
