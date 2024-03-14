@@ -105,10 +105,17 @@
               <mat-option [value]="value">{{ value }}</mat-option>
               }
             </mat-select>  -->
-            <mat-select [(value)]="defaultAgentStatus" ngModel name="AgentStatus" multiple>
-              <mat-option *ngFor="let value of agentStatuses" [value]="value">{{ value }}</mat-option>
-            </mat-select>
-            </mat-form-field><br />
+            <mat-select
+              [(value)]="defaultAgentStatus"
+              ngModel
+              name="AgentStatus"
+              multiple
+            >
+              <mat-option *ngFor="let value of agentStatuses" [value]="value">{{
+                value
+              }}</mat-option>
+            </mat-select> </mat-form-field
+          ><br />
           <label for="search">Score Number:</label><br />
           <mat-form-field>
             <mat-select
@@ -191,10 +198,21 @@
       </div>
     </div>
   </form>
-</div>
-<div class="row">
-  <div class="col-md-12">
-    <hr *ngIf="isSubmitted" />
-    <app-search-list *ngIf="isSubmitted"></app-search-list>
+
+  <mat-divider *ngIf="isSubmitted"></mat-divider>
+
+  <div class="row mt-3 mb-3" style="font-size: larger" *ngIf="isSubmitted">
+    <div class="col d-flex justify-content-center">
+      <span class="me-2" style="font-weight: 700">{{
+        searchEmployeeResult.length
+      }}</span>
+      - record(s) found
+    </div>
+  </div>
+
+  <div class="row" *ngIf="isSubmitted">
+    <div class="col-md-12">
+      <app-search-list></app-search-list>
+    </div>
   </div>
 </div>

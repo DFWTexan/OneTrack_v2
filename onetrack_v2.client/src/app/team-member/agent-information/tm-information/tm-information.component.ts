@@ -23,6 +23,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   ) {
     this.subscribeAgentInfo = new Subscription();
     this.subscribeAgentLicenseAppointments = new Subscription();
+    this.agentInfo.agentLicenseAppointments = [];
   }
 
   ngOnInit() {

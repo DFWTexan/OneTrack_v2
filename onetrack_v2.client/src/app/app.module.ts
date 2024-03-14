@@ -1,6 +1,7 @@
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
@@ -69,6 +70,9 @@ import { EditEmploymentHistComponent } from './team-member/agent-information/tm-
 import { EditTransferHistComponent } from './team-member/agent-information/tm-emptrans-history/edit-transfer-hist/edit-transfer-hist.component';
 import { EditCorequirementHistComponent } from './team-member/agent-information/tm-emptrans-history/edit-corequirement-hist/edit-corequirement-hist.component';
 import { EditJobtitleHistComponent } from './team-member/agent-information/tm-emptrans-history/edit-jobtitle-hist/edit-jobtitle-hist.component';
+import { EditLicApplInfoComponent } from './team-member/agent-information/tm-license-management/license-application/edit-lic-appl-info/edit-lic-appl-info.component';
+import { EditLicPreEduComponent } from './team-member/agent-information/tm-license-management/license-application/edit-lic-pre-edu/edit-lic-pre-edu.component';
+import { EditLicPreExamComponent } from './team-member/agent-information/tm-license-management/license-application/edit-lic-pre-exam/edit-lic-pre-exam.component';
 
 @NgModule({
   declarations: [
@@ -117,6 +121,9 @@ import { EditJobtitleHistComponent } from './team-member/agent-information/tm-em
     EditTransferHistComponent,
     EditCorequirementHistComponent,
     EditJobtitleHistComponent,
+    EditLicApplInfoComponent,
+    EditLicPreEduComponent,
+    EditLicPreExamComponent,
   ],
   imports: [
     BrowserModule,
@@ -124,6 +131,7 @@ import { EditJobtitleHistComponent } from './team-member/agent-information/tm-em
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    CommonModule,
     MatButtonModule,
     MatSidenavModule,
     MatMenuModule,

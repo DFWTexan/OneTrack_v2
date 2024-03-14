@@ -7,11 +7,16 @@ import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import {
   AgentInfo,
+  AgentLicApplicationInfo,
   AgentLicenseAppointments,
   CompanyRequirementsHistory,
   EmploymentHistory,
   EmploymentJobTitleHistory,
+  LicenseApplicationItem,
   LicenseAppointment,
+  LicensePreEducationItem,
+  LicensePreExamItem,
+  LicenseRenewalItem,
   TransferHistory,
 } from '../../_Models';
 import { AgentComService } from './agentInfo.com.service';
@@ -41,6 +46,18 @@ export class AgentDataService {
   companyRequirementsHistItemChanged = new Subject<any>();
   employmentJobTitleHistItem: any = {};
   employmentJobTitleHistItemChanged = new Subject<any>();
+  // AGENT LICENSE APPLICATION INFO
+  agentLicApplicationInfo: AgentLicApplicationInfo =
+    {} as AgentLicApplicationInfo;
+  agentLicApplicationInfoChanged = new Subject<AgentLicApplicationInfo>();
+  licenseApplicationItem: any = {};
+  licenseApplicationItemChanged = new Subject<any>();
+  licensePreEducationItem: any = {};
+  licensePreEducationItemChanged = new Subject<any>();
+  licensePreExamItem: any = {};
+  licensePreExamItemChanged = new Subject<any>();
+  licenseRenewalItem: any = {};
+  licenseRenewalItemChanged = new Subject<any>();  
 
   constructor(
     private http: HttpClient,
@@ -89,6 +106,31 @@ export class AgentDataService {
             this.agentInformation.agentLicenseAppointments = response.objData;
             this.agentLicenseAppointmentsChanged.next(
               this.agentInformation.agentLicenseAppointments
+            );
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  fetchAgentLicApplicationInfo(employeeLicenseID: number) {
+    this.apiUrl = environment.apiUrl + 'Agent/GetLicenseApplcationInfo/';
+
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: AgentLicApplicationInfo;
+        errMessage: string;
+      }>(this.apiUrl + employeeLicenseID)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            this.agentLicApplicationInfo = response.objData;
+            this.agentLicApplicationInfoChanged.next(
+              this.agentLicApplicationInfo
             );
             return response.objData;
           } else {
@@ -150,5 +192,42 @@ export class AgentDataService {
     this.employmentJobTitleHistItemChanged.next(
       this.employmentJobTitleHistItem
     );
+  }
+
+  // TM LICENSE APPLICATION INFORMATION
+  storeLicAppInfo(
+    mode: string | '',
+    licenseApplicationItem: LicenseApplicationItem | null
+  ) {
+    this.agentComService.modeLicAppInfoModal(mode);
+    this.licenseApplicationItem = licenseApplicationItem || {};
+    this.licenseApplicationItemChanged.next(this.licenseApplicationItem);
+  }
+
+  storeLicPreEdu(
+    mode: string | '',
+    licensePreEducationItem: LicensePreEducationItem | null
+  ) {
+    this.agentComService.modeLicPreEduModal(mode);
+    this.licensePreEducationItem = licensePreEducationItem || {};
+    this.licensePreEducationItemChanged.next(this.licensePreEducationItem);
+  }
+
+  storeLicPreExam(
+    mode: string | '',
+    licensePreExamItem: LicensePreExamItem | null
+  ) {
+    this.agentComService.modeLicPreExamModal(mode);
+    this.licensePreExamItem = licensePreExamItem || {};
+    this.licensePreExamItemChanged.next(this.licensePreExamItem);
+  }
+
+  storeLicRenewal(
+    mode: string | '',
+    licenseRenewalItem: LicenseRenewalItem | null
+  ) {
+    this.agentComService.modeLicRenewalModal(mode);
+    this.licenseRenewalItem = licenseRenewalItem || {};
+    this.licenseRenewalItemChanged.next(this.licenseRenewalItem);
   }
 }
