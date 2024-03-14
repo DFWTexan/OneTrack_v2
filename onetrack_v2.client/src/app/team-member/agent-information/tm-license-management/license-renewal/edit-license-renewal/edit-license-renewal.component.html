@@ -1,0 +1,87 @@
+<form
+  [formGroup]="licRenewalForm"
+  (ngSubmit)="onSubmit()"
+  class="container app-modal-container"
+>
+  <div class="row">
+    <div class="col">
+      <div class="mb-3" *ngIf="agentComService.modeLicAppInfo === 'EDIT'">
+        <label for="licenseApplicationID" class="form-label"
+          >License Appl. ID:</label
+        >
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="licenseApplicationID"
+          formControlName="licenseApplicationID"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="sentToAgentDate" class="form-label">Sent to Agent:</label>
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="sentToAgentDate"
+          formControlName="sentToAgentDate"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="recFromAgentDate" class="form-label"
+          >Sent From Agent:</label
+        >
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="recFromAgentDate"
+          formControlName="recFromAgentDate"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="sentToStateDate" class="form-label">Sent To State:</label>
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="sentToStateDate"
+          formControlName="sentToStateDate"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="recFromStateDate" class="form-label"
+          >Renewed Date:</label
+        >
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="recFromStateDate"
+          formControlName="recFromStateDate"
+        />
+      </div>
+
+     <div class="mb-3">
+        <label for="renewalMethod" class="form-label">Renewal Method:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="renewalMethod"
+          formControlName="renewalMethod"
+        />
+      </div>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button type="button" class="btn btn-secondary me-3 cancel-button">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary save-button">Save</button>
+    </div>
+  </div>
+</form>
+

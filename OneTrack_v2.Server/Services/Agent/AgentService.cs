@@ -152,78 +152,41 @@ namespace OneTrack_v2.Services
                         rtrim(e1.lastname) + ', ' + e1.FirstName AS MgrName, j.JobTitle AS MgrTitle,
                         h1.BranchCode AS MgrDeptCode, b1.Name AS MgrDeptName, b1.Address1 AS MgrDeptAddress1, b1.Address2 AS MgrDeptAddress2, 
                         b1.City AS MgrDeptCity, b1.State AS MgrDeptState, b1.Zip_Code AS MgrDeptZip, b1.Phone AS MgrDeptPhone, b1.Fax AS MgrDeptFax, m1.Email AS MgrEmail
-                        FROM
-                        [dbo].[Employment] m
-                        INNER JOIN
-                        [dbo].[Employment] m1
-                        ON m.H4EmploymentID = m1.EmploymentID AND m.EmploymentID = @EmploymentID
-                        INNER JOIN
-                        [dbo].[EmploymentJobTitle] ej
-                        ON m1.EmploymentID = ej.EmploymentID AND ej.[IsCurrent] = 1
-                        INNER JOIN
-                        [dbo].[JobTitles] j
-                        ON ej.JobTitleID = j.JobTitleID
-                        INNER JOIN
-                        [dbo].[Employee] e1
-                        ON m1.EmployeeID = e1.EmployeeID 
-                        INNER JOIN
-                        [dbo].[TransferHistory] h1
-                        ON m1.EmploymentID = h1.EmploymentID AND h1.IsCurrent = 1
-                        LEFT OUTER JOIN
-                        [dbo].[BIF] b1
-                        ON RIGHT(h1.BranchCode,8) = RIGHT(b1.HR_Department_ID,8)
+                        FROM [dbo].[Employment] m
+                        INNER JOIN [dbo].[Employment] m1 ON m.H4EmploymentID = m1.EmploymentID AND m.EmploymentID = @EmploymentID
+                        INNER JOIN [dbo].[EmploymentJobTitle] ej ON m1.EmploymentID = ej.EmploymentID AND ej.[IsCurrent] = 1
+                        INNER JOIN [dbo].[JobTitles] j ON ej.JobTitleID = j.JobTitleID
+                        INNER JOIN [dbo].[Employee] e1 ON m1.EmployeeID = e1.EmployeeID 
+                        INNER JOIN [dbo].[TransferHistory] h1 ON m1.EmploymentID = h1.EmploymentID AND h1.IsCurrent = 1
+                        LEFT OUTER JOIN [dbo].[BIF] b1 ON RIGHT(h1.BranchCode,8) = RIGHT(b1.HR_Department_ID,8)
+
                         UNION
 
                         SELECT TOP 1 5 AS Hierarchy,
                         rtrim(e1.lastname) + ', ' + e1.FirstName AS MgrName, j.JobTitle AS MgrTitle,
                         h1.BranchCode AS MgrDeptCode, b1.Name AS MgrDeptName, b1.Address1 AS MgrDeptAddress1, b1.Address2 AS MgrDeptAddress2, 
                         b1.City AS MgrDeptCity, b1.State AS MgrDeptState, b1.Zip_Code AS MgrDeptZip, b1.Phone AS MgrDeptPhone, b1.Fax AS MgrDeptFax, m1.Email AS MgrEmail
-                        FROM
-                        [dbo].[Employment] m
-                        INNER JOIN
-                        [dbo].[Employment] m1
-                        ON m.H5EmploymentID = m1.EmploymentID AND m.EmploymentID = @EmploymentID
-                        INNER JOIN
-                        [dbo].[EmploymentJobTitle] ej
-                        ON m1.EmploymentID = ej.EmploymentID AND ej.[IsCurrent] = 1
-                        INNER JOIN
-                        [dbo].[JobTitles] j
-                        ON ej.JobTitleID = j.JobTitleID
-                        INNER JOIN
-                        [dbo].[Employee] e1
-                        ON m1.EmployeeID = e1.EmployeeID 
-                        INNER JOIN
-                        [dbo].[TransferHistory] h1
-                        ON m1.EmploymentID = h1.EmploymentID AND h1.IsCurrent = 1
-                        LEFT OUTER JOIN
-                        [dbo].[BIF] b1
-                        ON RIGHT(h1.BranchCode,8) = RIGHT(b1.HR_Department_ID,8)
+                        FROM [dbo].[Employment] m
+                        INNER JOIN [dbo].[Employment] m1 ON m.H5EmploymentID = m1.EmploymentID AND m.EmploymentID = @EmploymentID
+                        INNER JOIN [dbo].[EmploymentJobTitle] ej ON m1.EmploymentID = ej.EmploymentID AND ej.[IsCurrent] = 1
+                        INNER JOIN [dbo].[JobTitles] j ON ej.JobTitleID = j.JobTitleID
+                        INNER JOIN [dbo].[Employee] e1 ON m1.EmployeeID = e1.EmployeeID 
+                        INNER JOIN [dbo].[TransferHistory] h1 ON m1.EmploymentID = h1.EmploymentID AND h1.IsCurrent = 1
+                        LEFT OUTER JOIN [dbo].[BIF] b1 ON RIGHT(h1.BranchCode,8) = RIGHT(b1.HR_Department_ID,8)
+
                         UNION
 
                         SELECT TOP 1 6 AS Hierarchy,
                         rtrim(e1.lastname) + ', ' + e1.FirstName AS MgrName, j.JobTitle AS MgrTitle,
                         h1.BranchCode AS MgrDeptCode, b1.Name AS MgrDeptName, b1.Address1 AS MgrDeptAddress1, b1.Address2 AS MgrDeptAddress2, 
                         b1.City AS MgrDeptCity, b1.State AS MgrDeptState, b1.Zip_Code AS MgrDeptZip, b1.Phone AS MgrDeptPhone, b1.Fax AS MgrDeptFax, m1.Email AS MgrEmail
-                        FROM
-                        [dbo].[Employment] m
-                        INNER JOIN
-                        [dbo].[Employment] m1
-                        ON m.H6EmploymentID = m1.EmploymentID AND m.EmploymentID = @EmploymentID
-                        INNER JOIN
-                        [dbo].[EmploymentJobTitle] ej
-                        ON m1.EmploymentID = ej.EmploymentID AND ej.[IsCurrent] = 1
-                        INNER JOIN
-                        [dbo].[JobTitles] j
-                        ON ej.JobTitleID = j.JobTitleID
-                        INNER JOIN
-                        [dbo].[Employee] e1
-                        ON m1.EmployeeID = e1.EmployeeID 
-                        INNER JOIN
-                        [dbo].[TransferHistory] h1
-                        ON m1.EmploymentID = h1.EmploymentID AND h1.IsCurrent = 1
-                        LEFT OUTER JOIN
-                        [dbo].[BIF] b1
-                        ON RIGHT(h1.BranchCode,8) = RIGHT(b1.HR_Department_ID,8)
+                        FROM [dbo].[Employment] m
+                        INNER JOIN [dbo].[Employment] m1 ON m.H6EmploymentID = m1.EmploymentID AND m.EmploymentID = @EmploymentID
+                        INNER JOIN [dbo].[EmploymentJobTitle] ej ON m1.EmploymentID = ej.EmploymentID AND ej.[IsCurrent] = 1
+                        INNER JOIN [dbo].[JobTitles] j ON ej.JobTitleID = j.JobTitleID
+                        INNER JOIN [dbo].[Employee] e1 ON m1.EmployeeID = e1.EmployeeID 
+                        INNER JOIN [dbo].[TransferHistory] h1 ON m1.EmploymentID = h1.EmploymentID AND h1.IsCurrent = 1
+                        LEFT OUTER JOIN [dbo].[BIF] b1 ON RIGHT(h1.BranchCode,8) = RIGHT(b1.HR_Department_ID,8)
 
                         ORDER BY Hierarchy";
 
