@@ -237,13 +237,13 @@ namespace OneTrack_v2.Services
                 agent.EmploymentJobTitleHistory = agentEmpTransHistory.EmploymentJobTitleItems;
 
                 // Continuing Education
-                var agentContEduRequirement = GeContEducationItems(agent.EmploymentID);
+                var agentContEduRequirement = FillContEducationItems(agent.EmploymentID);
 
                 agent.ContEduRequiredItems = agentContEduRequirement.Item1.ToList();
                 agent.ContEduCompletedItems = agentContEduRequirement.Item2.ToList();
 
                 //Diary Information
-                var agentDiaryInfo = GetDiaryInfo(agent.EmploymentID);
+                var agentDiaryInfo = FillDiaryInfo(agent.EmploymentID);
 
                 agent.DiaryCreatedByItems = agentDiaryInfo.Item1.ToList();
                 agent.DiaryItems = agentDiaryInfo.Item2.ToList();
@@ -1187,7 +1187,7 @@ namespace OneTrack_v2.Services
 
             return employmentTransferHistory;
         }
-        private (AgentContEduRequiredItem[], AgentContEduCompletedItem[]) GeContEducationItems(int vEmploymentID)
+        private (AgentContEduRequiredItem[], AgentContEduCompletedItem[]) FillContEducationItems(int vEmploymentID)
         {
             List<AgentContEduRequiredItem> _requiredItems = new List<AgentContEduRequiredItem>();
             List<AgentContEduCompletedItem> _completedItems = new List<AgentContEduCompletedItem>();
@@ -1257,7 +1257,7 @@ namespace OneTrack_v2.Services
 
             return (_requiredItems.ToArray(), _completedItems.ToArray());
         }
-        protected (DiaryCreatedByItem[], DiaryItem[]) GetDiaryInfo(int vEmploymentID)
+        protected (DiaryCreatedByItem[], DiaryItem[]) FillDiaryInfo(int vEmploymentID)
         {
             List<DiaryCreatedByItem> _diaryCreatedByItems = new List<DiaryCreatedByItem>();
             
