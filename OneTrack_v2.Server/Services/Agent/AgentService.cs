@@ -67,6 +67,7 @@ namespace OneTrack_v2.Services
                             let employmentJobTitle = _db.EmploymentJobTitles.FirstOrDefault(ejt => ejt.EmploymentId == employment.EmploymentId && ejt.IsCurrent)
                             let jobTitle = _db.JobTitles.FirstOrDefault(jt => jt.JobTitleId == employmentJobTitle.JobTitleId)
                             let diary = _db.Diaries.Where(d => d.DiaryName == "Agent" && d.EmploymentId == employment.EmploymentId).OrderByDescending(d => d.DiaryDate).FirstOrDefault()
+                            let licenseTech = _db.LicenseTeches.Where(lt => lt.TeamNum == employee.Geid).FirstOrDefault()
                             select new OputAgent
                             {
                                 EmployeeID = employee.EmployeeId,
@@ -81,7 +82,7 @@ namespace OneTrack_v2.Services
                                 JobTitle = jobTitle.JobTitle1,
                                 JobDate = employmentJobTitle.JobTitleDate,
                                 EmployeeSSN = employeeSSN != null ? employeeSSN.EmployeeSsn1 : "",
-                                Soeid = employee.Soeid,
+                                Soeid = licenseTech.Soeid,
                                 Address1 = address.Address1,
                                 Address2 = address.Address2,
                                 City = address.City,
@@ -234,6 +235,18 @@ namespace OneTrack_v2.Services
                 agent.TransferHistory = agentEmpTransHistory.AgentTransferItems;
                 agent.CompayRequirementsHistory = agentEmpTransHistory.CompayRequirementsItems;
                 agent.EmploymentJobTitleHistory = agentEmpTransHistory.EmploymentJobTitleItems;
+
+                // Continuing Education
+                var agentContEduRequirement = GeContEducationItems(agent.EmploymentID);
+
+                agent.ContEduRequiredItems = agentContEduRequirement.Item1.ToList();
+                agent.ContEduCompletedItems = agentContEduRequirement.Item2.ToList();
+
+                //Diary Information
+                var agentDiaryInfo = GetDiaryInfo(agent.EmploymentID);
+
+                agent.DiaryCreatedByItems = agentDiaryInfo.Item1.ToList();
+                agent.DiaryItems = agentDiaryInfo.Item2.ToList();
 
                 result.Success = true;
                 result.ObjData = agent;
@@ -1173,6 +1186,115 @@ namespace OneTrack_v2.Services
             employmentTransferHistory.EmploymentJobTitleItems = jobTitleHistories;
 
             return employmentTransferHistory;
+        }
+        private (AgentContEduRequiredItem[], AgentContEduCompletedItem[]) GeContEducationItems(int vEmploymentID)
+        {
+            List<AgentContEduRequiredItem> _requiredItems = new List<AgentContEduRequiredItem>();
+            List<AgentContEduCompletedItem> _completedItems = new List<AgentContEduCompletedItem>();
+
+            var defaultDate = new DateTime(1900, 1, 1);
+            var requiredQuery = (from ce in _db.ContEducationRequirements
+                                 join e in _db.Employments on ce.EmploymentId equals e.EmploymentId
+                                 where (ce.EmploymentId ?? 0) == vEmploymentID
+                                 && ce.IsExempt == false
+                                 && e.Cerequired == true
+                                 // Uncomment the following line if you want to filter out records where EducationStartDate is the default date
+                                 // && (ce.EducationStartDate ?? defaultDate) != defaultDate
+                                 orderby ce.EducationStartDate descending
+                                 select new
+                                 {
+                                     ce.ContEducationRequirementId,
+                                     EducationStartDate = ce.EducationStartDate ?? defaultDate,
+                                     EducationEndDate = ce.EducationEndDate ?? defaultDate,
+                                     ce.RequiredCreditHours,
+                                     ce.IsExempt,
+                                     ce.EmploymentId
+                                 });
+
+            foreach (var item in requiredQuery)
+            {
+                _requiredItems.Add(new AgentContEduRequiredItem
+                {
+                    ContEducationRequirementID = item.ContEducationRequirementId,
+                    EducationStartDate = item.EducationStartDate,
+                    EducationEndDate = item.EducationEndDate,
+                    RequiredCreditHours = item.RequiredCreditHours,
+                    IsExempt = item.IsExempt
+                });
+            }
+
+            var requiredIDs = requiredQuery.Select(r => r.ContEducationRequirementId).ToList();
+
+            var takenQuery = (from ece in _db.EmployeeContEducations
+                              join ce in _db.ContEducations on ece.ContEducationId equals ce.ContEducationId
+                              orderby ece.ContEducationTakenDate descending
+                              select new
+                              {
+                                  ece.EmployeeEducationId,
+                                  ce.EducationName,
+                                  ece.ContEducationRequirementId,
+                                  ece.ContEducationTakenDate,
+                                  ece.CreditHoursTaken,
+                                  ece.AdditionalNotes
+                              });
+
+            foreach (var item in requiredIDs)
+            {
+                var completedItems = takenQuery.Where(x => x.ContEducationRequirementId == item).ToList();
+                foreach (var completedItem in completedItems)
+                {
+                    _completedItems.Add(new AgentContEduCompletedItem
+                    {
+                        EmployeeEducationID = completedItem.EmployeeEducationId,
+                        EducationName = completedItem.EducationName,
+                        ContEducationRequirementID = completedItem.ContEducationRequirementId,
+                        ContEducationTakenDate = completedItem.ContEducationTakenDate,
+                        CreditHoursTaken = completedItem.CreditHoursTaken,
+                        AdditionalNotes = completedItem.AdditionalNotes
+                    });
+                }
+            }
+
+            return (_requiredItems.ToArray(), _completedItems.ToArray());
+        }
+        protected (DiaryCreatedByItem[], DiaryItem[]) GetDiaryInfo(int vEmploymentID)
+        {
+            List<DiaryCreatedByItem> _diaryCreatedByItems = new List<DiaryCreatedByItem>();
+            
+            var queryCreatedBy = (from diary in _db.Diaries
+                                  join lt in _db.LicenseTeches on diary.Soeid equals lt.Soeid into ltGroup
+                                  from lt in ltGroup.DefaultIfEmpty()
+                                  where diary.EmploymentId == vEmploymentID
+                                  select new DiaryCreatedByItem
+                                  {
+                                      SOEID = diary.Soeid.Trim(),
+                                      TechName = lt != null ? lt.FirstName + " " + lt.LastName : diary.Soeid
+                                  }).Distinct();
+
+            _diaryCreatedByItems.Add(new DiaryCreatedByItem { SOEID = "{All}", TechName = "{All}" });
+
+            foreach (var item in queryCreatedBy)
+            {
+                _diaryCreatedByItems.Add(new DiaryCreatedByItem
+                {
+                    SOEID = item.SOEID,
+                    TechName = item.TechName
+                });
+            }
+
+            var entryItems = _db.Diaries
+                .Where(d => d.EmploymentId == vEmploymentID)
+                .OrderByDescending(d => d.DiaryDate)
+                .Select(d => new DiaryItem
+                {
+                    DiaryID = d.DiaryId,
+                    SOEID = d.Soeid,
+                    DiaryName = d.DiaryName,
+                    DiaryDate = d.DiaryDate,
+                    Notes = d.Notes
+                }).ToList();
+
+            return (_diaryCreatedByItems.ToArray(), entryItems.ToArray());
         }
         #endregion
     }

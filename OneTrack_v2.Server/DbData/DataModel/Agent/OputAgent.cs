@@ -54,6 +54,10 @@ namespace OneTrack_v2.DataModel
         public List<AgentTransferItem> TransferHistory { get; set; }
         public List<CompayRequirementsItem> CompayRequirementsHistory { get; set; }
         public List<EmploymentJobTitleItem> EmploymentJobTitleHistory { get; set; }
+        public List<AgentContEduRequiredItem> ContEduRequiredItems { get; set; }
+        public List<AgentContEduCompletedItem> ContEduCompletedItems { get; set; }
+        public List<DiaryCreatedByItem> DiaryCreatedByItems { get; set; }
+        public List<DiaryItem> DiaryItems { get; set; }
 
         public OputAgent()
         {
@@ -63,6 +67,46 @@ namespace OneTrack_v2.DataModel
             TransferHistory = new List<AgentTransferItem>();
             CompayRequirementsHistory = new List<CompayRequirementsItem>();
             EmploymentJobTitleHistory = new List<EmploymentJobTitleItem>();
+            ContEduRequiredItems = new List<AgentContEduRequiredItem>();
+            ContEduCompletedItems = new List<AgentContEduCompletedItem>();
+            DiaryCreatedByItems = new List<DiaryCreatedByItem>();
+            DiaryItems = new List<DiaryItem>();
         }
+    }
+
+    public class AgentContEduRequiredItem
+    {
+        public int ContEducationRequirementID { get; set; }
+        public DateTime? EducationStartDate { get; set; }
+        public DateTime? EducationEndDate { get; set; }
+        public decimal? RequiredCreditHours { get; set; }
+        public Boolean? IsExempt { get; set; }
+        public int? EmploymentID { get; set; }
+    }
+
+    public class AgentContEduCompletedItem
+    {
+        public int EmployeeEducationID { get; set; }
+        public string? EducationName { get; set; }
+        public int? ContEducationRequirementID { get; set; }
+        public DateTime? ContEducationTakenDate { get; set; }
+        public decimal? CreditHoursTaken { get; set; }
+        public string? AdditionalNotes { get; set; }
+    }
+
+    public class  DiaryCreatedByItem
+    {
+        public string? SOEID { get; set; }
+        public string? TechName { get; set; }
+    }
+
+    public class DiaryItem
+    {
+        public int DiaryID { get; set; }
+        public string? SOEID { get; set; }
+        public string? DiaryName { get; set; }
+        public DateTime? DiaryDate { get; set; }
+        public string? Notes { get; set; }
+        //public string? EmploymentID { get; set; }
     }
 }
