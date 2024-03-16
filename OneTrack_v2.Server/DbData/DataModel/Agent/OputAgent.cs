@@ -58,6 +58,7 @@ namespace OneTrack_v2.DataModel
         public List<AgentContEduCompletedItem> ContEduCompletedItems { get; set; }
         public List<DiaryCreatedByItem> DiaryCreatedByItems { get; set; }
         public List<DiaryItem> DiaryItems { get; set; }
+        public List<EmploymentCommunicationItem> EmploymentCommunicationItems { get; set; }
 
         public OputAgent()
         {
@@ -71,6 +72,7 @@ namespace OneTrack_v2.DataModel
             ContEduCompletedItems = new List<AgentContEduCompletedItem>();
             DiaryCreatedByItems = new List<DiaryCreatedByItem>();
             DiaryItems = new List<DiaryItem>();
+            EmploymentCommunicationItems = new List<EmploymentCommunicationItem>();
         }
     }
 
@@ -108,5 +110,13 @@ namespace OneTrack_v2.DataModel
         public DateTime? DiaryDate { get; set; }
         public string? Notes { get; set; }
         //public string? EmploymentID { get; set; }
+    }
+
+    public class EmploymentCommunicationItem
+    {
+        public int EmploymentCommunicationID { get; set; }
+        public string? LetterName { get; set; }
+        public DateTime? EmailCreateDate { get; set; }
+        public DateTime? EmailSentDate { get; set; }
     }
 }

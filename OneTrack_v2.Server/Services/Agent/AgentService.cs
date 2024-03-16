@@ -248,6 +248,21 @@ namespace OneTrack_v2.Services
                 agent.DiaryCreatedByItems = agentDiaryInfo.Item1.ToList();
                 agent.DiaryItems = agentDiaryInfo.Item2.ToList();
 
+                //Employment Communication
+                var queryEmploymentCommunications = (from ec in _db.EmploymentCommunications
+                                                 join c in _db.Communications on ec.CommunicationId equals c.CommunicationId
+                                                 where ec.EmploymentId == agent.EmploymentID
+                                                 orderby ec.EmailCreateDate, c.DocTypeAbv + "-" + c.DocSubType
+                                                 select new EmploymentCommunicationItem
+                                                 {
+                                                     EmploymentCommunicationID = ec.EmploymentCommunicationId,
+                                                     LetterName = c.DocTypeAbv + "-" + c.DocSubType,
+                                                     EmailCreateDate= ec.EmailCreateDate,
+                                                     EmailSentDate = ec.EmailSentDate
+                                                 });
+
+                agent.EmploymentCommunicationItems = queryEmploymentCommunications.AsNoTracking().ToList();
+
                 result.Success = true;
                 result.ObjData = agent;
                 result.StatusCode = 200;
