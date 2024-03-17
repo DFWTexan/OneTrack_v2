@@ -58,6 +58,9 @@ export class AgentDataService {
   licensePreExamItemChanged = new Subject<any>();
   licenseRenewalItem: any = {};
   licenseRenewalItemChanged = new Subject<any>();  
+  // CONTINUING EDUCATION
+  contEduHoursTaken: any = {};
+  contEduHoursTakenChanged = new Subject<any>();
 
   constructor(
     private http: HttpClient,
@@ -229,5 +232,15 @@ export class AgentDataService {
     this.agentComService.modeLicRenewalModal(mode);
     this.licenseRenewalItem = licenseRenewalItem || {};
     this.licenseRenewalItemChanged.next(this.licenseRenewalItem);
+  }
+
+  // CONTINUING EDUCATION
+  storeContEduHoursTaken(
+    mode: string | '',
+    contEduHoursTaken: any | null
+  ) {
+    this.agentComService.modeContEduHoursTakenModal(mode);
+    this.contEduHoursTaken = contEduHoursTaken || {};
+    this.contEduHoursTakenChanged.next(this.contEduHoursTaken);
   }
 }

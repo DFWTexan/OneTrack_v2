@@ -27,6 +27,9 @@ export class AgentComService {
   modeLicPreExamChanged = new Subject<string>();
   modeLicRenewal: string = '';
   modeLicRenewalChanged = new Subject<string>();
+  // Employment Continuing Education
+  modeContEduHoursTaken: string = '';
+  modeContEduHoursTakenChanged = new Subject<string>();
 
   constructor() {}
 
@@ -80,5 +83,11 @@ export class AgentComService {
   modeLicRenewalModal(mode: string) {
     this.modeLicRenewal = mode;
     this.modeLicRenewalChanged.next(this.modeLicRenewal);
+  }
+
+  // Continuing Education Tanken Hours
+  modeContEduHoursTakenModal(mode: string) {
+    this.modeContEduHoursTaken = mode;
+    this.modeContEduHoursTakenChanged.next(this.modeContEduHoursTaken);
   }
 }

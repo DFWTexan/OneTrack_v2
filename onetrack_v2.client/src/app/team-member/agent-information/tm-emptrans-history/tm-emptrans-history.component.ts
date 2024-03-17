@@ -20,7 +20,7 @@ export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
   employmentJobTitleHistory: EmploymentJobTitleHistory[] = [];
   
   constructor(
-    public agentService: AgentDataService,
+    public agentDataService: AgentDataService,
     public agentComService: AgentComService,
     protected modalService: ModalService
   ) {
@@ -28,7 +28,7 @@ export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscribeAgentInfo = this.agentService.agentInfoChanged.subscribe(
+    this.subscribeAgentInfo = this.agentDataService.agentInfoChanged.subscribe(
       (agentInfo: any) => {
         // this.agentInfo = agentInfo;
         this.employmentHistory = agentInfo.employmentHistory;

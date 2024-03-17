@@ -74,6 +74,7 @@ import { EditLicApplInfoComponent } from './team-member/agent-information/tm-lic
 import { EditLicPreEduComponent } from './team-member/agent-information/tm-license-management/license-application/edit-lic-pre-edu/edit-lic-pre-edu.component';
 import { EditLicPreExamComponent } from './team-member/agent-information/tm-license-management/license-application/edit-lic-pre-exam/edit-lic-pre-exam.component';
 import { EditLicenseRenewalComponent } from './team-member/agent-information/tm-license-management/license-renewal/edit-license-renewal/edit-license-renewal.component';
+import { EditHoursTakenComponent } from './team-member/agent-information/tm-continuing-edu/edit-hours-taken/edit-hours-taken.component';
 
 @NgModule({
   declarations: [
@@ -125,7 +126,8 @@ import { EditLicenseRenewalComponent } from './team-member/agent-information/tm-
     EditLicApplInfoComponent,
     EditLicPreEduComponent,
     EditLicPreExamComponent,
-    EditLicenseRenewalComponent
+    EditLicenseRenewalComponent,
+    EditHoursTakenComponent
   ],
   imports: [
     BrowserModule,
