@@ -52,6 +52,11 @@ export interface AgentInfo {
   transferHistory: TransferHistory[];
   companyRequirementsHistory: CompanyRequirementsHistory[];
   employmentJobTitleHistory: EmploymentJobTitleHistory[];
+  contEduRequiredItems: ContEduRequiredItem[];
+  contEduCompletedItems: ContEduCompletedItem[];
+  diaryCreatedByItems: DiaryCreatedByItem[];
+  diaryItems: DiaryItem[];
+  employmentCommunicationItems: EmploymentCommunicationItem[];
 }
 
 export interface EmploymentHistory {
@@ -93,4 +98,37 @@ export interface EmploymentJobTitleHistory {
   jobTitle: string;
   isCurrent: boolean;
 }
+export interface ContEduRequiredItem {
+  contEducationRequirementID: number;
+  educationStartDate: string | null;
+  educationEndDate: string | null;
+  requiredCreditHours: number | null;
+  isExempt: boolean | null;
+  employmentID: number | null;
+}
 
+export interface ContEduCompletedItem {
+  employeeEducationID: number;
+  educationName: string | null;
+  contEducationRequirementID: number | null;
+  contEducationTakenDate: string | null;
+  creditHoursTaken: number | null;
+  additionalNotes: string | null;
+}
+export interface DiaryCreatedByItem {
+  SOEID: string | null;
+  techName: string | null;
+}
+export interface DiaryItem {
+  diaryID: number;
+  SOEID: string | null;
+  diaryName: string | null;
+  diaryDate: string | null;
+  notes: string | null;
+}
+export interface EmploymentCommunicationItem {
+  employmentCommunicationID: number;
+  letterName: string | null;
+  emailCreateDate: string | null;
+  emailSentDate: string | null;
+}

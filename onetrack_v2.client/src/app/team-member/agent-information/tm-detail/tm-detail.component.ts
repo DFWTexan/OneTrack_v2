@@ -15,14 +15,14 @@ export class TmDetailComponent implements OnInit, OnDestroy {
   subscribeAgentInfo: Subscription;
 
   constructor(
-    private agentService: AgentDataService,
+    private agentDataService: AgentDataService,
     protected modalService: ModalService
   ) {
     this.subscribeAgentInfo = new Subscription();
   }
 
   ngOnInit(): void {
-    this.subscribeAgentInfo = this.agentService.agentInfoChanged.subscribe(
+    this.subscribeAgentInfo = this.agentDataService.agentInfoChanged.subscribe(
       (agentInfo: any) => {
         this.agentInfo = agentInfo;
       }
