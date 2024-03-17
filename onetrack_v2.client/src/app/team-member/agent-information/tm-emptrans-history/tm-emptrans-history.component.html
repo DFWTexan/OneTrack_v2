@@ -16,7 +16,7 @@
           <button
             class="btn btn-success"
             (click)="
-              agentService.storeEmploymentTransferHistory('INSERT', null);
+              agentDataService.storeEmploymentTransferHistory('INSERT', null);
               modalService.open('modal-edit-emp-history')
             "
           >
@@ -79,7 +79,7 @@
                     <button
                       class="edit-button"
                       (click)="
-                        agentService.storeEmploymentTransferHistory(
+                        agentDataService.storeEmploymentTransferHistory(
                           'EDIT',
                           emp
                         );
@@ -118,7 +118,7 @@
           <button
             class="btn btn-success"
             (click)="
-              agentService.storeTransferHistory('INSERT', null);
+              agentDataService.storeTransferHistory('INSERT', null);
               modalService.open('modal-edit-tran-history')
             "
           >
@@ -172,7 +172,7 @@
                   <button
                     class="edit-button"
                     (click)="
-                      agentService.storeTransferHistory('EDIT', transfer);
+                      agentDataService.storeTransferHistory('EDIT', transfer);
                       modalService.open('modal-edit-tran-history')
                     "
                   >
@@ -207,7 +207,7 @@
           <button
             class="btn btn-success"
             (click)="
-              agentService.storeCompanyRequirementsHistory('INSERT', null);
+              agentDataService.storeCompanyRequirementsHistory('INSERT', null);
               modalService.open('modal-edit-co-req-history')
             "
           >
@@ -255,7 +255,7 @@
                   <button
                     class="edit-button"
                     (click)="
-                      agentService.storeCompanyRequirementsHistory(
+                      agentDataService.storeCompanyRequirementsHistory(
                         'EDIT',
                         coReq
                       );
@@ -292,7 +292,7 @@
         <button
           class="btn btn-success"
           (click)="
-            agentService.storeEmploymentJobTitleHistory('INSERT', null);
+            agentDataService.storeEmploymentJobTitleHistory('INSERT', null);
             modalService.open('modal-edit-jobTitle-history')
           "
         >
@@ -344,7 +344,7 @@
                 <button
                   class="edit-button"
                   (click)="
-                    agentService.storeEmploymentJobTitleHistory(
+                    agentDataService.storeEmploymentJobTitleHistory(
                       'EDIT',
                       jobTitle
                     );

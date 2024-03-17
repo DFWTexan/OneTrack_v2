@@ -67,6 +67,7 @@ namespace OneTrack_v2.Services
                             let employmentJobTitle = _db.EmploymentJobTitles.FirstOrDefault(ejt => ejt.EmploymentId == employment.EmploymentId && ejt.IsCurrent)
                             let jobTitle = _db.JobTitles.FirstOrDefault(jt => jt.JobTitleId == employmentJobTitle.JobTitleId)
                             let diary = _db.Diaries.Where(d => d.DiaryName == "Agent" && d.EmploymentId == employment.EmploymentId).OrderByDescending(d => d.DiaryDate).FirstOrDefault()
+                            let licenseTech = _db.LicenseTeches.Where(lt => lt.TeamNum == employee.Geid).FirstOrDefault()
                             select new OputAgent
                             {
                                 EmployeeID = employee.EmployeeId,
@@ -81,7 +82,7 @@ namespace OneTrack_v2.Services
                                 JobTitle = jobTitle.JobTitle1,
                                 JobDate = employmentJobTitle.JobTitleDate,
                                 EmployeeSSN = employeeSSN != null ? employeeSSN.EmployeeSsn1 : "",
-                                Soeid = employee.Soeid,
+                                Soeid = licenseTech.Soeid,
                                 Address1 = address.Address1,
                                 Address2 = address.Address2,
                                 City = address.City,
@@ -152,78 +153,41 @@ namespace OneTrack_v2.Services
                         rtrim(e1.lastname) + ', ' + e1.FirstName AS MgrName, j.JobTitle AS MgrTitle,
                         h1.BranchCode AS MgrDeptCode, b1.Name AS MgrDeptName, b1.Address1 AS MgrDeptAddress1, b1.Address2 AS MgrDeptAddress2, 
                         b1.City AS MgrDeptCity, b1.State AS MgrDeptState, b1.Zip_Code AS MgrDeptZip, b1.Phone AS MgrDeptPhone, b1.Fax AS MgrDeptFax, m1.Email AS MgrEmail
-                        FROM
-                        [dbo].[Employment] m
-                        INNER JOIN
-                        [dbo].[Employment] m1
-                        ON m.H4EmploymentID = m1.EmploymentID AND m.EmploymentID = @EmploymentID
-                        INNER JOIN
-                        [dbo].[EmploymentJobTitle] ej
-                        ON m1.EmploymentID = ej.EmploymentID AND ej.[IsCurrent] = 1
-                        INNER JOIN
-                        [dbo].[JobTitles] j
-                        ON ej.JobTitleID = j.JobTitleID
-                        INNER JOIN
-                        [dbo].[Employee] e1
-                        ON m1.EmployeeID = e1.EmployeeID 
-                        INNER JOIN
-                        [dbo].[TransferHistory] h1
-                        ON m1.EmploymentID = h1.EmploymentID AND h1.IsCurrent = 1
-                        LEFT OUTER JOIN
-                        [dbo].[BIF] b1
-                        ON RIGHT(h1.BranchCode,8) = RIGHT(b1.HR_Department_ID,8)
+                        FROM [dbo].[Employment] m
+                        INNER JOIN [dbo].[Employment] m1 ON m.H4EmploymentID = m1.EmploymentID AND m.EmploymentID = @EmploymentID
+                        INNER JOIN [dbo].[EmploymentJobTitle] ej ON m1.EmploymentID = ej.EmploymentID AND ej.[IsCurrent] = 1
+                        INNER JOIN [dbo].[JobTitles] j ON ej.JobTitleID = j.JobTitleID
+                        INNER JOIN [dbo].[Employee] e1 ON m1.EmployeeID = e1.EmployeeID 
+                        INNER JOIN [dbo].[TransferHistory] h1 ON m1.EmploymentID = h1.EmploymentID AND h1.IsCurrent = 1
+                        LEFT OUTER JOIN [dbo].[BIF] b1 ON RIGHT(h1.BranchCode,8) = RIGHT(b1.HR_Department_ID,8)
+
                         UNION
 
                         SELECT TOP 1 5 AS Hierarchy,
                         rtrim(e1.lastname) + ', ' + e1.FirstName AS MgrName, j.JobTitle AS MgrTitle,
                         h1.BranchCode AS MgrDeptCode, b1.Name AS MgrDeptName, b1.Address1 AS MgrDeptAddress1, b1.Address2 AS MgrDeptAddress2, 
                         b1.City AS MgrDeptCity, b1.State AS MgrDeptState, b1.Zip_Code AS MgrDeptZip, b1.Phone AS MgrDeptPhone, b1.Fax AS MgrDeptFax, m1.Email AS MgrEmail
-                        FROM
-                        [dbo].[Employment] m
-                        INNER JOIN
-                        [dbo].[Employment] m1
-                        ON m.H5EmploymentID = m1.EmploymentID AND m.EmploymentID = @EmploymentID
-                        INNER JOIN
-                        [dbo].[EmploymentJobTitle] ej
-                        ON m1.EmploymentID = ej.EmploymentID AND ej.[IsCurrent] = 1
-                        INNER JOIN
-                        [dbo].[JobTitles] j
-                        ON ej.JobTitleID = j.JobTitleID
-                        INNER JOIN
-                        [dbo].[Employee] e1
-                        ON m1.EmployeeID = e1.EmployeeID 
-                        INNER JOIN
-                        [dbo].[TransferHistory] h1
-                        ON m1.EmploymentID = h1.EmploymentID AND h1.IsCurrent = 1
-                        LEFT OUTER JOIN
-                        [dbo].[BIF] b1
-                        ON RIGHT(h1.BranchCode,8) = RIGHT(b1.HR_Department_ID,8)
+                        FROM [dbo].[Employment] m
+                        INNER JOIN [dbo].[Employment] m1 ON m.H5EmploymentID = m1.EmploymentID AND m.EmploymentID = @EmploymentID
+                        INNER JOIN [dbo].[EmploymentJobTitle] ej ON m1.EmploymentID = ej.EmploymentID AND ej.[IsCurrent] = 1
+                        INNER JOIN [dbo].[JobTitles] j ON ej.JobTitleID = j.JobTitleID
+                        INNER JOIN [dbo].[Employee] e1 ON m1.EmployeeID = e1.EmployeeID 
+                        INNER JOIN [dbo].[TransferHistory] h1 ON m1.EmploymentID = h1.EmploymentID AND h1.IsCurrent = 1
+                        LEFT OUTER JOIN [dbo].[BIF] b1 ON RIGHT(h1.BranchCode,8) = RIGHT(b1.HR_Department_ID,8)
+
                         UNION
 
                         SELECT TOP 1 6 AS Hierarchy,
                         rtrim(e1.lastname) + ', ' + e1.FirstName AS MgrName, j.JobTitle AS MgrTitle,
                         h1.BranchCode AS MgrDeptCode, b1.Name AS MgrDeptName, b1.Address1 AS MgrDeptAddress1, b1.Address2 AS MgrDeptAddress2, 
                         b1.City AS MgrDeptCity, b1.State AS MgrDeptState, b1.Zip_Code AS MgrDeptZip, b1.Phone AS MgrDeptPhone, b1.Fax AS MgrDeptFax, m1.Email AS MgrEmail
-                        FROM
-                        [dbo].[Employment] m
-                        INNER JOIN
-                        [dbo].[Employment] m1
-                        ON m.H6EmploymentID = m1.EmploymentID AND m.EmploymentID = @EmploymentID
-                        INNER JOIN
-                        [dbo].[EmploymentJobTitle] ej
-                        ON m1.EmploymentID = ej.EmploymentID AND ej.[IsCurrent] = 1
-                        INNER JOIN
-                        [dbo].[JobTitles] j
-                        ON ej.JobTitleID = j.JobTitleID
-                        INNER JOIN
-                        [dbo].[Employee] e1
-                        ON m1.EmployeeID = e1.EmployeeID 
-                        INNER JOIN
-                        [dbo].[TransferHistory] h1
-                        ON m1.EmploymentID = h1.EmploymentID AND h1.IsCurrent = 1
-                        LEFT OUTER JOIN
-                        [dbo].[BIF] b1
-                        ON RIGHT(h1.BranchCode,8) = RIGHT(b1.HR_Department_ID,8)
+                        FROM [dbo].[Employment] m
+                        INNER JOIN [dbo].[Employment] m1 ON m.H6EmploymentID = m1.EmploymentID AND m.EmploymentID = @EmploymentID
+                        INNER JOIN [dbo].[EmploymentJobTitle] ej ON m1.EmploymentID = ej.EmploymentID AND ej.[IsCurrent] = 1
+                        INNER JOIN [dbo].[JobTitles] j ON ej.JobTitleID = j.JobTitleID
+                        INNER JOIN [dbo].[Employee] e1 ON m1.EmployeeID = e1.EmployeeID 
+                        INNER JOIN [dbo].[TransferHistory] h1 ON m1.EmploymentID = h1.EmploymentID AND h1.IsCurrent = 1
+                        LEFT OUTER JOIN [dbo].[BIF] b1 ON RIGHT(h1.BranchCode,8) = RIGHT(b1.HR_Department_ID,8)
 
                         ORDER BY Hierarchy";
 
@@ -271,6 +235,33 @@ namespace OneTrack_v2.Services
                 agent.TransferHistory = agentEmpTransHistory.AgentTransferItems;
                 agent.CompayRequirementsHistory = agentEmpTransHistory.CompayRequirementsItems;
                 agent.EmploymentJobTitleHistory = agentEmpTransHistory.EmploymentJobTitleItems;
+
+                // Continuing Education
+                var agentContEduRequirement = FillContEducationItems(agent.EmploymentID);
+
+                agent.ContEduRequiredItems = agentContEduRequirement.Item1.ToList();
+                agent.ContEduCompletedItems = agentContEduRequirement.Item2.ToList();
+
+                //Diary Information
+                var agentDiaryInfo = FillDiaryInfo(agent.EmploymentID);
+
+                agent.DiaryCreatedByItems = agentDiaryInfo.Item1.ToList();
+                agent.DiaryItems = agentDiaryInfo.Item2.ToList();
+
+                //Employment Communication
+                var queryEmploymentCommunications = (from ec in _db.EmploymentCommunications
+                                                 join c in _db.Communications on ec.CommunicationId equals c.CommunicationId
+                                                 where ec.EmploymentId == agent.EmploymentID
+                                                 orderby ec.EmailCreateDate, c.DocTypeAbv + "-" + c.DocSubType
+                                                 select new EmploymentCommunicationItem
+                                                 {
+                                                     EmploymentCommunicationID = ec.EmploymentCommunicationId,
+                                                     LetterName = c.DocTypeAbv + "-" + c.DocSubType,
+                                                     EmailCreateDate= ec.EmailCreateDate,
+                                                     EmailSentDate = ec.EmailSentDate
+                                                 });
+
+                agent.EmploymentCommunicationItems = queryEmploymentCommunications.AsNoTracking().ToList();
 
                 result.Success = true;
                 result.ObjData = agent;
@@ -1210,6 +1201,115 @@ namespace OneTrack_v2.Services
             employmentTransferHistory.EmploymentJobTitleItems = jobTitleHistories;
 
             return employmentTransferHistory;
+        }
+        private (AgentContEduRequiredItem[], AgentContEduCompletedItem[]) FillContEducationItems(int vEmploymentID)
+        {
+            List<AgentContEduRequiredItem> _requiredItems = new List<AgentContEduRequiredItem>();
+            List<AgentContEduCompletedItem> _completedItems = new List<AgentContEduCompletedItem>();
+
+            var defaultDate = new DateTime(1900, 1, 1);
+            var requiredQuery = (from ce in _db.ContEducationRequirements
+                                 join e in _db.Employments on ce.EmploymentId equals e.EmploymentId
+                                 where (ce.EmploymentId ?? 0) == vEmploymentID
+                                 && ce.IsExempt == false
+                                 && e.Cerequired == true
+                                 // Uncomment the following line if you want to filter out records where EducationStartDate is the default date
+                                 // && (ce.EducationStartDate ?? defaultDate) != defaultDate
+                                 orderby ce.EducationStartDate descending
+                                 select new
+                                 {
+                                     ce.ContEducationRequirementId,
+                                     EducationStartDate = ce.EducationStartDate ?? defaultDate,
+                                     EducationEndDate = ce.EducationEndDate ?? defaultDate,
+                                     ce.RequiredCreditHours,
+                                     ce.IsExempt,
+                                     ce.EmploymentId
+                                 });
+
+            foreach (var item in requiredQuery)
+            {
+                _requiredItems.Add(new AgentContEduRequiredItem
+                {
+                    ContEducationRequirementID = item.ContEducationRequirementId,
+                    EducationStartDate = item.EducationStartDate,
+                    EducationEndDate = item.EducationEndDate,
+                    RequiredCreditHours = item.RequiredCreditHours,
+                    IsExempt = item.IsExempt
+                });
+            }
+
+            var requiredIDs = requiredQuery.Select(r => r.ContEducationRequirementId).ToList();
+
+            var takenQuery = (from ece in _db.EmployeeContEducations
+                              join ce in _db.ContEducations on ece.ContEducationId equals ce.ContEducationId
+                              orderby ece.ContEducationTakenDate descending
+                              select new
+                              {
+                                  ece.EmployeeEducationId,
+                                  ce.EducationName,
+                                  ece.ContEducationRequirementId,
+                                  ece.ContEducationTakenDate,
+                                  ece.CreditHoursTaken,
+                                  ece.AdditionalNotes
+                              });
+
+            foreach (var item in requiredIDs)
+            {
+                var completedItems = takenQuery.Where(x => x.ContEducationRequirementId == item).ToList();
+                foreach (var completedItem in completedItems)
+                {
+                    _completedItems.Add(new AgentContEduCompletedItem
+                    {
+                        EmployeeEducationID = completedItem.EmployeeEducationId,
+                        EducationName = completedItem.EducationName,
+                        ContEducationRequirementID = completedItem.ContEducationRequirementId,
+                        ContEducationTakenDate = completedItem.ContEducationTakenDate,
+                        CreditHoursTaken = completedItem.CreditHoursTaken,
+                        AdditionalNotes = completedItem.AdditionalNotes
+                    });
+                }
+            }
+
+            return (_requiredItems.ToArray(), _completedItems.ToArray());
+        }
+        protected (DiaryCreatedByItem[], DiaryItem[]) FillDiaryInfo(int vEmploymentID)
+        {
+            List<DiaryCreatedByItem> _diaryCreatedByItems = new List<DiaryCreatedByItem>();
+            
+            var queryCreatedBy = (from diary in _db.Diaries
+                                  join lt in _db.LicenseTeches on diary.Soeid equals lt.Soeid into ltGroup
+                                  from lt in ltGroup.DefaultIfEmpty()
+                                  where diary.EmploymentId == vEmploymentID
+                                  select new DiaryCreatedByItem
+                                  {
+                                      SOEID = diary.Soeid.Trim(),
+                                      TechName = lt != null ? lt.FirstName + " " + lt.LastName : diary.Soeid
+                                  }).Distinct();
+
+            _diaryCreatedByItems.Add(new DiaryCreatedByItem { SOEID = "{All}", TechName = "ALL" });
+
+            foreach (var item in queryCreatedBy)
+            {
+                _diaryCreatedByItems.Add(new DiaryCreatedByItem
+                {
+                    SOEID = item.SOEID,
+                    TechName = item.TechName
+                });
+            }
+
+            var entryItems = _db.Diaries
+                .Where(d => d.EmploymentId == vEmploymentID)
+                .OrderByDescending(d => d.DiaryDate)
+                .Select(d => new DiaryItem
+                {
+                    DiaryID = d.DiaryId,
+                    SOEID = d.Soeid,
+                    DiaryName = d.DiaryName,
+                    DiaryDate = d.DiaryDate,
+                    Notes = d.Notes
+                }).ToList();
+
+            return (_diaryCreatedByItems.ToArray(), entryItems.ToArray());
         }
         #endregion
     }

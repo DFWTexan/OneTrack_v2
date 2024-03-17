@@ -73,6 +73,8 @@ import { EditJobtitleHistComponent } from './team-member/agent-information/tm-em
 import { EditLicApplInfoComponent } from './team-member/agent-information/tm-license-management/license-application/edit-lic-appl-info/edit-lic-appl-info.component';
 import { EditLicPreEduComponent } from './team-member/agent-information/tm-license-management/license-application/edit-lic-pre-edu/edit-lic-pre-edu.component';
 import { EditLicPreExamComponent } from './team-member/agent-information/tm-license-management/license-application/edit-lic-pre-exam/edit-lic-pre-exam.component';
+import { EditLicenseRenewalComponent } from './team-member/agent-information/tm-license-management/license-renewal/edit-license-renewal/edit-license-renewal.component';
+import { EditHoursTakenComponent } from './team-member/agent-information/tm-continuing-edu/edit-hours-taken/edit-hours-taken.component';
 
 @NgModule({
   declarations: [
@@ -124,6 +126,8 @@ import { EditLicPreExamComponent } from './team-member/agent-information/tm-lice
     EditLicApplInfoComponent,
     EditLicPreEduComponent,
     EditLicPreExamComponent,
+    EditLicenseRenewalComponent,
+    EditHoursTakenComponent
   ],
   imports: [
     BrowserModule,
@@ -147,7 +151,7 @@ import { EditLicPreExamComponent } from './team-member/agent-information/tm-lice
     MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule,
-    RouterModule.forRoot([]),
+    RouterModule.forRoot([])
   ],
   providers: [provideAnimationsAsync(), ConstantsDataService],
   bootstrap: [AppComponent],
