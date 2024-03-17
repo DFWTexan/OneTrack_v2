@@ -121,7 +121,7 @@ export interface DiaryCreatedByItem {
 }
 export interface DiaryItem {
   diaryID: number;
-  SOEID: string | null;
+  soeid: string | null;
   diaryName: string | null;
   diaryDate: string | null;
   notes: string | null;

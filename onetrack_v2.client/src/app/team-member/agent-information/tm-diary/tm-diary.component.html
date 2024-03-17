@@ -1,1 +1,52 @@
-<p>tm-diary works!</p>
+<div class="container app-component-container">
+  <div class="row">
+    <div class="col">
+      <label for="search">Created By:</label>
+      <input
+        class="form-select form-select-lg select-size-medium"
+        type="text"
+        id="workStateAbv"
+        formControlName="workStateAbv"
+      />
+    </div>
+
+    <div class="col d-flex align-items-end justify-content-end">
+      <button class="btn btn-success" type="button">
+        Insert New Diary Entry
+      </button>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col">
+      <div class="table">
+        <thead>
+          <tr style="background-color: gainsboro">
+            <th scope="col">TechName</th>
+            <th scope="col">DiaryID</th>
+            <th scope="col">DiaryDate</th>
+            <th scope="col">Notes</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody class="bg-body">
+          <tr *ngFor="let diary of agentInfo.diaryItems">
+            <td class="align-middle" style="font-size: larger;">{{ diary.soeid }}</td>
+            <td class="align-middle">{{ diary.diaryID }}</td>
+            <td class="align-middle text-nowrap">{{ diary.diaryDate | date }}</td>
+            <td class="align-middle" style="width: max-content;">{{ diary.notes }}</td>
+            <td class="align-middle" style="width: 10rem">
+              <div class="d-flex justify-content-between mb-3 me-4">
+                <button class="edit-button" type="button">
+                  <span class="material-symbols-outlined"> edit </span>
+                </button>
+                <button class="edit-button" type="button">
+                  <span class="material-symbols-outlined"> delete </span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </div>
+    </div>
+  </div>
+</div>
