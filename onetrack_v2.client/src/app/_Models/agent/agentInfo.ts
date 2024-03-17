@@ -116,7 +116,7 @@ export interface ContEduCompletedItem {
   additionalNotes: string | null;
 }
 export interface DiaryCreatedByItem {
-  SOEID: string | null;
+  soeid: string | null;
   techName: string | null;
 }
 export interface DiaryItem {

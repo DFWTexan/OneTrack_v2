@@ -243,4 +243,21 @@ export class AgentDataService {
     this.contEduHoursTaken = contEduHoursTaken || {};
     this.contEduHoursTakenChanged.next(this.contEduHoursTaken);
   }
+
+  filterBySOEID(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    console.log('EMFTEST - (AgentDataService) Value: ', value);
+    // Filter agentInformation.diaryItems by SOEID
+    this.agentInformation.diaryItems = this.agentInformation.diaryItems.filter(
+      (item) => {
+        if (item && item.soeid !== null) {
+          return item.soeid.includes(value);
+        } else {
+          return false;
+        }
+      }
+    );
+
+  }
 }

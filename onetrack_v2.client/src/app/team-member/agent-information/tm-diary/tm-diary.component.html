@@ -2,12 +2,19 @@
   <div class="row">
     <div class="col">
       <label for="search">Created By:</label>
-      <input
-        class="form-select form-select-lg select-size-medium"
+      <select
+        class="form-select form-select-lg select-size-small"
         type="text"
-        id="workStateAbv"
-        formControlName="workStateAbv"
-      />
+        id="createdBy"
+        (change)="agentDataService.filterBySOEID($event)"
+      >
+        <option
+          *ngFor="let createdBy of agentInfo.diaryCreatedByItems"
+          [value]="createdBy.soeid"
+        >
+          {{ createdBy.techName }}
+        </option>
+      </select>
     </div>
 
     <div class="col d-flex align-items-end justify-content-end">
@@ -30,10 +37,16 @@
         </thead>
         <tbody class="bg-body">
           <tr *ngFor="let diary of agentInfo.diaryItems">
-            <td class="align-middle" style="font-size: larger;">{{ diary.soeid }}</td>
+            <td class="align-middle" style="font-size: larger">
+              {{ diary.soeid }}
+            </td>
             <td class="align-middle">{{ diary.diaryID }}</td>
-            <td class="align-middle text-nowrap">{{ diary.diaryDate | date }}</td>
-            <td class="align-middle" style="width: max-content;">{{ diary.notes }}</td>
+            <td class="align-middle text-nowrap">
+              {{ diary.diaryDate | date }}
+            </td>
+            <td class="align-middle" style="width: max-content">
+              {{ diary.notes }}
+            </td>
             <td class="align-middle" style="width: 10rem">
               <div class="d-flex justify-content-between mb-3 me-4">
                 <button class="edit-button" type="button">
