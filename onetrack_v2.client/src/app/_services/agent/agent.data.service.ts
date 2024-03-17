@@ -63,6 +63,9 @@ export class AgentDataService {
   contEduHoursTakenChanged = new Subject<any>();
   diaryItems: any = {};
   diaryItemsChanged = new Subject<any>();
+  // TM DIARY
+  diaryEntry: any = {};
+  diaryEntryChanged = new Subject<any>();
 
   constructor(
     private http: HttpClient,
@@ -248,6 +251,7 @@ export class AgentDataService {
     this.contEduHoursTakenChanged.next(this.contEduHoursTaken);
   }
 
+  // TM DIARY
   filterBySOEID(event: Event): void {
     const target = event.target as HTMLInputElement;
     const value = target.value;
@@ -267,6 +271,14 @@ export class AgentDataService {
     );
 
     this.diaryItemsChanged.next(this.diaryItems);
+  }
 
+  storeDiaryEntry(
+    mode: string | '',
+    diaryEntry: any | null
+  ) {
+    this.agentComService.modeDiaryEntryModal(mode);
+    this.diaryEntry = diaryEntry || {};
+    this.diaryEntryChanged.next(this.diaryEntry);
   }
 }

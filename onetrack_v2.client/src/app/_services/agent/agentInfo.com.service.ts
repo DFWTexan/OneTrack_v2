@@ -30,6 +30,9 @@ export class AgentComService {
   // Employment Continuing Education
   modeContEduHoursTaken: string = '';
   modeContEduHoursTakenChanged = new Subject<string>();
+  // TM Diary
+  modeDiary: string = '';
+  modeDiaryChanged = new Subject<string>();
 
   constructor() {}
 
@@ -89,5 +92,11 @@ export class AgentComService {
   modeContEduHoursTakenModal(mode: string) {
     this.modeContEduHoursTaken = mode;
     this.modeContEduHoursTakenChanged.next(this.modeContEduHoursTaken);
+  }
+
+  // TM Diary
+  modeDiaryEntryModal(mode: string) {
+    this.modeDiary = mode;
+    this.modeDiaryChanged.next(this.modeDiary);
   }
 }

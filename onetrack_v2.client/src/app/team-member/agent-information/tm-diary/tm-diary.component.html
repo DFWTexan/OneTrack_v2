@@ -18,7 +18,14 @@
     </div>
 
     <div class="col d-flex align-items-end justify-content-end">
-      <button class="btn btn-success" type="button">
+      <button
+        class="btn btn-success"
+        type="button"
+        (click)="
+          agentDataService.storeContEduHoursTaken('INSERT', null);
+          modalService.open('modal-edit-diary-entry')
+        "
+      >
         Insert New Diary Entry
       </button>
     </div>
@@ -49,7 +56,14 @@
             </td>
             <td class="align-middle" style="width: 10rem">
               <div class="d-flex justify-content-between mb-3 me-4">
-                <button class="edit-button" type="button">
+                <button
+                  class="edit-button"
+                  type="button"
+                  (click)="
+                    agentDataService.storeContEduHoursTaken('EDIT', diary);
+                    modalService.open('modal-edit-diary-entry')
+                  "
+                >
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
                 <button class="edit-button" type="button">
@@ -63,3 +77,33 @@
     </div>
   </div>
 </div>
+
+<!-- Modal: EDIT-DIARY-ENTRY -->
+<modal id="modal-edit-diary-entry">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      {{ agentComService.modeContEduHoursTaken }} - Diary Entry
+    </h1>
+    <!-- <button
+          type="button"
+          class="btn-close"
+          (click)="modalService.close()"
+        ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-edit-diary-entry></app-edit-diary-entry>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="modalService.close()"
+        >
+          Close
+        </button>
+      </div> -->
+</modal>
