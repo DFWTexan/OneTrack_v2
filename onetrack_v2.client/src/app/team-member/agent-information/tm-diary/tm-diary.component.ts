@@ -43,5 +43,6 @@ export class TmDiaryComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscribeAgentInfo.unsubscribe();
+    this.subscribeDiaryData.unsubscribe();
   }
 }

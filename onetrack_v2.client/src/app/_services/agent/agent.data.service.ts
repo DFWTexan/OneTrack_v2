@@ -251,8 +251,6 @@ export class AgentDataService {
   filterBySOEID(event: Event): void {
     const target = event.target as HTMLInputElement;
     const value = target.value;
-    console.log('EMFTEST - (AgentDataService) Value: ', value);
-    // Filter agentInformation.diaryItems by SOEID
     if (value === '{All}') {
       this.diaryItems = this.agentInformation.diaryItems;
       this.diaryItemsChanged.next(this.diaryItems);
