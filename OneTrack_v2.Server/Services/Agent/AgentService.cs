@@ -1286,7 +1286,7 @@ namespace OneTrack_v2.Services
                                       TechName = lt != null ? lt.FirstName + " " + lt.LastName : diary.Soeid
                                   }).Distinct();
 
-            _diaryCreatedByItems.Add(new DiaryCreatedByItem { SOEID = "{All}", TechName = "{All}" });
+            _diaryCreatedByItems.Add(new DiaryCreatedByItem { SOEID = "{All}", TechName = "ALL" });
 
             foreach (var item in queryCreatedBy)
             {

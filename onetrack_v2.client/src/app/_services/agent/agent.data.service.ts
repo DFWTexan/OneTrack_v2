@@ -61,6 +61,8 @@ export class AgentDataService {
   // CONTINUING EDUCATION
   contEduHoursTaken: any = {};
   contEduHoursTakenChanged = new Subject<any>();
+  diaryItems: any = {};
+  diaryItemsChanged = new Subject<any>();
 
   constructor(
     private http: HttpClient,
@@ -84,6 +86,8 @@ export class AgentDataService {
           if (response.success && response.statusCode === 200) {
             this.agentInfoChanged.next(response.objData);
             this.agentInformation = response.objData;
+            this.diaryItems = this.agentInformation.diaryItems;
+            this.diaryItemsChanged.next(this.diaryItems);
             this.fetchAgentLicenseAppointments(response.objData.employmentID);
             return response.objData;
           } else {
@@ -249,7 +253,12 @@ export class AgentDataService {
     const value = target.value;
     console.log('EMFTEST - (AgentDataService) Value: ', value);
     // Filter agentInformation.diaryItems by SOEID
-    this.agentInformation.diaryItems = this.agentInformation.diaryItems.filter(
+    if (value === '{All}') {
+      this.diaryItems = this.agentInformation.diaryItems;
+      this.diaryItemsChanged.next(this.diaryItems);
+      return;
+    }
+    this.diaryItems = this.agentInformation.diaryItems.filter(
       (item) => {
         if (item && item.soeid !== null) {
           return item.soeid.includes(value);
@@ -258,6 +267,8 @@ export class AgentDataService {
         }
       }
     );
+
+    this.diaryItemsChanged.next(this.diaryItems);
 
   }
 }
