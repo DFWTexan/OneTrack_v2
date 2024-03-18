@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using OneTrack_v2.DbData;
 using OneTrack_v2.Services;
+using OneTrak_v2.Server.Services.Email.Templates;
 
 var builder = WebApplication.CreateBuilder(args);
 // Connect to the database
@@ -9,6 +10,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 // Add services to the container.
 builder.Services.AddScoped<IAgentService, AgentService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
+builder.Services.AddScoped<IEmailTemplateService, EmailTemplateService>();
 builder.Services.AddScoped<IMiscService, MiscService>();
 builder.Services.AddScoped<IUtilityHelpService, UtilityHelpService>();
 

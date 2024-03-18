@@ -30,4 +30,8 @@
     </ProjectReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DbData\DataModel\Email\" />
+  </ItemGroup>
+
 </Project>

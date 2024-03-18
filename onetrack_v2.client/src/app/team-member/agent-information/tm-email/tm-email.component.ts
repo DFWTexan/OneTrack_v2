@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-tm-email',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrl: './tm-email.component.css'
 })
 export class TmEmailComponent {
+
+
+  onSubmit(form: NgForm) {
+    console.log(form);
+  }
 
 }

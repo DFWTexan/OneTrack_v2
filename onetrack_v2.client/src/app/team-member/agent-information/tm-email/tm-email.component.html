@@ -1,72 +1,80 @@
 <div class="container app-component-container">
-  <div class="row bg-body p-3">
-    <div class="col">
-      <label for="emailTemaplate">Email Template:</label>
-      <select
-        class="form-select form-select-lg select-size-large"
-        type="text"
-        id="emailTemaplate"
-      >
-        <option></option>
-      </select>
-    </div>
-    <div class="col">
-      <label for="emailSubject">Comunication ID:</label>
-      <div>TBD...</div>
-    </div>
-    <div class="col d-flex align-items-end justify-content-end me-5">
-      <button class="btn btn-secondary" type="button">
-        <span class="material-symbols-outlined"> send </span>
-        <div class="text-align-center">send</div>
-      </button>
-    </div>
-  </div>
-  <div class="row bg-body p-3">
-    <div class="col">
-      <table>
-        <tbody>
-          <tr>
-            <td class="pe-3" style="font-size: larger; font-weight: 600">
-              To:
-            </td>
-            <td>TBD...</td>
-          </tr>
-          <tr>
-            <td class="pe-3" style="font-size: larger; font-weight: 600">
-              Cc:
-            </td>
-            <td>TBD...</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="col align-items-start">
-      <div class="checkbox">
-        <label><input type="checkbox" value="" />Cc: Mgr</label>
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <div class="row bg-body p-3">
+      <div class="col">
+        <label for="emailTemaplate">Email Template:</label>
+        <select
+          class="form-select form-select-lg select-size-large"
+          type="text"
+          id="emailTemaplate"
+        >
+          <option></option>
+        </select>
       </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="" />Cc: DM</label>
+      <div class="col">
+        <label for="emailSubject">Comunication ID:</label>
+        <div>TBD...</div>
       </div>
-      <div class="checkbox">
-        <label><input type="checkbox" value="" />Cc: RD</label>
+      <div class="col d-flex align-items-end justify-content-end me-5">
+        <button class="btn btn-secondary" type="button">
+          <span class="material-symbols-outlined"> send </span>
+          <div class="text-align-center">send</div>
+        </button>
       </div>
     </div>
-  </div>
-  <div class="row bg-body p-3">
-    <div class="col">
-      <label for="emailSubject">Subject:</label>
-      <input
-        class="form-control input-size-large"
-        type="text"
-        id="emailSubject"
-        style="height: 3rem"
-      />
-    </div>
-    <div class="col">
-      <div class="mb-3">
-        <label for="formFile" class="form-label">Add Attachment: </label>
-        <input class="form-control" type="file" id="formFile" />
+    <div class="row bg-body p-3">
+      <div class="col">
+        <table>
+          <tbody>
+            <tr>
+              <td
+                class="pe-3 text-align-end"
+                style="font-size: larger; font-weight: 600"
+              >
+                To:
+              </td>
+              <td>TBD...</td>
+            </tr>
+            <tr>
+              <td
+                class="pe-3 text-align-end"
+                style="font-size: larger; font-weight: 600"
+              >
+                Cc:
+              </td>
+              <td>TBD...</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col align-items-start">
+        <div class="checkbox">
+          <label><input type="checkbox" value="" />Cc: Mgr</label>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox" value="" />Cc: DM</label>
+        </div>
+        <div class="checkbox">
+          <label><input type="checkbox" value="" />Cc: RD</label>
+        </div>
       </div>
     </div>
-  </div>
+    <div class="row bg-body p-3">
+      <div class="col">
+        <label for="emailSubject">Subject:</label>
+        <input
+          class="form-control input-size-large"
+          type="text"
+          id="emailSubject"
+          style="height: 3rem"
+        />
+      </div>
+      <div class="col">
+        <div class="mb-3">
+          <label for="formFile" class="form-label">Add Attachment: </label>
+          <input class="form-control" type="file" id="formFile" />
+        </div>
+      </div>
+    </div>
+  </form>
 </div>
