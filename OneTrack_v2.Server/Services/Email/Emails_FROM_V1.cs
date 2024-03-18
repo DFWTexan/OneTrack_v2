@@ -11,7 +11,7 @@ using System.Configuration;
 
 namespace OneTrack_v2.Email
 {
-    class Emails
+    class Emails_FROM_V1
     {
         //public string connString = GetConnection();
 

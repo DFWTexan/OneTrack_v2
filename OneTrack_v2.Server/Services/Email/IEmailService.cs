@@ -5,6 +5,7 @@ namespace OneTrack_v2.Services
 {
     public interface IEmailService
     {
+        public ReturnResult GetEmailComTemplates();
         public ReturnResult GetEmailTemplate(int vCommunicationID, int vEmploymentID);
         
     }

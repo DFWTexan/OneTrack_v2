@@ -1,5 +1,6 @@
 ﻿using DataModel.Response;
 using OneTrack_v2.DbData;
+using OneTrak_v2.DataModel;
 using OneTrak_v2.Server.Services.Email.Templates;
 using OneTrak_v2.Services.Model;
 
@@ -20,6 +21,41 @@ namespace OneTrack_v2.Services
             _connectionString = _config.GetConnectionString(name: "DefaultConnection");
             _utilityService = utilityHelpService;
             _emailTemplateService = emailTemplateService;
+        }
+
+        public ReturnResult GetEmailComTemplates()
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var emailComTemplates = _db.Communications
+                                    .Where(c => c.DocAppType == "Template" && c.IsActive)
+                                    .OrderBy(c => c.DocTypeAbv + "-" + c.CommunicationName)
+                                    .Select(c => new OputEmailComTemplate
+                                    {
+                                        CommunicationID = c.CommunicationId,
+                                        CommunicationName = c.CommunicationName ?? "",
+                                        DocType = c.DocType ?? "",
+                                        DocTypeAbv = c.DocTypeAbv ?? "",
+                                        DocSubType = c.DocSubType ?? "",
+                                        EmailAttachments = c.EmailAttachments ?? "",
+                                        HasNote = c.HasNote,
+                                        DocTypeDocSubType = c.DocTypeAbv + "-" + c.CommunicationName
+                                    })
+                                    .ToList();
+
+                result.ObjData = emailComTemplates;
+                result.Success = true;
+                result.StatusCode = 200;
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+                return result;
+            }
         }
 
         public ReturnResult GetEmailTemplate(int vCommunicationID, int vEmploymentID)
@@ -61,7 +97,5 @@ namespace OneTrack_v2.Services
                 return result;
             }
         }
-
-
     }
 }
