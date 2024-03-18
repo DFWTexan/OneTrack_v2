@@ -9,7 +9,7 @@
             type="text"
             id="emailTemaplate"
             [(ngModel)]="selectedTemplate"
-            [ngModelOptions]="{standalone: true}"
+            [ngModelOptions]="{ standalone: true }"
           >
             <option
               *ngFor="let comTemplate of emailComTemplates"
@@ -51,22 +51,22 @@
                 >
                   Cc:
                 </td>
-                <td>TBD...</td>
+                <td>{{ ccEmail }}</td>
               </tr>
             </tbody>
           </table>
         </div>
-        <!-- <div class="col align-items-start">
+        <div class="col align-items-start">
           <div class="checkbox">
-            <label><input type="checkbox" value="" ngModel />Cc: Mgr</label>
+            <label><input type="checkbox" name="chkMgr" [(ngModel)]="chkMgr" [ngModelOptions]="{ standalone: true }" />Cc: Mgr</label>
           </div>
           <div class="checkbox">
-            <label><input type="checkbox" value="" ngModel />Cc: DM</label>
+            <label><input type="checkbox" name="chkDM" [(ngModel)]="chkDM" [ngModelOptions]="{ standalone: true }" />Cc: DM</label>
           </div>
           <div class="checkbox">
-            <label><input type="checkbox" value="" ngModel />Cc: RD</label>
+            <label><input type="checkbox" name="chkRD" [(ngModel)]="chkRD" [ngModelOptions]="{ standalone: true }" />Cc: RD</label>
           </div>
-        </div> -->
+        </div>
       </div>
 
       <!-- <div class="row bg-body p-3">

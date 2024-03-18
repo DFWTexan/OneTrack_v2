@@ -19,6 +19,11 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   subscribeAgentInfo: Subscription;
   subscribeEmailComTemplates: Subscription;
 
+  ccEmail: string[] = [];
+  chkMgr: boolean = false;
+  chkDM: boolean = false;
+  chkRD: boolean = false;
+
   constructor(
     private emailDataService: EmailDataService,
     public agentDataService: AgentDataService
