@@ -8,7 +8,7 @@
             class="form-select form-select-lg select-size-large"
             type="text"
             id="emailTemaplate"
-            [(ngModel)]="emailComTemplates"
+            [(ngModel)]="selectedTemplate"
             [ngModelOptions]="{standalone: true}"
           >
             <option
@@ -21,7 +21,7 @@
         </div>
         <div class="col">
           <label for="emailSubject">Comunication ID:</label>
-          <div>TBD...</div>
+          <div>{{ selectedTemplate }}</div>
         </div>
         <div class="col d-flex align-items-end justify-content-end me-1">
           <button class="btn btn-secondary" type="button">
@@ -42,7 +42,7 @@
                 >
                   To:
                 </td>
-                <td>TBD...</td>
+                <td>{{ agentInfo.email }}</td>
               </tr>
               <tr>
                 <td

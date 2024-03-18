@@ -2,8 +2,8 @@ import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { EmailComTemplate } from '../../../_Models';
-import { EmailDataService } from '../../../_services';
+import { AgentInfo, EmailComTemplate } from '../../../_Models';
+import { AgentDataService, EmailDataService } from '../../../_services';
 
 @Component({
   selector: 'app-tm-email',
@@ -12,15 +12,27 @@ import { EmailDataService } from '../../../_services';
 })
 @Injectable()
 export class TmEmailComponent implements OnInit, OnDestroy {
+  agentInfo: AgentInfo = {} as AgentInfo;
   emailComTemplates: EmailComTemplate[] = [];
+  selectedTemplate: number = 33;
   htmlContent: string = '';
+  subscribeAgentInfo: Subscription;
   subscribeEmailComTemplates: Subscription;
 
-  constructor(private emailDataService: EmailDataService) {
+  constructor(
+    private emailDataService: EmailDataService,
+    public agentDataService: AgentDataService
+  ) {
+    this.subscribeAgentInfo = new Subscription();
     this.subscribeEmailComTemplates = new Subscription();
   }
 
   ngOnInit(): void {
+    this.subscribeAgentInfo = this.agentDataService.agentInfoChanged.subscribe(
+      (agentInfo: AgentInfo) => {
+        this.agentInfo = agentInfo;
+      }
+    );
     this.emailDataService
       .fetchEmailComTemplates()
       .subscribe((emailComTemplates: EmailComTemplate[]) => {
@@ -33,6 +45,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.subscribeAgentInfo.unsubscribe();
     this.subscribeEmailComTemplates.unsubscribe();
   }
 }
