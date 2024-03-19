@@ -24,6 +24,8 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   chkMgr: boolean = false;
   chkDM: boolean = false;
   chkRD: boolean = false;
+  emailSubject: string = '';
+  emailFile: string = '';
 
   constructor(
     private emailDataService: EmailDataService,
@@ -42,11 +44,8 @@ export class TmEmailComponent implements OnInit, OnDestroy {
         this.emailDataService
           .fetchEmailComTemplateByID(33, this.agentInfo.employmentID)
           .subscribe((rawHtmlContent: string) => {
-
-console.log('EMFTEST (app-tm-email) - template =>', rawHtmlContent);
-
-            // this.htmlContent = rawHtmlContent;
-            this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(rawHtmlContent);
+            this.htmlContent =
+              this.sanitizer.bypassSecurityTrustHtml(rawHtmlContent);
           });
       }
     );

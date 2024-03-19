@@ -119,7 +119,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                 strHTML = strHTML + @"<td> &nbsp;</td> ";
                 strHTML = strHTML + @"</tr> ";
                 strHTML = strHTML + @"<tr> ";
-                strHTML = strHTML + @"<td><img alt = """" src = ""../Pictures/OneMainSolutionsHorizontal.jpg"" width = ""100""/></td> ";
+                strHTML = strHTML + @"<td><img alt = """" src = ""images/OneMainSolutionsHorizontal.jpg"" width = ""100""/></td> ";
                 strHTML = strHTML + @"<td> &nbsp;</td> ";
                 strHTML = strHTML + @"<td> &nbsp;</td> ";
                 strHTML = strHTML + @"</tr> ";

@@ -59,18 +59,39 @@
         </div>
         <div class="col align-items-start">
           <div class="checkbox">
-            <label><input type="checkbox" name="chkMgr" [(ngModel)]="chkMgr" [ngModelOptions]="{ standalone: true }" />Cc: Mgr</label>
+            <label
+              ><input
+                type="checkbox"
+                name="chkMgr"
+                [(ngModel)]="chkMgr"
+                [ngModelOptions]="{ standalone: true }"
+              />Cc: Mgr</label
+            >
           </div>
           <div class="checkbox">
-            <label><input type="checkbox" name="chkDM" [(ngModel)]="chkDM" [ngModelOptions]="{ standalone: true }" />Cc: DM</label>
+            <label
+              ><input
+                type="checkbox"
+                name="chkDM"
+                [(ngModel)]="chkDM"
+                [ngModelOptions]="{ standalone: true }"
+              />Cc: DM</label
+            >
           </div>
           <div class="checkbox">
-            <label><input type="checkbox" name="chkRD" [(ngModel)]="chkRD" [ngModelOptions]="{ standalone: true }" />Cc: RD</label>
+            <label
+              ><input
+                type="checkbox"
+                name="chkRD"
+                [(ngModel)]="chkRD"
+                [ngModelOptions]="{ standalone: true }"
+              />Cc: RD</label
+            >
           </div>
         </div>
       </div>
 
-      <!-- <div class="row bg-body p-3">
+      <div class="row bg-body p-3">
         <div class="col">
           <label for="emailSubject">Subject:</label>
           <input
@@ -78,16 +99,23 @@
             type="text"
             ngModel
             id="emailSubject"
-            style="height: 3rem"
+            name="emailSubject"
+            [(ngModel)]="emailSubject"
+            [ngModelOptions]="{ standalone: true }"
           />
         </div>
         <div class="col">
           <div class="mb-3">
             <label for="formFile" class="form-label">Add Attachment: </label>
-            <input class="form-control" type="file" id="formFile" ngModel />
+            <input
+              class="form-control"
+              type="file"
+              id="formFile"
+              name="emailFile"
+            />
           </div>
         </div>
-      </div> -->
+      </div>
       <!-- <mat-divider></mat-divider> -->
       <div class="row bg-body mt-1 p-2">
         <div class="col">
