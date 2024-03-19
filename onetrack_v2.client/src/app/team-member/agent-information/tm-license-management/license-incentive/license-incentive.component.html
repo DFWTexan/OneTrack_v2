@@ -1,29 +1,29 @@
 <div class="container app-component-container">
-    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-        <div class="row mb-3">
-            <div
-              class="col d-flex justify-content-start align-items-center mt-4"
-              style="font-size: larger"
-            >
-              <strong style="margin-right: 1rem">License Name:</strong>
-              {{ licenseMgmtData[currentIndex].licenseName }}
-              <button class="edit-button me-5 mb-5" *ngIf="modeEdit">
-                <span class="material-symbols-outlined"> save </span>
-              </button>
-              <button
-                *ngIf="!modeEdit"
-                class="edit-button me-5 mb-5"
-                (click)="onEdit()"
-              >
-                <span class="material-symbols-outlined"> edit </span>
-              </button>
-              <button class="edit-button mb-5">
-                <span class="material-symbols-outlined"> delete </span>
-              </button>
-            </div>
-        
-            <div class="col d-flex justify-content-center mb-3 mt-1">
-              <!-- <button
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <div class="row mb-3">
+      <div
+        class="col d-flex justify-content-start align-items-center mt-4"
+        style="font-size: larger"
+      >
+        <strong style="margin-right: 1rem">License Name:</strong>
+        {{ licenseMgmtData[currentIndex].licenseName }}
+        <button class="edit-button me-5 mb-5" *ngIf="modeEdit">
+          <span class="material-symbols-outlined"> save </span>
+        </button>
+        <button
+          *ngIf="!modeEdit"
+          class="edit-button me-5 mb-5"
+          (click)="onEdit()"
+        >
+          <span class="material-symbols-outlined"> edit </span>
+        </button>
+        <button class="edit-button mb-5">
+          <span class="material-symbols-outlined"> delete </span>
+        </button>
+      </div>
+
+      <div class="col d-flex justify-content-center mb-3 mt-1">
+        <!-- <button
                         class="btn btn-link page-button mb-5"
                         *ngIf="isDisplayPrevious()"
                         (click)="previousPage()"
@@ -37,53 +37,134 @@
                       >
                         <span class="material-symbols-outlined"> arrow_forward_ios </span>
                       </button> -->
-            </div>
-        
-            <div class="col d-flex justify-content-end me-5"></div>
-          </div>
-        
-          <div class="row bg-body p-3">
-            <div class="col">
-              <div class="row">
-                <div class="col">
-                  <table class="table">
-                    <thead>
-                      <tr style="background-color: whitesmoke">
-                        <th scope="col">Rollout Group</th>
-                        <th scope="col">DM Mgr</th>
-                        <th scope="col">CCd BM Mgr</th>
-                        <th scope="col">Sent To DM</th>
-                        <th scope="col">Date DM Approved</th>
-                        <th scope="col">Date DM Declined</th>
-                        <th scope="col">DM Followup By N/A</th>
-                        <th scope="col">DM Followup By N/A</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <!-- <tr *ngFor="let license of licenseMgmtData[currentIndex].licenseAppointments">
-                        <td>{{ license.licenseNumber }}</td>
-                        <td>{{ license.licenseType }}</td>
-                        <td>{{ license.licenseStatus }}</td>
-                        <td>{{ license.licenseExpirationDate }}</td>
-                        <td>{{ license.licenseState }}</td>
-                        <td>{{ license.licenseIncentive }}</td>
-                      </tr> -->
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div class="row"><div class="col"></div></div>
-            </div>
-          </div>
-        
-          <div class="row bg-body p-3">
-            <div class="col">Row 2</div>
-          </div>
-        
-          <div class="row bg-body p-3">
-            <div class="col">Row 3</div>
-          </div>
-    </form>
+      </div>
 
-  
+      <div class="col d-flex justify-content-end me-5"></div>
+    </div>
+
+    <div class="row bg-body p-1">
+      <div class="col">
+        <table class="table">
+          <thead>
+            <tr style="background-color: whitesmoke">
+              <!-- DISPLAY -->
+              <th scope="col" *ngIf="!modeEdit">IncentiveID</th>
+              <!--  -->
+              <th scope="col">Rollout Group</th>
+              <!--  -->
+              <th scope="col">DM Mgr</th>
+              <!--  -->
+              <th scope="col">CCd BM Mgr</th>
+              <!--  -->
+              <th scope="col">Sent To DM</th>
+              <!--  -->
+              <th scope="col">Date DM Approved</th>
+              <!--  -->
+              <th scope="col">Date DM Declined</th>
+              <!--  -->
+              <th scope="col" *ngIf="!modeEdit">DM Followup By N/A</th>
+              <!--  -->
+              <th scope="col" *ngIf="!modeEdit">DM Followup By N/A</th>
+              <!--  -->
+              <th scope="col" *ngIf="modeEdit">DM 10 Day FollowUp</th>
+              <!--  -->
+              <th scope="col" *ngIf="modeEdit">DM 20 Day FollowUP</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- <tr *ngFor="let license of licenseMgmtData[currentIndex].licenseAppointments">
+                      <td>{{ license.licenseNumber }}</td>
+                      <td>{{ license.licenseType }}</td>
+                      <td>{{ license.licenseStatus }}</td>
+                      <td>{{ license.licenseExpirationDate }}</td>
+                      <td>{{ license.licenseState }}</td>
+                      <td>{{ license.licenseIncentive }}</td>
+                    </tr> -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row bg-body p-1">
+      <div class="col">
+        <table class="table">
+          <thead>
+            <tr style="background-color: whitesmoke">
+              <!--  -->
+              <th scope="col" *ngIf="!modeEdit">Program Eligible</th>
+              <!--  -->
+              <th scope="col">Sent To TM</th>
+              <!--  -->
+              <th scope="col">CCd BM Mgr</th>
+              <!--  -->
+              <th scope="col">Date TM Approved</th>
+              <!--  -->
+              <th scope="col">Date TM Declined</th>
+              <!--  -->
+              <th scope="col" *ngIf="!modeEdit">TM Followup By N/A</th>
+              <!--  -->
+              <th scope="col" *ngIf="modeEdit">TM 10 Day FollowUp</th>
+              <!--  -->
+              <th scope="col">TM 45 Day FollowUp</th>
+              <!--  -->
+              <th scope="col">Exception Start Date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- <tr *ngFor="let license of licenseMgmtData[currentIndex].licenseAppointments">
+                  <td>{{ license.licenseNumber }}</td>
+                  <td>{{ license.licenseType }}</td>
+                  <td>{{ license.licenseStatus }}</td>
+                  <td>{{ license.licenseExpirationDate }}</td>
+                  <td>{{ license.licenseState }}</td>
+                  <td>{{ license.licenseIncentive }}</td>
+                </tr> -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row bg-body p-1">
+      <div class="col">
+        <table class="table">
+          <thead>
+            <tr style="background-color: whitesmoke">
+              <!--  -->
+              <th scope="col" *ngIf="!modeEdit">Completed In 90 Days</th>
+              <!--  -->
+              <th scope="col" *ngIf="!modeEdit">Ok To Sell Sent To TM</th>
+              <!--  -->
+              <th scope="col">CC'd BM Mgr</th>
+              <!--  -->
+              <th scope="col" *ngIf="!modeEdit">Original Issue Date</th>
+              <!--  -->
+              <th scope="col">Comp Cert Rec'd</th>
+              <!--  -->
+              <th scope="col">Non Credit Completed</th>
+              <!--  -->
+              <th scope="col">Appointment Effective Date</th>
+              <!--  -->
+              <th scope="col">OMS Appr To Send To HR</th>
+              <!--  -->
+              <th scope="col" *ngIf="modeEdit">Date Sent To HR</th>
+              <!--  -->
+              <th scope="col">Incentive Period</th>
+              <!--  -->
+              <th scope="col">Incentive Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- <tr *ngFor="let license of licenseMgmtData[currentIndex].licenseAppointments">
+              <td>{{ license.licenseNumber }}</td>
+              <td>{{ license.licenseType }}</td>
+              <td>{{ license.licenseStatus }}</td>
+              <td>{{ license.licenseExpirationDate }}</td>
+              <td>{{ license.licenseState }}</td>
+              <td>{{ license.licenseIncentive }}</td>
+            </tr> -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </form>
 </div>
