@@ -9,6 +9,7 @@ import {
   AgentDataService,
   ModalService,
 } from '../../../../_services';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-license-incentive',
@@ -17,6 +18,7 @@ import {
 })
 @Injectable()
 export class LicenseIncentiveComponent implements OnInit {
+  modeEdit: boolean = false;
   licenseMgmtData: AgentLicenseAppointments[] = [];
   currentIndex: number = 0;
   panelOpenState = false;
@@ -35,6 +37,15 @@ export class LicenseIncentiveComponent implements OnInit {
       .fetchAgentLicApplicationInfo(
         this.licenseMgmtData[this.currentIndex].employeeLicenseId
       )
+  }
+
+  onEdit() {
+    this.modeEdit = true;
+  }
+
+  onSubmit(form: NgForm) {
+    this.modeEdit = false;
+    console.log(form);
   }
 
   // Pagination

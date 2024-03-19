@@ -1,55 +1,89 @@
 <div class="container app-component-container">
-  <div class="row mb-3">
-    <div
-      class="col d-flex justify-content-start align-items-center mt-4"
-      style="font-size: larger"
-    >
-      <strong style="margin-right: 1rem">License Name:</strong>
-      {{ licenseMgmtData[currentIndex].licenseName }}
-      <button
-        class="edit-button me-5 mb-5"
-        (click)="modalService.open('modal-edit-license-info')"
-      >
-        <span class="material-symbols-outlined"> edit </span>
-      </button>
-      <button class="edit-button mb-5">
-        <span class="material-symbols-outlined"> delete </span>
-      </button>
-    </div>
-
-    <div class="col d-flex justify-content-center mb-3 mt-1">
-      <!-- <button
-                class="btn btn-link page-button mb-5"
-                *ngIf="isDisplayPrevious()"
-                (click)="previousPage()"
-              >
-                <span class="material-symbols-outlined"> arrow_back_ios </span></button
-              ><span class="page-info">{{ getPageInfo() }}</span>
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+        <div class="row mb-3">
+            <div
+              class="col d-flex justify-content-start align-items-center mt-4"
+              style="font-size: larger"
+            >
+              <strong style="margin-right: 1rem">License Name:</strong>
+              {{ licenseMgmtData[currentIndex].licenseName }}
+              <button class="edit-button me-5 mb-5" *ngIf="modeEdit">
+                <span class="material-symbols-outlined"> save </span>
+              </button>
               <button
-                class="btn btn-link page-button mb-5"
-                *ngIf="isDisplayNext()"
-                (click)="nextPage()"
+                *ngIf="!modeEdit"
+                class="edit-button me-5 mb-5"
+                (click)="onEdit()"
               >
-                <span class="material-symbols-outlined"> arrow_forward_ios </span>
-              </button> -->
-    </div>
+                <span class="material-symbols-outlined"> edit </span>
+              </button>
+              <button class="edit-button mb-5">
+                <span class="material-symbols-outlined"> delete </span>
+              </button>
+            </div>
+        
+            <div class="col d-flex justify-content-center mb-3 mt-1">
+              <!-- <button
+                        class="btn btn-link page-button mb-5"
+                        *ngIf="isDisplayPrevious()"
+                        (click)="previousPage()"
+                      >
+                        <span class="material-symbols-outlined"> arrow_back_ios </span></button
+                      ><span class="page-info">{{ getPageInfo() }}</span>
+                      <button
+                        class="btn btn-link page-button mb-5"
+                        *ngIf="isDisplayNext()"
+                        (click)="nextPage()"
+                      >
+                        <span class="material-symbols-outlined"> arrow_forward_ios </span>
+                      </button> -->
+            </div>
+        
+            <div class="col d-flex justify-content-end me-5"></div>
+          </div>
+        
+          <div class="row bg-body p-3">
+            <div class="col">
+              <div class="row">
+                <div class="col">
+                  <table class="table">
+                    <thead>
+                      <tr style="background-color: whitesmoke">
+                        <th scope="col">Rollout Group</th>
+                        <th scope="col">DM Mgr</th>
+                        <th scope="col">CCd BM Mgr</th>
+                        <th scope="col">Sent To DM</th>
+                        <th scope="col">Date DM Approved</th>
+                        <th scope="col">Date DM Declined</th>
+                        <th scope="col">DM Followup By N/A</th>
+                        <th scope="col">DM Followup By N/A</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <!-- <tr *ngFor="let license of licenseMgmtData[currentIndex].licenseAppointments">
+                        <td>{{ license.licenseNumber }}</td>
+                        <td>{{ license.licenseType }}</td>
+                        <td>{{ license.licenseStatus }}</td>
+                        <td>{{ license.licenseExpirationDate }}</td>
+                        <td>{{ license.licenseState }}</td>
+                        <td>{{ license.licenseIncentive }}</td>
+                      </tr> -->
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              <div class="row"><div class="col"></div></div>
+            </div>
+          </div>
+        
+          <div class="row bg-body p-3">
+            <div class="col">Row 2</div>
+          </div>
+        
+          <div class="row bg-body p-3">
+            <div class="col">Row 3</div>
+          </div>
+    </form>
 
-    <div class="col d-flex justify-content-end me-5">
-      <!-- <button class="edit-button">
-        <span class="material-symbols-outlined"> delete </span>
-      </button> -->
-    </div>
-  </div>
-
-  <div class="row bg-body p-3">
-    <div class="col">Incentive...</div>
-  </div>
-
-  <div class="row bg-body p-3">
-    <div class="col">Row 2</div>
-  </div>
-
-  <div class="row bg-body p-3">
-    <div class="col">Row 3</div>
-  </div>
+  
 </div>
