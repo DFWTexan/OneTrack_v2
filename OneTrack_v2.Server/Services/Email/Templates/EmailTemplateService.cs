@@ -29,7 +29,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
             {
                 var managerInfo = GetManagerInfo(vEmploymentID);
 
-                strHTML = strHTML + @"<html>";
+                //strHTML = strHTML + @"<html>";
 
                 string strH2MgrName = managerInfo.H2MgrName ?? "";
                 string strH2MgrTitle = managerInfo.H2MgrTitle ?? "";
@@ -144,7 +144,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                 strHTML = strHTML + @"<td> &nbsp;</td> ";
                 strHTML = strHTML + @"</tr> ";
                 strHTML = strHTML + @"</table> ";
-                strHTML = strHTML + @"</html> ";
+                //strHTML = strHTML + @"</html> ";
             }
             //catch (SqlException mySQLEx)
             //{

@@ -1,4 +1,4 @@
-<div class="container app-component-container">
+<div class="container app-component-container w-75">
   <form (ngSubmit)="onSubmit(f)" #f="ngForm">
     <div id="email" ngModelGroup="emailForm" #emailForm="ngModelGroup">
       <div class="row bg-body p-3">
@@ -10,6 +10,7 @@
             id="emailTemaplate"
             [(ngModel)]="selectedTemplate"
             [ngModelOptions]="{ standalone: true }"
+            (change)="onTemplateChange($event)"
           >
             <option
               *ngFor="let comTemplate of emailComTemplates"
@@ -87,12 +88,12 @@
           </div>
         </div>
       </div> -->
-
-      <!-- <div class="row">
+      <!-- <mat-divider></mat-divider> -->
+      <div class="row bg-body mt-1 p-2">
         <div class="col">
           <div [innerHTML]="htmlContent"></div>
         </div>
-      </div> -->
+      </div>
     </div>
   </form>
 </div>

@@ -1,6 +1,7 @@
 import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 import { AgentInfo, EmailComTemplate } from '../../../_Models';
 import { AgentDataService, EmailDataService } from '../../../_services';
@@ -15,7 +16,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   agentInfo: AgentInfo = {} as AgentInfo;
   emailComTemplates: EmailComTemplate[] = [];
   selectedTemplate: number = 33;
-  htmlContent: string = '';
+  htmlContent: SafeHtml = '' as SafeHtml;
   subscribeAgentInfo: Subscription;
   subscribeEmailComTemplates: Subscription;
 
@@ -26,7 +27,8 @@ export class TmEmailComponent implements OnInit, OnDestroy {
 
   constructor(
     private emailDataService: EmailDataService,
-    public agentDataService: AgentDataService
+    public agentDataService: AgentDataService,
+    private sanitizer: DomSanitizer
   ) {
     this.subscribeAgentInfo = new Subscription();
     this.subscribeEmailComTemplates = new Subscription();
@@ -36,12 +38,32 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     this.subscribeAgentInfo = this.agentDataService.agentInfoChanged.subscribe(
       (agentInfo: AgentInfo) => {
         this.agentInfo = agentInfo;
+
+        this.emailDataService
+          .fetchEmailComTemplateByID(33, this.agentInfo.employmentID)
+          .subscribe((rawHtmlContent: string) => {
+
+console.log('EMFTEST (app-tm-email) - template =>', rawHtmlContent);
+
+            // this.htmlContent = rawHtmlContent;
+            this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(rawHtmlContent);
+          });
       }
     );
     this.emailDataService
       .fetchEmailComTemplates()
       .subscribe((emailComTemplates: EmailComTemplate[]) => {
         this.emailComTemplates = emailComTemplates;
+      });
+  }
+
+  onTemplateChange(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    this.emailDataService
+      .fetchEmailComTemplateByID(+value, this.agentInfo.employmentID)
+      .subscribe((template: string) => {
+        this.htmlContent = template;
       });
   }
 
