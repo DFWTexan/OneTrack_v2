@@ -3,7 +3,7 @@ import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
-import { AgentInfo, EmailComTemplate } from '../../../_Models';
+import { AgentInfo, EmailComTemplate, ManagerHierarchy } from '../../../_Models';
 import { AgentDataService, EmailDataService } from '../../../_services';
 
 @Component({
@@ -14,6 +14,7 @@ import { AgentDataService, EmailDataService } from '../../../_services';
 @Injectable()
 export class TmEmailComponent implements OnInit, OnDestroy {
   agentInfo: AgentInfo = {} as AgentInfo;
+  // mgrHierarchy: ManagerHierarchy[] = [];
   emailComTemplates: EmailComTemplate[] = [];
   selectedTemplate: number = 33;
   htmlContent: SafeHtml = '' as SafeHtml;
@@ -40,6 +41,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     this.subscribeAgentInfo = this.agentDataService.agentInfoChanged.subscribe(
       (agentInfo: AgentInfo) => {
         this.agentInfo = agentInfo;
+        // this.mgrHierarchy = this.agentInfo.mgrHiearchy;
 
         this.emailDataService
           .fetchEmailComTemplateByID(33, this.agentInfo.employmentID)
@@ -64,6 +66,23 @@ export class TmEmailComponent implements OnInit, OnDestroy {
       .subscribe((template: string) => {
         this.htmlContent = template;
       });
+  }
+
+  onCcChange(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+
+console.log('EMFTEST (app-tm-email) - onCcChange | value: ', value);
+console.log('EMFTEST (app-tm-email) - onCcChange | target.checked: ', target.checked);
+
+    if (target.checked) {
+      this.ccEmail.push(value);
+    } else {
+      const index = this.ccEmail.indexOf(value);
+      if (index > -1) {
+        this.ccEmail.splice(index, 1);
+      }
+    }
   }
 
   onSubmit(form: NgForm) {

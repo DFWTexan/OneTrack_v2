@@ -1,4 +1,4 @@
-<div class="container app-component-container" style="width: 90%;">
+<div class="container app-component-container" style="width: 90%">
   <form (ngSubmit)="onSubmit(f)" #f="ngForm">
     <div id="email" ngModelGroup="emailForm" #emailForm="ngModelGroup">
       <div class="row bg-body p-3">
@@ -22,7 +22,9 @@
         </div>
         <div class="col">
           <label for="emailSubject">Comunication ID:</label>
-          <div>{{ selectedTemplate }}</div>
+          <div style="font-size: larger; font-weight: 500">
+            {{ selectedTemplate }}
+          </div>
         </div>
         <div class="col d-flex align-items-end justify-content-end me-1">
           <button class="btn btn-secondary" type="button">
@@ -52,7 +54,7 @@
                 >
                   Cc:
                 </td>
-                <td>{{ ccEmail }}</td>
+                <td><div>{{ ccEmail.join(', ') }}</div></td>
               </tr>
             </tbody>
           </table>
@@ -63,18 +65,25 @@
               ><input
                 type="checkbox"
                 name="chkMgr"
+                [value]="
+                  agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[0].mgrEmail
+                "
                 [(ngModel)]="chkMgr"
                 [ngModelOptions]="{ standalone: true }"
-              />Cc: Mgr</label
-            >
+                (change)="onCcChange($event)"
+              />Cc: Mgr</label>
           </div>
           <div class="checkbox">
             <label
               ><input
                 type="checkbox"
                 name="chkDM"
+                [value]="
+                  agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[1].mgrEmail
+                "
                 [(ngModel)]="chkDM"
                 [ngModelOptions]="{ standalone: true }"
+                (change)="onCcChange($event)"
               />Cc: DM</label
             >
           </div>
@@ -83,10 +92,28 @@
               ><input
                 type="checkbox"
                 name="chkRD"
+                [value]="
+                  agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[2].mgrEmail
+                "
                 [(ngModel)]="chkRD"
                 [ngModelOptions]="{ standalone: true }"
+                (change)="onCcChange($event)"
               />Cc: RD</label
             >
+          </div>
+        </div>
+        <div class="col">
+          <div class="mb-3">
+            <span style="font-size: larger; font-weight: 400">Mgr</span> -
+            {{ agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[0].mgrName }}
+          </div>
+          <div class="mb-3">
+            <span style="font-size: larger; font-weight: 400">DM</span> -
+            {{ agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[1].mgrName }}
+          </div>
+          <div>
+            <span style="font-size: larger; font-weight: 400">RD</span> -
+            {{ agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[2].mgrName }}
           </div>
         </div>
       </div>

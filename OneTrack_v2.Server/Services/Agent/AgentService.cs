@@ -194,8 +194,8 @@ namespace OneTrack_v2.Services
                 var parameters = new[] { new SqlParameter("@EmploymentID", agent.EmploymentID) };
 
                 var queryHierarchyResults = _db.OputAgentHiearchy
-                    .FromSqlRaw(sql, parameters)
-                    .ToList();
+                                            .FromSqlRaw(sql, parameters)
+                                            .ToList();
 
                 agent.MgrHiearchy = queryHierarchyResults;
                 agent.AgentLicenseAppointments = FillAgentLicenseAppointment(agent.EmploymentID);

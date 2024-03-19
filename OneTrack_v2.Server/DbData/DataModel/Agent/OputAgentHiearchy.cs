@@ -6,5 +6,6 @@
         public string? MgrName { get; set; }
         public string? MgrTitle { get; set; }
         public string? MgrDeptPhone { get; set; }
+        public string? MgrEmail { get; set; }
     }
 }

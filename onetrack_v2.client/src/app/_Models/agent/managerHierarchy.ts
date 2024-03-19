@@ -3,4 +3,5 @@ export interface ManagerHierarchy {
     mgrName: string;
     mgrTitle: string;
     mgrDeptPhone: string;
+    mgrEmail: string;
   }
