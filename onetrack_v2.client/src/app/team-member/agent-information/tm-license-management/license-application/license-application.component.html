@@ -42,274 +42,331 @@
   <div class="row">
     <div class="col">
       <!-- <mat-accordion> -->
-        <mat-expansion-panel class="mat-elevation-z4 mb-3">
-          <mat-expansion-panel-header>
-            <mat-panel-title class="panel-title">
-              License Applications
-            </mat-panel-title>
-            <mat-panel-description>
-              {{ agentDataService.agentLicApplicationInfo.licenseApplicationItems.length }} - record(s) found
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <div class="row mb-3">
-            <div class="col">
-              <button
-                class="btn btn-success"
-                (click)="agentDataService.storeLicAppInfo(
-                  'INSERT',
-                  null
-                );
-                modalService.open('modal-edit-lic-appl-info')"
+      <mat-expansion-panel class="mat-elevation-z4 mb-3">
+        <mat-expansion-panel-header>
+          <mat-panel-title class="panel-title">
+            License Applications
+          </mat-panel-title>
+          <mat-panel-description>
+            {{
+              agentDataService.agentLicApplicationInfo.licenseApplicationItems
+                .length
+            }}
+            - record(s) found
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="row mb-3">
+          <div class="col">
+            <button
+              class="btn btn-success"
+              (click)="
+                agentDataService.storeLicAppInfo('INSERT', null);
+                modalService.open('modal-edit-lic-appl-info')
+              "
+            >
+              <span style="font-size: larger"> Insert - Applications </span>
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div
+            class="div d-flex justify-content-center"
+            style="font-size: larger; color: gray"
+            *ngIf="
+              agentDataService.agentLicApplicationInfo.licenseApplicationItems
+                .length === 0
+            "
+          >
+            No records found
+          </div>
+          <table
+            class="table"
+            *ngIf="
+              agentDataService.agentLicApplicationInfo.licenseApplicationItems
+                .length !== 0
+            "
+          >
+            <thead>
+              <tr style="background-color: whitesmoke">
+                <th scope="col">Application Status</th>
+                <th scope="col">Application ID</th>
+                <th scope="col">Set to Agent</th>
+                <th scope="col">Rec. From Agent</th>
+                <th scope="col">Sent to State</th>
+                <th scope="col">Rec. From State</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let licApplication of agentDataService.agentLicApplicationInfo
+                    .licenseApplicationItems
+                "
               >
-                <span style="font-size: larger"> Insert - Applications </span>
-              </button>
-            </div>
-          </div>
-          <div class="row">
-            <div class="div d-flex justify-content-center" style="font-size: larger; color: gray;" *ngIf="agentDataService.agentLicApplicationInfo.licenseApplicationItems.length === 0">
-              No records found
-            </div>
-            <table class="table" *ngIf="agentDataService.agentLicApplicationInfo.licenseApplicationItems.length !== 0">
-              <thead>
-                <tr style="background-color: whitesmoke">
-                  <th scope="col">Application Status</th>
-                  <th scope="col">Application ID</th>
-                  <th scope="col">Set to Agent</th>
-                  <th scope="col">Rec. From Agent</th>
-                  <th scope="col">Sent to State</th>
-                  <th scope="col">Rec. From State</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let licApplication of agentDataService.agentLicApplicationInfo.licenseApplicationItems">
-                  <td class="align-middle">
-                    {{ licApplication.applicationStatus }}
-                  </td>
-                  <td class="align-middle">
-                    {{ licApplication.licenseApplicationID }}
-                  </td>
-                  <td class="align-middle">
-                    {{ licApplication.sentToAgentDate | date : "MM/dd/yyyy" }}
-                  </td>
-                  <td class="align-middle">
-                    {{ licApplication.recFromAgentDate| date : "MM/dd/yyyy" }}
-                  </td>
-                  <td class="align-middle">
-                    {{ licApplication.sentToStateDate| date : "MM/dd/yyyy" }}
-                  </td>
-                  <td class="align-middle">
-                    {{ licApplication.recFromStateDate| date : "MM/dd/yyyy" }}
-                  </td>
-                  <td>
-                    <div
-                      class="d-flex justify-content-between mb-3 me-4"
-                      style="min-width: 10rem; max-width: 10rem"
+                <td class="align-middle">
+                  {{ licApplication.applicationStatus }}
+                </td>
+                <td class="align-middle">
+                  {{ licApplication.licenseApplicationID }}
+                </td>
+                <td class="align-middle">
+                  {{ licApplication.sentToAgentDate | date : "MM/dd/yyyy" }}
+                </td>
+                <td class="align-middle">
+                  {{ licApplication.recFromAgentDate | date : "MM/dd/yyyy" }}
+                </td>
+                <td class="align-middle">
+                  {{ licApplication.sentToStateDate | date : "MM/dd/yyyy" }}
+                </td>
+                <td class="align-middle">
+                  {{ licApplication.recFromStateDate | date : "MM/dd/yyyy" }}
+                </td>
+                <td>
+                  <div
+                    class="d-flex justify-content-between mb-3 me-4"
+                    style="min-width: 10rem; max-width: 10rem"
+                  >
+                    <button
+                      class="edit-button"
+                      (click)="
+                        agentDataService.storeLicAppInfo(
+                          'EDIT',
+                          licApplication
+                        );
+                        modalService.open('modal-edit-lic-appl-info')
+                      "
                     >
-                      <button
-                        class="edit-button"
-                        (click)="
-                          agentDataService.storeLicAppInfo(
-                            'EDIT',
-                            licApplication
-                          );
-                          modalService.open('modal-edit-lic-appl-info')
-                        "
-                      >
-                        <span class="material-symbols-outlined"> edit </span>
-                      </button>
-                      <button class="edit-button">
-                        <span class="material-symbols-outlined"> delete </span>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </mat-expansion-panel>
+                      <span class="material-symbols-outlined"> edit </span>
+                    </button>
+                    <button class="edit-button">
+                      <span class="material-symbols-outlined"> delete </span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </mat-expansion-panel>
 
-        <mat-expansion-panel
-          class="mat-elevation-z4 mb-3"
-          (opened)="panelOpenState = true"
-          (closed)="panelOpenState = false"
-        >
-          <mat-expansion-panel-header>
-            <mat-panel-title class="panel-title">
-              License PreEducation
-            </mat-panel-title>
-            <mat-panel-description>
-              {{ agentDataService.agentLicApplicationInfo.licensePreEducationItems.length }} - record(s) found
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <div class="row mb-3">
-            <div class="col">
-              <button
-                class="btn btn-success"
-                (click)="agentDataService.storeLicPreEdu(
-                  'INSERT',
-                  null
-                );
-                modalService.open('modal-edit-lic-pre-edu')"
+      <mat-expansion-panel
+        class="mat-elevation-z4 mb-3"
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title class="panel-title">
+            License PreEducation
+          </mat-panel-title>
+          <mat-panel-description>
+            {{
+              agentDataService.agentLicApplicationInfo.licensePreEducationItems
+                .length
+            }}
+            - record(s) found
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="row mb-3">
+          <div class="col">
+            <button
+              class="btn btn-success"
+              (click)="
+                agentDataService.storeLicPreEdu('INSERT', null);
+                modalService.open('modal-edit-lic-pre-edu')
+              "
+            >
+              <span style="font-size: larger"> Insert - PreEducation </span>
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div
+            class="div d-flex justify-content-center"
+            style="font-size: larger; color: gray"
+            *ngIf="
+              agentDataService.agentLicApplicationInfo.licensePreEducationItems
+                .length === 0
+            "
+          >
+            No records found
+          </div>
+          <table
+            class="table"
+            *ngIf="
+              agentDataService.agentLicApplicationInfo.licensePreEducationItems
+                .length !== 0
+            "
+          >
+            <thead>
+              <tr style="background-color: whitesmoke">
+                <th scope="col">PreEdu Status</th>
+                <th scope="col">PreEdu ID</th>
+                <th scope="col">Class Name</th>
+                <th scope="col">Scheduled Date</th>
+                <th scope="col">Taken Date</th>
+                <th scope="col">PreEdu Notes</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let licPreEdu of agentDataService.agentLicApplicationInfo
+                    .licensePreEducationItems
+                "
               >
-                <span style="font-size: larger"> Insert - PreEducation </span>
-              </button>
-            </div>
-          </div>
-          <div class="row">
-            <div class="div d-flex justify-content-center" style="font-size: larger; color: gray;" *ngIf="agentDataService.agentLicApplicationInfo.licensePreEducationItems.length === 0">
-              No records found
-            </div>
-            <table class="table" *ngIf="agentDataService.agentLicApplicationInfo.licensePreEducationItems.length !== 0">
-              <thead>
-                <tr style="background-color: whitesmoke">
-                  <th scope="col">PreEdu Status</th>
-                  <th scope="col">PreEdu ID</th>
-                  <th scope="col">Class Name</th>
-                  <th scope="col">Scheduled Date</th>
-                  <th scope="col">Taken Date</th>
-                  <th scope="col">PreEdu Notes</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let licPreEdu of agentDataService.agentLicApplicationInfo.licensePreEducationItems">
-                  <td class="align-middle">
-                    {{ licPreEdu.status }}
-                  </td>
-                  <td class="align-middle">
-                    {{ licPreEdu.employeeLicensePreEducationID }}
-                  </td>
-                  <td class="align-middle">
-                    {{ licPreEdu.educationName }}
-                  </td>
-                  <td class="align-middle">
-                    {{ licPreEdu.educationStartDate | date : "MM/dd/yyyy" }}
-                  </td>
-                  <td class="align-middle">
-                    {{ licPreEdu.educationEndDate | date : "MM/dd/yyyy" }}
-                  </td>
-                  <td class="align-middle">
-                    {{ licPreEdu.additionalNotes }}
-                  </td>
-                  <td>
-                    <div
-                      class="d-flex justify-content-between mb-3 me-4"
-                      style="min-width: 10rem; max-width: 10rem"
+                <td class="align-middle">
+                  {{ licPreEdu.status }}
+                </td>
+                <td class="align-middle">
+                  {{ licPreEdu.employeeLicensePreEducationID }}
+                </td>
+                <td class="align-middle">
+                  {{ licPreEdu.educationName }}
+                </td>
+                <td class="align-middle">
+                  {{ licPreEdu.educationStartDate | date : "MM/dd/yyyy" }}
+                </td>
+                <td class="align-middle">
+                  {{ licPreEdu.educationEndDate | date : "MM/dd/yyyy" }}
+                </td>
+                <td class="align-middle">
+                  {{ licPreEdu.additionalNotes }}
+                </td>
+                <td>
+                  <div
+                    class="d-flex justify-content-between mb-3 me-4"
+                    style="min-width: 10rem; max-width: 10rem"
+                  >
+                    <button
+                      class="edit-button"
+                      (click)="
+                        agentDataService.storeLicPreEdu('EDIT', licPreEdu);
+                        modalService.open('modal-edit-lic-pre-edu')
+                      "
                     >
-                      <button
-                        class="edit-button"
-                        (click)="
-                          agentDataService.storeLicPreEdu(
-                            'EDIT',
-                            licPreEdu
-                          );
-                          modalService.open('modal-edit-lic-pre-edu')
-                        "
-                      >
-                        <span class="material-symbols-outlined"> edit </span>
-                      </button>
-                      <button class="edit-button">
-                        <span class="material-symbols-outlined"> delete </span>
-                      </button>
-                    </div>
-                  </td>
-                 </tr> 
-              </tbody>
-            </table>
-          </div>
-        </mat-expansion-panel>
+                      <span class="material-symbols-outlined"> edit </span>
+                    </button>
+                    <button class="edit-button">
+                      <span class="material-symbols-outlined"> delete </span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </mat-expansion-panel>
 
-        <mat-expansion-panel
-          class="mat-elevation-z4 mb-3"
-          (opened)="panelOpenState = true"
-          (closed)="panelOpenState = false"
-        >
-          <mat-expansion-panel-header>
-            <mat-panel-title class="panel-title">
-              License PreExams
-            </mat-panel-title>
-            <mat-panel-description>
-              {{ agentDataService.agentLicApplicationInfo.licensePreExamItems.length }} - record(s) found
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <div class="row mb-3">
-            <div class="col">
-              <button
-                class="btn btn-success"
-                (click)="agentDataService.storeLicPreExam(
-                  'INSERT',
-                  null
-                );
-                modalService.open('modal-edit-lic-pre-exam')"
+      <mat-expansion-panel
+        class="mat-elevation-z4 mb-3"
+        (opened)="panelOpenState = true"
+        (closed)="panelOpenState = false"
+      >
+        <mat-expansion-panel-header>
+          <mat-panel-title class="panel-title">
+            License PreExams
+          </mat-panel-title>
+          <mat-panel-description>
+            {{
+              agentDataService.agentLicApplicationInfo.licensePreExamItems
+                .length
+            }}
+            - record(s) found
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <div class="row mb-3">
+          <div class="col">
+            <button
+              class="btn btn-success"
+              (click)="
+                agentDataService.storeLicPreExam('INSERT', null);
+                modalService.open('modal-edit-lic-pre-exam')
+              "
+            >
+              <span style="font-size: larger"> Insert - PreExams </span>
+            </button>
+          </div>
+        </div>
+        <div class="row">
+          <div
+            class="div d-flex justify-content-center"
+            style="font-size: larger; color: gray"
+            *ngIf="
+              agentDataService.agentLicApplicationInfo.licensePreExamItems
+                .length === 0
+            "
+          >
+            No records found
+          </div>
+          <table
+            class="table"
+            *ngIf="
+              agentDataService.agentLicApplicationInfo.licensePreExamItems
+                .length !== 0
+            "
+          >
+            <thead>
+              <tr style="background-color: whitesmoke">
+                <th scope="col">Status</th>
+                <th scope="col">PreExam ID</th>
+                <th scope="col">Exam Name</th>
+                <th scope="col">Scheduled Date</th>
+                <th scope="col">Taken Date</th>
+                <th scope="col">Exam Notes</th>
+                <th scope="col">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                *ngFor="
+                  let preExam of agentDataService.agentLicApplicationInfo
+                    .licensePreExamItems
+                "
               >
-                <span style="font-size: larger"> Insert - PreExams </span>
-              </button>
-            </div>
-          </div>
-          <div class="row">
-            <div class="div d-flex justify-content-center" style="font-size: larger; color: gray;" *ngIf="agentDataService.agentLicApplicationInfo.licensePreExamItems.length === 0">
-              No records found
-            </div>
-            <table class="table" *ngIf="agentDataService.agentLicApplicationInfo.licensePreExamItems.length !== 0">
-              <thead>
-                <tr style="background-color: whitesmoke">
-                  <th scope="col">Status</th>
-                  <th scope="col">PreExam ID</th>
-                  <th scope="col">Exam Name</th>
-                  <th scope="col">Scheduled Date</th>
-                  <th scope="col">Taken Date</th>
-                  <th scope="col">Exam Notes</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                 <tr *ngFor="let preExam of agentDataService.agentLicApplicationInfo.licensePreExamItems">
-                  <td class="align-middle">
-                    {{ preExam.status }}
-                  </td>
-                  <td class="align-middle">
-                    {{ preExam.employeeLicensePreExamID }}
-                  </td>
-                  <td class="align-middle">
-                    {{ preExam.examName }}
-                  </td>
-                  <td class="align-middle">
-                    {{ preExam.examScheduleDate| date : "MM/dd/yyyy" }}
-                  </td>
-                  <td class="align-middle">
-                    {{ preExam.examTakenDate| date : "MM/dd/yyyy" }}
-                  </td>
-                  <td class="align-middle">
-                    {{ preExam.additionalNotes }}
-                  </td>
-                  <td>
-                    <div
-                      class="d-flex justify-content-between mb-3 me-4"
-                      style="min-width: 10rem; max-width: 10rem"
+                <td class="align-middle">
+                  {{ preExam.status }}
+                </td>
+                <td class="align-middle">
+                  {{ preExam.employeeLicensePreExamID }}
+                </td>
+                <td class="align-middle">
+                  {{ preExam.examName }}
+                </td>
+                <td class="align-middle">
+                  {{ preExam.examScheduleDate | date : "MM/dd/yyyy" }}
+                </td>
+                <td class="align-middle">
+                  {{ preExam.examTakenDate | date : "MM/dd/yyyy" }}
+                </td>
+                <td class="align-middle">
+                  {{ preExam.additionalNotes }}
+                </td>
+                <td>
+                  <div
+                    class="d-flex justify-content-between mb-3 me-4"
+                    style="min-width: 10rem; max-width: 10rem"
+                  >
+                    <button
+                      class="edit-button"
+                      (click)="
+                        agentDataService.storeLicPreExam('EDIT', preExam);
+                        modalService.open('modal-edit-lic-pre-exam')
+                      "
                     >
-                      <button
-                        class="edit-button"
-                        (click)="
-                          agentDataService.storeLicPreExam(
-                            'EDIT',
-                            preExam
-                          );
-                          modalService.open('modal-edit-lic-pre-exam')
-                        "
-                      >
-                        <span class="material-symbols-outlined"> edit </span>
-                      </button>
-                      <button class="edit-button">
-                        <span class="material-symbols-outlined"> delete </span>
-                      </button>
-                    </div>
-                  </td> 
-                </tr> 
-              </tbody>
-            </table>
-          </div>
-        </mat-expansion-panel>
+                      <span class="material-symbols-outlined"> edit </span>
+                    </button>
+                    <button class="edit-button">
+                      <span class="material-symbols-outlined"> delete </span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </mat-expansion-panel>
       <!-- </mat-accordion> -->
     </div>
   </div>
@@ -319,7 +376,8 @@
 <modal id="modal-edit-lic-appl-info">
   <div class="modal-header">
     <h1 class="modal-title">
-      <strong>{{ agentComService.modeLicAppInfo }}</strong> - License Application
+      <strong>{{ agentComService.modeLicAppInfo }}</strong> - License
+      Application
     </h1>
     <!-- <button
           type="button"

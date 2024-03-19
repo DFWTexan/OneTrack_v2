@@ -1,1 +1,42 @@
-<p>license-incentive works!</p>
+<div class="container app-component-container">
+    <div class="row mb-3">
+        <div
+          class="col d-flex justify-content-start mt-4"
+          style="font-size: larger"
+        >
+          <strong style="margin-right: 1rem">License Name:</strong
+          >{{ licenseMgmtData[currentIndex].licenseName }}
+        </div>
+    
+        <div class="col d-flex justify-content-center mb-3 mt-1">
+          <!-- <button
+                class="btn btn-link page-button mb-5"
+                *ngIf="isDisplayPrevious()"
+                (click)="previousPage()"
+              >
+                <span class="material-symbols-outlined"> arrow_back_ios </span></button
+              ><span class="page-info">{{ getPageInfo() }}</span>
+              <button
+                class="btn btn-link page-button mb-5"
+                *ngIf="isDisplayNext()"
+                (click)="nextPage()"
+              >
+                <span class="material-symbols-outlined"> arrow_forward_ios </span>
+              </button> -->
+        </div>
+    
+        <div class="col d-flex justify-content-end me-5">
+          <!--   <button
+                class="edit-button me-5"
+                (click)="
+                  modalService.open('modal-edit-license-info')
+                "
+              >
+                <span class="material-symbols-outlined"> edit </span>
+              </button>
+              <button class="edit-button">
+                <span class="material-symbols-outlined"> delete </span>
+              </button> -->
+        </div>
+      </div>
+</div>
