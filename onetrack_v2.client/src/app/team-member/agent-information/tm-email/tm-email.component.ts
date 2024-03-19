@@ -72,9 +72,6 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     const target = event.target as HTMLInputElement;
     const value = target.value;
 
-console.log('EMFTEST (app-tm-email) - onCcChange | value: ', value);
-console.log('EMFTEST (app-tm-email) - onCcChange | target.checked: ', target.checked);
-
     if (target.checked) {
       this.ccEmail.push(value);
     } else {

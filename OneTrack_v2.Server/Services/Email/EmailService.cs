@@ -82,6 +82,13 @@ namespace OneTrack_v2.Services
                         result.ObjData = proHTML.Item1.ToString();
                         break;
                     default:
+                        result.ObjData = @"<div class=""col d-flex justify-content-center mt-5"">
+                                                <span class=""material-symbols-outlined"">unknown_document</span>
+                                                <div>
+                                                    <h3>Unknown Document Type</h3>
+                                                    <p>Document type not found.</p>
+                                                </div>
+                                           </div>"; 
                         break;
                 }
 
