@@ -135,12 +135,14 @@ namespace OneTrack_v2.DbData
         #region STORED PROCEDURES
         //public virtual DbSet<OputEmployeeSearchResult> SPOUT_SearchEmployees { get; set; }
         //public virtual DbSet<UspAgentDetails_Result> UspAgentDetails_Results { get; set; }
-        public virtual DbSet<OputAgentHiearchy> OputAgentHiearchy { get; set; }
+
         #endregion
 
         #region // Raw SQL Queries
+        public virtual DbSet<OputAgentHiearchy> OputAgentHiearchy { get; set; }
         public virtual DbSet<OputVarDropDownList> OputVarDropDownList { get; set; }
         public virtual DbSet<OputVarDropDownList_v2> OputVarDropDownList_v2 { get; set; }
+        public virtual DbSet<OputLicenseIncentiveInfo> OputLicenseIncentiveInfo { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -4004,12 +4006,13 @@ namespace OneTrack_v2.DbData
             #region STORED PROCEDURES
             //modelBuilder.Entity<SPOUT_uspEmployeeGridSearchNew>().ToView("SPOUT_SearchEmployee", "dbo").HasNoKey();
             //modelBuilder.Entity<OputEmployeeSearchResult>().ToTable("SPOUT_SearchEmployee").HasNoKey();
-            modelBuilder.Entity<OputAgentHiearchy>().ToSqlQuery("OputAgentHiearchy").HasNoKey();
             #endregion
 
             #region Raw SQL Queries
+            modelBuilder.Entity<OputAgentHiearchy>().ToSqlQuery("OputAgentHiearchy").HasNoKey();
             modelBuilder.Entity<OputVarDropDownList>().ToSqlQuery("OputVarDropDownList").HasNoKey();
             modelBuilder.Entity<OputVarDropDownList_v2>().ToSqlQuery("OputVarDropDownList_v2").HasNoKey();
+            modelBuilder.Entity<OputLicenseIncentiveInfo>().ToSqlQuery("OputLicenseIncentiveInfo").HasNoKey();
             #endregion
 
             OnModelCreatingPartial(modelBuilder);

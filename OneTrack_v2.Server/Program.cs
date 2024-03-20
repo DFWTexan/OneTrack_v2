@@ -12,6 +12,7 @@ builder.Services.AddScoped<IAgentService, AgentService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IEmailTemplateService, EmailTemplateService>();
+builder.Services.AddScoped<ILicenseInfo, LicenseInfo>();
 builder.Services.AddScoped<IMiscService, MiscService>();
 builder.Services.AddScoped<IUtilityHelpService, UtilityHelpService>();
 

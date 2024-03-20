@@ -195,6 +195,7 @@ namespace OneTrack_v2.Services
 
                 var queryHierarchyResults = _db.OputAgentHiearchy
                                             .FromSqlRaw(sql, parameters)
+                                            .AsNoTracking()
                                             .ToList();
 
                 agent.MgrHiearchy = queryHierarchyResults;
