@@ -3,10 +3,12 @@ import { Component, OnInit, Injectable } from '@angular/core';
 import {
   // AgentLicApplicationInfo,
   AgentLicenseAppointments,
+  LicenseIncentiveInfo,
 } from '../../../../_Models';
 import {
   AgentComService,
   AgentDataService,
+  LicIncentiveInfoService,
   ModalService,
 } from '../../../../_services';
 import { NgForm } from '@angular/forms';
@@ -20,12 +22,14 @@ import { NgForm } from '@angular/forms';
 export class LicenseIncentiveComponent implements OnInit {
   modeEdit: boolean = false;
   licenseMgmtData: AgentLicenseAppointments[] = [];
+  licenseIncentiveInfo: LicenseIncentiveInfo = {} as LicenseIncentiveInfo;
   currentIndex: number = 0;
   panelOpenState = false;
 
   constructor(
     public agentDataService: AgentDataService,
     public agentComService: AgentComService,
+    public licIncentiveInfoDataService: LicIncentiveInfoService,
     protected modalService: ModalService
   ) {}
 
@@ -33,10 +37,16 @@ export class LicenseIncentiveComponent implements OnInit {
     this.currentIndex = this.agentDataService.licenseMgmtDataIndex;
     this.licenseMgmtData =
       this.agentDataService.agentInformation.agentLicenseAppointments;
-    this.agentDataService
-      .fetchAgentLicApplicationInfo(
+    this.agentDataService.fetchAgentLicApplicationInfo(
+      this.licenseMgmtData[this.currentIndex].employeeLicenseId
+    );
+    this.licIncentiveInfoDataService
+      .fetchLicIncentiveInfo(
         this.licenseMgmtData[this.currentIndex].employeeLicenseId
       )
+      .subscribe((licenseIncentiveInfo: LicenseIncentiveInfo) => {
+        this.licenseIncentiveInfo = licenseIncentiveInfo;
+      });
   }
 
   onEditToggle() {

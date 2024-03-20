@@ -1068,6 +1068,7 @@ namespace OneTrack_v2.Services
                                         join license in _db.Licenses on employeeLicense.LicenseId equals license.LicenseId
                                         join lineOfAuthority in _db.LineOfAuthorities on license.LineOfAuthorityId equals lineOfAuthority.LineOfAuthorityId
                                         where employeeLicense.EmploymentId == vEmploymentID
+                                        orderby employeeLicense.LicenseStatus ascending, license.LicenseId ascending
                                         select new OputAgentLicenseAppointments
                                         {
                                             EmployeeLicenseId = (int)employeeLicense.EmployeeLicenseId == 0 ? 0 : employeeLicense.EmployeeLicenseId,

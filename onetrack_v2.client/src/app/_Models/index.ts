@@ -5,3 +5,4 @@ export * from './agent/agentInfo';
 export * from './agent/agentLicenseAppointments';
 export * from './agent/agentLicApplicationInfo';
 export * from './email/emailComTemplate';
+export * from './LicenseInfo/LicenseIncentiveInfo';
