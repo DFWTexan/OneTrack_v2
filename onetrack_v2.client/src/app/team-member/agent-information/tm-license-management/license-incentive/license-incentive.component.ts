@@ -39,8 +39,8 @@ export class LicenseIncentiveComponent implements OnInit {
       )
   }
 
-  onEdit() {
-    this.modeEdit = true;
+  onEditToggle() {
+    this.modeEdit = !this.modeEdit;
   }
 
   onSubmit(form: NgForm) {
