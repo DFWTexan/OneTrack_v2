@@ -1,12 +1,35 @@
-<div class="container app-container">
+<!-- <div class="container app-container">
+    <div class="col bg-body d-flex">
+      <ul class="nav nav-tabs">
+        <li routerLinkActive="active" data-toggle="tab"><a [routerLink]="['tic-info']">Tickler</a></li>
+        <li routerLinkActive="active" data-toggle="tab"><a [routerLink]="['tic-search']">Search</a></li>
+      </ul>
+  
+      <div class="tab-content">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
+  </div> -->
+
+<!-- <div class="container app-container">
   <div class="col bg-body d-flex">
     <ul class="nav nav-tabs">
-      <li routerLinkActive="active"><a [routerLink]="['tic-info']">Tickler</a></li>
-      <li routerLinkActive="active"><a [routerLink]="['tic-search']">Search</a></li>
+      <li *ngFor="let tab of tabs" routerLinkActive="active">
+        <a [routerLink]="[tab.link]">{{ tab.label }}</a>
+      </li>
     </ul>
 
     <div class="tab-content">
-      <router-outlet></router-outlet>
+      <div class="row">
+        <div class="col">
+          <router-outlet></router-outlet>
+        </div>
+      </div>
     </div>
   </div>
-</div>
+</div> -->
+
+<mat-tab-group>
+    <mat-tab label="Tickler"><app-tickler-info></app-tickler-info></mat-tab>
+    <mat-tab label="Search"><app-tickler-search></app-tickler-search></mat-tab>
+  </mat-tab-group>
