@@ -33,7 +33,10 @@
                         </button> -->
     </div>
 
-    <div class="col d-flex justify-content-end me-5">
+    <div class="col d-flex justify-content-end align-items-end me-5">
+      <div class="mb-3">
+        {{ licenseIncentiveInfo.licenseIncentive }}
+      </div>
       <button class="edit-button mb-5" style="color: grey">
         <span class="material-symbols-outlined"> delete </span>
       </button>
@@ -62,11 +65,38 @@
         <tbody>
           <tr>
             <td>{{ licenseIncentiveInfo.employmentLicenseIncentiveID }}</td>
-            <!-- <td>{{ license.licenseType }}</td>
-                      <td>{{ license.licenseStatus }}</td>
-                      <td>{{ license.licenseExpirationDate }}</td>
-                      <td>{{ license.licenseState }}</td>
-                      <td>{{ license.licenseIncentive }}</td> -->
+            <td style="font-size: smaller">
+              {{ licenseIncentiveInfo.rollOutGroup }}
+            </td>
+            <td style="font-size: smaller">
+              {{ licenseIncentiveInfo.dmMgrName }}
+            </td>
+            <td style="font-size: smaller">
+              {{ licenseIncentiveInfo.cCdBRMgrName }}<br />{{
+                licenseIncentiveInfo.cCdBRMgrJobTitle
+              }}
+            </td>
+            <td></td>
+            <td style="font-size: smaller">
+              {{ licenseIncentiveInfo.dmApprovalDate }}
+            </td>
+            <td style="font-size: smaller">
+              {{ licenseIncentiveInfo.dmDeclinedDate }}
+            </td>
+            <td style="font-size: smaller">
+              {{ licenseIncentiveInfo.dmApprovalStatus }}
+            </td>
+            <td></td>
+            <td></td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="6">
+              <div>
+                <span style="font-weight: 600"> DM Comment: </span>
+                <div>{{ licenseIncentiveInfo.dmComment }}</div>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
