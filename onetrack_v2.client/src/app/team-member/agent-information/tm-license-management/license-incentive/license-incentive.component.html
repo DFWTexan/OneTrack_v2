@@ -93,7 +93,7 @@
             <td></td>
             <td colspan="6">
               <div>
-                <span style="font-weight: 600"> DM Comment: </span>
+                <span style="font-weight: 600; color: grey;"> DM Comment: </span>
                 <div>{{ licenseIncentiveInfo.dmComment }}</div>
               </div>
             </td>
@@ -134,14 +134,14 @@
             <td></td>
             <td colspan="4">
               <div>
-                <span style="font-weight: 600"> TM Comment: </span>
+                <span style="font-weight: 600; color: grey;"> TM Comment: </span>
                 {{ licenseIncentiveInfo.tmComment }}
               </div>
             </td>
             <td></td>
             <td colspan="4">
               <div>
-                <span style="font-weight: 600">Exeption Reason: </span>
+                <span style="font-weight: 600; color: grey;">Exeption Reason: </span>
                 {{ licenseIncentiveInfo.tmException }}
 
             </div>
@@ -181,6 +181,15 @@
               <td></td>
               <td></td>
               <td>{{ licenseIncentiveInfo.incentiveStatus }}</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td colspan="8">
+                <div>
+                  <span style="font-weight: 600; color: grey;">Notes: </span>
+                  {{ licenseIncentiveInfo.notes }}
+                </div>
+              </td>
             </tr>
         </tbody>
       </table>
