@@ -76,7 +76,7 @@
                 licenseIncentiveInfo.cCdBRMgrJobTitle
               }}
             </td>
-            <td></td>
+            <td><div>&nbsp;<br>{{ licenseIncentiveInfo.dmSentBy }}</div></td>
             <td style="font-size: smaller">
               {{ licenseIncentiveInfo.dmApprovalDate }}
             </td>
@@ -122,14 +122,31 @@
           </tr>
         </thead>
         <tbody>
-          <!-- <tr *ngFor="let license of licenseMgmtData[currentIndex].licenseAppointments">
-                  <td>{{ license.licenseNumber }}</td>
-                  <td>{{ license.licenseType }}</td>
-                  <td>{{ license.licenseStatus }}</td>
-                  <td>{{ license.licenseExpirationDate }}</td>
-                  <td>{{ license.licenseState }}</td>
-                  <td>{{ license.licenseIncentive }}</td>
-                </tr> -->
+          <tr>
+            <td>{{ licenseIncentiveInfo.tmProgramEligable }}</td>
+            <!-- <td>{{ licenseIncentiveInfo.licenseType }}</td>
+            <td>{{ licenseIncentiveInfo.licenseStatus }}</td>
+            <td>{{ licenseIncentiveInfo.licenseExpirationDate }}</td>
+            <td>{{ licenseIncentiveInfo.licenseState }}</td>
+            <td>{{ licenseIncentiveInfo.licenseIncentive }}</td> -->
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="4">
+              <div>
+                <span style="font-weight: 600"> TM Comment: </span>
+                {{ licenseIncentiveInfo.tmComment }}
+              </div>
+            </td>
+            <td></td>
+            <td colspan="4">
+              <div>
+                <span style="font-weight: 600">Exeption Reason: </span>
+                {{ licenseIncentiveInfo.tmException }}
+
+            </div>
+          </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -153,14 +170,18 @@
           </tr>
         </thead>
         <tbody>
-          <!-- <tr *ngFor="let license of licenseMgmtData[currentIndex].licenseAppointments">
-              <td>{{ license.licenseNumber }}</td>
-              <td>{{ license.licenseType }}</td>
-              <td>{{ license.licenseStatus }}</td>
-              <td>{{ license.licenseExpirationDate }}</td>
-              <td>{{ license.licenseState }}</td>
-              <td>{{ license.licenseIncentive }}</td>
-            </tr> -->
+          <tr>
+              <td>{{ licenseIncentiveInfo.completedIn90Days }}</td>
+              <td></td>
+              <td></td>
+              <td>{{ licenseIncentiveInfo.originalIssueDate }}</td>
+              <td>{{ licenseIncentiveInfo.certificationDate }}</td>
+              <td>{{ licenseIncentiveInfo.mod2Date }}</td>
+              <td>{{ licenseIncentiveInfo.appointmentEffectiveDate }}</td>
+              <td></td>
+              <td></td>
+              <td>{{ licenseIncentiveInfo.incentiveStatus }}</td>
+            </tr>
         </tbody>
       </table>
     </div>
