@@ -28,6 +28,8 @@ import { TmContinuingEduComponent } from './team-member/agent-information/tm-con
 import { TmDiaryComponent } from './team-member/agent-information/tm-diary/tm-diary.component';
 import { TmEmailComponent } from './team-member/agent-information/tm-email/tm-email.component';
 import { TmCommunicationsComponent } from './team-member/agent-information/tm-communications/tm-communications.component';
+import { TicklerInfoComponent } from './_components/tickler-mgmt/tickler-info/tickler-info.component';
+import { TicklerSearchComponent } from './_components/tickler-mgmt/tickler-search/tickler-search.component';
 
 const routes: Routes = [
   // Dashboard
@@ -48,7 +50,15 @@ const routes: Routes = [
   { path: 'admin/xbor-lic-requirements', component: XborLicRequirementsComponent },
   // Team Member
   { path: 'team/add-member', component: AddTeamMemberComponent },
-  { path: 'team/search-members', component: SearchTeamMemberComponent },
+  // { path: 'team/search-members', component: SearchTeamMemberComponent },
+  { 
+    path: 'team/search-members', 
+    component: SearchTeamMemberComponent,
+    children: [
+      { path: 'tic-info', component: TicklerInfoComponent },
+      { path: 'tic-search', component: TicklerSearchComponent },
+    ]
+  },
   { path: 'team/agent-info/:id', 
     component: AgentInformationComponent,
     children: [

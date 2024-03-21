@@ -1,1 +1,12 @@
-<p>tickler-mgmt works!</p>
+<div class="container app-container">
+  <div class="col bg-body d-flex">
+    <ul class="nav nav-tabs">
+      <li class="active"><a [routerLink]="['tic-info']">Tickler</a></li>
+      <li><a [routerLink]="['tic-search']">Search</a></li>
+    </ul>
+
+    <div class="tab-content">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
