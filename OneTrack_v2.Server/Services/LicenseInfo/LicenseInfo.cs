@@ -32,10 +32,10 @@ namespace OneTrack_v2.Services
 							License.LicenseID,
 							License.LicenseName,
 							el.LicenseNumber,
-							el.LicenseIssueDate,
-							el.LineOfAuthorityIssueDate,
-							el.LicenseEffectiveDate,
-							el.LicenseExpireDate,
+							ISNULL(CONVERT(VARCHAR(10), el.LicenseIssueDate, 101), null) as LicenseIssueDate,
+							ISNULL(CONVERT(VARCHAR(10), el.LineOfAuthorityIssueDate, 101), null) as LineOfAuthorityIssueDate,
+							ISNULL(CONVERT(VARCHAR(10), el.LicenseEffectiveDate, 101), null) as LicenseEffectiveDate,
+							ISNULL(CONVERT(VARCHAR(10), el.LicenseExpireDate, 101), null) as LicenseExpireDate,
 							el.Reinstatement,
 							el.Required,
 							el.NonResident,
@@ -237,11 +237,20 @@ namespace OneTrack_v2.Services
                 var queryLicenseInfoResults = _db.OputLicenseIncentiveInfo
                                             .FromSqlRaw(sql, parameters)
 											.AsNoTracking()
-                                            .ToList();
+                                            .FirstOrDefault();
 
-				result.Success = true;
-				result.ObjData = queryLicenseInfoResults;
-				result.StatusCode = 200;
+                if (queryLicenseInfoResults != null)
+                {
+                    result.Success = true;
+                    result.ObjData = queryLicenseInfoResults;
+                    result.StatusCode = 200;
+                }
+                else
+                {
+                    result.Success = false;
+                    result.ErrMessage = "No data found for the provided EmployeeLicenseID";
+                    result.StatusCode = 404;
+                }
 
                 return result;
             }

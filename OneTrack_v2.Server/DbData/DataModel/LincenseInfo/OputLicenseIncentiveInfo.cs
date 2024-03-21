@@ -2,29 +2,29 @@
 {
     public class OputLicenseIncentiveInfo
     {
-        public int EmployeeID { get; set; }
-        public int EmploymentID { get; set; }
+        public int? EmployeeID { get; set; }
+        public int? EmploymentID { get; set; }
         public string? Email { get; set; }
         public string? LicenseIncentive { get; set; }
         public string? Alias { get; set; }
-        public int EmployeeLicenseID { get; set; }
+        public int? EmployeeLicenseID { get; set; }
         public string? LicenseStatus { get; set; }
         public string? StateProvinceAbv { get; set; }
-        public int LicenseID { get; set; }
+        public int? LicenseID { get; set; }
         public string? LicenseName { get; set; }
         public string? LicenseNumber { get; set; }
-        public DateTime LicenseIssueDate { get; set; }
-        public DateTime LineOfAuthorityIssueDate { get; set; }
-        public DateTime LicenseEffectiveDate { get; set; }
-        public DateTime LicenseExpireDate { get; set; }
+        public string? LicenseIssueDate { get; set; }
+        public string? LineOfAuthorityIssueDate { get; set; }
+        public string? LicenseEffectiveDate { get; set; }
+        public string? LicenseExpireDate { get; set; }
         public bool Reinstatement { get; set; }
         public bool Required { get; set; }
         public bool NonResident { get; set; }
         public string? BranchCode { get; set; }
         public string? AscLicense { get; set; }
-        public int AscEmployeeLicenseID { get; set; }
+        public int? AscEmployeeLicenseID { get; set; }
         public string? LicenseNote { get; set; }
-        public int EmploymentLicenseIncentiveID { get; set; }
+        public int? EmploymentLicenseIncentiveID { get; set; }
         public string? RollOutGroup { get; set; }
         public string? DMMgrName { get; set; }
         public string? DMMgrJobTitle { get; set; }

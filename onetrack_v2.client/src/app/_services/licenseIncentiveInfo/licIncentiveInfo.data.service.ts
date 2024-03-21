@@ -11,7 +11,7 @@ import { LicenseIncentiveInfo } from '../../_Models';
 })
 export class LicIncentiveInfoService {
   private apiUrl: string = environment.apiUrl + 'LicenseInfo/';
-  licenseIncentiveInfo: LicenseIncentiveInfo[] = [];
+  licenseIncentiveInfo: LicenseIncentiveInfo = {} as LicenseIncentiveInfo;
   licenseIncentiveInfoChanged = new Subject<LicenseIncentiveInfo[]>();
 
   constructor(private http: HttpClient) {}
@@ -31,9 +31,9 @@ export class LicIncentiveInfoService {
           if (response.success && response.statusCode === 200) {
             this.licenseIncentiveInfo = response.objData;
             this.licenseIncentiveInfoChanged.next([
-              this.licenseIncentiveInfo[0],
+              this.licenseIncentiveInfo,
             ]);
-            return response.objData[0];
+            return response.objData;
           } else {
             throw new Error(response.errMessage || 'Unknown error');
           }
