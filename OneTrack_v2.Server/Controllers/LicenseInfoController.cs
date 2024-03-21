@@ -23,5 +23,37 @@ namespace OneTrak_v2.Server.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpGet]
+        public async Task<ActionResult> GetIncentiveRolloutGroups()
+        {
+            var result = await Task.Run(() => _licenseInfo.GetIncentiveRolloutGroups());
+
+            return StatusCode(result.StatusCode, result);
+        }
+        
+        [HttpGet]
+        public async Task<ActionResult> GetIncentiveBMMgrs()
+        {
+            var result = await Task.Run(() => _licenseInfo.GetIncentiveBMMgrs());
+
+            return StatusCode(result.StatusCode, result);
+        }
+        
+        [HttpGet]
+        public async Task<ActionResult> GetIncentiveDMMrgs()
+        {
+            var result = await Task.Run(() => _licenseInfo.GetIncentiveDMMrgs());
+
+            return StatusCode(result.StatusCode, result);
+        }
+        
+        [HttpGet]
+        public async Task<ActionResult> GetIncentiveTechNames()
+        {
+            var result = await Task.Run(() => _licenseInfo.GetIncentiveTechNames());
+
+            return StatusCode(result.StatusCode, result);
+        }
     }
 }

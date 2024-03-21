@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using OneTrack_v2.DbData.Models;
 using OneTrack_v2.DataModel;
+using OneTrak_v2.DataModel;
 
 namespace OneTrack_v2.DbData
 {
@@ -143,6 +144,10 @@ namespace OneTrack_v2.DbData
         public virtual DbSet<OputVarDropDownList> OputVarDropDownList { get; set; }
         public virtual DbSet<OputVarDropDownList_v2> OputVarDropDownList_v2 { get; set; }
         public virtual DbSet<OputLicenseIncentiveInfo> OputLicenseIncentiveInfo { get; set; }
+        public virtual DbSet<OputIncentiveRolloutGroup> OputIncentiveRolloutGroup { get; set; }
+        public virtual DbSet<OputIncentiveBMMgr> OputIncentiveBMMgr { get; set; }
+        public virtual DbSet<OputIncentiveTechName> OputIncentiveTechName { get; set; }
+        public virtual DbSet<OputIncentiveDMMgr> OputIncentiveDMMgr { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -4013,6 +4018,10 @@ namespace OneTrack_v2.DbData
             modelBuilder.Entity<OputVarDropDownList>().ToSqlQuery("OputVarDropDownList").HasNoKey();
             modelBuilder.Entity<OputVarDropDownList_v2>().ToSqlQuery("OputVarDropDownList_v2").HasNoKey();
             modelBuilder.Entity<OputLicenseIncentiveInfo>().ToSqlQuery("OputLicenseIncentiveInfo").HasNoKey();
+            modelBuilder.Entity<OputIncentiveRolloutGroup>().ToSqlQuery("OputIncentiveRolloutGroup").HasNoKey();
+            modelBuilder.Entity<OputIncentiveBMMgr>().ToSqlQuery("OputIncentiveBMMgr").HasNoKey();
+            modelBuilder.Entity<OputIncentiveTechName>().ToSqlQuery("OputIncentiveTechName").HasNoKey();
+            modelBuilder.Entity<OputIncentiveDMMgr>().ToSqlQuery("OputIncentiveDMMgr").HasNoKey();
             #endregion
 
             OnModelCreatingPartial(modelBuilder);

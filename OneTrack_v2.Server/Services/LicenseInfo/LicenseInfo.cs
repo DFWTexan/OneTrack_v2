@@ -261,5 +261,189 @@ namespace OneTrack_v2.Services
                 return result;
             }
         }
+        public ReturnResult GetIncentiveRolloutGroups() 
+		{
+			var result = new ReturnResult();
+			try
+			{
+                var sql = @"SELECT  LkpField,	LkpValue,	SortOrder  
+							FROM [License].[dbo].[lkp_TypeStatus]
+							WHERE [LkpField] = 'RolloutGroup'
+							UNION
+							SELECT 'RolloutGroup' AS LkpField,'RolloutGroup' AS LkpValue, '0' AS SortOrder
+							ORDER BY SortOrder";
+
+                var queryRolloutGrops = _db.OputIncentiveRolloutGroup
+                                       .FromSqlRaw(sql)
+                                       .AsNoTracking()
+                                       .ToList();
+
+                result.Success = true;
+                result.ObjData = queryRolloutGrops;
+                result.StatusCode = 200;
+               
+				return result;
+            }
+            catch (Exception ex)
+			{
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+                return result;
+            }
+		}
+        public ReturnResult GetIncentiveBMMgrs() 
+		{
+			var result = new ReturnResult();
+			try
+			{
+                var sql = @"SELECT    
+								m2.EmploymentID AS BMMgrEmploymentID,
+								(ISNULL(e2.LastName, '') + CASE WHEN e2.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(e2.FirstName, '') + ' ' + ISNULL(e2.MiddleName, '') ) AS BMMgrName
+							FROM dbo.Employee e 
+							INNER JOIN dbo.Employment m ON e.EmployeeID = m.EmployeeID 
+						--CCdBM
+							LEFT OUTER JOIN [dbo].[Employment] m2 ON m.H1EmploymentID = m2.EmploymentID
+							LEFT OUTER JOIN [dbo].[EmploymentJobTitle] j2 ON m2.EmploymentID = j2.EmploymentID 
+								AND j2.[IsCurrent] = 1
+							LEFT OUTER JOIN [dbo].[Employee] e2 ON m2.EmployeeID = e2.EmployeeID
+							WHERE 
+								m2.EmploymentID IS NOT NULL
+
+							UNION
+
+							SELECT    
+								m2.EmploymentID AS BMMgrEmploymentID,
+								(ISNULL(e2.LastName, '') + CASE WHEN e2.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(e2.FirstName, '') + ' ' + ISNULL(e2.MiddleName, '') ) AS BMMgrName
+							FROM dbo.EmploymentLicenseIncentive eli
+						--CCdBM
+							LEFT OUTER JOIN [dbo].[Employment] m2 ON eli.CCdBMEmploymentID = m2.EmploymentID 
+								OR eli.CCd2BMEmploymentID = m2.EmploymentID 
+								OR eli.CCOkToSellBMEmploymentID = m2.EmploymentID
+							LEFT OUTER JOIN [dbo].[EmploymentJobTitle] j2 ON m2.EmploymentID = j2.EmploymentID 
+								AND j2.[IsCurrent] = 1
+							LEFT OUTER JOIN [dbo].[Employee] e2 ON m2.EmployeeID = e2.EmployeeID
+							WHERE 
+								m2.EmploymentID IS NOT NULL
+							GROUP BY
+								m2.EmploymentID,
+								(ISNULL(e2.LastName, '') + CASE WHEN e2.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(e2.FirstName, '') + ' ' + ISNULL(e2.MiddleName, '') ) 
+
+							UNION
+
+							SELECT '0' AS BMMgrEmploymentID, 'BMMgrName'
+
+							ORDER BY
+								(ISNULL(e2.LastName, '') + CASE WHEN e2.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(e2.FirstName, '') + ' ' + ISNULL(e2.MiddleName, '') ) ";
+
+                var queryBMMgrs = _db.OputIncentiveBMMgr
+                                       .FromSqlRaw(sql)
+                                       .AsNoTracking()
+                                       .ToList();
+
+                result.Success = true;
+                result.ObjData = queryBMMgrs;
+                result.StatusCode = 200;
+
+                return result;
+            }
+			catch (Exception ex)
+			{
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+                return result;
+            }
+		}
+        public ReturnResult GetIncentiveDMMrgs() 
+		{
+			var result = new ReturnResult();
+			try
+			{
+                var sql = @"SELECT    
+								 m1.EmploymentID AS DMMgrEmploymentID,
+								(ISNULL(e1.LastName, '') + CASE WHEN e1.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(e1.FirstName, '') + ' ' + ISNULL(e1.MiddleName, '') ) AS DMMgrName
+							FROM dbo.Employee e
+							INNER JOIN dbo.Employment m ON e.EmployeeID = m.EmployeeID 
+						--DM
+							LEFT OUTER JOIN [dbo].[Employment] m1 ON m.H2EmploymentID = m1.EmploymentID
+							LEFT OUTER JOIN [dbo].[EmploymentJobTitle] j1 ON m1.EmploymentID = j1.EmploymentID 
+								AND j1.[IsCurrent] = 1
+							LEFT OUTER JOIN [dbo].[Employee] e1 ON m1.EmployeeID = e1.EmployeeID
+							WHERE 
+								m1.EmploymentID IS NOT NULL
+
+							UNION
+
+							SELECT    
+								 m1.EmploymentID AS DMMgrEmploymentID,
+								(ISNULL(e1.LastName, '') + CASE WHEN e1.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(e1.FirstName, '') + ' ' + ISNULL(e1.MiddleName, '') ) AS DMMgrName
+							FROM dbo.EmploymentLicenseIncentive eli
+						--DM
+							LEFT OUTER JOIN [dbo].[Employment] m1 ON eli.DMEmploymentID = m1.EmploymentID
+							LEFT OUTER JOIN [dbo].[EmploymentJobTitle] j1 ON m1.EmploymentID = j1.EmploymentID 
+								AND j1.[IsCurrent] = 1
+							LEFT OUTER JOIN [dbo].[Employee] e1 ON m1.EmployeeID = e1.EmployeeID
+							WHERE 
+								m1.EmploymentID IS NOT NULL
+							GROUP BY
+								 m1.EmploymentID,
+								(ISNULL(e1.LastName, '') + CASE WHEN e1.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(e1.FirstName, '') + ' ' + ISNULL(e1.MiddleName, '') )
+
+							UNION
+
+							SELECT '0' AS DMMgrEmploymentID, 'DMMgrName'
+
+							ORDER BY
+								(ISNULL(e1.LastName, '') + CASE WHEN e1.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(e1.FirstName, '') + ' ' + ISNULL(e1.MiddleName, '') ) ";
+
+                var queryDMMrgs = _db.OputIncentiveDMMgr
+                                       .FromSqlRaw(sql)
+                                       .AsNoTracking()
+                                       .ToList();
+
+                result.Success = true;
+                result.ObjData = queryDMMrgs;
+                result.StatusCode = 200;
+
+                return result;
+            }
+			catch (Exception ex)
+			{
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+                return result;
+            }
+		}
+        public ReturnResult GetIncentiveTechNames() 
+		{ 
+			var result = new ReturnResult();
+			try
+			{
+                var sql = @"SELECT [SOEID], ISNULL((ISNULL(lt.LastName, '') + CASE WHEN lt.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(lt.FirstName, '') + ' ' ),'UNKNOWN') AS TechName
+							FROM [dbo].[LicenseTech] lt
+							WHERE [IsActive] = 1
+							UNION
+							SELECT '0' AS SOEID, 'TechName' AS TechName
+							UNION
+							SELECT 'OneTrak' AS SOEID, 'OneTrak' AS TechName
+							ORDER BY TechName ";
+
+                var queryTechNames = _db.OputIncentiveTechName
+                                       .FromSqlRaw(sql)
+                                       .AsNoTracking()
+                                       .ToList();
+
+                result.Success = true;
+                result.ObjData = queryTechNames;
+                result.StatusCode = 200;
+
+                return result;
+            }
+			catch (Exception ex)
+			{
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+                return result;
+            }
+		}
     }
 }
