@@ -6,3 +6,4 @@ export * from './common/constants.data.service';
 export * from './common/dropDown.data.service';
 export * from './email/email.data.service';
 export * from './licenseIncentiveInfo/licIncentiveInfo.data.service';
+export * from  './common/app.com.service';

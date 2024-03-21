@@ -7,7 +7,7 @@
       #searchFilter="ngModelGroup"
     >
       <div class="row">
-        <div class="col-md-6">
+        <div class="col">
           <div class="form-group">
             <label for="search">Social Security #:</label>
             <input
@@ -97,7 +97,7 @@
             ><br />
           </div>
         </div>
-        <div class="col-md-6 app-multi-select-ddl">
+        <div class="col">
           <mat-form-field>
             <mat-label>Agent Status</mat-label>
             <!-- <mat-select ngModel name="agentStatus" multiple>
@@ -190,6 +190,7 @@
             </mat-select>
           </mat-form-field>
         </div>
+        <div class="col-md-5" *ngIf="isShowTickle">TODO - Tickler information...</div>
       </div>
     </div>
     <div class="row">

@@ -2,6 +2,7 @@ import {
   Component,
   OnInit,
   Injectable,
+  OnDestroy,
   // ViewChild
 } from '@angular/core';
 import {
@@ -12,7 +13,8 @@ import { Subscription } from 'rxjs';
 
 import { EmployeeDataService, 
   DropdownDataService, 
-  ConstantsDataService 
+  ConstantsDataService, 
+  AppComService
 } from '../../_services';
 import { EmployeeSearchResult, SearchEmployeeFilter } from '../../_Models';
 
@@ -22,13 +24,15 @@ import { EmployeeSearchResult, SearchEmployeeFilter } from '../../_Models';
   styleUrl: './search-team-member.component.css',
 })
 @Injectable()
-export class SearchTeamMemberComponent implements OnInit {
+export class SearchTeamMemberComponent implements OnInit, OnDestroy {
   // @ViewChild('f') searchForm: NgForm;
   isSubmitted = false;
   agentStatuses: string[] = [];
   states: string[] = [];
   stateProvinces: string[] = [];
   defaultAgentStatus = 'ALL';
+  isShowTickle: boolean = false;
+  subscribeTickleToggleChanged: Subscription = new Subscription();
 
   // Dropdown-Data-Service
   branchNames: { value: string; label: string }[] = [];
@@ -42,7 +46,8 @@ export class SearchTeamMemberComponent implements OnInit {
   constructor(
     private conService: ConstantsDataService,
     private drpdwnDataService: DropdownDataService,
-    private emplyService: EmployeeDataService
+    private emplyService: EmployeeDataService,
+    private appComService: AppComService,
   ) {}
 
   ngOnInit() {
@@ -50,6 +55,10 @@ export class SearchTeamMemberComponent implements OnInit {
     this.agentStatuses = this.conService.getAgentStatuses();
     this.states = this.conService.getStates();
     this.stateProvinces = this.conService.getStateProvinces();
+    this.subscribeTickleToggleChanged =
+      this.appComService.tickleToggleChanged.subscribe((tickleToggle: boolean) => {
+        this.isShowTickle = tickleToggle;
+      });
     this.drpdwnDataService
       .fetchDropdownData('GetBranches')
       .subscribe((branchNames: { value: string; label: string }[]) => {
@@ -104,4 +113,7 @@ export class SearchTeamMemberComponent implements OnInit {
       });
   }
   
+  ngOnDestroy(): void {
+    this.subscribeTickleToggleChanged.unsubscribe();
+  }
 }

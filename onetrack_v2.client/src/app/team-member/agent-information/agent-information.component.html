@@ -21,7 +21,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-md-12">
+    <div class="col">
       <div class="panel panel-default">
         <div class="panel-body">
           <div class="row">
@@ -72,8 +72,13 @@
         </div>
       </div>
     </div>
+    <div class="col-md-5" *ngIf="isShowTickle">
+      TODO: Add a Tickler Information
+    </div>
   </div>
+
   <mat-divider></mat-divider>
+
   <div class="row" *ngIf="!isShowLicenseMgmt">
     <div class="col">
       <mat-tab-group>

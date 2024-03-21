@@ -3,7 +3,7 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { AgentInfo } from '../../_Models';
-import { AgentComService, AgentDataService } from '../../_services';
+import { AgentComService, AgentDataService, AppComService } from '../../_services';
 
 @Component({
   selector: 'app-agent-information',
@@ -16,11 +16,14 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
   agentInfo: AgentInfo = {} as AgentInfo;
   isShowLicenseMgmt: boolean = false;
   subscribeShowLicMgmtChanged: Subscription = new Subscription();
+  isShowTickle: boolean = false;
+  subscribeTickleToggleChanged: Subscription = new Subscription();
 
   constructor(
     private agentDataService: AgentDataService,
     private route: ActivatedRoute,
     private agentComService: AgentComService,
+    private appComService: AppComService,
     private router: Router
   ) {}
 
@@ -40,6 +43,11 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
           this.isShowLicenseMgmt = showLicenseMgmt;
         }
       );
+
+    this.subscribeTickleToggleChanged =
+      this.appComService.tickleToggleChanged.subscribe((tickleToggle: boolean) => {
+        this.isShowTickle = tickleToggle;
+      });
   }
 
   exitLicenseMgmt() {
@@ -51,5 +59,6 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscribeShowLicMgmtChanged.unsubscribe();
+    this.subscribeTickleToggleChanged.unsubscribe();
   }
 }
