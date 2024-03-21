@@ -76,6 +76,7 @@ import { EditLicPreExamComponent } from './team-member/agent-information/tm-lice
 import { EditLicenseRenewalComponent } from './team-member/agent-information/tm-license-management/license-renewal/edit-license-renewal/edit-license-renewal.component';
 import { EditHoursTakenComponent } from './team-member/agent-information/tm-continuing-edu/edit-hours-taken/edit-hours-taken.component';
 import { EditDiaryEntryComponent } from './team-member/agent-information/tm-diary/edit-diary-entry/edit-diary-entry.component';
+import { TicklerMgmtComponent } from './_components/tickler-mgmt/tickler-mgmt.component';
 
 @NgModule({
   declarations: [
@@ -129,7 +130,8 @@ import { EditDiaryEntryComponent } from './team-member/agent-information/tm-diar
     EditLicPreExamComponent,
     EditLicenseRenewalComponent,
     EditHoursTakenComponent,
-    EditDiaryEntryComponent
+    EditDiaryEntryComponent,
+    TicklerMgmtComponent
   ],
   imports: [
     BrowserModule,
