@@ -31,7 +31,7 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
   states: string[] = [];
   stateProvinces: string[] = [];
   defaultAgentStatus = 'ALL';
-  isShowTickle: boolean = false;
+  isShowTickle: boolean = true;
   subscribeTickleToggleChanged: Subscription = new Subscription();
 
   // Dropdown-Data-Service
