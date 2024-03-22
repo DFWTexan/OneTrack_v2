@@ -1,6 +1,6 @@
 ﻿using DataModel.Response;
 
-namespace OneTrack_v2.Services
+namespace OneTrak_v2.Services
 {
     public interface ILicenseInfo
     {

@@ -3,14 +3,14 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using OneTrack_v2.DbData;
 
-namespace OneTrack_v2.Services
+namespace OneTrak_v2.Services
 {
     public class LicenseInfo : ILicenseInfo
     {
         private readonly AppDataContext _db;
 
-		public LicenseInfo(AppDataContext db)
-		{
+        public LicenseInfo(AppDataContext db)
+        {
             _db = db;
         }
 
@@ -236,21 +236,12 @@ namespace OneTrack_v2.Services
 
                 var queryLicenseInfoResults = _db.OputLicenseIncentiveInfo
                                             .FromSqlRaw(sql, parameters)
-											.AsNoTracking()
+                                            .AsNoTracking()
                                             .FirstOrDefault();
 
-                if (queryLicenseInfoResults != null)
-                {
-                    result.Success = true;
-                    result.ObjData = queryLicenseInfoResults;
-                    result.StatusCode = 200;
-                }
-                else
-                {
-                    result.Success = false;
-                    result.ErrMessage = "No data found for the provided EmployeeLicenseID";
-                    result.StatusCode = 404;
-                }
+                result.Success = true;
+                result.ObjData = queryLicenseInfoResults;
+                result.StatusCode = 200;
 
                 return result;
             }
@@ -261,11 +252,11 @@ namespace OneTrack_v2.Services
                 return result;
             }
         }
-        public ReturnResult GetIncentiveRolloutGroups() 
-		{
-			var result = new ReturnResult();
-			try
-			{
+        public ReturnResult GetIncentiveRolloutGroups()
+        {
+            var result = new ReturnResult();
+            try
+            {
                 var sql = @"SELECT  LkpField,	LkpValue,	SortOrder  
 							FROM [License].[dbo].[lkp_TypeStatus]
 							WHERE [LkpField] = 'RolloutGroup'
@@ -281,21 +272,21 @@ namespace OneTrack_v2.Services
                 result.Success = true;
                 result.ObjData = queryRolloutGrops;
                 result.StatusCode = 200;
-               
-				return result;
+
+                return result;
             }
             catch (Exception ex)
-			{
+            {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
                 return result;
             }
-		}
-        public ReturnResult GetIncentiveBMMgrs() 
-		{
-			var result = new ReturnResult();
-			try
-			{
+        }
+        public ReturnResult GetIncentiveBMMgrs()
+        {
+            var result = new ReturnResult();
+            try
+            {
                 var sql = @"SELECT    
 								m2.EmploymentID AS BMMgrEmploymentID,
 								(ISNULL(e2.LastName, '') + CASE WHEN e2.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(e2.FirstName, '') + ' ' + ISNULL(e2.MiddleName, '') ) AS BMMgrName
@@ -346,18 +337,18 @@ namespace OneTrack_v2.Services
 
                 return result;
             }
-			catch (Exception ex)
-			{
+            catch (Exception ex)
+            {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
                 return result;
             }
-		}
-        public ReturnResult GetIncentiveDMMrgs() 
-		{
-			var result = new ReturnResult();
-			try
-			{
+        }
+        public ReturnResult GetIncentiveDMMrgs()
+        {
+            var result = new ReturnResult();
+            try
+            {
                 var sql = @"SELECT    
 								 m1.EmploymentID AS DMMgrEmploymentID,
 								(ISNULL(e1.LastName, '') + CASE WHEN e1.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(e1.FirstName, '') + ' ' + ISNULL(e1.MiddleName, '') ) AS DMMgrName
@@ -406,18 +397,18 @@ namespace OneTrack_v2.Services
 
                 return result;
             }
-			catch (Exception ex)
-			{
+            catch (Exception ex)
+            {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
                 return result;
             }
-		}
-        public ReturnResult GetIncentiveTechNames() 
-		{ 
-			var result = new ReturnResult();
-			try
-			{
+        }
+        public ReturnResult GetIncentiveTechNames()
+        {
+            var result = new ReturnResult();
+            try
+            {
                 var sql = @"SELECT [SOEID], ISNULL((ISNULL(lt.LastName, '') + CASE WHEN lt.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(lt.FirstName, '') + ' ' ),'UNKNOWN') AS TechName
 							FROM [dbo].[LicenseTech] lt
 							WHERE [IsActive] = 1
@@ -438,12 +429,12 @@ namespace OneTrack_v2.Services
 
                 return result;
             }
-			catch (Exception ex)
-			{
+            catch (Exception ex)
+            {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
                 return result;
             }
-		}
+        }
     }
 }
