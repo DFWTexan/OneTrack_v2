@@ -62,10 +62,15 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
 
     this.selectedLicenseTechID = +value;
 
+console.log('EMFTEST () - selectedLicenseTechID: ', this.selectedLicenseTechID);   
+
     this.ticklerMgmtDataService
-      .fetchTicklerInfo(+value, 0, 0)
-      .subscribe((stockTicklerItems: any) => {
-        this.stockTicklerItems = stockTicklerItems;
+      .fetchTicklerInfo(0, +value, 0)
+      .subscribe((ticklerInfoItems: any) => {
+
+console.log('EMFTEST () - stockTicklerItems: ', ticklerInfoItems);
+
+        this.ticklerInfoItems = ticklerInfoItems;
       });
   }
 
