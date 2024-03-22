@@ -9,7 +9,7 @@ import { LicenseIncentiveInfo } from '../../_Models';
 @Injectable({
   providedIn: 'root',
 })
-export class LicIncentiveInfoService {
+export class LicIncentiveInfoDataService {
   private apiUrl: string = environment.apiUrl + 'LicenseInfo/';
   licenseIncentiveInfo: LicenseIncentiveInfo = {} as LicenseIncentiveInfo;
   licenseIncentiveInfoChanged = new Subject<LicenseIncentiveInfo[]>();

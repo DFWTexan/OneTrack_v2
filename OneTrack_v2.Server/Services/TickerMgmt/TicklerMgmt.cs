@@ -17,6 +17,41 @@ namespace OneTrak_v2.Services
             _db = db;
         }
 
+        public ReturnResult GetStockTickler()
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var sql = @"SELECT LkpField
+                            ,LkpValue
+                            ,SortOrder
+                            FROM [dbo].[lkp_TypeStatus]
+                            WHERE [LkpField] = 'Tickler'
+                            UNION
+                            SELECT 'Tickler' AS LkpField, 'Tickler' AS [LkpValue], '1' AS SortOrder";
+
+                var resultStockTicklers = _db.OputStockTickler
+                                                .FromSqlRaw(sql)
+                                                .AsNoTracking()
+                                                .OrderBy(x => x.SortOrder) // Apply ordering
+                                                .ToList(); // Load data into memory
+
+                //.FirstOrDefault();
+
+                result.Success = true;
+                result.ObjData = resultStockTicklers;
+                result.StatusCode = 200;
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+                return result;
+            };
+        }
+
         public ReturnResult GetTicklerInfo(int vTicklerID = 0, int vLicenseTechID = 0, int vEmploymentID = 0)
         {
             var result = new ReturnResult();
@@ -71,41 +106,6 @@ namespace OneTrak_v2.Services
             }
         }
 
-        public ReturnResult GetStockTickler()
-        {
-            var result = new ReturnResult();
-            try
-            {
-                var sql = @"SELECT LkpField
-                            ,LkpValue
-                            ,SortOrder
-                            FROM [dbo].[lkp_TypeStatus]
-                            WHERE [LkpField] = 'Tickler'
-                            UNION
-                            SELECT 'Tickler' AS LkpField, 'Tickler' AS [LkpValue], '1' AS SortOrder";
-
-                var resultStockTicklers = _db.OputStockTickler
-                                                .FromSqlRaw(sql)
-                                                .AsNoTracking()
-                                                .OrderBy(x => x.SortOrder) // Apply ordering
-                                                .ToList(); // Load data into memory
-                                                
-                                                //.FirstOrDefault();
-
-                result.Success = true;
-                result.ObjData = resultStockTicklers;
-                result.StatusCode = 200;
-
-                return result;
-            }
-            catch (Exception ex)
-            {
-                result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
-                return result;
-            };
-        }
-
         public ReturnResult GetLicenseTech(int vLicenseTechID = 0, string? vSOEID = null)
         {
             var result = new ReturnResult();
@@ -118,15 +118,15 @@ namespace OneTrak_v2.Services
                                   l.IsActive == true
                             select new
                             {
-                                LicenseTechID = l.LicenseTechId,
-                                SOEID = l.Soeid,
-                                FirstName = l.FirstName,
-                                LastName = l.LastName,
-                                isActive = l.IsActive,
-                                TeamNum = l.TeamNum,
-                                TechPhone = l.LicenseTechPhone,
-                                TechFax = l.LicenseTechFax,
-                                TechEmail = l.LicenseTechEmail,
+                                l.LicenseTechId,
+                                l.Soeid,
+                                l.FirstName,
+                                l.LastName,
+                                l.IsActive,
+                                l.TeamNum,
+                                l.LicenseTechPhone,
+                                l.LicenseTechFax,
+                                l.LicenseTechEmail,
                                 TechName = l.FirstName + " " + l.LastName
                             };
 

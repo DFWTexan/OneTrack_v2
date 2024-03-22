@@ -8,7 +8,7 @@ import {
 import {
   AgentComService,
   AgentDataService,
-  LicIncentiveInfoService,
+  LicIncentiveInfoDataService,
   ModalService,
 } from '../../../../_services';
 import { NgForm } from '@angular/forms';
@@ -29,7 +29,7 @@ export class LicenseIncentiveComponent implements OnInit {
   constructor(
     public agentDataService: AgentDataService,
     public agentComService: AgentComService,
-    public licIncentiveInfoDataService: LicIncentiveInfoService,
+    public licIncentiveInfoDataService: LicIncentiveInfoDataService,
     protected modalService: ModalService
   ) {}
 

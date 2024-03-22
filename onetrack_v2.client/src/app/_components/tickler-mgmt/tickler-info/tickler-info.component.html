@@ -1,7 +1,97 @@
-<div class="container app-container">
-  <div class="row h-100">
-    <div class="col bg-body">
-      <h1>Tickler Information</h1>
+<div class="container app-container bg-body">
+  <div style="border-width: 1px; border-color: gray; border-radius: 0.5rem">
+    <div class="row p-3">
+      <div class="col">
+        <label for="licenseTech">License Tech:</label>
+        <select
+          class="form-select select-size-med-small"
+          type="text"
+          id="licenseTech"
+          (change)="changeStockTicklerItems($event)"
+        >
+          <option
+            *ngFor="let item of licenseTechItems"
+            [value]="item.licenseTechId"
+          >
+            {{ item.techName }}
+          </option>
+        </select>
+      </div>
+      <div class="col d-flex justify-content-center align-items-end">
+        <button class="btn btn-success" type="button">
+          Insert New Tickler
+        </button>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div class="table">
+          <thead>
+            <tr style="background-color: gainsboro">
+              <th scope="col">&nbsp;</th>
+              <th scope="col">TicklerID</th>
+              <th scope="col">DateDue</th>
+              <th scope="col">Message</th>
+              <th scope="col">&nbsp;</th>
+            </tr>
+          </thead>
+          <tbody class="bg-body">
+            <tr *ngFor="let item of ticklerInfoItems">
+              <td class="align-middle text-start">
+                <button class="edit-button" type="button">
+                  <span class="material-symbols-outlined"> close </span>
+                </button>
+              </td>
+              <td class="align-middle" style="font-size: small">
+                {{ item.ticklerId }}
+              </td>
+              <td class="align-middle text-nowrap">
+                {{ item.ticklerDueDate | date : "MM/dd/yyyy" }}
+              </td>
+              <td class="align-middle" style="width: max-content">
+                {{ item.message }}
+              </td>
+              <td class="align-middle" style="width: 10rem">
+                <div class="d-flex justify-content-between mb-3 me-4">
+                  <button
+                    class="edit-button"
+                    type="button"
+                    (click)="modalService.open('modal-edit-tickler')"
+                  >
+                    <span class="material-symbols-outlined"> edit </span>
+                  </button>
+                  <button class="edit-button" type="button">
+                    <span class="material-symbols-outlined">
+                      find_in_page
+                    </span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+
+<!-- agentDataService.storeContEduHoursTaken('EDIT', diary); -->
+
+<!-- Modal: EDIT-TICKLER -->
+<modal id="modal-edit-tickler">
+  <div class="modal-header">
+    <h1 class="modal-title">TODO - mode... - Tickler Entry</h1>
+    <!-- <button
+            type="button"
+            class="btn-close"
+            (click)="modalService.close()"
+          ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <!-- <app-edit-diary-entry></app-edit-diary-entry> -->
+      </div>
+    </div>
+  </div>
+</modal>

@@ -18,7 +18,7 @@ namespace OneTrak_v2.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetIncentiveRolloutGroups(int ticklerID, int licenseTechID, int employmentID)
+        public async Task<ActionResult> GetTicklerInfo(int ticklerID, int licenseTechID, int employmentID)
         {
             var result = await Task.Run(() => _ticklerMgmt.GetTicklerInfo(ticklerID, licenseTechID, employmentID));
 
@@ -29,6 +29,14 @@ namespace OneTrak_v2.Server.Controllers
         public async Task<ActionResult> GetStockTickler()
         {
             var result = await Task.Run(() => _ticklerMgmt.GetStockTickler());
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetLicenseTech(int licenseTechID, string? soeid)
+        {
+            var result = await Task.Run(() => _ticklerMgmt.GetLicenseTech(licenseTechID, soeid));
 
             return StatusCode(result.StatusCode, result);
         }
