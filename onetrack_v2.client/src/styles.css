@@ -102,3 +102,11 @@ body {
   max-width: 100%; /* Ensure the width doesn't exceed 100% */
   overflow-x: auto; /* Add horizontal scrollbars if the content overflows the container */
 }
+
+.icon-edit-delete-button {
+  border-style: none;
+  background-color: transparent;
+  height: 1rem;
+  width: 1rem;
+  margin: 1rem;
+}

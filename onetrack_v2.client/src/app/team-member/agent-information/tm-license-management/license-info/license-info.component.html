@@ -27,7 +27,7 @@
 
     <div class="col d-flex justify-content-end me-5">
       <button
-        class="edit-button me-5"
+        class="icon-edit-delete-button me-5"
         (click)="
           setModeLicenseMgmt('EDIT');
           modalService.open('modal-edit-license-info')
@@ -35,7 +35,7 @@
       >
         <span class="material-symbols-outlined"> edit </span>
       </button>
-      <button class="edit-button">
+      <button class="icon-edit-delete-button">
         <span class="material-symbols-outlined"> delete </span>
       </button>
     </div>
@@ -170,7 +170,7 @@
           <td style="min-width: 10rem">
             <div class="d-flex justify-content-between me-4">
               <button
-                class="edit-button"
+                class="icon-edit-delete-button"
                 (click)="
                   agentDataService.storeLicenseAppointment(appointment);
                   modalService.open('modal-edit-license-appt')
@@ -178,7 +178,7 @@
               >
                 <span class="material-symbols-outlined"> edit </span>
               </button>
-              <button class="edit-button">
+              <button class="icon-edit-delete-button">
                 <span class="material-symbols-outlined"> delete </span>
               </button>
             </div>

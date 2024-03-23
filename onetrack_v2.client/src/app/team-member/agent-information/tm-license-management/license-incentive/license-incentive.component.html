@@ -8,7 +8,7 @@
       {{ licenseMgmtData[currentIndex].licenseName }}
       <button
         *ngIf="!modeEdit"
-        class="edit-button ms-3 mb-5"
+        class="icon-edit-delete-button ms-3 mb-5"
         style="color: grey"
         (click)="onEditToggle()"
       >
@@ -37,7 +37,7 @@
       <div class="mb-3">
         {{ licenseIncentiveInfo.licenseIncentive }}
       </div>
-      <button class="edit-button mb-5" style="color: grey">
+      <button class="icon-edit-delete-button mb-5" style="color: grey">
         <span class="material-symbols-outlined"> delete </span>
       </button>
     </div>
@@ -201,14 +201,14 @@
     <div class="row bg-body">
       <div class="col d-flex justify-content-end">
         <button
-          class="edit-button me-5 mb-5"
+          class="icon-edit-delete-button me-5 mb-5"
           *ngIf="modeEdit"
           style="color: grey"
         >
           <span class="material-symbols-outlined"> save </span>
         </button>
         <button
-          class="edit-button mb-3 me-5"
+          class="icon-edit-delete-button mb-3 me-5"
           *ngIf="modeEdit"
           style="color: grey"
           (click)="onEditToggle()"
