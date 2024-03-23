@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tickler-mgmt',
@@ -7,5 +8,6 @@ import { Component } from '@angular/core';
 })
 export class TicklerMgmtComponent {
   
+  constructor(public router: Router) { }
 
 }
