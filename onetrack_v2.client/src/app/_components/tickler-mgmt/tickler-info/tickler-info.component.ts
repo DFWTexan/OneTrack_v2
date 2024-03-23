@@ -11,6 +11,7 @@ import { StockTickler, TicklerInfo } from '../../../_Models';
 })
 @Injectable()
 export class TicklerInfoComponent implements OnInit, OnDestroy {
+  loading: boolean = false;
   stockTicklerItems: StockTickler[] = [];
   licenseTechItems: any = [];
   subscribeStockTicklerItemsData: Subscription;
@@ -26,6 +27,7 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.loading = true;
     this.ticklerMgmtDataService
       .fetchStockTickler()
       .subscribe((stockTicklerItems: any) => {
@@ -40,12 +42,14 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
         this.ticklerMgmtDataService
           .fetchTicklerInfo(0, licenseTechItems[0].licenseTechId, 0)
           .subscribe((ticklerInfoItems: any) => {
+            this.loading = false;
             this.ticklerInfoItems = ticklerInfoItems;
           });
       });
   }
 
   changeStockTicklerItems(event: Event): void {
+    this.loading = true;
     const target = event.target as HTMLInputElement;
     const value = target.value;
 
@@ -55,6 +59,7 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
       .fetchTicklerInfo(0, +value, 0)
       .subscribe((ticklerInfoItems: any) => {
         this.ticklerInfoItems = ticklerInfoItems;
+        this.loading = false;
       });
   }
 
