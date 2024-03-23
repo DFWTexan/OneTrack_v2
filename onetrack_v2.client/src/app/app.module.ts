@@ -79,6 +79,7 @@ import { EditDiaryEntryComponent } from './team-member/agent-information/tm-diar
 import { TicklerMgmtComponent } from './_components/tickler-mgmt/tickler-mgmt.component';
 import { TicklerInfoComponent } from './_components/tickler-mgmt/tickler-info/tickler-info.component';
 import { TicklerSearchComponent } from './_components/tickler-mgmt/tickler-search/tickler-search.component';
+import { EditTicklerInfoComponent } from './_components/tickler-mgmt/tickler-info/edit-tickler-info/edit-tickler-info.component';
 
 @NgModule({
   declarations: [
@@ -135,7 +136,8 @@ import { TicklerSearchComponent } from './_components/tickler-mgmt/tickler-searc
     EditDiaryEntryComponent,
     TicklerMgmtComponent,
     TicklerInfoComponent,
-    TicklerSearchComponent
+    TicklerSearchComponent,
+    EditTicklerInfoComponent
   ],
   imports: [
     BrowserModule,
