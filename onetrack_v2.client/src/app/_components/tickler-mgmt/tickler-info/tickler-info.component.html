@@ -1,6 +1,28 @@
-<div class="container app-container  overflow-auto" style="background-color: whitesmoke; max-height: 75vh; overflow-x: hidden;">
-  <div style="border-width: 1px; border-color: gray; border-radius: 0.5rem">
-    <div class="row p-3 sticky-top" style="top: 0; background-color: white; z-index: 1020;">
+<div
+  class="container app-container overflow-auto"
+  style="background-color: whitesmoke; max-height: 60vh; overflow-x: hidden"
+>
+  <div
+    style="
+      border-width: 1px;
+      border-color: gray;
+      border-bottom-left-radius: 1rem;
+      border-bottom-right-radius: 1rem;
+    "
+  >
+    <div
+      class="row p-3 sticky-top"
+      style="
+        top: 0;
+        background-color: white;
+        z-index: 1020;
+        border-bottom-style: ridge;
+        border-bottom-width: 1px;
+        border-color: gray;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+      "
+    >
       <div class="col">
         <label for="licenseTech">License Tech:</label>
         <select
@@ -34,7 +56,12 @@
             style="width: 90%"
           >
             <div class="card-body">
-              <h5 class="card-title">{{ item.ticklerId }}</h5>
+              <h5
+                class="card-title"
+                style="font-size: larger; font-weight: 500"
+              >
+                {{ item.ticklerId }}
+              </h5>
               <p class="card-text">
                 <strong>Date Due:</strong>
                 {{ item.ticklerDueDate | date : "MM/dd/yyyy" }}<br />
