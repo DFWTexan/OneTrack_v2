@@ -40,7 +40,14 @@
         </select>
       </div>
       <div class="col d-flex justify-content-center align-items-end">
-        <button class="btn btn-success" type="button">
+        <button
+          class="btn btn-success"
+          type="button"
+          (click)="
+            ticklerMgmtDataService.storeTicklerInfo('INSERT', null);
+            modalService.open('modal-edit-tickler')
+          "
+        >
           Insert New Tickler
         </button>
       </div>
@@ -53,9 +60,9 @@
           <div
             *ngFor="let item of ticklerInfoItems"
             class="card m-2"
-            style="width: 90%"
+            style="width: 95%"
           >
-            <div class="card-body">
+            <div class="card-body" style="border-radius: 1rem">
               <h5
                 class="card-title"
                 style="font-size: larger; font-weight: 500"
@@ -71,7 +78,10 @@
                 <button
                   class="icon-edit-delete-button"
                   type="button"
-                  (click)="modalService.open('modal-edit-tickler')"
+                  (click)="
+                    ticklerMgmtDataService.storeTicklerInfo('EDIT', item);
+                    modalService.open('modal-edit-tickler')
+                  "
                 >
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
@@ -92,7 +102,9 @@
   <!-- Modal: EDIT-TICKLER -->
   <modal id="modal-edit-tickler">
     <div class="modal-header">
-      <h1 class="modal-title">TODO - mode... - Tickler Entry</h1>
+      <h1 class="modal-title">
+        {{ ticklerMgmtComService.modeTicklerMgmt }} - Tickler Entry
+      </h1>
       <!-- <button
             type="button"
             class="btn-close"

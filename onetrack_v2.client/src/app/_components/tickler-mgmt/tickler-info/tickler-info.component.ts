@@ -1,8 +1,8 @@
 import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { ModalService, TicklerMgmtDataService } from '../../../_services';
-import { StockTickler, TicklerInfo, TicklerLicTech } from '../../../_Models';
+import { ModalService, TicklerMgmtComService, TicklerMgmtDataService } from '../../../_services';
+import { StockTickler, TicklerInfo } from '../../../_Models';
 
 @Component({
   selector: 'app-tickler-info',
@@ -19,6 +19,7 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
 
   constructor(
     public ticklerMgmtDataService: TicklerMgmtDataService,
+    public ticklerMgmtComService: TicklerMgmtComService,
     protected modalService: ModalService
   ) {
     this.subscribeStockTicklerItemsData = new Subscription();
@@ -36,21 +37,9 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
       .subscribe((licenseTechItems: any) => {
         this.licenseTechItems = licenseTechItems;
         this.selectedLicenseTechID = licenseTechItems[0].licenseTechId;
-
-// console.log(
-//           'EMFTEST () - licenseTechItems[0]: ',
-//           licenseTechItems[0].licenseTechId
-//         );
-
         this.ticklerMgmtDataService
           .fetchTicklerInfo(0, licenseTechItems[0].licenseTechId, 0)
           .subscribe((ticklerInfoItems: any) => {
-
-//  console.log(
-//               'EMFTEST () - stockTicklerItems => \n',
-//               stockTicklerItems
-//             );
-
             this.ticklerInfoItems = ticklerInfoItems;
           });
       });
@@ -62,14 +51,9 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
 
     this.selectedLicenseTechID = +value;
 
-console.log('EMFTEST () - selectedLicenseTechID: ', this.selectedLicenseTechID);   
-
     this.ticklerMgmtDataService
       .fetchTicklerInfo(0, +value, 0)
       .subscribe((ticklerInfoItems: any) => {
-
-console.log('EMFTEST () - stockTicklerItems: ', ticklerInfoItems);
-
         this.ticklerInfoItems = ticklerInfoItems;
       });
   }

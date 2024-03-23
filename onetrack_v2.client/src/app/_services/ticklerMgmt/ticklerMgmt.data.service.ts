@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 import { StockTickler, TicklerInfo, TicklerLicTech } from '../../_Models';
+import { TicklerMgmtComService } from './ticklerMgmt.com.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,11 +19,16 @@ export class TicklerMgmtDataService {
   ticklerInfoItemsChanged = new Subject<TicklerInfo[]>();
   licenseTechItems: TicklerLicTech[] = [];
   licenseTechItemsChanged = new Subject<TicklerLicTech[]>();
+  ticklerInfo: TicklerInfo = {} as TicklerInfo;
+  ticklerInfoChanged = new Subject<TicklerInfo>();
 
   paramLicenseTech: number = 0;
   paramSOEID: string | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private ticklerMgmtComService: TicklerMgmtComService
+  ) {}
 
   fetchStockTickler(): Observable<StockTickler[]> {
     return this.http
@@ -98,6 +104,12 @@ export class TicklerMgmtDataService {
           }
         })
       );
+  }
+
+  storeTicklerInfo(mode: string | '', ticklerInfo: any | null) {
+    this.ticklerMgmtComService.modeTicklerMgmtModal(mode);
+    this.ticklerInfo = ticklerInfo || {};
+    this.ticklerInfoChanged.next(this.ticklerInfo);
   }
 
   addStockTickler(stockTickler: StockTickler): Observable<StockTickler> {
