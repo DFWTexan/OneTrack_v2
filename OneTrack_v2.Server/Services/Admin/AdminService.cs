@@ -1,23 +1,22 @@
 ﻿using DataModel.Response;
 using OneTrack_v2.DbData;
+using OneTrack_v2.Services;
 
 namespace OneTrak_v2.Services
 {
     public class AdminService : IAdminService
     {
-        private readonly AppDataContext _db;
         private readonly IConfiguration _config;
-        private readonly IWebHostEnvironment _env;
-        private readonly UtilityService.Utility _utility;
-        //private readonly ILogger _logger;
+        private readonly AppDataContext _db;
+        private readonly IUtilityHelpService _utilityService;
+        private readonly string? _connectionString;
 
-        public AdminService(AppDataContext db, IConfiguration config, IWebHostEnvironment env, UtilityService.Utility utility)
+        public AdminService(AppDataContext db, IConfiguration config, IUtilityHelpService utilityHelpService)
         {
             _db = db;
             _config = config;
-            _env = env;
-            _utility = utility;
-            //_logger = logger;
+            _connectionString = _config.GetConnectionString(name: "DefaultConnection");
+            _utilityService = utilityHelpService;
         }
 
         public ReturnResult GetCompanyTypes()
