@@ -1,8 +1,14 @@
-import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
+import { Component, Injectable, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { ModalService, TicklerMgmtComService, TicklerMgmtDataService } from '../../../_services';
-import { StockTickler, TicklerInfo } from '../../../_Models';
+import {
+  AgentDataService,
+  ModalService,
+  TicklerMgmtComService,
+  TicklerMgmtDataService,
+} from '../../../_services';
+import { AgentInfo, StockTickler, TicklerInfo } from '../../../_Models';
 
 @Component({
   selector: 'app-tickler-info',
@@ -10,21 +16,20 @@ import { StockTickler, TicklerInfo } from '../../../_Models';
   styleUrl: './tickler-info.component.css',
 })
 @Injectable()
-export class TicklerInfoComponent implements OnInit, OnDestroy {
+export class TicklerInfoComponent implements OnInit {
   loading: boolean = false;
   stockTicklerItems: StockTickler[] = [];
   licenseTechItems: any = [];
-  subscribeStockTicklerItemsData: Subscription;
   selectedLicenseTechID: number = 0;
   ticklerInfoItems: TicklerInfo[] = [];
-
+  
   constructor(
     public ticklerMgmtDataService: TicklerMgmtDataService,
     public ticklerMgmtComService: TicklerMgmtComService,
+    private agentDataService: AgentDataService,
+    public router: Router,
     protected modalService: ModalService
-  ) {
-    this.subscribeStockTicklerItemsData = new Subscription();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
@@ -34,18 +39,31 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
         this.stockTicklerItems = stockTicklerItems;
       });
 
-    this.ticklerMgmtDataService
-      .fetchLicenseTech(0, null)
-      .subscribe((licenseTechItems: any) => {
-        this.licenseTechItems = licenseTechItems;
-        this.selectedLicenseTechID = licenseTechItems[0].licenseTechId;
-        this.ticklerMgmtDataService
-          .fetchTicklerInfo(0, licenseTechItems[0].licenseTechId, 0)
-          .subscribe((ticklerInfoItems: any) => {
-            this.loading = false;
-            this.ticklerInfoItems = ticklerInfoItems;
-          });
-      });
+    if (this.router.url.startsWith('/team/search-members')) {
+      this.ticklerMgmtDataService
+        .fetchLicenseTech(0, null)
+        .subscribe((licenseTechItems: any) => {
+          this.licenseTechItems = licenseTechItems;
+          this.selectedLicenseTechID = licenseTechItems[0].licenseTechId;
+          this.ticklerMgmtDataService
+            .fetchTicklerInfo(0, licenseTechItems[0].licenseTechId, 0)
+            .subscribe((ticklerInfoItems: any) => {
+              this.loading = false;
+              this.ticklerInfoItems = ticklerInfoItems;
+            });
+        });
+    } else {
+      this.ticklerMgmtDataService
+        .fetchTicklerInfo(
+          0,
+          0,
+          this.agentDataService.agentInformation.employmentID
+        )
+        .subscribe((ticklerInfoItems: any) => {
+          this.loading = false;
+          this.ticklerInfoItems = ticklerInfoItems;
+        });
+    }
   }
 
   changeStockTicklerItems(event: Event): void {
@@ -63,7 +81,4 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngOnDestroy(): void {
-    this.subscribeStockTicklerItemsData.unsubscribe();
-  }
 }

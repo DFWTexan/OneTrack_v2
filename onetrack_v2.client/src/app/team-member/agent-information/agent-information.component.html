@@ -22,10 +22,10 @@
   </div>
   <div class="row">
     <div class="col">
-      <div class="panel panel-default">
+      <div class="panel panel-default" [style.max-height]="isShowTickle ? '90vh' : 'auto'" style="border-radius: 1rem;">
         <div class="panel-body">
           <div class="row">
-            <div class="col">
+            <div class="col" >
               <p>
                 <strong>Name:</strong><br />
                 {{ agentInfo.firstName }}
@@ -72,7 +72,7 @@
         </div>
       </div>
     </div>
-    <div class="col-md-5" *ngIf="isShowTickle">
+    <div class="col-md-5 mb-3" *ngIf="isShowTickle">
       <app-tickler-mgmt></app-tickler-mgmt>
     </div>
   </div>

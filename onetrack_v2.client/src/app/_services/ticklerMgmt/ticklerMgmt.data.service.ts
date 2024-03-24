@@ -84,7 +84,7 @@ export class TicklerMgmtDataService {
     licenseTechID: number | 0,
     employmentID: number | 0
   ): Observable<TicklerInfo[]> {
-    const queryParams = `?ticklerID=${ticklerID}&licenseTechID=${licenseTechID}&soeid=${employmentID}`;
+    const queryParams = `?ticklerID=${ticklerID}&licenseTechID=${licenseTechID}&employmentID=${employmentID}`;
 
     return this.http
       .get<{
