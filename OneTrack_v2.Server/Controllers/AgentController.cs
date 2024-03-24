@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OneTrack_v2.DataModel;
-using OneTrack_v2.DbData.Models;
 using OneTrack_v2.Services;
 
 namespace OneTrack_v2.Controllers

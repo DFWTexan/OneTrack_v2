@@ -16,6 +16,7 @@ builder.Services.AddScoped<IEmailTemplateService, EmailTemplateService>();
 builder.Services.AddScoped<ILicenseInfo, LicenseInfo>();
 builder.Services.AddScoped<ITicklerMgmt, TicklerMgmt>();
 builder.Services.AddScoped<IMiscService, MiscService>();
+builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IUtilityHelpService, UtilityHelpService>();
 
 builder.Services.AddControllers();
