@@ -66,6 +66,7 @@ import { LicenseIncentiveComponent } from './team-member/agent-information/tm-li
 import { EditLicenseInfoComponent } from './team-member/agent-information/tm-license-management/license-info/edit-license-info/edit-license-info.component';
 import { EditTmDetailComponent } from './team-member/agent-information/tm-detail/edit-tm-detail/edit-tm-detail.component';
 import { PhoneFormatPipe } from './_shared/';
+import { SsnFormatPipe } from './_shared/';
 import { EditEmploymentHistComponent } from './team-member/agent-information/tm-emptrans-history/edit-employment-hist/edit-employment-hist.component';
 import { EditTransferHistComponent } from './team-member/agent-information/tm-emptrans-history/edit-transfer-hist/edit-transfer-hist.component';
 import { EditCorequirementHistComponent } from './team-member/agent-information/tm-emptrans-history/edit-corequirement-hist/edit-corequirement-hist.component';
@@ -124,6 +125,7 @@ import { EditTicklerInfoComponent } from './_components/tickler-mgmt/tickler-inf
     EditLicenseInfoComponent,
     EditTmDetailComponent,
     PhoneFormatPipe,
+    SsnFormatPipe,
     EditEmploymentHistComponent,
     EditTransferHistComponent,
     EditCorequirementHistComponent,

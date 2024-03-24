@@ -10,7 +10,7 @@
       </p>
       <p>
         <strong>Social Security #:</strong><br />
-        {{ agentInfo.employeeSSN || "N/A" }}
+        {{ (agentInfo.employeeSSN | ssnFormat) || "N/A" }}
       </p>
       <p>
         <strong>Birth Date:</strong><br />
