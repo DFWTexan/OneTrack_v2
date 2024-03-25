@@ -20,17 +20,17 @@ namespace OneTrack_v2.Controllers
 
         #region "Admin Display"
         [HttpGet]
-        public async Task<IActionResult> GetAgentByEmployeeID()
+        public async Task<IActionResult> GetCompanyTypes()
         {
             var result = await Task.Run(() => _adminService.GetCompanyTypes());
 
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpGet("{companyTypeID}")]
-        public async Task<IActionResult> GetAgentByEmployeeID(int companyTypeID)
+        [HttpGet("{companyType}")]
+        public async Task<IActionResult> GetCompanyByType(string companyType)
         {
-            var result = await Task.Run(() => _adminService.GetCompanyByType(companyTypeID));
+            var result = await Task.Run(() => _adminService.GetCompanyByType(companyType));
 
             return StatusCode(result.StatusCode, result);
         }

@@ -24,7 +24,14 @@ namespace OneTrak_v2.Services
             ReturnResult result = new ReturnResult();
             try
             {
-                //result.ObjData = _db.Comp/*a*/nyTypes.ToList();
+                var resCompanyTypes = _db.LkpTypeStatuses
+                                    .Where(x => x.LkpField == "CompanyType")
+                                    .Select(x => x.LkpValue)
+                                    .Union(new List<string> { "CompanyType" })
+                                    .OrderBy(x => x)
+                                    .ToList();
+
+                result.ObjData = resCompanyTypes;
                 result.Success = true;
                 result.StatusCode = 200;
             }
@@ -36,12 +43,37 @@ namespace OneTrak_v2.Services
             return result;
         }
         
-        public ReturnResult GetCompanyByType(int vCompanyTypeID)
+        public ReturnResult GetCompanyByType(string? vCompanyType = null)
         {
             ReturnResult result = new ReturnResult();
             try
             {
-                //result.ObjData = _db.Companies.Where(x => x.CompanyTypeID == vCompanyTypeID).ToList();
+                var resCompanies = (from c in _db.Companies
+                                  join a in _db.Addresses on c.AddressId equals a.AddressId into ca
+                                  from a in ca.DefaultIfEmpty()
+                                  where vCompanyType == null || c.CompanyType == vCompanyType
+                                  group new { c, a } by new
+                                  {
+                                      c.CompanyId,
+                                      c.CompanyAbv,
+                                      c.CompanyType,
+                                      c.CompanyName,
+                                      c.Tin,
+                                      c.Naicnumber,
+                                      a.AddressId,
+                                      a.Address1,
+                                      a.Address2,
+                                      a.City,
+                                      a.State,
+                                      a.Phone,
+                                      a.Country,
+                                      a.Zip,
+                                      a.Fax
+                                  } into g
+                                  orderby g.Key.CompanyName
+                                  select g.Key).ToList();
+
+                result.ObjData = resCompanies;
                 result.Success = true;
                 result.StatusCode = 200;
             }
@@ -58,7 +90,12 @@ namespace OneTrak_v2.Services
             ReturnResult result = new ReturnResult();
             try
             {
-                //result.ObjData = _db.LicenseTypes.ToList();
+                var resLicenses = (from l in _db.Licenses
+                                   join sp in _db.StateProvinces on l.StateProvinceAbv equals sp.StateProvinceAbv
+                                   group l by new { l.LicenseId, l.LicenseName } into g
+                                   select g.Key).ToList();
+
+                result.ObjData = resLicenses;
                 result.Success = true;
                 result.StatusCode = 200;
             }
