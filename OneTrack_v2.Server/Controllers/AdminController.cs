@@ -28,9 +28,9 @@ namespace OneTrack_v2.Controllers
         }
 
         [HttpGet("{companyType}")]
-        public async Task<IActionResult> GetCompanyByType(string companyType)
+        public async Task<IActionResult> GetCompaniesByType(string companyType)
         {
-            var result = await Task.Run(() => _adminService.GetCompanyByType(companyType));
+            var result = await Task.Run(() => _adminService.GetCompaniesByType(companyType));
 
             return StatusCode(result.StatusCode, result);
         }

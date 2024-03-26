@@ -5,7 +5,7 @@ namespace OneTrak_v2.Services
     public interface IAdminService
     {
         public ReturnResult GetCompanyTypes();
-        public ReturnResult GetCompanyByType(string vCompanyType);
+        public ReturnResult GetCompaniesByType(string vCompanyType);
         public ReturnResult GetLicenseTypes();
         public ReturnResult GetConEduLicenses(string vState, int LicenesTypeID);
         public ReturnResult GetCompanyRequirements(string vWorkState, string vResState);

@@ -1,3 +1,118 @@
-<p>company-edit works!</p>    
+<div class="container app-component-container">
+  <div class="row mt-5">
+    <div class="col">
+      <label for="companyType">Company Type:</label><br />
+      <select
+        class="form-select select-size-med-small"
+        type="text"
+        id="companyType"
+        (change)="changeCompanyType($event)"
+      >
+        <option *ngFor="let item of companyTypes" [value]="item">
+          {{ item }}
+        </option>
+      </select>
+    </div>
+    <div class="col d-flex justify-content-center align-items-end">
+      <button
+        class="btn btn-success"
+        type="button"
+        (click)="
+          adminDataService.storeCompany('INSERT', null);
+          modalService.open('modal-edit-company')
+        "
+      >
+        Insert New Company
+      </button>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div
+      class="col-md-12 d-flex justify-content-center align-items-center mt-5"
+      *ngIf="selectedCompanyType == 'Select Company Type'"
+    >
+      <h1>No Company Type Selected...</h1>
+    </div>
+    <div
+      class="col-md-12 d-flex justify-content-center align-items-center mt-5"
+      *ngIf="selectedCompanyType !== 'Select Company Type' && companies.length == 0"
+    >
+      <h1>No Record(s) Found</h1>
+    </div>
+    <div class="col">
+      <div class="table" *ngIf="companies.length > 0">
+        <thead>
+          <tr class="sticky-top" style="background-color: gainsboro">
+            <th scope="col">Type</th>
+            <th scope="col">ID</th>
+            <th scope="col">Abv</th>
+            <th scope="col">Name</th>
+            <th scope="col">TIN</th>
+            <th scope="col">NAIC #</th>
+            <th scope="col">Street Address</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody class="bg-body">
+          <tr *ngFor="let company of companies">
+            <td class="align-middle" style="font-size: larger">
+              {{ company.companyType }}
+            </td>
+            <td class="align-middle">{{ company.companyId }}</td>
+            <td class="align-middle text-nowrap">
+              {{ company.companyAbv }}
+            </td>
+            <td class="align-middle" style="width: max-content">
+              {{ company.companyName }}
+            </td>
+            <td class="align-middle" style="width: max-content">
+              {{ company.tin }}
+            </td>
+            <td class="align-middle" style="width: max-content">
+              {{ company.naicnumber }}
+            </td>
+            <td class="align-middle" style="width: max-content">
+              {{ company.address1 }}
+            </td>
+            <td class="align-middle" style="width: 10rem">
+              <div class="d-flex justify-content-between mb-3 me-4">
+                <button
+                  class="icon-edit-delete-button"
+                  type="button"
+                  (click)="
+                    adminDataService.storeCompany('EDIT', company);
+                    modalService.open('modal-edit-company')
+                  "
+                >
+                  <span class="material-symbols-outlined"> edit </span>
+                </button>
+                <button class="icon-edit-delete-button" type="button">
+                  <span class="material-symbols-outlined"> delete </span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </div>
+    </div>
+  </div>
+</div>
 
-
+<!-- Modal: EDIT-COMPANY -->
+<modal id="modal-edit-company">
+  <div class="modal-header">
+    <h1 class="modal-title">{{ adminComService.modeCompany }} - Company</h1>
+    <!-- <button
+              type="button"
+              class="btn-close"
+              (click)="modalService.close()"
+            ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <!-- <app-edit-tickler-info></app-edit-tickler-info> -->
+      </div>
+    </div>
+  </div>
+</modal>

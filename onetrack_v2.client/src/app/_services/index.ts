@@ -9,3 +9,5 @@ export * from './licenseIncentiveInfo/licIncentiveInfo.data.service';
 export * from  './ticklerMgmt/ticklerMgmt.data.service';
 export * from  './ticklerMgmt/ticklerMgmt.com.service';
 export * from  './common/app.com.service';
+export * from  './Admin/admin.data.service';
+export * from  './Admin/admin.com.service';

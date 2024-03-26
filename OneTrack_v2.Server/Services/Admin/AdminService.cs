@@ -27,7 +27,7 @@ namespace OneTrak_v2.Services
                 var resCompanyTypes = _db.LkpTypeStatuses
                                     .Where(x => x.LkpField == "CompanyType")
                                     .Select(x => x.LkpValue)
-                                    .Union(new List<string> { "CompanyType" })
+                                    //.Union(new List<string> { "CompanyType" })
                                     .OrderBy(x => x)
                                     .ToList();
 
@@ -43,7 +43,7 @@ namespace OneTrak_v2.Services
             return result;
         }
         
-        public ReturnResult GetCompanyByType(string? vCompanyType = null)
+        public ReturnResult GetCompaniesByType(string? vCompanyType = null)
         {
             ReturnResult result = new ReturnResult();
             try
