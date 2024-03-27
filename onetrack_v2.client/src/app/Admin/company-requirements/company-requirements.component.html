@@ -1,1 +1,49 @@
-<p>company-requirements works!</p>
+<div class="container app-component-container">
+  <div class="row mt-5 mb-3">
+    <div class="col">
+      <label for="workState">Work State:</label><br />
+      <select
+        class="form-select select-size-x-small"
+        type="text"
+        id="workState"
+        (change)="changeWorkState($event)"
+      >
+        <option *ngFor="let state of states" [value]="state">
+          {{ state }}
+        </option>
+      </select>
+    </div>
+    <div class="col">
+      <label for="residentState">Resident State:</label><br />
+      <select
+        class="form-select select-size-x-small"
+        type="text"
+        id="residentState"
+        (change)="changeResidentState($event)"
+        [disabled]="selectedWorkState == 'Select'"
+      >
+        <option *ngFor="let state of states" [value]="state">
+          {{ state }}
+        </option>
+      </select>
+    </div>
+    <div class="col d-flex justify-content-center align-items-end">
+      <button
+        class="btn btn-success"
+        type="button"
+        (click)="
+          adminDataService.storeCompany('INSERT', null);
+          modalService.open('modal-edit-company')
+        "
+      >
+        Add New Company Requirement
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row mt-4">
+    <div class="col">
+
+    </div>
+  </div>
+</div>

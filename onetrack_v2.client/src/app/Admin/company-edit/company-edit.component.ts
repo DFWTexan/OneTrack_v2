@@ -22,8 +22,10 @@ export class CompanyEditComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.adminDataService.fetchCompanyTypes().subscribe((response) => {
       this.companyTypes = ['Select Company Type', ...response];
+      this.loading = false;
     });
   }
 
