@@ -43,7 +43,100 @@
   <mat-divider></mat-divider>
   <div class="row mt-4">
     <div class="col">
-
+      <div class="table" *ngIf="companyRequirements.length > 0">
+        <thead>
+          <tr class="sticky-top" style="background-color: gainsboro">
+            <th scope="col">ID</th>
+            <th scope="col">Work State</th>
+            <th scope="col">Res State</th>
+            <th scope="col">Type</th>
+            <th scope="col">LicLevel1</th>
+            <th scope="col">LicLevel2</th>
+            <th scope="col">LicLevel3</th>
+            <th scope="col">LicLevel4</th>
+            <th scope="col">Start After Date</th>
+            <th scope="col">Document</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody class="bg-body">
+          <tr *ngFor="let company of companyRequirements">
+            <td class="align-middle" style="font-size: larger">
+              {{ company.companyRequirementId }}
+            </td>
+            <td class="align-middle">{{ company.workStateAbv }}</td>
+            <td class="align-middle text-nowrap">
+              {{ company.resStateAbv }}
+            </td>
+            <td class="align-middle" style="width: max-content">
+              {{ company.requirementType }}
+            </td>
+            <td class="align-middle" style="width: max-content">
+                <div class="form-check d-flex justify-content-center">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      [checked]="company.licLevel1"
+                      disabled
+                    />
+                  </div>
+            </td>
+            <td class="align-middle" style="width: max-content">
+                <div class="form-check d-flex justify-content-center">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      [checked]="company.licLevel2"
+                      disabled
+                    />
+                  </div>
+            </td>
+            <td class="align-middle" style="width: max-content">
+                <div class="form-check d-flex justify-content-center">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      [checked]="company.licLevel3"
+                      disabled
+                    />
+                  </div>
+            </td>
+            <td class="align-middle" style="width: max-content">
+              <div class="form-check d-flex justify-content-center">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [checked]="company.licLevel4"
+                  disabled
+                />
+              </div>
+            </td>
+            <td class="align-middle" style="width: max-content">
+              {{ company.startAfterDate | date : "MM/dd/yyyy" }}
+            </td>
+            <td class="align-middle">
+              {{ company.document }}
+            </td>
+            <!-- <td class="align-middle" style="width: 10rem">
+                  <div class="d-flex justify-content-between mb-3 me-4">
+                    <button
+                      class="icon-edit-delete-button"
+                      type="button"
+                      (click)="
+                        adminDataService.storeCompany('EDIT', company);
+                        modalService.open('modal-edit-company')
+                      "
+                    >
+                      <span class="material-symbols-outlined"> edit </span>
+                    </button>
+                    <button class="icon-edit-delete-button" type="button">
+                      <span class="material-symbols-outlined"> delete </span>
+                    </button>
+                  </div>
+                </td> -->
+          </tr>
+        </tbody>
+      </div>
     </div>
   </div>
 </div>

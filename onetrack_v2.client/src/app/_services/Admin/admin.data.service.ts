@@ -4,14 +4,14 @@ import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { AdminComService } from './admin.com.service';
-import { Company } from '../../_Models';
+import { Company, CompanyRequirement } from '../../_Models';
 import { ModalService } from '../common/modal.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminDataService {
-  private apiUrl: string = environment.apiUrl;
+  private apiUrl: string = environment.apiUrl + 'Admin/';
 
   companyTypes: any[] = [];
   companyTypesChanged = new Subject<any[]>();
@@ -19,6 +19,8 @@ export class AdminDataService {
   companiesChanged = new Subject<Company[]>();
   company: Company = {} as Company;
   companyChanged = new Subject<Company>();
+  companyRequirements: CompanyRequirement[] = [];
+  companyRequirementsChanged = new Subject<CompanyRequirement[]>();
 
   constructor(
     private http: HttpClient,
@@ -50,7 +52,7 @@ export class AdminDataService {
   }
 
   fetchCompanies(companyType: string) {
-    this.apiUrl = environment.apiUrl + 'Admin/GetCompaniesByType/';
+    this.apiUrl = environment.apiUrl + 'GetCompaniesByType/';
 
     return this.http
       .get<{
@@ -64,6 +66,31 @@ export class AdminDataService {
           if (response.success && response.statusCode === 200) {
             this.companies = response.objData;
             this.companiesChanged.next(this.companies);
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  fetchCompanyRequirements(workState: string, resState: string | null = null) {
+    const queryParams = `?workState=${workState}&resState=${
+      resState ? resState : ''
+    }`;
+
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: CompanyRequirement[];
+        errMessage: string;
+      }>(`${this.apiUrl}GetCompanyRequirements${queryParams}`)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            this.companyRequirements = response.objData;
+            this.companyRequirementsChanged.next(this.companyRequirements);
             return response.objData;
           } else {
             throw new Error(response.errMessage || 'Unknown error');

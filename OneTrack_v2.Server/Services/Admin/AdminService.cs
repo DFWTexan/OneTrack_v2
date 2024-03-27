@@ -1,4 +1,6 @@
 ﻿using DataModel.Response;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using OneTrack_v2.DbData;
 using OneTrack_v2.Services;
 
@@ -29,6 +31,7 @@ namespace OneTrak_v2.Services
                                     .Select(x => x.LkpValue)
                                     //.Union(new List<string> { "CompanyType" })
                                     .OrderBy(x => x)
+                                    .AsNoTracking()
                                     .ToList();
 
                 result.ObjData = resCompanyTypes;
@@ -71,7 +74,7 @@ namespace OneTrak_v2.Services
                                       a.Fax
                                   } into g
                                   orderby g.Key.CompanyName
-                                  select g.Key).ToList();
+                                  select g.Key).AsNoTracking().ToList();
 
                 result.ObjData = resCompanies;
                 result.Success = true;
@@ -93,7 +96,7 @@ namespace OneTrak_v2.Services
                 var resLicenses = (from l in _db.Licenses
                                    join sp in _db.StateProvinces on l.StateProvinceAbv equals sp.StateProvinceAbv
                                    group l by new { l.LicenseId, l.LicenseName } into g
-                                   select g.Key).ToList();
+                                   select g.Key).AsNoTracking().ToList();
 
                 result.ObjData = resLicenses;
                 result.Success = true;
@@ -124,12 +127,43 @@ namespace OneTrak_v2.Services
             return result;
         }
 
-        public ReturnResult GetCompanyRequirements(string vWorkState, string vResState)
+        public ReturnResult GetCompanyRequirements(string vWorkState, string? vResState = null)
         {
             ReturnResult result = new ReturnResult();
             try
             {
-                //result.ObjData = _db.CompanyRequirements.Where(x => x.WorkState == vWorkState && x.ResState == vResState).ToList();
+                var sql = @"
+                       SELECT  
+                            R.CompanyRequirementID,
+                            R.WorkStateAbv, 
+                            R.ResStateAbv, 
+                            R.RequirementType, 
+                            R.[LicLevel1],
+                            R.[LicLevel2],
+                            R.[LicLevel3],
+                            R.[LicLevel4],
+                            R.StartAfterDate,
+                            R.[Document]
+                        FROM 
+                            dbo.CompanyRequirements R
+                        WHERE
+                            (@vWorkState IS NULL OR R.WorkStateAbv = @vWorkState) AND 
+                            (@vResState IS NULL OR R.ResStateAbv = @vResState) ";
+
+                var parameters = new[]
+                            {
+                                new SqlParameter("@vWorkState", vWorkState),
+                                new SqlParameter("@vResState", vResState ?? (object)DBNull.Value)
+                            };
+
+                var queryCoRequirementsResults = _db.OputCompanyRequirements
+                                            .FromSqlRaw(sql, parameters)
+                                            .AsNoTracking()
+                                            .OrderBy(r => r.WorkStateAbv)
+                                            .ThenBy(r => r.ResStateAbv)
+                                            .ToList();
+
+                result.ObjData = queryCoRequirementsResults;
                 result.Success = true;
                 result.StatusCode = 200;
             }

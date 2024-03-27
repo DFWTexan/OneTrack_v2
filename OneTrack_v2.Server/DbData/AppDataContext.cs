@@ -149,6 +149,7 @@ namespace OneTrack_v2.DbData
         public virtual DbSet<OputIncentiveTechName> OputIncentiveTechName { get; set; }
         public virtual DbSet<OputIncentiveDMMgr> OputIncentiveDMMgr { get; set; }
         public virtual DbSet<OputStockTickler> OputStockTickler { get; set; }
+        public virtual DbSet<OputCompanyRequirement> OputCompanyRequirements { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -4024,6 +4025,7 @@ namespace OneTrack_v2.DbData
             modelBuilder.Entity<OputIncentiveTechName>().ToSqlQuery("OputIncentiveTechName").HasNoKey();
             modelBuilder.Entity<OputIncentiveDMMgr>().ToSqlQuery("OputIncentiveDMMgr").HasNoKey();
             modelBuilder.Entity<OputStockTickler>().ToSqlQuery("OputStockTickler").HasNoKey();
+            modelBuilder.Entity<OputCompanyRequirement>().ToSqlQuery("OputCompanyRequirement").HasNoKey();
             #endregion
 
             OnModelCreatingPartial(modelBuilder);

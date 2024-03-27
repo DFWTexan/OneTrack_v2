@@ -51,8 +51,8 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpGet("{workState}/{resState}")]
-        public async Task<ActionResult> GetCompanyRequirements(string workState, string resState)
+        [HttpGet]
+        public async Task<ActionResult> GetCompanyRequirements(string workState, string? resState = null)
         {
             var result = await Task.Run(() => _adminService.GetCompanyRequirements(workState, resState));
 

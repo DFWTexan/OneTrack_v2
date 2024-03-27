@@ -6,6 +6,7 @@ import {
   ConstantsDataService,
   ModalService,
 } from '../../_services';
+import { CompanyRequirement } from '../../_Models';
 
 @Component({
   selector: 'app-company-requirements',
@@ -17,7 +18,8 @@ export class CompanyRequirementsComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   states: any[] = [];
   selectedWorkState: string = 'Select';
-  selectedResState: string = 'Select';
+  selectedResState: string | null = null;
+  companyRequirements: CompanyRequirement[] = [];
 
   constructor(
     private conService: ConstantsDataService,
@@ -35,15 +37,21 @@ export class CompanyRequirementsComponent implements OnInit, OnDestroy {
     const target = event.target as HTMLInputElement;
     const value = target.value;
     this.selectedWorkState = value;
-    
+
     if (value === 'Select') {
       return;
-    } 
-    // else {
-    //   this.adminDataService.fetchCompanyRequirements(value).subscribe((response) => {
-    //     this.loading = false;
-    //   });
-    // }
+    } else {
+
+console.log('EMFTEST (app-company-requirements) - CompanyRequirementsComponent: changeWorkState: value: ', value);
+
+      this.loading = false;
+      this.adminDataService
+        .fetchCompanyRequirements(value, this.selectedResState)
+        .subscribe((response) => {
+          this.companyRequirements = response;
+          this.loading = false;
+        });
+    }
   }
 
   changeResidentState(event: any) {
