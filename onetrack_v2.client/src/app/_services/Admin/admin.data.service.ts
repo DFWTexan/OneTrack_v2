@@ -21,6 +21,8 @@ export class AdminDataService {
   companyChanged = new Subject<Company>();
   companyRequirements: CompanyRequirement[] = [];
   companyRequirementsChanged = new Subject<CompanyRequirement[]>();
+  coRequirement: CompanyRequirement = {} as CompanyRequirement;
+  coRequirementChanged = new Subject<CompanyRequirement>();
 
   constructor(
     private http: HttpClient,
@@ -103,5 +105,11 @@ export class AdminDataService {
     this.adminComService.modeCompanyModal(mode);
     this.company = company || {};
     this.companyChanged.next(this.company);
+  }
+
+  storeCoRequirement(mode: string | '', coRequirement: any | null) {
+    this.adminComService.modeCoRequirementModal(mode);
+    this.coRequirement = coRequirement || {};
+    this.coRequirementChanged.next(this.coRequirement);
   }
 }

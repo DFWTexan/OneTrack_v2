@@ -32,8 +32,8 @@
         class="btn btn-success"
         type="button"
         (click)="
-          adminDataService.storeCompany('INSERT', null);
-          modalService.open('modal-edit-company')
+          adminDataService.storeCoRequirement('INSERT', null);
+          modalService.open('modal-edit-co-requirement')
         "
       >
         Add New Company Requirement
@@ -123,8 +123,8 @@
                   class="icon-edit-delete-button"
                   type="button"
                   (click)="
-                    adminDataService.storeCompany('EDIT', company);
-                    modalService.open('modal-edit-company')
+                    adminDataService.storeCoRequirement('EDIT', company);
+                    modalService.open('modal-edit-co-requirement')
                   "
                 >
                   <span class="material-symbols-outlined"> edit </span>
@@ -141,10 +141,10 @@
   </div>
 </div>
 
-<!-- Modal: EDIT-COMPANY -->
-<modal id="modal-edit-company">
+<!-- Modal: EDIT-CO-REQUIREMENT -->
+<modal id="modal-edit-co-requirement">
     <div class="modal-header">
-      <h1 class="modal-title">{{ adminComService.modeCompany }} - Company Requirement</h1>
+      <h1 class="modal-title">{{ adminComService.modeCoRequirement }} - Company Requirement</h1>
       <!-- <button
                 type="button"
                 class="btn-close"

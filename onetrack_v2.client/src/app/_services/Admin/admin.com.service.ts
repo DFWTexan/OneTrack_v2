@@ -9,6 +9,9 @@ export class AdminComService {
 //Company
   modeCompany: string = '';
   modeCompanyChanged = new Subject<string>();
+  //CompanyRequirement
+  modeCoRequirement: string = '';
+  modeCoRequirementChanged = new Subject<string>();
 
   constructor() {}
 
@@ -17,4 +20,9 @@ export class AdminComService {
     this.modeCompanyChanged.next(this.modeCompany);
   }
   
+  modeCoRequirementModal(mode: string) {
+    this.modeCoRequirement = mode;
+    this.modeCoRequirementChanged.next(this.modeCoRequirement);
+  }
+
 }
