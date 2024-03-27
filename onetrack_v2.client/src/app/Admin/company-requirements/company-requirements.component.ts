@@ -41,9 +41,6 @@ export class CompanyRequirementsComponent implements OnInit, OnDestroy {
     if (value === 'Select') {
       return;
     } else {
-
-console.log('EMFTEST (app-company-requirements) - CompanyRequirementsComponent: changeWorkState: value: ', value);
-
       this.loading = false;
       this.adminDataService
         .fetchCompanyRequirements(value, this.selectedResState)
@@ -59,6 +56,18 @@ console.log('EMFTEST (app-company-requirements) - CompanyRequirementsComponent: 
     const target = event.target as HTMLInputElement;
     const value = target.value;
     this.selectedResState = value;
+
+    if (value === 'Select') {
+      return;
+    } else {
+      this.loading = false;
+      this.adminDataService
+        .fetchCompanyRequirements(this.selectedWorkState, value)
+        .subscribe((response) => {
+          this.companyRequirements = response;
+          this.loading = false;
+        });
+    }
   }
 
   ngOnDestroy(): void {}
