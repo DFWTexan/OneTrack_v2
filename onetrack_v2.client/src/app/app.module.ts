@@ -82,6 +82,7 @@ import { TicklerInfoComponent } from './_components/tickler-mgmt/tickler-info/ti
 import { TicklerSearchComponent } from './_components/tickler-mgmt/tickler-search/tickler-search.component';
 import { EditTicklerInfoComponent } from './_components/tickler-mgmt/tickler-info/edit-tickler-info/edit-tickler-info.component';
 import { EditCompanyComponent } from './admin/company-edit/edit-company/edit-company.component';
+import { EditCoRequirementComponent } from './admin/company-requirements/edit-co-requirement/edit-co-requirement.component';
 
 @NgModule({
   declarations: [
@@ -141,7 +142,8 @@ import { EditCompanyComponent } from './admin/company-edit/edit-company/edit-com
     TicklerInfoComponent,
     TicklerSearchComponent,
     EditTicklerInfoComponent,
-    EditCompanyComponent
+    EditCompanyComponent,
+    EditCoRequirementComponent
   ],
   imports: [
     BrowserModule,
