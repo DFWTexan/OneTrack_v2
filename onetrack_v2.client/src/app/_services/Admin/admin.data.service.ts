@@ -244,4 +244,10 @@ export class AdminDataService {
     this.dropdownListItem = dropdownItem || {};
     this.dropdownListItemChanged.next(this.dropdownListItem);
   }
+
+  storeExamItem(mode: string | '', examItem: any | null) {
+    this.adminComService.changeMode('examItem', mode);
+    this.examItems = examItem || [];
+    this.examItemsChanged.next(this.examItems);
+  }
 }

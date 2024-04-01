@@ -18,8 +18,8 @@
             class="btn btn-success"
             type="button"
             (click)="
-              adminDataService.storeCompany('INSERT', null);
-              modalService.open('modal-edit-company')
+              adminDataService.storeExamItem('INSERT', null);
+              modalService.open('modal-edit-exam')
             "
           >
             Create New Exam
@@ -62,14 +62,14 @@
                 <td class="align-middle" style="width: max-content">
                   {{ exam.companyName }}
                 </td>
-                <!-- <td class="align-middle" style="width: 10rem">
+                <td class="align-middle" style="width: 10rem">
                   <div class="d-flex justify-content-between mb-3 me-4">
                     <button
                       class="icon-edit-delete-button"
                       type="button"
                       (click)="
-                        adminDataService.storeCompany('EDIT', company);
-                        modalService.open('modal-edit-company')
+                        adminDataService.storeExamItem('EDIT', exam);
+                        modalService.open('modal-edit-exam')
                       "
                     >
                       <span class="material-symbols-outlined"> edit </span>
@@ -78,10 +78,29 @@
                       <span class="material-symbols-outlined"> delete </span>
                     </button>
                   </div>
-                </td> -->
+                </td>
               </tr>
             </tbody>
           </div>
         </div>
       </div>
 </div>
+
+<!-- Modal: EDIT-EXAAM -->
+<modal id="modal-edit-exam">
+    <div class="modal-header">
+      <h1 class="modal-title">{{ adminComService.modes.examItem.mode }} - Exam</h1>
+      <!-- <button
+                type="button"
+                class="btn-close"
+                (click)="modalService.close()"
+              ></button> -->
+    </div>
+    <div class="modal-body">
+      <div>
+        <div>
+          <!-- <app-edit-company></app-edit-company> -->
+        </div>
+      </div>
+    </div>
+  </modal>

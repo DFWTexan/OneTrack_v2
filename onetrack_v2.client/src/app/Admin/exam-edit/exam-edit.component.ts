@@ -41,10 +41,9 @@ export class ExamEditComponent implements OnInit {
       //   this.adminDataService.citiesChanged.next(this.adminDataService.cities);
       // });
     } else {
-      // this.adminDataService.fetchCities(value).subscribe((response) => {
-      //   this.adminDataService.cities = response;
-      //   this.adminDataService.citiesChanged.next(this.adminDataService.cities);
-      // });
+      this.adminDataService.fetchExamItems(value).subscribe((response) => {
+        this.examItems = response;
+      });
     }
   }
 }

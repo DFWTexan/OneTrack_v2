@@ -11,12 +11,13 @@ export class AdminComService {
     coRequirement: { mode: '', changed: new Subject<string>() },
     educationRule: { mode: '', changed: new Subject<string>() },
     dropdownItem: { mode: '', changed: new Subject<string>() },
+    examItem: { mode: '', changed: new Subject<string>() },
   };
-  
+
   constructor() {}
 
   changeMode(
-    type: 'company' | 'coRequirement' | 'educationRule' | 'dropdownItem',
+    type: 'company' | 'coRequirement' | 'educationRule' | 'dropdownItem' | 'examItem',
     mode: string
   ) {
     this.modes[type].mode = mode;
