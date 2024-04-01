@@ -25,6 +25,7 @@ export class JobTitleLicenseComponent {
   ) {}
 
   ngOnInit(): void {
+    this.loading = true;
     this.adminDataService.fetchLicenseLevels().subscribe((response) => {
       this.licenseLevels = response;
     });
@@ -33,6 +34,15 @@ export class JobTitleLicenseComponent {
     });
     this.adminDataService.fetchJobTitles().subscribe((response) => {
       this.jobTitles = response;
+      this.loading = false;
     });
+  }
+
+  saveRow(row: any) {
+    this.loading = true;
+    // this.adminDataService.saveJobTitle(row).subscribe((response) => {
+    //   this.loading = false;
+    //   this.jobTitles = response;
+    // });
   }
 }

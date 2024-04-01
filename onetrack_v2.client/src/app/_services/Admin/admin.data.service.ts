@@ -235,7 +235,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'GetLicenseLevels')
+      }>(this.apiUrl + 'GetJobTitleLicLevel')
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -256,7 +256,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'GetLicenseIncentives')
+      }>(this.apiUrl + 'GetJobTitlelicIncentive')
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {

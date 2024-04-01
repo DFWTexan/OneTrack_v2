@@ -299,7 +299,7 @@ namespace OneTrak_v2.Services
             {
                 var resultLicLevels = new List<(string LicenseLevel, int SortOrder)>
                                         {
-                                            ("NeedsReview", 0),
+                                            ("{NeedsReview}", 0),
                                             ("NoLicense", 1),
                                             ("LicLevel1", 2),
                                             ("LicLevel2", 3),

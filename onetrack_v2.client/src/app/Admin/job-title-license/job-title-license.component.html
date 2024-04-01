@@ -14,7 +14,10 @@
     </div>
   </div>
   <mat-divider></mat-divider>
-  <div class="row mt-4">
+  <div class="mt-5 mb-5 d-flex justify-content-center" *ngIf="loading">
+    <div class="spinner-border text-primary"></div>
+  </div>
+  <div class="row mt-4" *ngIf="!loading">
     <div class="col">
       <div class="table" *ngIf="jobTitles.length > 0">
         <thead>
@@ -37,15 +40,53 @@
             <td class="align-middle text-nowrap">
               {{ job.jobTitle1 }}
             </td>
-            <td class="align-middle" style="width: max-content">
+            <!-- <td class="align-middle" style="width: max-content">
               {{ job.isActive }}
-            </td>
+            </td> -->
             <td class="align-middle" style="width: max-content">
+              <div class="form-check d-flex justify-content-center">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [checked]="job.isActive"
+                  disabled
+                />
+              </div>
+            </td>
+            <!-- <td class="align-middle" style="width: max-content">
               {{ job.licenseLevel }}
+            </td> -->
+            <td>
+              <select
+                class="form-select select-size-small"
+                [(ngModel)]="job.licenseLevel"
+                (change)="saveRow(job)"
+              >
+                <option
+                  *ngFor="let level of licenseLevels"
+                  [value]="level.licenseLevel"
+                >
+                  {{ level.licenseLevel }}
+                </option>
+              </select>
             </td>
-            <td class="align-middle" style="width: max-content">
+            <!-- <td class="align-middle" style="width: max-content">
               {{ job.licenseIncentive }}
-            </td>
+            </td> -->
+            <td>
+                <select
+                  class="form-select select-size-small"
+                  [(ngModel)]="job.licenseIncentive"
+                  (change)="saveRow(job)"
+                >
+                  <option
+                    *ngFor="let incentive of licenseIncentives"
+                    [value]="incentive.licenseIncentive"
+                  >
+                    {{ incentive.licenseIncentive }}
+                  </option>
+                </select>
+              </td>
             <td
               class="align-middle justify-content-center text-center"
               style="width: 10rem"
