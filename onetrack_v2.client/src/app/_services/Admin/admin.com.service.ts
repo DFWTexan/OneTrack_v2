@@ -6,38 +6,19 @@ import { Company } from '../../_Models';
   providedIn: 'root',
 })
 export class AdminComService {
-//Company
-  modeCompany: string = '';
-  modeCompanyChanged = new Subject<string>();
-  //CompanyRequirement
-  modeCoRequirement: string = '';
-  modeCoRequirementChanged = new Subject<string>();
-  //EducationRule
-  modeEducationRule: string = '';
-  modeEducationRuleChanged = new Subject<string>();
-  //DropdownItem
-  modeDropdownItem: string = '';
-  modeDropdownItemChanged = new Subject<string>();
-
+  modes = {
+    company: { mode: '', changed: new Subject<string>() },
+    coRequirement: { mode: '', changed: new Subject<string>() },
+    educationRule: { mode: '', changed: new Subject<string>() },
+    dropdownItem: { mode: '', changed: new Subject<string>() },
+  };
   constructor() {}
 
-  modeCompanyModal(mode: string) {
-    this.modeCompany = mode;
-    this.modeCompanyChanged.next(this.modeCompany);
-  }
-  
-  modeCoRequirementModal(mode: string) {
-    this.modeCoRequirement = mode;
-    this.modeCoRequirementChanged.next(this.modeCoRequirement);
-  }
-
-  modeEducationRuleModal(mode: string) {
-    this.modeEducationRule = mode;
-    this.modeEducationRuleChanged.next(this.modeEducationRule);
-  }
-
-  modeDropdownItemModal(mode: string) {
-    this.modeDropdownItem = mode;
-    this.modeDropdownItemChanged.next(this.modeDropdownItem);
+  changeMode(
+    type: 'company' | 'coRequirement' | 'educationRule' | 'dropdownItem',
+    mode: string
+  ) {
+    this.modes[type].mode = mode;
+    this.modes[type].changed.next(mode);
   }
 }

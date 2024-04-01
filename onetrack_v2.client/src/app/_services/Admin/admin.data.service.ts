@@ -4,7 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { AdminComService } from './admin.com.service';
-import { Company, CompanyRequirement, EducationRule } from '../../_Models';
+import { Company, CompanyRequirement, EducationRule, Exam } from '../../_Models';
 import { ModalService } from '../common/modal.service';
 
 @Injectable({
@@ -37,6 +37,9 @@ export class AdminDataService {
   dropdownListItemsChanged = new Subject<any[]>();
   dropdownListItem: {} = {};
   dropdownListItemChanged = new Subject<any>();
+  // EXAM EDIT
+  examItems: Exam[] = [];
+  examItemsChanged = new Subject<Exam[]>();
 
   constructor(
     private http: HttpClient,
@@ -197,27 +200,47 @@ export class AdminDataService {
       );
   }
 
-  // STORE
+  // EXAM EDIT
+  fetchExamItems(stateProvince: string) {
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'GetExamByState/' + stateProvince)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  // STORE DATA
   storeCompany(mode: string | '', company: any | null) {
-    this.adminComService.modeCompanyModal(mode);
+    this.adminComService.changeMode('company', mode);
     this.company = company || {};
     this.companyChanged.next(this.company);
   }
 
   storeCoRequirement(mode: string | '', coRequirement: any | null) {
-    this.adminComService.modeCoRequirementModal(mode);
+    this.adminComService.changeMode('coRequirement', mode);
     this.coRequirement = coRequirement || {};
     this.coRequirementChanged.next(this.coRequirement);
   }
 
   storeEducationRule(mode: string | '', educationRule: any | null) {
-    this.adminComService.modeEducationRuleModal(mode);
+    this.adminComService.changeMode('educationRule', mode);
     this.educationRule = educationRule || {};
     this.educationRuleChanged.next(this.educationRule);
   }
 
   storeDopdownItem(mode: string | '', dropdownItem: any | null) {
-    this.adminComService.modeDropdownItemModal(mode);
+    this.adminComService.changeMode('dropdownItem', mode);
     this.dropdownListItem = dropdownItem || {};
     this.dropdownListItemChanged.next(this.dropdownListItem);
   }

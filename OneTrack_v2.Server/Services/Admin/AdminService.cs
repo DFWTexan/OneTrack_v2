@@ -87,7 +87,6 @@ namespace OneTrak_v2.Services
             }
             return result;
         }
-
         public ReturnResult GetLicenseTypes(string? vStateAbv = null)
         {
             ReturnResult result = new ReturnResult();
@@ -266,7 +265,22 @@ namespace OneTrak_v2.Services
             ReturnResult result = new ReturnResult();
             try
             {
-                //result.ObjData = _db.Exams.Where(x => x.State == vState).ToList();
+                var resultExams = from e in _db.Exams
+                                 join c in _db.Companies on e.ExamProviderId equals c.CompanyId into ec
+                                 from subCompany in ec.DefaultIfEmpty()
+                                 where e.StateProvinceAbv == vState
+                                  select new
+                                 {
+                                     e.ExamId,
+                                     e.ExamName,
+                                     e.ExamFees,
+                                     e.StateProvinceAbv,
+                                     e.ExamProviderId,
+                                     CompanyName = subCompany != null ? subCompany.CompanyName : null,
+                                     e.DeliveryMethod
+                                 };
+
+                result.ObjData = resultExams;
                 result.Success = true;
                 result.StatusCode = 200;
             }

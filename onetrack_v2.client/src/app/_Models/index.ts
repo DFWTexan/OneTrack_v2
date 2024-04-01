@@ -10,3 +10,5 @@ export * from './ticklerMgmt/ticklerMgmt';
 export * from './admin/company';
 export * from './admin/companyRequirement'; 
 export * from './admin/educationRule';
+export * from './admin/dropdownItem';
+export * from  './admin/exam';
