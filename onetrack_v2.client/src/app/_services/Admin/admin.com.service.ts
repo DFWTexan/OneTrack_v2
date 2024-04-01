@@ -12,6 +12,7 @@ export class AdminComService {
     educationRule: { mode: '', changed: new Subject<string>() },
     dropdownItem: { mode: '', changed: new Subject<string>() },
   };
+  
   constructor() {}
 
   changeMode(
