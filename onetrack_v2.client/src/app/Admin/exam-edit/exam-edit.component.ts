@@ -35,6 +35,8 @@ export class ExamEditComponent implements OnInit {
     const target = event.target as HTMLInputElement;
     const value = target.value;
 
+    this.selectedStateProvince = value;
+
     if (value === 'Select') {
       // this.adminDataService.fetchCities(value).subscribe((response) => {
       //   this.adminDataService.cities = response;
