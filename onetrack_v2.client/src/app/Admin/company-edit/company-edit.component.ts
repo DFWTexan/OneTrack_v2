@@ -1,5 +1,4 @@
-import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, Injectable, OnInit } from '@angular/core';
 
 import { AdminComService, AdminDataService, ModalService } from '../../_services';
 
@@ -9,7 +8,7 @@ import { AdminComService, AdminDataService, ModalService } from '../../_services
   styleUrl: './company-edit.component.css',
 })
 @Injectable()
-export class CompanyEditComponent implements OnInit, OnDestroy {
+export class CompanyEditComponent implements OnInit {
   loading: boolean = false;
   companyTypes: any[] = [];
   companies: any[] = [];
@@ -46,9 +45,5 @@ export class CompanyEditComponent implements OnInit, OnDestroy {
         this.loading = false;
       });
     }
-  }
-
-  ngOnDestroy(): void {
-    // this.adminDataService.companyTypesChanged.unsubscribe();
   }
 }

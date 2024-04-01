@@ -37,15 +37,13 @@ export class AdminDataService {
 
   // COMPANY
   fetchCompanyTypes() {
-    this.apiUrl = environment.apiUrl + 'Admin/GetCompanyTypes';
-
     return this.http
       .get<{
         success: boolean;
         statusCode: number;
         objData: [];
         errMessage: string;
-      }>(this.apiUrl)
+      }>(this.apiUrl+ 'GetCompanyTypes')
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -60,15 +58,13 @@ export class AdminDataService {
   }
 
   fetchCompanies(companyType: string) {
-    this.apiUrl = environment.apiUrl + 'GetCompaniesByType/';
-
     return this.http
       .get<{
         success: boolean;
         statusCode: number;
         objData: Company[];
         errMessage: string;
-      }>(this.apiUrl + companyType)
+      }>(this.apiUrl + 'GetCompaniesByType/' + companyType)
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -140,6 +136,26 @@ export class AdminDataService {
         objData: any;
         errMessage: string;
       }>(`${this.apiUrl}GetConEducationRules/${queryParams}`)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  // DROPDOWN LIST
+  fetchDropdownListTypes() {
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'GetDropdownListTypes')
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {

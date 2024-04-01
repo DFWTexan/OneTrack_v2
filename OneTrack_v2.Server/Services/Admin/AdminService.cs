@@ -240,7 +240,16 @@ namespace OneTrak_v2.Services
             ReturnResult result = new ReturnResult();
             try
             {
-                //result.ObjData = _db.DropdownLists.Where(x => x.LkpField == vLkpField).ToList();
+                var query = _db.LkpTypeStatuses
+                        .Where(x => vLkpField == null || x.LkpField == vLkpField)
+                        .OrderBy(x => x.LkpField)
+                        .ThenBy(x => x.SortOrder)
+                        .ThenBy(x => x.LkpValue)
+                        .Select(x => new { x.LkpField, x.LkpValue, x.SortOrder })
+                        .AsNoTracking()
+                        .ToList();
+
+                result.ObjData = query;
                 result.Success = true;
                 result.StatusCode = 200;
             }

@@ -1,1 +1,29 @@
-<p>dropdown-list-edit works!</p>
+<div class="container app-component-container">
+    <div class="row mt-5 mb-3">
+      <div class="col">
+        <label for="dropdownType">Dropdown Type:</label><br />
+        <select
+          class="form-select select-size-med-small"
+          type="text"
+          id="dropdownType"
+          (change)="changeDropdownListType($event)"
+        >
+          <option *ngFor="let item of dropdownListTypes" [value]="item">
+            {{ item }}
+          </option>
+        </select>
+      </div>
+      <div class="col d-flex justify-content-center align-items-end">
+        <button
+          class="btn btn-success"
+          type="button"
+          (click)="
+            adminDataService.storeCompany('INSERT', null);
+            modalService.open('modal-edit-company')
+          "
+        >
+          Create New Company
+        </button>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
