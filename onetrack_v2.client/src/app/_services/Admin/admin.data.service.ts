@@ -110,15 +110,13 @@ export class AdminDataService {
 
   // CONTINUE EDUCATION
   fetchLicenseTypes() {
-    this.apiUrl = environment.apiUrl + 'Admin/GetLicenseTypes';
-
-    return this.http
+   return this.http
       .get<{
         success: boolean;
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl)
+      }>(this.apiUrl + 'GetLicenseTypes')
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -132,8 +130,8 @@ export class AdminDataService {
       );
   }
 
-  fetchContinueEducation(stateProvince: string | null, licenseID: number = 0) {
-    const queryParams = `?stateProv=${stateProvince}&licenseID=${licenseID}`;
+  fetchEducationRules(stateAbv: string | null, licenseType: string | null) {
+    const queryParams = `?stateAbv=${stateAbv}&licenseType=${licenseType}`;
 
     return this.http
       .get<{
@@ -141,7 +139,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(`${this.apiUrl}GetContinueEducation/${queryParams}`)
+      }>(`${this.apiUrl}GetConEducationRules/${queryParams}`)
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -163,6 +161,12 @@ export class AdminDataService {
   storeCoRequirement(mode: string | '', coRequirement: any | null) {
     this.adminComService.modeCoRequirementModal(mode);
     this.coRequirement = coRequirement || {};
+    this.coRequirementChanged.next(this.coRequirement);
+  }
+
+  storeEducationRule(mode: string | '', educationRule: any | null) {
+    this.adminComService.modeEducationRuleModal(mode);
+    this.coRequirement = educationRule || {};
     this.coRequirementChanged.next(this.coRequirement);
   }
 }

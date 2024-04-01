@@ -112,7 +112,7 @@ namespace OneTrak_v2.Services
         }
 
 
-        public ReturnResult GetConEduLicenses(string? vStateAbv = null, string? vLicenseType = null)
+        public ReturnResult GetConEducationRules(string? vStateAbv = null, string? vLicenseType = null)
         {
             ReturnResult result = new ReturnResult();
             try

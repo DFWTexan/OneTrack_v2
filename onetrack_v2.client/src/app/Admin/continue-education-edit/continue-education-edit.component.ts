@@ -5,19 +5,21 @@ import {
   ConstantsDataService,
   ModalService,
 } from '../../_services';
+import { EducationRule } from '../../_Models';
 
 @Component({
   selector: 'app-continue-education-edit',
   templateUrl: './continue-education-edit.component.html',
-  styleUrl: './continue-education-edit.component.css'
+  styleUrl: './continue-education-edit.component.css',
 })
 @Injectable()
 export class ContinueEducationEditComponent implements OnInit {
   loading: boolean = false;
-stateProvinces: any[] = [];
-licenseTypes: any[] = [];
-selectedStateProvince: string = 'Select';
-selectedLicenseType: number = 0;
+  stateProvinces: any[] = [];
+  licenseTypes: any[] = [];
+  selectedStateProvince: string | null = '';
+  selectedLicenseType: string | null = '';
+  contEducationRules: EducationRule[] = [] as EducationRule[];
 
   constructor(
     private conService: ConstantsDataService,
@@ -29,49 +31,48 @@ selectedLicenseType: number = 0;
   ngOnInit(): void {
     this.stateProvinces = ['ALL', ...this.conService.getStateProvinces()];
     this.adminDataService.fetchLicenseTypes().subscribe((response) => {
-
-console.log(response);
-
       this.licenseTypes = ['ALL', ...response];
     });
+    this.fetchEducationRules();
   }
 
-changeStateProvince(event: any) {
+  changeStateProvince(event: any) {
     this.loading = true;
     const target = event.target as HTMLInputElement;
     const value = target.value;
     this.selectedStateProvince = value;
 
-    if (value === 'Select') {
-      return;
-    } else {
-      // this.loading = false;
-      // this.adminDataService
-      //   .fetchContinueEducation(value)
-      //   .subscribe((response) => {
-      //     this.continueEducation = response;
-      //     this.loading = false;
-      //   });
+    if (value === 'ALL') {
+      this.selectedStateProvince = null;
     }
+
+    this.fetchEducationRules();
   }
 
-  changeLicenseType(event: any) { 
+  changeLicenseType(event: any) {
     this.loading = true;
     const target = event.target as HTMLInputElement;
     const value = target.value;
-    this.selectedLicenseType = +value;
+    this.selectedLicenseType = value;
 
-    if (+value === 0) {
+    if (value === 'ALL') {
+      this.selectedLicenseType = null;
       return;
-    } else {
-      // this.loading = false;
-      // this.adminDataService
-      //   .fetchContinueEducation(value)
-      //   .subscribe((response) => {
-      //     this.continueEducation = response;
-      //     this.loading = false;
-      //   });
     }
+
+    this.fetchEducationRules();
   }
 
+  fetchEducationRules() {
+    this.loading = true;
+    this.adminDataService
+      .fetchEducationRules(this.selectedStateProvince, this.selectedLicenseType)
+      .subscribe((response) => {
+
+console.log('EMFTEST (app-continue-education-edit) - response => \n', response);
+
+        this.contEducationRules = response;
+        this.loading = false;
+      });
+  }
 }
