@@ -297,7 +297,19 @@ namespace OneTrak_v2.Services
             ReturnResult result = new ReturnResult();
             try
             {
-                //result.ObjData = _db.JobTitleLicLevels.ToList();
+                var resultLicLevels = new List<(string LicenseLevel, int SortOrder)>
+                                        {
+                                            ("NeedsReview", 0),
+                                            ("NoLicense", 1),
+                                            ("LicLevel1", 2),
+                                            ("LicLevel2", 3),
+                                            ("LicLevel3", 4),
+                                            ("LicLevel4", 5)
+                                        }
+                                        .OrderBy(x => x.SortOrder)
+                                        .Select(x => new { x.LicenseLevel, x.SortOrder });
+
+                result.ObjData = resultLicLevels;
                 result.Success = true;
                 result.StatusCode = 200;
             }
@@ -314,7 +326,18 @@ namespace OneTrak_v2.Services
             ReturnResult result = new ReturnResult();
             try
             {
-                //result.ObjData = _db.JobTitleLicIncentives.ToList();
+                var resultIncentives = new List<(string LicenseIncentive, int SortOrder)>
+                                {
+                                    ("NoIncentive", 0),
+                                    ("PLS_Incentive1", 1),
+                                    ("Incentive2_Plus", 2),
+                                    ("LicIncentive3", 3)
+                                }
+                                .OrderBy(x => x.SortOrder)
+                                .Select(x => new { x.LicenseIncentive, x.SortOrder });
+
+
+                result.ObjData = resultIncentives;
                 result.Success = true;
                 result.StatusCode = 200;
             }
@@ -331,7 +354,21 @@ namespace OneTrak_v2.Services
             ReturnResult result = new ReturnResult();
             try
             {
-                //result.ObjData = _db.JobTitleLicenseds.ToList();
+                var resultJobTitles = from jt in _db.JobTitles
+                                     orderby jt.IsActive descending, jt.LicenseLevel, jt.JobTitle1
+                                     select new
+                                     {
+                                         jt.JobTitleId,
+                                         jt.JobTitle1,
+                                         jt.JobCode,
+                                         jt.CreatedDate,
+                                         jt.Reviewed,
+                                         jt.IsActive,
+                                         jt.LicenseLevel,
+                                         jt.LicenseIncentive
+                                     };
+
+                result.ObjData = resultJobTitles;
                 result.Success = true;
                 result.StatusCode = 200;
             }

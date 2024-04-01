@@ -250,4 +250,10 @@ export class AdminDataService {
     this.examItems = examItem || [];
     this.examItemsChanged.next(this.examItems);
   }
+
+  storeJobTitle(mode: string | '', jobTitle: any | null) {
+    this.adminComService.changeMode('jobTitle', mode);
+    this.dropdownListItem = jobTitle || {};
+    this.dropdownListItemChanged.next(this.dropdownListItem);
+  }
 }

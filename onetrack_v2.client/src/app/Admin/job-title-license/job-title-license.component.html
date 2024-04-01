@@ -1,1 +1,17 @@
-<p>job-title-license works!</p>
+<div class="container app-component-container">
+    <div class="row mt-5 mb-3">
+        <div class="col d-flex justify-content-start align-items-start">
+          <button
+            class="btn btn-success"
+            type="button"
+            (click)="
+              adminDataService.storeJobTitle('INSERT', null);
+              modalService.open('modal-edit-exam')
+            "
+          >
+            Create New Job Title
+          </button>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+</div>
