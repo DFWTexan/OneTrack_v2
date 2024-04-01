@@ -84,6 +84,7 @@ import { EditTicklerInfoComponent } from './_components/tickler-mgmt/tickler-inf
 import { EditCompanyComponent } from './admin/company-edit/edit-company/edit-company.component';
 import { EditCoRequirementComponent } from './admin/company-requirements/edit-co-requirement/edit-co-requirement.component';
 import { EditEduRuleComponent } from './admin/continue-education-edit/edit-edu-rule/edit-edu-rule.component';
+import { EditDropdownItemComponent } from './admin/dropdown-list-edit/edit-dropdown-item/edit-dropdown-item.component';
 
 @NgModule({
   declarations: [
@@ -145,7 +146,8 @@ import { EditEduRuleComponent } from './admin/continue-education-edit/edit-edu-r
     EditTicklerInfoComponent,
     EditCompanyComponent,
     EditCoRequirementComponent,
-    EditEduRuleComponent
+    EditEduRuleComponent,
+    EditDropdownItemComponent
   ],
   imports: [
     BrowserModule,

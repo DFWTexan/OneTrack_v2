@@ -15,6 +15,9 @@ export class AdminComService {
   //EducationRule
   modeEducationRule: string = '';
   modeEducationRuleChanged = new Subject<string>();
+  //DropdownItem
+  modeDropdownItem: string = '';
+  modeDropdownItemChanged = new Subject<string>();
 
   constructor() {}
 
@@ -31,5 +34,10 @@ export class AdminComService {
   modeEducationRuleModal(mode: string) {
     this.modeEducationRule = mode;
     this.modeEducationRuleChanged.next(this.modeEducationRule);
+  }
+
+  modeDropdownItemModal(mode: string) {
+    this.modeDropdownItem = mode;
+    this.modeDropdownItemChanged.next(this.modeDropdownItem);
   }
 }

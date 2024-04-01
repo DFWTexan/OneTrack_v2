@@ -29,6 +29,7 @@ export class DropdownListEditComponent implements OnInit {
       this.dropdownListTypes = response;
       this.loading = false;
     });
+    this.fetchDropdownListItems();
   }
   
   changeDropdownListType(event: any) {
@@ -48,5 +49,13 @@ export class DropdownListEditComponent implements OnInit {
     //     this.loading = false;
     //   });
     // }
+  }
+
+  fetchDropdownListItems() {
+    this.loading = true;
+    this.adminDataService.fetchDropdownListItems(this.selectedDropdownListType).subscribe((response) => {
+      this.dropdownListItems = response;
+      this.loading = false;
+    });
   }
 }
