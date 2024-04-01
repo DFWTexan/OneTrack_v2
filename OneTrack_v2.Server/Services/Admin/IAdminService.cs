@@ -14,7 +14,7 @@ namespace OneTrak_v2.Services
         public ReturnResult GetExamByState(string vState);
         public ReturnResult GetJobTitleLicLevel();
         public ReturnResult GetJobTitlelicIncentive();
-        public ReturnResult GetJobTitlelicensed();
+        public ReturnResult GetJobTitles();
         public ReturnResult GetLicenseEditList();
         public ReturnResult GetLicenseEditByID(int vLicenseID);
         public ReturnResult GetLicTechList();

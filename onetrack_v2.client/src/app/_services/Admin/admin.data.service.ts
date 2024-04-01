@@ -4,7 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { AdminComService } from './admin.com.service';
-import { Company, CompanyRequirement, EducationRule, Exam } from '../../_Models';
+import { Company, CompanyRequirement, EducationRule, Exam, JobTitle } from '../../_Models';
 import { ModalService } from '../common/modal.service';
 
 @Injectable({
@@ -40,6 +40,13 @@ export class AdminDataService {
   // EXAM EDIT
   examItems: Exam[] = [];
   examItemsChanged = new Subject<Exam[]>();
+  // JOB TITLE
+  licenseLevels: any[] = [];
+  licenseLevelsChanged = new Subject<any[]>();
+  licenseIncentives: any[] = [];
+  licenseIncentivesChanged = new Subject<any[]>();
+  jobTitles: JobTitle[] = [];
+  jobTitlesChanged = new Subject<JobTitle[]>();
 
   constructor(
     private http: HttpClient,
@@ -220,7 +227,71 @@ export class AdminDataService {
       );
   }
 
-  // STORE DATA
+  // JOB TITLE
+  fetchLicenseLevels() {
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'GetLicenseLevels')
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            this.licenseLevels = response.objData;
+            this.licenseLevelsChanged.next(this.licenseLevels);
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  fetchLicenseIncentives() {
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'GetLicenseIncentives')
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            this.licenseIncentives = response.objData;
+            this.licenseIncentivesChanged.next(this.licenseIncentives);
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  fetchJobTitles() {
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: JobTitle[];
+        errMessage: string;
+      }>(this.apiUrl + 'GetJobTitles')
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            this.jobTitles = response.objData;
+            this.jobTitlesChanged.next(this.jobTitles);
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  // STORE DATA //////////////////////////////////////////
   storeCompany(mode: string | '', company: any | null) {
     this.adminComService.changeMode('company', mode);
     this.company = company || {};

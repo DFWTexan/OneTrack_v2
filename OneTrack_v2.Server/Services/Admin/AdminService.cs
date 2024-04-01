@@ -349,7 +349,7 @@ namespace OneTrak_v2.Services
             return result;
         }
 
-        public ReturnResult GetJobTitlelicensed()
+        public ReturnResult GetJobTitles()
         {
             ReturnResult result = new ReturnResult();
             try

@@ -101,9 +101,9 @@ namespace OneTrack_v2.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetJobTitlelicensed()
+        public async Task<IActionResult> GetJobTitles()
         {
-            var result = await Task.Run(() => _adminService.GetJobTitlelicensed());
+            var result = await Task.Run(() => _adminService.GetJobTitles());
 
             return StatusCode(result.StatusCode, result);
         }

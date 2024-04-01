@@ -24,5 +24,15 @@ export class JobTitleLicenseComponent {
     public modalService: ModalService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.adminDataService.fetchLicenseLevels().subscribe((response) => {
+      this.licenseLevels = response;
+    });
+    this.adminDataService.fetchLicenseIncentives().subscribe((response) => {
+      this.licenseIncentives = response;
+    });
+    this.adminDataService.fetchJobTitles().subscribe((response) => {
+      this.jobTitles = response;
+    });
+  }
 }
