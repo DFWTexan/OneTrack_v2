@@ -216,7 +216,14 @@ namespace OneTrak_v2.Services
             ReturnResult result = new ReturnResult();
             try
             {
-                //result.ObjData = _db.DropdownListTypes.ToList();
+                var query = _db.LkpTypeStatuses
+                            .Select(x => x.LkpField)
+                            .Distinct()
+                            .OrderBy(x => x)
+                            .AsNoTracking()
+                            .ToList();
+
+                result.ObjData = query;
                 result.Success = true;
                 result.StatusCode = 200;
             }
