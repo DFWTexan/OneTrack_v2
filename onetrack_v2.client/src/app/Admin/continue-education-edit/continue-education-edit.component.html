@@ -1,1 +1,43 @@
-<p>continue-education-edit works!</p>
+<div class="container app-component-container">
+    <div class="row mt-5 mb-3">
+        <div class="col">
+          <label for="stateProvince">State Province:</label><br />
+          <select
+            class="form-select select-size-x-small"
+            type="text"
+            id="stateProvince"
+            (change)="changeStateProvince($event)"
+          >
+            <option *ngFor="let state of stateProvinces" [value]="state">
+              {{ state }}
+            </option>
+          </select>
+        </div>
+        <div class="col">
+          <label for="licenseType">License Type:</label><br />
+          <select
+            class="form-select select-size-large"
+            type="text"
+            id="licenseType"
+            (change)="changeLicenseType($event)"
+          >
+            <option *ngFor="let licType of licenseTypes" [value]="licType">
+              {{ licType }}
+            </option>
+          </select>
+        </div>
+        <div class="col d-flex justify-content-center align-items-end">
+          <button
+            class="btn btn-success"
+            type="button"
+            (click)="
+              adminDataService.storeCoRequirement('INSERT', null);
+              modalService.open('modal-edit-co-requirement')
+            "
+          >
+            New
+          </button>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+</div>

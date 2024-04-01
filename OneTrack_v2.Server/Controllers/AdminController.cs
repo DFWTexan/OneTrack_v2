@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using NuGet.Packaging;
 using OneTrack_v2.DataModel;
 using OneTrack_v2.Services;
 using OneTrak_v2.Services;
@@ -36,17 +37,17 @@ namespace OneTrack_v2.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetLicenseTypes()
+        public async Task<IActionResult> GetLicenseTypes(string? vStateAbv = null)
         {
-            var result = await Task.Run(() => _adminService.GetLicenseTypes());
+            var result = await Task.Run(() => _adminService.GetLicenseTypes(vStateAbv));
 
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpGet("{state}/{licenesTypeID}")]
-        public async Task<ActionResult> GetConEduLicenses(string state, int licenesTypeID)
+        [HttpGet]
+        public async Task<ActionResult> GetConEduLicenses(string? stateAbv = null, string? licenseType = null)
         {
-            var result = await Task.Run(() => _adminService.GetConEduLicenses(state, licenesTypeID));
+            var result = await Task.Run(() => _adminService.GetConEduLicenses(stateAbv, licenseType));
 
             return StatusCode(result.StatusCode, result);
         }

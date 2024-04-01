@@ -6,8 +6,8 @@ namespace OneTrak_v2.Services
     {
         public ReturnResult GetCompanyTypes();
         public ReturnResult GetCompaniesByType(string vCompanyType);
-        public ReturnResult GetLicenseTypes();
-        public ReturnResult GetConEduLicenses(string vState, int LicenesTypeID);
+        public ReturnResult GetLicenseTypes(string? vStateAbv = null);
+        public ReturnResult GetConEduLicenses(string? vState = null, string? LicenesType = null);
         public ReturnResult GetCompanyRequirements(string vWorkState, string? vResState = null);
         public ReturnResult GetDropdownListTypes();
         public ReturnResult GetDropdownByType(string vLkpField);

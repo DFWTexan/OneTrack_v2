@@ -1,5 +1,4 @@
-import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, Injectable, OnInit } from '@angular/core';
 import {
   AdminComService,
   AdminDataService,
@@ -14,7 +13,7 @@ import { CompanyRequirement } from '../../_Models';
   styleUrl: './company-requirements.component.css',
 })
 @Injectable()
-export class CompanyRequirementsComponent implements OnInit, OnDestroy {
+export class CompanyRequirementsComponent implements OnInit {
   loading: boolean = false;
   states: any[] = [];
   selectedWorkState: string = 'Select';
@@ -69,6 +68,4 @@ export class CompanyRequirementsComponent implements OnInit, OnDestroy {
         });
     }
   }
-
-  ngOnDestroy(): void {}
 }

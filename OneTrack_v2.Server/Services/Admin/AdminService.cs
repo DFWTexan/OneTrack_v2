@@ -88,15 +88,16 @@ namespace OneTrak_v2.Services
             return result;
         }
 
-        public ReturnResult GetLicenseTypes()
+        public ReturnResult GetLicenseTypes(string? vStateAbv = null)
         {
             ReturnResult result = new ReturnResult();
             try
             {
-                var resLicenses = (from l in _db.Licenses
-                                   join sp in _db.StateProvinces on l.StateProvinceAbv equals sp.StateProvinceAbv
-                                   group l by new { l.LicenseId, l.LicenseName } into g
-                                   select g.Key).AsNoTracking().ToList();
+                var query = from l in _db.Licenses
+                            where vStateAbv == null || l.StateProvinceAbv == vStateAbv
+                            select l.LicenseName;
+
+                var resLicenses = query.Distinct().AsNoTracking().ToList();
 
                 result.ObjData = resLicenses;
                 result.Success = true;
@@ -110,12 +111,47 @@ namespace OneTrak_v2.Services
             return result;
         }
 
-        public ReturnResult GetConEduLicenses(string vState, int LicenesTypeID)
+
+        public ReturnResult GetConEduLicenses(string? vStateAbv = null, string? vLicenseType = null)
         {
             ReturnResult result = new ReturnResult();
             try
             {
-                //result.ObjData = _db.ConEduLicenses.Where(x => x.State == vState && x.LicenseTypeID == LicenesTypeID).ToList();
+                var sql = @"SELECT 
+                                ER.RuleNumber, 
+                                ER.StateProvince, 
+                                ER.LicenseType, 
+                                ER.RequiredCreditHours, 
+                                ER.EducationStartDateID,
+                                ERC1.Description AS EducationStartDate,
+                                ER.EducationEndDateID, 
+                                ERC2.Description AS EducationEndDate,
+                                ER.ExceptionID, 
+                                ER.ExemptionID,
+                                ER.IsActive
+                            FROM dbo.EducationRule ER 
+                            LEFT OUTER JOIN dbo.EducationRuleCriteria ERC1 ON ERC1.EducationCriteriaID = ER.EducationStartDateID
+                                AND ERC1.UsageType = 'EducationStartDate'
+                                AND ERC1.IsActive = 1
+                            LEFT OUTER JOIN dbo.EducationRuleCriteria ERC2 ON ERC2.EducationCriteriaID = ER.EducationEndDateID
+                                AND ERC2.UsageType = 'EducationEndDate'
+                                AND ERC2.IsActive = 1
+                            WHERE (@StateProvince IS NULL OR ER.StateProvince = @StateProvince)
+                                AND (@LicenseType IS NULL OR ER.LicenseType LIKE '%' + @LicenseType + '%')
+                                AND ER.IsActive = 1 ";
+
+                var parameters = new[]
+                            {
+                                new SqlParameter("@StateProvince", vStateAbv ?? (object)DBNull.Value),
+                                new SqlParameter("@LicenseType", vLicenseType ?? (object)DBNull.Value)
+                            };
+
+                var queryEduRulesResults = _db.OputEducationRules
+                                            .FromSqlRaw(sql, parameters)
+                                            .AsNoTracking()
+                                            .ToList();
+
+                result.ObjData = queryEduRulesResults;
                 result.Success = true;
                 result.StatusCode = 200;
             }

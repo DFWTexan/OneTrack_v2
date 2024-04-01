@@ -7,5 +7,6 @@ export * from './agent/agentLicApplicationInfo';
 export * from './email/emailComTemplate';
 export * from './LicenseInfo/LicenseIncentiveInfo';
 export * from './ticklerMgmt/ticklerMgmt';
-export * from  './admin/company';
+export * from './admin/company';
 export * from './admin/companyRequirement'; 
+export * from './admin/educationRule';
