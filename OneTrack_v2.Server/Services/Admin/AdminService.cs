@@ -443,6 +443,7 @@ namespace OneTrak_v2.Services
                             CompanyId = c.CompanyId,
                             CompanyAbv = c.CompanyAbv,
                             CompanyType = c.CompanyType,
+                            CompanyName = c.CompanyName,
                             TIN = c.Tin.ToString(),
                             NAICNumber = c.Naicnumber.ToString(),
                             IsActive = cp.IsActive,

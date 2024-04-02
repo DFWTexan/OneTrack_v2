@@ -36,97 +36,24 @@
     </div>
     <div
       class="col-md-12 d-flex justify-content-center align-items-center mt-5"
-      *ngIf="selectedStateProvince !== 'Select' && licenseItems.length == 0"
+      *ngIf="
+        selectedStateProvince !== 'Select' &&
+        licenseItems.length == 0 &&
+        !loading
+      "
     >
       <h1>No Record(s) Found</h1>
     </div>
+    <div class="mt-5 mb-5 d-flex justify-content-center" *ngIf="loading">
+      <div class="spinner-border text-primary"></div>
+    </div>
     <div class="col">
-      <!-- <div
-        class="table"
-        *ngIf="selectedStateProvince !== 'Select' && licenseItems.length > 0"
-      >
-        <thead>
-          <tr class="sticky-top" style="background-color: gainsboro">
-            <th scope="col">LicenseID</th>
-            <th scope="col">License Name</th>
-            <th scope="col">License Abv</th>
-            <th scope="col">License State Abv</th>
-            <th scope="col">Line of Auth.</th>
-            <th scope="col">Sent to CICS</th>
-            <th scope="col">PLS Incentive 1 TMPay</th>
-            <th scope="col">PLS Incentive 1 MRPay</th>
-            <th scope="col">Incentive2 Plus TMPay</th>
-            <th scope="col">Incentive2 Plus MRPay</th>
-            <th scope="col">IsActive</th>
-            <th scope="col" class="text-center">ACTION</th>
-          </tr>
-        </thead>
-        <tbody class="bg-body">
-          <tr *ngFor="let license of licenseItems">
-            <td class="align-middle text-center">
-              {{ license.licenseId }}
-            </td>
-            <td class="align-middle">{{ license.licenseName }}</td>
-            <td class="align-middle text-nowrap">
-              {{ license.licenseAbv }}
-            </td>
-            <td class="align-middle text-center" style="width: max-content">
-              {{ license.stateProvinceAbv }}
-            </td>
-            <td class="align-middle text-center" style="width: max-content">
-              {{ license.lineOfAuthorityAbv }}
-            </td>
-            <td class="align-middle" style="width: max-content">
-              {{ license.agentStateTable }}
-            </td>
-            <td class="align-middle text-center" style="width: max-content">
-              {{ license.plsIncentive1Tmpay }}
-            </td>
-            <td class="align-middle text-center" style="width: max-content">
-              {{ license.plsIncentive1Mrpay }}
-            </td>
-            <td class="align-middle text-center" style="width: max-content">
-              {{ license.incentive2PlusTmpay }}
-            </td>
-            <td class="align-middle text-center" style="width: max-content">
-              {{ license.incentive2PlusMrpay }}
-            </td>
-            <td class="align-middle" style="width: max-content">
-              <div class="form-check d-flex justify-content-center">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  [checked]="license.isActive"
-                  disabled
-                />
-              </div>
-            </td>
-            <td class="align-middle" style="width: 10rem">
-              <div class="d-flex justify-content-between mb-3 me-4">
-                <button
-                  class="icon-edit-delete-button"
-                  type="button"
-                  (click)="
-                    adminDataService.storeExamItem('EDIT', license);
-                    modalService.open('modal-edit-exam')
-                  "
-                >
-                  <span class="material-symbols-outlined"> edit </span>
-                </button>
-                <button class="icon-edit-delete-button" type="button">
-                  <span class="material-symbols-outlined"> delete </span>
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </div> -->
       <mat-accordion
         *ngIf="selectedStateProvince !== 'Select' && licenseItems.length > 0"
       >
         <mat-expansion-panel *ngFor="let license of licenseItems">
           <mat-expansion-panel-header>
-            <mat-panel-title>
+            <mat-panel-title style="font-size: large; font-weight: 400">
               {{ license.licenseName }}
             </mat-panel-title>
             <mat-panel-description>
@@ -187,7 +114,10 @@
               </p>
             </div>
             <div class="col">
-              <div class="d-flex justify-content-end mb-3 me-4"  style="width: 15rem;">
+              <div
+                class="d-flex justify-content-end mb-3 me-4"
+                style="width: 15rem"
+              >
                 <button
                   class="icon-edit-delete-button me-5"
                   type="button"
@@ -205,6 +135,134 @@
             </div>
           </div>
           <mat-divider></mat-divider>
+          <div class="row mt-4">
+            <div class="row">
+              <div
+                class="col d-flex align-items-baseline"
+                style="font-size: larger; font-weight: 400"
+              >
+                Company(s)
+              </div>
+              <div class="col align-middle">
+                <button class="btn btn-success">Add New Company</button>
+              </div>
+            </div>
+            <div class="row mt-4">
+              <div class="col d-flex">
+                <div class="table" *ngIf="license.companyItems.length > 0">
+                  <thead>
+                    <tr class="sticky-top" style="background-color: gainsboro">
+                      <th scope="col">License CompanyId</th>
+                      <th scope="col">CompanyId</th>
+                      <th scope="col">Company Name</th>
+                      <th scope="col">Company Abv</th>
+                      <th scope="col">Company Type</th>
+                      <th scope="col">TIN</th>
+                      <th scope="col">NAIC Number</th>
+                      <th scope="col">isActive</th>
+                      <th scope="col" class="text-center">ACTION</th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-body">
+                    <tr *ngFor="let company of license.companyItems">
+                      <td class="align-middle">
+                        {{ company.licenseCompanyId }}
+                      </td>
+                      <td class="align-middle">{{ company.companyId }}</td>
+                      <td class="align-middle text-nowrap">
+                        {{ company.companyName }}
+                      </td>
+                      <td class="align-middle" style="width: max-content">
+                        {{ company.companyAbv }}
+                      </td>
+                      <td class="align-middle" style="width: max-content">
+                        {{ company.companyType }}
+                      </td>
+                      <td class="align-middle" style="width: max-content">
+                        {{ company.tin }}
+                      </td>
+                      <td class="align-middle" style="width: max-content">
+                        {{ company.naicNumber }}
+                      </td>
+                      <!-- <td class="align-middle" style="width: max-content">
+                        {{ company.isActive }}
+                      </td> -->
+                      <td class="align-middle" style="width: max-content">
+                        <div class="form-check d-flex justify-content-center">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            [checked]="company.isActive"
+                            disabled
+                          />
+                        </div>
+                      </td>
+                      <td class="align-middle" style="width: 10rem">
+                        <div class="d-flex justify-content-between mb-3 me-4">
+                          <button
+                            class="icon-edit-delete-button"
+                            type="button"
+                            (click)="
+                              adminDataService.storeExamItem('EDIT', company);
+                              modalService.open('modal-edit-exam')
+                            "
+                          >
+                            <span class="material-symbols-outlined">
+                              edit
+                            </span>
+                          </button>
+                          <button class="icon-edit-delete-button" type="button">
+                            <span class="material-symbols-outlined">
+                              delete
+                            </span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row mb-4">
+              <div
+                class="col align-middle"
+                style="font-size: larger; font-weight: 400"
+              >
+                Pre-Exam(s)
+              </div>
+              <div class="col align-middle">
+                <button class="btn btn-success">Add New Pre-Exam</button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row mb-4">
+              <div
+                class="col align-middle"
+                style="font-size: larger; font-weight: 400"
+              >
+                Pre-Education(s)
+              </div>
+              <div class="col align-middle">
+                <button class="btn btn-success">Add New Pre-Education</button>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="row mb-4">
+              <div
+                class="col align-middle"
+                style="font-size: larger; font-weight: 400"
+              >
+                Product(s)
+              </div>
+              <div class="col align-middle">
+                <button class="btn btn-success">Add New Product</button>
+              </div>
+            </div>
+          </div>
         </mat-expansion-panel>
       </mat-accordion>
     </div>

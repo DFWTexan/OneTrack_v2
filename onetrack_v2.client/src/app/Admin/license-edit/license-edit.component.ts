@@ -37,8 +37,10 @@ changeStateProvince(event: any) {
     //   this.adminDataService.citiesChanged.next(this.adminDataService.cities);
     // });
   } else {
+    this.loading = true;
     this.adminDataService.fetchLicenseItems(value).subscribe((response) => {
       this.licenseItems = response;
+      this.loading = false;
     });
   }
 }

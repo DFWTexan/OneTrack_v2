@@ -36,6 +36,7 @@
         public int CompanyId { get; set; }
         public string? CompanyAbv { get; set; }
         public string? CompanyType { get; set; }
+        public string? CompanyName { get; set; }
         public string? TIN { get; set; }
         public string? NAICNumber { get; set; }
         public bool? IsActive { get; set; }

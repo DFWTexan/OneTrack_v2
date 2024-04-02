@@ -13,4 +13,58 @@ export interface License {
   licIncentive3Tmpay: number;
   licIncentive3Mrpay: number;
   isActive: boolean;
+  companyItems: CompanyItem[];
+  preExamItems: PreExamItem[];
+  preEduItems: PreEduItem[];
+  productItems: ProductItem[];
+}
+
+export interface CompanyItem {
+  licenseCompanyId: number;
+  companyId: number;
+  companyAbv: string;
+  companyType: string;
+  companyName: string;
+  tin: string | null;
+  naicNumber: string | null;
+  isActive: boolean;
+  addressId: number;
+  address1: string | null;
+  address2: string | null;
+  city: string | null;
+  state: string;
+  zip: string | null;
+  phone: string | null;
+  fax: string | null;
+  country: string;
+}
+
+export interface PreExamItem {
+  ExamId: number;
+  ExamName: string | null;
+  StateProvinceAbv: string | null;
+  CompanyName: string | null;
+  DeliveryMethod: string | null;
+  LicenseExamID: number;
+  IsActive: boolean | null;
+}
+
+export interface PreEduItem {
+  LicensePreEducationID: number;
+  PreEducationID: number;
+  EducationName: string | null;
+  StateProvinceAbv: string | null;
+  CreditHours: number;
+  CompanyID: number;
+  CompanyName: string | null;
+  DeliveryMethod: string | null;
+  IsActive: boolean | null;
+}
+
+export interface ProductItem {
+  LicenseProductID: number;
+  ProductID: number;
+  ProductName: string | null;
+  ProductAbv: string | null;
+  IsActive: boolean | null;
 }
