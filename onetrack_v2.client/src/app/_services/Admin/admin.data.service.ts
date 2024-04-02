@@ -4,7 +4,14 @@ import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { environment } from '../../environments/environment';
 import { AdminComService } from './admin.com.service';
-import { Company, CompanyRequirement, EducationRule, Exam, JobTitle } from '../../_Models';
+import {
+  Company,
+  CompanyRequirement,
+  EducationRule,
+  Exam,
+  JobTitle,
+  License,
+} from '../../_Models';
 import { ModalService } from '../common/modal.service';
 
 @Injectable({
@@ -47,6 +54,9 @@ export class AdminDataService {
   licenseIncentivesChanged = new Subject<any[]>();
   jobTitles: JobTitle[] = [];
   jobTitlesChanged = new Subject<JobTitle[]>();
+  // LICENSE EDIT
+  licenseItems: License[] = [];
+  licenseItemsChanged = new Subject<License[]>();
 
   constructor(
     private http: HttpClient,
@@ -62,7 +72,7 @@ export class AdminDataService {
         statusCode: number;
         objData: [];
         errMessage: string;
-      }>(this.apiUrl+ 'GetCompanyTypes')
+      }>(this.apiUrl + 'GetCompanyTypes')
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -125,7 +135,7 @@ export class AdminDataService {
 
   // CONTINUE EDUCATION
   fetchLicenseTypes() {
-   return this.http
+    return this.http
       .get<{
         success: boolean;
         statusCode: number;
@@ -283,6 +293,28 @@ export class AdminDataService {
           if (response.success && response.statusCode === 200) {
             this.jobTitles = response.objData;
             this.jobTitlesChanged.next(this.jobTitles);
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  //  LINCENSE EDIT
+  fetchLicenseItems(stateProvince: string) {
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: License[];
+        errMessage: string;
+      }>(this.apiUrl + 'GetLicenseByStateProv/' + stateProvince)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            this.licenseItems = response.objData;
+            this.licenseItemsChanged.next(this.licenseItems);
             return response.objData;
           } else {
             throw new Error(response.errMessage || 'Unknown error');

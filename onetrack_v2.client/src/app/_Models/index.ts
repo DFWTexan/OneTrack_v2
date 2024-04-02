@@ -13,3 +13,4 @@ export * from './admin/educationRule';
 export * from './admin/dropdownItem';
 export * from  './admin/exam';
 export * from './admin/jobTitle';
+export * from './admin/license';

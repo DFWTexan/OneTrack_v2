@@ -7,4 +7,5 @@ export interface JobTitle {
   isActive: boolean;
   licenseLevel: string;
   licenseIncentive: string;
+  isDirty: boolean;
 }

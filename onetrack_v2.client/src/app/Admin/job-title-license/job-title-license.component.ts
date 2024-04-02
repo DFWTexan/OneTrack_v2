@@ -5,6 +5,7 @@ import {
   AdminDataService,
   ModalService,
 } from '../../_services';
+import { JobTitle } from '../../_Models';
 
 @Component({
   selector: 'app-job-title-license',
@@ -17,6 +18,7 @@ export class JobTitleLicenseComponent {
   licenseLevels: any[] = [];
   licenseIncentives: any[] = [];
   jobTitles: any[] = [];
+  selectChanged = false;
 
   constructor(
     public adminDataService: AdminDataService,
@@ -38,11 +40,7 @@ export class JobTitleLicenseComponent {
     });
   }
 
-  saveRow(row: any) {
-    this.loading = true;
-    // this.adminDataService.saveJobTitle(row).subscribe((response) => {
-    //   this.loading = false;
-    //   this.jobTitles = response;
-    // });
+  setDirty(job: JobTitle) {
+    job.isDirty = true;
   }
 }

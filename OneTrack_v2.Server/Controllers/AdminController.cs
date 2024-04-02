@@ -108,10 +108,10 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetLicenseEditList()
+        [HttpGet("{stateProv}")]
+        public async Task<IActionResult> GetLicenseByStateProv(string stateProv)
         {
-            var result = await Task.Run(() => _adminService.GetLicenseEditList());
+            var result = await Task.Run(() => _adminService.GetLicenseByStateProv(stateProv));
 
             return StatusCode(result.StatusCode, result);
         }

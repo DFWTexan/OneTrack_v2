@@ -1,1 +1,212 @@
-<p>license-edit works!</p>
+<div class="container app-component-container">
+  <div class="row mt-5 mb-3">
+    <div class="col">
+      <label for="companyType">Exam State/Province:</label><br />
+      <select
+        class="form-select select-size-x-small"
+        type="text"
+        id="companyType"
+        (change)="changeStateProvince($event)"
+      >
+        <option *ngFor="let state of stateProvinces" [value]="state">
+          {{ state }}
+        </option>
+      </select>
+    </div>
+    <div class="col d-flex justify-content-center align-items-end">
+      <button
+        class="btn btn-success"
+        type="button"
+        (click)="
+          adminDataService.storeExamItem('INSERT', null);
+          modalService.open('modal-edit-exam')
+        "
+      >
+        Create New License
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row mt-4">
+    <div
+      class="col-md-12 d-flex justify-content-center align-items-center mt-5"
+      *ngIf="selectedStateProvince == 'Select'"
+    >
+      <h1>No State Province Selected</h1>
+    </div>
+    <div
+      class="col-md-12 d-flex justify-content-center align-items-center mt-5"
+      *ngIf="selectedStateProvince !== 'Select' && licenseItems.length == 0"
+    >
+      <h1>No Record(s) Found</h1>
+    </div>
+    <div class="col">
+      <!-- <div
+        class="table"
+        *ngIf="selectedStateProvince !== 'Select' && licenseItems.length > 0"
+      >
+        <thead>
+          <tr class="sticky-top" style="background-color: gainsboro">
+            <th scope="col">LicenseID</th>
+            <th scope="col">License Name</th>
+            <th scope="col">License Abv</th>
+            <th scope="col">License State Abv</th>
+            <th scope="col">Line of Auth.</th>
+            <th scope="col">Sent to CICS</th>
+            <th scope="col">PLS Incentive 1 TMPay</th>
+            <th scope="col">PLS Incentive 1 MRPay</th>
+            <th scope="col">Incentive2 Plus TMPay</th>
+            <th scope="col">Incentive2 Plus MRPay</th>
+            <th scope="col">IsActive</th>
+            <th scope="col" class="text-center">ACTION</th>
+          </tr>
+        </thead>
+        <tbody class="bg-body">
+          <tr *ngFor="let license of licenseItems">
+            <td class="align-middle text-center">
+              {{ license.licenseId }}
+            </td>
+            <td class="align-middle">{{ license.licenseName }}</td>
+            <td class="align-middle text-nowrap">
+              {{ license.licenseAbv }}
+            </td>
+            <td class="align-middle text-center" style="width: max-content">
+              {{ license.stateProvinceAbv }}
+            </td>
+            <td class="align-middle text-center" style="width: max-content">
+              {{ license.lineOfAuthorityAbv }}
+            </td>
+            <td class="align-middle" style="width: max-content">
+              {{ license.agentStateTable }}
+            </td>
+            <td class="align-middle text-center" style="width: max-content">
+              {{ license.plsIncentive1Tmpay }}
+            </td>
+            <td class="align-middle text-center" style="width: max-content">
+              {{ license.plsIncentive1Mrpay }}
+            </td>
+            <td class="align-middle text-center" style="width: max-content">
+              {{ license.incentive2PlusTmpay }}
+            </td>
+            <td class="align-middle text-center" style="width: max-content">
+              {{ license.incentive2PlusMrpay }}
+            </td>
+            <td class="align-middle" style="width: max-content">
+              <div class="form-check d-flex justify-content-center">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [checked]="license.isActive"
+                  disabled
+                />
+              </div>
+            </td>
+            <td class="align-middle" style="width: 10rem">
+              <div class="d-flex justify-content-between mb-3 me-4">
+                <button
+                  class="icon-edit-delete-button"
+                  type="button"
+                  (click)="
+                    adminDataService.storeExamItem('EDIT', license);
+                    modalService.open('modal-edit-exam')
+                  "
+                >
+                  <span class="material-symbols-outlined"> edit </span>
+                </button>
+                <button class="icon-edit-delete-button" type="button">
+                  <span class="material-symbols-outlined"> delete </span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </div> -->
+      <mat-accordion
+        *ngIf="selectedStateProvince !== 'Select' && licenseItems.length > 0"
+      >
+        <mat-expansion-panel *ngFor="let license of licenseItems">
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              {{ license.licenseName }}
+            </mat-panel-title>
+            <mat-panel-description>
+              Active: {{ license.isActive ? "Yes" : "No" }}
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div class="row">
+            <div class="col">
+              <p>License Abv: {{ license.licenseAbv }}</p>
+              <p>
+                License State Abv:
+                <span style="font-size: larger; font-weight: 500">{{
+                  license.stateProvinceAbv
+                }}</span>
+              </p>
+            </div>
+            <div class="col">
+              <p>
+                Sent to CICS:
+                <span style="font-size: larger; font-weight: 500">{{
+                  license.agentStateTable ? "Yes" : "No"
+                }}</span>
+              </p>
+              <p>
+                Line of Auth.:
+                <span style="font-size: larger; font-weight: 500">{{
+                  license.lineOfAuthorityAbv
+                }}</span>
+              </p>
+              <!-- <p>License ID: <span style="font-size: larger; font-weight: 500">{{ license.licenseId }}</span></p> -->
+            </div>
+            <div class="col">
+              <p>
+                Incentive2 Plus TMPay:
+                <span style="font-size: larger; font-weight: 500">{{
+                  license.incentive2PlusTmpay | currency
+                }}</span>
+              </p>
+              <p>
+                Incentive2 Plus MRPay:
+                <span style="font-size: larger; font-weight: 500">{{
+                  license.incentive2PlusMrpay | currency
+                }}</span>
+              </p>
+            </div>
+            <div class="col">
+              <p>
+                PLS Incentive 1 TMPay:
+                <span style="font-size: larger; font-weight: 500">{{
+                  license.plsIncentive1Tmpay | currency
+                }}</span>
+              </p>
+              <p>
+                PLS Incentive 1 MRPay:
+                <span style="font-size: larger; font-weight: 500">{{
+                  license.plsIncentive1Mrpay | currency
+                }}</span>
+              </p>
+            </div>
+            <div class="col">
+              <div class="d-flex justify-content-end mb-3 me-4"  style="width: 15rem;">
+                <button
+                  class="icon-edit-delete-button me-5"
+                  type="button"
+                  (click)="
+                    adminDataService.storeExamItem('EDIT', license);
+                    modalService.open('modal-edit-exam')
+                  "
+                >
+                  <span class="material-symbols-outlined"> edit </span>
+                </button>
+                <button class="icon-edit-delete-button" type="button">
+                  <span class="material-symbols-outlined"> delete </span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+</div>

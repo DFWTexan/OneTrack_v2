@@ -1,107 +1,109 @@
 <div class="container app-component-container">
-    <div class="row mt-5 mb-3">
-        <div class="col">
-          <label for="companyType">Exam State:</label><br />
-          <select
-            class="form-select select-size-x-small"
-            type="text"
-            id="companyType"
-            (change)="changeStateProvince($event)"
-          >
-            <option *ngFor="let state of stateProvinces" [value]="state">
-              {{ state }}
-            </option>
-          </select>
-        </div>
-        <div class="col d-flex justify-content-center align-items-end">
-          <button
-            class="btn btn-success"
-            type="button"
-            (click)="
-              adminDataService.storeExamItem('INSERT', null);
-              modalService.open('modal-edit-exam')
-            "
-          >
-            Create New Exam
-          </button>
-        </div>
+  <div class="row mt-5 mb-3">
+    <div class="col">
+      <label for="companyType">Exam State/Province:</label><br />
+      <select
+        class="form-select select-size-x-small"
+        type="text"
+        id="companyType"
+        (change)="changeStateProvince($event)"
+      >
+        <option *ngFor="let state of stateProvinces" [value]="state">
+          {{ state }}
+        </option>
+      </select>
+    </div>
+    <div class="col d-flex justify-content-center align-items-end">
+      <button
+        class="btn btn-success"
+        type="button"
+        (click)="
+          adminDataService.storeExamItem('INSERT', null);
+          modalService.open('modal-edit-exam')
+        "
+      >
+        Create New Exam
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row mt-4">
+    <div
+      class="col-md-12 d-flex justify-content-center align-items-center mt-5"
+      *ngIf="selectedStateProvince == 'Select'"
+    >
+      <h1>No State Province Selected</h1>
+    </div>
+    <div
+      class="col-md-12 d-flex justify-content-center align-items-center mt-5"
+      *ngIf="selectedStateProvince !== 'Select' && examItems.length == 0"
+    >
+      <h1>No Record(s) Found</h1>
+    </div>
+    <div class="col">
+      <div class="table" *ngIf="examItems.length > 0">
+        <thead>
+          <tr class="sticky-top" style="background-color: gainsboro">
+            <th scope="col">ExamID</th>
+            <th scope="col">Exam Name</th>
+            <th scope="col">Delivery Method</th>
+            <th scope="col">Exam Provider</th>
+            <th scope="col" class="text-center">ACTION</th>
+          </tr>
+        </thead>
+        <tbody class="bg-body">
+          <tr *ngFor="let exam of examItems">
+            <td class="align-middle">
+              {{ exam.examId }}
+            </td>
+            <td class="align-middle">{{ exam.examName }}</td>
+            <td class="align-middle text-nowrap">
+              {{ exam.deliveryMethod }}
+            </td>
+            <td class="align-middle" style="width: max-content">
+              {{ exam.companyName }}
+            </td>
+            <td class="align-middle" style="width: 10rem">
+              <div class="d-flex justify-content-between mb-3 me-4">
+                <button
+                  class="icon-edit-delete-button"
+                  type="button"
+                  (click)="
+                    adminDataService.storeExamItem('EDIT', exam);
+                    modalService.open('modal-edit-exam')
+                  "
+                >
+                  <span class="material-symbols-outlined"> edit </span>
+                </button>
+                <button class="icon-edit-delete-button" type="button">
+                  <span class="material-symbols-outlined"> delete </span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
       </div>
-      <mat-divider></mat-divider>
-      <div class="row mt-4">
-        <div
-          class="col-md-12 d-flex justify-content-center align-items-center mt-5"
-          *ngIf="selectedStateProvince == 'Select'"
-        >
-          <h1>No State Province Selected...</h1>
-        </div>
-        <div
-          class="col-md-12 d-flex justify-content-center align-items-center mt-5"
-          *ngIf="selectedStateProvince !== 'Select' && examItems.length == 0"
-        >
-          <h1>No Record(s) Found</h1>
-        </div>
-        <div class="col">
-          <div class="table" *ngIf="examItems.length > 0">
-            <thead>
-              <tr class="sticky-top" style="background-color: gainsboro">
-                <th scope="col">ExamID</th>
-                <th scope="col">Exam Name</th>
-                <th scope="col">Delivery Method</th>
-                <th scope="col">Exam Provider</th>
-                <th scope="col" class="text-center">ACTION</th>
-              </tr>
-            </thead>
-            <tbody class="bg-body">
-              <tr *ngFor="let exam of examItems">
-                <td class="align-middle">
-                  {{ exam.examId }}
-                </td>
-                <td class="align-middle">{{ exam.examName }}</td>
-                <td class="align-middle text-nowrap">
-                  {{ exam.deliveryMethod }}
-                </td>
-                <td class="align-middle" style="width: max-content">
-                  {{ exam.companyName }}
-                </td>
-                <td class="align-middle" style="width: 10rem">
-                  <div class="d-flex justify-content-between mb-3 me-4">
-                    <button
-                      class="icon-edit-delete-button"
-                      type="button"
-                      (click)="
-                        adminDataService.storeExamItem('EDIT', exam);
-                        modalService.open('modal-edit-exam')
-                      "
-                    >
-                      <span class="material-symbols-outlined"> edit </span>
-                    </button>
-                    <button class="icon-edit-delete-button" type="button">
-                      <span class="material-symbols-outlined"> delete </span>
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            </tbody>
-          </div>
-        </div>
-      </div>
+    </div>
+  </div>
 </div>
 
 <!-- Modal: EDIT-EXAAM -->
 <modal id="modal-edit-exam">
-    <div class="modal-header">
-      <h1 class="modal-title">{{ adminComService.modes.examItem.mode }} - Exam</h1>
-      <!-- <button
+  <div class="modal-header">
+    <h1 class="modal-title">
+      {{ adminComService.modes.examItem.mode }} - Exam
+    </h1>
+    <!-- <button
                 type="button"
                 class="btn-close"
                 (click)="modalService.close()"
               ></button> -->
-    </div>
-    <div class="modal-body">
+  </div>
+  <div class="modal-body">
+    <div>
       <div>
-        <div>
-          <app-edit-exam></app-edit-exam>
-        </div>
+        <app-edit-exam></app-edit-exam>
       </div>
     </div>
-  </modal>
+  </div>
+</modal>

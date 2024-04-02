@@ -365,7 +365,8 @@ namespace OneTrak_v2.Services
                                          jt.Reviewed,
                                          jt.IsActive,
                                          jt.LicenseLevel,
-                                         jt.LicenseIncentive
+                                         jt.LicenseIncentive,
+                                         isDirty = false
                                      };
 
                 result.ObjData = resultJobTitles;
@@ -380,12 +381,34 @@ namespace OneTrak_v2.Services
             return result;
         }
 
-        public ReturnResult GetLicenseEditList()
+        public ReturnResult GetLicenseByStateProv(string vStateProv)
         {
             ReturnResult result = new ReturnResult();
             try
             {
-                //result.ObjData = _db.LicenseEditLists.ToList();
+                var resultLicenses = from l in _db.Licenses
+                                     join a in _db.LineOfAuthorities on l.LineOfAuthorityId equals a.LineOfAuthorityId
+                                     where string.IsNullOrEmpty(vStateProv) || l.StateProvinceAbv == vStateProv
+                                     orderby l.LicenseName
+                                     select new
+                                     {
+                                         l.LicenseId,
+                                         l.LicenseName,
+                                         l.LicenseAbv,
+                                         l.StateProvinceAbv,
+                                         a.LineOfAuthorityAbv,
+                                         a.LineOfAuthorityId,
+                                         a.AgentStateTable,
+                                         l.PlsIncentive1Tmpay,
+                                         l.PlsIncentive1Mrpay,
+                                         l.Incentive2PlusTmpay,
+                                         l.Incentive2PlusMrpay,
+                                         l.LicIncentive3Tmpay,
+                                         l.LicIncentive3Mrpay,
+                                         l.IsActive
+                                     };
+
+                result.ObjData = resultLicenses;
                 result.Success = true;
                 result.StatusCode = 200;
             }
