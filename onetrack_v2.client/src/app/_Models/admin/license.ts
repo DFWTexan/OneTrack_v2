@@ -40,13 +40,14 @@ export interface CompanyItem {
 }
 
 export interface PreExamItem {
-  ExamId: number;
-  ExamName: string | null;
-  StateProvinceAbv: string | null;
-  CompanyName: string | null;
-  DeliveryMethod: string | null;
-  LicenseExamID: number;
-  IsActive: boolean | null;
+  examId: number;
+  examName: string | null;
+  stateProvinceAbv: string | null;
+  companyName: string | null;
+  deliveryMethod: string | null;
+  licenseExamID: number;
+  examProviderID: number;
+  isActive: boolean | null;
 }
 
 export interface PreEduItem {

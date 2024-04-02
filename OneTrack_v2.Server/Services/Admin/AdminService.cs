@@ -476,6 +476,7 @@ namespace OneTrak_v2.Services
                             CompanyName = p.CompanyName,
                             DeliveryMethod = e.DeliveryMethod,
                             LicenseExamID = le.LicenseExamId,
+                            ExamProviderID = e.ExamProviderId.HasValue ? (int)e.ExamProviderId : 0,
                             IsActive = le.IsActive
                         };
 

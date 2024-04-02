@@ -59,6 +59,7 @@
         public string? CompanyName { get; set; }
         public string? DeliveryMethod { get; set; }
         public int LicenseExamID { get; set; }
+        public int ExamProviderID { get; set; }
         public bool? IsActive { get; set; }
     }
 
