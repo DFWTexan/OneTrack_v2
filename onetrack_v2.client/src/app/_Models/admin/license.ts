@@ -15,7 +15,7 @@ export interface License {
   isActive: boolean;
   companyItems: CompanyItem[];
   preExamItems: PreExamItem[];
-  preEduItems: PreEduItem[];
+  preEducationItems: PreEduItem[];
   productItems: ProductItem[];
 }
 

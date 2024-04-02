@@ -322,77 +322,70 @@
               </div>
             </div>
             <div class="row mt-2">
-                <div class="col d-flex">
-                  <div class="table" *ngIf="license.preExamItems.length > 0">
-                    <thead>
-                      <tr class="sticky-top" style="background-color: gainsboro">
-                        <th scope="col">Lic ExamID</th>
-                        <th scope="col">ExamID</th>
-                        <th scope="col">ExamName</th>
-                        <th scope="col">Exam Provider ID</th>
-                        <th scope="col">Exam Provider</th>
-                        <th scope="col">Delivery Method</th>
-                        <th scope="col">isActive</th>
-                        <th scope="col" class="text-center">ACTION</th>
-                      </tr>
-                    </thead>
-                    <tbody class="bg-body">
-                      <tr *ngFor="let preExam of license.preExamItems">
-                        <td class="align-middle">
-                          {{ preExam.licenseExamID }}
-                        </td>
-                        <td class="align-middle">{{ preExam.examId }}</td>
-                        <td class="align-middle text-nowrap">
-                          {{ preExam.examName }}
-                        </td>
-                        <td class="align-middle" style="width: max-content">
-                          {{ preExam.examProviderID }}
-                        </td>
-                        <td class="align-middle" style="width: max-content">
-                          {{ preExam.companyName }}
-                        </td>
-                        <td class="align-middle" style="width: max-content">
-                          {{ preExam.deliveryMethod }}
-                        </td>
-                        <!-- <td class="align-middle" style="width: max-content">
-                            {{ company.isActive }}
-                          </td> -->
-                        <td class="align-middle" style="width: max-content">
-                          <div class="form-check d-flex justify-content-center">
-                            <input
-                              class="form-check-input"
-                              type="checkbox"
-                              [checked]="preExam.isActive"
-                              disabled
-                            />
-                          </div>
-                        </td>
-                        <td class="align-middle" style="width: 10rem">
-                          <div class="d-flex justify-content-between mb-3 me-4">
-                            <button
-                              class="icon-edit-delete-button"
-                              type="button"
-                              (click)="
-                                adminDataService.storeExamItem('EDIT', preExam);
-                                modalService.open('modal-edit-exam')
-                              "
-                            >
-                              <span class="material-symbols-outlined">
-                                edit
-                              </span>
-                            </button>
-                            <button class="icon-edit-delete-button" type="button">
-                              <span class="material-symbols-outlined">
-                                delete
-                              </span>
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </div>
+              <div class="col">
+                <div class="table" *ngIf="license.preEducationItems.length > 0">
+                  <thead>
+                    <tr style="background-color: gainsboro">
+                      <th scope="col">Lic PreEd ID</th>
+                      <th scope="col">PreEducation ID</th>
+                      <th scope="col">Education Name</th>
+                      <th scope="col">PreEd Provider</th>
+                      <th scope="col">Delivery Method</th>
+                      <th scope="col">isActive</th>
+                      <th scope="col" class="text-center">ACTION</th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-body">
+                    <tr *ngFor="let preEdu of license.preEducationItems">
+                      <td class="align-middle">
+                        {{ preEdu.licensePreEducationID }}
+                      </td>
+                      <td class="align-middle">{{ preEdu.preEducationID }}</td>
+                      <td class="align-middle text-nowrap">
+                        {{ preEdu.educationName }}
+                      </td>
+                      <td class="align-middle" style="width: max-content">
+                        {{ preEdu.companyName }}
+                      </td>
+                      <td class="align-middle" style="width: max-content">
+                        {{ preEdu.deliveryMethod }}
+                      </td>
+                      <td class="align-middle" style="width: max-content">
+                        <div class="form-check d-flex justify-content-center">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            [checked]="preEdu.isActive"
+                            disabled
+                          />
+                        </div>
+                      </td>
+                      <td class="align-middle" style="width: 10rem">
+                        <div class="d-flex justify-content-between mb-3 me-4">
+                          <button
+                            class="icon-edit-delete-button"
+                            type="button"
+                            (click)="
+                              adminDataService.storeExamItem('EDIT', preEdu);
+                              modalService.open('modal-edit-exam')
+                            "
+                          >
+                            <span class="material-symbols-outlined">
+                              edit
+                            </span>
+                          </button>
+                          <button class="icon-edit-delete-button" type="button">
+                            <span class="material-symbols-outlined">
+                              delete
+                            </span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
                 </div>
               </div>
+            </div>
           </div>
           <div class="row">
             <div class="row">
@@ -406,7 +399,6 @@
                 <button class="btn btn-success">Add New Product</button>
               </div>
             </div>
-            
           </div>
         </mat-expansion-panel>
       </mat-accordion>
