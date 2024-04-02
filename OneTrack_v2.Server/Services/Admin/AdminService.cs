@@ -3,6 +3,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using OneTrack_v2.DbData;
 using OneTrack_v2.Services;
+using OneTrak_v2.DataModel;
 
 namespace OneTrak_v2.Services
 {
@@ -386,29 +387,39 @@ namespace OneTrak_v2.Services
             ReturnResult result = new ReturnResult();
             try
             {
-                var resultLicenses = from l in _db.Licenses
+                var query = from l in _db.Licenses
                                      join a in _db.LineOfAuthorities on l.LineOfAuthorityId equals a.LineOfAuthorityId
                                      where string.IsNullOrEmpty(vStateProv) || l.StateProvinceAbv == vStateProv
                                      orderby l.LicenseName
-                                     select new
+                                     select new OputLicenseInfo
                                      {
-                                         l.LicenseId,
-                                         l.LicenseName,
-                                         l.LicenseAbv,
-                                         l.StateProvinceAbv,
-                                         a.LineOfAuthorityAbv,
-                                         a.LineOfAuthorityId,
-                                         a.AgentStateTable,
-                                         l.PlsIncentive1Tmpay,
-                                         l.PlsIncentive1Mrpay,
-                                         l.Incentive2PlusTmpay,
-                                         l.Incentive2PlusMrpay,
-                                         l.LicIncentive3Tmpay,
-                                         l.LicIncentive3Mrpay,
-                                         l.IsActive
+                                         LicenseId = l.LicenseId,
+                                         LicenseName = l.LicenseName,
+                                         LicenseAbv = l.LicenseAbv,
+                                         StateProvinceAbv = l.StateProvinceAbv,
+                                         LineOfAuthorityAbv = a.LineOfAuthorityAbv,
+                                         LineOfAuthorityId = a.LineOfAuthorityId,
+                                         AgentStateTable = a.AgentStateTable,
+                                         PlsIncentive1Tmpay = l.PlsIncentive1Tmpay,
+                                         PlsIncentive1Mrpay = l.PlsIncentive1Mrpay,
+                                         Incentive2PlusTmpay = l.Incentive2PlusTmpay,
+                                         Incentive2PlusMrpay = l.Incentive2PlusMrpay,
+                                         LicIncentive3Tmpay = l.LicIncentive3Tmpay,
+                                         LicIncentive3Mrpay = l.LicIncentive3Mrpay,
+                                         IsActive = l.IsActive,
                                      };
 
-                result.ObjData = resultLicenses;
+                var licenseInfo = query.AsNoTracking().ToList();
+
+                foreach (var item in licenseInfo)
+                {
+                    item.CompanyItems = GetLicenseCompanyItems(item.LicenseId);
+                    item.PreExamItems = GetLicensePreExamItems(item.LicenseId);
+                    item.PreEducationItems = GetLicensePreEduItems(item.LicenseId);
+                    item.ProductItems = GetLicenseProductItems(item.LicenseId);
+                }
+
+                result.ObjData = licenseInfo;
                 result.Success = true;
                 result.StatusCode = 200;
             }
@@ -419,7 +430,96 @@ namespace OneTrak_v2.Services
             }
             return result;
         }
+        private List<LicenseCompanyItem> GetLicenseCompanyItems(int vLicenseID)
+        {
+            var query = from cp in _db.LicenseCompanies
+                        join c in _db.Companies on cp.CompanyId equals c.CompanyId
+                        join a in _db.Addresses on c.AddressId equals a.AddressId
+                        where cp.LicenseId == vLicenseID
+                        orderby c.CompanyName
+                        select new LicenseCompanyItem
+                        {
+                            LicenseCompanyId = cp.LicenseCompanyId,
+                            CompanyId = c.CompanyId,
+                            CompanyAbv = c.CompanyAbv,
+                            CompanyType = c.CompanyType,
+                            TIN = c.Tin.ToString(),
+                            NAICNumber = c.Naicnumber.ToString(),
+                            IsActive = cp.IsActive,
+                            AddressId = a.AddressId,
+                            Address1 = a.Address1,
+                            Address2 = a.Address2,
+                            City = a.City,
+                            State = a.State,
+                            Zip = a.Zip,
+                            Phone = a.Phone,
+                            Fax = a.Fax,
+                            Country = a.Country
+                        };
 
+            return query.ToList();
+        }
+        private List<LicensePreExamItem> GetLicensePreExamItems(int vLicenseID)
+        {
+            var query = from le in _db.LicenseExams
+                        join e in _db.Exams on le.ExamId equals e.ExamId
+                        join c in _db.Companies on e.ExamProviderId equals c.CompanyId into ps
+                        from p in ps.DefaultIfEmpty()
+                        where le.LicenseId == vLicenseID
+                        orderby e.ExamName
+                        select new LicensePreExamItem
+                        {
+                            ExamId = e.ExamId,
+                            ExamName = e.ExamName,
+                            StateProvinceAbv = e.StateProvinceAbv,
+                            CompanyName = p.CompanyName,
+                            DeliveryMethod = e.DeliveryMethod,
+                            LicenseExamID = le.LicenseExamId,
+                            IsActive = le.IsActive
+                        };
+
+            return query.ToList();
+        }
+        private List<LicensePreEducationItem> GetLicensePreEduItems(int vLicenseID)
+        {
+            var query = from le in _db.LicensePreEducations
+                        join e in _db.PreEducations on le.PreEducationId equals e.PreEducationId
+                        join c in _db.Companies on e.EducationProviderId equals c.CompanyId into ps
+                        from p in ps.DefaultIfEmpty()
+                        where le.LicenseId == vLicenseID
+                        orderby e.EducationName
+                        select new LicensePreEducationItem
+                        {
+                            LicensePreEducationID = le.LicensePreEducationId,
+                            PreEducationID = e.PreEducationId,
+                            EducationName = e.EducationName,
+                            StateProvinceAbv = e.StateProvinceAbv,
+                            CreditHours = (short)(e.CreditHours.HasValue ? (double)e.CreditHours.Value : 0.00),
+                            CompanyID = p.CompanyId,
+                            CompanyName = p.CompanyName,
+                            DeliveryMethod = e.DeliveryMethod,
+                            IsActive = le.IsActive
+                        };
+
+            return query.ToList();
+        }
+        private List<LicenseProductItem> GetLicenseProductItems(int vLicenseID)
+        {
+            var query = from le in _db.LicenseProducts
+                        join e in _db.Products on le.ProductId equals e.ProductId
+                        where le.LicenseId == vLicenseID
+                        orderby e.ProductName
+                        select new LicenseProductItem
+                        {
+                            LicenseProductID = le.LicenseProductId,
+                            ProductID = e.ProductId,
+                            ProductName = e.ProductName,
+                            ProductAbv = e.ProductAbv,
+                            IsActive = le.IsActive
+                        };
+
+            return query.ToList();
+        }
         public ReturnResult GetLicenseEditByID(int vLicenseID)
         {
             ReturnResult result = new ReturnResult();
