@@ -53,7 +53,7 @@
       >
         <mat-expansion-panel *ngFor="let license of licenseItems">
           <mat-expansion-panel-header>
-            <mat-panel-title style="font-size: large; font-weight: 400">
+            <mat-panel-title style="font-size: large; font-weight: 500">
               {{ license.licenseName }}
             </mat-panel-title>
             <mat-panel-description>
@@ -147,7 +147,7 @@
                 <button class="btn btn-success">Add New Company</button>
               </div>
             </div>
-            <div class="row mt-4">
+            <div class="row mt-2">
               <div class="col d-flex">
                 <div class="table" *ngIf="license.companyItems.length > 0">
                   <thead>
@@ -225,7 +225,7 @@
             </div>
           </div>
           <div class="row">
-            <div class="row mb-4">
+            <div class="row">
               <div
                 class="col align-middle"
                 style="font-size: larger; font-weight: 400"
@@ -236,7 +236,92 @@
                 <button class="btn btn-success">Add New Pre-Exam</button>
               </div>
             </div>
+            <div class="row mt-2">
+              <div class="col d-flex">
+                <div class="table" *ngIf="license.preExamItems.length > 0">
+                  <thead>
+                    <tr class="sticky-top" style="background-color: gainsboro">
+                      <th scope="col">Lic ExamID</th>
+                      <th scope="col">ExamID</th>
+                      <th scope="col">ExamName</th>
+                      <th scope="col">Exam Provider ID</th>
+                      <th scope="col">Exam Provider</th>
+                      <th scope="col">Delivery Method</th>
+                      <th scope="col">isActive</th>
+                      <th scope="col" class="text-center">ACTION</th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-body">
+                    <tr *ngFor="let preExam of license.preExamItems">
+                      <td class="align-middle">
+                        {{ preExam.licenseExamID }}
+                      </td>
+                      <td class="align-middle">{{ preExam.examId }}</td>
+                      <td class="align-middle text-nowrap">
+                        {{ preExam.examName }}
+                      </td>
+                      <td class="align-middle" style="width: max-content">
+                        {{ preExam.examProviderID }}
+                      </td>
+                      <td class="align-middle" style="width: max-content">
+                        {{ preExam.companyName }}
+                      </td>
+                      <td class="align-middle" style="width: max-content">
+                        {{ preExam.deliveryMethod }}
+                      </td>
+                      <!-- <td class="align-middle" style="width: max-content">
+                          {{ company.isActive }}
+                        </td> -->
+                      <td class="align-middle" style="width: max-content">
+                        <div class="form-check d-flex justify-content-center">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            [checked]="preExam.isActive"
+                            disabled
+                          />
+                        </div>
+                      </td>
+                      <td class="align-middle" style="width: 10rem">
+                        <div class="d-flex justify-content-between mb-3 me-4">
+                          <button
+                            class="icon-edit-delete-button"
+                            type="button"
+                            (click)="
+                              adminDataService.storeExamItem('EDIT', preExam);
+                              modalService.open('modal-edit-exam')
+                            "
+                          >
+                            <span class="material-symbols-outlined">
+                              edit
+                            </span>
+                          </button>
+                          <button class="icon-edit-delete-button" type="button">
+                            <span class="material-symbols-outlined">
+                              delete
+                            </span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
             <div class="row">
+              <div
+                class="col align-middle"
+                style="font-size: larger; font-weight: 400"
+              >
+                Pre-Education(s)
+              </div>
+              <div class="col align-middle">
+                <button class="btn btn-success">Add New Pre-Education</button>
+              </div>
+            </div>
+            <div class="row mt-2">
                 <div class="col d-flex">
                   <div class="table" *ngIf="license.preExamItems.length > 0">
                     <thead>
@@ -246,7 +331,7 @@
                         <th scope="col">ExamName</th>
                         <th scope="col">Exam Provider ID</th>
                         <th scope="col">Exam Provider</th>
-                        <th scope="col">Delivery Method	</th>
+                        <th scope="col">Delivery Method</th>
                         <th scope="col">isActive</th>
                         <th scope="col" class="text-center">ACTION</th>
                       </tr>
@@ -270,8 +355,8 @@
                           {{ preExam.deliveryMethod }}
                         </td>
                         <!-- <td class="align-middle" style="width: max-content">
-                          {{ company.isActive }}
-                        </td> -->
+                            {{ company.isActive }}
+                          </td> -->
                         <td class="align-middle" style="width: max-content">
                           <div class="form-check d-flex justify-content-center">
                             <input
@@ -315,25 +400,13 @@
                 class="col align-middle"
                 style="font-size: larger; font-weight: 400"
               >
-                Pre-Education(s)
-              </div>
-              <div class="col align-middle">
-                <button class="btn btn-success">Add New Pre-Education</button>
-              </div>
-            </div>
-          </div>
-          <div class="row">
-            <div class="row">
-              <div
-                class="col align-middle"
-                style="font-size: larger; font-weight: 400"
-              >
                 Product(s)
               </div>
               <div class="col align-middle">
                 <button class="btn btn-success">Add New Product</button>
               </div>
             </div>
+            
           </div>
         </mat-expansion-panel>
       </mat-accordion>

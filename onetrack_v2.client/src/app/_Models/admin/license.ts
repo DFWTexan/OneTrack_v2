@@ -51,21 +51,21 @@ export interface PreExamItem {
 }
 
 export interface PreEduItem {
-  LicensePreEducationID: number;
-  PreEducationID: number;
-  EducationName: string | null;
-  StateProvinceAbv: string | null;
-  CreditHours: number;
-  CompanyID: number;
-  CompanyName: string | null;
-  DeliveryMethod: string | null;
-  IsActive: boolean | null;
+  licensePreEducationID: number;
+  preEducationID: number;
+  educationName: string | null;
+  stateProvinceAbv: string | null;
+  creditHours: number;
+  companyID: number;
+  companyName: string | null;
+  deliveryMethod: string | null;
+  isActive: boolean | null;
 }
 
 export interface ProductItem {
-  LicenseProductID: number;
-  ProductID: number;
-  ProductName: string | null;
-  ProductAbv: string | null;
-  IsActive: boolean | null;
+  licenseProductID: number;
+  productID: number;
+  productName: string | null;
+  productAbv: string | null;
+  isActive: boolean | null;
 }
