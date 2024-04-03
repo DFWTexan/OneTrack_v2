@@ -544,7 +544,22 @@ namespace OneTrak_v2.Services
             ReturnResult result = new ReturnResult();
             try
             {
-                //result.ObjData = _db.LicTechLists.ToList();
+                var query = from l in _db.LicenseTeches
+                            select new
+                            {
+                                l.LicenseTechId,
+                                l.Soeid,
+                                l.FirstName,
+                                l.LastName,
+                                l.IsActive,
+                                l.TeamNum,
+                                l.LicenseTechPhone,
+                                l.LicenseTechFax,
+                                l.LicenseTechEmail,
+                                TechName = l.FirstName + " " + l.LastName
+                            };
+
+                result.ObjData = query;
                 result.Success = true;
                 result.StatusCode = 200;
             }

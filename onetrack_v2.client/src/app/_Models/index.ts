@@ -14,3 +14,4 @@ export * from './admin/dropdownItem';
 export * from  './admin/exam';
 export * from './admin/jobTitle';
 export * from './admin/license';
+export * from './admin/licenseTech';

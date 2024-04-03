@@ -6,7 +6,7 @@
         type="button"
         (click)="
           adminDataService.storeJobTitle('INSERT', null);
-          modalService.open('modal-edit-exam')
+          modalService.open('modal-edit-job-title')
         "
       >
         Create New Job Title
@@ -103,3 +103,24 @@
     </div>
   </div>
 </div>
+
+<!-- Modal: EDIT-JOB-TITLE -->
+<modal id="modal-edit-job-title">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      {{ adminComService.modes.jobTitle.mode }} - Job Title
+    </h1>
+    <!-- <button
+                  type="button"
+                  class="btn-close"
+                  (click)="modalService.close()"
+                ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-edit-job-title></app-edit-job-title>
+      </div>
+    </div>
+  </div>
+</modal>

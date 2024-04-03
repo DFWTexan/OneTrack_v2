@@ -13,7 +13,7 @@ import { JobTitle } from '../../_Models';
   styleUrl: './job-title-license.component.css',
 })
 @Injectable()
-export class JobTitleLicenseComponent {
+export class JobTitleLicenseComponent implements OnInit {
   loading: boolean = false;
   licenseLevels: any[] = [];
   licenseIncentives: any[] = [];

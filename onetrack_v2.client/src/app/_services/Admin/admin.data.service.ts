@@ -12,6 +12,7 @@ import {
   Exam,
   JobTitle,
   License,
+  LicenseTech,
   PreEduItem,
   PreExamItem,
   ProductItem,
@@ -69,6 +70,8 @@ export class AdminDataService {
   preEduItemChanged = new Subject<PreEduItem>();
   productItem: ProductItem = {} as ProductItem;
   productItemChanged = new Subject<ProductItem>();
+  licenseTech: LicenseTech = {} as LicenseTech;
+  licenseTechChanged = new Subject<LicenseTech>();
 
   constructor(
     private http: HttpClient,
@@ -313,7 +316,7 @@ export class AdminDataService {
       );
   }
 
-  //  LINCENSE EDIT
+  //  LICENSE EDIT
   fetchLicenseItems(stateProvince: string) {
     return this.http
       .get<{
@@ -335,7 +338,27 @@ export class AdminDataService {
       );
   }
 
-  // STORE DATA //////////////////////////////////////////
+  // LICENSE TECH
+  fetchLicenseTechs() {
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: LicenseTech[];
+        errMessage: string;
+      }>(this.apiUrl + 'GetLicTechList')
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  ///////////////////////////////////////////// STORE DATA //////////////////////////////////////////
   storeCompany(mode: string | '', company: any | null) {
     this.adminComService.changeMode('company', mode);
     this.company = company || {};
@@ -394,5 +417,11 @@ export class AdminDataService {
     this.adminComService.changeMode('productItem', mode);
     this.productItem = productItem || {};
     this.productItemChanged.next(this.productItem);
+  }
+
+  storeLicenseTech(mode: string | '', licenseTech: any | null) {
+    this.adminComService.changeMode('licenseTech', mode);
+    this.licenseTech = licenseTech || {};
+    this.licenseTechChanged.next(this.licenseTech);
   }
 }
