@@ -86,6 +86,10 @@ import { EditCoRequirementComponent } from './admin/company-requirements/edit-co
 import { EditEduRuleComponent } from './admin/continue-education-edit/edit-edu-rule/edit-edu-rule.component';
 import { EditDropdownItemComponent } from './admin/dropdown-list-edit/edit-dropdown-item/edit-dropdown-item.component';
 import { EditExamComponent } from './admin/exam-edit/edit-exam/edit-exam.component';
+import { EditCompanyItemComponent } from './admin/license-edit/edit-company-item/edit-company-item.component';
+import { EditPreExamItemComponent } from './admin/license-edit/edit-pre-exam-item/edit-pre-exam-item.component';
+import { EditPreEduItemComponent } from './admin/license-edit/edit-pre-edu-item/edit-pre-edu-item.component';
+import { EditProductItemComponent } from './admin/license-edit/edit-product-item/edit-product-item.component';
 
 @NgModule({
   declarations: [
@@ -149,7 +153,11 @@ import { EditExamComponent } from './admin/exam-edit/edit-exam/edit-exam.compone
     EditCoRequirementComponent,
     EditEduRuleComponent,
     EditDropdownItemComponent,
-    EditExamComponent
+    EditExamComponent,
+    EditCompanyItemComponent,
+    EditPreExamItemComponent,
+    EditPreEduItemComponent,
+    EditProductItemComponent
   ],
   imports: [
     BrowserModule,
