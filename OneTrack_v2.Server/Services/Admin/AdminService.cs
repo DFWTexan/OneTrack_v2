@@ -545,6 +545,7 @@ namespace OneTrak_v2.Services
             try
             {
                 var query = from l in _db.LicenseTeches
+                            where l.IsActive == true
                             select new
                             {
                                 l.LicenseTechId,
