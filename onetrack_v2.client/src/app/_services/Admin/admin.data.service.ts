@@ -14,6 +14,7 @@ import {
   License,
   LicenseTech,
   PreEduItem,
+  PreEducation,
   PreExamItem,
   ProductItem,
 } from '../../_Models';
@@ -72,6 +73,8 @@ export class AdminDataService {
   productItemChanged = new Subject<ProductItem>();
   licenseTech: LicenseTech = {} as LicenseTech;
   licenseTechChanged = new Subject<LicenseTech>();
+  preEducation: PreEducation = {} as PreEducation;
+  preEducationChanged = new Subject<PreEducation>();
 
   constructor(
     private http: HttpClient,
@@ -358,6 +361,26 @@ export class AdminDataService {
       );
   }
 
+  // PRE-EDUCATION
+  fetchPreEducationItems(stateProvince: string) {
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: PreEducation[];
+        errMessage: string;
+      }>(this.apiUrl + 'GetPreEduEditByState/' + stateProvince)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
   ///////////////////////////////////////////// STORE DATA //////////////////////////////////////////
   storeCompany(mode: string | '', company: any | null) {
     this.adminComService.changeMode('company', mode);
@@ -423,5 +446,11 @@ export class AdminDataService {
     this.adminComService.changeMode('licenseTech', mode);
     this.licenseTech = licenseTech || {};
     this.licenseTechChanged.next(this.licenseTech);
+  }
+
+  storePreEducation(mode: string | '', preEducation: any | null) {
+    this.adminComService.changeMode('preEducation', mode);
+    this.preEducation = preEducation || {};
+    this.preEducationChanged.next(this.preEducation);
   }
 }

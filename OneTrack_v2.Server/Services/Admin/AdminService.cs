@@ -572,12 +572,23 @@ namespace OneTrak_v2.Services
             return result;
         }
 
-        public ReturnResult GetPreEduEditByState(string vState)
+        public ReturnResult GetPreEduEditByState(string vStateProvinceAbv)
         {
             ReturnResult result = new ReturnResult();
             try
             {
-                //result.ObjData = _db.PreEduEdits.Where(x => x.State == vState).ToList();
+                var query = from p in _db.PreEducations
+                            where p.StateProvinceAbv == vStateProvinceAbv
+                            select new
+                            {
+                                p.PreEducationId,
+                                p.EducationName,
+                                p.StateProvinceAbv,
+                                p.CreditHours,
+                                p.DeliveryMethod
+                            };
+
+                result.ObjData = query;
                 result.Success = true;
                 result.StatusCode = 200;
             }

@@ -15,3 +15,4 @@ export * from  './admin/exam';
 export * from './admin/jobTitle';
 export * from './admin/license';
 export * from './admin/licenseTech';
+export * from './admin/preEducation';
