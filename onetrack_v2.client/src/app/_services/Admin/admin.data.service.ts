@@ -6,11 +6,15 @@ import { environment } from '../../environments/environment';
 import { AdminComService } from './admin.com.service';
 import {
   Company,
+  CompanyItem,
   CompanyRequirement,
   EducationRule,
   Exam,
   JobTitle,
   License,
+  PreEduItem,
+  PreExamItem,
+  ProductItem,
 } from '../../_Models';
 import { ModalService } from '../common/modal.service';
 
@@ -57,6 +61,14 @@ export class AdminDataService {
   // LICENSE EDIT
   licenseItems: License[] = [];
   licenseItemsChanged = new Subject<License[]>();
+  companyItem: CompanyItem = {} as CompanyItem;
+  companyItemChanged = new Subject<CompanyItem>();
+  preExamItem: PreExamItem = {} as PreExamItem;
+  preExamItemChanged = new Subject<PreExamItem>();
+  preEduItem: PreEduItem = {} as PreEduItem;
+  preEduItemChanged = new Subject<PreEduItem>();
+  productItem: ProductItem = {} as ProductItem;
+  productItemChanged = new Subject<ProductItem>();
 
   constructor(
     private http: HttpClient,
@@ -358,5 +370,29 @@ export class AdminDataService {
     this.adminComService.changeMode('jobTitle', mode);
     this.dropdownListItem = jobTitle || {};
     this.dropdownListItemChanged.next(this.dropdownListItem);
+  }
+
+  storeCompanyItem(mode: string | '', companyItem: any | null) {
+    this.adminComService.changeMode('companyItem', mode);
+    this.companyItem = companyItem || {};
+    this.companyItemChanged.next(this.companyItem);
+  }
+
+  storePreExamItem(mode: string | '', preExamItem: any | null) {
+    this.adminComService.changeMode('preExamItem', mode);
+    this.preExamItem = preExamItem || {};
+    this.preExamItemChanged.next(this.preExamItem);
+  }
+
+  storePreEduItem(mode: string | '', preEduItem: any | null) {
+    this.adminComService.changeMode('preEduItem', mode);
+    this.preEduItem = preEduItem || {};
+    this.preEduItemChanged.next(this.preEduItem);
+  }
+
+  storeProductItem(mode: string | '', productItem: any | null) {
+    this.adminComService.changeMode('productItem', mode);
+    this.productItem = productItem || {};
+    this.productItemChanged.next(this.productItem);
   }
 }

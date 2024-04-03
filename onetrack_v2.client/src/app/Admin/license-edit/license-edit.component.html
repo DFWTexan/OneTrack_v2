@@ -144,13 +144,21 @@
                 Company(s)
               </div>
               <div class="col align-middle">
-                <button class="btn btn-success">Add New Company</button>
+                <button
+                  class="btn btn-success"
+                  (click)="
+                    adminDataService.storeCompanyItem('INSERT', null);
+                    modalService.open('modal-edit-company-item')
+                  "
+                >
+                  Add New Company
+                </button>
               </div>
             </div>
             <div class="row mt-2">
               <div class="col d-flex">
                 <div class="ms-5" *ngIf="license.companyItems.length == 0">
-                    <h2>No Record(s) Found</h2>
+                  <h2>No Record(s) Found</h2>
                 </div>
                 <div class="table" *ngIf="license.companyItems.length > 0">
                   <thead>
@@ -206,8 +214,11 @@
                             class="icon-edit-delete-button"
                             type="button"
                             (click)="
-                              adminDataService.storeExamItem('EDIT', company);
-                              modalService.open('modal-edit-exam')
+                              adminDataService.storeCompanyItem(
+                                'EDIT',
+                                company
+                              );
+                              modalService.open('modal-edit-company-item')
                             "
                           >
                             <span class="material-symbols-outlined">
@@ -236,13 +247,21 @@
                 Pre-Exam(s)
               </div>
               <div class="col align-middle">
-                <button class="btn btn-success">Add New Pre-Exam</button>
+                <button
+                  class="btn btn-success"
+                  (click)="
+                    adminDataService.storePreExamItem('INSERT', null);
+                    modalService.open('modal-edit-preExam-item')
+                  "
+                >
+                  Add New Pre-Exam
+                </button>
               </div>
             </div>
             <div class="row mt-2">
               <div class="col d-flex">
                 <div class="ms-5" *ngIf="license.preExamItems.length == 0">
-                    <h2>No Record(s) Found</h2>
+                  <h2>No Record(s) Found</h2>
                 </div>
                 <div class="table" *ngIf="license.preExamItems.length > 0">
                   <thead>
@@ -294,8 +313,11 @@
                             class="icon-edit-delete-button"
                             type="button"
                             (click)="
-                              adminDataService.storeExamItem('EDIT', preExam);
-                              modalService.open('modal-edit-exam')
+                              adminDataService.storePreExamItem(
+                                'EDIT',
+                                preExam
+                              );
+                              modalService.open('modal-edit-preExam-item')
                             "
                           >
                             <span class="material-symbols-outlined">
@@ -324,13 +346,21 @@
                 Pre-Education(s)
               </div>
               <div class="col align-middle">
-                <button class="btn btn-success">Add New Pre-Education</button>
+                <button
+                  class="btn btn-success"
+                  (click)="
+                    adminDataService.storePreEduItem('INSERT', null);
+                    modalService.open('modal-edit-preEdu-Item')
+                  "
+                >
+                  Add New Pre-Education
+                </button>
               </div>
             </div>
             <div class="row mt-2">
               <div class="col d-flex">
                 <div class="ms-5" *ngIf="license.preEducationItems.length == 0">
-                    <h2>No Record(s) Found</h2>
+                  <h2>No Record(s) Found</h2>
                 </div>
                 <div class="table" *ngIf="license.preEducationItems.length > 0">
                   <thead>
@@ -375,8 +405,8 @@
                             class="icon-edit-delete-button"
                             type="button"
                             (click)="
-                              adminDataService.storeExamItem('EDIT', preEdu);
-                              modalService.open('modal-edit-exam')
+                              adminDataService.storePreEduItem('EDIT', preEdu);
+                              modalService.open('modal-edit-preEdu-Item')
                             "
                           >
                             <span class="material-symbols-outlined">
@@ -405,13 +435,21 @@
                 Product(s)
               </div>
               <div class="col align-middle">
-                <button class="btn btn-success">Add New Product</button>
+                <button
+                  class="btn btn-success"
+                  (click)="
+                    adminDataService.storeProductItem('INSERT', null);
+                    modalService.open('modal-edit-product-Item')
+                  "
+                >
+                  Add New Product
+                </button>
               </div>
             </div>
             <div class="row mt-2">
               <div class="co d-flex">
                 <div class="ms-5" *ngIf="license.productItems.length == 0">
-                    <h2>No Record(s) Found</h2>
+                  <h2>No Record(s) Found</h2>
                 </div>
                 <div class="table" *ngIf="license.productItems.length > 0">
                   <thead>
@@ -454,8 +492,11 @@
                             class="icon-edit-delete-button"
                             type="button"
                             (click)="
-                              adminDataService.storeExamItem('EDIT', product);
-                              modalService.open('modal-edit-exam')
+                              adminDataService.storeProductItem(
+                                'EDIT',
+                                product
+                              );
+                              modalService.open('modal-edit-product-Item')
                             "
                           >
                             <span class="material-symbols-outlined">
@@ -480,3 +521,87 @@
     </div>
   </div>
 </div>
+
+<!-- Modal: EDIT-COMPANY-ITEM -->
+<modal id="modal-edit-company-item">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      {{ adminComService.modes.companyItem.mode }} - License Company
+    </h1>
+    <!-- <button
+                  type="button"
+                  class="btn-close"
+                  (click)="modalService.close()"
+                ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <!-- <app-edit-exam></app-edit-exam> -->
+      </div>
+    </div>
+  </div>
+</modal>
+
+<!-- Modal: EDIT-PRE-EXAM_ITEM -->
+<modal id="modal-edit-preExam-item">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      {{ adminComService.modes.preExamItem.mode }} - License Pre-Exam
+    </h1>
+    <!-- <button
+                  type="button"
+                  class="btn-close"
+                  (click)="modalService.close()"
+                ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <!-- <app-edit-exam></app-edit-exam> -->
+      </div>
+    </div>
+  </div>
+</modal>
+
+<!-- Modal: EDIT-PRE-EDU-ITEM -->
+<modal id="modal-edit-preEdu-Item">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      {{ adminComService.modes.preEduItem.mode }} - License Pre-Education
+    </h1>
+    <!-- <button
+                  type="button"
+                  class="btn-close"
+                  (click)="modalService.close()"
+                ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <!-- <app-edit-exam></app-edit-exam> -->
+      </div>
+    </div>
+  </div>
+</modal>
+
+<!-- Modal: EDIT-PRODUCT-ITEM -->
+<modal id="modal-edit-product-Item">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      {{ adminComService.modes.productItem.mode }} - License Product
+    </h1>
+    <!-- <button
+                  type="button"
+                  class="btn-close"
+                  (click)="modalService.close()"
+                ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <!-- <app-edit-exam></app-edit-exam> -->
+      </div>
+    </div>
+  </div>
+</modal>

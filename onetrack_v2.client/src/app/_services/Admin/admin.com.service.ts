@@ -13,12 +13,26 @@ export class AdminComService {
     dropdownItem: { mode: '', changed: new Subject<string>() },
     examItem: { mode: '', changed: new Subject<string>() },
     jobTitle: { mode: '', changed: new Subject<string>() },
+    companyItem: { mode: '', changed: new Subject<string>() },
+    productItem: { mode: '', changed: new Subject<string>() },
+    preEduItem: { mode: '', changed: new Subject<string>() },
+    preExamItem: { mode: '', changed: new Subject<string>() },
   };
 
   constructor() {}
 
   changeMode(
-    type: 'company' | 'coRequirement' | 'educationRule' | 'dropdownItem' | 'examItem' | 'jobTitle',
+    type:
+      | 'company'
+      | 'coRequirement'
+      | 'educationRule'
+      | 'dropdownItem'
+      | 'examItem'
+      | 'jobTitle'
+      | 'companyItem'
+      | 'productItem'
+      | 'preEduItem'
+      | 'preExamItem',
     mode: string
   ) {
     this.modes[type].mode = mode;
