@@ -91,6 +91,7 @@ import { EditPreExamItemComponent } from './admin/license-edit/edit-pre-exam-ite
 import { EditPreEduItemComponent } from './admin/license-edit/edit-pre-edu-item/edit-pre-edu-item.component';
 import { EditProductItemComponent } from './admin/license-edit/edit-product-item/edit-product-item.component';
 import { EditJobTitleComponent } from './admin/job-title-license/edit-job-title/edit-job-title.component';
+import { EditLicenseTechComponent } from './admin/license-tech-edit/edit-license-tech/edit-license-tech.component';
 
 @NgModule({
   declarations: [
@@ -159,7 +160,8 @@ import { EditJobTitleComponent } from './admin/job-title-license/edit-job-title/
     EditPreExamItemComponent,
     EditPreEduItemComponent,
     EditProductItemComponent,
-    EditJobTitleComponent
+    EditJobTitleComponent,
+    EditLicenseTechComponent
   ],
   imports: [
     BrowserModule,
