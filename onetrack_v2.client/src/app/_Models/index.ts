@@ -16,3 +16,4 @@ export * from './admin/jobTitle';
 export * from './admin/license';
 export * from './admin/licenseTech';
 export * from './admin/preEducation';
+export * from './admin/product';

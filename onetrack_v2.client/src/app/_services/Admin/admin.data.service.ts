@@ -16,6 +16,7 @@ import {
   PreEduItem,
   PreEducation,
   PreExamItem,
+  Product,
   ProductItem,
 } from '../../_Models';
 import { ModalService } from '../common/modal.service';
@@ -75,6 +76,8 @@ export class AdminDataService {
   licenseTechChanged = new Subject<LicenseTech>();
   preEducation: PreEducation = {} as PreEducation;
   preEducationChanged = new Subject<PreEducation>();
+  product: Product = {} as Product;
+  productChanged = new Subject<Product>();  
 
   constructor(
     private http: HttpClient,
@@ -381,6 +384,26 @@ export class AdminDataService {
       );
   }
 
+  // PRODUCT
+  fetchProducts() {
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: Product[];
+        errMessage: string;
+      }>(this.apiUrl + 'GetProductEditList')
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
   ///////////////////////////////////////////// STORE DATA //////////////////////////////////////////
   storeCompany(mode: string | '', company: any | null) {
     this.adminComService.changeMode('company', mode);
@@ -452,5 +475,11 @@ export class AdminDataService {
     this.adminComService.changeMode('preEducation', mode);
     this.preEducation = preEducation || {};
     this.preEducationChanged.next(this.preEducation);
+  }
+
+  storeProduct(mode: string | '', product: any | null) {
+    this.adminComService.changeMode('product', mode);
+    this.product = product || {};
+    this.productChanged.next(this.product);
   }
 }

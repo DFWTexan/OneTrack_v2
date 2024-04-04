@@ -605,7 +605,21 @@ namespace OneTrak_v2.Services
             ReturnResult result = new ReturnResult();
             try
             {
-                //result.ObjData = _db.ProductEditLists.ToList();
+                var query = from le in _db.LicenseProducts
+                            join e in _db.Products on le.ProductId equals e.ProductId
+                            group new { le, e } by new { le.IsActive, le.ProductId, e.ProductName, e.ProductAbv, e.EffectiveDate, e.ExpireDate } into g
+                            orderby g.Key.ProductName
+                            select new
+                            {
+                                g.Key.ProductId,
+                                g.Key.ProductName,
+                                g.Key.ProductAbv,
+                                g.Key.IsActive,
+                                g.Key.EffectiveDate,
+                                g.Key.ExpireDate
+                            };
+
+                result.ObjData = query;
                 result.Success = true;
                 result.StatusCode = 200;
             }
