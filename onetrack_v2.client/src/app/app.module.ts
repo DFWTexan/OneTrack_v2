@@ -94,6 +94,7 @@ import { EditJobTitleComponent } from './admin/job-title-license/edit-job-title/
 import { EditLicenseTechComponent } from './admin/license-tech-edit/edit-license-tech/edit-license-tech.component';
 import { EditPreEducationComponent } from './admin/pre-education-edit/edit-pre-education/edit-pre-education.component';
 import { EditStateRequirementComponent } from './admin/state-license-requirements/edit-state-requirement/edit-state-requirement.component';
+import { EditStateProvinceComponent } from './admin/state-province-edit/edit-state-province/edit-state-province.component';
 
 @NgModule({
   declarations: [
@@ -165,7 +166,8 @@ import { EditStateRequirementComponent } from './admin/state-license-requirement
     EditJobTitleComponent,
     EditLicenseTechComponent,
     EditPreEducationComponent,
-    EditStateRequirementComponent
+    EditStateRequirementComponent,
+    EditStateProvinceComponent
   ],
   imports: [
     BrowserModule,

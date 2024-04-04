@@ -680,7 +680,36 @@ namespace OneTrak_v2.Services
             ReturnResult result = new ReturnResult();
             try
             {
-                //result.ObjData = _db.StateProvinces.ToList();
+                var sql = @"SELECT 
+	                            S.StateProvinceCode, 
+                                S.StateProvinceName, 
+	                            S.Country, 
+                                S.StateProvinceAbv, 
+	                            S.DOIAddressID, 
+                                ISNULL(S.LicenseTechID, 0) as LicenseTechID, 
+	                            S.IsActive, 
+                                S.DOIName, 
+                                T.TeamNum, 
+                                T.FirstName + ' ' + T.LastName AS TechName,
+	                            A.AddressType, 
+                                A.Address1, 
+	                            A.Address2, 
+                                A.City, 
+	                            A.State, 
+                                A.Phone, 
+	                            A.Zip, 
+                                A.Fax
+                            FROM dbo.StateProvince S 
+                            LEFT OUTER JOIN dbo.LicenseTech T ON S.LicenseTechID = T.LicenseTechID
+                            LEFT OUTER JOIN dbo.Address A ON S.DOIAddressID = A.AddressID";
+
+                var queryStateProvResults = _db.OputStateProvince
+                                            .FromSqlRaw(sql)
+                                            .AsNoTracking()
+                                            .OrderBy(r => r.StateProvinceAbv)
+                                            .ToList();
+
+                result.ObjData = queryStateProvResults;
                 result.Success = true;
                 result.StatusCode = 200;
             }

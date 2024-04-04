@@ -18,6 +18,7 @@ import {
   PreExamItem,
   Product,
   ProductItem,
+  StateProvince,
   StateRequirement,
 } from '../../_Models';
 import { ModalService } from '../common/modal.service';
@@ -83,6 +84,10 @@ export class AdminDataService {
   stateRequirementsChanged = new Subject<StateRequirement[]>();
   stateRequirement: StateRequirement = {} as StateRequirement;
   stateRequirementChanged = new Subject<StateRequirement>();
+  stateProvinces: StateProvince[] = [];
+  stateProvincesChanged = new Subject<StateProvince[]>();
+  stateProvince: StateProvince = {} as StateProvince;
+  stateProvinceChanged = new Subject<StateProvince>();
 
   constructor(
     private http: HttpClient,
@@ -435,6 +440,26 @@ export class AdminDataService {
       );
   }
 
+  // STATE PROVINCE
+  fetchStateProvinces() {
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: StateProvince[];
+        errMessage: string;
+      }>(this.apiUrl + 'GetStateProvinceList')
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
   ///////////////////////////////////////////// STORE DATA //////////////////////////////////////////
   storeCompany(mode: string | '', company: any | null) {
     this.adminComService.changeMode('company', mode);
@@ -518,5 +543,11 @@ export class AdminDataService {
     this.adminComService.changeMode('stateRequirement', mode);
     this.stateRequirement = stateRequirement || {};
     this.stateRequirementChanged.next(this.stateRequirement);
+  }
+
+  storeStateProvince(mode: string | '', stateProvince: any | null) {
+    this.adminComService.changeMode('stateProvince', mode);
+    this.stateProvince = stateProvince || {};
+    this.stateProvinceChanged.next(this.stateProvince);
   }
 }

@@ -18,3 +18,4 @@ export * from './admin/licenseTech';
 export * from './admin/preEducation';
 export * from './admin/product';
 export * from './admin/stateRequirement';
+export * from './admin/stateProvince';

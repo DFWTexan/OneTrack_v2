@@ -1,1 +1,115 @@
-<p>state-province-edit works!</p>
+<div class="container app-component-container">
+    <div class="row mt-5 mb-3">
+      <div class="col d-flex justify-content-start align-items-start">
+        <button
+          class="btn btn-success"
+          type="button"
+          (click)="
+            adminDataService.storeStateProvince('INSERT', null);
+            modalService.open('modal-state-province')
+          "
+        >
+          Create State Province
+        </button>
+      </div>
+    </div>
+    <mat-divider></mat-divider>
+    <div class="mt-5 mb-5 d-flex justify-content-center" *ngIf="loading">
+      <div class="spinner-border text-primary"></div>
+    </div>
+    <div class="row mt-4" *ngIf="!loading">
+      <div class="col">
+        <div class="table" *ngIf="stateProvinces.length > 0">
+          <thead>
+            <tr class="sticky-top" style="background-color: gainsboro">
+              <th scope="col">State Abv</th>
+              <th scope="col">Code</th>
+              <th scope="col">Name</th>
+              <th scope="col">Country</th>
+              <th scope="col">LicTech</th>
+              <th scope="col">IsActive</th>
+              <th scope="col">DOIName</th>
+              <th scope="col" class="text-center">ACTION</th>
+            </tr>
+          </thead>
+          <tbody class="bg-body">
+            <tr *ngFor="let statProv of stateProvinces">
+              <td class="align-middle  text-center">
+                {{ statProv.stateProvinceAbv }}
+              </td>
+              <td class="align-middle">{{ statProv.stateProvinceCode }}</td>
+              <td class="align-middle text-nowrap">
+                {{ statProv.stateProvinceName }}
+              </td>
+              <td class="align-middle text-nowrap">
+                {{ statProv.country }}
+              </td>
+              <td class="align-middle text-nowrap">
+                {{ statProv.techName }}
+              </td>
+              <td class="align-middle" style="width: max-content">
+                <div class="form-check d-flex justify-content-center">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [checked]="statProv.isActive"
+                    disabled
+                  />
+                </div>
+              </td>
+              <td class="align-middle text-nowrap">
+                {{ statProv.doiName }}
+              </td>
+              <td class="align-middle" style="width: 10rem">
+                  <div class="d-flex justify-content-between mb-3 me-4">
+                    <button
+                      class="icon-edit-delete-button"
+                      type="button"
+                      (click)="
+                        adminDataService.storeStateProvince(
+                          'EDIT',
+                          statProv
+                        );
+                        modalService.open('modal-state-province')
+                      "
+                    >
+                      <span class="material-symbols-outlined">
+                        edit
+                      </span>
+                    </button>
+                    <button class="icon-edit-delete-button" type="button">
+                      <span class="material-symbols-outlined">
+                        delete
+                      </span>
+                    </button>
+                  </div>
+                </td>
+            </tr>
+          </tbody>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Modal: EDIT-STATE-PROVINCE -->
+  <modal id="modal-state-province">
+    <div class="modal-header">
+      <h1 class="modal-title">
+        {{ adminComService.modes.stateProvince.mode }} - State Province
+      </h1>
+      <!-- <button
+                      type="button"
+                      class="btn-close"
+                      (click)="modalService.close()"
+                    ></button> -->
+    </div>
+    <div class="modal-body">
+      <div>
+        <div>
+          <app-edit-state-province></app-edit-state-province>
+        </div>
+      </div>
+    </div>
+  </modal>
+  
+
