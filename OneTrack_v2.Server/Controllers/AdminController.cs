@@ -149,9 +149,9 @@ namespace OneTrack_v2.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetStateLicRequirements(string? workState = null, string? resState = null)
+        public async Task<ActionResult> GetStateLicRequirements(string? workState = null, string? resState = null, string? branchCode = null)
         {
-            var result = await Task.Run(() => _adminService.GetStateLicRequirements(workState, resState));
+            var result = await Task.Run(() => _adminService.GetStateLicRequirements(workState, resState, branchCode));
 
             return StatusCode(result.StatusCode, result);
         }
@@ -165,20 +165,13 @@ namespace OneTrack_v2.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetXBorderBranchList()
+        public async Task<IActionResult> GetXBorderBranchCodes()
         {
-            var result = await Task.Run(() => _adminService.GetXBorderBranchList());
+            var result = await Task.Run(() => _adminService.GetXBorderBranchCodes());
 
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpGet("{branchCode}")]
-        public async Task<IActionResult> GetXBorderBranchByCode(int branchCode)
-        {
-            var result = await Task.Run(() => _adminService.GetXBorderBranchByCode(branchCode));
-
-            return StatusCode(result.StatusCode, result);
-        }
         #endregion
     }
 }

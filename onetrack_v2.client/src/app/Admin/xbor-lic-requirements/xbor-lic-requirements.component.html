@@ -1,1 +1,178 @@
-<p>xbor-lic-requirements works!</p>
+<div class="container app-component-container">
+  <div class="row mt-5 mb-3">
+    <div class="col">
+      <label for="workState">Branch Code:</label><br />
+      <select
+        class="form-select select-size-x-small"
+        type="text"
+        id="workState"
+        (change)="changeBranchCode($event)"
+      >
+        <option *ngFor="let code of branchCodes" [value]="code">
+          {{ code }}
+        </option>
+      </select>
+    </div>
+    <div class="col d-flex justify-content-center align-items-end">
+      <button
+        class="btn btn-success"
+        type="button"
+        (click)="
+          adminDataService.storeXBorRequirement('INSERT', null);
+          modalService.open('modal-edit-xBor-requirement')
+        "
+      >
+        Add New XBor Requirement
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row mt-4">
+    <div class="col">
+      <div class="table" *ngIf="xborLicRequirements.length > 0">
+        <thead>
+          <tr class="sticky-top" style="background-color: gainsboro">
+            <th scope="col">ReqID</th>
+            <th scope="col">XBor Branch</th>
+            <th scope="col">Work</th>
+            <th scope="col">Res</th>
+            <th scope="col">State</th>
+            <th scope="col">Name</th>
+            <th scope="col">Lic1</th>
+            <th scope="col">Lic2</th>
+            <th scope="col">Lic3</th>
+            <th scope="col">Lic4</th>
+            <th scope="col">PLS 1</th>
+            <th scope="col">2 Plus</th>
+            <th scope="col" colspan="2">Documents</th>
+            <th scope="col" class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody class="bg-body">
+          <tr *ngFor="let xBor of xborLicRequirements">
+            <td class="align-middle" style="font-size: larger">
+              {{ xBor.requiredLicenseId }}
+            </td>
+            <td class="align-middle" style="font-size: larger">
+                {{ xBor.branchCode }}
+              </td>
+            <td class="align-middle">{{ xBor.workStateAbv }}</td>
+            <td class="align-middle text-nowrap">
+              {{ xBor.resStateAbv }}
+            </td>
+            <td class="align-middle text-nowrap">
+                {{ xBor.licState }}
+              </td>
+              <td class="align-middle text-nowrap">
+                {{ xBor.licenseName }}
+              </td>
+            <td class="align-middle" style="width: max-content">
+              <div class="form-check d-flex justify-content-center">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [checked]="xBor.licLevel1"
+                  disabled
+                />
+              </div>
+            </td>
+            <td class="align-middle" style="width: max-content">
+              <div class="form-check d-flex justify-content-center">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [checked]="xBor.licLevel2"
+                  disabled
+                />
+              </div>
+            </td>
+            <td class="align-middle" style="width: max-content">
+              <div class="form-check d-flex justify-content-center">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [checked]="xBor.licLevel3"
+                  disabled
+                />
+              </div>
+            </td>
+            <td class="align-middle" style="width: max-content">
+              <div class="form-check d-flex justify-content-center">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [checked]="xBor.licLevel4"
+                  disabled
+                />
+              </div>
+            </td>
+            <td class="align-middle" style="width: max-content">
+              <div class="form-check d-flex justify-content-center">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [checked]="xBor.plS_Incentive1"
+                  disabled
+                />
+              </div>
+            </td>
+            <td class="align-middle" style="width: max-content">
+              <div class="form-check d-flex justify-content-center">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [checked]="xBor.incentive2_Plus"
+                  disabled
+                />
+              </div>
+            </td>
+            <td class="align-middle" colspan="2">
+              <div class="d-flex flex-column">
+                <div>{{ xBor.startDocument }}</div>
+                <div>{{ xBor.renewalDocument }}</div>
+              </div>
+            </td>
+            <td class="align-middle" style="width: 10rem">
+              <div class="d-flex justify-content-between mb-3 me-4">
+                <button
+                  class="icon-edit-delete-button"
+                  type="button"
+                  (click)="
+                    adminDataService.storeXBorRequirement('EDIT', xBor);
+                    modalService.open('modal-edit-xBor-requirement')
+                  "
+                >
+                  <span class="material-symbols-outlined"> edit </span>
+                </button>
+                <button class="icon-edit-delete-button" type="button">
+                  <span class="material-symbols-outlined"> delete </span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: EDIT-XBOR-REQUIREMENT -->
+<modal id="modal-edit-xBor-requirement">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      {{ adminComService.modes.xBorRequirement.mode }} - XBor State Requirement
+    </h1>
+    <!-- <button
+                    type="button"
+                    class="btn-close"
+                    (click)="modalService.close()"
+                  ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-edit-xbor-requirement></app-edit-xbor-requirement>
+      </div>
+    </div>
+  </div>
+</modal>

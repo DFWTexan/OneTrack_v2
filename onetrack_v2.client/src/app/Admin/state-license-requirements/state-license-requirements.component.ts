@@ -13,7 +13,8 @@ import { StateRequirement } from '../../_Models';
   templateUrl: './state-license-requirements.component.html',
   styleUrl: './state-license-requirements.component.css',
 })
-export class StateLicenseRequirementsComponent {
+@Injectable()
+export class StateLicenseRequirementsComponent implements OnInit {
   loading: boolean = false;
   states: any[] = [];
   selectedWorkState: string = 'Select';

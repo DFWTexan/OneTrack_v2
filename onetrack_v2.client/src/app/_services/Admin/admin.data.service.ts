@@ -79,7 +79,7 @@ export class AdminDataService {
   preEducation: PreEducation = {} as PreEducation;
   preEducationChanged = new Subject<PreEducation>();
   product: Product = {} as Product;
-  productChanged = new Subject<Product>();  
+  productChanged = new Subject<Product>();
   stateRequirements: StateRequirement[] = [];
   stateRequirementsChanged = new Subject<StateRequirement[]>();
   stateRequirement: StateRequirement = {} as StateRequirement;
@@ -88,6 +88,8 @@ export class AdminDataService {
   stateProvincesChanged = new Subject<StateProvince[]>();
   stateProvince: StateProvince = {} as StateProvince;
   stateProvinceChanged = new Subject<StateProvince>();
+  xBorRequirement: StateRequirement = {} as StateRequirement;
+  xBorRequirementChanged = new Subject<StateRequirement>();
 
   constructor(
     private http: HttpClient,
@@ -415,10 +417,12 @@ export class AdminDataService {
   }
 
   // STATE REQUIREMENT
-  fetchStateRequirements(workState: string, resState: string | null = null) {
-    const queryParams = `?workState=${workState}&resState=${
-      resState ? resState : ''
-    }`;
+  fetchStateRequirements(
+    workState: string | null = null,
+    resState: string | null = null,
+    branchCode: string | null = null
+  ) {
+    const queryParams = `?workState=${workState ? workState : ''}&resState=${resState ? resState : ''}&branchCode=${branchCode ? branchCode : ''}`;
 
     return this.http
       .get<{
@@ -449,6 +453,26 @@ export class AdminDataService {
         objData: StateProvince[];
         errMessage: string;
       }>(this.apiUrl + 'GetStateProvinceList')
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  // XBOR REQUIREMENTS
+  fetchXBorBranchCodes() {
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'GetXBorderBranchCodes')
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -549,5 +573,11 @@ export class AdminDataService {
     this.adminComService.changeMode('stateProvince', mode);
     this.stateProvince = stateProvince || {};
     this.stateProvinceChanged.next(this.stateProvince);
+  }
+
+  storeXBorRequirement(mode: string | '', xBorRequirement: any | null) {  
+    this.adminComService.changeMode('xBorRequirement', mode);
+    this.xBorRequirement = xBorRequirement || {};
+    this.xBorRequirementChanged.next(this.xBorRequirement);
   }
 }

@@ -631,7 +631,7 @@ namespace OneTrak_v2.Services
             return result;  
         }
 
-        public ReturnResult GetStateLicRequirements(string? vWorkStateAbv = null, string? vResStateAbv = null)
+        public ReturnResult GetStateLicRequirements(string? vWorkStateAbv = null, string? vResStateAbv = null, string? vBranchCode = null)
         {
             ReturnResult result = new ReturnResult();
             try
@@ -639,7 +639,8 @@ namespace OneTrak_v2.Services
                 var query = from r in _db.RequiredLicenses
                             join l in _db.Licenses on r.LicenseId equals l.LicenseId
                             where (vWorkStateAbv == null || r.WorkStateAbv == vWorkStateAbv) &&
-                                  (vResStateAbv == null || r.ResStateAbv == vResStateAbv)
+                                  (vResStateAbv == null || r.ResStateAbv == vResStateAbv) &&
+                                  (vBranchCode == null || r.BranchCode == vBranchCode)
                             orderby r.WorkStateAbv, r.ResStateAbv, l.StateProvinceAbv
                             select new
                             {
@@ -721,12 +722,16 @@ namespace OneTrak_v2.Services
             return result;
         }
 
-        public ReturnResult GetXBorderBranchList()
+        public ReturnResult GetXBorderBranchCodes()
         {
             ReturnResult result = new ReturnResult();
             try
             {
-                //result.ObjData = _db.XBorderBranches.ToList();
+                var query = (from r in _db.RequiredLicenses
+                             where r.RequirementType != "Regular"
+                             select r.BranchCode).Distinct();
+
+                result.ObjData = query;
                 result.Success = true;
                 result.StatusCode = 200;
             }
@@ -738,21 +743,5 @@ namespace OneTrak_v2.Services
             return result;
         }
 
-        public ReturnResult GetXBorderBranchByCode(int vBranchCode)
-        {
-            ReturnResult result = new ReturnResult();
-            try
-            {
-                //result.ObjData = _db.XBorderBranches.Where(x => x.BranchCode == vBranchCode).ToList();
-                result.Success = true;
-                result.StatusCode = 200;
-            }
-            catch (Exception ex)
-            {
-                result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
-            }
-            return result;
-        }
     }
 }
