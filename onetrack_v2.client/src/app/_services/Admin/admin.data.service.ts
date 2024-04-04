@@ -18,6 +18,7 @@ import {
   PreExamItem,
   Product,
   ProductItem,
+  StateRequirement,
 } from '../../_Models';
 import { ModalService } from '../common/modal.service';
 
@@ -78,6 +79,10 @@ export class AdminDataService {
   preEducationChanged = new Subject<PreEducation>();
   product: Product = {} as Product;
   productChanged = new Subject<Product>();  
+  stateRequirements: StateRequirement[] = [];
+  stateRequirementsChanged = new Subject<StateRequirement[]>();
+  stateRequirement: StateRequirement = {} as StateRequirement;
+  stateRequirementChanged = new Subject<StateRequirement>();
 
   constructor(
     private http: HttpClient,
@@ -392,10 +397,36 @@ export class AdminDataService {
         statusCode: number;
         objData: Product[];
         errMessage: string;
-      }>(this.apiUrl + 'GetProductEditList')
+      }>(this.apiUrl + 'GetProductEdits')
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  // STATE REQUIREMENT
+  fetchStateRequirements(workState: string, resState: string | null = null) {
+    const queryParams = `?workState=${workState}&resState=${
+      resState ? resState : ''
+    }`;
+
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: StateRequirement[];
+        errMessage: string;
+      }>(`${this.apiUrl}GetStateLicRequirements${queryParams}`)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            this.stateRequirements = response.objData;
+            this.stateRequirementChanged.next(this.stateRequirement);
             return response.objData;
           } else {
             throw new Error(response.errMessage || 'Unknown error');
@@ -481,5 +512,11 @@ export class AdminDataService {
     this.adminComService.changeMode('product', mode);
     this.product = product || {};
     this.productChanged.next(this.product);
+  }
+
+  storeStateRequirement(mode: string | '', stateRequirement: any | null) {
+    this.adminComService.changeMode('stateRequirement', mode);
+    this.stateRequirement = stateRequirement || {};
+    this.stateRequirementChanged.next(this.stateRequirement);
   }
 }

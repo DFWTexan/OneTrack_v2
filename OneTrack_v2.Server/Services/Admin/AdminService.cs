@@ -600,7 +600,7 @@ namespace OneTrak_v2.Services
             return result;  
         }
 
-        public ReturnResult GetProductEditList()
+        public ReturnResult GetProductEdits()
         {
             ReturnResult result = new ReturnResult();
             try
@@ -631,12 +631,39 @@ namespace OneTrak_v2.Services
             return result;  
         }
 
-        public ReturnResult GetStateLicRequirementList(string vWorkState, string vResState)
+        public ReturnResult GetStateLicRequirements(string? vWorkStateAbv = null, string? vResStateAbv = null)
         {
             ReturnResult result = new ReturnResult();
             try
             {
-                //result.ObjData = _db.StateLicRequirements.Where(x => x.WorkState == vWorkState && x.ResState == vResState).ToList();
+                var query = from r in _db.RequiredLicenses
+                            join l in _db.Licenses on r.LicenseId equals l.LicenseId
+                            where (vWorkStateAbv == null || r.WorkStateAbv == vWorkStateAbv) &&
+                                  (vResStateAbv == null || r.ResStateAbv == vResStateAbv)
+                            orderby r.WorkStateAbv, r.ResStateAbv, l.StateProvinceAbv
+                            select new
+                            {
+                                r.RequiredLicenseId,
+                                r.WorkStateAbv,
+                                r.ResStateAbv,
+                                r.LicenseId,
+                                r.BranchCode,
+                                r.RequirementType,
+                                LicLevel1 = r.LicLevel1,
+                                LicLevel2 = r.LicLevel2,
+                                LicLevel3 = r.LicLevel3,
+                                LicLevel4 = r.LicLevel4,
+                                PLS_Incentive1 = r.PlsIncentive1,
+                                Incentive2_Plus = r.Incentive2Plus,
+                                LicIncentive3 = r.LicIncentive3,
+                                LicState = l.StateProvinceAbv,
+                                l.LicenseName,
+                                StartDocument = r.StartDocument,
+                                RenewalDocument = r.RenewalDocument
+                            };
+
+
+                result.ObjData = query;
                 result.Success = true;
                 result.StatusCode = 200;
             }

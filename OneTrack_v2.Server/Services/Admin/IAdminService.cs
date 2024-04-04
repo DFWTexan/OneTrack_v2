@@ -19,8 +19,8 @@ namespace OneTrak_v2.Services
         public ReturnResult GetLicenseEditByID(int vLicenseID);
         public ReturnResult GetLicTechList();
         public ReturnResult GetPreEduEditByState(string vState);
-        public ReturnResult GetProductEditList();
-        public ReturnResult GetStateLicRequirementList(string vWorkState, string vResState);
+        public ReturnResult GetProductEdits();
+        public ReturnResult GetStateLicRequirements(string vWorkState, string vResState);
         public ReturnResult GetStateProvinceList();
         public ReturnResult GetXBorderBranchList();
         public ReturnResult GetXBorderBranchByCode(int vBranchCode);

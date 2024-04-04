@@ -20,6 +20,7 @@ export class AdminComService {
     licenseTech: { mode: '', changed: new Subject<string>() },
     preEducation: { mode: '', changed: new Subject<string>() },
     product: { mode: '', changed: new Subject<string>() },
+    stateRequirement: { mode: '', changed: new Subject<string>() },
   };
 
   constructor() {}
@@ -38,7 +39,8 @@ export class AdminComService {
       | 'preExamItem'
       | 'licenseTech'
       | 'preEducation'
-      | 'product',
+      | 'product'
+      | 'stateRequirement',
     mode: string
   ) {
     this.modes[type].mode = mode;

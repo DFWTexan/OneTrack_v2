@@ -141,17 +141,17 @@ namespace OneTrack_v2.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetProductEditList()
+        public async Task<IActionResult> GetProductEdits()
         {
-            var result = await Task.Run(() => _adminService.GetProductEditList());
+            var result = await Task.Run(() => _adminService.GetProductEdits());
 
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpGet("{workState}/{resState}")]
-        public async Task<ActionResult> GetStateLicRequirementList(string workState, string resState)
+        [HttpGet]
+        public async Task<ActionResult> GetStateLicRequirements(string? workState = null, string? resState = null)
         {
-            var result = await Task.Run(() => _adminService.GetStateLicRequirementList(workState, resState));
+            var result = await Task.Run(() => _adminService.GetStateLicRequirements(workState, resState));
 
             return StatusCode(result.StatusCode, result);
         }
