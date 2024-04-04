@@ -1,1 +1,193 @@
-<p>state-license-requirements works!</p>
+<div class="container app-component-container">
+  <div class="row mt-5 mb-3">
+    <div class="col">
+      <label for="workState">Work State:</label><br />
+      <select
+        class="form-select select-size-x-small"
+        type="text"
+        id="workState"
+        (change)="changeWorkState($event)"
+      >
+        <option *ngFor="let state of states" [value]="state">
+          {{ state }}
+        </option>
+      </select>
+    </div>
+    <div class="col">
+      <label for="residentState">Resident State:</label><br />
+      <select
+        class="form-select select-size-x-small"
+        type="text"
+        id="residentState"
+        (change)="changeResidentState($event)"
+        [disabled]="selectedWorkState == 'Select'"
+      >
+        <option *ngFor="let state of states" [value]="state">
+          {{ state }}
+        </option>
+      </select>
+    </div>
+    <div class="col d-flex justify-content-center align-items-end">
+      <button
+        class="btn btn-success"
+        type="button"
+        (click)="
+          adminDataService.storeStateRequirement('INSERT', null);
+          modalService.open('modal-edit-state-requirement')
+        "
+      >
+        Add New State Requirement
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row mt-4">
+    <div class="col">
+      <div class="table" *ngIf="stateRequirements.length > 0">
+        <thead>
+          <tr class="sticky-top" style="background-color: gainsboro">
+            <th scope="col">ID</th>
+            <th scope="col">Work</th>
+            <th scope="col">Res</th>
+            <th scope="col">LicID</th>
+            <th scope="col">Lic1</th>
+            <th scope="col">Lic2</th>
+            <th scope="col">Lic3</th>
+            <th scope="col">Lic4</th>
+            <th scope="col">PLS 1</th>
+            <th scope="col">2 Plus</th>
+            <!-- <th scope="col">.Licensing\StateNewHirePDFs</th>
+            <th scope="col">Licensing\StateRenewalPDFs</th>
+            <th scope="col" class="text-center">Action</th> -->
+            <th scope="col" colspan="2">Documents</th>
+            <th scope="col" class="text-center">Action</th>
+          </tr>
+        </thead>
+        <tbody class="bg-body">
+          <tr *ngFor="let stateReq of stateRequirements">
+            <td class="align-middle" style="font-size: larger">
+              {{ stateReq.requiredLicenseId }}
+            </td>
+            <td class="align-middle">{{ stateReq.workStateAbv }}</td>
+            <td class="align-middle text-nowrap">
+              {{ stateReq.resStateAbv }}
+            </td>
+            <td class="align-middle" style="width: max-content">
+              {{ stateReq.requirementType }}
+            </td>
+            <td class="align-middle" style="width: max-content">
+              <div class="form-check d-flex justify-content-center">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [checked]="stateReq.licLevel1"
+                  disabled
+                />
+              </div>
+            </td>
+            <td class="align-middle" style="width: max-content">
+              <div class="form-check d-flex justify-content-center">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [checked]="stateReq.licLevel2"
+                  disabled
+                />
+              </div>
+            </td>
+            <td class="align-middle" style="width: max-content">
+              <div class="form-check d-flex justify-content-center">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [checked]="stateReq.licLevel3"
+                  disabled
+                />
+              </div>
+            </td>
+            <td class="align-middle" style="width: max-content">
+              <div class="form-check d-flex justify-content-center">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [checked]="stateReq.licLevel4"
+                  disabled
+                />
+              </div>
+            </td>
+            <td class="align-middle" style="width: max-content">
+              <div class="form-check d-flex justify-content-center">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [checked]="stateReq.plS_Incentive1"
+                  disabled
+                />
+              </div>
+            </td>
+            <td class="align-middle" style="width: max-content">
+              <div class="form-check d-flex justify-content-center">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  [checked]="stateReq.incentive2_Plus"
+                  disabled
+                />
+              </div>
+            </td>
+            <!-- <td class="align-middle">
+              {{ stateReq.startDocument }}
+            </td>
+            <td class="align-middle" style="width: max-content">
+              {{ stateReq.renewalDocument }}
+            </td> -->
+            <td class="align-middle" colspan="2">
+              <div class="d-flex flex-column">
+                <div>{{ stateReq.startDocument }}</div>
+                <div>{{ stateReq.renewalDocument }}</div>
+              </div>
+            </td>
+            <td class="align-middle" style="width: 10rem">
+              <div class="d-flex justify-content-between mb-3 me-4">
+                <button
+                  class="icon-edit-delete-button"
+                  type="button"
+                  (click)="
+                    adminDataService.storeStateRequirement('EDIT', stateReq);
+                    modalService.open('modal-edit-state-requirement')
+                  "
+                >
+                  <span class="material-symbols-outlined"> edit </span>
+                </button>
+                <button class="icon-edit-delete-button" type="button">
+                  <span class="material-symbols-outlined"> delete </span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: EDIT-STATE-REQUIREMENT -->
+<modal id="modal-edit-state-requirement">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      {{ adminComService.modes.stateRequirement.mode }} - State Requirement
+    </h1>
+    <!-- <button
+                  type="button"
+                  class="btn-close"
+                  (click)="modalService.close()"
+                ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-edit-state-requirement></app-edit-state-requirement>
+      </div>
+    </div>
+  </div>
+</modal>
