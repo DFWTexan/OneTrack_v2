@@ -10,7 +10,7 @@ import { AdminComService, AdminDataService, ModalService } from '../../_services
 @Injectable()
 export class CompanyEditComponent implements OnInit {
   loading: boolean = false;
-  companyTypes: any[] = [];
+  companyTypes: any[] = ['Loading...'];
   companies: any[] = [];
   selectedCompanyType: string = 'Select Company Type';
 

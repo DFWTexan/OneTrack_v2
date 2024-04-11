@@ -16,7 +16,7 @@ import { EducationRule } from '../../_Models';
 export class ContinueEducationEditComponent implements OnInit {
   loading: boolean = false;
   stateProvinces: any[] = [];
-  licenseTypes: any[] = [];
+  licenseTypes: any[] = ['Loading...'];
   selectedStateProvince: string | null = '';
   selectedLicenseType: string | null = '';
   contEducationRules: EducationRule[] = [] as EducationRule[];
