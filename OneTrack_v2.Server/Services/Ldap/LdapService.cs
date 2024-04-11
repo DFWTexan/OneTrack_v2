@@ -1,6 +1,8 @@
 ﻿using DataModel.Response;
 using OneTrak_v2.Services.Model;
 using System.DirectoryServices.AccountManagement;
+using System.DirectoryServices.Protocols;
+using System.Net;
 
 namespace OneTrak_v2.Services
 {
@@ -8,26 +10,56 @@ namespace OneTrak_v2.Services
     {
         public ReturnResult GetUserAccount(string vUserName, string vPassWord) 
         {
+            //string ldapServer = "ldapServername:389";
+            //string ldapDomain = "CORP";
+            //string ldapContainer = "OU=Users,DC=domain,DC=com";
             string ldapServer = "ldapServername:389";
-            string ldapDomain = "domain";
-            string ldapContainer = "OU=Users,DC=domain,DC=com";
-            
-           UserAccount userAccount = new UserAccount();
+            int ldapPort = 389;
+            string ldapDomain = "CORP";
+
+            UserAccount userAccount = new UserAccount();
             ReturnResult retResult = new ReturnResult();
             try
 			{
-                using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, ldapServer, ldapContainer))
+                using (var connection = new LdapConnection(new LdapDirectoryIdentifier(ldapServer, ldapPort)))
                 {
-                    if (pc.ValidateCredentials(vUserName, vPassWord))
+                    connection.AuthType = AuthType.Basic;
+                    connection.SessionOptions.ProtocolVersion = 3; // equivalent to Ldap_V3
+                    connection.Bind(new NetworkCredential($"{vUserName}@{ldapDomain}", vPassWord));
+
+                    var searchRequest = new SearchRequest(
+                        ldapDomain,
+                        $"(sAMAccountName={vUserName})",
+                        SearchScope.Subtree, // equivalent to SCOPE_SUB
+                        new[] { "displayName", "sAMAccountName", "mail" }
+                    );
+
+                    var searchResponse = (SearchResponse)connection.SendRequest(searchRequest);
+
+                    foreach (SearchResultEntry entry in searchResponse.Entries)
                     {
                         userAccount = new UserAccount
                         {
-                            DisplayName = UserPrincipal.FindByIdentity(pc, vUserName).DisplayName,
-                            UserSamAcctName = UserPrincipal.FindByIdentity(pc, vUserName).SamAccountName,
-                            Email = UserPrincipal.FindByIdentity(pc, vUserName).EmailAddress
+                            DisplayName = entry.Attributes["displayName"][0].ToString(),
+                            UserSamAcctName = entry.Attributes["sAMAccountName"][0].ToString(),
+                            Email = entry.Attributes["mail"][0].ToString()
                         };
                     }
                 }
+
+                //using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, ldapServer, ldapDomain))
+                //{
+                //    if (pc.ValidateCredentials(vUserName, vPassWord))
+                //    {
+                //        userAccount = new UserAccount
+                //        {
+                //            DisplayName = UserPrincipal.FindByIdentity(pc, vUserName).DisplayName,
+                //            UserSamAcctName = UserPrincipal.FindByIdentity(pc, vUserName).SamAccountName,
+                //            Email = UserPrincipal.FindByIdentity(pc, vUserName).EmailAddress
+                //        };
+                //    }
+                //}
+
                 // Create PrincipalContext with LDAP connection
                 //using (var context = new PrincipalContext(ContextType.Domain, ldapServer, ldapDomain, vUserName, vPassWord))
                 //{

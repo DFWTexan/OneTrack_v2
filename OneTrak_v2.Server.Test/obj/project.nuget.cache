@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Rn+rIhb2Px33LaChrHPTF5I59Xh/yqi3jPnj3a2BNNl4S5Ml5ohKr4iwUg5vL6ekjR4McW8YNzsvXG/gKlxvMQ==",
+  "dgSpecHash": "9hruJBPTXZxfSHtNao1fu2kDs9ZANIiakIlInod4WatkiyW0TUSp6hmgAauee83doKh9zVXZdEiWPZjE6zRZ0w==",
   "success": true,
   "projectFilePath": "U:\\Development\\Repos\\OneTrack_v2\\OneTrak_v2.Server.Test\\OneTrak_v2.Server.Test.csproj",
   "expectedPackageFiles": [
@@ -124,6 +124,7 @@
     "C:\\Users\\T2229513\\.nuget\\packages\\mono.texttemplating\\2.3.1\\mono.texttemplating.2.3.1.nupkg.sha512",
     "C:\\Users\\T2229513\\.nuget\\packages\\moq\\4.20.70\\moq.4.20.70.nupkg.sha512",
     "C:\\Users\\T2229513\\.nuget\\packages\\newtonsoft.json\\13.0.3\\newtonsoft.json.13.0.3.nupkg.sha512",
+    "C:\\Users\\T2229513\\.nuget\\packages\\novell.directory.ldap.netstandard\\3.6.0\\novell.directory.ldap.netstandard.3.6.0.nupkg.sha512",
     "C:\\Users\\T2229513\\.nuget\\packages\\nuget.common\\6.9.1\\nuget.common.6.9.1.nupkg.sha512",
     "C:\\Users\\T2229513\\.nuget\\packages\\nuget.configuration\\6.9.1\\nuget.configuration.6.9.1.nupkg.sha512",
     "C:\\Users\\T2229513\\.nuget\\packages\\nuget.dependencyresolver.core\\6.9.1\\nuget.dependencyresolver.core.6.9.1.nupkg.sha512",
