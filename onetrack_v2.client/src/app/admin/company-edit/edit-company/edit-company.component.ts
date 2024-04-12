@@ -1,11 +1,9 @@
 import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 
 import { AdminComService, AdminDataService } from '../../../_services';
-import { Company, CompanyItem } from '../../../_Models';
-
+import { Company } from '../../../_Models';
 
 @Component({
   selector: 'app-edit-company',
@@ -41,34 +39,32 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
       fax: new FormControl(''),
     });
 
-   this.subscriptionData = this.adminComService.modes.company.changed.subscribe((mode: string) => {
-      if (mode === 'EDIT') {
-        this.adminDataService.companyChanged.subscribe((company: Company) => {
-
-console.log('EMFTEST (app-edit-company) - company', company);
-
-          this.companyForm.patchValue({
-            companyId: company.companyId,
-            companyAbv: company.companyAbv,
-            companyType: company.companyType,
-            companyName: company.companyName,
-            tin: company.tin,
-            naicnumber: company.naicnumber,
-            addressId: company.addressId,
-            address1: company.address1,
-            address2: company.address2,
-            city: company.city,
-            state: company.state,
-            phone: company.phone,
-            country: company.country,
-            zip: company.zip,
-            fax: company.fax,
+    this.subscriptionData =
+      this.adminComService.modes.company.changed.subscribe((mode: string) => {
+        if (mode === 'EDIT') {
+          this.adminDataService.companyChanged.subscribe((company: Company) => {
+            this.companyForm.patchValue({
+              companyId: company.companyId,
+              companyAbv: company.companyAbv,
+              companyType: company.companyType,
+              companyName: company.companyName,
+              tin: company.tin,
+              naicnumber: company.naicnumber,
+              addressId: company.addressId,
+              address1: company.address1,
+              address2: company.address2,
+              city: company.city,
+              state: company.state,
+              phone: company.phone,
+              country: company.country,
+              zip: company.zip,
+              fax: company.fax,
+            });
           });
-        });
-      } else {
-        this.companyForm.reset();
-      }
-    });
+        } else {
+          this.companyForm.reset();
+        }
+      });
   }
 
   onSubmit() {}
