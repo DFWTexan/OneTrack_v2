@@ -53,6 +53,8 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
               isActive: eduRule.isActive,
             });
           });
+        } else {
+          this.eduRuleForm.reset();
         }
       });
   }

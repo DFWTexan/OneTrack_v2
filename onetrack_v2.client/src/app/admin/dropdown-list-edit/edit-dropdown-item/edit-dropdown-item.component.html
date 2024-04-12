@@ -1,1 +1,50 @@
-<p>edit-dropdown-item works!</p>
+<form
+  [formGroup]="dropdownItemForm"
+  (ngSubmit)="onSubmit()"
+  class="container app-modal-container"
+>
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        <label for="lkpField" class="form-label">Lookup Field:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="lkpField"
+          formControlName="lkpField"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="lkpValue" class="form-label">Lookup Value:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="lkpValue"
+          formControlName="lkpValue"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="sortOrder" class="form-label">Sort Order:</label>
+        <input
+          class="form-control input-size-small"
+          type="number"
+          id="sortOrder"
+          formControlName="sortOrder"
+        />
+      </div>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button type="button" class="btn btn-secondary me-3 cancel-button">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary save-button">Save</button>
+    </div>
+  </div>
+</form>
