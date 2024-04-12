@@ -1,1 +1,43 @@
-<p>edit-edu-rule works!</p>
+<form
+  [formGroup]="eduRuleForm"
+  (ngSubmit)="onSubmit()"
+  class="container app-modal-container"
+>
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        <label for="ruleNumber" class="form-label">Rule Number:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="ruleNumber"
+          formControlName="ruleNumber"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="stateProvince" class="form-label">State Province:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="stateProvince"
+          formControlName="stateProvince"
+        />
+      </div>
+
+      <!-- Add more form controls for the rest of the properties in the EducationRule interface -->
+
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button type="button" class="btn btn-secondary me-3 cancel-button">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary save-button">Save</button>
+    </div>
+  </div>
+</form>
