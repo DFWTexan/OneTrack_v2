@@ -2,6 +2,7 @@ import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
+
 import { AgentComService, AgentDataService } from '../../../../../_services';
 
 @Component({
@@ -16,7 +17,7 @@ export class EditLicenseRenewalComponent implements OnInit, OnDestroy {
   subscriptionData: Subscription = new Subscription();
 
   constructor(
-    public agentService: AgentDataService,
+    public agentDataService: AgentDataService,
     public agentComService: AgentComService
   ) {}
 
@@ -38,7 +39,7 @@ export class EditLicenseRenewalComponent implements OnInit, OnDestroy {
       this.agentComService.modeLicRenewalChanged.subscribe((mode: string) => {
         if (mode === 'EDIT') {
           this.subscriptionData =
-            this.agentService.licenseRenewalItemChanged.subscribe(
+            this.agentDataService.licenseRenewalItemChanged.subscribe(
               (licRenewal: any) => {
                 this.licRenewalForm
                 .patchValue({

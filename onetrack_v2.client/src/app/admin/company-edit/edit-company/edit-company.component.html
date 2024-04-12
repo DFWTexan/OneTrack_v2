@@ -1,1 +1,43 @@
-<p>edit-company works!</p>
+<form
+  [formGroup]="companyForm"
+  (ngSubmit)="onSubmit()"
+  class="container app-modal-container"
+>
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        <label for="companyId" class="form-label">Company ID:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="companyId"
+          formControlName="companyId"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="companyAbv" class="form-label">Company Abbreviation:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="companyAbv"
+          formControlName="companyAbv"
+        />
+      </div>
+
+      <!-- Add more form controls for the rest of the properties in the Company interface -->
+
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button type="button" class="btn btn-secondary me-3 cancel-button">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary save-button">Save</button>
+    </div>
+  </div>
+</form>

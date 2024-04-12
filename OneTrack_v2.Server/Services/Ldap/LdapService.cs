@@ -9,7 +9,7 @@ namespace OneTrak_v2.Services
         public ReturnResult GetUserAccount(string vUserName, string vPassWord) 
         {
             string ldapServer = "ldapServername:389";
-            string ldapDomain = "domain";
+            string ldapDomain = "CORP";
             string ldapContainer = "OU=Users,DC=domain,DC=com";
             
            UserAccount userAccount = new UserAccount();
