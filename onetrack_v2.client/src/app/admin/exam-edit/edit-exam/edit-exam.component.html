@@ -1,1 +1,43 @@
-<p>edit-exam works!</p>
+<form
+  [formGroup]="examForm"
+  (ngSubmit)="onSubmit()"
+  class="container app-modal-container"
+>
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        <label for="examId" class="form-label">Exam ID:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="examId"
+          formControlName="examId"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="examName" class="form-label">Exam Name:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="examName"
+          formControlName="examName"
+        />
+      </div>
+
+      <!-- Add more form controls for the rest of the properties in the Exam interface -->
+
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button type="button" class="btn btn-secondary me-3 cancel-button">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary save-button">Save</button>
+    </div>
+  </div>
+</form>

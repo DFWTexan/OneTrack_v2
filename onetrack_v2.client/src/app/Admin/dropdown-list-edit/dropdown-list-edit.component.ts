@@ -13,7 +13,7 @@ import {
 @Injectable()
 export class DropdownListEditComponent implements OnInit {
   loading: boolean = false;
-  dropdownListTypes: any[] = [];  
+  dropdownListTypes: any[] = ['Lodding...'];  
   dropdownListItems: any[] = [];
   selectedDropdownListType: string = 'AgentStatus';
 
