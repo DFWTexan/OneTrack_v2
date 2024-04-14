@@ -66,6 +66,8 @@ export class AdminDataService {
   // LICENSE EDIT
   licenseItems: License[] = [];
   licenseItemsChanged = new Subject<License[]>();
+  licenseItem: License = {} as License;
+  licenseItemChanged = new Subject<License>();
   companyItem: CompanyItem = {} as CompanyItem;
   companyItemChanged = new Subject<CompanyItem>();
   preExamItem: PreExamItem = {} as PreExamItem;
@@ -519,6 +521,12 @@ export class AdminDataService {
     this.adminComService.changeMode('jobTitle', mode);
     this.dropdownListItem = jobTitle || {};
     this.dropdownListItemChanged.next(this.dropdownListItem);
+  }
+
+  storeLicenseItem(mode: string | '', licenseItem: any | null) {
+    this.adminComService.changeMode('licenseItem', mode);
+    this.licenseItem = licenseItem || {};
+    this.licenseItemChanged.next(this.licenseItem);
   }
 
   storeCompanyItem(mode: string | '', companyItem: any | null) {

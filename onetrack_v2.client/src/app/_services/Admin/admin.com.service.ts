@@ -13,6 +13,7 @@ export class AdminComService {
     dropdownItem: { mode: '', changed: new Subject<string>() },
     examItem: { mode: '', changed: new Subject<string>() },
     jobTitle: { mode: '', changed: new Subject<string>() },
+    licenseItem: { mode: '', changed: new Subject<string>() },
     companyItem: { mode: '', changed: new Subject<string>() },
     productItem: { mode: '', changed: new Subject<string>() },
     preEduItem: { mode: '', changed: new Subject<string>() },
@@ -35,6 +36,7 @@ export class AdminComService {
       | 'dropdownItem'
       | 'examItem'
       | 'jobTitle'
+      | 'licenseItem'
       | 'companyItem'
       | 'productItem'
       | 'preEduItem'

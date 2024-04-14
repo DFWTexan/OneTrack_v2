@@ -18,8 +18,8 @@
         class="btn btn-success"
         type="button"
         (click)="
-          adminDataService.storeExamItem('INSERT', null);
-          modalService.open('modal-edit-exam')
+          adminDataService.storeLicenseItem('INSERT', null);
+          modalService.open('modal-edit-license')
         "
       >
         Create New License
@@ -122,8 +122,8 @@
                   class="icon-edit-delete-button me-5"
                   type="button"
                   (click)="
-                    adminDataService.storeExamItem('EDIT', license);
-                    modalService.open('modal-edit-exam')
+                    adminDataService.storeLicenseItem('EDIT', license);
+                    modalService.open('modal-edit-license')
                   "
                 >
                   <span class="material-symbols-outlined"> edit </span>
@@ -521,6 +521,27 @@
     </div>
   </div>
 </div>
+
+<!-- Modal: EDIT-LICENSE -->
+<modal id="modal-edit-license">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      {{ adminComService.modes.licenseItem.mode }} - License
+    </h1>
+    <!-- <button
+                  type="button"
+                  class="btn-close"
+                  (click)="modalService.close()"
+                ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-edit-license></app-edit-license>
+      </div>
+    </div>
+  </div>
+</modal>
 
 <!-- Modal: EDIT-COMPANY-ITEM -->
 <modal id="modal-edit-company-item">
