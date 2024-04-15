@@ -1,1 +1,43 @@
-<p>edit-product-item works!</p>
+<form
+  [formGroup]="productItemForm"
+  (ngSubmit)="onSubmit()"
+  class="container app-modal-container"
+>
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        <label for="licenseProductID" class="form-label">License Product ID:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="licenseProductID"
+          formControlName="licenseProductID"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="productID" class="form-label">Product ID:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="productID"
+          formControlName="productID"
+        />
+      </div>
+
+      <!-- Add more form controls for the rest of the properties in the ProductItem interface -->
+
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button type="button" class="btn btn-secondary me-3 cancel-button">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary save-button">Save</button>
+    </div>
+  </div>
+</form>

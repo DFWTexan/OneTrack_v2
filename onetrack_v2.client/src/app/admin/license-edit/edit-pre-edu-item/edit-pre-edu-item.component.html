@@ -1,1 +1,43 @@
-<p>edit-pre-edu-item works!</p>
+<form
+  [formGroup]="preEduItemForm"
+  (ngSubmit)="onSubmit()"
+  class="container app-modal-container"
+>
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        <label for="licensePreEducationID" class="form-label">License Pre-Education ID:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="licensePreEducationID"
+          formControlName="licensePreEducationID"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="preEducationID" class="form-label">Pre-Education ID:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="preEducationID"
+          formControlName="preEducationID"
+        />
+      </div>
+
+      <!-- Add more form controls for the rest of the properties in the PreEduItem interface -->
+
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button type="button" class="btn btn-secondary me-3 cancel-button">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary save-button">Save</button>
+    </div>
+  </div>
+</form>
