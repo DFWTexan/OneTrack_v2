@@ -1,1 +1,43 @@
-<p>edit-company-item works!</p>
+<form
+  [formGroup]="companyItemForm"
+  (ngSubmit)="onSubmit()"
+  class="container app-modal-container"
+>
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        <label for="licenseCompanyId" class="form-label">License Company ID:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="licenseCompanyId"
+          formControlName="licenseCompanyId"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="companyId" class="form-label">Company ID:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="companyId"
+          formControlName="companyId"
+        />
+      </div>
+
+      <!-- Add more form controls for the rest of the properties in the CompanyItem interface -->
+
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button type="button" class="btn btn-secondary me-3 cancel-button">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary save-button">Save</button>
+    </div>
+  </div>
+</form>

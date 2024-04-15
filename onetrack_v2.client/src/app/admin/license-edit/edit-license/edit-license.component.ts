@@ -10,7 +10,7 @@ import { AdminComService, AdminDataService } from '../../../_services';
   styleUrl: './edit-license.component.css'
 })
 @Injectable()
-export class EditLicenseComponent {
+export class EditLicenseComponent implements OnInit, OnDestroy{
   licenseForm!: FormGroup;
   subscriptionData: Subscription = new Subscription();
 
