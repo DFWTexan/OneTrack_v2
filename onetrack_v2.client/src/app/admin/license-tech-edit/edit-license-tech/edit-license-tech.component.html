@@ -1,1 +1,43 @@
-<p>edit-license-tech works!</p>
+<form
+  [formGroup]="licenseTechForm"
+  (ngSubmit)="onSubmit()"
+  class="container app-modal-container"
+>
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        <label for="licenseTechId" class="form-label">License Tech ID:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="licenseTechId"
+          formControlName="licenseTechId"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="soeid" class="form-label">SOEID:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="soeid"
+          formControlName="soeid"
+        />
+      </div>
+
+      <!-- Add more form controls for the rest of the properties in the LicenseTech interface -->
+
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button type="button" class="btn btn-secondary me-3 cancel-button">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary save-button">Save</button>
+    </div>
+  </div>
+</form>
