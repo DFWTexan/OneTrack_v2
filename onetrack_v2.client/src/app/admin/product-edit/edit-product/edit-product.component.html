@@ -1,0 +1,43 @@
+<form
+  [formGroup]="productForm"
+  (ngSubmit)="onSubmit()"
+  class="container app-modal-container"
+>
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        <label for="productId" class="form-label">Product ID:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="productId"
+          formControlName="productId"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="productName" class="form-label">Product Name:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="productName"
+          formControlName="productName"
+        />
+      </div>
+
+      <!-- Add more form controls for the rest of the properties in the Product interface -->
+
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button type="button" class="btn btn-secondary me-3 cancel-button">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary save-button">Save</button>
+    </div>
+  </div>
+</form>

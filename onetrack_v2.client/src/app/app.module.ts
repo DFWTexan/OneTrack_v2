@@ -97,6 +97,7 @@ import { EditStateRequirementComponent } from './admin/state-license-requirement
 import { EditStateProvinceComponent } from './admin/state-province-edit/edit-state-province/edit-state-province.component';
 import { EditXborRequirementComponent } from './admin/xbor-lic-requirements/edit-xbor-requirement/edit-xbor-requirement.component';
 import { EditLicenseComponent } from './admin/license-edit/edit-license/edit-license.component';
+import { EditProductComponent } from './admin/product-edit/edit-product/edit-product.component';
 
 @NgModule({
   declarations: [
@@ -171,7 +172,8 @@ import { EditLicenseComponent } from './admin/license-edit/edit-license/edit-lic
     EditStateRequirementComponent,
     EditStateProvinceComponent,
     EditXborRequirementComponent,
-    EditLicenseComponent
+    EditLicenseComponent,
+    EditProductComponent
   ],
   imports: [
     BrowserModule,
