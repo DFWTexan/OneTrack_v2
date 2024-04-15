@@ -1,1 +1,43 @@
-<p>edit-state-province works!</p>
+<form
+  [formGroup]="stateProvinceForm"
+  (ngSubmit)="onSubmit()"
+  class="container app-modal-container"
+>
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        <label for="stateProvinceCode" class="form-label">State Province Code:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="stateProvinceCode"
+          formControlName="stateProvinceCode"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="stateProvinceName" class="form-label">State Province Name:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="stateProvinceName"
+          formControlName="stateProvinceName"
+        />
+      </div>
+
+      <!-- Add more form controls for the rest of the properties in the StateProvince interface -->
+
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button type="button" class="btn btn-secondary me-3 cancel-button">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary save-button">Save</button>
+    </div>
+  </div>
+</form>
