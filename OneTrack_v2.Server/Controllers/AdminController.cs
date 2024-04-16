@@ -172,6 +172,14 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
+        [HttpGet("{branchCode}")]
+        public async Task<ActionResult> GetXBorLicRequirements(string branchCode)
+        {
+            var result = await Task.Run(() => _adminService.GetXBorLicRequirements(branchCode));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
         #endregion
     }
 }

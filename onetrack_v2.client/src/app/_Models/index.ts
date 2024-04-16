@@ -19,3 +19,4 @@ export * from './admin/preEducation';
 export * from './admin/product';
 export * from './admin/stateRequirement';
 export * from './admin/stateProvince';
+export * from './admin/xborLicenseRequirement';

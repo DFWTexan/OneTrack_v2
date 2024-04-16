@@ -23,5 +23,6 @@ namespace OneTrak_v2.Services
         public ReturnResult GetStateLicRequirements(string? vWorkState = null, string? vResState = null, string? vBranchCode = null);
         public ReturnResult GetStateProvinceList();
         public ReturnResult GetXBorderBranchCodes();
+        public ReturnResult GetXBorLicRequirements(string vBranchCode);
     }
 }

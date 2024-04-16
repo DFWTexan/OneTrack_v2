@@ -20,6 +20,7 @@ import {
   ProductItem,
   StateProvince,
   StateRequirement,
+  XborLicenseRequirement,
 } from '../../_Models';
 import { ModalService } from '../common/modal.service';
 
@@ -90,8 +91,8 @@ export class AdminDataService {
   stateProvincesChanged = new Subject<StateProvince[]>();
   stateProvince: StateProvince = {} as StateProvince;
   stateProvinceChanged = new Subject<StateProvince>();
-  xBorRequirement: StateRequirement = {} as StateRequirement;
-  xBorRequirementChanged = new Subject<StateRequirement>();
+  xborLicenseRequirement: StateRequirement = {} as XborLicenseRequirement;
+  xborLicenseRequirementChanged = new Subject<XborLicenseRequirement>();
 
   constructor(
     private http: HttpClient,
@@ -485,6 +486,25 @@ export class AdminDataService {
         })
       );
   }
+  fetchXBorLicRequirements(branchCode: string) {
+
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'GetXBorLicRequirements/' + branchCode)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
 
   ///////////////////////////////////////////// STORE DATA //////////////////////////////////////////
   storeCompany(mode: string | '', company: any | null) {
@@ -584,8 +604,8 @@ export class AdminDataService {
   }
 
   storeXBorRequirement(mode: string | '', xBorRequirement: any | null) {  
-    this.adminComService.changeMode('xBorRequirement', mode);
-    this.xBorRequirement = xBorRequirement || {};
-    this.xBorRequirementChanged.next(this.xBorRequirement);
+    this.adminComService.changeMode('xborLicenseRequirement', mode);
+    this.xborLicenseRequirement = xBorRequirement || {};
+    this.xborLicenseRequirementChanged.next(this.xborLicenseRequirement);
   }
 }

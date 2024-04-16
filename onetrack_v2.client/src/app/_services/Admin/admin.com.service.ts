@@ -23,7 +23,7 @@ export class AdminComService {
     product: { mode: '', changed: new Subject<string>() },
     stateRequirement: { mode: '', changed: new Subject<string>() },
     stateProvince: { mode: '', changed: new Subject<string>() },
-    xBorRequirement: { mode: '', changed: new Subject<string>() },
+    xborLicenseRequirement: { mode: '', changed: new Subject<string>() },
   };
 
   constructor() {}
@@ -46,7 +46,7 @@ export class AdminComService {
       | 'product'
       | 'stateRequirement'
       | 'stateProvince'
-      | 'xBorRequirement',
+      | 'xborLicenseRequirement',
     mode: string
   ) {
     this.modes[type].mode = mode;

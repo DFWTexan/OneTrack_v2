@@ -6,7 +6,7 @@ import {
   ConstantsDataService,
   ModalService,
 } from '../../_services';
-import { StateRequirement } from '../../_Models';
+import { StateRequirement, XborLicenseRequirement } from '../../_Models';
 
 @Component({
   selector: 'app-xbor-lic-requirements',
@@ -18,7 +18,7 @@ export class XborLicRequirementsComponent implements OnInit {
   loading: boolean = false;
   branchCodes: any[] = [];
   selectedBranchCode: string = 'Select';
-  xborLicRequirements: StateRequirement[] = [];
+  xborLicRequirements: XborLicenseRequirement[] = [];
 
   constructor(
     private conService: ConstantsDataService,
@@ -44,7 +44,7 @@ export class XborLicRequirementsComponent implements OnInit {
     } else {
       this.loading = false;
       this.adminDataService
-        .fetchStateRequirements(null, null, value)
+        .fetchXBorLicRequirements(value)
         .subscribe((response) => {
           this.xborLicRequirements = response;
           this.loading = false;

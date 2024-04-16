@@ -1,1 +1,43 @@
-<p>edit-xbor-requirement works!</p>
+<form
+  [formGroup]="xborLicenseRequirementForm"
+  (ngSubmit)="onSubmit()"
+  class="container app-modal-container"
+>
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        <label for="requiredLicenseId" class="form-label">Required License ID:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="requiredLicenseId"
+          formControlName="requiredLicenseId"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="workStateAbv" class="form-label">Work State Abv:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="workStateAbv"
+          formControlName="workStateAbv"
+        />
+      </div>
+
+      <!-- Add more form controls for the rest of the properties in the XborLicenseRequirement interface -->
+
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button type="button" class="btn btn-secondary me-3 cancel-button">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary save-button">Save</button>
+    </div>
+  </div>
+</form>
