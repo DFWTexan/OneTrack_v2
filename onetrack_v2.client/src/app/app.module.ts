@@ -98,6 +98,8 @@ import { EditStateProvinceComponent } from './admin/state-province-edit/edit-sta
 import { EditXborRequirementComponent } from './admin/xbor-lic-requirements/edit-xbor-requirement/edit-xbor-requirement.component';
 import { EditLicenseComponent } from './admin/license-edit/edit-license/edit-license.component';
 import { EditProductComponent } from './admin/product-edit/edit-product/edit-product.component';
+import { AddTicklerComponent } from './team-member/search-team-member/add-tickler/add-tickler.component';
+import { AddIndexerComponent } from './team-member/search-team-member/add-indexer/add-indexer.component';
 
 @NgModule({
   declarations: [
@@ -173,7 +175,9 @@ import { EditProductComponent } from './admin/product-edit/edit-product/edit-pro
     EditStateProvinceComponent,
     EditXborRequirementComponent,
     EditLicenseComponent,
-    EditProductComponent
+    EditProductComponent,
+    AddTicklerComponent,
+    AddIndexerComponent
   ],
   imports: [
     BrowserModule,
