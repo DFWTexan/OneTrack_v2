@@ -14,26 +14,30 @@ export class WorkListComponent implements OnInit {
   licenseTechs: LicenseTech[] = [];
 
   workListName: string = 'Agent Address Change';
-  licenseTech: string | null = null;
+  licenseTech: string = 'T9999999';
   date: string | null = null;
 
   selectedWorkListName = 'Agent Address Change';
-  selectedLicenseTech: string | null;
+  selectedLicenseTech = 'T9999999';
   selectedDate: string | null;
 
   constructor(
     public workListDataService: WorkListDataService,
     public miscDataService: MiscDataService
   ) {
-    this.selectedLicenseTech = null;
+    // this.selectedLicenseTech = null;
     this.selectedDate = null;
   }
 
   ngOnInit(): void {
     this.miscDataService.fetchWorkListNames().subscribe((worklistNames) => {
       this.worklistNames = worklistNames;
+      this.selectedWorkListName = worklistNames[0];
     });
     this.miscDataService.fetchLicenseTechs().subscribe((licenseTechs) => {
+
+console.log('EMFTEST => \n', licenseTechs);
+
       this.licenseTechs = licenseTechs;
       this.selectedLicenseTech = licenseTechs[0].soeid;
     });
@@ -41,6 +45,9 @@ export class WorkListComponent implements OnInit {
   }
 
   fetchWorkListData(): void {
+
+console.log('EMFTEST - ', this.selectedWorkListName, this.selectedDate, this.selectedLicenseTech);
+
     this.workListDataService
       .fetchWorkListData(
         this.selectedWorkListName,

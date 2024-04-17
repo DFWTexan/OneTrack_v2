@@ -22,7 +22,7 @@
             class="form-select select-size-med-small"
             name="licenseTech"
             id="licenseTech"
-            [value]="selectedLicenseTech"
+            value="selectedLicenseTech"
             (change)="changeLicenseTech($event)"
             [(ngModel)]="licenseTech"
           >
@@ -47,6 +47,11 @@
     </form>
   </div>
   <mat-divider></mat-divider>
+  <div class="row" *ngIf="worklistData.length == 0">
+    <div class="col d-flex justify-content-center mt-5">
+      <h3>No data found</h3>
+    </div>
+  </div>
   <div class="row" *ngIf="worklistData.length > 0">
     <div class="col">
       <div class="table">
