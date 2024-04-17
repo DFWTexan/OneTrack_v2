@@ -140,6 +140,7 @@ namespace OneTrack_v2.DbData
         #endregion
 
         #region // Raw SQL Queries
+        public virtual DbSet<OputEmployeeSearchResult> OputEmployeeSearchResult { get; set; }
         public virtual DbSet<OputAgentHiearchy> OputAgentHiearchy { get; set; }
         public virtual DbSet<OputVarDropDownList> OputVarDropDownList { get; set; }
         public virtual DbSet<OputVarDropDownList_v2> OputVarDropDownList_v2 { get; set; }
@@ -4018,6 +4019,7 @@ namespace OneTrack_v2.DbData
             #endregion
 
             #region Raw SQL Queries
+            modelBuilder.Entity<OputEmployeeSearchResult>().ToSqlQuery("OputEmployeeSearchResult").HasNoKey();
             modelBuilder.Entity<OputAgentHiearchy>().ToSqlQuery("OputAgentHiearchy").HasNoKey();
             modelBuilder.Entity<OputVarDropDownList>().ToSqlQuery("OputVarDropDownList").HasNoKey();
             modelBuilder.Entity<OputVarDropDownList_v2>().ToSqlQuery("OputVarDropDownList_v2").HasNoKey();

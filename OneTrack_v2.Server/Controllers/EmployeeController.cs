@@ -21,17 +21,17 @@ namespace OneTrack_v2.Controllers
             _employeeService = employeeService;
         }
                     
-        [HttpPut]
-        public async Task<IActionResult> SearchEmployee(int CompanyID = 0, string? EmployeeSSN = null, string? GEID = null, string? SCORENumber = null, 
-            string? LastName = null, string? FirstName = null, List<string>? AgentStatus = null, string? ResState = null, string? WrkState = null, 
-            string? BranchCode = null, int EmployeeLicenseID = 0, string? LicStatus = null, string? LicState = null, string? LicenseName = null, 
-            int EmploymentID = 0, int NationalProducerNumber = 0)
-        {
-            var result = await Task.Run(() => _employeeService.SearchEmployee(EmployeeSSN, GEID, SCORENumber,   LastName, FirstName,
-               AgentStatus, ResState, WrkState, BranchCode, EmployeeLicenseID, LicStatus, LicState, LicenseName, NationalProducerNumber));
+        //[HttpPut]
+        //public async Task<IActionResult> SearchEmployee(int CompanyID = 0, string? EmployeeSSN = null, string? GEID = null, string? SCORENumber = null, 
+        //    string? LastName = null, string? FirstName = null, List<string>? AgentStatus = null, string? ResState = null, string? WrkState = null, 
+        //    string? BranchCode = null, int EmployeeLicenseID = 0, List<string>? LicStatus = null, string? LicState = null, string? LicenseName = null, 
+        //    int EmploymentID = 0, int NationalProducerNumber = 0)
+        //{
+        //    var result = await Task.Run(() => _employeeService.SearchEmployee(EmployeeSSN, GEID, SCORENumber,   LastName, FirstName,
+        //       AgentStatus, ResState, WrkState, BranchCode, EmployeeLicenseID, LicStatus, LicState, LicenseName, NationalProducerNumber));
 
-            return StatusCode(result.StatusCode, result);
-        }
+        //    return StatusCode(result.StatusCode, result);
+        //}
 
         [HttpPut]
         public async Task<IActionResult> SearchEmployee_v2([FromBody] IputEmployeeSearch vInput)

@@ -14,7 +14,7 @@
         public string? WrkState { get; set; } = null;
         public string? BranchCode { get; set; } = null;
         public int? EmployeeLicenseID { get; set; }
-        public string? LicStatus { get; set; } = null;
+        public List<string>? LicStatus { get; set; } = null;
         public string? LicState { get; set; } = null;
         public string? LicenseName { get; set; } = null;
         //public int EmploymentID { get; set; } = 0;
