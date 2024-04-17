@@ -20,7 +20,7 @@
           </thead>
           <tbody>
             <tr *ngFor="let teamMember of searchEmployeeResults">
-              <td>
+              <td class="align-middle">
                 <a
                   [routerLink]="[
                     '../../team/agent-info',
@@ -29,14 +29,34 @@
                   >View</a
                 >
               </td>
-              <td>{{ teamMember.employeeID }}</td>
-              <td>{{ teamMember.geid }}</td>
-              <td>{{ teamMember.name }}</td>
-              <td>{{ teamMember.resStateAbv }}</td>
-              <td>{{ teamMember.workStateAbv }}</td>
-              <td>{{ teamMember.branchName }}</td>
-              <td>{{ teamMember.scoreNumber }}</td>
-              <td>{{ teamMember.employmentID }}</td>
+              <td class="align-middle">{{ teamMember.employeeID }}</td>
+              <td class="align-middle">{{ teamMember.geid }}</td>
+              <td class="align-middle">{{ teamMember.name }}</td>
+              <td class="align-middle">{{ teamMember.resStateAbv }}</td>
+              <td class="align-middle">{{ teamMember.workStateAbv }}</td>
+              <td class="align-middle">{{ teamMember.branchName }}</td>
+              <td class="align-middle">{{ teamMember.scoreNumber }}</td>
+              <td class="align-middle">{{ teamMember.employmentID }}</td>
+              <td class="align-middle">
+                <button
+                  class="icon-edit-delete-button"
+                  type="button"
+                  title="Tickle"
+                  (click)="modalService.open('modal-new-tickler')"
+                >
+                  <span class="material-symbols-outlined"> chat </span>
+                </button>
+              </td>
+              <td class="align-middle">
+                <button
+                  class="icon-edit-delete-button"
+                  type="button"
+                  title="Document(s) Index"
+                  (click)="modalService.open('modal-document-index')"
+                >
+                  <span class="material-symbols-outlined"> list </span>
+                </button>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -44,3 +64,41 @@
     </div>
   </div>
 </div>
+
+<!-- Modal: NEW-TICKLER -->
+<modal id="modal-new-tickler">
+  <div class="modal-header">
+    <h1 class="modal-title">Inser New Tickler</h1>
+    <!-- <button
+              type="button"
+              class="btn-close"
+              (click)="modalService.close()"
+            ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <!-- <app-edit-company></app-edit-company> -->
+      </div>
+    </div>
+  </div>
+</modal>
+
+<!-- Modal: DOCUMENT-INDEX -->
+<modal id="modal-document-index">
+  <div class="modal-header">
+    <h1 class="modal-title">OneTrak Document(s) Indexer</h1>
+    <!-- <button
+              type="button"
+              class="btn-close"
+              (click)="modalService.close()"
+            ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <!-- <app-edit-company></app-edit-company> -->
+      </div>
+    </div>
+  </div>
+</modal>
