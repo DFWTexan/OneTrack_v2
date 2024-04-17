@@ -2,7 +2,7 @@
 
 namespace OneTrak_v2.Services
 {
-    public interface ILicenseInfo
+    public interface ILicenseInfoService
     {
         public ReturnResult GetIncentiveInfo(int vEmployeelicenseID);
         public ReturnResult GetIncentiveRolloutGroups();

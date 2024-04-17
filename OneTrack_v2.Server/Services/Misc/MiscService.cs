@@ -38,7 +38,8 @@ namespace OneTrack_v2.Services
             }
         }
         public ReturnResult GetBranches()
-        {             var result = new ReturnResult();
+        {             
+            var result = new ReturnResult();
             try
             {
 
@@ -63,6 +64,7 @@ namespace OneTrack_v2.Services
 
                 var queryResult = _db.Set<OputVarDropDownList_v2>()
                                       .FromSqlRaw(sql)
+                                      .AsNoTracking()
                                       .ToList();
 
                 result.ObjData = queryResult;
@@ -104,6 +106,7 @@ namespace OneTrack_v2.Services
 
                 var queryResult = _db.Set<OputVarDropDownList_v2>()
                                       .FromSqlRaw(sql)
+                                      .AsNoTracking()
                                       .ToList();
 
                 result.ObjData = queryResult;
@@ -203,6 +206,69 @@ namespace OneTrack_v2.Services
                 // TBD: Placeholder method to return a list of tickler message types
 
                 result.Success = true;
+                result.StatusCode = 200;
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+                return result;
+            }
+        }
+        public ReturnResult WorkListNames()
+        {
+            var result = new ReturnResult();
+            try
+            {
+
+                var activeWorkLists = _db.WorkLists
+                                    .Where(wl => wl.IsActive == true)
+                                    .OrderBy(wl => wl.WorkListName)
+                                    .Select(wl => wl.WorkListName)
+                                    .AsNoTracking()
+                                    .ToList();
+
+                result.Success = true;
+                result.ObjData = activeWorkLists;
+                result.StatusCode = 200;
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+                return result;
+            }
+        }
+        public ReturnResult GetLicenseTeches()
+        {
+            var result = new ReturnResult();
+            try
+            {
+
+                var query = from l in _db.LicenseTeches
+                            where l.IsActive == true
+                            select new
+                            {
+                                l.LicenseTechId,
+                                l.Soeid,
+                                l.FirstName,
+                                l.LastName,
+                                l.IsActive,
+                                l.TeamNum,
+                                l.LicenseTechPhone,
+                                l.LicenseTechFax,
+                                l.LicenseTechEmail,
+                                TechName = l.FirstName + " " + l.LastName
+                            };
+
+                var resultLicTechs = query.AsNoTracking().ToList();
+
+                result.Success = true;
+                result.ObjData = resultLicTechs;
                 result.StatusCode = 200;
 
                 return result;

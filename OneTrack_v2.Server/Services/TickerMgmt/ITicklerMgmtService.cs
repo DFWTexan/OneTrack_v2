@@ -2,7 +2,7 @@
 
 namespace OneTrak_v2.Services
 {
-    public interface ITicklerMgmt
+    public interface ITicklerMgmtService
     {
         public ReturnResult GetTicklerInfo(int vTicklerID, int vLicenseTechID, int vEmploymentID);
         public ReturnResult GetStockTickler();

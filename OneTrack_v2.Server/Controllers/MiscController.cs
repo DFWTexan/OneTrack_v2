@@ -80,5 +80,21 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpGet]
+        public async Task<ActionResult> GetLicenseTeches()
+        {
+            var result = await Task.Run(() => _miscService.GetLicenseTeches());
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> WorkListNames()
+        {
+            var result = await Task.Run(() => _miscService.WorkListNames());
+
+            return StatusCode(result.StatusCode, result);
+        }
     }
 }

@@ -12,5 +12,7 @@ namespace OneTrack_v2.Services
         public ReturnResult GetLicenseNames();
         public ReturnResult GetEmailTemplates();
         public ReturnResult GetTicklerMessageTypes();
+        public ReturnResult WorkListNames();
+        public ReturnResult GetLicenseTeches();
     }
 }

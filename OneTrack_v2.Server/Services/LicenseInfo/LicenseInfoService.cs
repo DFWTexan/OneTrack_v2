@@ -5,11 +5,11 @@ using OneTrack_v2.DbData;
 
 namespace OneTrak_v2.Services
 {
-    public class LicenseInfo : ILicenseInfo
+    public class LicenseInfoService : ILicenseInfoService
     {
         private readonly AppDataContext _db;
 
-        public LicenseInfo(AppDataContext db)
+        public LicenseInfoService(AppDataContext db)
         {
             _db = db;
         }

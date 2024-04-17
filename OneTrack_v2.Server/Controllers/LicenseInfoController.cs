@@ -8,9 +8,9 @@ namespace OneTrak_v2.Server.Controllers
     [ApiController]
     public class LicenseInfoController : ControllerBase
     {
-        private readonly ILicenseInfo _licenseInfo;
+        private readonly ILicenseInfoService _licenseInfo;
 
-        public LicenseInfoController(ILicenseInfo licenseInfo)
+        public LicenseInfoController(ILicenseInfoService licenseInfo)
         {
             _licenseInfo = licenseInfo;
         }

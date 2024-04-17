@@ -10,9 +10,9 @@ namespace OneTrak_v2.Server.Controllers
     [ApiController]
     public class TicklerMgmtController : ControllerBase
     {
-        private readonly ITicklerMgmt _ticklerMgmt;
+        private readonly ITicklerMgmtService _ticklerMgmt;
 
-        public TicklerMgmtController(ITicklerMgmt ticklerMgmt)
+        public TicklerMgmtController(ITicklerMgmtService ticklerMgmt)
         {
             _ticklerMgmt = ticklerMgmt;
         }

@@ -1,1 +1,70 @@
-<p>work-list works!</p>
+<div class="container">
+  <div class="row mb-3">
+    <form #agentForm="ngForm" (ngSubmit)="onSubmit()">
+      <div class="row mt-5">
+        <div class="col">
+          <label for="workListName">Work List Name:</label><br />
+          <select
+            class="form-select select-size-med-small"
+            name="workListName"
+            id="workListName"
+            (change)="changeWorkListName($event)"
+            [(ngModel)]="workListName"
+          >
+            <option *ngFor="let item of worklistNames" [value]="item">
+              {{ item }}
+            </option>
+          </select>
+        </div>
+        <div class="col">
+          <label for="licenseTech">License Tech:</label><br />
+          <select
+            class="form-select select-size-med-small"
+            name="licenseTech"
+            id="licenseTech"
+            [value]="selectedLicenseTech"
+            (change)="changeLicenseTech($event)"
+            [(ngModel)]="licenseTech"
+          >
+            <option *ngFor="let tech of licenseTechs" [value]="tech.soeid">
+              {{ tech.techName }}
+            </option>
+          </select>
+        </div>
+        <div class="col">
+          <label for="date">Date:</label><br />
+          <input
+            class="form-control input-size-small"
+            type="date"
+            name="date"
+            [(ngModel)]="date"
+          />
+        </div>
+        <div class="col align-middle">
+          <button class="btn btn-primary" type="submit">Search</button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row" *ngIf="worklistData.length > 0">
+    <div class="col">
+      <div class="table">
+        <thead>
+          <tr>
+            <th>&nbsp;</th>
+            <th *ngFor="let header of worklistData[0].split('|')">
+              {{ header }}
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-body">
+          <tr *ngFor="let row of worklistData.slice(1)">
+            <td><input type="checkbox" /></td>
+            <td *ngFor="let cell of row.split('|')">{{ cell }}</td>
+          </tr>
+        </tbody>
+      </div>
+    </div>
+  </div>
+</div>

@@ -8,11 +8,11 @@ using System.Linq;
 
 namespace OneTrak_v2.Services
 {
-    public class TicklerMgmt : ITicklerMgmt
+    public class TicklerMgmtService : ITicklerMgmtService
     {
         private readonly AppDataContext _db;
 
-        public TicklerMgmt(AppDataContext db)
+        public TicklerMgmtService(AppDataContext db)
         {
             _db = db;
         }

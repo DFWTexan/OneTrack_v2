@@ -11,3 +11,5 @@ export * from  './ticklerMgmt/ticklerMgmt.com.service';
 export * from  './common/app.com.service';
 export * from  './Admin/admin.data.service';
 export * from  './Admin/admin.com.service';
+export * from  './worklist/worklist.data.service';
+export * from  './common/misc.data.service';

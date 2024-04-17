@@ -50,7 +50,11 @@
     class="app-sidenav"
   >
     <mat-nav-list>
-      <mat-list-item routerLink="/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+      <mat-list-item
+        routerLink="/dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
         <mat-icon>dashboard</mat-icon><span>Dashboard</span>
       </mat-list-item>
       <mat-expansion-panel [class.mat-elevation-z0]="true">
@@ -159,12 +163,13 @@
           </a>
         </mat-nav-list>
       </mat-expansion-panel>
-      <!-- <mat-list-item routerLink="reports" routerLinkActive="active">
-        <mat-icon>library_books</mat-icon><span>Reports</span>
-      </mat-list-item> -->
-      <a href="https://omsbi/Reports/browse/Licensing" class="mat-list-item">
-        <mat-icon>library_books</mat-icon><span>Reports</span>
-      </a>
+      <mat-list-item>
+        <a href="https://omsbi/Reports/browse/Licensing">
+          <mat-icon>library_books</mat-icon>
+          <span style="font-size: 1.7rem; font-weight: 400;">Reports</span>
+        </a>
+      </mat-list-item>
+
       <mat-list-item routerLink="/work-lists">
         <mat-icon>list_alt</mat-icon><span>Work Lists</span>
       </mat-list-item>

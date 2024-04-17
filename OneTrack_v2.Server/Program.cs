@@ -14,11 +14,12 @@ builder.Services.AddScoped<IAgentService, AgentService>();
 builder.Services.AddScoped<IEmployeeService, EmployeeService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IEmailTemplateService, EmailTemplateService>();
-builder.Services.AddScoped<ILicenseInfo, LicenseInfo>();
-builder.Services.AddScoped<ITicklerMgmt, TicklerMgmt>();
+builder.Services.AddScoped<ILicenseInfoService, LicenseInfoService>();
+builder.Services.AddScoped<ITicklerMgmtService, TicklerMgmtService>();
 builder.Services.AddScoped<IMiscService, MiscService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IUtilityHelpService, UtilityHelpService>();
+builder.Services.AddScoped<IWorklistService, WorklistService>();
 
 builder.Services.AddControllers();
 
