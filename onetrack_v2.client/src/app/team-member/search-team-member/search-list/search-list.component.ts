@@ -35,9 +35,6 @@ export class SearchListComponent implements OnInit, OnDestroy, AfterViewInit {
       this.emplyService.employeeSearchResultsChanged.subscribe(
         (employeeSearchResults: EmployeeSearchResult[]) => {
           this.searchEmployeeResults = employeeSearchResults;
-
-console.log('EMFTest - (search-list) ngOnInit => \n', this.searchEmployeeResults);
-
           this.dataSource.data = employeeSearchResults;
         }
       );
