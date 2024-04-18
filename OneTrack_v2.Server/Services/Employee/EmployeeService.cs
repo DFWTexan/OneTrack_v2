@@ -198,8 +198,8 @@ namespace OneTrack_v2.Services
                              CONCAT(e.LastName,', ',e.FirstName,' ', LEFT(e.MiddleName,1)) ";
 
                 // Convert the lists to comma separated strings for the Function [dbo].[fn_String_To_Table] used in SQL
-                string vAgentStatusString = vAgentStatus != null ? string.Join(",", vAgentStatus) : "ALL";
-                string vLicStatusString = vLicStatus != null ? string.Join(",", vLicStatus) : "ALL";
+                string vAgentStatusString = vAgentStatus?.Count() != 0 ? string.Join(",", vAgentStatus) : "ALL";
+                string vLicStatusString = vLicStatus?.Count() != 0 ? string.Join(",", vLicStatus) : "ALL";
 
                 var parameters = new[]
                                 {
