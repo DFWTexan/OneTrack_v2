@@ -18,6 +18,13 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatTable } from '@angular/material/table';
+import { MatHeaderRow } from '@angular/material/table';
+import { MatHeaderCell } from '@angular/material/table';
+import { MatCell } from '@angular/material/table';
+import { MatRow } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableModule } from '@angular/material/table';
 
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
@@ -201,6 +208,13 @@ import { AddIndexerComponent } from './team-member/search-team-member/add-indexe
     MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule,
+    MatTable,
+    MatRow,
+    MatHeaderRow,
+    MatHeaderCell,
+    MatCell,
+    MatPaginator,
+    MatTableModule,
     RouterModule.forRoot([])
   ],
   providers: [provideAnimationsAsync(), ConstantsDataService],
