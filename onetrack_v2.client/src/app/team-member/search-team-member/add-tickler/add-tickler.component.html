@@ -1,1 +1,69 @@
-<p>add-tickler works!</p>
+<form #ticklerForm="ngForm" (ngSubmit)="onSubmit(ticklerForm)">
+  <div class="form-group">
+    <label for="assignment">Assignment</label>
+    <select
+      class="form-control"
+      id="assignment"
+      name="assignment"
+      ngModel
+      required
+    >
+      <option value="">UNASSIGNED UNASSIGNED</option>
+      <!-- Add more options here -->
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="memberNumber">Team Member Number</label>
+    <input
+      type="text"
+      class="form-control"
+      id="memberNumber"
+      name="memberNumber"
+      ngModel
+      required
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="memberName">Team Member Name</label>
+    <input
+      type="text"
+      class="form-control"
+      id="memberName"
+      name="memberName"
+      ngModel
+      required
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="dueDate">Due Date</label>
+    <input
+      type="date"
+      class="form-control"
+      id="dueDate"
+      name="dueDate"
+      ngModel
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="stockTickler">Stock Tickler Messages</label>
+    <select class="form-control" id="stockTickler" name="stockTickler" ngModel>
+      <option value="">Please select</option>
+      <!-- Add more options here -->
+    </select>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="row mt-3">
+    <div class="col d-flex justify-content-end">
+      <button type="submit" class="btn btn-primary me-4">Insert</button>
+      <button type="button" class="btn btn-secondary" (click)="cancel()">
+        Cancel
+      </button>
+    </div>
+  </div>
+</form>

@@ -14,7 +14,7 @@
 
     public class OputVarDropDownList_v2
     {
-        public string? Key { get; set; } = null;
         public string? Value { get; set; } = null;
+        public string? Label { get; set; } = null;
     }
 }

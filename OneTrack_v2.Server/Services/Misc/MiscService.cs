@@ -20,8 +20,8 @@ namespace OneTrack_v2.Services
                                     .OrderBy(_db => _db.StateProvinceName)
                                     .Select(_db => new OputVarDropDownList_v2
                                     {
-                                        Key = _db.StateProvinceAbv,
-                                        Value = _db.StateProvinceAbv
+                                        Value = _db.StateProvinceAbv,
+                                        Label = _db.StateProvinceAbv
                                     });
 
                 result.Success = true;
@@ -44,8 +44,8 @@ namespace OneTrack_v2.Services
             {
 
                 var sql = @"SELECT 
-                                BranchCode as [Key]
-                                , TRIM(ISNULL(b.Name,CONCAT('ZZ', BranchCode))) AS Value
+                                BranchCode as [Value]
+                                , TRIM(ISNULL(b.Name,CONCAT('ZZ', BranchCode))) AS [Label]
                             FROM 
                                 (SELECT h.EmploymentID, BranchCode 
                                  FROM dbo.TransferHistory h
@@ -86,8 +86,8 @@ namespace OneTrack_v2.Services
             try
             {
                 var sql = @"SELECT 
-                                 ISNULL(ScoreNumber,'0000') AS [Key]
-                                 , ISNULL(ScoreNumber,'0000') AS Value
+                                 ISNULL(ScoreNumber,'0000') AS [Value]
+                                 , ISNULL(ScoreNumber,'0000') AS [Label]
                             FROM 
                                  (SELECT h.EmploymentID, BranchCode 
                                   FROM dbo.TransferHistory h
@@ -127,9 +127,14 @@ namespace OneTrack_v2.Services
             var result = new ReturnResult();
             try
             {
-                // TBD: Placeholder method to return a list of employer agencies
+                var resultEmpAgencies = _db.Companies
+                                    .Where(c => c.CompanyType == "Employer" || c.CompanyType == "Agency")
+                                    .Select(c => new { Value = c.CompanyId, Label = c.CompanyName })
+                                    .AsNoTracking()
+                                    .ToList();
 
                 result.Success = true;
+                result.ObjData = resultEmpAgencies;
                 result.StatusCode = 200;
 
                 return result;
@@ -146,9 +151,15 @@ namespace OneTrack_v2.Services
             var result = new ReturnResult();
             try
             {
-                // TBD: Placeholder method to return a list of license statuses
+                var resultLicStatuses = _db.LkpTypeStatuses
+                            .Where(l => l.LkpField == "LicenseStatusSearch")
+                            .OrderBy(l => l.SortOrder)
+                            .Select(l => new { Value = l.LkpValue, Label = l.LkpValue })
+                            .AsNoTracking()
+                            .ToList();
 
                 result.Success = true;
+                result.ObjData = resultLicStatuses;
                 result.StatusCode = 200;
 
                 return result;
@@ -165,9 +176,18 @@ namespace OneTrack_v2.Services
             var result = new ReturnResult();
             try
             {
-                // TBD: Placeholder method to return a list of license names
+                var resultLicNames = _db.Licenses
+                                .Join(_db.StateProvinces,
+                                    license => license.StateProvinceAbv,
+                                    stateProvince => stateProvince.StateProvinceAbv,
+                                    (license, stateProvince) => new { License = license, StateProvince = stateProvince })
+                                .GroupBy(l => l.License.LicenseName)
+                                .AsNoTracking()
+                                .Select(g => new { Value = g.Key, Label = g.Key })
+                                .ToList();
 
                 result.Success = true;
+                result.ObjData = resultLicNames;
                 result.StatusCode = 200;
 
                 return result;

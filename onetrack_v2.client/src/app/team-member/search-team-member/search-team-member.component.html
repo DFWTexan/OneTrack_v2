@@ -158,8 +158,8 @@
                   <mat-option>None</mat-option>
                   <mat-option
                     *ngFor="let licenseStatus of licenseStatuses"
-                    [value]="licenseStatus"
-                    >{{ licenseStatus }}</mat-option
+                    [value]="licenseStatus.value"
+                    >{{ licenseStatus.label }}</mat-option
                   >
                 </mat-select> </mat-form-field
               ><br />
@@ -186,8 +186,8 @@
                   <mat-option>None</mat-option>
                   <mat-option
                     *ngFor="let licenseName of licenseNames"
-                    [value]="licenseName"
-                    >{{ licenseName }}</mat-option
+                    [value]="licenseName.value"
+                    >{{ licenseName.label }}</mat-option
                   >
                 </mat-select>
               </mat-form-field>

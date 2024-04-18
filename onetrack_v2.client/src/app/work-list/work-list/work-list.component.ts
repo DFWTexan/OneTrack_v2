@@ -35,9 +35,6 @@ export class WorkListComponent implements OnInit {
       this.selectedWorkListName = worklistNames[0];
     });
     this.miscDataService.fetchLicenseTechs().subscribe((licenseTechs) => {
-
-console.log('EMFTEST => \n', licenseTechs);
-
       this.licenseTechs = licenseTechs;
       this.selectedLicenseTech = licenseTechs[0].soeid;
     });
@@ -45,9 +42,6 @@ console.log('EMFTEST => \n', licenseTechs);
   }
 
   fetchWorkListData(): void {
-
-console.log('EMFTEST - ', this.selectedWorkListName, this.selectedDate, this.selectedLicenseTech);
-
     this.workListDataService
       .fetchWorkListData(
         this.selectedWorkListName,

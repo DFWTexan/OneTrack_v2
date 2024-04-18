@@ -25,7 +25,7 @@ export class DropdownDataService {
       .get<{
         success: boolean;
         statusCode: number;
-        objData: { key: string; value: string }[];
+        objData: { value: string; label: string }[];
         errMessage: string;
       }>(url)
       .pipe(
@@ -34,8 +34,8 @@ export class DropdownDataService {
           if (response.success && response.objData) {
             // Map the objData to the desired format
             return response.objData.map((item) => ({
-              value: item.key, // Assuming you want to map 'key' to 'value'
-              label: item.value, // 'value' is mapped to 'label'
+              value: item.value, // Assuming you want to map 'key' to 'value'
+              label: item.label, // 'value' is mapped to 'label'
             }));
           } else {
             // Handle the case where response is not successful or objData is not available
