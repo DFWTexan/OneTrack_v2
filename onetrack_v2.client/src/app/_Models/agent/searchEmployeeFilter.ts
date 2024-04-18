@@ -7,7 +7,7 @@ export interface SearchEmployeeFilter {
   ResState: string | null;
   WrkState: string | null;
   BranchCode: string | null;
-  AgentStatus: string | ['All'];
+  AgentStatus: string[] | ["All"];
   ScoreNumber: string | null;
   EmployerAgency: string | null;
   LicStatus: string[] | ['All'];

@@ -9,6 +9,7 @@ import {
   NgForm,
   // FormControl
 } from '@angular/forms';
+import { MatSelectChange } from '@angular/material/select';
 import { Subscription } from 'rxjs';
 
 import {
@@ -18,7 +19,6 @@ import {
   AppComService,
 } from '../../_services';
 import { EmployeeSearchResult, SearchEmployeeFilter } from '../../_Models';
-
 @Component({
   selector: 'app-search-team-member',
   templateUrl: './search-team-member.component.html',
@@ -32,6 +32,7 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
   states: string[] = [];
   stateProvinces: string[] = [];
   defaultAgentStatus = 'ALL';
+  defaultLicenseStatus = 'ALL';
   isShowTickle: boolean = true;
   subscribeTickleToggleChanged: Subscription = new Subscription();
 
@@ -42,6 +43,8 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
   licenseStatuses: { value: string; label: string }[] = [];
   licenseNames: { value: string; label: string }[] = [];
 
+  selectedAgentStatuses: string[] = [];
+  selectedLicenseStatuses: string[] = [];
   searchEmployeeResult: EmployeeSearchResult[] = [];
 
   constructor(
@@ -89,6 +92,28 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
       });
   }
 
+  onAgentStatusSelectionChange(event: MatSelectChange) {
+    if (event.value.includes('ALL')) {
+      this.selectedAgentStatuses = ['ALL'];
+    } else {
+      this.selectedAgentStatuses = event.value;
+    }
+
+console.log('EMFTEST (onAgentStatusSelectionChange) - selectedAgentStatuses => \n', this.selectedAgentStatuses);
+
+  }
+
+  onLicenseStatusSelectionChange(event: MatSelectChange) {
+    if (event.value.includes('All')) {
+      this.selectedLicenseStatuses = ['All'];
+    } else {
+      this.selectedLicenseStatuses = event.value;
+    }
+
+console.log('EMFTEST (onLicenseStatusSelectionChange) - selectedLicenseStatuses => \n', this.selectedLicenseStatuses);
+
+  }
+
   onSubmit(form: NgForm) {
     this.isSubmitted = true;
     const searchFilter: SearchEmployeeFilter = {
@@ -101,13 +126,15 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
       ResState: form.value.searchFilter.ResState || null,
       WrkState: form.value.searchFilter.WrkState || null,
       BranchCode: form.value.searchFilter.BranchCode || null,
-      AgentStatus: form.value.searchFilter.AgentStatus || ['All'],
+      AgentStatus: this.selectedAgentStatuses || null,
       ScoreNumber: form.value.searchFilter.ScoreNumber || null,
       EmployerAgency: form.value.searchFilter.EmployerAgency || null,
-      LicStatus: form.value.searchFilter.LicStatus || null,
+      LicStatus: this.selectedLicenseStatuses || null,
       LicState: form.value.searchFilter.LicState || null,
       LicenseName: form.value.searchFilter.LicenseName || null,
     };
+
+    console.log('EMFTEST (onSubmit) - searchFilter => \n', searchFilter);
 
     this.emplyService.fetchEmployeeSearch(searchFilter).subscribe((results) => {
       this.searchEmployeeResult = results;

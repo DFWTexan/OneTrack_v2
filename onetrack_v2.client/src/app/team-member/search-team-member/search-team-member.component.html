@@ -1,4 +1,4 @@
-<div class="container app-container" style="overflow-x: hidden;">
+<div class="container app-container" style="overflow-x: hidden">
   <!-- <h1>Search for Team Member</h1> -->
   <div class="row">
     <div class="col-md-12 p-3">
@@ -20,6 +20,7 @@
                   name="EmployeeSSN"
                   placeholder="####"
                 />
+                <br />
                 <label for="search">Team Member ID:</label>
                 <input
                   type="text"
@@ -28,6 +29,7 @@
                   ngModel
                   name="TeamMemberGEID"
                 />
+                <br />
                 <label for="search">National Producer #:</label>
                 <input
                   type="text"
@@ -36,6 +38,7 @@
                   ngModel
                   name="NationalProducerNumber"
                 />
+                <br />
                 <label for="search">Last Name:</label>
                 <input
                   type="text"
@@ -44,6 +47,7 @@
                   ngModel
                   name="LastName"
                 />
+                <br />
                 <label for="search">First Name:</label>
                 <input
                   type="text"
@@ -52,23 +56,23 @@
                   ngModel
                   name="FirstName"
                 />
-                <label for="search">Resident State:</label><br />
+
+                <mat-divider class="mt-3 mb-3"></mat-divider>
+                
                 <mat-form-field>
-                  <mat-select
-                    ngModel
-                    name="ResState"
-                    placeholder="Select Res State"
-                  >
+                  <mat-label>Resident State</mat-label>
+                  <mat-select ngModel name="ResState">
                     <mat-option>None</mat-option>
                     <mat-option
                       *ngFor="let state of stateProvinces"
                       [value]="state"
                       >{{ state }}</mat-option
                     >
-                  </mat-select> </mat-form-field
-                ><br />
-                <label for="search">Work State:</label><br />
+                  </mat-select>
+                </mat-form-field>
+                <br />
                 <mat-form-field>
+                  <mat-label>Work State</mat-label>
                   <mat-select
                     ngModel
                     name="WrkState"
@@ -80,61 +84,13 @@
                       [value]="state"
                       >{{ state }}</mat-option
                     >
-                  </mat-select> </mat-form-field
-                ><br />
-                <label for="search">Branch Name:</label><br />
-                <mat-form-field>
-                  <mat-select
-                    ngModel
-                    name="BranchCode"
-                    placeholder="Select Branch Name"
-                  >
-                    <mat-option>None</mat-option>
-                    <mat-option
-                      *ngFor="let branchName of branchNames"
-                      [value]="branchName.value"
-                      >{{ branchName.label }}</mat-option
-                    >
-                  </mat-select> </mat-form-field
-                ><br />
+                  </mat-select>
+                </mat-form-field>
               </div>
             </div>
             <div class="col">
               <mat-form-field>
-                <mat-label>Agent Status</mat-label>
-                <!-- <mat-select ngModel name="agentStatus" multiple>
-                  @for (value of agentStatuses; track value) {
-                  <mat-option [value]="value">{{ value }}</mat-option>
-                  }
-                </mat-select>  -->
-                <mat-select
-                  [(value)]="defaultAgentStatus"
-                  ngModel
-                  name="AgentStatus"
-                  multiple
-                >
-                  <mat-option *ngFor="let value of agentStatuses" [value]="value">{{
-                    value
-                  }}</mat-option>
-                </mat-select> </mat-form-field
-              ><br />
-              <label for="search">Score Number:</label><br />
-              <mat-form-field>
-                <mat-select
-                  ngModel
-                  name="ScoreNumber"
-                  placeholder="Select Score Num"
-                >
-                  <mat-option>None</mat-option>
-                  <mat-option
-                    *ngFor="let scoreNumber of scoreNumbers"
-                    [value]="scoreNumber.value"
-                    >{{ scoreNumber.label }}</mat-option
-                  >
-                </mat-select> </mat-form-field
-              ><br />
-              <label for="search">Employer/Agency:</label><br />
-              <mat-form-field>
+                <mat-label>Employer/Agency</mat-label>
                 <mat-select
                   ngModel
                   name="EmployerAgency"
@@ -146,25 +102,91 @@
                     [value]="employerAgency.value"
                     >{{ employerAgency.label }}</mat-option
                   >
-                </mat-select> </mat-form-field
-              ><br /><br />
-              <label for="search">License Status:</label><br />
+                </mat-select>
+              </mat-form-field>
+              <br />
               <mat-form-field>
+                <mat-label>Agent Status</mat-label>
+                <mat-select
+                  [(value)]="defaultAgentStatus"
+                  [(ngModel)]="selectedAgentStatuses"
+                  name="AgentStatus"
+                  multiple
+                  (selectionChange)="onAgentStatusSelectionChange($event)"
+                  placeholder="Select Agent Status"
+                >
+                  <mat-option
+                    *ngFor="let value of agentStatuses"
+                    [value]="value"
+                    [disabled]="
+                      selectedAgentStatuses.includes('ALL') && value !== 'ALL'
+                    "
+                    >{{ value }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+
+              <mat-divider class="mt-2 mb-3"></mat-divider>
+
+              <mat-form-field>
+                <mat-label>Score Number</mat-label>
                 <mat-select
                   ngModel
-                  name="LicStatus"
-                  placeholder="Select License Status"
+                  name="ScoreNumber"
+                  placeholder="Select Score Num"
                 >
                   <mat-option>None</mat-option>
                   <mat-option
+                    *ngFor="let scoreNumber of scoreNumbers"
+                    [value]="scoreNumber.value"
+                    >{{ scoreNumber.label }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+              <br />
+              <mat-form-field>
+                <mat-label>Branch Name</mat-label>
+                <mat-select
+                  ngModel
+                  name="BranchCode"
+                  placeholder="Select Branch Name"
+                >
+                  <mat-option>None</mat-option>
+                  <mat-option
+                    *ngFor="let branchName of branchNames"
+                    [value]="branchName.value"
+                    >{{ branchName.label }}</mat-option
+                  >
+                </mat-select>
+              </mat-form-field>
+
+              <mat-divider class="mt-2 mb-3"></mat-divider>
+              
+              <mat-form-field>
+                <mat-label>License Status</mat-label>
+                <mat-select
+                  [(value)]="defaultLicenseStatus"
+                  [(ngModel)]="selectedLicenseStatuses"
+                  name="LicStatus"
+                  multiple
+                  (selectionChange)="onLicenseStatusSelectionChange($event)"
+                  placeholder="Select License Status"
+                >
+                  <!-- <mat-option>None</mat-option> -->
+                  <mat-option
                     *ngFor="let licenseStatus of licenseStatuses"
                     [value]="licenseStatus.value"
+                    [disabled]="
+                      selectedLicenseStatuses.includes('All') &&
+                      licenseStatus.value !== 'All'
+                    "
                     >{{ licenseStatus.label }}</mat-option
                   >
-                </mat-select> </mat-form-field
-              ><br />
-              <label for="search">License State:</label><br />
+                </mat-select>
+              </mat-form-field>
+              <br />
               <mat-form-field>
+                <mat-label>License State</mat-label>
                 <mat-select
                   ngModel
                   name="LicState"
@@ -174,10 +196,11 @@
                   <mat-option *ngFor="let state of states" [value]="state">{{
                     state
                   }}</mat-option>
-                </mat-select> </mat-form-field
-              ><br />
-              <label for="search">License Name:</label><br />
+                </mat-select>
+              </mat-form-field>
+              <br />
               <mat-form-field>
+                <mat-label>License Name</mat-label>
                 <mat-select
                   ngModel
                   name="LicenseName"
@@ -197,6 +220,9 @@
             </div>
           </div>
         </div>
+
+        <mat-divider class="mt-1 mb-1"></mat-divider>
+        
         <div class="row">
           <div class="col">
             <button type="submit" class="btn btn-primary">Search</button>
@@ -205,7 +231,6 @@
       </form>
     </div>
   </div>
-  
 
   <mat-divider *ngIf="isSubmitted"></mat-divider>
 
@@ -223,5 +248,4 @@
       <app-search-list></app-search-list>
     </div>
   </div>
-
 </div>
