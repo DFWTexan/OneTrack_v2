@@ -17,7 +17,7 @@ export class SearchListComponent implements OnInit, OnDestroy, AfterViewInit {
   dataSource = new MatTableDataSource<EmployeeSearchResult>([]);
   searchEmployeeResults: EmployeeSearchResult[] = [];
 
-  displayedColumns: string[] = ['employeeID' /* ... other column ids ... */];
+  displayedColumns: string[] = ['employeeID', 'geid', 'name', 'resStateAbv', 'workStateAbv', 'branchName', 'scoreNumber', 'employmentID'];
 
   subscription: Subscription = new Subscription();
 
@@ -35,6 +35,9 @@ export class SearchListComponent implements OnInit, OnDestroy, AfterViewInit {
       this.emplyService.employeeSearchResultsChanged.subscribe(
         (employeeSearchResults: EmployeeSearchResult[]) => {
           this.searchEmployeeResults = employeeSearchResults;
+
+console.log('EMFTest - (search-list) ngOnInit => \n', this.searchEmployeeResults);
+
           this.dataSource.data = employeeSearchResults;
         }
       );
