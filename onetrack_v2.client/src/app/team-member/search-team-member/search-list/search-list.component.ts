@@ -17,7 +17,7 @@ export class SearchListComponent implements OnInit, OnDestroy, AfterViewInit {
   dataSource = new MatTableDataSource<EmployeeSearchResult>([]);
   searchEmployeeResults: EmployeeSearchResult[] = [];
 
-  displayedColumns: string[] = ['employeeID', 'geid', 'name', 'resStateAbv', 'workStateAbv', 'branchName', 'scoreNumber', 'employmentID'];
+  displayedColumns: string[] = ['employeeID', 'geid', 'name', 'resStateAbv', 'workStateAbv', 'branchName', 'scoreNumber', 'employmentID', 'actions'];
 
   subscription: Subscription = new Subscription();
 
@@ -38,6 +38,14 @@ export class SearchListComponent implements OnInit, OnDestroy, AfterViewInit {
           this.dataSource.data = employeeSearchResults;
         }
       );
+  }
+
+  action1(member: any) {
+    // this.modalService.openModal('Action 1');
+  }
+
+  action2(member: any) {
+    // this.modalService.openModal('Action 2');
   }
 
   ngOnDestroy() {
