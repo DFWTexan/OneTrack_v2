@@ -12,7 +12,11 @@ import { EmployeeDataService, ModalService } from '../../../_services';
 })
 export class SearchListComponent implements OnInit, OnDestroy {
   searchEmployeeResults: EmployeeSearchResult[] = [];
+  paginatedResults: EmployeeSearchResult[] = [];
+  currentPage: number = 1;
+  itemsPerPage: number = 50; // Adjust as needed
   subscription: Subscription = new Subscription();
+  Math = Math;
 
   constructor(
     private emplyService: EmployeeDataService,
@@ -24,8 +28,28 @@ export class SearchListComponent implements OnInit, OnDestroy {
       this.emplyService.employeeSearchResultsChanged.subscribe(
         (employeeSearchResults: EmployeeSearchResult[]) => {
           this.searchEmployeeResults = employeeSearchResults;
+          this.updatePaginatedResults();
         }
       );
+  }
+
+  updatePaginatedResults() {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.paginatedResults = this.searchEmployeeResults.slice(startIndex, endIndex);
+  }
+
+  goToPage(n: number): void {
+    this.currentPage = n;
+    this.updatePaginatedResults();
+  }
+
+  nextPage(): void {
+    this.goToPage(this.currentPage + 1);
+  }
+
+  previousPage(): void {
+    this.goToPage(this.currentPage - 1);
   }
 
   ngOnDestroy() {
