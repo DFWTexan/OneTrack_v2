@@ -1,1 +1,290 @@
-<p>add-team-member works!</p>
+<div class="container">
+  <form
+    [formGroup]="newAgentForm"
+    (ngSubmit)="onSubmit()"
+    class="container mt-4"
+  >
+    <div class="row mt-5">
+      <div class="col">
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="firstName">First Name</label>
+            <input
+              type="text"
+              class="form-control input-size-medium"
+              id="firstName"
+              formControlName="firstName"
+              placeholder="First Name"
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="middleName">Middle Name</label>
+            <input
+              type="text"
+              class="form-control input-size-medium"
+              id="middleName"
+              formControlName="middleName"
+              placeholder="Middle Name"
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="lastName">Last Name</label>
+            <input
+              type="text"
+              class="form-control input-size-medium"
+              id="lastName"
+              formControlName="lastName"
+              placeholder="Last Name"
+            />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="preferedName">Prefered Name</label>
+            <input
+              type="text"
+              class="form-control input-size-medium"
+              id="preferedName"
+              formControlName="preferedName"
+              placeholder="Prefered Name"
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="dob">Date Of Birth</label>
+            <input
+              type="date"
+              class="form-control input-size-small"
+              id="dob"
+              formControlName="dateOfBirth"
+              placeholder="MM/DD/YYYY"
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="employeeSSN">Employee SSN</label>
+            <input
+              type="text"
+              class="form-control input-size-small"
+              id="employeeSSN"
+              formControlName="employeeSSN"
+              placeholder="###-##-####"
+            />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="teamID">Team ID</label>
+            <input
+              type="text"
+              class="form-control input-size-small"
+              id="teamID"
+              formControlName="teamID"
+              placeholder="Team ID"
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="soeid">SOEID</label>
+            <input
+              type="text"
+              class="form-control input-size-small"
+              id="soeid"
+              formControlName="soeid"
+              placeholder="SOEID"
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="nationalProducerNumber">Nat. Producer #</label>
+            <input
+              type="text"
+              class="form-control input-size-small"
+              id="nationalProducerNumber"
+              formControlName="nationalProducerNumber"
+              placeholder="Nat. Producer #"
+            />
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="col-md-12">
+            <mat-divider style="margin-bottom: 1rem"></mat-divider>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="employerAgency">Employer/Agency</label>
+            <select
+              class="form-select form-control select-size-med-medium"
+              id="employerAgency"
+              formControlName="employerAgency"
+            >
+              <!-- Dynamically generated options -->
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="workState">Work State</label>
+            <select
+              class="form-select form-control select-size-med-small"
+              id="workState"
+              formControlName="workState"
+            >
+              <!-- Dynamically generated options -->
+            </select>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="resState">Res State</label>
+            <select
+              class="form-select form-control select-size-med-small"
+              id="resState"
+              formControlName="resState"
+            >
+              <!-- Dynamically generated options -->
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="jobTitle">Job Title</label>
+            <input
+              type="text"
+              class="form-control input-size-large"
+              id="jobTitle"
+              formControlName="jobTitle"
+              placeholder="Job Title"
+            />
+          </div>
+          <div class="form-group col-md-3">
+            <label for="hireDate">Hire Date</label>
+            <input
+              type="date"
+              class="form-control input-size-small"
+              id="hireDate"
+              formControlName="hireDate"
+              placeholder="MM/DD/YYYY"
+            />
+          </div>
+          <div class="form-group col-md-3">
+            <label for="branchCode">Branch Code</label>
+            <select
+              class="form-control select-size-med-small"
+              id="branchCode"
+              formControlName="branchCode"
+            >
+              <!-- Dynamically generated options -->
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="address1">Address 1</label>
+            <input
+              type="text"
+              class="form-control input-size-large"
+              id="address1"
+              formControlName="address1"
+              placeholder="Address 1"
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="address2">Address 2</label>
+            <input
+              type="text"
+              class="form-control input-size-large"
+              id="address2"
+              formControlName="address2"
+              placeholder="Address 2"
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="city">City</label>
+            <input
+              type="text"
+              class="form-control input-size-medium"
+              id="city"
+              formControlName="city"
+              placeholder="Address 1"
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="zip">Zip</label>
+            <input
+              type="text"
+              class="form-control input-size-small"
+              id="zip"
+              formControlName="zip"
+              placeholder="#####-###"
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="email">Email</label>
+            <input
+              type="text"
+              class="form-control input-size-med-large"
+              id="email"
+              formControlName="email"
+              placeholder="Email"
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-4">
+            <label for="homePhone">Home Phone</label>
+            <input
+              type="text"
+              class="form-control input-size-small"
+              id="homePhone"
+              formControlName="homePhone"
+              placeholder="(###)###-####"
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="workPhone">Work Phone</label>
+            <input
+              type="text"
+              class="form-control input-size-small"
+              id="workPhone"
+              formControlName="workPhone"
+              placeholder="(###)###-####"
+            />
+          </div>
+          <div class="form-group col-md-4">
+            <label for="fax">Fax Phone</label>
+            <input
+              type="text"
+              class="form-control input-size-med-small"
+              id="fax"
+              formControlName="fax"
+              placeholder="(###)###-####"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <div class="col-md-12">
+        <mat-divider style="margin-bottom: 1rem"></mat-divider>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="form-group d-flex justify-content-end">
+          <button type="submit" class="btn btn-primary">Insert</button>
+          <button
+            type="button"
+            class="btn btn-secondary ms-3"
+            (click)="onCancel()"
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

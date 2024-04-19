@@ -57,6 +57,7 @@
       >
         <mat-icon>dashboard</mat-icon><span>Dashboard</span>
       </mat-list-item>
+
       <mat-expansion-panel [class.mat-elevation-z0]="true">
         <mat-expansion-panel-header>
           <mat-icon>business</mat-icon><span>Administration</span>
@@ -142,6 +143,7 @@
           >
         </mat-nav-list>
       </mat-expansion-panel>
+
       <mat-expansion-panel [class.mat-elevation-z0]="true">
         <mat-expansion-panel-header>
           <mat-icon>group</mat-icon><span>Team Members</span>
@@ -152,7 +154,7 @@
             routerLink="/team/add-member"
             routerLinkActive="active"
           >
-            <mat-icon>person_add</mat-icon><span>Add Team Member</span>
+            <mat-icon>person_add</mat-icon><span>Add Member</span>
           </a>
           <a
             mat-list-item
@@ -163,21 +165,27 @@
           </a>
         </mat-nav-list>
       </mat-expansion-panel>
+
       <mat-list-item>
         <a href="https://omsbi/Reports/browse/Licensing">
           <mat-icon>library_books</mat-icon>
-          <span style="font-size: 1.7rem; font-weight: 400;">Reports</span>
+          <span style="font-size: 1.5rem; font-weight: 500">Reports</span>
         </a>
       </mat-list-item>
 
       <mat-list-item routerLink="/work-lists">
-        <mat-icon>list_alt</mat-icon><span>Work Lists</span>
+        <mat-icon>list_alt</mat-icon>
+        <span style="font-size: 1.5rem; font-weight: 500" class="text-center">
+          Work Lists
+        </span>
       </mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
+
   <mat-sidenav-content style="background-color: aliceblue">
     <!-- <div class="app-sidenav-content"> -->
     <router-outlet></router-outlet>
     <!-- </div> -->
   </mat-sidenav-content>
+  
 </mat-sidenav-container>
