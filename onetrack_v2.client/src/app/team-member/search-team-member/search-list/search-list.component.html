@@ -1,12 +1,19 @@
 <div class="container">
   <div class="row">
-    <div
-      class="col-md-12"
-    >
-      <div class="table-responsive">
+    <div class="col-md-12">
+      <div
+        class="table-responsive"
+        style="
+          max-height: 500px;
+          overflow-y: auto;
+          overflow-x: hidden;
+          border-top-left-radius: 0.7rem;
+          border-top-right-radius: 0.7rem;
+        "
+      >
         <table class="table table-striped shadow-sm">
           <thead class="sticky-header">
-            <tr style="background-color: black; color: white; opacity: 0.8">
+            <tr style="background-color: black; color: white; opacity: 1">
               <th>&nbsp;</th>
               <th>Employee ID</th>
               <th>Team #</th>
@@ -62,7 +69,7 @@
             </tr>
           </tbody>
         </table>
-        <nav aria-label="Page navigation example">
+        <!-- <nav aria-label="Page navigation example">
           <ul class="pagination">
             <li class="page-item" [class.disabled]="currentPage === 1">
               <a
@@ -108,7 +115,7 @@
               </a>
             </li>
           </ul>
-        </nav>
+        </nav> -->
       </div>
     </div>
   </div>

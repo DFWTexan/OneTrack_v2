@@ -98,9 +98,6 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
     } else {
       this.selectedAgentStatuses = event.value;
     }
-
-console.log('EMFTEST (onAgentStatusSelectionChange) - selectedAgentStatuses => \n', this.selectedAgentStatuses);
-
   }
 
   onLicenseStatusSelectionChange(event: MatSelectChange) {
@@ -109,9 +106,6 @@ console.log('EMFTEST (onAgentStatusSelectionChange) - selectedAgentStatuses => \
     } else {
       this.selectedLicenseStatuses = event.value;
     }
-
-console.log('EMFTEST (onLicenseStatusSelectionChange) - selectedLicenseStatuses => \n', this.selectedLicenseStatuses);
-
   }
 
   onSubmit(form: NgForm) {
@@ -133,8 +127,6 @@ console.log('EMFTEST (onLicenseStatusSelectionChange) - selectedLicenseStatuses 
       LicState: form.value.searchFilter.LicState || null,
       LicenseName: form.value.searchFilter.LicenseName || null,
     };
-
-    console.log('EMFTEST (onSubmit) - searchFilter => \n', searchFilter);
 
     this.emplyService.fetchEmployeeSearch(searchFilter).subscribe((results) => {
       this.searchEmployeeResult = results;

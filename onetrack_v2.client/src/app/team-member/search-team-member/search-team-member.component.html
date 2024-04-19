@@ -244,19 +244,18 @@
   </div>
 
   <div class="row" *ngIf="isSubmitted">
-    <div
-      class="col-md-12"
-      style="
-        max-height: 500px;
-        overflow-y: auto;
-        overflow-x: hidden;
-        border-top-left-radius: 0.7rem;
-        border-top-right-radius: 0.7rem;
-      "
-    >
+    <div class="col-md-12">
       <app-search-list></app-search-list>
     </div>
     <div>
+      <!-- <app-pagination
+        [currentPage]="currentPage"
+        [totalItems]="searchEmployeeResults.length"
+        [itemsPerPage]="itemsPerPage"
+        (pageChange)="currentPage = $event; updatePaginatedResults()"
+      >
+      </app-pagination> -->
+
       <!-- <nav aria-label="Page navigation example">
         <ul class="pagination">
           <li class="page-item" [class.disabled]="currentPage === 1">

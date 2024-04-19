@@ -100,6 +100,7 @@ import { EditLicenseComponent } from './admin/license-edit/edit-license/edit-lic
 import { EditProductComponent } from './admin/product-edit/edit-product/edit-product.component';
 import { AddTicklerComponent } from './team-member/search-team-member/add-tickler/add-tickler.component';
 import { AddIndexerComponent } from './team-member/search-team-member/add-indexer/add-indexer.component';
+import { PaginationComponent } from './_components/pagination/pagination.component';
 
 @NgModule({
   declarations: [
@@ -177,7 +178,8 @@ import { AddIndexerComponent } from './team-member/search-team-member/add-indexe
     EditLicenseComponent,
     EditProductComponent,
     AddTicklerComponent,
-    AddIndexerComponent
+    AddIndexerComponent,
+    PaginationComponent,
   ],
   imports: [
     BrowserModule,

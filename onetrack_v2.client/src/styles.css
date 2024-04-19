@@ -51,7 +51,7 @@ body {
 
 .cancel-button {
   font-size: larger;
-} 
+}
 
 .input-size-small {
   width: 150px;
@@ -137,4 +137,13 @@ body {
 
 .icon-edit-delete-button:active {
   transform: scale(0.9); /* This creates a "pressed" effect when clicked */
+}
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 1020;
+  background-color: black;
+  color: white;
+  opacity: 0.8;
 }
