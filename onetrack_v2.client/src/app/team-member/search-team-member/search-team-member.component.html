@@ -248,13 +248,16 @@
       <app-search-list></app-search-list>
     </div>
     <div>
-      <!-- <app-pagination
-        [currentPage]="currentPage"
-        [totalItems]="searchEmployeeResults.length"
-        [itemsPerPage]="itemsPerPage"
-        (pageChange)="currentPage = $event; updatePaginatedResults()"
+      <app-pagination
+        [currentPage]="paginationComService.currentPage"
+        [totalItems]="paginationComService.displayItems.length"
+        [itemsPerPage]="paginationComService.itemsPerPage"
+        (pageChange)="
+          paginationComService.currentPage = $event;
+          paginationComService.updatePaginatedResults()
+        "
       >
-      </app-pagination> -->
+      </app-pagination>
 
       <!-- <nav aria-label="Page navigation example">
         <ul class="pagination">

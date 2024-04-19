@@ -1,10 +1,13 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Injectable, Input, Output } from '@angular/core';
+
+import { PaginationComService } from '../../_services';
 
 @Component({
   selector: 'app-pagination',
   templateUrl: './pagination.component.html',
   styleUrl: './pagination.component.css'
 })
+@Injectable()
 export class PaginationComponent {
   @Input() currentPage: number = 1;
   @Input() totalItems: number = 0;
@@ -12,6 +15,8 @@ export class PaginationComponent {
   @Output() pageChange = new EventEmitter<number>();
 
   totalPages: number = 0;
+
+  constructor(public paginationComService: PaginationComService) {}
 
   ngOnChanges() {
     this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);

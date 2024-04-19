@@ -17,6 +17,7 @@ import {
   DropdownDataService,
   ConstantsDataService,
   AppComService,
+  PaginationComService,
 } from '../../_services';
 import { EmployeeSearchResult, SearchEmployeeFilter } from '../../_Models';
 @Component({
@@ -51,7 +52,8 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
     private conService: ConstantsDataService,
     private drpdwnDataService: DropdownDataService,
     private emplyService: EmployeeDataService,
-    private appComService: AppComService
+    private appComService: AppComService,
+    public paginationComService: PaginationComService
   ) {}
 
   ngOnInit() {

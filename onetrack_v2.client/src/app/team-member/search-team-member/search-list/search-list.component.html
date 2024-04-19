@@ -28,7 +28,7 @@
             </tr>
           </thead>
           <tbody class="bg-body">
-            <tr *ngFor="let teamMember of paginatedResults">
+            <tr *ngFor="let teamMember of paginationComService.paginatedResults">
               <td class="align-middle">
                 <a
                   [routerLink]="[
