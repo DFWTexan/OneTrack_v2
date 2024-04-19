@@ -94,7 +94,7 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
 
   onAgentStatusSelectionChange(event: MatSelectChange) {
     if (event.value.includes('ALL')) {
-      this.selectedAgentStatuses = ['ALL'];
+      this.selectedAgentStatuses = [];
     } else {
       this.selectedAgentStatuses = event.value;
     }
@@ -105,7 +105,7 @@ console.log('EMFTEST (onAgentStatusSelectionChange) - selectedAgentStatuses => \
 
   onLicenseStatusSelectionChange(event: MatSelectChange) {
     if (event.value.includes('All')) {
-      this.selectedLicenseStatuses = ['All'];
+      this.selectedLicenseStatuses = [];
     } else {
       this.selectedLicenseStatuses = event.value;
     }
