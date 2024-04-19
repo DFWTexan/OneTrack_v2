@@ -19,7 +19,7 @@ import { AgentInfo, StockTickler, TicklerInfo } from '../../../_Models';
 export class TicklerInfoComponent implements OnInit {
   loading: boolean = false;
   stockTicklerItems: StockTickler[] = [];
-  licenseTechItems: any = [];
+  licenseTechItems: any = ['Loading...'];
   selectedLicenseTechID: number = 0;
   ticklerInfoItems: TicklerInfo[] = [];
   

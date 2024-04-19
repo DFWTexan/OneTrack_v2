@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { MiscDataService, WorkListDataService } from '../../_services';
-import { LicenseTech } from '../../_Models';
+import { MiscDataService, WorkListDataService } from '../_services';
+import { LicenseTech } from '../_Models';
 
 @Component({
   selector: 'app-work-list',

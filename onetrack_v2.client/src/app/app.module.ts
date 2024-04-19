@@ -44,7 +44,7 @@ import { XborLicRequirementsComponent } from './admin/xbor-lic-requirements/xbor
 import { AddTeamMemberComponent } from './team-member/add-team-member/add-team-member.component';
 import { SearchTeamMemberComponent } from './team-member/search-team-member/search-team-member.component';
 import { ReportsComponent } from './reports/reports/reports.component';
-import { WorkListComponent } from './work-list/work-list/work-list.component';
+import { WorkListComponent } from './work-list/work-list.component';
 import { AgentInformationComponent } from './team-member/agent-information/agent-information.component';
 import { ConstantsDataService } from './_services/';
 import { SearchListComponent } from './team-member/search-team-member/search-list/search-list.component';

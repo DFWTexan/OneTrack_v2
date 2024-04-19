@@ -18,7 +18,7 @@ import { XborLicRequirementsComponent } from './admin/xbor-lic-requirements/xbor
 import { AddTeamMemberComponent } from './team-member/add-team-member/add-team-member.component';
 import { SearchTeamMemberComponent } from './team-member/search-team-member/search-team-member.component';
 import { ReportsComponent } from './reports/reports/reports.component';
-import { WorkListComponent } from './work-list/work-list/work-list.component';
+import { WorkListComponent } from './work-list/work-list.component';
 import { AgentInformationComponent } from './team-member/agent-information/agent-information.component';
 import { EmfTestPageComponent } from './emf-test/emf-test-page.component';
 import { TmInformationComponent } from './team-member/agent-information/tm-information/tm-information.component';
