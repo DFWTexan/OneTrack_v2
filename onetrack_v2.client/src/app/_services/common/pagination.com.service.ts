@@ -28,7 +28,6 @@ export class PaginationComService {
     const startIndex = (this.currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;
     this.paginatedResults = this.displayItems.slice(startIndex, endIndex);
-    // this.paginatedResults = items;
     this.paginatedResultsChanged.next(this.paginatedResults);
   }
 

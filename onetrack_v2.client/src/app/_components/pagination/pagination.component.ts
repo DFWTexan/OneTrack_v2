@@ -15,11 +15,20 @@ export class PaginationComponent {
   @Output() pageChange = new EventEmitter<number>();
 
   totalPages: number = 0;
+  pageRange: any[] = [];
 
   constructor(public paginationComService: PaginationComService) {}
 
   ngOnChanges() {
     this.totalPages = Math.ceil(this.totalItems / this.itemsPerPage);
+    this.calculatePageRange();
+  }
+
+  calculatePageRange() {
+    let start = Math.max(this.currentPage - 2, 1);
+    let end = Math.min(start + 4, this.totalPages);
+    start = Math.max(end - 4, 1);
+    this.pageRange = Array(end - start + 1).fill(0).map((_, i) => start + i);
   }
 
   previousPage() {
