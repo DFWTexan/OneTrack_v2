@@ -338,7 +338,12 @@ export class AdminDataService {
       );
   }
 
-  filterJobTitleData(filterJobTitle: string) {
+  filterJobTitleData(filterJobTitle: string | null = null) {
+    if (filterJobTitle === '') {
+      this.jobTitlesChanged.next(this.jobTitles);
+      return;
+    }
+
     let filteredJobTitles: any[] = [];
     // console.log(
     //   'EMFTEST (admin.Service) - filterJobTitleData: ',
