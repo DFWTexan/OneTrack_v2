@@ -1,4 +1,7 @@
-<div class="container app-component-container">
+<div
+  class="container app-component-container"
+  style="width: 100%; max-width: none"
+>
   <div class="row mt-5 mb-3">
     <div class="col d-flex justify-content-start align-items-start">
       <button
@@ -19,10 +22,71 @@
   <div class="mt-5 mb-5 d-flex justify-content-center" *ngIf="isLoading">
     <div class="spinner-border text-primary"></div>
   </div>
-  <div class="row mt-4" *ngIf="!isLoading">
+  <div class="row mt-4" *ngIf="!isLoading" style="width: 100%; margin: 0">
+    <!-- FILTER -->
     <div
-      class="col-md-12 shadow-sm"
       style="
+        color: black;
+        background-color: darkgray;
+        border-radius: 1rem;
+        padding: 1rem;
+      "
+    >
+      <div class="row align-items-center">
+        <div class="d-flex align-items-center ms-3" style="width: 8rem">
+          <h1 class="text-start mb-0">Filter:</h1>
+        </div>
+
+        <div class="col justify-content-center align-middle">
+          <input
+            class="form-control input-size-medium"
+            type="text"
+            placeholder="Filter Job Title"
+          />
+        </div>
+
+        <div class="col justify-content-center align-middle">
+          <select class="form-select select-filter-size-small">
+            <option value="0">Active</option>
+            <option value="1">Yes</option>
+            <option value="2">No</option>
+          </select>
+        </div>
+
+        <div class="col justify-content-center align-middle">
+          <select class="form-select select-filter-size-small">
+            <option value="0">License Level</option>
+            <option
+              *ngFor="let level of licenseLevels"
+              [value]="level.licenseLevel"
+            >
+              {{ level.licenseLevel }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col justify-content-center align-middle">
+          <select class="form-select select-filter-size-small">
+            <option value="0">License Incentive</option>
+            <option
+              *ngFor="let incentive of licenseIncentives"
+              [value]="incentive.licenseIncentive"
+            >
+              {{ incentive.licenseIncentive }}
+            </option>
+          </select>
+        </div>
+
+        <div class="col">
+          <button class="btn btn-primary" type="button">Clear Filter</button>
+        </div>
+      </div>
+    </div>
+    <!-- JOB TITLE DISPLAY -->
+    <div
+      class="col-md-12 shadow-sm mt-2"
+      style="
+        width: 100%;
         max-height: 700px;
         overflow-y: auto;
         overflow-x: hidden;
@@ -32,13 +96,16 @@
     >
       <div
         class="table shadow-sm"
-        style="width: 100% !important; border-collapse: collapse"
         *ngIf="jobTitles.length > 0"
+        style="width: 100%; margin: 0"
       >
         <thead>
-          <tr class="sticky-top" style="background-color: gainsboro">
-            <th scope="col">JobTitleID</th>
-            <th scope="col">JobCode</th>
+          <tr
+            class="sticky-top"
+            style="background-color: gainsboro; width: 100%"
+          >
+            <th style="width: 10rem">JobTitleID</th>
+            <th style="width: 10rem">JobCode</th>
             <th scope="col">Job Title Name</th>
             <th scope="col">IsActive</th>
             <th scope="col">LicenseLevel</th>
@@ -48,10 +115,10 @@
         </thead>
         <tbody class="bg-body">
           <tr *ngFor="let job of paginationComService.paginatedResults">
-            <td class="align-middle">
+            <td class="align-middle" style="width: 10rem">
               {{ job.jobTitleId }}
             </td>
-            <td class="align-middle">{{ job.jobCode }}</td>
+            <td class="align-middle" style="width: 10rem">{{ job.jobCode }}</td>
             <td class="align-middle text-nowrap">
               {{ job.jobTitle1 }}
             </td>
@@ -116,6 +183,7 @@
         </tbody>
       </div>
     </div>
+    <!-- PAGINATION -->
     <div>
       <app-pagination
         *ngIf="!isLoading && jobTitles.length > 50"
