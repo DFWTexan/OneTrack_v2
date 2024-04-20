@@ -4,6 +4,7 @@ import {
   AdminComService,
   AdminDataService,
   ModalService,
+  PaginationComService,
 } from '../../_services';
 import { JobTitle } from '../../_Models';
 
@@ -14,7 +15,7 @@ import { JobTitle } from '../../_Models';
 })
 @Injectable()
 export class JobTitleLicenseComponent implements OnInit {
-  loading: boolean = false;
+  isLoading: boolean = false;
   licenseLevels: any[] = [];
   licenseIncentives: any[] = [];
   jobTitles: any[] = [];
@@ -23,11 +24,12 @@ export class JobTitleLicenseComponent implements OnInit {
   constructor(
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
-    public modalService: ModalService
+    public modalService: ModalService,
+    public paginationComService: PaginationComService
   ) {}
 
   ngOnInit(): void {
-    this.loading = true;
+    this.isLoading = true;
     this.adminDataService.fetchLicenseLevels().subscribe((response) => {
       this.licenseLevels = response;
     });
@@ -36,7 +38,9 @@ export class JobTitleLicenseComponent implements OnInit {
     });
     this.adminDataService.fetchJobTitles().subscribe((response) => {
       this.jobTitles = response;
-      this.loading = false;
+      this.paginationComService.updateDisplayItems(this.jobTitles);
+      this.paginationComService.updatePaginatedResults();
+      this.isLoading = false;
     });
   }
 

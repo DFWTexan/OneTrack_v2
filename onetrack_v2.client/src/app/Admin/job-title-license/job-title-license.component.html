@@ -13,13 +13,28 @@
       </button>
     </div>
   </div>
+
   <mat-divider></mat-divider>
-  <div class="mt-5 mb-5 d-flex justify-content-center" *ngIf="loading">
+
+  <div class="mt-5 mb-5 d-flex justify-content-center" *ngIf="isLoading">
     <div class="spinner-border text-primary"></div>
   </div>
-  <div class="row mt-4" *ngIf="!loading">
-    <div class="col">
-      <div class="table" *ngIf="jobTitles.length > 0">
+  <div class="row mt-4" *ngIf="!isLoading">
+    <div
+      class="col-md-12 shadow-sm"
+      style="
+        max-height: 700px;
+        overflow-y: auto;
+        overflow-x: hidden;
+        border-top-left-radius: 0.7rem;
+        border-top-right-radius: 0.7rem;
+      "
+    >
+      <div
+        class="table shadow-sm"
+        style="width: 100% !important; border-collapse: collapse"
+        *ngIf="jobTitles.length > 0"
+      >
         <thead>
           <tr class="sticky-top" style="background-color: gainsboro">
             <th scope="col">JobTitleID</th>
@@ -32,7 +47,7 @@
           </tr>
         </thead>
         <tbody class="bg-body">
-          <tr *ngFor="let job of jobTitles">
+          <tr *ngFor="let job of paginationComService.paginatedResults">
             <td class="align-middle">
               {{ job.jobTitleId }}
             </td>
@@ -100,6 +115,19 @@
           </tr>
         </tbody>
       </div>
+    </div>
+    <div>
+      <app-pagination
+        *ngIf="!isLoading && jobTitles.length > 50"
+        [currentPage]="paginationComService.currentPage"
+        [totalItems]="paginationComService.displayItems.length"
+        [itemsPerPage]="paginationComService.itemsPerPage"
+        (pageChange)="
+          paginationComService.currentPage = $event;
+          paginationComService.updatePaginatedResults()
+        "
+      >
+      </app-pagination>
     </div>
   </div>
 </div>
