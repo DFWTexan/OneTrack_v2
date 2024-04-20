@@ -25,7 +25,7 @@
   <div class="row mt-4" *ngIf="!isLoading" style="width: 100%; margin: 0">
     <!-- FILTER -->
     <form #f="ngForm">
-      <div
+      <div 
         style="
           color: black;
           background-color: darkgray;
@@ -33,12 +33,13 @@
           padding: 1rem;
         "
       >
-        <div class="row align-items-center">
-          <div class="d-flex align-items-center ms-3" style="width: 8rem">
+
+        <div class="d-flex justify-content-between">
+          <div class="d-flex align-items-center ms-3">
             <h1 class="text-start mb-0">Filter:</h1>
           </div>
 
-          <div class="col justify-content-center align-middle">
+          <div class="d-flex align-middle">
             <input
               class="form-control input-size-medium"
               type="text"
@@ -50,7 +51,7 @@
             />
           </div>
 
-          <div class="col justify-content-center align-middle">
+          <div class="d-flex align-middle" style="width: 10rem;">
             <select
               class="form-select select-filter-size-small"
               (change)="filterByActive($event)"
@@ -61,7 +62,7 @@
             </select>
           </div>
 
-          <div class="col justify-content-center align-middle">
+          <div class="d-flex align-middle">
             <select
               class="form-select select-filter-size-small"
               (change)="filterByLicenseLevel($event)"
@@ -76,7 +77,7 @@
             </select>
           </div>
 
-          <div class="col justify-content-center align-middle">
+          <div class="d-flex align-middle">
             <select
               class="form-select select-filter-size-small"
               (change)="filterByLicenseIncentive($event)"
@@ -91,14 +92,16 @@
             </select>
           </div>
 
-          <div class="col">
+          <div class="d-flex align-middle">
             <button class="btn btn-primary" type="button" (click)="clearfilter()">Clear Filter</button>
           </div>
         </div>
+
+
       </div>
     </form>
  <div class="row ms-5 mt-1">
-      <div class="col d-flex justify-content-start align-items-start">
+      <div class="col d-flex justify-content-center align-items-center">
         {{ jobTitles.length | number }} - record(s) found
       </div>
  </div> 
