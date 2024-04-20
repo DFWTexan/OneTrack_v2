@@ -131,6 +131,12 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
       });
   }
 
+  clearFilterJobTitle(){
+    this.filterJobTitle = null;
+    this.adminDataService.filterJobTitleData(null, this.selectedFilterIsActive, this.selectedFilterLicLevel, this.selectedFilterLicIncentive);
+    this.getFilterData();
+  }
+
   clearfilter() {
     this.filterJobTitle = null;
     this.activeFilterVal = '0';
