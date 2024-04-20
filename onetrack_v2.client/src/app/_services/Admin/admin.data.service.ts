@@ -338,6 +338,28 @@ export class AdminDataService {
       );
   }
 
+  filterJobTitleData(filterJobTitle: string) {
+    let filteredJobTitles: any[] = [];
+    // console.log(
+    //   'EMFTEST (admin.Service) - filterJobTitleData: ',
+    //   filterJobTitle
+    // );
+
+    if (
+      filterJobTitle !== '' &&
+      filterJobTitle !== null &&
+      filterJobTitle !== undefined
+    ) {
+      filteredJobTitles = this.jobTitles.filter((jobTitle) =>
+        jobTitle.jobTitle1.toLowerCase().includes(filterJobTitle.toLowerCase())
+      );
+    }
+
+    // console.log('EMFTEST (admin.Service) - Filtered job titles => \n ', filteredJobTitles);
+
+    this.jobTitlesChanged.next(filteredJobTitles);
+  }
+
   //  LICENSE EDIT
   fetchLicenseItems(stateProvince: string) {
     return this.http
@@ -426,7 +448,9 @@ export class AdminDataService {
     resState: string | null = null,
     branchCode: string | null = null
   ) {
-    const queryParams = `?workState=${workState ? workState : ''}&resState=${resState ? resState : ''}&branchCode=${branchCode ? branchCode : ''}`;
+    const queryParams = `?workState=${workState ? workState : ''}&resState=${
+      resState ? resState : ''
+    }&branchCode=${branchCode ? branchCode : ''}`;
 
     return this.http
       .get<{
@@ -488,7 +512,6 @@ export class AdminDataService {
       );
   }
   fetchXBorLicRequirements(branchCode: string) {
-
     return this.http
       .get<{
         success: boolean;
@@ -604,7 +627,7 @@ export class AdminDataService {
     this.stateProvinceChanged.next(this.stateProvince);
   }
 
-  storeXBorRequirement(mode: string | '', xBorRequirement: any | null) {  
+  storeXBorRequirement(mode: string | '', xBorRequirement: any | null) {
     this.adminComService.changeMode('xborLicenseRequirement', mode);
     this.xborLicenseRequirement = xBorRequirement || {};
     this.xborLicenseRequirementChanged.next(this.xborLicenseRequirement);

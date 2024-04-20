@@ -24,64 +24,71 @@
   </div>
   <div class="row mt-4" *ngIf="!isLoading" style="width: 100%; margin: 0">
     <!-- FILTER -->
-    <div
-      style="
-        color: black;
-        background-color: darkgray;
-        border-radius: 1rem;
-        padding: 1rem;
-      "
-    >
-      <div class="row align-items-center">
-        <div class="d-flex align-items-center ms-3" style="width: 8rem">
-          <h1 class="text-start mb-0">Filter:</h1>
-        </div>
+    <form #f="ngForm">
+      <div
+        style="
+          color: black;
+          background-color: darkgray;
+          border-radius: 1rem;
+          padding: 1rem;
+        "
+      >
+        <div class="row align-items-center">
+          <div class="d-flex align-items-center ms-3" style="width: 8rem">
+            <h1 class="text-start mb-0">Filter:</h1>
+          </div>
 
-        <div class="col justify-content-center align-middle">
-          <input
-            class="form-control input-size-medium"
-            type="text"
-            placeholder="Filter Job Title"
-          />
-        </div>
+          <div class="col justify-content-center align-middle">
+            <input
+              class="form-control input-size-medium"
+              type="text"
+              id="filterJobTitle"
+              [(ngModel)]="filterJobTitle"
+              [ngModelOptions]="{standalone: true}"
+              placeholder="Filter Job Title"
+              (input)="filterByJobTitles($event)"
+            />
+          </div>
 
-        <div class="col justify-content-center align-middle">
-          <select class="form-select select-filter-size-small">
-            <option value="0">Active</option>
-            <option value="1">Yes</option>
-            <option value="2">No</option>
-          </select>
-        </div>
+          <div class="col justify-content-center align-middle">
+            <select class="form-select select-filter-size-small">
+              <option value="0">Active</option>
+              <option value="1">Yes</option>
+              <option value="2">No</option>
+            </select>
+          </div>
 
-        <div class="col justify-content-center align-middle">
-          <select class="form-select select-filter-size-small">
-            <option value="0">License Level</option>
-            <option
-              *ngFor="let level of licenseLevels"
-              [value]="level.licenseLevel"
-            >
-              {{ level.licenseLevel }}
-            </option>
-          </select>
-        </div>
+          <div class="col justify-content-center align-middle">
+            <select class="form-select select-filter-size-small">
+              <option value="0">License Level</option>
+              <option
+                *ngFor="let level of licenseLevels"
+                [value]="level.licenseLevel"
+              >
+                {{ level.licenseLevel }}
+              </option>
+            </select>
+          </div>
 
-        <div class="col justify-content-center align-middle">
-          <select class="form-select select-filter-size-small">
-            <option value="0">License Incentive</option>
-            <option
-              *ngFor="let incentive of licenseIncentives"
-              [value]="incentive.licenseIncentive"
-            >
-              {{ incentive.licenseIncentive }}
-            </option>
-          </select>
-        </div>
+          <div class="col justify-content-center align-middle">
+            <select class="form-select select-filter-size-small">
+              <option value="0">License Incentive</option>
+              <option
+                *ngFor="let incentive of licenseIncentives"
+                [value]="incentive.licenseIncentive"
+              >
+                {{ incentive.licenseIncentive }}
+              </option>
+            </select>
+          </div>
 
-        <div class="col">
-          <button class="btn btn-primary" type="button">Clear Filter</button>
+          <div class="col">
+            <button class="btn btn-primary" type="button">Clear Filter</button>
+          </div>
         </div>
       </div>
-    </div>
+    </form>
+
     <!-- JOB TITLE DISPLAY -->
     <div
       class="col-md-12 shadow-sm mt-2"

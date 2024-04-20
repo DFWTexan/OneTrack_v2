@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 
 import {
   AdminComService,
@@ -7,6 +7,7 @@ import {
   PaginationComService,
 } from '../../_services';
 import { JobTitle } from '../../_Models';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-job-title-license',
@@ -14,12 +15,14 @@ import { JobTitle } from '../../_Models';
   styleUrl: './job-title-license.component.css',
 })
 @Injectable()
-export class JobTitleLicenseComponent implements OnInit {
+export class JobTitleLicenseComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
+  filterJobTitle: string = '';
   licenseLevels: any[] = [];
   licenseIncentives: any[] = [];
   jobTitles: any[] = [];
   selectChanged = false;
+  subscribeDataJobTitles: Subscription = new Subscription();
 
   constructor(
     public adminDataService: AdminDataService,
@@ -46,5 +49,28 @@ export class JobTitleLicenseComponent implements OnInit {
 
   setDirty(job: JobTitle) {
     job.isDirty = true;
+  }
+
+  filterByJobTitles(event: any) {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+
+    this.filterJobTitle = value;
+    this.adminDataService.filterJobTitleData(value);
+    this.getFilterData();
+  }
+
+  getFilterData() {
+    this.subscribeDataJobTitles = this.adminDataService.jobTitlesChanged.subscribe(
+      (response) => {
+        this.jobTitles = response;
+        this.paginationComService.updateDisplayItems(this.jobTitles);
+        this.paginationComService.updatePaginatedResults();
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscribeDataJobTitles.unsubscribe();
   }
 }
