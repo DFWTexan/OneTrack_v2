@@ -253,7 +253,7 @@
     </div>
     <div>
       <app-pagination
-        *ngIf="isSubmitted && !loading"
+        *ngIf="isSubmitted && !loading && searchEmployeeResult.length > 50"
         [currentPage]="paginationComService.currentPage"
         [totalItems]="paginationComService.displayItems.length"
         [itemsPerPage]="paginationComService.itemsPerPage"
