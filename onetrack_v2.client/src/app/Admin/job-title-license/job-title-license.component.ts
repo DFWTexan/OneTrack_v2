@@ -84,7 +84,7 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
     }
 
     this.adminDataService.filterJobTitleData(
-      this.filterJobTitle,
+      this.filterJobTitle === '' ? null : this.filterJobTitle,
       this.selectedFilterIsActive,
       this.selectedFilterLicLevel,
       this.selectedFilterLicIncentive
@@ -98,7 +98,7 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
 
     this.selectedFilterLicLevel = value;
     this.adminDataService.filterJobTitleData(
-      this.filterJobTitle,
+      this.filterJobTitle === '' ? null : this.filterJobTitle,
       this.selectedFilterIsActive,
       value,
       this.selectedFilterLicIncentive
@@ -112,7 +112,7 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
 
     this.selectedFilterLicIncentive = value;
     this.adminDataService.filterJobTitleData(
-      this.filterJobTitle,
+      this.filterJobTitle === '' ? null : this.filterJobTitle,
       this.selectedFilterIsActive,
       this.selectedFilterLicLevel,
       value
@@ -130,7 +130,7 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
   }
 
   clearfilter() {
-    this.filterJobTitle = '';
+    this.filterJobTitle = null;
     this.selectedFilterIsActive = null;
     this.selectedFilterLicLevel = null;
     this.selectedFilterLicIncentive = null;

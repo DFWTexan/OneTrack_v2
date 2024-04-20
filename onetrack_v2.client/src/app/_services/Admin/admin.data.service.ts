@@ -344,46 +344,55 @@ export class AdminDataService {
     licLevel: string | null = null,
     licIncentive: string | null = null
   ) {
-
     console.log('EMFTEST (AdminService) - filterJobTitle: ', filterJobTitle);
     console.log('EMFTEST (AdminService) - isActive: ', isActive);
     console.log('EMFTEST (AdminService) - licLevel: ', licLevel);
     console.log('EMFTEST (AdminService) - licIncentive: ', licIncentive);
+    console.log('EMFTEST (AdminService) - Count: ', this.jobTitles.length);
+    console.log('EMFTEST (AdminService) - jobTitles => \n ', this.jobTitles);
 
-
-    if (filterJobTitle === null && isActive === null && licLevel === null && licIncentive === null) {
+    if (
+      filterJobTitle === null &&
+      isActive === null &&
+      licLevel === null &&
+      licIncentive === null
+    ) {
       this.jobTitlesChanged.next(this.jobTitles);
       return;
     }
 
-    let filteredJobTitles: any[] = [];
-    if (
-      filterJobTitle !== '' &&
-      filterJobTitle !== null &&
-      filterJobTitle !== undefined
-    ) {
-      filteredJobTitles = this.jobTitles.filter((jobTitle) =>
-        jobTitle.jobTitle1.toLowerCase().includes(filterJobTitle.toLowerCase())
-      );
-    }
+    let filteredJobTitles: any[] = this.jobTitles.slice();
 
-    if (isActive !== null) {
-      filteredJobTitles = filteredJobTitles.filter(
-        (jobTitle) => jobTitle.isActive === isActive
-      );
-    }
+  if (filterJobTitle !== null) {
+    filteredJobTitles = filteredJobTitles.filter((jobTitle) =>
+      jobTitle.jobTitle1.toLowerCase().includes(filterJobTitle.toLowerCase())
+    );
+    this.jobTitlesChanged.next(filteredJobTitles);
+  }
 
-    if (licLevel !== null) {
-      filteredJobTitles = filteredJobTitles.filter(
-        (jobTitle) => jobTitle.licLevel === licLevel
-      );
-    }
+  if (isActive !== null) {
+    filteredJobTitles = filteredJobTitles.filter(
+      (jobTitle) => jobTitle.isActive === isActive
+    );
+    this.jobTitlesChanged.next(filteredJobTitles);
+  }
 
-    if (licIncentive !== null) {
-      filteredJobTitles = filteredJobTitles.filter(
-        (jobTitle) => jobTitle.licIncentive === licIncentive
-      );
-    }
+  if (licLevel !== null) {
+    filteredJobTitles = filteredJobTitles.filter(
+      (jobTitle) => jobTitle.licLevel === licLevel
+    );
+    this.jobTitlesChanged.next(filteredJobTitles);
+  }
+
+  if (licIncentive !== null) {
+    filteredJobTitles = filteredJobTitles.filter(
+      (jobTitle) => jobTitle.licIncentive === licIncentive
+    );
+    this.jobTitlesChanged.next(filteredJobTitles);
+  }
+
+    console.log('EMFTEST (AdminService) - Count_5: ', filteredJobTitles.length);
+    console.log('EMFTEST (AdminService) - filteredJobTitles => \n ', filteredJobTitles);
 
     this.jobTitlesChanged.next(filteredJobTitles);
   }
