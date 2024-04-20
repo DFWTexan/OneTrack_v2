@@ -27,7 +27,7 @@ import { EmployeeSearchResult, SearchEmployeeFilter } from '../../_Models';
 })
 @Injectable()
 export class SearchTeamMemberComponent implements OnInit, OnDestroy {
-  // @ViewChild('f') searchForm: NgForm;
+  loading = false;
   isSubmitted = false;
   agentStatuses: string[] = [];
   states: string[] = [];
@@ -111,6 +111,7 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm) {
+    this.loading = true;
     this.isSubmitted = true;
     const searchFilter: SearchEmployeeFilter = {
       EmployeeSSN: form.value.searchFilter.EmployeeSSN || null,
@@ -131,6 +132,7 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
     };
 
     this.emplyService.fetchEmployeeSearch(searchFilter).subscribe((results) => {
+      this.loading = false;
       this.searchEmployeeResult = results;
     });
   }
