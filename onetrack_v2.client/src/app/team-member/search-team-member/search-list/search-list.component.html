@@ -1,10 +1,10 @@
-<div class="container">
+<div class="d-flex" style="border-bottom-style: inset; border-bottom-color: lightgray; border-bottom-width: 1px;">
   <div class="row">
     <div class="col-md-12">
       <div
         class="table-responsive"
         style="
-          max-height: 600px;
+          max-height: 700px;
           overflow-y: auto;
           overflow-x: hidden;
           border-top-left-radius: 0.7rem;
@@ -28,7 +28,9 @@
             </tr>
           </thead>
           <tbody class="bg-body">
-            <tr *ngFor="let teamMember of paginationComService.paginatedResults">
+            <tr
+              *ngFor="let teamMember of paginationComService.paginatedResults"
+            >
               <td class="align-middle">
                 <a
                   [routerLink]="[
