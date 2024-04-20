@@ -18,6 +18,7 @@ import { Subscription } from 'rxjs';
 export class JobTitleLicenseComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   filterJobTitle: string | null = null;
+  activeFilterVal = '0';
   selectedFilterIsActive: boolean | null = null;
   selectedFilterLicLevel: string | null = null;
   selectedFilterLicIncentive: string | null = null;
@@ -71,6 +72,7 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
   filterByActive(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;
+    this.activeFilterVal = value;
     switch (value) {
       case '1':
         this.selectedFilterIsActive = true;
@@ -131,6 +133,7 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
 
   clearfilter() {
     this.filterJobTitle = null;
+    this.activeFilterVal = '0';
     this.selectedFilterIsActive = null;
     this.selectedFilterLicLevel = null;
     this.selectedFilterLicIncentive = null;

@@ -54,6 +54,7 @@
           <div class="d-flex align-middle" style="width: 10rem;">
             <select
               class="form-select select-filter-size-small"
+              [value]="activeFilterVal"
               (change)="filterByActive($event)"
             >
               <option value="0">Active</option>
