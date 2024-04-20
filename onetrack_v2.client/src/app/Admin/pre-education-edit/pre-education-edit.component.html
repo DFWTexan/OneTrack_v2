@@ -46,7 +46,7 @@
       <div class="table" *ngIf="preEducationItems.length > 0 && selectedStateProvince != 'Select'">
         <thead>
           <tr class="sticky-top" style="background-color: gainsboro">
-            <th scope="col">PreEducationID</th>
+            <th scope="col" style="width: 15rem;">PreEducationID</th>
             <th scope="col">EducationName</th>
             <th scope="col">StateProvinceAbv</th>
             <th scope="col">CreditHours</th>
@@ -56,7 +56,7 @@
         </thead>
         <tbody class="bg-body">
           <tr *ngFor="let preEdu of preEducationItems">
-            <td class="align-middle text-center">
+            <td class="align-middle text-center" style="width: 15rem;">
               {{ preEdu.preEducationId }}
             </td>
             <td class="align-middle">{{ preEdu.educationName }}</td>

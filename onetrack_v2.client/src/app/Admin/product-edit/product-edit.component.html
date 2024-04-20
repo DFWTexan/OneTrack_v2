@@ -22,8 +22,8 @@
         <div class="table" *ngIf="products.length > 0">
           <thead>
             <tr class="sticky-top" style="background-color: gainsboro">
-              <th scope="col">ProductID</th>
-              <th scope="col">ProductAbv</th>
+              <th scope="col" style="width: 15rem;">ProductID</th>
+              <th scope="col" style="width: 15rem;">ProductAbv</th>
               <th scope="col">ProductName</th>
               <th scope="col">EffectiveDate</th>
               <th scope="col">ExpireDate</th>
@@ -32,10 +32,10 @@
           </thead>
           <tbody class="bg-body">
             <tr *ngFor="let product of products">
-              <td class="align-middle  text-center">
+              <td class="align-middle text-center" style="width: 15rem;">
                 {{ product.productId }}
               </td>
-              <td class="align-middle">{{ product.productAbv }}</td>
+              <td class="align-middle" style="width: 15rem;">{{ product.productAbv }}</td>
               <td class="align-middle text-nowrap">
                 {{ product.productName }}
               </td>

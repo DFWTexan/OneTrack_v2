@@ -44,7 +44,7 @@
       <div class="table" *ngIf="examItems.length > 0">
         <thead>
           <tr class="sticky-top" style="background-color: gainsboro">
-            <th scope="col">ExamID</th>
+            <th scope="col" style="width: 10rem;">ExamID</th>
             <th scope="col">Exam Name</th>
             <th scope="col">Delivery Method</th>
             <th scope="col">Exam Provider</th>
@@ -53,7 +53,7 @@
         </thead>
         <tbody class="bg-body">
           <tr *ngFor="let exam of examItems">
-            <td class="align-middle">
+            <td class="align-middle" style="width: 10rem;">
               {{ exam.examId }}
             </td>
             <td class="align-middle">{{ exam.examName }}</td>
