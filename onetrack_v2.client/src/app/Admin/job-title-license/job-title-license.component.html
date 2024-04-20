@@ -44,14 +44,17 @@
               type="text"
               id="filterJobTitle"
               [(ngModel)]="filterJobTitle"
-              [ngModelOptions]="{standalone: true}"
+              [ngModelOptions]="{ standalone: true }"
               placeholder="Filter Job Title"
               (input)="filterByJobTitles($event)"
             />
           </div>
 
           <div class="col justify-content-center align-middle">
-            <select class="form-select select-filter-size-small">
+            <select
+              class="form-select select-filter-size-small"
+              (change)="filterByActive($event)"
+            >
               <option value="0">Active</option>
               <option value="1">Yes</option>
               <option value="2">No</option>
@@ -59,7 +62,10 @@
           </div>
 
           <div class="col justify-content-center align-middle">
-            <select class="form-select select-filter-size-small">
+            <select
+              class="form-select select-filter-size-small"
+              (change)="filterByLicenseLevel($event)"
+            >
               <option value="0">License Level</option>
               <option
                 *ngFor="let level of licenseLevels"
@@ -71,7 +77,10 @@
           </div>
 
           <div class="col justify-content-center align-middle">
-            <select class="form-select select-filter-size-small">
+            <select
+              class="form-select select-filter-size-small"
+              (change)="filterByLicenseIncentive($event)"
+            >
               <option value="0">License Incentive</option>
               <option
                 *ngFor="let incentive of licenseIncentives"
@@ -83,7 +92,7 @@
           </div>
 
           <div class="col">
-            <button class="btn btn-primary" type="button">Clear Filter</button>
+            <button class="btn btn-primary" type="button" (click)="clearfilter()">Clear Filter</button>
           </div>
         </div>
       </div>

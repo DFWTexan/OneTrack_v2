@@ -17,7 +17,10 @@ import { Subscription } from 'rxjs';
 @Injectable()
 export class JobTitleLicenseComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
-  filterJobTitle: string = '';
+  filterJobTitle: string | null = null;
+  selectedFilterIsActive: boolean | null = null;
+  selectedFilterLicLevel: string | null = null;
+  selectedFilterLicIncentive: string | null = null;
   licenseLevels: any[] = [];
   licenseIncentives: any[] = [];
   jobTitles: any[] = [];
@@ -56,18 +59,83 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
     const value = target.value;
 
     this.filterJobTitle = value;
-    this.adminDataService.filterJobTitleData(value);
+    this.adminDataService.filterJobTitleData(
+      value === '' ? null : value,
+      this.selectedFilterIsActive,
+      this.selectedFilterLicLevel,
+      this.selectedFilterLicIncentive
+    );
+    this.getFilterData();
+  }
+
+  filterByActive(event: any) {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    switch (value) {
+      case '1':
+        this.selectedFilterIsActive = true;
+        break;
+      case '2':
+        this.selectedFilterIsActive = false;
+        break;
+      default:
+        this.selectedFilterIsActive = null;
+        break;
+    }
+
+    this.adminDataService.filterJobTitleData(
+      this.filterJobTitle,
+      this.selectedFilterIsActive,
+      this.selectedFilterLicLevel,
+      this.selectedFilterLicIncentive
+    );
+    this.getFilterData();
+  }
+
+  filterByLicenseLevel(event: any) {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+
+    this.selectedFilterLicLevel = value;
+    this.adminDataService.filterJobTitleData(
+      this.filterJobTitle,
+      this.selectedFilterIsActive,
+      value,
+      this.selectedFilterLicIncentive
+    );
+    this.getFilterData();
+  }
+
+  filterByLicenseIncentive(event: any) {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+
+    this.selectedFilterLicIncentive = value;
+    this.adminDataService.filterJobTitleData(
+      this.filterJobTitle,
+      this.selectedFilterIsActive,
+      this.selectedFilterLicLevel,
+      value
+    );
     this.getFilterData();
   }
 
   getFilterData() {
-    this.subscribeDataJobTitles = this.adminDataService.jobTitlesChanged.subscribe(
-      (response) => {
+    this.subscribeDataJobTitles =
+      this.adminDataService.jobTitlesChanged.subscribe((response) => {
         this.jobTitles = response;
         this.paginationComService.updateDisplayItems(this.jobTitles);
         this.paginationComService.updatePaginatedResults();
-      }
-    );
+      });
+  }
+
+  clearfilter() {
+    this.filterJobTitle = '';
+    this.selectedFilterIsActive = null;
+    this.selectedFilterLicLevel = null;
+    this.selectedFilterLicIncentive = null;
+    this.adminDataService.filterJobTitleData(null, null, null, null);
+    this.getFilterData();
   }
 
   ngOnDestroy(): void {
