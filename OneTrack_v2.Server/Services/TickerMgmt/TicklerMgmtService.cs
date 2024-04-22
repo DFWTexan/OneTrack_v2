@@ -82,6 +82,9 @@ namespace OneTrak_v2.Services
                                             t.EmploymentId,
                                             t.EmployeeLicenseId,
                                             e.EmployeeId,
+                                            loa.LineOfAuthorityName,
+                                            e.Geid,
+                                            TeamMemberName = e.LastName + ", " + e.FirstName,
                                             t.TicklerCloseDate,
                                             t.TicklerCloseByLicenseTechId,
                                             Message = (e.FirstName + " " + e.LastName + "\r\n" + "TM-" + e.Geid + "\r\n" ?? "") +

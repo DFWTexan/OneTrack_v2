@@ -6,6 +6,9 @@ export interface TicklerInfo {
   employmentId: number;
   employeeLicenseId: number | null;
   employeeId: number;
+  teamMemberName: string | null;
+  geid: number | null;
+  lineOfAuthorityName: string | null;
   ticklerCloseDate: string | null;
   ticklerCloseByLicenseTechId: number | null;
   message: string;

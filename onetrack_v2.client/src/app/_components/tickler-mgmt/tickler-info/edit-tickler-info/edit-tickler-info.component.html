@@ -1,44 +1,95 @@
 <form [formGroup]="ticklerForm" (ngSubmit)="onSubmit()" class="mt-4">
   <div class="form-group">
+    <label for="licenseTech">Tickler ID</label>
+    <select
+      class="form-select select-size-med-small"
+      type="text"
+      id="licenseTech"
+      [value]="ticklerForm.get('licenseTechId')?.value"
+    >
+      <option
+        *ngFor="let item of licenseTechItems"
+        [value]="item.licenseTechId"
+      >
+        {{ item.techName }}
+      </option>
+    </select>
+  </div>
+
+  <div class="form-group" *ngIf="ticklerComService.modeTicklerMgmt == 'EDIT'">
     <label for="ticklerId">Tickler ID</label>
     <input
+      class="form-control input-size-small"
       id="ticklerId"
       type="number"
       formControlName="ticklerId"
-      class="form-control"
     />
   </div>
 
   <div class="form-group">
-    <label for="ticklerDate">Tickler Date</label>
+    <label for="geid">Team Member #</label>
+    <input
+      class="form-control input-size-small"
+      id="geid"
+      type="number"
+      formControlName="geid"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="teamMemberName">Team Member Name</label>
+    <input
+      class="form-control input-size-medium"
+      id="teamMemberName"
+      type="text"
+      formControlName="teamMemberName"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="lineOfAuthorityName">Line of Authority</label>
+    <input
+      class="form-control input-size-small"
+      id="lineOfAuthorityName"
+      type="text"
+      formControlName="lineOfAuthorityName"
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="ticklerDate">Due Date</label>
     <input
       id="ticklerDate"
       type="date"
       formControlName="ticklerDate"
-      class="form-control"
+      class="form-control input-size-small"
+      [value]="ticklerForm.get('ticklerDueDate')?.value"
     />
   </div>
 
-  <!-- Add similar divs for the other form controls -->
+  <div class="form-group">
+    <label for="stockTicker">Stock Tickler Message</label>
+    <select
+      class="form-select select-size-med-small"
+      type="text"
+      id="stockTicker"
+      [value]="ticklerForm.get('lkpValue')?.value"
+    >
+      <option *ngFor="let item of stockTicklerItems" [value]="item.lkpValue">
+        {{ item.lkpValue }}
+      </option>
+    </select>
+  </div>
 
   <div class="form-group">
     <label for="message">Message</label>
-    <input
+    <textarea
+      rows="5"
       id="message"
       type="text"
       formControlName="message"
       class="form-control"
-    />
-  </div>
-
-  <div class="form-group">
-    <label for="lkpValue">LKP Value</label>
-    <input
-      id="lkpValue"
-      type="text"
-      formControlName="lkpValue"
-      class="form-control"
-    />
+    ></textarea>
   </div>
 
   <mat-divider></mat-divider>

@@ -6,6 +6,7 @@ import {
   TicklerMgmtComService,
   TicklerMgmtDataService,
 } from '../../../../_services';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-edit-tickler-info',
@@ -15,6 +16,8 @@ import {
 @Injectable()
 export class EditTicklerInfoComponent implements OnInit, OnDestroy {
   ticklerForm!: FormGroup;
+  licenseTechItems: any[] = [];
+  stockTicklerItems: any[] = [];
   subscriptionData: Subscription = new Subscription();
 
   constructor(
@@ -27,7 +30,7 @@ export class EditTicklerInfoComponent implements OnInit, OnDestroy {
 
   createForm() {
     this.ticklerForm = this.fb.group({
-      ticklerId: [null],
+      ticklerId: [{ value: null, disabled: true }],
       ticklerDate: [null],
       ticklerDueDate: [null],
       licenseTechId: [null],
@@ -36,6 +39,9 @@ export class EditTicklerInfoComponent implements OnInit, OnDestroy {
       employeeId: [null],
       ticklerCloseDate: [null],
       ticklerCloseByLicenseTechId: [null],
+      lineOfAuthorityName: [null],
+      teamMemberName: [null],
+      geid: [null],
       message: [null],
       lkpValue: [null],
     });
@@ -50,8 +56,15 @@ export class EditTicklerInfoComponent implements OnInit, OnDestroy {
               (ticklerInfo) => {
                 this.ticklerForm.patchValue({
                   ticklerId: ticklerInfo.ticklerId,
-                  ticklerDate: ticklerInfo.ticklerDate,
-                  ticklerDueDate: ticklerInfo.ticklerDueDate,
+                  ticklerDate:  formatDate(ticklerInfo.ticklerDate,
+                    'yyyy-MM-dd',
+                    'en-US'
+                  ),
+                  ticklerDueDate: formatDate(
+                    ticklerInfo.ticklerDueDate,
+                    'yyyy-MM-dd',
+                    'en-US'
+                  ),
                   licenseTechId: ticklerInfo.licenseTechId,
                   employmentId: ticklerInfo.employmentId,
                   employeeLicenseId: ticklerInfo.employeeLicenseId,
@@ -59,6 +72,9 @@ export class EditTicklerInfoComponent implements OnInit, OnDestroy {
                   ticklerCloseDate: ticklerInfo.ticklerCloseDate,
                   ticklerCloseByLicenseTechId:
                     ticklerInfo.ticklerCloseByLicenseTechId,
+                  lineOfAuthorityName: ticklerInfo.lineOfAuthorityName,
+                  teamMemberName: ticklerInfo.teamMemberName,
+                  geid: ticklerInfo.geid,
                   message: ticklerInfo.message,
                   lkpValue: ticklerInfo.lkpValue,
                 });
@@ -67,6 +83,16 @@ export class EditTicklerInfoComponent implements OnInit, OnDestroy {
           } else {
             this.ticklerForm.reset();
           } 
+        }
+      );
+      this.ticklerDataService.fetchLicenseTech(0, null).subscribe(
+        (licenseTechItems) => {
+          this.licenseTechItems = licenseTechItems;
+        }
+      );
+      this.ticklerDataService.fetchStockTickler().subscribe(
+        (stockTicklerItems) => {
+          this.stockTicklerItems = stockTicklerItems;
         }
       );
   }
