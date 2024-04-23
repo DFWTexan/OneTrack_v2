@@ -133,7 +133,7 @@
       <thead>
         <tr style="background-color: gainsboro; border-radius: 5rem">
           <th>Status</th>
-          <th *ngIf="appComService.isShowDebug">License ID</th>
+          <th *ngIf="appComService.isShowEditID">License ID</th>
           <th>Company ID</th>
           <th>Co. Abbr.</th>
           <th>Carrier Date</th>
@@ -150,7 +150,7 @@
           "
         >
           <td>{{ appointment.appointmentStatus }}</td>
-          <td *ngIf="appComService.isShowDebug">{{ appointment.licenseID }}</td>
+          <td *ngIf="appComService.isShowEditID">{{ appointment.licenseID }}</td>
           <td>{{ appointment.companyID }}</td>
           <td>{{ appointment.companyAbv }}</td>
           <td>{{ appointment.carrierDate | date : "MM/dd/yyyy" }}</td>

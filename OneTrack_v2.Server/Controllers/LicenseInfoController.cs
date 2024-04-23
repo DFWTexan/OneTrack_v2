@@ -54,5 +54,13 @@ namespace OneTrak_v2.Server.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpGet]
+        public async Task<ActionResult> GetAffiliatedLicenses(string stateProvinceAbv, int licenseID)
+        {
+            var result = await Task.Run(() => _licenseInfo.GetAffiliatedLicenses(stateProvinceAbv, licenseID));
+
+            return StatusCode(result.StatusCode, result);
+        }
     }
 }

@@ -243,14 +243,14 @@ namespace OneTrak_v2.Services
                 result.ObjData = queryLicenseInfoResults;
                 result.StatusCode = 200;
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             }
+
+            return result;
         }
         public ReturnResult GetIncentiveRolloutGroups()
         {
@@ -273,14 +273,14 @@ namespace OneTrak_v2.Services
                 result.ObjData = queryRolloutGrops;
                 result.StatusCode = 200;
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             }
+
+            return result;
         }
         public ReturnResult GetIncentiveBMMgrs()
         {
@@ -334,15 +334,15 @@ namespace OneTrak_v2.Services
                 result.Success = true;
                 result.ObjData = queryBMMgrs;
                 result.StatusCode = 200;
-
-                return result;
-            }
+			
+			}
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             }
+
+            return result;
         }
         public ReturnResult GetIncentiveDMMrgs()
         {
@@ -394,15 +394,14 @@ namespace OneTrak_v2.Services
                 result.Success = true;
                 result.ObjData = queryDMMrgs;
                 result.StatusCode = 200;
-
-                return result;
-            }
+			}
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             }
+
+            return result;
         }
         public ReturnResult GetIncentiveTechNames()
         {
@@ -426,15 +425,57 @@ namespace OneTrak_v2.Services
                 result.Success = true;
                 result.ObjData = queryTechNames;
                 result.StatusCode = 200;
-
-                return result;
-            }
+			}
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             }
+
+            return result;
         }
-    }
+        public ReturnResult GetAffiliatedLicenses(string vStateProvinceAbv, int vLicenseID)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var query = from employee in _db.Employees
+                            join employment in _db.Employments on employee.EmployeeId equals employment.EmployeeId
+                            join address in _db.Addresses on employee.AddressId equals address.AddressId
+                            join employeeLicense in _db.EmployeeLicenses on employment.EmploymentId equals employeeLicense.EmploymentId
+                            join license in _db.Licenses on employeeLicense.LicenseId equals license.LicenseId
+                            where employeeLicense.LicenseStatus == "Active"
+                                  && license.StateProvinceAbv == vStateProvinceAbv
+                                  && license.LicenseId == vLicenseID
+                            orderby (employee.Alias ?? "") + "-" +
+                                    (employeeLicense.LicenseStatus ?? "") + "-" +
+                                    (license.StateProvinceAbv ?? "") + "-" +
+                                    (license.LicenseName ?? "") + "-" +
+                                    (employeeLicense.LicenseNumber ?? "")
+                            select new
+                            {
+                                EmployeeLicenseID = employeeLicense.EmployeeLicenseId,
+                                AscLicense = (employee.Alias ?? "") + "-" +
+                                             (employeeLicense.LicenseStatus ?? "") + "-" +
+                                             (license.StateProvinceAbv ?? "") + "-" +
+                                             (license.LicenseName ?? "") + "-" +
+                                             (employeeLicense.LicenseNumber ?? "")
+                            };
+
+				var affiliatedLicenses = query.AsNoTracking().ToList();	
+
+                result.Success = true;
+				result.ObjData = affiliatedLicenses;
+                result.StatusCode = 200;
+			}
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;
+
+        }
+	}
 }

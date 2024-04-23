@@ -3,7 +3,13 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 
-import { AgentComService, AgentDataService } from '../../../../../_services';
+import {
+  AgentComService,
+  AgentDataService,
+  AppComService,
+  ConstantsDataService,
+  DropdownDataService,
+} from '../../../../../_services';
 import { AgentLicenseAppointments } from '../../../../../_Models';
 
 @Component({
@@ -13,14 +19,21 @@ import { AgentLicenseAppointments } from '../../../../../_Models';
 })
 export class EditLicenseInfoComponent implements OnInit, OnDestroy {
   licenseForm: FormGroup;
-  @Input()currentIndex: number = 0;
+  @Input() currentIndex: number = 0;
   licenseMgmtData: AgentLicenseAppointments[] = [];
+  licenseStates: string[] = [];
+  licenseStatuses: { value: string; label: string }[] = [];
+  licenseNames: { value: string; label: string }[] = [];
+  affiliatedLicenses: string[] = [];
   subscriptionMode: Subscription = new Subscription();
   subscriptionData: Subscription = new Subscription();
 
   constructor(
+    private conService: ConstantsDataService,
+    private drpdwnDataService: DropdownDataService,
     private agentDataService: AgentDataService,
     public agentComService: AgentComService,
+    public appComService: AppComService,
     private fb: FormBuilder
   ) {
     this.licenseForm = this.fb.group({
@@ -45,6 +58,17 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.licenseStates = ['Select', ...this.conService.getStates()];
+    this.drpdwnDataService
+      .fetchDropdownData('GetLicenseStatuses')
+      .subscribe((licenseStatuses: { value: string; label: string }[]) => {
+        this.licenseStatuses = [{value: '0', label: 'Select'}, ...licenseStatuses];
+      });
+    this.drpdwnDataService
+      .fetchDropdownData('GetLicenseNames')
+      .subscribe((licenseNames: { value: string; label: string }[]) => {
+        this.licenseNames = [{value: '0', label: 'Select'}, ...licenseNames];
+    });
     this.subscriptionMode =
       this.agentComService.modeLicenseMgmtChanged.subscribe((mode: string) => {
         if (mode === 'EDIT') {
@@ -74,7 +98,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
               this.licenseMgmtData[this.currentIndex].employeeLicenseId,
             licenseState: this.licenseMgmtData[this.currentIndex].licenseState,
             licenseName:
-              this.licenseMgmtData[this.currentIndex].employeeLicenseId,
+              this.licenseMgmtData[this.currentIndex].licenseName,
             licenseNumber:
               this.licenseMgmtData[this.currentIndex].licenseNumber,
             licenseStatus:
@@ -100,6 +124,12 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
           });
         } else {
           this.licenseForm.reset();
+          this.licenseForm.patchValue({
+            agentName:
+              this.agentDataService.agentInformation.lastName +
+              ', ' +
+              this.agentDataService.agentInformation.firstName,
+          });
         }
       });
   }

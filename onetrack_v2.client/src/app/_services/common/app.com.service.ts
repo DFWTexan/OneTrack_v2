@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
     providedIn: 'root',
   })
 export class AppComService {
-    isShowDebug = environment.isShowDebug;
+    isShowEditID = environment.isShowEditID;
     tickleToggle = false;
     tickleToggleChanged = new Subject<boolean>();
 

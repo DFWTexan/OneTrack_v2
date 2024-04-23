@@ -169,7 +169,7 @@
                 <table class="table">
                   <thead>
                     <tr style="background-color: whitesmoke">
-                      <th scope="col" *ngIf="appComService.isShowDebug">License ID</th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">License ID</th>
                       <th scope="col">Appt ID</th>
                       <th scope="col">Status</th>
                       <th scope="col">Company ID</th>
@@ -183,7 +183,7 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let appointment of license.licenseAppointments">
-                      <td *ngIf="appComService.isShowDebug">{{ appointment.licenseID }}</td>
+                      <td *ngIf="appComService.isShowEditID">{{ appointment.licenseID }}</td>
                       <td>{{ appointment.employeeAppointmentID }}</td>
                       <td>{{ appointment.appointmentStatus }}</td>
                       <td>{{ appointment.companyID }}</td>

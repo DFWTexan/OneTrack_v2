@@ -17,9 +17,9 @@ namespace OneTrak_v2.Server.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUserAccount(string vUserName, string vPassWord)
+        public async Task<IActionResult> GetUserAccount(string UserName, string PassWord)
         {
-            var result = await Task.Run(() => _ldapService.GetUserAccount(vUserName, vPassWord));
+            var result = await Task.Run(() => _ldapService.GetUserAccount(UserName, PassWord));
 
             return StatusCode(result.StatusCode, result);
         }
