@@ -1066,6 +1066,7 @@ namespace OneTrack_v2.Services
         {
             var queryEmployeeLicenses = from employeeLicense in _db.EmployeeLicenses
                                         join license in _db.Licenses on employeeLicense.LicenseId equals license.LicenseId
+                                        join ascLicense in _db.EmployeeLicenses on employeeLicense.AscEmployeeLicenseId equals ascLicense.EmployeeLicenseId into ascLicense
                                         join lineOfAuthority in _db.LineOfAuthorities on license.LineOfAuthorityId equals lineOfAuthority.LineOfAuthorityId
                                         where employeeLicense.EmploymentId == vEmploymentID
                                         orderby employeeLicense.LicenseStatus ascending, license.LicenseId ascending
@@ -1078,11 +1079,16 @@ namespace OneTrack_v2.Services
                                             EmploymentID = employeeLicense.EmploymentId,
                                             LicenseName = license.LicenseName,
                                             LicenseNumber = employeeLicense.LicenseNumber,
-                                            //ResNoneRes = (bool)employeeLicense.NonResident ? "Res" : "None",
                                             OriginalIssueDate = employeeLicense.LicenseIssueDate,
                                             LineOfAuthIssueDate = employeeLicense.LineOfAuthorityIssueDate,
                                             LicenseEffectiveDate = employeeLicense.LicenseEffectiveDate,
-                                            LicenseExpirationDate = employeeLicense.LicenseExpireDate
+                                            LicenseExpirationDate = employeeLicense.LicenseExpireDate,
+                                            LicenseNote = employeeLicense.LicenseNote,
+                                            Reinstatement = employeeLicense.Reinstatement,
+                                            Required = employeeLicense.Required,
+                                            NonResident = employeeLicense.NonResident,
+                                            AscEmployeeLicenseID = employeeLicense.AscEmployeeLicenseId,
+                                            AscLicenseName = ascLicense.FirstOrDefault().License.LicenseName,
                                         };
 
             var licenses = queryEmployeeLicenses.AsNoTracking().ToList();
@@ -1093,6 +1099,7 @@ namespace OneTrack_v2.Services
                    .ToList();
 
             var queryAppointments = from appointment in _db.EmployeeAppointments
+                                    join companies in _db.Companies on appointment.CompanyId equals companies.CompanyId
                                     where employeeLicenses.Contains((int)appointment.EmployeeLicenseId)
                                     select new OputAgentAppointments
                                     {
@@ -1105,6 +1112,7 @@ namespace OneTrack_v2.Services
                                         AppointmentExpireDate = appointment.AppointmentExpireDate,
                                         AppointmentTerminationDate = appointment.AppointmentTerminationDate,
                                         CompanyID = appointment.CompanyId,
+                                        CompanyAbv = companies.CompanyAbv,
                                         RetentionDate = appointment.RetentionDate
                                     };
 

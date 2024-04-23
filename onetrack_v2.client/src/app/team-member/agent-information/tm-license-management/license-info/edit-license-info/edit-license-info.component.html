@@ -78,6 +78,18 @@
         />
       </div>
 
+      <div class="mb-3" *ngIf="agentComService.modeLicAppInfo == 'INSERT'">
+        <label for="originalIssueDate" class="form-label"
+          >Sent to Agent Date:</label
+        >
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="originalIssueDate"
+          formControlName="originalIssueDate"
+        />
+      </div>
+
       <div class="mb-3">
         <label for="originalIssueDate" class="form-label"
           >Original Issue Date:</label
@@ -90,9 +102,9 @@
         />
       </div>
 
-      <div class="mb-3">
+      <div class="mb-3" *ngIf="agentComService.modeLicAppInfo == 'EDIT'">
         <label for="lineOfAuthIssueDate" class="form-label"
-          >Line Of Auth. Date:</label
+          >Line Of Auth. Issue Date:</label
         >
         <input
           class="form-control input-size-small"
@@ -102,7 +114,7 @@
         />
       </div>
 
-      <div class="mb-3">
+      <div class="mb-3" *ngIf="agentComService.modeLicAppInfo == 'EDIT'">
         <label for="licenseEffectiveDate" class="form-label"
           >Effective Date:</label
         >
@@ -125,6 +137,18 @@
           formControlName="licenseExpirationDate"
         />
       </div>
+
+      <div class="form-group">
+        <label for="Notes">Notes:</label>
+        <textarea
+          rows="5"
+          id="Notes"
+          type="text"
+          formControlName="notes"
+          class="form-control"
+        ></textarea>
+      </div>
+
     </div>
   </div>
 

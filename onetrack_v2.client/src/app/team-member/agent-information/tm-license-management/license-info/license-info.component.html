@@ -59,30 +59,26 @@
     <div class="col">
       <p>
         <strong>Affilliated License:</strong> <br />
-        <!-- {{ licenseMgmtData[currentIndex].licenseStatus }} -->
-        TBD...
+        {{ licenseMgmtData[currentIndex].ascLicenseName == null ? "None" : licenseMgmtData[currentIndex].ascLicenseName }}
       </p>
       <p>
-        <strong>Notes:</strong> <br />
-        <!-- {{ licenseMgmtData[currentIndex].licenseStatus }} -->
-        TBD...
+        <strong>Note:</strong> <br />
+        {{ licenseMgmtData[currentIndex].licenseNote == null ? "N/A" : licenseMgmtData[currentIndex].licenseNote}}
       </p>
     </div>
 
     <div class="col">
       <p>
         <strong>Required:</strong> <br />
-        <!-- {{ licenseMgmtData[currentIndex].resNoneRes ? "Yes" : "No" }} -->
-        TBD...
+        {{ licenseMgmtData[currentIndex].required ? "Yes" : "No" }}
       </p>
       <p>
         <strong>Reinstatement:</strong> <br />
-        <!-- {{ licenseMgmtData[currentIndex].resNoneRes ? "Yes" : "No" }} -->
-        TBD...
+        {{ licenseMgmtData[currentIndex].reinstatement ? "Yes" : "No" }}
       </p>
       <p>
         <strong>Non-Resident:</strong> <br />
-        {{ licenseMgmtData[currentIndex].resNoneRes ? "Yes" : "No" }}
+        {{ licenseMgmtData[currentIndex].nonResident ? "Yes" : "No" }}
       </p>
     </div>
 
@@ -137,16 +133,14 @@
       <thead>
         <tr style="background-color: gainsboro; border-radius: 5rem">
           <th>Status</th>
-          <th>License ID</th>
+          <th *ngIf="appComService.isShowDebug">License ID</th>
           <th>Company ID</th>
           <th>Co. Abbr.</th>
           <th>Carrier Date</th>
           <th>Effective Date</th>
           <th>Expire Date</th>
           <th>Termination Date</th>
-          <th class="text-center">ACTION</th>
-          <!-- <th>Appt ID</th>
-          <th>Retention Date</th> -->
+          <th class="text-center" style="width: 10rem;">ACTION</th>
         </tr>
       </thead>
       <tbody class="bg-body">
@@ -156,9 +150,9 @@
           "
         >
           <td>{{ appointment.appointmentStatus }}</td>
-          <td>{{ appointment.licenseID }}</td>
+          <td *ngIf="appComService.isShowDebug">{{ appointment.licenseID }}</td>
           <td>{{ appointment.companyID }}</td>
-          <td>TBD...</td>
+          <td>{{ appointment.companyAbv }}</td>
           <td>{{ appointment.carrierDate | date : "MM/dd/yyyy" }}</td>
           <td>
             {{ appointment.appointmentEffectiveDate | date : "MM/dd/yyyy" }}

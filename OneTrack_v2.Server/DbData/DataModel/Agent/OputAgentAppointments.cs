@@ -11,6 +11,7 @@
         public DateTime? AppointmentExpireDate { get; set; }
         public DateTime? AppointmentTerminationDate { get; set; }
         public int? CompanyID { get; set; }
+        public string? CompanyAbv { get; set; }
         public DateTime? RetentionDate { get; set; }
     }
 }

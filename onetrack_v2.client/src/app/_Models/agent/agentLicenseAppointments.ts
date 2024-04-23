@@ -12,6 +12,12 @@ export interface AgentLicenseAppointments {
     lineOfAuthIssueDate: string | null;
     licenseEffectiveDate: string | null;
     licenseExpirationDate: string | null;
+    ascEmployeeLicenseID: number | null;
+    ascLicenseName: string | null;
+    nonResident: boolean;
+    required: boolean; 
+    reinstatement: boolean; 
+    licenseNote: string | null;
   }
 
   export interface LicenseAppointment {
@@ -24,5 +30,6 @@ export interface AgentLicenseAppointments {
     appointmentExpireDate: string | null;
     appointmentTerminationDate: string | null;
     companyID: number;
+    companyAbv: string;
     retentionDate: string | null;
   }

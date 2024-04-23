@@ -39,38 +39,15 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       required: [''],
       reinstatementDate: [''],
       resNoneRes: [''],
+      notes: [''],
       employmentID: ['', Validators.required],
     });
   }
 
-  // ngOnInit(): void {
-  //   this.currentIndex = this.agentDataService.licenseMgmtDataIndex;
-  //   this.licenseMgmtData =
-  //     this.agentDataService.agentInformation.agentLicenseAppointments;
-  //     this.licenseForm.patchValue({
-  //       agentName: this.agentDataService.agentInformation.lastName + ', ' + this.agentDataService.agentInformation.firstName,
-  //       employeeLicenseId: this.licenseMgmtData[this.currentIndex].employeeLicenseId,
-  //       licenseState: this.licenseMgmtData[this.currentIndex].licenseState,
-  //       licenseName: this.licenseMgmtData[this.currentIndex].employeeLicenseId,
-  //       licenseNumber: this.licenseMgmtData[this.currentIndex].licenseNumber,
-  //       licenseStatus: this.licenseMgmtData[this.currentIndex].licenseStatus,
-  //       affiliatedLicense: 'SELECT-TBD...',
-  //       originalIssueDate: this.licenseMgmtData[this.currentIndex].originalIssueDate,
-  //       lineOfAuthIssueDate: this.licenseMgmtData[this.currentIndex].lineOfAuthIssueDate,
-  //       licenseEffectiveDate: this.licenseMgmtData[this.currentIndex].licenseEffectiveDate,
-  //       licenseExpirationDate: this.licenseMgmtData[this.currentIndex].licenseExpirationDate,
-  //       licenseNotes: 'TBD...',
-  //       required: 'Yes',
-  //       reinstatementDate: 'TBD...',
-  //       resNoneRes: this.licenseMgmtData[this.currentIndex].resNoneRes,
-  //       employmentID: this.licenseMgmtData[this.currentIndex].employmentID,
-  //     });
-  // }
   ngOnInit(): void {
     this.subscriptionMode =
       this.agentComService.modeLicenseMgmtChanged.subscribe((mode: string) => {
         if (mode === 'EDIT') {
-          // this.currentIndex = this.agentDataService.licenseMgmtDataIndex;
           this.subscriptionData =
             this.agentDataService.licenseMgmtDataIndexChanged.subscribe(
               (licenseMgmtDataIndex: any) => {

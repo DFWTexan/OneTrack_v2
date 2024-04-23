@@ -154,6 +154,7 @@
                   <button
                     class="page-button appointment-edit-button"
                     (click)="toggleLicenseMgmt(i)"
+                    title="View License Information"
                   >
                     <span
                       class="material-symbols-outlined"
@@ -168,7 +169,7 @@
                 <table class="table">
                   <thead>
                     <tr style="background-color: whitesmoke">
-                      <th scope="col">License ID</th>
+                      <th scope="col" *ngIf="appComService.isShowDebug">License ID</th>
                       <th scope="col">Appt ID</th>
                       <th scope="col">Status</th>
                       <th scope="col">Company ID</th>
@@ -182,15 +183,15 @@
                   </thead>
                   <tbody>
                     <tr *ngFor="let appointment of license.licenseAppointments">
-                      <td>{{ appointment.licenseID }}</td>
+                      <td *ngIf="appComService.isShowDebug">{{ appointment.licenseID }}</td>
                       <td>{{ appointment.employeeAppointmentID }}</td>
                       <td>{{ appointment.appointmentStatus }}</td>
                       <td>{{ appointment.companyID }}</td>
-                      <td>TBD...</td>
-                      <td>TBD...</td>
-                      <td>TBD...</td>
-                      <td>TBD...</td>
-                      <td>TBD...</td>
+                      <td>{{ appointment.companyAbv }}</td>
+                      <td>{{ appointment.carrierDate | date : "MM/dd/yyyy" }}</td>
+                      <td>{{ appointment.appointmentEffectiveDate | date : "MM/dd/yyyy" }}</td>
+                      <td>{{ appointment.appointmentExpireDate | date : "MM/dd/yyyy" }}</td>
+                      <td>{{ appointment.appointmentTerminationDate | date : "MM/dd/yyyy" }}</td>
                       <td>
                         <div class="d-flex justify-content-between mb-3 me-4">
                           <button

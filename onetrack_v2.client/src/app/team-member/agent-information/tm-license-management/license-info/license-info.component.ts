@@ -1,7 +1,7 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 
 import { AgentLicenseAppointments } from '../../../../_Models';
-import { AgentComService, AgentDataService, ModalService } from '../../../../_services';
+import { AgentComService, AgentDataService, AppComService, ModalService } from '../../../../_services';
 
 @Component({
   selector: 'app-license-info',
@@ -16,7 +16,8 @@ export class LicenseInfoComponent implements OnInit {
   constructor(
     protected agentDataService: AgentDataService,
     public agentComService: AgentComService,
-    protected modalService: ModalService
+    protected modalService: ModalService,
+    public appComService: AppComService
   ) {}
 
   ngOnInit() {
