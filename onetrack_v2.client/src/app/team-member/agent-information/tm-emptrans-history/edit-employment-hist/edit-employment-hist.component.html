@@ -6,7 +6,8 @@
   <div class="row">
     <div class="col">
       <div class="mb-3" *ngIf="agentComService.modeEmploymentHist === 'EDIT'">
-        <label for="employmentHistoryID" class="form-label">Employment History ID</label
+        <label for="employmentHistoryID" class="form-label"
+          >Employment History ID</label
         >
         <input
           class="form-control input-size-small"
@@ -38,12 +39,16 @@
         <label for="backgroundCheckStatus" class="form-label"
           >Background Check Status:</label
         >
-        <input
-          class="form-select form-select-lg select-size-small"
+        <select
+          class="form-select select-size-x-small"
           type="text"
-          id="backgroundCheckStatus"
-          formControlName="backgroundCheckStatus"
-        />
+          id="licenseStatus"
+          [value]="employmentHistoryForm.get('backgroundCheckStatus')?.value"
+        >
+          <option *ngFor="let status of backgroundStatuses" [value]="status.lkpValue">
+            {{ status.lkpValue }}
+          </option>
+        </select>
       </div>
       <div class="mb-3">
         <label for="backGroundCheckNotes" class="form-label"

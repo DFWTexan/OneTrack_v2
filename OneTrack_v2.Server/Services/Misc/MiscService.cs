@@ -28,14 +28,14 @@ namespace OneTrack_v2.Services
                 result.StatusCode = 200;
                 result.ObjData = stateProvincses;
                 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             }
+
+            return result;
         }
         public ReturnResult GetBranches()
         {             
@@ -71,14 +71,14 @@ namespace OneTrack_v2.Services
                 result.Success = true;
                 result.StatusCode = 200;
 
-                return result;
             }
                        catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             }
+
+            return result;
         }
         public ReturnResult GetScoreNumbers()
         {
@@ -113,14 +113,14 @@ namespace OneTrack_v2.Services
                 result.Success = true;
                 result.StatusCode = 200;
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             }
+
+            return result;
         }
         public ReturnResult GetEmployerAgencies()
         {
@@ -137,14 +137,14 @@ namespace OneTrack_v2.Services
                 result.ObjData = resultEmpAgencies;
                 result.StatusCode = 200;
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             }
+
+            return result;
         }
         public ReturnResult GetLicenseStatuses()
         {
@@ -162,14 +162,14 @@ namespace OneTrack_v2.Services
                 result.ObjData = resultLicStatuses;
                 result.StatusCode = 200;
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             }
+
+            return result;
         }
         public ReturnResult GetLicenseNames()
         {
@@ -190,14 +190,14 @@ namespace OneTrack_v2.Services
                 result.ObjData = resultLicNames;
                 result.StatusCode = 200;
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             }
+
+            return result;
         }
         public ReturnResult GetEmailTemplates()
         {
@@ -209,14 +209,14 @@ namespace OneTrack_v2.Services
                 result.Success = true;
                 result.StatusCode = 200;
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             }
+
+            return result;
         }
         public ReturnResult GetTicklerMessageTypes()
         {
@@ -228,14 +228,14 @@ namespace OneTrack_v2.Services
                 result.Success = true;
                 result.StatusCode = 200;
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             }
+
+            return result;
         }
         public ReturnResult WorkListNames()
         {
@@ -253,15 +253,15 @@ namespace OneTrack_v2.Services
                 result.Success = true;
                 result.ObjData = activeWorkLists;
                 result.StatusCode = 200;
-
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
+                
             }
+
+            return result;
         }
         public ReturnResult GetLicenseTeches()
         {
@@ -291,14 +291,43 @@ namespace OneTrack_v2.Services
                 result.ObjData = resultLicTechs;
                 result.StatusCode = 200;
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             }
+            return result;
+        }
+        public ReturnResult GetBackgroundStatuses()
+        {
+            var result = new ReturnResult();
+            try
+            {
+
+                var query = from typeStatus in _db.LkpTypeStatuses
+                            where typeStatus.LkpField == "BackgroundStatus"
+                            orderby typeStatus.SortOrder, typeStatus.LkpValue
+                            select new
+                            {
+                                LkpValue = typeStatus.LkpValue,
+                                //SortOrder = typeStatus.SortOrder
+                            };
+
+                var resultBackgroundStatuses = query.AsNoTracking().ToList();
+
+                result.Success = true;
+                result.ObjData = resultBackgroundStatuses;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;
         }
     }
 }

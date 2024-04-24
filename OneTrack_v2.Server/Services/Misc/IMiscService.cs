@@ -14,5 +14,6 @@ namespace OneTrack_v2.Services
         public ReturnResult GetTicklerMessageTypes();
         public ReturnResult WorkListNames();
         public ReturnResult GetLicenseTeches();
+        public ReturnResult GetBackgroundStatuses();
     }
 }

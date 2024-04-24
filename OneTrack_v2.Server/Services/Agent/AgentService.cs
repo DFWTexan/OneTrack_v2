@@ -1149,7 +1149,7 @@ namespace OneTrack_v2.Services
                                             HRTermDate = h.HrtermDate,
                                             HRTermCode = h.HrtermCode,
                                             IsForCause = h.ForCause,
-                                            BackgroundCheckStatus = h.BackgroundCheckStatus,
+                                            BackgroundCheckStatus = h.BackgroundCheckStatus == "0" ? "N/A" : h.BackgroundCheckStatus,
                                             BackGroundCheckNotes = h.BackGroundCheckNotes,
                                             IsCurrent = h.IsCurrent
                                         });

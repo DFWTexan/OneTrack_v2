@@ -36,7 +36,7 @@
           <table class="table">
             <thead>
               <tr style="background-color: whitesmoke">
-                <th scope="col">History ID</th>
+                <th scope="col" *ngIf="appComService.isShowEditID">History ID</th>
                 <th scope="col">Hire Date</th>
                 <th scope="col">Rehire Date</th>
                 <th scope="col">Notified Term Date</th>
@@ -46,12 +46,12 @@
                 <th scope="col">Background Check Status</th>
                 <th scope="col">Background Check Notes</th>
                 <th scope="col">Is Current</th>
-                <th scope="col" class="text-center" style="width: 15rem;">ACTION</th>
+                <th scope="col" class="text-center" style="width: 10rem;">ACTION</th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let emp of employmentHistory">
-                <td class="align-middle">{{ emp.employmentHistoryID }}</td>
+                <td class="align-middle" *ngIf="appComService.isShowEditID">{{ emp.employmentHistoryID }}</td>
                 <td class="align-middle">
                   {{ emp.hireDate | date : "MM/dd/yyyy" }}
                 </td>
@@ -65,11 +65,9 @@
                   {{ emp.hrTermDate | date : "MM/dd/yyyy" }}
                 </td>
                 <td class="align-middle">{{ emp.hrTermCode }}</td>
-                <!-- <td>{{ emp.forCause ? "Yes" : "No" }}</td> -->
-                <td class="align-middle">TBD...</td>
+                <td>{{ emp.isForCause ? "Yes" : "No" }}</td>
                 <td class="align-middle">{{ emp.backgroundCheckStatus }}</td>
-                <!-- <td>{{ emp.backgroundCheckNotes }}</td> -->
-                <td class="align-middle">TBD...</td>
+                <td class="align-middle">{{ emp.backGroundCheckNotes }}</td>
                 <td class="align-middle">{{ emp.isCurrent ? "Yes" : "No" }}</td>
                 <td>
                   <div
@@ -137,18 +135,18 @@
         <table class="table">
           <thead>
             <tr style="background-color: whitesmoke">
-              <th scope="col">Trans. ID</th>
+              <th scope="col" *ngIf="appComService.isShowEditID">Trans. ID</th>
               <th scope="col">Branch Code</th>
               <th scope="col">Res. St. Code</th>
               <th scope="col">Work St. Code</th>
               <th scope="col">Trans. Date</th>
               <th scope="col">Is Current</th>
-              <th scope="col" class="text-center" style="width: 15rem;">ACTION</th>
+              <th scope="col" class="text-center" style="width: 10rem;">ACTION</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let transfer of transferHistory">
-              <td class="align-middle">{{ transfer.transferHistoryID }}</td>
+              <td class="align-middle" *ngIf="appComService.isShowEditID">{{ transfer.transferHistoryID }}</td>
               <td class="align-middle">
                 {{ transfer.branchCode }}
               </td>
@@ -226,16 +224,16 @@
         <table class="table">
           <thead>
             <tr style="background-color: whitesmoke">
-              <th scope="col">Emp. Co. Req. ID</th>
+              <th scope="col" *ngIf="appComService.isShowEditID">Emp. Co. Req. ID</th>
               <th scope="col">Asset ID</th>
               <th scope="col">Status</th>
               <th scope="col">Comp. Date</th>
-              <th scope="col" class="text-center" style="width: 15rem;">ACTION</th>
+              <th scope="col" class="text-center" style="width: 10rem;">ACTION</th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let coReq of companyRequirementsHistory">
-              <td class="align-middle">
+              <td class="align-middle" *ngIf="appComService.isShowEditID">
                 {{ coReq.employmentCompanyRequirementID }}
               </td>
               <td class="align-middle">
@@ -311,17 +309,17 @@
       <table class="table">
         <thead>
           <tr style="background-color: whitesmoke">
-            <th scope="col">Emp. JobTitle ID</th>
+            <th scope="col" *ngIf="appComService.isShowEditID">Emp. JobTitle ID</th>
             <th scope="col">JobTitle Date</th>
             <th scope="col">Job Title</th>
             <th scope="col">Job Code</th>
             <th scope="col">Is Current</th>
-            <th scope="col" class="text-center" style="width: 15rem;">ACTION</th>
+            <th scope="col" class="text-center" style="width: 10rem;">ACTION</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let jobTitle of employmentJobTitleHistory">
-            <td class="align-middle">
+            <td class="align-middle" *ngIf="appComService.isShowEditID">
               {{ jobTitle.employmentJobTitleID }}
             </td>
             <td class="align-middle">

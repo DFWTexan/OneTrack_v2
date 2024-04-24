@@ -3,7 +3,11 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 
-import { AgentComService, AgentDataService } from '../../../../_services';
+import {
+  AgentComService,
+  AgentDataService,
+  MiscDataService,
+} from '../../../../_services';
 
 @Component({
   selector: 'app-edit-employment-hist',
@@ -13,10 +17,12 @@ import { AgentComService, AgentDataService } from '../../../../_services';
 @Injectable()
 export class EditEmploymentHistComponent implements OnInit, OnDestroy {
   employmentHistoryForm!: FormGroup;
-  subscriptionMode: Subscription = new Subscription;
-  subscriptionData: Subscription = new Subscription;
+  backgroundStatuses: Array<{ lkpValue: string }> = [];
+  subscriptionMode: Subscription = new Subscription();
+  subscriptionData: Subscription = new Subscription();
 
   constructor(
+    private miscDataService: MiscDataService,
     public agentService: AgentDataService,
     public agentComService: AgentComService
   ) {}
@@ -35,48 +41,63 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
       isCurrent: new FormControl(null),
     });
 
-    this.subscriptionMode = this.agentComService.modeEmploymentHistChanged.subscribe((mode: string) => {
-      if (mode === 'EDIT') {
-        this.subscriptionData = this.agentService.employmentTransferHistItemChanged.subscribe(
-          (employmentHistory: any) => {
-            this.employmentHistoryForm.patchValue({
-              employmentHistoryID: employmentHistory.employmentHistoryID,
-              hireDate: formatDate(
-                employmentHistory.hireDate,
-                'yyyy-MM-dd',
-                'en-US'
-              ),
-              rehireDate: formatDate(
-                employmentHistory.rehireDate,
-                'yyyy-MM-dd',
-                'en-US'
-              ),
-              notifiedTermDate: formatDate(
-                employmentHistory.notifiedTermDate,
-                'yyyy-MM-dd',
-                'en-US'
-              ),
-              hrTermDate: formatDate(
-                employmentHistory.hrTermDate,
-                'yyyy-MM-dd',
-                'en-US'
-              ),
-              hrTermCode: employmentHistory.hrTermCode,
-              isForCause: employmentHistory.isForCause,
-              backgroundCheckStatus: employmentHistory.backgroundCheckStatus,
-              backGroundCheckNotes: employmentHistory.backGroundCheckNotes,
-              isCurrent: employmentHistory.isCurrent,
-            });
+    this.miscDataService
+      .fetchBackgroundStatuses()
+      .subscribe((backgroundStatuses: Array<{ lkpValue: string }>) => {
+        this.backgroundStatuses = [{ lkpValue: 'N/A' }, ...backgroundStatuses];
+      });
+
+    this.subscriptionMode =
+      this.agentComService.modeEmploymentHistChanged.subscribe(
+        (mode: string) => {
+          if (mode === 'EDIT') {
+            this.subscriptionData =
+              this.agentService.employmentTransferHistItemChanged.subscribe(
+                (employmentHistory: any) => {
+                  this.employmentHistoryForm.patchValue({
+                    employmentHistoryID: employmentHistory.employmentHistoryID,
+                    hireDate: formatDate(
+                      employmentHistory.hireDate,
+                      'yyyy-MM-dd',
+                      'en-US'
+                    ),
+                    rehireDate: formatDate(
+                      employmentHistory.rehireDate,
+                      'yyyy-MM-dd',
+                      'en-US'
+                    ),
+                    notifiedTermDate: formatDate(
+                      employmentHistory.notifiedTermDate,
+                      'yyyy-MM-dd',
+                      'en-US'
+                    ),
+                    hrTermDate: formatDate(
+                      employmentHistory.hrTermDate,
+                      'yyyy-MM-dd',
+                      'en-US'
+                    ),
+                    hrTermCode: employmentHistory.hrTermCode,
+                    isForCause: employmentHistory.isForCause,
+                    backgroundCheckStatus:
+                      employmentHistory.backgroundCheckStatus,
+                    backGroundCheckNotes:
+                      employmentHistory.backGroundCheckNotes,
+                    isCurrent: employmentHistory.isCurrent,
+                  });
+                }
+              );
+          } else {
+            this.employmentHistoryForm.reset();
           }
-        );
-      } else {
-        this.employmentHistoryForm.reset();
-      }
-    });
+        }
+      );
   }
 
   onSubmit() {
-    console.log('EMFTest - (app-edit-employment-hist) onSubmit => \n', this.employmentHistoryForm.value);
+    console.log(
+      'EMFTest - (app-edit-employment-hist) onSubmit => \n',
+      this.employmentHistoryForm.value
+    );
   }
 
   ngOnDestroy(): void {

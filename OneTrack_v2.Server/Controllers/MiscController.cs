@@ -96,5 +96,13 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpGet]
+        public async Task<ActionResult> GetBackgroundStatuses()
+        {
+            var result = await Task.Run(() => _miscService.GetBackgroundStatuses());
+
+            return StatusCode(result.StatusCode, result);
+        }
     }
 }

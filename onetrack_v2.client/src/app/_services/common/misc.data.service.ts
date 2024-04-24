@@ -80,4 +80,24 @@ export class MiscDataService {
         })
       );
   }
+
+  fetchBackgroundStatuses() {
+    const url = this.url + 'GetBackgroundStatuses';
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: Array<{ lkpValue: string }>;
+        errMessage: string;
+      }>(url)
+      .pipe(
+        map((response) => {
+          if (response.success && response.objData) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
 }
