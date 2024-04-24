@@ -78,21 +78,36 @@
           </option>
         </select>
       </div>
+
+      <div class="form-group">
+        <label for="Notes">Notes:</label>
+        <textarea
+          rows="5"
+          id="Notes"
+          type="text"
+          formControlName="notes"
+          class="form-control"
+        ></textarea>
+      </div>
     </div>
+
     <div class="col">
       <div class="mb-3">
-        <label for="licenseStatus" class="form-label"
+        <label for="affiliatedLicense" class="form-label"
           >Affiliated License:</label
         >
-        <input
-          class="form-select form-select-lg select-size-small"
+        <select
+          class="form-select select-size-x-small"
           type="text"
-          id="licenseStatus"
-          formControlName="licenseStatus"
-        />
+          id="affiliatedLicense"
+        >
+          <option *ngFor="let affLic of affiliatedLicenses" [value]="affLic">
+            {{ affLic }}
+          </option>
+        </select>
       </div>
 
-      <div class="mb-3" *ngIf="agentComService.modeLicAppInfo == 'INSERT'">
+      <div class="mb-3" *ngIf="agentComService.modeLicenseMgmt == 'ADD'">
         <label for="originalIssueDate" class="form-label"
           >Sent to Agent Date:</label
         >
@@ -116,7 +131,7 @@
         />
       </div>
 
-      <div class="mb-3" *ngIf="agentComService.modeLicAppInfo == 'EDIT'">
+      <div class="mb-3" *ngIf="agentComService.modeLicenseMgmt == 'ADD'">
         <label for="lineOfAuthIssueDate" class="form-label"
           >Line Of Auth. Issue Date:</label
         >
@@ -128,7 +143,7 @@
         />
       </div>
 
-      <div class="mb-3" *ngIf="agentComService.modeLicAppInfo == 'EDIT'">
+      <div class="mb-3" *ngIf="agentComService.modeLicenseMgmt == 'EDIT'">
         <label for="licenseEffectiveDate" class="form-label"
           >Effective Date:</label
         >
@@ -137,6 +152,18 @@
           type="date"
           id="licenseEffectiveDate"
           formControlName="licenseEffectiveDate"
+        />
+      </div>
+
+      <div class="mb-3" *ngIf="agentComService.modeLicenseMgmt == 'ADD'">
+        <label for="renewalDate" class="form-label"
+          >Renewal Date:</label
+        >
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="renewalDate"
+          formControlName="reinstatementDate"
         />
       </div>
 
@@ -150,17 +177,6 @@
           id="licenseExpirationDate"
           formControlName="licenseExpirationDate"
         />
-      </div>
-
-      <div class="form-group">
-        <label for="Notes">Notes:</label>
-        <textarea
-          rows="5"
-          id="Notes"
-          type="text"
-          formControlName="notes"
-          class="form-control"
-        ></textarea>
       </div>
     </div>
   </div>
