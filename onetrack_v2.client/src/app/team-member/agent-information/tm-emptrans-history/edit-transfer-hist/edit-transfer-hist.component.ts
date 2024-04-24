@@ -3,22 +3,32 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 
-import { AgentComService, AgentDataService } from '../../../../_services';
+import {
+  AdminDataService,
+  AgentComService,
+  AgentDataService,
+  AppComService,
+  ConstantsDataService,
+} from '../../../../_services';
 
 @Component({
   selector: 'app-edit-transfer-hist',
   templateUrl: './edit-transfer-hist.component.html',
-  styleUrl: './edit-transfer-hist.component.css'
+  styleUrl: './edit-transfer-hist.component.css',
 })
 @Injectable()
 export class EditTransferHistComponent implements OnInit, OnDestroy {
   transferHistoryForm!: FormGroup;
-  subscriptionMode: Subscription = new Subscription;
-  subscriptionData: Subscription = new Subscription;
-  
+  branchCodes: Array<{ branchCode: string }> = [];
+  states: any[] = [];
+  subscriptionMode: Subscription = new Subscription();
+  subscriptionData: Subscription = new Subscription();
+
   constructor(
-    public agentService: AgentDataService,
-    public agentComService: AgentComService
+    private conService: ConstantsDataService,
+    public agentDataService: AgentDataService,
+    public agentComService: AgentComService,
+    public appComService: AppComService
   ) {}
 
   ngOnInit(): void {
@@ -31,34 +41,43 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
       state: new FormControl(null),
       isCurrent: new FormControl(null),
     });
-
-    this.subscriptionMode = this.agentComService.modeTransferHistChanged.subscribe((mode: string) => {
-      if (mode === 'EDIT') {
-        this.subscriptionData = this.agentService.transferHistItemChanged.subscribe(
-          (transferHistory: any) => {
-            this.transferHistoryForm.patchValue({
-              transferHistoryID: transferHistory.transferHistoryID,
-              branchCode: transferHistory.branchCode,
-              workStateAbv: transferHistory.workStateAbv,
-              resStateAbv: transferHistory.resStateAbv,
-              transferDate: formatDate(
-                transferHistory.transferDate,
-                'yyyy-MM-dd',
-                'en-US'
-              ),
-              state: transferHistory.state,
-              isCurrent: transferHistory.isCurrent,
-            });
-          }
-        );
-      } else {
-        this.transferHistoryForm.reset();
-      }
+    this.states = ['Select', ...this.conService.getStates()];
+    this.agentDataService.fetchBranchCodes().subscribe((response) => {
+      this.branchCodes = [{ branchCode: 'Select' }, ...response];
     });
+
+    this.subscriptionMode =
+      this.agentComService.modeTransferHistChanged.subscribe((mode: string) => {
+        if (mode === 'EDIT') {
+          this.subscriptionData =
+            this.agentDataService.transferHistItemChanged.subscribe(
+              (transferHistory: any) => {
+                this.transferHistoryForm.patchValue({
+                  transferHistoryID: transferHistory.transferHistoryID,
+                  branchCode: transferHistory.branchCode,
+                  workStateAbv: transferHistory.workStateAbv,
+                  resStateAbv: transferHistory.resStateAbv,
+                  transferDate: formatDate(
+                    transferHistory.transferDate,
+                    'yyyy-MM-dd',
+                    'en-US'
+                  ),
+                  state: transferHistory.state,
+                  isCurrent: transferHistory.isCurrent,
+                });
+              }
+            );
+        } else {
+          this.transferHistoryForm.reset();
+        }
+      });
   }
 
   onSubmit() {
-    console.log('EMFTest - (app-edit-employment-hist) onSubmit => \n', this.transferHistoryForm.value);
+    console.log(
+      'EMFTest - (app-edit-employment-hist) onSubmit => \n',
+      this.transferHistoryForm.value
+    );
   }
 
   ngOnDestroy(): void {

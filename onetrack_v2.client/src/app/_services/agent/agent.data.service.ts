@@ -38,6 +38,7 @@ export class AgentDataService {
   licenseMgmtDataIndex: any = 0;
   licenseMgmtDataIndexChanged = new Subject<number>();
   // EMP TRANSFER HISTORY
+  branchCodes: Array<{ branchCode: string }> = [];
   employmentTransferHistItem: any = {};
   employmentTransferHistItemChanged = new Subject<any>();
   transferHistItem: any = {};
@@ -150,6 +151,30 @@ export class AgentDataService {
       );
   }
 
+  fetchBranchCodes() {
+    this.apiUrl = environment.apiUrl + 'Agent/GetBranchCodes';
+
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: Array<{ branchCode: string }>;
+        errMessage: string;
+      }>(this.apiUrl)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            this.branchCodes = response.objData;
+            this.agentLicApplicationInfoChanged.next(
+              this.agentLicApplicationInfo
+            );
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
   // LICENSE APPOINTMENT MANAGEMENT
   storeLicenseAppointment(appointment: LicenseAppointment) {
     this.licenseAppointment = appointment;

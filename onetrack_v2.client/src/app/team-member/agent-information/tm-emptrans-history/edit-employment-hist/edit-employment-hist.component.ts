@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs';
 import {
   AgentComService,
   AgentDataService,
+  AppComService,
   MiscDataService,
 } from '../../../../_services';
 
@@ -24,7 +25,8 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
   constructor(
     private miscDataService: MiscDataService,
     public agentService: AgentDataService,
-    public agentComService: AgentComService
+    public agentComService: AgentComService,
+    public appComService: AppComService
   ) {}
 
   ngOnInit(): void {

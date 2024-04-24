@@ -268,14 +268,14 @@ namespace OneTrack_v2.Services
                 result.ObjData = agent;
                 result.StatusCode = 200;
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             };
+
+            return result;
         }
 
         /// <summary>
@@ -325,14 +325,14 @@ namespace OneTrack_v2.Services
                 result.ObjData = licenses;
                 result.StatusCode = 200;
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             }
+
+            return result;
         }
 
         /// <summary>
@@ -414,14 +414,14 @@ namespace OneTrack_v2.Services
                 result.ObjData = FillAgentLicenseAppointment(vEmploymentID);
                 result.StatusCode = 200;
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             }
+
+            return result;
         }
 
         /// <summary>
@@ -590,14 +590,14 @@ namespace OneTrack_v2.Services
                 result.ObjData = employmentTransferHistory;
                 result.StatusCode = 200;
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             }
+
+            return result;
         }
 
         /// <summary>
@@ -636,14 +636,14 @@ namespace OneTrack_v2.Services
                 result.ObjData = licenses;
                 result.StatusCode = 200;
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             }
+
+            return result;
         }
 
         /// <summary>
@@ -709,14 +709,14 @@ namespace OneTrack_v2.Services
                 result.ObjData = diaries;
                 result.StatusCode = 200;
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             }
+
+            return result;
         }
 
         /// <summary>
@@ -767,14 +767,14 @@ namespace OneTrack_v2.Services
                 result.ObjData = communications;
                 result.StatusCode = 200;
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             }
+
+            return result;
         }
         public ReturnResult GetLicenseApplcationInfo(int vEmployeeLicenseID)
         {
@@ -864,14 +864,14 @@ namespace OneTrack_v2.Services
                 result.ObjData = agentLicenseInformation;
                 result.StatusCode = 200;
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             }
+
+            return result;
         }
         public ReturnResult InsertAgent([FromBody] IputAgentInsert vInput)
         {
@@ -883,15 +883,14 @@ namespace OneTrack_v2.Services
                 result.Success = true;
                 result.StatusCode = 200;
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             }
 
+            return result;
         }
         public ReturnResult InsertAgent_v2([FromBody] IputAgentInsert vInput)
         {
@@ -971,15 +970,42 @@ namespace OneTrack_v2.Services
                     }
                 }
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
             }
+
+            return result;
         }
+        public ReturnResult GetBranchCodes()
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var query = from b in _db.Bifs
+                            select new
+                            {
+                                BranchCode = b.HrDepartmentId
+                            };
+
+                var branches = query.AsNoTracking().ToList();
+
+                result.Success = true;
+                result.ObjData = branches;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;
+        }
+
         #region Private Methods
         private bool ExecuteAddressInsert(IputAgentInsert vInput, string? vCountry = null)
         {

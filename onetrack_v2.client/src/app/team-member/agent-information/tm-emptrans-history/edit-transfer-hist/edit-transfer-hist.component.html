@@ -5,8 +5,15 @@
 >
   <div class="row">
     <div class="col">
-      <div class="mb-3" *ngIf="agentComService.modeTransferHist === 'EDIT'">
-        <label for="transferHistoryID" class="form-label">Transfer History ID:</label
+      <div
+        class="mb-3"
+        *ngIf="
+          agentComService.modeTransferHist === 'EDIT' &&
+          appComService.isShowEditID
+        "
+      >
+        <label for="transferHistoryID" class="form-label"
+          >Transfer History ID:</label
         >
         <input
           class="form-control input-size-small"
@@ -17,34 +24,47 @@
       </div>
       <div class="mb-3">
         <label for="branchCode" class="form-label">Branch Code:</label>
-        <input
-          class="form-control input-size-small"
+        <select
+          class="form-select select-size-small"
           type="text"
-          id="branchCode"
-          formControlName="branchCode"
-        />
+          id="licenseStatus"
+          [value]="transferHistoryForm.get('branchCode')?.value"
+        >
+          <option *ngFor="let code of branchCodes" [value]="code.branchCode">
+            {{ code.branchCode }}
+          </option>
+        </select>
       </div>
 
       <div class="mb-3">
         <label for="workStateAbv" class="form-label">Work State:</label>
-        <input
-          class="form-select form-select-lg select-size-small"
+        <select
+          class="form-select select-size-x-small"
           type="text"
           id="workStateAbv"
-          formControlName="workStateAbv"
-        />
+          [value]="transferHistoryForm.get('workStateAbv')?.value"
+        >
+          <option *ngFor="let state of states" [value]="state">
+            {{ state }}
+          </option>
+        </select>
       </div>
 
       <div class="mb-3">
         <label for="resStateAbv" class="form-label">Resident State:</label>
-        <input
-          class="form-select form-select-lg select-size-small"
+        <select
+          class="form-select select-size-x-small"
           type="text"
           id="resStateAbv"
-          formControlName="resStateAbv"
-        />
+          [value]="transferHistoryForm.get('resStateAbv')?.value"
+        >
+          <option *ngFor="let state of states" [value]="state">
+            {{ state }}
+          </option>
+        </select>
       </div>
-
+    </div>
+    <div class="col">
       <div class="mb-3">
         <label for="transferDate" class="form-label">Transfer Date:</label>
         <input
@@ -56,16 +76,6 @@
       </div>
 
       <div class="mb-3">
-        <label for="state" class="form-label">State:</label>
-        <input
-          class="form-select form-select-lg select-size-small"
-          type="text"
-          id="state"
-          formControlName="state"
-        />
-      </div>
-      
-      <div class="mb-3">
         <input
           class="form-check-input me-2"
           type="checkbox"
@@ -74,7 +84,6 @@
         />
         <label for="isCurrent" class="form-label">Is Current</label>
       </div>
-      
     </div>
   </div>
 
@@ -89,4 +98,3 @@
     </div>
   </div>
 </form>
-

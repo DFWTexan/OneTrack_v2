@@ -101,6 +101,14 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpGet]
+        public async Task<ActionResult> GetBranchCodes()
+        {
+            var result = await Task.Run(() => _agentService.GetBranchCodes());
+
+            return StatusCode(result.StatusCode, result);
+        }
         #endregion
 
         #region "Agent Insert"
