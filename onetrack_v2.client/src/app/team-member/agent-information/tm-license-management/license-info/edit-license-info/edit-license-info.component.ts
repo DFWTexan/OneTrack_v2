@@ -129,6 +129,9 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
               this.agentDataService.agentInformation.lastName +
               ', ' +
               this.agentDataService.agentInformation.firstName,
+              licenseState: 'Select', 
+              licenseName: 0,
+              licenseStatus: 0,
           });
         }
       });
