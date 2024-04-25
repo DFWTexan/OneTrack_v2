@@ -1006,6 +1006,64 @@ namespace OneTrack_v2.Services
             return result;
         }
 
+        public ReturnResult GetCoRequirementAssetIDs()
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var query = from typeStatus in _db.LkpTypeStatuses
+                            where typeStatus.LkpField == "CompanyRequirement"
+                            select new
+                            {
+                                LkpValue = typeStatus.LkpValue,
+                                //SortOrder = typeStatus.SortOrder
+                            };
+
+                var coReqAssetIDs = query.AsNoTracking().ToList();
+
+                result.Success = true;
+                result.ObjData = coReqAssetIDs;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;
+        }
+
+        public ReturnResult GetCoRequirementStatuses()
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var query = from typeStatus in _db.LkpTypeStatuses
+                            where typeStatus.LkpField == "CompanyRequirementStatus"
+                            select new
+                            {
+                                LkpValue = typeStatus.LkpValue,
+                                //SortOrder = typeStatus.SortOrder
+                            };
+
+                var coReqStatuses = query.AsNoTracking().ToList();
+
+                result.Success = true;
+                result.ObjData = coReqStatuses;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;
+        }
+
         #region Private Methods
         private bool ExecuteAddressInsert(IputAgentInsert vInput, string? vCountry = null)
         {

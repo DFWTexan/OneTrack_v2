@@ -5,14 +5,18 @@
 >
   <div class="row">
     <div class="col">
-      <div class="mb-3" *ngIf="agentComService.modeCompanyRequirementsHist === 'EDIT'">
+      <div class="mb-3">
         <label for="assetIdString" class="form-label"> Asset ID:</label>
-        <input
-          class="form-select form-select-lg select-size-small"
+        <select
+          class="form-select select-size-medium"
           type="text"
           id="assetIdString"
-          formControlName="assetIdString"
-        />
+          [value]="coRequirementsForm.get('assetIdString')?.value"
+        >
+          <option *ngFor="let id of coReqAssetIDs" [value]="id.lkpValue">
+            {{ id.lkpValue }}
+          </option>
+        </select>
       </div>
 
       <div class="mb-3">
@@ -26,41 +30,32 @@
           formControlName="learningProgramEnrollmentDate"
         />
       </div>
-
+    </div>
+    <div class="col">
       <div class="mb-3">
         <label for="learningProgramStatus" class="form-label">Status:</label>
-        <input
-          class="form-select form-select-lg select-size-small"
+        <select
+          class="form-select select-size-small"
           type="text"
           id="learningProgramStatus"
-          formControlName="learningProgramStatus"
-        />
+          [value]="coRequirementsForm.get('learningProgramStatus')?.value"
+        >
+          <option *ngFor="let code of coReqStatuses" [value]="code.lkpValue">
+            {{ code.lkpValue }}
+          </option>
+        </select>
       </div>
 
-      
-
       <div class="mb-3">
-        <label for="learningProgramCompletionDate" class="form-label">Completion Date:</label><br />
+        <label for="learningProgramCompletionDate" class="form-label"
+          >Completion Date:</label
+        ><br />
         <input
           class="form-control input-size-small"
           type="date"
           id="learningProgramCompletionDate"
           formControlName="learningProgramCompletionDate"
         />
-        <!-- <mat-form-field>
-          <mat-label>Choose a date</mat-label>
-          <input
-            matInput
-            [matDatepicker]="picker"
-            formControlName="learningProgramCompletionDate"
-          />
-          <mat-hint>MM/DD/YYYY</mat-hint>
-          <mat-datepicker-toggle
-            matSuffix
-            [for]="picker"
-          ></mat-datepicker-toggle>
-          <mat-datepicker #picker></mat-datepicker>
-        </mat-form-field> -->
       </div>
     </div>
   </div>

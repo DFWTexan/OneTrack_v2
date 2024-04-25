@@ -58,7 +58,7 @@ export class AgentDataService {
   licensePreExamItem: any = {};
   licensePreExamItemChanged = new Subject<any>();
   licenseRenewalItem: any = {};
-  licenseRenewalItemChanged = new Subject<any>();  
+  licenseRenewalItemChanged = new Subject<any>();
   // CONTINUING EDUCATION
   contEduHoursTaken: any = {};
   contEduHoursTakenChanged = new Subject<any>();
@@ -175,6 +175,49 @@ export class AgentDataService {
         })
       );
   }
+
+  fetchCoReqAssetIDs() {
+    this.apiUrl = environment.apiUrl + 'Agent/GetCoRequirementAssetIDs';
+
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: Array<{ lkpValue: string }>;
+        errMessage: string;
+      }>(this.apiUrl)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  fetchCoReqStatuses() {
+    this.apiUrl = environment.apiUrl + 'Agent/GetCoRequirementStatuses';
+
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: Array<{ lkpValue: string }>;
+        errMessage: string;
+      }>(this.apiUrl)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
   // LICENSE APPOINTMENT MANAGEMENT
   storeLicenseAppointment(appointment: LicenseAppointment) {
     this.licenseAppointment = appointment;
@@ -267,10 +310,7 @@ export class AgentDataService {
   }
 
   // CONTINUING EDUCATION
-  storeContEduHoursTaken(
-    mode: string | '',
-    contEduHoursTaken: any | null
-  ) {
+  storeContEduHoursTaken(mode: string | '', contEduHoursTaken: any | null) {
     this.agentComService.modeContEduHoursTakenModal(mode);
     this.contEduHoursTaken = contEduHoursTaken || {};
     this.contEduHoursTakenChanged.next(this.contEduHoursTaken);
@@ -285,23 +325,18 @@ export class AgentDataService {
       this.diaryItemsChanged.next(this.diaryItems);
       return;
     }
-    this.diaryItems = this.agentInformation.diaryItems.filter(
-      (item) => {
-        if (item && item.soeid !== null) {
-          return item.soeid.includes(value);
-        } else {
-          return false;
-        }
+    this.diaryItems = this.agentInformation.diaryItems.filter((item) => {
+      if (item && item.soeid !== null) {
+        return item.soeid.includes(value);
+      } else {
+        return false;
       }
-    );
+    });
 
     this.diaryItemsChanged.next(this.diaryItems);
   }
 
-  storeDiaryEntry(
-    mode: string | '',
-    diaryEntry: any | null
-  ) {
+  storeDiaryEntry(mode: string | '', diaryEntry: any | null) {
     this.agentComService.modeDiaryEntryModal(mode);
     this.diaryEntry = diaryEntry || {};
     this.diaryEntryChanged.next(this.diaryEntry);

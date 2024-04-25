@@ -109,6 +109,22 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpGet]
+        public async Task<ActionResult> GetCoRequirementAssetIDs()
+        {
+            var result = await Task.Run(() => _agentService.GetCoRequirementAssetIDs());
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetCoRequirementStatuses()
+        {
+            var result = await Task.Run(() => _agentService.GetCoRequirementStatuses());
+
+            return StatusCode(result.StatusCode, result);
+        }
         #endregion
 
         #region "Agent Insert"
@@ -120,7 +136,7 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpPost]  
+        [HttpPost]
         public async Task<ActionResult> InsertAgent_v2([FromBody] IputAgentInsert Input)
         {
             var result = await Task.Run(() => _agentService.InsertAgent_v2(Input));  // Implimentation of InsertAgent_v2 Linq Query

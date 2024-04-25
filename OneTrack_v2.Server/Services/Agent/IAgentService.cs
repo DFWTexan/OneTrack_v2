@@ -18,5 +18,7 @@ namespace OneTrack_v2.Services
         public ReturnResult InsertAgent_v2([FromBody] IputAgentInsert Input);
         public ReturnResult GetLicenseApplcationInfo(int EmployeeLicenseID);
         public ReturnResult GetBranchCodes();
+        public ReturnResult GetCoRequirementAssetIDs();
+        public ReturnResult GetCoRequirementStatuses();
     }
 }

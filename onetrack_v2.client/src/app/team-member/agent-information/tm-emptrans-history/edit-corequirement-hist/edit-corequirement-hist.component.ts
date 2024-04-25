@@ -3,7 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 
-import { AgentComService, AgentDataService } from '../../../../_services';
+import { AgentComService, AgentDataService, AppComService } from '../../../../_services';
 
 @Component({
   selector: 'app-edit-corequirement-hist',
@@ -13,12 +13,15 @@ import { AgentComService, AgentDataService } from '../../../../_services';
 @Injectable()
 export class EditCorequirementHistComponent implements OnInit, OnDestroy {
   coRequirementsForm!: FormGroup;
+  coReqAssetIDs: Array<{ lkpValue: string }> = [];
+  coReqStatuses: Array<{ lkpValue: string }> = [];
   subscriptionMode: Subscription = new Subscription;
   subscriptionData: Subscription = new Subscription;
 
   constructor(
-    public agentService: AgentDataService,
-    public agentComService: AgentComService
+    public agentDataService: AgentDataService,
+    public agentComService: AgentComService,
+    public appComService: AppComService
   ) {}
 
   ngOnInit(): void {
@@ -31,10 +34,18 @@ export class EditCorequirementHistComponent implements OnInit, OnDestroy {
       ]),
     });
 
+    this.agentDataService.fetchCoReqAssetIDs().subscribe((response) => {
+      this.coReqAssetIDs = [{ lkpValue: 'Select' }, ...response];
+    });
+
+    this.agentDataService.fetchCoReqStatuses().subscribe((response) => {
+      this.coReqStatuses = [{ lkpValue: 'Select' }, ...response];
+    });
+
     this.subscriptionMode = this.agentComService.modeCompanyRequirementsHistChanged.subscribe(
       (mode: string) => {
         if (mode === 'EDIT') {
-          this.subscriptionData = this.agentService.companyRequirementsHistItemChanged.subscribe(
+          this.subscriptionData = this.agentDataService.companyRequirementsHistItemChanged.subscribe(
             (coRequirement: any) => {
               this.coRequirementsForm.patchValue({
                 assetIdString: coRequirement.assetIdString,
@@ -54,6 +65,8 @@ export class EditCorequirementHistComponent implements OnInit, OnDestroy {
           );
         } else {
           this.coRequirementsForm.reset();
+          this.coReqAssetIDs = [{ lkpValue: 'Select' }];
+          this.coReqStatuses = [{ lkpValue: 'Select' }];
         }
       }
     );
