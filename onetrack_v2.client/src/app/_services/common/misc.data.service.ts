@@ -100,4 +100,24 @@ export class MiscDataService {
         })
       );
   }
+
+  fetchJobTitles() {
+    const url = this.url + 'GetJobTitles';
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: Array<{ jobTitleID: number, jobTitle: string }>;
+        errMessage: string;
+      }>(url)
+      .pipe(
+        map((response) => {
+          if (response.success && response.objData) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
 }

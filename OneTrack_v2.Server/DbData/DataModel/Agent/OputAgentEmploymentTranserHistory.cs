@@ -53,6 +53,7 @@
         public int EmploymentID { get; set; }
         public DateTime? JobTitleDate { get; set; }
         public string? JobCode { get; set; }
+        public int JobTitleID { get; set; }
         public string? JobTitle { get; set; }
         public bool? IsCurrent { get; set; }
    }

@@ -3,7 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 
-import { AgentComService, AgentDataService } from '../../../../_services';
+import { AgentComService, AgentDataService, AppComService, MiscDataService } from '../../../../_services';
 
 @Component({
   selector: 'app-edit-jobtitle-hist',
@@ -13,12 +13,15 @@ import { AgentComService, AgentDataService } from '../../../../_services';
 @Injectable()
 export class EditJobtitleHistComponent implements OnInit, OnDestroy {
   jobTitleForm!: FormGroup;
+  jobTitleList: Array<{ jobTitleID: number, jobTitle: string }> = [];
   subscriptionMode: Subscription = new Subscription;
   subscriptionData: Subscription = new Subscription;
 
   constructor(
     public agentService: AgentDataService,
-    public agentComService: AgentComService
+    public agentComService: AgentComService,
+    public appComService: AppComService,
+    private miscDataService: MiscDataService
   ) {}
 
   ngOnInit(): void {
@@ -27,6 +30,7 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
       employmentID: new FormControl(null),
       jobTitleDate: new FormControl(null),
       jobCode: new FormControl(null),
+      jobTitleID: new FormControl(null),
       jobTitle: new FormControl(null),
       isCurrent: new FormControl(null),
     });
@@ -45,6 +49,7 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
                   'en-US'
                 ),
                 jobCode: jobTitle.jobCode,
+                jobTitleID: jobTitle.jobTitleID,
                 jobTitle: jobTitle.jobTitle,
                 isCurrent: jobTitle.isCurrent,
               });
@@ -52,7 +57,18 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
           );
         } else {
           this.jobTitleForm.reset();
+          this.jobTitleForm.patchValue({
+            jobTitleID: 0,
+            // jobTitleDate: formatDate(new Date(), 'yyyy-MM-dd', 'en-US'),
+            isCurrent: false,
+          });
         }
+      }
+    );
+
+    this.miscDataService.fetchJobTitles().subscribe(
+      (jobTitles: Array<{ jobTitleID: number, jobTitle: string }>) => {
+        this.jobTitleList = [ { jobTitleID: 0, jobTitle: 'Select' }, ...jobTitles];
       }
     );
   }

@@ -329,5 +329,34 @@ namespace OneTrack_v2.Services
 
             return result;
         }
+        public ReturnResult GetJobTitles()
+        {
+            var result = new ReturnResult();
+            try
+            {
+
+                var query = from j in _db.JobTitles
+                            where j.IsActive == true
+                            select new
+                            {
+                                JobTitleID = j.JobTitleId,
+                                JobTitle = j.JobTitle1
+                            };
+
+                var resultTitles = query.AsNoTracking().ToList();
+
+                result.Success = true;
+                result.ObjData = resultTitles;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;
+        }
     }
 }

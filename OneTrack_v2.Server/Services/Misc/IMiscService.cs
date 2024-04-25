@@ -15,5 +15,6 @@ namespace OneTrack_v2.Services
         public ReturnResult WorkListNames();
         public ReturnResult GetLicenseTeches();
         public ReturnResult GetBackgroundStatuses();
+        public ReturnResult GetJobTitles();
     }
 }

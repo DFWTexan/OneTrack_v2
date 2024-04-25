@@ -65,8 +65,20 @@ export class EditCorequirementHistComponent implements OnInit, OnDestroy {
           );
         } else {
           this.coRequirementsForm.reset();
-          this.coReqAssetIDs = [{ lkpValue: 'Select' }];
-          this.coReqStatuses = [{ lkpValue: 'Select' }];
+          this.coRequirementsForm.patchValue({
+            assetIdString: 'Select',
+            learningProgramStatus: 'Select',
+            // learningProgramEnrollmentDate: formatDate(
+            //   new Date(),
+            //   'yyyy-MM-dd',
+            //   'en-US'
+            // ),
+            // learningProgramCompletionDate: formatDate(
+            //   new Date(),
+            //   'yyyy-MM-dd',
+            //   'en-US'
+            // ),
+          });
         }
       }
     );

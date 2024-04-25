@@ -1287,6 +1287,7 @@ namespace OneTrack_v2.Services
                                              EmploymentID = ej.EmploymentId,
                                              JobTitleDate = ej.JobTitleDate,
                                              JobCode = j.JobCode,
+                                             JobTitleID = j.JobTitleId,
                                              JobTitle = j.JobTitle1,
                                              IsCurrent = ej.IsCurrent
                                          };
