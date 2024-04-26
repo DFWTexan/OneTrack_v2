@@ -5,8 +5,13 @@
 >
   <div class="row">
     <div class="col">
-      <div class="mb-3" *ngIf="agentComService.modeEmploymentHist === 'EDIT' &&
-      appComService.isShowEditID">
+      <div
+        class="mb-3"
+        *ngIf="
+          agentComService.modeEmploymentHist === 'EDIT' &&
+          appComService.isShowEditID
+        "
+      >
         <label for="employmentHistoryID" class="form-label"
           >Employment History ID</label
         >
@@ -46,7 +51,10 @@
           id="licenseStatus"
           [value]="employmentHistoryForm.get('backgroundCheckStatus')?.value"
         >
-          <option *ngFor="let status of backgroundStatuses" [value]="status.lkpValue">
+          <option
+            *ngFor="let status of backgroundStatuses"
+            [value]="status.lkpValue"
+          >
             {{ status.lkpValue }}
           </option>
         </select>
