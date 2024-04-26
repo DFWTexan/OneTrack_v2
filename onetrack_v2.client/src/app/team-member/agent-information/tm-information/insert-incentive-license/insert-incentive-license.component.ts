@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -13,7 +13,7 @@ import {
   templateUrl: './insert-incentive-license.component.html',
   styleUrl: './insert-incentive-license.component.css',
 })
-export class InsertIncentiveLicenseComponent implements OnInit {
+export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
   incentiveLicenseForm!: FormGroup;
   defaultLicenseStatus = 'Incentive';
   licenseStates: string[] = [];
@@ -67,5 +67,9 @@ export class InsertIncentiveLicenseComponent implements OnInit {
   cancel() {
     // Your cancel logic here
     console.log('Form Cancellation initiated');
+  }
+
+  ngOnDestroy() {
+    this.subscriptionData.unsubscribe();
   }
 }
