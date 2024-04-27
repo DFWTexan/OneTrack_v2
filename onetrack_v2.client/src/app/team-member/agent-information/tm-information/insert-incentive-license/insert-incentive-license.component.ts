@@ -54,14 +54,14 @@ export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
     );
   }
 
-  onSubmit(form: NgForm) {
-    if (form.valid) {
-      // Your submission logic here
-      console.log('Form Submitted!', this.incentiveLicenseForm);
-    } else {
-      // Handle the invalid form case
-      console.error('Form is not valid!');
-    }
+  onSubmit() {
+    // if (form.valid) {
+    //   // Your submission logic here
+    //   console.log('Form Submitted!', this.incentiveLicenseForm);
+    // } else {
+    //   // Handle the invalid form case
+    //   console.error('Form is not valid!');
+    // }
   }
 
   cancel() {

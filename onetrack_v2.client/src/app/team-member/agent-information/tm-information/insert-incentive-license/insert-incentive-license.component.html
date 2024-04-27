@@ -1,4 +1,4 @@
-<form #f="ngForm" (ngSubmit)="onSubmit(f)">
+<form [formGroup]="incentiveLicenseForm" (ngSubmit)="onSubmit()">
   <div class="form-group">
     <label for="preferredName">Preferred Name:</label><br />
     {{ agentName }}
@@ -71,7 +71,7 @@
       <button
         type="submit"
         class="btn btn-primary save-button"
-        (click)="onSubmit(f)"
+        (click)="onSubmit()"
       >
         Save
       </button>

@@ -53,6 +53,11 @@ body {
   font-size: larger;
 }
 
+.input-size-x-small {
+  width: 100px;
+  font-size: 1.5rem;
+}
+
 .input-size-small {
   width: 150px;
   font-size: 1.5rem;

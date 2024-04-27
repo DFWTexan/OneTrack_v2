@@ -1,7 +1,7 @@
 import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { AgentComService, AgentDataService, ModalService } from '../../../_services';
+import { AgentComService, AgentDataService, AppComService, ModalService } from '../../../_services';
 import { AgentInfo } from '../../../_Models';
 
 @Component({
@@ -20,7 +20,8 @@ export class TmContinuingEduComponent implements OnInit, OnDestroy {
   constructor(
     public agentDataService: AgentDataService,
     public agentComService: AgentComService,
-    protected modalService: ModalService
+    protected modalService: ModalService,
+    public appComService: AppComService
   ) {
     this.subscribeAgentInfo = new Subscription();
   }

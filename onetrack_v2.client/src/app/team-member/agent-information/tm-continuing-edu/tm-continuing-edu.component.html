@@ -62,9 +62,15 @@
     </div>
     <div class="col">
       <div class="d-flex justify-content-start">
-        <button class="btn btn-success" 
-        (click)="agentDataService.storeContEduHoursTaken('INSERT', null); modalService.open('modal-edit-edu-hours-taken')"
-        >Add Hours Taken</button>
+        <button
+          class="btn btn-success"
+          (click)="
+            agentDataService.storeContEduHoursTaken('INSERT', null);
+            modalService.open('modal-edit-edu-hours-taken')
+          "
+        >
+          Add Hours Taken
+        </button>
       </div>
     </div>
   </div>
@@ -79,7 +85,7 @@
             <th scope="col">Taken Date</th>
             <th scope="col">Hours Taken</th>
             <th scope="col">Notes</th>
-            <th scope="col" class="text-center" style="width: 15rem;">ACTION</th>
+            <th scope="col" class="text-center" style="width: 10rem">ACTION</th>
           </tr>
         </thead>
         <tbody class="bg-body">
@@ -91,11 +97,14 @@
               {{ ce.creditHoursTaken }}
             </td>
             <td>{{ ce.additionalNotes }}</td>
-            <td style="width: 15rem">
+            <td style="width: 10rem">
               <div class="d-flex justify-content-between mb-3 me-4">
                 <button
                   class="icon-edit-delete-button"
-                  (click)="agentDataService.storeContEduHoursTaken('EDIT', ce); modalService.open('modal-edit-edu-hours-taken')"
+                  (click)="
+                    agentDataService.storeContEduHoursTaken('EDIT', ce);
+                    modalService.open('modal-edit-edu-hours-taken')
+                  "
                 >
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
@@ -114,7 +123,10 @@
 <!-- Modal: EDIT-TM-HOURS-TAKEN -->
 <modal id="modal-edit-edu-hours-taken">
   <div class="modal-header">
-    <h1 class="modal-title"><strong>{{ agentComService.modeContEduHoursTaken }}</strong> - Education Hours Taken</h1>
+    <h1 class="modal-title">
+      <strong>{{ agentComService.modeContEduHoursTaken }}</strong> - Education
+      Hours Taken
+    </h1>
     <!-- <button
           type="button"
           class="btn-close"
