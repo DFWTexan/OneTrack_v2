@@ -16,6 +16,12 @@
         </option>
       </select>
     </div>
+    
+    <div class="col d-flex align-items-end justify-content-center">
+      <div style="font-size: medium; font-weight: 500;">
+        {{ diaryItems.length | number }} - record(s) found
+      </div>
+    </div>
 
     <div class="col d-flex align-items-end justify-content-end">
       <button
@@ -30,7 +36,17 @@
       </button>
     </div>
   </div>
-  <div class="row mt-4">
+  <div
+    class="row mt-4"
+    style="
+      width: 100%;
+      max-height: 700px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      border-top-left-radius: 0.7rem;
+      border-top-right-radius: 0.7rem;
+    "
+  >
     <div class="col">
       <div class="table">
         <thead>
@@ -39,11 +55,11 @@
             <th scope="col">DiaryID</th>
             <th scope="col">DiaryDate</th>
             <th scope="col">Notes</th>
-            <th scope="col" class="text-center" style="width: 10rem;">Action</th>
+            <th scope="col" class="text-center" style="width: 10rem">Action</th>
           </tr>
         </thead>
         <tbody class="bg-body">
-          <tr *ngFor="let diary of diaryItems">
+          <tr *ngFor="let diary of paginationComService.paginatedResults">
             <td class="align-middle" style="font-size: larger">
               {{ diary.soeid }}
             </td>
@@ -75,6 +91,20 @@
         </tbody>
       </div>
     </div>
+  </div>
+  <!-- PAGINATION -->
+  <div>
+    <app-pagination
+      *ngIf="!isLoading && diaryItems.length > 50"
+      [currentPage]="paginationComService.currentPage"
+      [totalItems]="paginationComService.displayItems.length"
+      [itemsPerPage]="paginationComService.itemsPerPage"
+      (pageChange)="
+        paginationComService.currentPage = $event;
+        paginationComService.updatePaginatedResults()
+      "
+    >
+    </app-pagination>
   </div>
 </div>
 

@@ -5,6 +5,7 @@ import {
   AgentComService,
   AgentDataService,
   ModalService,
+  PaginationComService,
 } from '../../../_services';
 
 @Component({
@@ -14,6 +15,7 @@ import {
 })
 @Injectable()
 export class TmDiaryComponent implements OnInit, OnDestroy {
+  isLoading: boolean = false;
   agentInfo: AgentInfo = {} as AgentInfo;
   diaryItems: DiaryItem[] = [];
   subscribeAgentInfo: Subscription;
@@ -22,13 +24,15 @@ export class TmDiaryComponent implements OnInit, OnDestroy {
   constructor(
     public agentDataService: AgentDataService,
     public agentComService: AgentComService,
-    protected modalService: ModalService
+    protected modalService: ModalService,
+    public paginationComService: PaginationComService
   ) {
     this.subscribeAgentInfo = new Subscription();
     this.subscribeDiaryData = new Subscription();
   }
 
   ngOnInit(): void {
+    this.isLoading = true;
     this.subscribeAgentInfo = this.agentDataService.agentInfoChanged.subscribe(
       (agentInfo: any) => {
         this.agentInfo = agentInfo;
@@ -37,6 +41,9 @@ export class TmDiaryComponent implements OnInit, OnDestroy {
     this.subscribeDiaryData = this.agentDataService.diaryItemsChanged.subscribe(
       (diaryData: any) => {
         this.diaryItems = diaryData;
+        this.paginationComService.updateDisplayItems(this.diaryItems);
+        this.paginationComService.updatePaginatedResults();
+        this.isLoading = false;
       }
     );
   }
