@@ -39,7 +39,7 @@
             <th scope="col">DiaryID</th>
             <th scope="col">DiaryDate</th>
             <th scope="col">Notes</th>
-            <th scope="col" class="text-center" style="width: 15rem;">Action</th>
+            <th scope="col" class="text-center" style="width: 10rem;">Action</th>
           </tr>
         </thead>
         <tbody class="bg-body">
@@ -60,7 +60,7 @@
                   class="icon-edit-delete-button"
                   type="button"
                   (click)="
-                    agentDataService.storeContEduHoursTaken('EDIT', diary);
+                    agentDataService.storeDiaryEntry('EDIT', diary);
                     modalService.open('modal-edit-diary-entry')
                   "
                 >
