@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { CompanyEditComponent } from './admin/company-edit/company-edit.component';
 import { CompanyRequirementsComponent } from './admin/company-requirements/company-requirements.component';
 import { ContinueEducationEditComponent } from './admin/continue-education-edit/continue-education-edit.component';

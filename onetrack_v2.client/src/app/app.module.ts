@@ -27,7 +27,7 @@ import { AppComponent } from './app.component';
 import { SideMenuNavComponent } from './_components';
 import { ModalComponent } from './_components';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { DashboardComponent } from './dashboard/dashboard/dashboard.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 import { CompanyEditComponent } from './admin/company-edit/company-edit.component';
 import { CompanyRequirementsComponent } from './admin/company-requirements/company-requirements.component';
 import { ContinueEducationEditComponent } from './admin/continue-education-edit/continue-education-edit.component';
