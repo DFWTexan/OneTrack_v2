@@ -14,3 +14,4 @@ export * from  './Admin/admin.com.service';
 export * from  './worklist/worklist.data.service';
 export * from  './common/misc.data.service';
 export * from  './common/pagination.com.service';
+export * from  './dashboard/dashboard.data.service';
