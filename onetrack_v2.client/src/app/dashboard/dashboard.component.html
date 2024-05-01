@@ -13,13 +13,24 @@
               This is a summary of the content
             </mat-panel-description> -->
         </mat-expansion-panel-header>
-        <div class="row align-middle mb-2" style="background-color: aliceblue; padding: 1rem; border-radius: 1rem;">
+        <div
+          class="row align-middle mb-2"
+          style="
+            background-color: aliceblue;
+            padding: 1rem;
+            border-radius: 1rem;
+            border-color: lightgray;
+            border-width: 1px;
+            border-style: solid;
+          "
+        >
           <div class="col-md-3">
             <label for="workListName">Work List Name:</label><br />
             <select
               class="form-select select-size-med-small"
               name="workListName"
               id="workListName"
+              [value]="selectedWorkListName"
               (change)="changeWorkListName($event)"
               [(ngModel)]="workListName"
             >
@@ -41,7 +52,9 @@
               [(ngModel)]="date"
             />
           </div>
-          <div class="col-md-3 d-flex align-items-center justify-content-center">
+          <div
+            class="col-md-3 d-flex align-items-center justify-content-center"
+          >
             <button class="btn btn-primary" type="submit">Search</button>
           </div>
         </div>
@@ -60,7 +73,33 @@
             ## records imported on ##/##/####
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <p>I'm visible because I am open</p>
+        <div
+          class="row align-middle mb-2"
+          style="
+            background-color: aliceblue;
+            padding: 1rem;
+            border-radius: 1rem;
+            border-color: lightgray;
+            border-width: 1px;
+            border-style: solid;
+          "
+        >
+          <div class="col-md-3">
+            <label for="importDate">Import Date:</label><br />
+            <select
+              class="form-select select-size-med-small"
+              name="importDate"
+              id="importDate"
+              (change)="changeImportDate($event)"
+              [(ngModel)]="workListName"
+            >
+              <option *ngFor="let item of worklistNames" [value]="item">
+                {{ item }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
       </mat-expansion-panel>
     </mat-accordion>
   </div>

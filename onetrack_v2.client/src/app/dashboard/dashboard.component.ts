@@ -18,12 +18,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   worklistData: any[] = [];
   worklistNames: string[] = ['Loading...'];
+  defaultWorkListName: string = 'Loading...';
 
   workListName: string = 'Agent Address Change';
   licenseTech: string = 'T9999999';
   date: string | null = null;
 
-  selectedWorkListName = 'Agent Address Change';
+  selectedWorkListName = 'Loading...';
   selectedLicenseTech = 'T9999999';
   selectedDate: string | null;
 
@@ -68,6 +69,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
     const target = event.target as HTMLInputElement;
     const value = target.value;
     this.selectedWorkListName = value;
+    this.fetchWorkListData();
+  }
+
+  changeImportDate(event: any) {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    this.selectedDate = value;
     this.fetchWorkListData();
   }
 
