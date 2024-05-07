@@ -1,6 +1,7 @@
 ﻿using DataModel.Response;
 using OneTrak_v2.Services.Model;
 using System.DirectoryServices.AccountManagement;
+using System.DirectoryServices.ActiveDirectory;
 using System.DirectoryServices.Protocols;
 using System.Net;
 
@@ -10,87 +11,40 @@ namespace OneTrak_v2.Services
     {
         public ReturnResult GetUserAccount(string vUserName, string vPassWord) 
         {
-            //string ldapServer = "ldapServername:389";
-            //string ldapDomain = "CORP";
-            //string ldapContainer = "OU=Users,DC=domain,DC=com";
-            string ldapServer = "ldapServername:389";
-            int ldapPort = 389;
-            string ldapDomain = "CORP";
+            string ldapServer = "corp.fin";
+            //int ldapPort = 636;
+            string ldapDomain = "DC=corp,DC=fin";
 
             UserAccount userAccount = new UserAccount();
             ReturnResult retResult = new ReturnResult();
             try
 			{
-                using (var connection = new LdapConnection(new LdapDirectoryIdentifier(ldapServer, ldapPort)))
+                // Set up the domain context with credentials
+                using (var pc = new PrincipalContext(ContextType.Domain, ldapServer, ldapDomain, vUserName, vPassWord))
                 {
-                    connection.AuthType = AuthType.Basic;
-                    connection.SessionOptions.ProtocolVersion = 3; // equivalent to Ldap_V3
-                    connection.Bind(new NetworkCredential($"{vUserName}@{ldapDomain}", vPassWord));
+                    // Validate the credentials
+                    bool isValid = pc.ValidateCredentials(vUserName, vPassWord);
 
-                    var searchRequest = new SearchRequest(
-                        ldapDomain,
-                        $"(sAMAccountName={vUserName})",
-                        SearchScope.Subtree, // equivalent to SCOPE_SUB
-                        new[] { "displayName", "sAMAccountName", "mail" }
-                    );
-
-                    var searchResponse = (SearchResponse)connection.SendRequest(searchRequest);
-
-                    foreach (SearchResultEntry entry in searchResponse.Entries)
+                    if (isValid)
                     {
-                        userAccount = new UserAccount
+                        // If credentials are valid, find the user to get the account name
+                        UserPrincipal user = UserPrincipal.FindByIdentity(pc, IdentityType.SamAccountName, vUserName);
+                        if (user != null)
                         {
-                            DisplayName = entry.Attributes["displayName"][0].ToString(),
-                            UserSamAcctName = entry.Attributes["sAMAccountName"][0].ToString(),
-                            Email = entry.Attributes["mail"][0].ToString()
-                        };
+                            userAccount.UserSamAcctName = user.SamAccountName;  // Return the SAM account name
+                            userAccount.DisplayName = user.DisplayName;
+                            userAccount.Email = user.EmailAddress;
+                        }
+                        else
+                        {
+                            throw new ApplicationException("User authenticated but cannot be found in directory.");
+                        }
+                    }
+                    else
+                    {
+                        return null;  // Authentication failed, return null
                     }
                 }
-
-                //using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, ldapServer, ldapDomain))
-                //{
-                //    if (pc.ValidateCredentials(vUserName, vPassWord))
-                //    {
-                //        userAccount = new UserAccount
-                //        {
-                //            DisplayName = UserPrincipal.FindByIdentity(pc, vUserName).DisplayName,
-                //            UserSamAcctName = UserPrincipal.FindByIdentity(pc, vUserName).SamAccountName,
-                //            Email = UserPrincipal.FindByIdentity(pc, vUserName).EmailAddress
-                //        };
-                //    }
-                //}
-
-                // Create PrincipalContext with LDAP connection
-                //using (var context = new PrincipalContext(ContextType.Domain, ldapServer, ldapDomain, vUserName, vPassWord))
-                //{
-                //    // Create UserPrincipal object for searching
-                //    using (var userPrincipal = new UserPrincipal(context))
-                //    {
-                //        // Set search criteria (e.g., search for all users whose name starts with "ram")
-                //        userPrincipal.GivenName = "ram*";
-
-                //        // Create PrincipalSearcher to perform the search
-                //        using (var searcher = new PrincipalSearcher(userPrincipal))
-                //        {
-                //            // Perform the search and iterate over the results
-                //            foreach (var result in searcher.FindAll())
-                //            {
-                //                if (result is UserPrincipal user)
-                //                {
-                //                    // Access user properties
-                //                    //Console.WriteLine("Name: " + user.DisplayName);
-                //                    //Console.WriteLine("Username: " + user.SamAccountName);
-                //                    //Console.WriteLine("Email: " + user.EmailAddress);
-                //                    //Console.WriteLine("------------------------------------");
-                //                    userAccount.DisplayName = user.DisplayName;
-                //                    userAccount.UserSamAcctName = user.SamAccountName;
-                //                    userAccount.Email = user.EmailAddress;
-
-                //                }
-                //            }
-                //        }
-                //    }
-                //}
 
                 retResult.ObjData = userAccount;
                 retResult.Success = true;
