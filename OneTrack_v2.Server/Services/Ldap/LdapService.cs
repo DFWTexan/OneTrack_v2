@@ -1,6 +1,9 @@
 ﻿using DataModel.Response;
 using OneTrak_v2.Services.Model;
 using System.DirectoryServices.AccountManagement;
+using System.DirectoryServices.ActiveDirectory;
+using System.DirectoryServices.Protocols;
+using System.Net;
 
 namespace OneTrak_v2.Services
 {
@@ -8,57 +11,40 @@ namespace OneTrak_v2.Services
     {
         public ReturnResult GetUserAccount(string vUserName, string vPassWord) 
         {
-            string ldapServer = "corp.fin:636";
-            string ldapDomain = "CORP";
-            string ldapContainer = "OU=Users,DC=corp,DC=fin";
-            
-           UserAccount userAccount = new UserAccount();
+            string ldapServer = "corp.fin";
+            //int ldapPort = 636;
+            string ldapDomain = "DC=corp,DC=fin";
+
+            UserAccount userAccount = new UserAccount();
             ReturnResult retResult = new ReturnResult();
             try
 			{
-                using (PrincipalContext pc = new PrincipalContext(ContextType.Domain, ldapServer, ldapContainer))
+                // Set up the domain context with credentials
+                using (var pc = new PrincipalContext(ContextType.Domain, ldapServer, ldapDomain, vUserName, vPassWord))
                 {
-                    if (pc.ValidateCredentials(vUserName, vPassWord))
+                    // Validate the credentials
+                    bool isValid = pc.ValidateCredentials(vUserName, vPassWord);
+
+                    if (isValid)
                     {
-                        userAccount = new UserAccount
+                        // If credentials are valid, find the user to get the account name
+                        UserPrincipal user = UserPrincipal.FindByIdentity(pc, IdentityType.SamAccountName, vUserName);
+                        if (user != null)
                         {
-                            DisplayName = UserPrincipal.FindByIdentity(pc, vUserName).DisplayName,
-                            UserSamAcctName = UserPrincipal.FindByIdentity(pc, vUserName).SamAccountName,
-                            Email = UserPrincipal.FindByIdentity(pc, vUserName).EmailAddress
-                        };
+                            userAccount.UserSamAcctName = user.SamAccountName;  // Return the SAM account name
+                            userAccount.DisplayName = user.DisplayName;
+                            userAccount.Email = user.EmailAddress;
+                        }
+                        else
+                        {
+                            throw new ApplicationException("User authenticated but cannot be found in directory.");
+                        }
+                    }
+                    else
+                    {
+                        return null;  // Authentication failed, return null
                     }
                 }
-                // Create PrincipalContext with LDAP connection
-                //using (var context = new PrincipalContext(ContextType.Domain, ldapServer, ldapDomain, vUserName, vPassWord))
-                //{
-                //    // Create UserPrincipal object for searching
-                //    using (var userPrincipal = new UserPrincipal(context))
-                //    {
-                //        // Set search criteria (e.g., search for all users whose name starts with "ram")
-                //        userPrincipal.GivenName = "ram*";
-
-                //        // Create PrincipalSearcher to perform the search
-                //        using (var searcher = new PrincipalSearcher(userPrincipal))
-                //        {
-                //            // Perform the search and iterate over the results
-                //            foreach (var result in searcher.FindAll())
-                //            {
-                //                if (result is UserPrincipal user)
-                //                {
-                //                    // Access user properties
-                //                    //Console.WriteLine("Name: " + user.DisplayName);
-                //                    //Console.WriteLine("Username: " + user.SamAccountName);
-                //                    //Console.WriteLine("Email: " + user.EmailAddress);
-                //                    //Console.WriteLine("------------------------------------");
-                //                    userAccount.DisplayName = user.DisplayName;
-                //                    userAccount.UserSamAcctName = user.SamAccountName;
-                //                    userAccount.Email = user.EmailAddress;
-
-                //                }
-                //            }
-                //        }
-                //    }
-                //}
 
                 retResult.ObjData = userAccount;
                 retResult.Success = true;
