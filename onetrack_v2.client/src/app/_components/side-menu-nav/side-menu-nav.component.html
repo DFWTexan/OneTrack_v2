@@ -54,11 +54,15 @@
         routerLink="/dashboard"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
+        [disabled]="!appComService.isLoggedIn"
       >
         <mat-icon>dashboard</mat-icon><span>Dashboard</span>
       </mat-list-item>
 
-      <mat-expansion-panel [class.mat-elevation-z0]="true">
+      <mat-expansion-panel
+        [class.mat-elevation-z0]="true"
+        [disabled]="!appComService.isLoggedIn"
+      >
         <mat-expansion-panel-header>
           <mat-icon>business</mat-icon><span>Administration</span>
         </mat-expansion-panel-header>
@@ -144,7 +148,10 @@
         </mat-nav-list>
       </mat-expansion-panel>
 
-      <mat-expansion-panel [class.mat-elevation-z0]="true">
+      <mat-expansion-panel
+        [class.mat-elevation-z0]="true"
+        [disabled]="!appComService.isLoggedIn"
+      >
         <mat-expansion-panel-header>
           <mat-icon>group</mat-icon><span>Team Members</span>
         </mat-expansion-panel-header>
@@ -166,20 +173,28 @@
         </mat-nav-list>
       </mat-expansion-panel>
 
-      <mat-list-item>
+      <mat-list-item [disabled]="!appComService.isLoggedIn">
         <a href="https://omsbi/Reports/browse/Licensing">
           <mat-icon>library_books</mat-icon>
           <span style="font-size: 1.5rem; font-weight: 500">Reports</span>
         </a>
       </mat-list-item>
 
-      <mat-list-item routerLink="/work-lists">
+      <mat-list-item
+        routerLink="/work-lists"
+        [disabled]="!appComService.isLoggedIn"
+      >
         <mat-icon>list_alt</mat-icon>
         <span style="font-size: 1.5rem; font-weight: 500" class="text-center">
           Work Lists
         </span>
       </mat-list-item>
     </mat-nav-list>
+
+    <mat-divider></mat-divider>
+
+    <app-login *ngIf="!appComService.isLoggedIn"></app-login>
+  
   </mat-sidenav>
 
   <mat-sidenav-content style="background-color: aliceblue">
@@ -187,5 +202,4 @@
     <router-outlet></router-outlet>
     <!-- </div> -->
   </mat-sidenav-content>
-  
 </mat-sidenav-container>

@@ -63,6 +63,11 @@ body {
   font-size: 1.5rem;
 }
 
+.input-size-med-small {
+  width: 205px;
+  font-size: 1.5rem;
+}
+
 .input-size-medium {
   width: 300px;
   font-size: 1.5rem;

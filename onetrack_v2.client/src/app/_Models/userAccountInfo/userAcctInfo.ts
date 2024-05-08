@@ -1,5 +1,4 @@
 export interface UserAcctInfo {
-    isLoggedIn: boolean;
     displayName: string;
     userSamAcctName: string;
     email: string;
@@ -12,3 +11,4 @@ export interface UserAcctInfo {
     isReadRole: boolean;
     isSuperUser: boolean;
   }
+  

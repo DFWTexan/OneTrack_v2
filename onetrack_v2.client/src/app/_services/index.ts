@@ -1,4 +1,5 @@
-﻿export * from './common/modal.service';
+﻿export * from './userAcctInfo/userAcctInfo.data.Service';
+export * from './common/modal.service';
 export * from './employee/employee.data.service';
 export * from './agent/agent.data.service';
 export * from './agent/agentInfo.com.service';
