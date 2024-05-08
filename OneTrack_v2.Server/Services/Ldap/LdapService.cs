@@ -22,6 +22,10 @@ namespace OneTrak_v2.Services
 
             UserAcctInfo userAccount = new UserAcctInfo();
             ReturnResult retResult = new ReturnResult();
+            retResult.Success = true;
+            retResult.ObjData = null;
+            retResult.ErrMessage = null;
+
             try
 			{
                 // Set up the domain context with credentials
@@ -65,28 +69,25 @@ namespace OneTrak_v2.Services
                                 }
                             }
 
+                            retResult.StatusCode = 200;
                             retResult.ObjData = userAccount;
                         }
                         else
                         {
                             retResult.StatusCode = 403;
-                            retResult.ObjData = null;
                             retResult.ErrMessage = "User not found";
                         }
                     }
                     else
                     {
                         retResult.StatusCode = 401;
-                        retResult.ObjData = null;
                         retResult.ErrMessage = "Invalid credentials";
                     }
                 }
-
-                retResult.Success = true;
-                retResult.StatusCode = 200;
             }
 			catch (Exception ex)
 			{
+                retResult.Success = false;
                 retResult.StatusCode = 500;
                 retResult.ErrMessage = ex.Message;
             }

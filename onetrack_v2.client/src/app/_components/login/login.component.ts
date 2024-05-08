@@ -1,30 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 
 import { AppComService, UserAcctInfoDataService } from '../../_services';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit, OnDestroy{
+  subscribeLoginMsgChanged: Subscription = new Subscription();
+
   constructor(
     private userAcctInfoService: UserAcctInfoDataService,
     public appComService: AppComService
   ) {}
 
+  ngOnInit(): void {
+    this.subscribeLoginMsgChanged = this.appComService.loginErrorMsgChanged.subscribe(
+      (errMessage) => {
+          console.log('EMFTEST - (app-login): errMsg - ', errMessage);
+        
+      }
+    );
+  }
+
   onSubmit(form: NgForm) {
-
-    console.log(
-      'EMFTEST - (app-login): userTID - ',
-      form.value.loginInfo.userTID,
-    );
-    console.log(
-      'EMFTEST - (app-login): password - ',
-      form.value.loginInfo.password
-    );
-
     this.userAcctInfoService
       .fetchUserAcctInfo(
         form.value.loginInfo.userTID,
@@ -33,5 +35,9 @@ export class LoginComponent {
       .subscribe((response) => {
         console.log('EMFTEST - (app-login): response => \n', response);
       });
+  }
+
+  ngOnDestroy(): void {
+    this.subscribeLoginMsgChanged.unsubscribe();
   }
 }
