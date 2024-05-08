@@ -41,7 +41,9 @@
   </mat-menu>
 </mat-toolbar>
 
-<mat-sidenav-container class="app-container">
+<mat-sidenav-container
+  class="app-container"
+>
   <mat-sidenav
     #sidenav
     mode="side"
@@ -194,7 +196,6 @@
     <mat-divider></mat-divider>
 
     <app-login *ngIf="!appComService.isLoggedIn"></app-login>
-  
   </mat-sidenav>
 
   <mat-sidenav-content style="background-color: aliceblue">

@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 import {
+  AppComService,
   DashboardDataService,
   MiscDataService,
   WorkListDataService,
@@ -29,6 +30,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   selectedDate: string | null;
 
   constructor(
+    public appComService: AppComService,
     public workListDataService: WorkListDataService,
     public miscDataService: MiscDataService,
     public dashboardDataService: DashboardDataService
