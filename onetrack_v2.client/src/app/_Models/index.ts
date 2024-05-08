@@ -1,3 +1,4 @@
+export * from './userAccountInfo/userAcctInfo';
 export * from './dashboard/dashboard';
 export * from './agent/searchEmployeeFilter';
 export * from './agent/employeeSearchResult';

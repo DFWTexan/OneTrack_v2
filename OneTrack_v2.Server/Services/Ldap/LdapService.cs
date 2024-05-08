@@ -9,13 +9,18 @@ namespace OneTrak_v2.Services
 {
     public class LdapService : ILdapService
     {
-        public ReturnResult GetUserAccount(string vUserName, string vPassWord) 
+        private readonly string _groupNameRoleAdmin = "RG_OMS_LICEDIT_ADMIN";
+        private readonly string _groupNameRoleTech = "RG_OMS_LICEDIT_FULL";
+        private readonly string _groupNameRoleRead = "RG_OMS_LICEDIT_RO";
+        private readonly string _groupNameDevUser = "RG_OMS_DEVELOPER";
+
+        public ReturnResult GetUserAcctInfo(string vUserName, string vPassWord) 
         {
             string ldapServer = "corp.fin";
             //int ldapPort = 636;
             string ldapDomain = "DC=corp,DC=fin";
 
-            UserAccount userAccount = new UserAccount();
+            UserAcctInfo userAccount = new UserAcctInfo();
             ReturnResult retResult = new ReturnResult();
             try
 			{
@@ -34,6 +39,36 @@ namespace OneTrak_v2.Services
                             userAccount.UserSamAcctName = user.SamAccountName;  // Return the SAM account name
                             userAccount.DisplayName = user.DisplayName;
                             userAccount.Email = user.EmailAddress;
+                            userAccount.Enabled = user.Enabled;
+                            userAccount.EmployeeId = user.EmployeeId;
+                            userAccount.HomeDirectory = user.HomeDirectory;
+                            userAccount.LastLogon = user.LastLogon;
+
+                            var userGroups = user.GetAuthorizationGroups();
+                            foreach (GroupPrincipal group in userGroups)
+                            {
+                                if (group.Name == _groupNameRoleAdmin)
+                                {
+                                    userAccount.IsAdminRole = true;
+                                }
+                                else if (group.Name == _groupNameRoleTech)
+                                {
+                                    userAccount.IsTechRole = true;
+                                }
+                                else if (group.Name == _groupNameRoleRead)
+                                {
+                                    userAccount.IsReadRole = true;
+                                }
+                                else if (group.Name == _groupNameDevUser)
+                                {
+                                    userAccount.IsSuperUser = true;
+                                }
+                            }
+                            //userAccount.IsAdminRole = user.IsMemberOf(pc, IdentityType.Name, _groupNameRoleAdmin);
+                            //userAccount.IsTechRole = user.IsMemberOf(pc, IdentityType.Name, _groupNameRoleTech);
+                            //userAccount.IsReadRole = user.IsMemberOf(pc, IdentityType.Name, _groupNameRoleRead);
+                            //userAccount.IsSuperUser = user.IsMemberOf(pc, IdentityType.Name, _groupNameDevUser);
+
                         }
                         else
                         {
