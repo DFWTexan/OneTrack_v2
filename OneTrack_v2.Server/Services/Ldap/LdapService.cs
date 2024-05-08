@@ -64,24 +64,24 @@ namespace OneTrak_v2.Services
                                     userAccount.IsSuperUser = true;
                                 }
                             }
-                            //userAccount.IsAdminRole = user.IsMemberOf(pc, IdentityType.Name, _groupNameRoleAdmin);
-                            //userAccount.IsTechRole = user.IsMemberOf(pc, IdentityType.Name, _groupNameRoleTech);
-                            //userAccount.IsReadRole = user.IsMemberOf(pc, IdentityType.Name, _groupNameRoleRead);
-                            //userAccount.IsSuperUser = user.IsMemberOf(pc, IdentityType.Name, _groupNameDevUser);
 
+                            retResult.ObjData = userAccount;
                         }
                         else
                         {
-                            throw new ApplicationException("User authenticated but cannot be found in directory.");
+                            retResult.StatusCode = 403;
+                            retResult.ObjData = null;
+                            retResult.ErrMessage = "User not found";
                         }
                     }
                     else
                     {
-                        return null;  // Authentication failed, return null
+                        retResult.StatusCode = 401;
+                        retResult.ObjData = null;
+                        retResult.ErrMessage = "Invalid credentials";
                     }
                 }
 
-                retResult.ObjData = userAccount;
                 retResult.Success = true;
                 retResult.StatusCode = 200;
             }

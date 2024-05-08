@@ -9,6 +9,8 @@ import { environment } from '../../environments/environment';
 export class AppComService {
     isLoggedIn = false;
     isLoggedInChanged = new Subject<boolean>();
+    loginErrorMsg = '';
+    loginErrorMsgChanged = new Subject<string>();
     isShowEditID = environment.isShowEditID;
     tickleToggle = false;
     tickleToggleChanged = new Subject<boolean>();
@@ -23,5 +25,10 @@ export class AppComService {
     updateIsLoggedIn(isLoggedIn: boolean) {
         this.isLoggedIn = isLoggedIn;
         this.isLoggedInChanged.next(this.isLoggedIn);
+    }
+
+    updateLoginErrorMsg(loginErrorMsg: string) {
+        this.loginErrorMsg = loginErrorMsg;
+        this.loginErrorMsgChanged.next(this.loginErrorMsg);
     }
 }

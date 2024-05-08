@@ -5,6 +5,7 @@ import { map } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 import { UserAcctInfo } from '../../_Models';
+import { AppComService } from '../common/app.com.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +15,9 @@ export class UserAcctInfoDataService {
   userAcctInfo: UserAcctInfo = {} as UserAcctInfo;
   userAcctInfoChanged = new Subject<UserAcctInfo>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+    private appComService: AppComService
+  ) {}
 
   fetchUserAcctInfo(
     userName: string,
@@ -34,8 +37,11 @@ export class UserAcctInfoDataService {
           if (response.success && response.statusCode === 200) {
             this.userAcctInfo = response.objData;
             this.userAcctInfoChanged.next(this.userAcctInfo);
+            this.appComService.updateIsLoggedIn(true);
             return this.userAcctInfo;
           } else {
+            this.appComService.updateIsLoggedIn(false);
+            this.appComService.updateLoginErrorMsg(response.errMessage);
             throw new Error(response.errMessage || 'Unknown error');
           }
         })

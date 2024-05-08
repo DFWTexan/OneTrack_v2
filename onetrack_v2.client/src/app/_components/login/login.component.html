@@ -6,25 +6,32 @@
         style="width: 23rem; border-radius: 1rem; background-color: aliceblue"
       >
         <div class="card-body" style="width: 23rem">
-          <form>
-            <div class="form-group">
-              <label for="userTID">Network ID</label>
-              <input
-                type="text"
-                class="form-control input-size-med-small"
-                id="userTID"
-                placeholder="T#######"
-              />
+          <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+            <div ngModelGroup="loginInfo" #loginInfo="ngModelGroup">
+              <div class="form-group">
+                <label for="userTID">Network ID</label>
+                <input
+                  type="text"
+                  class="form-control input-size-med-small"
+                  id="userTID"
+                  placeholder="T#######"
+                  name="userTID"
+                  ngModel
+                />
+              </div>
+              <div class="form-group">
+                <label for="password">Password</label>
+                <input
+                  type="password"
+                  class="form-control input-size-med-small"
+                  id="password"
+                  placeholder="Password"
+                  name="password"
+                  ngModel
+                />
+              </div>
             </div>
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input
-                type="password"
-                class="form-control input-size-med-small"
-                id="password"
-                placeholder="Password"
-              />
-            </div>
+
             <div class="d-flex justify-content-center">
               <button type="submit" class="btn btn-primary">Submit</button>
             </div>
@@ -35,8 +42,8 @@
   </div>
   <div class="row">
     <div class="col" style="width: 24rem">
-      <div class="d-flex justify-content-center mt-3" style="color: red;">
-        TBD - Login Error Message...
+      <div class="d-flex justify-content-center mt-3" style="color: red">
+        {{ appComService.loginErrorMsg }}
       </div>
     </div>
   </div>
