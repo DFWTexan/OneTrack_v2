@@ -1,7 +1,9 @@
 ﻿using DataModel.Response;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using OneTrack_v2.DbData;
+using OneTrack_v2.DbData.Models;
 using OneTrack_v2.Services;
 using OneTrak_v2.DataModel;
 
@@ -783,6 +785,61 @@ namespace OneTrak_v2.Services
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
             }
+            return result;
+        }
+
+        public ReturnResult EditCompany([FromBody] IputEditCompany company)
+        {
+            ReturnResult result = new ReturnResult();
+            //try
+            //{
+            //    var company = _db.Companies
+            //                    .Where(x => x.CompanyId == IputEditCompany.CompanyId)
+            //                    .FirstOrDefaultAsync();
+
+            //    if (company == null)
+            //    {
+            //        result.StatusCode = 404;
+            //        result.ErrMessage = "Company not found";
+            //        //return StatusCode(result.StatusCode, result);
+            //    }
+
+            //    //company.CompanyAbv = IputEditCompany.CompanyAbv;
+            //    //company.CompanyType = IputEditCompany.CompanyType;
+            //    //company.CompanyName = IputEditCompany.CompanyName;
+            //    //company.Tin = IputEditCompany.Tin;
+            //    //company.Naicnumber = IputEditCompany.Naicnumber;
+
+            //    var address = _db.Addresses
+            //                    .Where(x => x.AddressId == IputEditCompany.AddressId)
+            //                    .FirstOrDefaultAsync();
+
+            //    if (address == null)
+            //    {
+            //        result.StatusCode = 404;
+            //        result.ErrMessage = "Address not found";
+            //        //return StatusCode(result.StatusCode, result);
+            //    }
+
+            //    //address.Address1 = IputEditCompany.Address1;
+            //    //address.Address2 = IputEditCompany.Address2;
+            //    //address.City = IputEditCompany.City;
+            //    //address.State = IputEditCompany.State;
+            //    //address.Phone = IputEditCompany.Phone;
+            //    //address.Country = IputEditCompany.Country;
+            //    //address.Zip = IputEditCompany.Zip;
+            //    //address.Fax = IputEditCompany.Fax;
+
+            //    _db.SaveChanges();
+
+            //    result.Success = true;
+            //    result.StatusCode = 200;
+            //}
+            //catch (Exception ex)
+            //{
+            //    result.StatusCode = 500;
+            //    result.ErrMessage = ex.Message;
+            //}
             return result;
         }
     }

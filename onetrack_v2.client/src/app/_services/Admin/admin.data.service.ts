@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 import { AdminComService } from './admin.com.service';
@@ -143,6 +143,24 @@ export class AdminDataService {
         })
       );
   }
+
+  editCompany(company: Company) {
+
+console.log('EMFTEST (AdminService) - editCompany: ', company);
+
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: Company;
+        errMessage: string;
+      }>(this.apiUrl + 'EditCompany', company, { observe: 'response' })
+      .pipe(
+        tap(response => {
+          console.log(response.status);
+        })
+      );
+}
 
   // COMPANY REQUIREMENTS
   fetchCompanyRequirements(workState: string, resState: string | null = null) {
@@ -363,36 +381,39 @@ export class AdminDataService {
 
     let filteredJobTitles: any[] = this.jobTitles.slice();
 
-  if (filterJobTitle !== null) {
-    filteredJobTitles = filteredJobTitles.filter((jobTitle) =>
-      jobTitle.jobTitle1.toLowerCase().includes(filterJobTitle.toLowerCase())
-    );
-    this.jobTitlesChanged.next(filteredJobTitles);
-  }
+    if (filterJobTitle !== null) {
+      filteredJobTitles = filteredJobTitles.filter((jobTitle) =>
+        jobTitle.jobTitle1.toLowerCase().includes(filterJobTitle.toLowerCase())
+      );
+      this.jobTitlesChanged.next(filteredJobTitles);
+    }
 
-  if (isActive !== null) {
-    filteredJobTitles = filteredJobTitles.filter(
-      (jobTitle) => jobTitle.isActive === isActive
-    );
-    this.jobTitlesChanged.next(filteredJobTitles);
-  }
+    if (isActive !== null) {
+      filteredJobTitles = filteredJobTitles.filter(
+        (jobTitle) => jobTitle.isActive === isActive
+      );
+      this.jobTitlesChanged.next(filteredJobTitles);
+    }
 
-  if (licLevel !== null) {
-    filteredJobTitles = filteredJobTitles.filter(
-      (jobTitle) => jobTitle.licLevel === licLevel
-    );
-    this.jobTitlesChanged.next(filteredJobTitles);
-  }
+    if (licLevel !== null) {
+      filteredJobTitles = filteredJobTitles.filter(
+        (jobTitle) => jobTitle.licLevel === licLevel
+      );
+      this.jobTitlesChanged.next(filteredJobTitles);
+    }
 
-  if (licIncentive !== null) {
-    filteredJobTitles = filteredJobTitles.filter(
-      (jobTitle) => jobTitle.licIncentive === licIncentive
-    );
-    this.jobTitlesChanged.next(filteredJobTitles);
-  }
+    if (licIncentive !== null) {
+      filteredJobTitles = filteredJobTitles.filter(
+        (jobTitle) => jobTitle.licIncentive === licIncentive
+      );
+      this.jobTitlesChanged.next(filteredJobTitles);
+    }
 
     console.log('EMFTEST (AdminService) - Count_5: ', filteredJobTitles.length);
-    console.log('EMFTEST (AdminService) - filteredJobTitles => \n ', filteredJobTitles);
+    console.log(
+      'EMFTEST (AdminService) - filteredJobTitles => \n ',
+      filteredJobTitles
+    );
 
     this.jobTitlesChanged.next(filteredJobTitles);
   }

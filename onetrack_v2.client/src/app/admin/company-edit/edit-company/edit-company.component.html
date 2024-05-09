@@ -17,7 +17,9 @@
       </div>
 
       <div class="mb-3">
-        <label for="companyType" class="form-label">Company Type:</label>
+        <label for="companyType" class="form-label"
+          >Company Type: <span class="text-danger">*</span></label
+        >
         <select
           class="form-select input-size-med-small"
           id="companyType"
@@ -28,26 +30,59 @@
           </option>
           s
         </select>
+        <div
+          *ngIf="
+            companyForm.controls['companyType'].errors &&
+            companyForm.controls['companyType'].errors['incorrect']
+          "
+          class="text-danger"
+        >
+          Please select a company type
+        </div>
       </div>
 
       <div class="mb-3">
-        <label for="companyAbv" class="form-label">Company Abbreviation:</label>
+        <label for="companyAbv" class="form-label"
+          >Company Abbreviation: <span class="text-danger">*</span></label
+        >
         <input
           class="form-control input-size-small"
           type="text"
           id="companyAbv"
           formControlName="companyAbv"
         />
+        <div
+          *ngIf="
+            (companyForm.controls['companyAbv'].touched || formSubmitted) &&
+            companyForm.controls['companyAbv'].errors &&
+            companyForm.controls['companyAbv'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please enter Company Abbreviation
+        </div>
       </div>
 
       <div class="mb-3">
-        <label for="companyName" class="form-label">Company Name:</label>
+        <label for="companyName" class="form-label"
+          >Company Name: <span class="text-danger">*</span></label
+        >
         <input
           class="form-control input-size-med-large"
           type="text"
           id="companyName"
           formControlName="companyName"
         />
+        <div
+          *ngIf="
+            (companyForm.controls['companyName'].touched || formSubmitted) &&
+            companyForm.controls['companyName'].errors &&
+            companyForm.controls['companyName'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please enter Company Name
+        </div>
       </div>
 
       <div class="mb-3">
@@ -149,7 +184,11 @@
 
   <div class="row mt-4">
     <div class="col d-flex justify-content-end">
-      <button type="button" class="btn btn-secondary me-3 cancel-button">
+      <button
+        type="button"
+        class="btn btn-secondary me-3 cancel-button"
+        (click)="closeModal()"
+      >
         Cancel
       </button>
       <button type="submit" class="btn btn-primary save-button">Save</button>

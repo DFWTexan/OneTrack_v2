@@ -1,4 +1,7 @@
 ﻿using DataModel.Response;
+using Microsoft.AspNetCore.Mvc;
+using OneTrack_v2.DbData.Models;
+using OneTrak_v2.DataModel;
 
 namespace OneTrak_v2.Services
 {
@@ -24,5 +27,6 @@ namespace OneTrak_v2.Services
         public ReturnResult GetStateProvinceList();
         public ReturnResult GetXBorderBranchCodes();
         public ReturnResult GetXBorLicRequirements(string vBranchCode);
+        public ReturnResult EditCompany([FromBody] IputEditCompany company);
     }
 }

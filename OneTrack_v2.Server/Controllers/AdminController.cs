@@ -2,6 +2,7 @@
 using NuGet.Packaging;
 using OneTrack_v2.DataModel;
 using OneTrack_v2.Services;
+using OneTrak_v2.DataModel;
 using OneTrak_v2.Services;
 
 namespace OneTrack_v2.Controllers
@@ -180,6 +181,16 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
+        #endregion
+
+        #region "Admin Edit"
+        [HttpPost]
+        public async Task<IActionResult> EditCompany([FromBody] IputEditCompany company)
+        {
+            var result = await Task.Run(() => _adminService.EditCompany(company));
+
+            return StatusCode(result.StatusCode, result);
+        }
         #endregion
     }
 }
