@@ -2,13 +2,13 @@
 {
     public class IputEditCompany
     {
-        public string? CompanyId { get; set; }
+        public int? CompanyId { get; set; }
         public string? CompanyAbv { get; set; }
         public string? CompanyType { get; set; }
         public string? CompanyName { get; set; }
         public string? Tin { get; set; }
         public string? Naicnumber { get; set; }
-        public string? AddressId { get; set; }
+        public int? AddressId { get; set; }
         public string? Address1 { get; set; }
         public string? Address2 { get; set; }
         public string? City { get; set; }

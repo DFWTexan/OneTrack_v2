@@ -90,7 +90,11 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.formSubmitted = true;
-    let company = this.companyForm.value;
+    let company: Company = this.companyForm.value;
+
+    if (this.adminComService.modes.company.mode === 'INSERT') {
+      company.companyId = 0;
+    }
 
     if (company.companyType === 'Select Company Type') {
       company.companyType = '';
