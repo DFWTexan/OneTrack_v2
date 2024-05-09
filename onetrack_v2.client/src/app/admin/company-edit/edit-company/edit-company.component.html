@@ -4,15 +4,30 @@
   class="container app-modal-container"
 >
   <div class="row">
-    <div class="col">
+    <div class="col-md-7">
+      <div
+        class="mb-3"
+        *ngIf="
+          adminComService.modes.company.mode != 'INSERT' &&
+          appComService.isShowEditID
+        "
+      >
+        <label for="companyId" class="form-label">Company ID:</label><br />
+        {{ adminDataService.company.companyId }}
+      </div>
+
       <div class="mb-3">
-        <label for="companyId" class="form-label">Company ID:</label>
-        <input
-          class="form-control input-size-small"
-          type="text"
-          id="companyId"
-          formControlName="companyId"
-        />
+        <label for="companyType" class="form-label">Company Type:</label>
+        <select
+          class="form-select input-size-med-small"
+          id="companyType"
+          formControlName="companyType"
+        >
+          <option *ngFor="let item of companyTypes" [value]="item">
+            {{ item }}
+          </option>
+          s
+        </select>
       </div>
 
       <div class="mb-3">
@@ -25,8 +40,108 @@
         />
       </div>
 
-      <!-- Add more form controls for the rest of the properties in the Company interface -->
+      <div class="mb-3">
+        <label for="companyName" class="form-label">Company Name:</label>
+        <input
+          class="form-control input-size-med-large"
+          type="text"
+          id="companyName"
+          formControlName="companyName"
+        />
+      </div>
 
+      <div class="mb-3">
+        <label for="tin" class="form-label">TIN:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="tin"
+          formControlName="tin"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="naicnumber" class="form-label">NAIC Number:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="naicnumber"
+          formControlName="naicnumber"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="phone" class="form-label">Phone:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="phone"
+          formControlName="phone"
+          pattern="\(\d{3}\) \d{3}-\d{4}"
+        />
+      </div>
+    </div>
+
+    <div class="col-md-5">
+      <div class="mb-3">
+        <span class="form-label" style="font-weight: 600">Address Type:</span
+        ><br />
+        <span style="font-size: larger">Company</span>
+      </div>
+
+      <div class="mb-3">
+        <label for="address" class="form-label">Address:</label>
+        <input
+          class="form-control input-size-medium"
+          type="text"
+          id="address"
+          formControlName="address1"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="city" class="form-label">City:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="city"
+          formControlName="city"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="state" class="form-label">State:</label>
+        <select
+          class="form-select input-size-small"
+          id="state"
+          formControlName="state"
+        >
+          <option *ngFor="let state of states" [value]="state">
+            {{ state }}
+          </option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="zip" class="form-label">Zip:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="zip"
+          formControlName="zip"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="fax" class="form-label">Fax:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="fax"
+          formControlName="fax"
+          pattern="\(\d{3}\) \d{3}-\d{4}"
+        />
+      </div>
     </div>
   </div>
 

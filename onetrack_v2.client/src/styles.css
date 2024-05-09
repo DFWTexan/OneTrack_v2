@@ -11,7 +11,8 @@ body {
 
 /* Custom modal size */
 .modal-dialog {
-  max-width: 80%;
+  max-width: 85%;
+  min-width: 60%;
   margin: 1.75rem auto;
 }
 
@@ -74,7 +75,7 @@ body {
 }
 
 .input-size-med-large {
-  width: 400px;
+  width: 375px;
   font-size: 1.5rem;
 }
 
