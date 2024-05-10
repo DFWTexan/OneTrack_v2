@@ -1,5 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { zip } from 'rxjs';
 
 import {
@@ -14,13 +19,11 @@ import {
   styleUrl: './add-team-member.component.css',
 })
 export class AddTeamMemberComponent implements OnInit, OnDestroy {
+  formSubmitted = false;
   newAgentForm: FormGroup;
-  states: any[] = ['Select State', 'Loading...'];
-  employerAgencies: any[] = [
-    { valu: '0', label: 'Select Employer Agency' },
-    'Loading...',
-  ];
-  branchCodes: any[] = [{branchCode: 'Loading...'}];
+  states: any[] = ['Loading...'];
+  employerAgencies: any[] = [{ valu: '0', label: 'Loading...' }, 'Loading...'];
+  branchCodes: any[] = [{ branchCode: 'Loading...' }];
 
   constructor(
     private fb: FormBuilder,
@@ -38,7 +41,8 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
       teamID: [''],
       soeid: [''],
       nationalProducerNumber: [''],
-      employerAgency: ['', Validators.required],
+      // employerAgency: ['', Validators.required],
+      employerAgency: ['', [Validators.required, this.employerAgencyValidator]],
       workState: ['', Validators.required],
       resState: ['', Validators.required],
       jobTitle: [''],
@@ -65,7 +69,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
       .fetchDropdownData('GetEmployerAgencies')
       .subscribe((employerAgencies: { value: string; label: string }[]) => {
         this.employerAgencies = [
-          { valu: '0', label: 'Select Employer Agency' },
+          { valu: '0', label: 'Select Employer/Agency' },
           ...employerAgencies,
         ];
         this.newAgentForm.get('employerAgency')?.setValue(0);
@@ -76,12 +80,50 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     });
   }
 
+  // VALIDATION
+  employerAgencyValidator(
+    control: AbstractControl
+  ): { [key: string]: boolean } | null {
+    if (control.value === 0 || control.value === '') {
+      return { invalid: true };
+    }
+    return null;
+  }
+
   onSubmit() {
-    // Handle form submission
+    this.formSubmitted = true;
+    let agent: any = this.newAgentForm.value;
+
+    console.log('EMFTEST (app-add-team-member: onSubmit) - agent => \n', agent);
+
+    if (agent.employerAgency === 0 || agent.employerAgency === '') {
+      this.newAgentForm.controls['employerAgency'].setErrors({ invalid: true });
+    }
+
+    if (agent.workState === 'Select State') {
+      this.newAgentForm.controls['workState'].setErrors({ invalid: true });
+    }
+
+    if (agent.resState === 'Select State') {
+      this.newAgentForm.controls['resState'].setErrors({ invalid: true });
+    }
+
+    if (agent.branchCode === 'Select Branch Code') {
+      this.newAgentForm.controls['branchCode'].setErrors({ invalid: true });
+    }
+
+    if (this.newAgentForm.invalid) {
+      this.newAgentForm.setErrors({ invalid: true });
+      return;
+    }
   }
 
   onCancel() {
     this.newAgentForm.reset();
+    this.newAgentForm.get('workState')?.setValue('Select State');
+    this.newAgentForm.get('resState')?.setValue('Select State');
+    this.newAgentForm.get('employerAgency')?.setValue(0);
+    this.newAgentForm.get('branchCode')?.setValue('Select Branch Code');
   }
 
   ngOnDestroy() {

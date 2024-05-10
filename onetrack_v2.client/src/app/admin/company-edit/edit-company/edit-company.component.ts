@@ -19,9 +19,9 @@ import { state } from '@angular/animations';
 })
 @Injectable()
 export class EditCompanyComponent implements OnInit, OnDestroy {
+  formSubmitted = false;
   states: any[] = ['Select State', 'Loading...'];
   companyForm!: FormGroup;
-  formSubmitted = false;
   subscriptionData: Subscription = new Subscription();
   defaultCompanyType: string = 'Select Company Type';
   defaultState: string = 'Select State';
@@ -106,7 +106,6 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
     }
 
     if (!this.companyForm.valid) {
-      // If the form is not valid, set an error on the form
       this.companyForm.setErrors({ invalid: true });
       return;
     }

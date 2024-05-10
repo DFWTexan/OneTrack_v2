@@ -24,6 +24,15 @@
               formControlName="firstName"
               placeholder="First Name"
             />
+            <div
+              *ngIf="
+                (newAgentForm.controls['firstName'].touched || formSubmitted) &&
+                newAgentForm.controls['firstName'].errors?.['required']
+              "
+              class="text-danger"
+            >
+              Please enter First Name
+            </div>
           </div>
           <div class="form-group col-md-4">
             <label for="middleName">Middle Name:</label>
@@ -140,6 +149,17 @@
                 {{ empAgency.label }}
               </option>
             </select>
+            <div
+              *ngIf="
+                (newAgentForm.controls['employerAgency'].touched ||
+                  formSubmitted) &&
+                newAgentForm.controls['employerAgency'].errors &&
+                newAgentForm.controls['employerAgency'].errors['invalid']
+              "
+              class="text-danger"
+            >
+              Please select Employer/Agency
+            </div>
           </div>
           <div class="form-group col-md-4">
             <label for="workState"
@@ -199,12 +219,12 @@
               id="branchCode"
               formControlName="branchCode"
             >
-            <option
-            *ngFor="let code of branchCodes"
-            [value]="code.branchCode"
-          >
-            {{ code.branchCode }}
-          </option>
+              <option
+                *ngFor="let code of branchCodes"
+                [value]="code.branchCode"
+              >
+                {{ code.branchCode }}
+              </option>
             </select>
           </div>
         </div>
