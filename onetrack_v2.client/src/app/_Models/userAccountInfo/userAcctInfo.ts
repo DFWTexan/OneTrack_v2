@@ -1,6 +1,6 @@
 export interface UserAcctInfo {
     displayName: string;
-    userSamAcctName: string;
+    soeid: string;
     email: string;
     enabled: boolean;
     employeeId: string;

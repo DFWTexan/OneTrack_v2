@@ -40,7 +40,7 @@ namespace OneTrak_v2.Services
                         UserPrincipal user = UserPrincipal.FindByIdentity(pc, IdentityType.SamAccountName, vUserName);
                         if (user != null)
                         {
-                            userAccount.UserSamAcctName = user.SamAccountName;  // Return the SAM account name
+                            userAccount.SOEID = user.SamAccountName;  // Return the SAM account name
                             userAccount.DisplayName = user.DisplayName;
                             userAccount.Email = user.EmailAddress;
                             userAccount.Enabled = user.Enabled;

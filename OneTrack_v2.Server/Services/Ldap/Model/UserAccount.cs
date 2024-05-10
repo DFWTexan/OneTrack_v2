@@ -3,7 +3,7 @@
     public class UserAcctInfo
     {
         public string? DisplayName { get; set; }
-        public string? UserSamAcctName { get; set; }
+        public string? SOEID { get; set; }
         public string? Email { get; set; }
         public bool? Enabled { get; set; }
         public string? EmployeeId { get; set; }
