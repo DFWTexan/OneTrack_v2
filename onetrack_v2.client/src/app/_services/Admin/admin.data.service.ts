@@ -145,9 +145,6 @@ export class AdminDataService {
   }
 
   editCompany(company: Company) {
-
-console.log('EMFTEST (AdminService) - editCompany: ', company);
-
     return this.http
       .post<{
         success: boolean;
@@ -156,11 +153,11 @@ console.log('EMFTEST (AdminService) - editCompany: ', company);
         errMessage: string;
       }>(this.apiUrl + 'EditCompany', company, { observe: 'response' })
       .pipe(
-        tap(response => {
+        tap((response) => {
           console.log(response.status);
         })
       );
-}
+  }
 
   // COMPANY REQUIREMENTS
   fetchCompanyRequirements(workState: string, resState: string | null = null) {
@@ -362,13 +359,6 @@ console.log('EMFTEST (AdminService) - editCompany: ', company);
     licLevel: string | null = null,
     licIncentive: string | null = null
   ) {
-    console.log('EMFTEST (AdminService) - filterJobTitle: ', filterJobTitle);
-    console.log('EMFTEST (AdminService) - isActive: ', isActive);
-    console.log('EMFTEST (AdminService) - licLevel: ', licLevel);
-    console.log('EMFTEST (AdminService) - licIncentive: ', licIncentive);
-    console.log('EMFTEST (AdminService) - Count: ', this.jobTitles.length);
-    console.log('EMFTEST (AdminService) - jobTitles => \n ', this.jobTitles);
-
     if (
       filterJobTitle === null &&
       isActive === null &&
@@ -408,12 +398,6 @@ console.log('EMFTEST (AdminService) - editCompany: ', company);
       );
       this.jobTitlesChanged.next(filteredJobTitles);
     }
-
-    console.log('EMFTEST (AdminService) - Count_5: ', filteredJobTitles.length);
-    console.log(
-      'EMFTEST (AdminService) - filteredJobTitles => \n ',
-      filteredJobTitles
-    );
 
     this.jobTitlesChanged.next(filteredJobTitles);
   }
