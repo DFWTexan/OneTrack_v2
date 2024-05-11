@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OneTrack_v2.DataModel;
 using OneTrack_v2.Services;
+using OneTrak_v2.DataModel;
 
 namespace OneTrack_v2.Controllers
 {
@@ -129,9 +130,9 @@ namespace OneTrack_v2.Controllers
 
         #region "Agent Insert"
         [HttpPost]
-        public async Task<ActionResult> InsertAgent([FromBody] IputAgentInsert Input)
+        public async Task<ActionResult> InsertAgent([FromBody] IputAddAgent Input)
         {
-            var result = await Task.Run(() => _agentService.InsertAgent(Input));  // Implimentation of InsertAgent SQL Storre Procedure
+            var result = await Task.Run(() => _agentService.InsertAgent(Input));
 
             return StatusCode(result.StatusCode, result);
         }

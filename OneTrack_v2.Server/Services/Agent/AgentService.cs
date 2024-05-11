@@ -873,7 +873,7 @@ namespace OneTrack_v2.Services
 
             return result;
         }
-        public ReturnResult InsertAgent([FromBody] IputAgentInsert vInput)
+        public ReturnResult InsertAgent([FromBody] IputAddAgent vInput)
         {
             var result = new ReturnResult();
             try

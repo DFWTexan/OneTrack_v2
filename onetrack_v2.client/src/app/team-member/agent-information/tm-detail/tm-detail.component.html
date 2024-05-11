@@ -1,8 +1,15 @@
-<div class="container app-component-container">
+<div
+  class="container app-component-container bg-body"
+  style="
+    border-radius: 1rem;
+    padding: 1rem;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+  "
+>
   <div class="row">
     <div class="col-md-12"></div>
   </div>
-  <div class="row bg-body p-3">
+  <div class="row p-3">
     <div class="col">
       <p>
         <strong>EmploymentID:</strong><br />
@@ -117,7 +124,12 @@
       <p class="p-5" *ngIf="agentInfo?.mgrHiearchy?.length === 0">
         No Heirarchy Information Available
       </p>
-      <table class="table" *ngIf="agentInfo && agentInfo.mgrHiearchy && agentInfo.mgrHiearchy.length > 0">
+      <table
+        class="table"
+        *ngIf="
+          agentInfo && agentInfo.mgrHiearchy && agentInfo.mgrHiearchy.length > 0
+        "
+      >
         <thead>
           <tr style="background-color: whitesmoke">
             <th>Mgr. Name</th>
@@ -144,22 +156,22 @@
 </div>
 <!-- Modal: EDIT-TM-INFO -->
 <modal id="modal-edit-tm-detail">
-    <div class="modal-header">
-      <h1 class="modal-title"><strong>Edit</strong> - Team Member Detail</h1>
-      <!-- <button
+  <div class="modal-header">
+    <h1 class="modal-title"><strong>Edit</strong> - Team Member Detail</h1>
+    <!-- <button
           type="button"
           class="btn-close"
           (click)="modalService.close()"
         ></button> -->
-    </div>
-    <div class="modal-body">
+  </div>
+  <div class="modal-body">
+    <div>
       <div>
-        <div>
-          <app-edit-tm-detail></app-edit-tm-detail>
-        </div>
+        <app-edit-tm-detail></app-edit-tm-detail>
       </div>
     </div>
-    <!-- <div class="modal-footer">
+  </div>
+  <!-- <div class="modal-footer">
         <button
           type="button"
           class="btn btn-secondary"
@@ -168,4 +180,4 @@
           Close
         </button>
       </div> -->
-  </modal>
+</modal>

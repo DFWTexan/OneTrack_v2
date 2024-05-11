@@ -41,8 +41,8 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
       teamID: [''],
       soeid: [''],
       nationalProducerNumber: [''],
-      // employerAgency: ['', Validators.required],
-      employerAgency: ['', [Validators.required, this.employerAgencyValidator]],
+      employerAgency: ['', Validators.required],
+      // employerAgency: ['', [Validators.required, this.employerAgencyValidator]],
       workState: ['', Validators.required],
       resState: ['', Validators.required],
       jobTitle: [''],
@@ -81,20 +81,20 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   }
 
   // VALIDATION
-  employerAgencyValidator(
-    control: AbstractControl
-  ): { [key: string]: boolean } | null {
-    if (control.value === 0 || control.value === '') {
-      return { invalid: true };
-    }
-    return null;
-  }
+  // employerAgencyValidator(
+  //   control: AbstractControl
+  // ): { [key: string]: boolean } | null {
+  //   if (control.value === 0 || control.value === '') {
+  //     return { invalid: true };
+  //   }
+  //   return null;
+  // }
 
   onSubmit() {
     this.formSubmitted = true;
     let agent: any = this.newAgentForm.value;
-
-    console.log('EMFTEST (app-add-team-member: onSubmit) - agent => \n', agent);
+    // agent.soeid = agent.soeid.toUpperCase();
+    agent.soeid = 'EMFTEST';
 
     if (agent.employerAgency === 0 || agent.employerAgency === '') {
       this.newAgentForm.controls['employerAgency'].setErrors({ invalid: true });
@@ -109,13 +109,25 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     }
 
     if (agent.branchCode === 'Select Branch Code') {
-      this.newAgentForm.controls['branchCode'].setErrors({ invalid: true });
+      agent.branchCode = '';
+      // this.newAgentForm.controls['branchCode'].setErrors({ invalid: true });
     }
 
-    if (this.newAgentForm.invalid) {
+    if (!this.newAgentForm.invalid) {
       this.newAgentForm.setErrors({ invalid: true });
       return;
     }
+
+    this.agentDataService.addAgent(agent).subscribe({
+      next: (response) => {
+        console.log(response);
+        // handle the response here
+      },
+      error: (error) => {
+        console.error(error);
+        // handle the error here
+      },
+    });
   }
 
   onCancel() {
