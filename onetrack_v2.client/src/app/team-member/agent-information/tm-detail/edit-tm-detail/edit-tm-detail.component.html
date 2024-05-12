@@ -181,11 +181,15 @@
       <div class="mb-3">
         <label class="form-label">
           State:
-          <input
-            type="text"
-            class="form-control input-size-small"
-            formControlName="state"
-          />
+          <select
+              class="form-select select-size-small"
+              id="state"
+              formControlName="state"
+            >
+              <option *ngFor="let state of states" [value]="state">
+                {{ state }}
+              </option>
+            </select>
         </label>
       </div>
     </div>
@@ -222,7 +226,7 @@
           Email:
           <input
             type="email"
-            class="form-control input-size-small"
+            class="form-control input-size-medium"
             formControlName="email"
           />
         </label>

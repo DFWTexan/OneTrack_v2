@@ -3,13 +3,13 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 
-import { AgentDataService } from '../../../../_services';
+import { AgentDataService, ConstantsDataService } from '../../../../_services';
 import { AgentInfo } from '../../../../_Models';
 
 @Component({
   selector: 'app-edit-tm-detail',
   templateUrl: './edit-tm-detail.component.html',
-  styleUrl: './edit-tm-detail.component.css'
+  styleUrl: './edit-tm-detail.component.css',
 })
 @Injectable()
 export class EditTmDetailComponent implements OnInit, OnDestroy {
@@ -33,19 +33,22 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
     isLicenseincentiveSecondChance: new FormControl(''),
   });
 
+  states: any[] = ['Loading...'];
   agentInfo: AgentInfo = {} as AgentInfo;
   subscribeAgentInfo: Subscription;
 
-  constructor(private agentService: AgentDataService) {
+  constructor(
+    private conService: ConstantsDataService,
+    private agentService: AgentDataService
+  ) {
     this.subscribeAgentInfo = new Subscription();
   }
 
   ngOnInit(): void {
-      this.subscribeAgentInfo = this.agentService.agentInfoChanged.subscribe(
+    this.subscribeAgentInfo = this.agentService.agentInfoChanged.subscribe(
       (agentInfo: any) => {
         this.agentInfo = agentInfo;
-        let dateOfBirth =
-            this.agentInfo.dateOfBirth;
+        let dateOfBirth = this.agentInfo.dateOfBirth;
         this.form.patchValue({
           employeeID: agentInfo.employeeID,
           lastName: agentInfo.lastName,
@@ -61,33 +64,16 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
           phone: agentInfo.phone,
           email: agentInfo.email,
           dateOfBirth: dateOfBirth
-          ? formatDate(dateOfBirth, 'yyyy-MM-dd', 'en-US')
-          : null,
+            ? formatDate(dateOfBirth, 'yyyy-MM-dd', 'en-US')
+            : null,
           licenseLevel: agentInfo.licenseLevel,
           licenseIncentive: agentInfo.licenseIncentive,
-          isLicenseincentiveSecondChance: agentInfo.isLicenseincentiveSecondChance,
+          isLicenseincentiveSecondChance:
+            agentInfo.isLicenseincentiveSecondChance,
         });
       }
     );
-    //   this.form.patchValue({
-    //   employeeID: this.agentService.agentInformation.employeeID ? this.agentService.agentInformation.employeeID.toString() : '',
-    //   lastName: this.agentService.agentInformation.lastName,
-    //   firstName: this.agentService.agentInformation.firstName,
-    //   middleName: this.agentService.agentInformation.middleName,
-    //   employeeSSN: this.agentService.agentInformation.employeeSSN,
-    //   geid: this.agentService.agentInformation.geid,
-    //   address1: this.agentService.agentInformation.address1,
-    //   address2: this.agentService.agentInformation.address2,
-    //   city: this.agentService.agentInformation.city,
-    //   state: this.agentService.agentInformation.state,
-    //   zip: this.agentService.agentInformation.zip,
-    //   phone: this.agentService.agentInformation.phone,
-    //   email: this.agentService.agentInformation.email,
-    //   dateOfBirth: this.agentService.agentInformation.dateOfBirth,
-    //   licenseLevel: this.agentService.agentInformation.licenseLevel,
-    //   licenseIncentive: this.agentService.agentInformation.licenseIncentive,
-    //   isLicenseincentiveSecondChance: this.agentService.agentInformation.isLicenseincentiveSecondChance ? 'true' : 'false',
-    // });
+    this.states = ['Select State', ...this.conService.getStates()];
   }
 
   onSubmit() {
@@ -97,7 +83,6 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscribeAgentInfo.unsubscribe();
   }
-
 }
 function injectable(): (
   target: typeof EditTmDetailComponent
