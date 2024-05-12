@@ -1,5 +1,5 @@
 import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 
@@ -15,8 +15,8 @@ import { AgentInfo } from '../../../../_Models';
 export class EditTmDetailComponent implements OnInit, OnDestroy {
   form = new FormGroup({
     employeeID: new FormControl(''),
-    lastName: new FormControl(''),
-    firstName: new FormControl(''),
+    lastName: new FormControl('', Validators.required),
+    firstName: new FormControl('', Validators.required),
     middleName: new FormControl(''),
     employeeSSN: new FormControl(''),
     geid: new FormControl(''),
@@ -33,6 +33,7 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
     isLicenseincentiveSecondChance: new FormControl(''),
   });
 
+  formSubmitted = false;
   states: any[] = ['Loading...'];
   licenseLevels: any[] = [];
   licenseIncentives: any[] = [];
@@ -93,13 +94,48 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
+    this.formSubmitted = true;
     console.log(this.form.value);
+
+    let agent: any = this.form.value;
+    // agent.soeid = agent.soeid.toUpperCase();
+    agent.soeid = 'EMFTEST';
+
+    // if (agent.employerAgency === 0 || agent.employerAgency === '') {
+    //   this.newAgentForm.controls['employerAgency'].setErrors({ invalid: true });
+    // }
+
+    // if (agent.workState === 'Select State') {
+    //   this.newAgentForm.controls['workState'].setErrors({ invalid: true });
+    // }
+
+    // if (agent.resState === 'Select State') {
+    //   this.newAgentForm.controls['resState'].setErrors({ invalid: true });
+    // }
+
+    // if (agent.branchCode === 'Select Branch Code') {
+    //   agent.branchCode = '';
+    //   // this.newAgentForm.controls['branchCode'].setErrors({ invalid: true });
+    // }
+
+    if (!this.form.invalid) {
+      this.form.setErrors({ invalid: true });
+      return;
+    }
+  }
+
+  closeModal() {
+    const modalDiv = document.getElementById('modal-edit-tm-detail');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
   }
 
   ngOnDestroy(): void {
     this.subscribeAgentInfo.unsubscribe();
   }
 }
+
 function injectable(): (
   target: typeof EditTmDetailComponent
 ) => void | typeof EditTmDetailComponent {

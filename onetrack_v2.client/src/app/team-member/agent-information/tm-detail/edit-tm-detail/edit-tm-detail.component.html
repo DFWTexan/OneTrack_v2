@@ -14,6 +14,15 @@
             formControlName="firstName"
           />
         </label>
+        <div
+          *ngIf="
+                (form.controls['firstName'].touched || formSubmitted) &&
+                form.controls['firstName'].errors?.['required']
+              "
+          class="text-danger"
+        >
+          Please enter First Name
+        </div>
       </div>
     </div>
     <div class="col">
@@ -38,6 +47,15 @@
             formControlName="lastName"
           />
         </label>
+        <div
+          *ngIf="
+                (form.controls['lastName'].touched || formSubmitted) &&
+                form.controls['lastName'].errors?.['required']
+              "
+          class="text-danger"
+        >
+          Please enter Last Name
+        </div>
       </div>
     </div>
     <div class="col">
@@ -256,7 +274,7 @@
 
   <div class="row mt-4">
     <div class="col d-flex justify-content-end">
-      <button type="button" class="btn btn-secondary me-3">Cancel</button>
+      <button type="button" class="btn btn-secondary me-3" (click)="closeModal()">Cancel</button>
       <button type="submit" class="btn btn-primary" [disabled]="!form.valid">
         Update
       </button>
