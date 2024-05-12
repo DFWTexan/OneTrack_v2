@@ -89,7 +89,6 @@
         </label>
       </div>
     </div>
-    
   </div>
 
   <div class="row">
@@ -97,45 +96,64 @@
       <div class="mb-3">
         <label class="form-label">
           License Level:
-          <input
-            type="text"
-            class="form-control input-size-small"
+          <select
+            class="form-select select-size-small"
+            id="licenseLevel"
             formControlName="licenseLevel"
-          />
+          >
+            <option
+              *ngFor="let level of licenseLevels"
+              [value]="level.sortOrder"
+            >
+              {{ level.licenseLevel }}
+            </option>
+          </select>
         </label>
       </div>
     </div>
-    <div class="col">
-      <div class="mb-3">
-        <label class="form-label">
-          Is License Incentive Second Chance:
-          <input
-            type="checkbox"
-            class="form-control input-size-small"
-            formControlName="isLicenseincentiveSecondChance"
-          />
-        </label>
-      </div>
-    </div>
+
     <div class="col">
       <div class="mb-3">
         <label class="form-label">
           License Incentive:
-          <input
-            type="text"
-            class="form-control input-size-small"
+          <select
+            class="form-select select-size-small"
+            id="licenseIncentive"
             formControlName="licenseIncentive"
-          />
+          >
+            <option
+              *ngFor="let incentive of licenseIncentives"
+              [value]="incentive.sortOrder"
+            >
+              {{ incentive.licenseIncentive }}
+            </option>
+          </select>
         </label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="mb-3 mt-4">
+        <!-- <input
+            type="checkbox"
+            class="form-check-input input-size-small"
+            formControlName="isLicenseincentiveSecondChance"
+          /> -->
+        <input
+          class="form-check-input me-2 align-middle"
+          type="checkbox"
+          id="isLicenseincentiveSecondChance"
+          formControlName="isLicenseincentiveSecondChance"
+        />
+        <label class="form-label"> Incentive Second Chance: </label>
       </div>
     </div>
   </div>
 
-  <div class="row">
+  <!-- <div class="row">
     <div class="col"></div>
     <div class="col"></div>
     <div class="col"></div>
-  </div>
+  </div> -->
 
   <div class="row">
     <div class="col">
@@ -182,14 +200,14 @@
         <label class="form-label">
           State:
           <select
-              class="form-select select-size-small"
-              id="state"
-              formControlName="state"
-            >
-              <option *ngFor="let state of states" [value]="state">
-                {{ state }}
-              </option>
-            </select>
+            class="form-select select-size-small"
+            id="state"
+            formControlName="state"
+          >
+            <option *ngFor="let state of states" [value]="state">
+              {{ state }}
+            </option>
+          </select>
         </label>
       </div>
     </div>

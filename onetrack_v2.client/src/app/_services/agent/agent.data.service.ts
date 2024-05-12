@@ -237,6 +237,48 @@ export class AgentDataService {
       );
   }
 
+  fetchLicenseLevels() {
+    this.apiUrl = environment.apiUrl + 'Agent/GetLicLevels';
+
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: Array<{ licenseLevel: string, sortOrder: number }>;
+        errMessage: string;
+      }>(this.apiUrl)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  fetchLicenseIncentives() {
+    this.apiUrl = environment.apiUrl + 'Agent/GetLicIncentives';
+
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: Array<{ licenseIncentive: string, sortOrder: number }>;
+        errMessage: string;
+      }>(this.apiUrl)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
   // LICENSE APPOINTMENT MANAGEMENT
   storeLicenseAppointment(appointment: LicenseAppointment) {
     this.licenseAppointment = appointment;

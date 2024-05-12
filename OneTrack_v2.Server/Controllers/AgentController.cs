@@ -126,6 +126,22 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpGet]
+        public async Task<ActionResult> GetLicLevels()
+        {
+            var result = await Task.Run(() => _agentService.GetLicLevels());
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetLicIncentives()
+        {
+            var result = await Task.Run(() => _agentService.GetLicIncentives());
+
+            return StatusCode(result.StatusCode, result);
+        }
         #endregion
 
         #region "Agent Insert"

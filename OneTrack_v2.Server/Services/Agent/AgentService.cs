@@ -1063,6 +1063,63 @@ namespace OneTrack_v2.Services
 
             return result;
         }
+        public ReturnResult GetLicLevels()
+        {
+            ReturnResult result = new ReturnResult();
+            try
+            {
+                var resultLicLevels = new List<(string LicenseLevel, int SortOrder)>
+                                        {
+                                            ("Select Lic Level", 0),
+                                            ("NoLicense", 1),
+                                            ("LicLevel1", 2),
+                                            ("LicLevel2", 3),
+                                            ("LicLevel3", 4),
+                                            ("LicLevel4", 5)
+                                        }
+                                        .OrderBy(x => x.SortOrder)
+                                        .Select(x => new { x.LicenseLevel, x.SortOrder });
+
+                result.ObjData = resultLicLevels;
+                result.Success = true;
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+            return result;
+        }
+
+        public ReturnResult GetLicIncentives()
+        {
+            ReturnResult result = new ReturnResult();
+            try
+            {
+                var resultIncentives = new List<(string LicenseIncentive, int SortOrder)>
+                                {
+                                    ("Select Incentive", 0),
+                                    ("NoIncentive", 1),
+                                    ("PLS_Incentive1", 2),
+                                    ("Incentive2_Plus", 3),
+                                    //("LicIncentive3", 3)
+                                }
+                                .OrderBy(x => x.SortOrder)
+                                .Select(x => new { x.LicenseIncentive, x.SortOrder });
+
+
+                result.ObjData = resultIncentives;
+                result.Success = true;
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+            return result;
+        }
 
         #region Private Methods
         private bool ExecuteAddressInsert(IputAgentInsert vInput, string? vCountry = null)

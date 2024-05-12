@@ -21,5 +21,7 @@ namespace OneTrack_v2.Services
         public ReturnResult GetBranchCodes();
         public ReturnResult GetCoRequirementAssetIDs();
         public ReturnResult GetCoRequirementStatuses();
+        public ReturnResult GetLicLevels();
+        public ReturnResult GetLicIncentives();
     }
 }

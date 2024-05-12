@@ -34,6 +34,8 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
   });
 
   states: any[] = ['Loading...'];
+  licenseLevels: any[] = [];
+  licenseIncentives: any[] = [];
   agentInfo: AgentInfo = {} as AgentInfo;
   subscribeAgentInfo: Subscription;
 
@@ -74,6 +76,20 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
       }
     );
     this.states = ['Select State', ...this.conService.getStates()];
+    this.agentService.fetchLicenseLevels().subscribe((licenseLevels: any[]) => {
+      this.licenseLevels = [
+        { value: 'Select License Level' },
+        ...licenseLevels,
+      ];
+    });
+    this.agentService
+      .fetchLicenseIncentives()
+      .subscribe((licIncentives: any[]) => {
+        this.licenseIncentives = [
+          { value: 'Select Incentive' },
+          ...licIncentives,
+        ];
+      });
   }
 
   onSubmit() {
