@@ -144,7 +144,7 @@ namespace OneTrack_v2.Controllers
         }
         #endregion
 
-        #region "Agent INSERT/EDIT"
+        #region "Agent INSERT"
         [HttpPost]
         public async Task<ActionResult> InsertAgent([FromBody] IputAddAgent Input)
         {
@@ -160,7 +160,9 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+        #endregion
 
+        #region "Agent Update"
         [HttpPost]
         public async Task<ActionResult> UpdateAgentDetails([FromBody] IputAgentDetail Input)
         {
@@ -178,10 +180,14 @@ namespace OneTrack_v2.Controllers
         }
         #endregion
 
-        #region "Agent Update"
-        #endregion
-
         #region "Agent Delete"
+        [HttpPost]
+        public async Task<ActionResult> DeleteEmploymentHistItem([FromBody] IputDeleteEmploymentHistoryItem Input)
+        {
+            var result = await Task.Run(() => _agentService.DeleteEmploymentHistItem(Input));
+
+            return StatusCode(result.StatusCode, result);
+        }
         #endregion
     }
 }

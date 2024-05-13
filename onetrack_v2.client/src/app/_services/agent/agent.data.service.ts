@@ -295,23 +295,6 @@ export class AgentDataService {
       );
   }
 
-  // upsertEmploymentHistItem(employmentHistItem: any): Observable<any> {
-  //   this.apiUrl = environment.apiUrl + 'Agent/UpsertEmploymentHistItem';
-
-  //   return this.http
-  //     .post<{
-  //       success: boolean;
-  //       statusCode: number;
-  //       objData: any;
-  //       errMessage: string;
-  //     }>(this.apiUrl, employmentHistItem)
-  //     .pipe(
-  //       tap(() => this.fetchAgentInformation(this.agentInformation.employeeID)),
-  //       map((response) => {
-  //         return response;
-  //       })
-  //     );
-  // }
   upsertEmploymentHistItem(employmentHistItem: any): Observable<any> {
     this.apiUrl = environment.apiUrl + 'Agent/UpsertEmploymentHistItem';
   
@@ -337,7 +320,37 @@ export class AgentDataService {
         })
       );
   }
+
+  deleteEmploymentHistItem(employmentHistItem: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'Agent/DeleteEmploymentHistItem';
+
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, employmentHistItem)
+      .pipe(
+        switchMap((response) => {
+          if (response.success && response.statusCode === 200) {
+            return this.fetchAgentInformation(this.agentInformation.employeeID);
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        }),
+        map((agentInfo) => {
+          this.agentInformation = agentInfo;
+          this.agentInfoChanged.next(this.agentInformation);
+          return this.agentInformation;
+        })
+      );
+  }
   
+  refreshAgentInfo(agentInfo: AgentInfo) {
+    this.agentInfoChanged.next(agentInfo);
+  }
+
   // LICENSE APPOINTMENT MANAGEMENT
   storeLicenseAppointment(appointment: LicenseAppointment) {
     this.licenseAppointment = appointment;

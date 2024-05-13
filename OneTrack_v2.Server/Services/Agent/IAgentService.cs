@@ -23,7 +23,8 @@ namespace OneTrack_v2.Services
         public ReturnResult GetCoRequirementStatuses();
         public ReturnResult GetLicLevels();
         public ReturnResult GetLicIncentives();
-        public ReturnResult UpdateAgentDetails([FromBody] IputAgentDetail Input);
-        public ReturnResult UpsertEmploymentHistItem([FromBody] InputEmploymentHistItem Input);
+        public ReturnResult UpdateAgentDetails([FromBody] IputAgentDetail vInput);
+        public ReturnResult UpsertEmploymentHistItem([FromBody] InputEmploymentHistItem vInput);
+        public ReturnResult DeleteEmploymentHistItem([FromBody] IputDeleteEmploymentHistoryItem vInput);
     }
 }

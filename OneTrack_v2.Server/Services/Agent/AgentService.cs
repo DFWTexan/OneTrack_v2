@@ -251,16 +251,16 @@ namespace OneTrack_v2.Services
 
                 //Employment Communication
                 var queryEmploymentCommunications = (from ec in _db.EmploymentCommunications
-                                                 join c in _db.Communications on ec.CommunicationId equals c.CommunicationId
-                                                 where ec.EmploymentId == agent.EmploymentID
-                                                 orderby ec.EmailCreateDate, c.DocTypeAbv + "-" + c.DocSubType
-                                                 select new EmploymentCommunicationItem
-                                                 {
-                                                     EmploymentCommunicationID = ec.EmploymentCommunicationId,
-                                                     LetterName = c.DocTypeAbv + "-" + c.DocSubType,
-                                                     EmailCreateDate= ec.EmailCreateDate,
-                                                     EmailSentDate = ec.EmailSentDate
-                                                 });
+                                                     join c in _db.Communications on ec.CommunicationId equals c.CommunicationId
+                                                     where ec.EmploymentId == agent.EmploymentID
+                                                     orderby ec.EmailCreateDate, c.DocTypeAbv + "-" + c.DocSubType
+                                                     select new EmploymentCommunicationItem
+                                                     {
+                                                         EmploymentCommunicationID = ec.EmploymentCommunicationId,
+                                                         LetterName = c.DocTypeAbv + "-" + c.DocSubType,
+                                                         EmailCreateDate = ec.EmailCreateDate,
+                                                         EmailSentDate = ec.EmailSentDate
+                                                     });
 
                 agent.EmploymentCommunicationItems = queryEmploymentCommunications.AsNoTracking().ToList();
 
@@ -873,112 +873,7 @@ namespace OneTrack_v2.Services
 
             return result;
         }
-        public ReturnResult InsertAgent([FromBody] IputAddAgent vInput)
-        {
-            var result = new ReturnResult();
-            try
-            {
-                // TBD: Placeholder method to execute [uspAgentInsert] stored procedure
 
-                result.Success = true;
-                result.StatusCode = 200;
-
-            }
-            catch (Exception ex)
-            {
-                result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
-            }
-
-            return result;
-        }
-        public ReturnResult InsertAgent_v2([FromBody] IputAgentInsert vInput)
-        {
-            var result = new ReturnResult();
-            try
-            {
-                result.StatusCode = 200;
-
-                using (var context = new AppDataContext())
-                using (var transaction = context.Database.BeginTransaction())
-                {
-                    try
-                    {
-                        // Assume GetCurrentDate is a method to get the current date, similar to GETDATE()
-                        var transferDate = DateTime.Now;
-
-                        // Retrieve country based on StateProvinceAbv
-                        var country = context.StateProvinces
-                            .Where(sp => sp.StateProvinceAbv == vInput.State)
-                            .Select(sp => sp.Country)
-                            .FirstOrDefault();
-
-                        // INSERT into EmployeeSSN and log audit
-                        var employeeSSN = new EmployeeSsn { EmployeeSsn1 = vInput.EmployeeSSN };
-                        context.EmployeeSsns.Add(employeeSSN);
-                        context.SaveChanges();
-
-                        // Log audit for EmployeeSSN insertion
-                        int employeeSsnid = employeeSSN.EmployeeSsnid;
-
-                        if (employeeSsnid > 0)
-                            _utilityService.LogAudit("EmployeeSSN", employeeSsnid, vInput.UserSOEID, "INSERT", "EmployeeSSN", null, employeeSsnid.ToString());
-
-                        // Address INSERT via stored procedure
-                        var isAddressInsert = ExecuteAddressInsert(vInput, country);
-
-                        // Employee INSERT
-                        var employee = new Employee
-                        {
-                            FirstName = vInput.FirstName,
-                            MiddleName = vInput.MiddleName,
-                            LastName = vInput.LastName,
-                            Alias = vInput.Alias,
-                            Geid = vInput.GEID,
-                            Soeid = vInput.SOEID,
-                            DateOfBirth = vInput.DateOfBirth,
-                            NationalProducerNumber = vInput.NationalProducerNumber,
-                            EmployeeSsnid = employeeSSN.EmployeeSsnid,
-                            //AddressId = addressId, // TBD: Placeholder for addressId
-                            ExcludeFromRpts = vInput.ExcludeFromRpts
-                        };
-                        context.Employees.Add(employee);
-                        context.SaveChanges();
-
-                        // Log audit for Employee INSERT
-                        int employeeId = employee.EmployeeId;
-
-                        if (employeeId > 0)
-                            _utilityService.LogAudit("Employee", employeeId, vInput.UserSOEID, "INSERT", "FirstName, MiddleName, LastName", null, employee.EmployeeId.ToString());
-
-                        // Employment INSERT 
-                        var isEmploymentInsert = ExecuteEmploymentInsert(vInput, employeeId);
-
-                        transaction.Commit();
-
-                        var empResult = GetAgentByEmployeeID(employeeId);
-                        result.Success = true;
-                        result.ObjData = empResult.ObjData;
-                    }
-                    catch (Exception ex)
-                    {
-                        transaction.Rollback();
-                        // Log or handle error
-                        //_utilityService.ExecuteErrorHandling(); // Placeholder for error handling stored procedure call
-                        result.StatusCode = 500;
-                        result.ErrMessage = ex.Message;
-                    }
-                }
-
-            }
-            catch (Exception ex)
-            {
-                result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
-            }
-
-            return result;
-        }
         public ReturnResult GetBranchCodes()
         {
             var result = new ReturnResult();
@@ -1121,7 +1016,113 @@ namespace OneTrack_v2.Services
             return result;
         }
 
-        #region UPDATES
+        #region INSERT/UPDATE/DELETE
+        public ReturnResult InsertAgent([FromBody] IputAddAgent vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                // TBD: Placeholder method to execute [uspAgentInsert] stored procedure
+
+                result.Success = true;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;
+        }
+        public ReturnResult InsertAgent_v2([FromBody] IputAgentInsert vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                result.StatusCode = 200;
+
+                using (var context = new AppDataContext())
+                using (var transaction = context.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        // Assume GetCurrentDate is a method to get the current date, similar to GETDATE()
+                        var transferDate = DateTime.Now;
+
+                        // Retrieve country based on StateProvinceAbv
+                        var country = context.StateProvinces
+                            .Where(sp => sp.StateProvinceAbv == vInput.State)
+                            .Select(sp => sp.Country)
+                            .FirstOrDefault();
+
+                        // INSERT into EmployeeSSN and log audit
+                        var employeeSSN = new EmployeeSsn { EmployeeSsn1 = vInput.EmployeeSSN };
+                        context.EmployeeSsns.Add(employeeSSN);
+                        context.SaveChanges();
+
+                        // Log audit for EmployeeSSN insertion
+                        int employeeSsnid = employeeSSN.EmployeeSsnid;
+
+                        if (employeeSsnid > 0)
+                            _utilityService.LogAudit("EmployeeSSN", employeeSsnid, vInput.UserSOEID, "INSERT", "EmployeeSSN", null, employeeSsnid.ToString());
+
+                        // Address INSERT via stored procedure
+                        var isAddressInsert = ExecuteAddressInsert(vInput, country);
+
+                        // Employee INSERT
+                        var employee = new Employee
+                        {
+                            FirstName = vInput.FirstName,
+                            MiddleName = vInput.MiddleName,
+                            LastName = vInput.LastName,
+                            Alias = vInput.Alias,
+                            Geid = vInput.GEID,
+                            Soeid = vInput.SOEID,
+                            DateOfBirth = vInput.DateOfBirth,
+                            NationalProducerNumber = vInput.NationalProducerNumber,
+                            EmployeeSsnid = employeeSSN.EmployeeSsnid,
+                            //AddressId = addressId, // TBD: Placeholder for addressId
+                            ExcludeFromRpts = vInput.ExcludeFromRpts
+                        };
+                        context.Employees.Add(employee);
+                        context.SaveChanges();
+
+                        // Log audit for Employee INSERT
+                        int employeeId = employee.EmployeeId;
+
+                        if (employeeId > 0)
+                            _utilityService.LogAudit("Employee", employeeId, vInput.UserSOEID, "INSERT", "FirstName, MiddleName, LastName", null, employee.EmployeeId.ToString());
+
+                        // Employment INSERT 
+                        var isEmploymentInsert = ExecuteEmploymentInsert(vInput, employeeId);
+
+                        transaction.Commit();
+
+                        var empResult = GetAgentByEmployeeID(employeeId);
+                        result.Success = true;
+                        result.ObjData = empResult.ObjData;
+                    }
+                    catch (Exception ex)
+                    {
+                        transaction.Rollback();
+                        // Log or handle error
+                        //_utilityService.ExecuteErrorHandling(); // Placeholder for error handling stored procedure call
+                        result.StatusCode = 500;
+                        result.ErrMessage = ex.Message;
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;
+        }
         public ReturnResult UpdateAgentDetails([FromBody] IputAgentDetail vInput)
         {
             var result = new ReturnResult();
@@ -1205,13 +1206,13 @@ namespace OneTrack_v2.Services
                             cmd.Parameters.Add(new SqlParameter("@BackgroundCheckNote", vInput.BackGroundCheckNotes));
                             cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
                             cmd.Parameters.Add(new SqlParameter("@IsCurrent", vInput.IsCurrent));
-                            
+
                             conn.Open();
                             cmd.ExecuteNonQuery();
                         }
                     }
                 }
-                else 
+                else
                 {
                     // UPDATE Employment History
                     using (SqlConnection conn = new SqlConnection(_connectionString))
@@ -1244,9 +1245,42 @@ namespace OneTrack_v2.Services
                         }
                     }
                 }
-                
+
                 result.Success = true;
-                result.ObjData = new { Message = "Employment History Item Created Successfully."};
+                result.ObjData = new { Message = "Employment History Item Created/Updated Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;
+        }
+        public ReturnResult DeleteEmploymentHistItem([FromBody] IputDeleteEmploymentHistoryItem vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspEmploymentHistoryDelete", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
+                        cmd.Parameters.Add(new SqlParameter("@EmploymentHistoryID", vInput.EmploymentHistoryID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "Employment History Item Deleted Successfully." };
                 result.StatusCode = 200;
 
             }
@@ -1566,7 +1600,7 @@ namespace OneTrack_v2.Services
         protected (DiaryCreatedByItem[], DiaryItem[]) FillDiaryInfo(int vEmploymentID)
         {
             List<DiaryCreatedByItem> _diaryCreatedByItems = new List<DiaryCreatedByItem>();
-            
+
             var queryCreatedBy = (from diary in _db.Diaries
                                   join lt in _db.LicenseTeches on diary.Soeid equals lt.Soeid into ltGroup
                                   from lt in ltGroup.DefaultIfEmpty()
