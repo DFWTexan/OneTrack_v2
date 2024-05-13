@@ -1246,6 +1246,7 @@ namespace OneTrack_v2.Services
                 }
                 
                 result.Success = true;
+                result.ObjData = new { Message = "Employment History Item Created Successfully."};
                 result.StatusCode = 200;
 
             }

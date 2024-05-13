@@ -19,8 +19,8 @@ import {
 @Injectable()
 export class EditEmploymentHistComponent implements OnInit, OnDestroy {
   employmentHistoryForm!: FormGroup;
-  @Input()employmentID: number = 0;
-  @Input()employeeID: number = 0;
+  @Input() employmentID: number = 0;
+  @Input() employeeID: number = 0;
   backgroundStatuses: Array<{ lkpValue: string }> = [];
   subscriptionMode: Subscription = new Subscription();
   subscriptionData: Subscription = new Subscription();
@@ -36,8 +36,8 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.employmentHistoryForm = new FormGroup({
       employmentHistoryID: new FormControl({ value: '', disabled: true }),
-      employmentID : new FormControl({ value: '', disabled: true }),
-      employeeID : new FormControl({ value: '', disabled: true }),
+      employmentID: new FormControl({ value: '', disabled: true }),
+      employeeID: new FormControl({ value: '', disabled: true }),
       hireDate: new FormControl(null),
       rehireDate: new FormControl(null),
       notifiedTermDate: new FormControl(null),
@@ -117,18 +117,25 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     let empHistItem: any = this.employmentHistoryForm.value;
+    empHistItem.EmployeeID = this.employeeID;
+    empHistItem.EmploymentID = this.employmentID;
     empHistItem.UserSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
-   
+
     if (this.agentComService.modeEmploymentHist === 'INSERT') {
       empHistItem.EmploymentHistoryID = 0;
-      empHistItem.EmployeeID = this.employeeID;
-      empHistItem.EmploymentID = this.employmentID;
     }
+
+    console.log(
+      'EMFTEST (app-edit-employment-hist: onSubmit) - empHistItem => \n',
+      empHistItem
+    );
 
     this.agentService.upsertEmploymentHistItem(empHistItem).subscribe({
       next: (response) => {
-        console.log(response);
-        // handle the response here
+
+        console.log('EMFTEST (app-edit-employment-hist) - response: ', response);
+
+        this.closeModal();
       },
       error: (error) => {
         console.error(error);
