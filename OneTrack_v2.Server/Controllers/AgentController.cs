@@ -168,6 +168,14 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> UpsertEmploymentHistItem([FromBody] InputEmploymentHistItem Input)
+        {
+            var result = await Task.Run(() => _agentService.UpsertEmploymentHistItem(Input));
+
+            return StatusCode(result.StatusCode, result);
+        }
         #endregion
 
         #region "Agent Update"

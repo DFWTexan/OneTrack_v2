@@ -24,5 +24,6 @@ namespace OneTrack_v2.Services
         public ReturnResult GetLicLevels();
         public ReturnResult GetLicIncentives();
         public ReturnResult UpdateAgentDetails([FromBody] IputAgentDetail Input);
+        public ReturnResult UpsertEmploymentHistItem([FromBody] InputEmploymentHistItem Input);
     }
 }

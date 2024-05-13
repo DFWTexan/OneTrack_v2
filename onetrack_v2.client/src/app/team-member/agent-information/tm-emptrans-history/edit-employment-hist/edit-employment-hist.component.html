@@ -102,6 +102,7 @@
           id="hrTermCode"
           formControlName="hrTermCode"
         />
+        TermCode for Death is "DT"
       </div>
 
       <div class="mb-3">
@@ -130,7 +131,7 @@
 
   <div class="row mt-4">
     <div class="col d-flex justify-content-end">
-      <button type="button" class="btn btn-secondary me-3 cancel-button">
+      <button type="button" class="btn btn-secondary me-3 cancel-button" (click)="closeModal()">
         Cancel
       </button>
       <button type="submit" class="btn btn-primary save-button">Save</button>

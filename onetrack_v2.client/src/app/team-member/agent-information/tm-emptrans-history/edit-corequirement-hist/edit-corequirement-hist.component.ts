@@ -90,6 +90,13 @@ export class EditCorequirementHistComponent implements OnInit, OnDestroy {
       this.coRequirementsForm.value
     );
   }
+  
+  closeModal() {
+    const modalDiv = document.getElementById('modal-edit-co-req-history');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+  }
 
   ngOnDestroy() {
     this.subscriptionMode.unsubscribe();

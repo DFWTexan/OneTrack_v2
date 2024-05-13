@@ -30,7 +30,7 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
     dateOfBirth: new FormControl(''),
     licenseLevel: new FormControl(''),
     licenseIncentive: new FormControl(''),
-    isLicenseincentiveSecondChance: new FormControl(''),
+    secondChance: new FormControl(''),
   });
 
   formSubmitted = false;
@@ -71,7 +71,7 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
             : null,
           licenseLevel: agentInfo.licenseLevel,
           licenseIncentive: agentInfo.licenseIncentive,
-          isLicenseincentiveSecondChance:
+          secondChance:
             agentInfo.isLicenseincentiveSecondChance,
         });
       }
@@ -122,6 +122,17 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
       this.form.setErrors({ invalid: true });
       return;
     }
+
+    this.agentService.updateAgent(agent).subscribe({
+      next: (response) => {
+        console.log(response);
+        // handle the response here
+      },
+      error: (error) => {
+        console.error(error);
+        // handle the error here
+      },
+    });
   }
 
   closeModal() {

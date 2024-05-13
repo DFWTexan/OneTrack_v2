@@ -102,6 +102,13 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
     );
   }
 
+  closeModal() {
+    const modalDiv = document.getElementById('modal-edit-emp-history');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+  }
+
   ngOnDestroy(): void {
     this.subscriptionMode.unsubscribe();
     this.subscriptionData.unsubscribe();

@@ -1179,6 +1179,84 @@ namespace OneTrack_v2.Services
 
             return result;
         }
+        public ReturnResult UpsertEmploymentHistItem([FromBody] InputEmploymentHistItem vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                if (vInput.EmploymentHistoryID == 0)
+                {
+                    // INSERT Employment History
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspAgentEmploymentHistInsert", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmployentID));
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeID", vInput.EmployeeID));
+                            cmd.Parameters.Add(new SqlParameter("@HireDate", vInput.HireDate));
+                            cmd.Parameters.Add(new SqlParameter("@RehireDate", vInput.RehireDate));
+                            cmd.Parameters.Add(new SqlParameter("@NotifiedTermDate", vInput.NotifiedTermDate));
+                            cmd.Parameters.Add(new SqlParameter("@HRTermDate", vInput.HrTermDate));
+                            cmd.Parameters.Add(new SqlParameter("@HRTermCode", vInput.HrTermCode));
+                            cmd.Parameters.Add(new SqlParameter("@ForCause", vInput.IsForCause));
+                            cmd.Parameters.Add(new SqlParameter("@BackgroundStatus", vInput.BackgroundCheckStatus));
+                            cmd.Parameters.Add(new SqlParameter("@BackgroundNote", vInput.BackGroundCheckNotes));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+                            cmd.Parameters.Add(new SqlParameter("@IsCurrent", vInput.IsCurrent));
+                            
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                else 
+                {
+                    // UPDATE Employment History
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspAgentEmploymentHistUpdate", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmployentID));
+                            cmd.Parameters.Add(new SqlParameter("@EmploymentHistoryID", vInput.EmploymentHistoryID));
+                            cmd.Parameters.Add(new SqlParameter("@HireDate", vInput.HireDate));
+                            cmd.Parameters.Add(new SqlParameter("@RehireDate", vInput.RehireDate));
+                            cmd.Parameters.Add(new SqlParameter("@NotifiedTermDate", vInput.NotifiedTermDate));
+                            cmd.Parameters.Add(new SqlParameter("@HRTermDate", vInput.HrTermDate));
+                            cmd.Parameters.Add(new SqlParameter("@HRTermCode", vInput.HrTermCode));
+                            cmd.Parameters.Add(new SqlParameter("@ForCause", vInput.IsForCause));
+                            cmd.Parameters.Add(new SqlParameter("@BackgroundStatus", vInput.BackgroundCheckStatus));
+                            cmd.Parameters.Add(new SqlParameter("@BackgroundNote", vInput.BackGroundCheckNotes));
+                            cmd.Parameters.Add(new SqlParameter("@IsCurrent", vInput.IsCurrent));
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeID", vInput.EmployeeID));
+                            cmd.Parameters.Add(new SqlParameter("@Email", DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@WorkPhone", DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeStatus", DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@CompanyID", DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@CERequired", DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                
+                result.Success = true;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;
+        }
         #endregion
 
         #region Private Methods

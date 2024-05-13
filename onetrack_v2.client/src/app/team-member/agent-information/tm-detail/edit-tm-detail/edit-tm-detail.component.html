@@ -97,7 +97,7 @@
     </div>
     <div class="col">
       <div class="mb-3">
-        <label class="form-label">
+        <label for="employeeSSN" class="form-label">
           Employee SSN:
           <input
             type="text"
@@ -112,7 +112,7 @@
   <div class="row">
     <div class="col">
       <div class="mb-3">
-        <label class="form-label">
+        <label for="licenseLevel" class="form-label">
           License Level:
           <select
             class="form-select select-size-small"
@@ -132,7 +132,7 @@
 
     <div class="col">
       <div class="mb-3">
-        <label class="form-label">
+        <label for="licenseIncentive" class="form-label">
           License Incentive:
           <select
             class="form-select select-size-small"
@@ -151,32 +151,21 @@
     </div>
     <div class="col">
       <div class="mb-3 mt-4">
-        <!-- <input
-            type="checkbox"
-            class="form-check-input input-size-small"
-            formControlName="isLicenseincentiveSecondChance"
-          /> -->
         <input
           class="form-check-input me-2 align-middle"
           type="checkbox"
-          id="isLicenseincentiveSecondChance"
-          formControlName="isLicenseincentiveSecondChance"
+          id="secondChance"
+          formControlName="secondChance"
         />
-        <label class="form-label"> Incentive Second Chance: </label>
+        <label for="secondChance" class="form-label"> Incentive Second Chance: </label>
       </div>
     </div>
   </div>
 
-  <!-- <div class="row">
-    <div class="col"></div>
-    <div class="col"></div>
-    <div class="col"></div>
-  </div> -->
-
   <div class="row">
     <div class="col">
       <div class="mb-3">
-        <label class="form-label">
+        <label for="address1" class="form-label">
           Address 1:
           <input
             type="text"
@@ -188,7 +177,7 @@
     </div>
     <div class="col">
       <div class="mb-3">
-        <label class="form-label">
+        <label for="address2" class="form-label">
           Address 2:
           <input
             type="text"

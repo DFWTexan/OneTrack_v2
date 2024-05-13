@@ -80,6 +80,13 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
     );
   }
 
+  closeModal() {
+    const modalDiv = document.getElementById('modal-edit-tran-history');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+  }
+
   ngOnDestroy(): void {
     this.subscriptionMode.unsubscribe();
     this.subscriptionData.unsubscribe();

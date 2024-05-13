@@ -75,10 +75,25 @@ export class AgentDataService {
     this.agentLicenseAppointments = [];
   }
 
+  updateAgent(agent: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'Agent/UpdateAgentDetails';
+
+    return this.http
+      .put<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, agent)
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
   addAgent(agent: any): Observable<any> {
     this.apiUrl = environment.apiUrl + 'Agent/InsertAgent';
-
-    console.log('EMFTEST (addAgent) - agent => \n', agent);
 
     return this.http
     .post<{
