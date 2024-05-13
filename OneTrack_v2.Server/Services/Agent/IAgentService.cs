@@ -23,5 +23,6 @@ namespace OneTrack_v2.Services
         public ReturnResult GetCoRequirementStatuses();
         public ReturnResult GetLicLevels();
         public ReturnResult GetLicIncentives();
+        public ReturnResult UpdateAgentDetails([FromBody] IputAgentDetail Input);
     }
 }

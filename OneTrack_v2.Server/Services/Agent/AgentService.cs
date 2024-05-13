@@ -1121,6 +1121,66 @@ namespace OneTrack_v2.Services
             return result;
         }
 
+        #region UPDATES
+        public ReturnResult UpdateAgentDetails([FromBody] IputAgentDetail vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspAgentDetailsUpdate", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@EmployeeSSN", vInput.EmployeeSSN));
+                        cmd.Parameters.Add(new SqlParameter("@EmployeeID", vInput.EmployeeID));
+                        cmd.Parameters.Add(new SqlParameter("@LastName", vInput.LastName));
+                        cmd.Parameters.Add(new SqlParameter("@FirstName", vInput.FirstName));
+                        cmd.Parameters.Add(new SqlParameter("@MiddleName", vInput.MiddleName));
+                        cmd.Parameters.Add(new SqlParameter("@SOEID", vInput.SOEID));
+                        cmd.Parameters.Add(new SqlParameter("@DateOfBirth", vInput.DateOfBirth)); // replace with your value
+                        cmd.Parameters.Add(new SqlParameter("@NationalProducerNumber", vInput.NationalProducerNumber)); // replace with your value
+                        cmd.Parameters.Add(new SqlParameter("@GEID", vInput.GEID));
+                        cmd.Parameters.Add(new SqlParameter("@Alias", vInput.Alias));
+                        cmd.Parameters.Add(new SqlParameter("@ExcludeFromRpts", vInput.ExcludeFromRpts)); // replace with your value
+                        cmd.Parameters.Add(new SqlParameter("@Address1", vInput.Address1));
+                        cmd.Parameters.Add(new SqlParameter("@Address2", vInput.Address2));
+                        cmd.Parameters.Add(new SqlParameter("@City", vInput.City));
+                        cmd.Parameters.Add(new SqlParameter("@State", vInput.State));
+                        cmd.Parameters.Add(new SqlParameter("@Zip", vInput.Zip));
+                        cmd.Parameters.Add(new SqlParameter("@Phone", vInput.Phone));
+                        cmd.Parameters.Add(new SqlParameter("@Fax", vInput.Fax));
+                        cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID)); // replace with your value
+                        cmd.Parameters.Add(new SqlParameter("@Email", vInput.Email));
+                        cmd.Parameters.Add(new SqlParameter("@WorkPhone", vInput.WorkPhone));
+                        cmd.Parameters.Add(new SqlParameter("@EmployeeStatus", vInput.EmployeeStatus));
+                        cmd.Parameters.Add(new SqlParameter("@CompanyID", vInput.CompanyID)); // replace with your value
+                        cmd.Parameters.Add(new SqlParameter("@CERequired", vInput.CERequired)); // replace with your value
+                        cmd.Parameters.Add(new SqlParameter("@LicenseLevel", vInput.LicenseLevel));
+                        cmd.Parameters.Add(new SqlParameter("@LicenseIncentive", vInput.LicenseIncentive));
+                        cmd.Parameters.Add(new SqlParameter("@SecondChance", vInput.SecondChance)); // replace with your value
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", "EMFTEST-TBD..."));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;
+        }
+        #endregion
+
         #region Private Methods
         private bool ExecuteAddressInsert(IputAgentInsert vInput, string? vCountry = null)
         {

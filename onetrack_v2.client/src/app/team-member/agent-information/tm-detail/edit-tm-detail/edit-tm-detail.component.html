@@ -121,7 +121,7 @@
           >
             <option
               *ngFor="let level of licenseLevels"
-              [value]="level.sortOrder"
+              [value]="level.licenseLevel"
             >
               {{ level.licenseLevel }}
             </option>
@@ -141,7 +141,7 @@
           >
             <option
               *ngFor="let incentive of licenseIncentives"
-              [value]="incentive.sortOrder"
+              [value]="incentive.licenseIncentive"
             >
               {{ incentive.licenseIncentive }}
             </option>
