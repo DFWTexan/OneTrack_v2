@@ -17,39 +17,48 @@
         </div>
       </div>
 
-      <div class="row bg-body p-3 rounded mt-4 ms-2">
-        <div class="col">
-          <p>
-            <strong>Job Title:</strong><br />
-            {{ agentInfo.jobTitle || "N/A" }}
-          </p>
-          <p>
-            <strong>Job Date:</strong><br />
-            {{ agentInfo.jobDate | date : "MM/dd/yyyy" }}
-          </p>
-          <div>
-            <strong>Diary:</strong>
+      <div class="row mt-4">
+        <div
+          class="d-flex bg-body p-3 ms-2"
+          style="
+            border-radius: 1rem;
+            padding: 1rem;
+            box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+          "
+        >
+          <div class="col">
+            <p>
+              <strong>Job Title:</strong><br />
+              {{ agentInfo.jobTitle || "N/A" }}
+            </p>
+            <p>
+              <strong>Job Date:</strong><br />
+              {{ agentInfo.jobDate | date : "MM/dd/yyyy" }}
+            </p>
             <div>
-              {{ agentInfo.diarySOEID }} -
-              {{ agentInfo.diaryEntryDate | date : "MMM dd yyyy  h:mm a" }}
-              <br />
-              {{ agentInfo.diaryNotes }}
+              <strong>Diary:</strong>
+              <div>
+                {{ agentInfo.diarySOEID }} -
+                {{ agentInfo.diaryEntryDate | date : "MMM dd yyyy  h:mm a" }}
+                <br />
+                {{ agentInfo.diaryNotes }}
+              </div>
             </div>
           </div>
-        </div>
-        <div class="col">
-          <p>
-            <strong>Team Member Status:</strong><br />
-            {{ agentInfo.employeeStatus || "N/A" }}
-          </p>
-          <p>
-            <strong>Requires Cont. Edu:</strong><br />
-            {{ agentInfo.ceRequired ? "Yes" : "No" }}
-          </p>
-          <p>
-            <strong>Exclude From Reports:</strong><br />
-            {{ agentInfo.excludeFromReports ? "Yes" : "No" }}
-          </p>
+          <div class="col">
+            <p>
+              <strong>Team Member Status:</strong><br />
+              {{ agentInfo.employeeStatus || "N/A" }}
+            </p>
+            <p>
+              <strong>Requires Cont. Edu:</strong><br />
+              {{ agentInfo.ceRequired ? "Yes" : "No" }}
+            </p>
+            <p>
+              <strong>Exclude From Reports:</strong><br />
+              {{ agentInfo.excludeFromReports ? "Yes" : "No" }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -69,9 +78,10 @@
           </button>
         </div>
         <div class="col d-flex justify-content-start">
-          <button class="btn btn-success" (click)="
-          modalService.open('modal-insert-incentive-license')
-        ">
+          <button
+            class="btn btn-success"
+            (click)="modalService.open('modal-insert-incentive-license')"
+          >
             <span style="font-size: larger"> Insert - Incentive License </span>
           </button>
         </div>
@@ -171,7 +181,9 @@
                 <table class="table">
                   <thead>
                     <tr style="background-color: whitesmoke">
-                      <th scope="col" *ngIf="appComService.isShowEditID">License ID</th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">
+                        License ID
+                      </th>
                       <th scope="col">Appt ID</th>
                       <th scope="col">Status</th>
                       <th scope="col">Company ID</th>
@@ -180,20 +192,41 @@
                       <th scope="col">Eff. Date</th>
                       <th scope="col">Exp. Date</th>
                       <th scope="col">Term Date</th>
-                      <th scope="col" class="text-center" style="width: 10rem">ACTION</th>
+                      <th scope="col" class="text-center" style="width: 10rem">
+                        ACTION
+                      </th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let appointment of license.licenseAppointments">
-                      <td *ngIf="appComService.isShowEditID">{{ appointment.licenseID }}</td>
+                      <td *ngIf="appComService.isShowEditID">
+                        {{ appointment.licenseID }}
+                      </td>
                       <td>{{ appointment.employeeAppointmentID }}</td>
                       <td>{{ appointment.appointmentStatus }}</td>
                       <td>{{ appointment.companyID }}</td>
                       <td>{{ appointment.companyAbv }}</td>
-                      <td>{{ appointment.carrierDate | date : "MM/dd/yyyy" }}</td>
-                      <td>{{ appointment.appointmentEffectiveDate | date : "MM/dd/yyyy" }}</td>
-                      <td>{{ appointment.appointmentExpireDate | date : "MM/dd/yyyy" }}</td>
-                      <td>{{ appointment.appointmentTerminationDate | date : "MM/dd/yyyy" }}</td>
+                      <td>
+                        {{ appointment.carrierDate | date : "MM/dd/yyyy" }}
+                      </td>
+                      <td>
+                        {{
+                          appointment.appointmentEffectiveDate
+                            | date : "MM/dd/yyyy"
+                        }}
+                      </td>
+                      <td>
+                        {{
+                          appointment.appointmentExpireDate
+                            | date : "MM/dd/yyyy"
+                        }}
+                      </td>
+                      <td>
+                        {{
+                          appointment.appointmentTerminationDate
+                            | date : "MM/dd/yyyy"
+                        }}
+                      </td>
                       <td>
                         <div class="d-flex justify-content-between mb-3 me-4">
                           <button
@@ -286,7 +319,8 @@
 <modal id="modal-edit-license-info">
   <div class="modal-header">
     <h1 class="modal-title">
-      <strong>{{ agentComService.modeLicenseMgmt }}</strong> - License Information
+      <strong>{{ agentComService.modeLicenseMgmt }}</strong> - License
+      Information
     </h1>
   </div>
   <div class="modal-body">

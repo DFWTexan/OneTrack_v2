@@ -36,7 +36,9 @@
           <table class="table">
             <thead>
               <tr style="background-color: whitesmoke">
-                <th scope="col" *ngIf="appComService.isShowEditID">History ID</th>
+                <th scope="col" *ngIf="appComService.isShowEditID">
+                  History ID
+                </th>
                 <th scope="col">Hire Date</th>
                 <th scope="col">Rehire Date</th>
                 <th scope="col">Notified Term Date</th>
@@ -46,12 +48,16 @@
                 <th scope="col">Background Check Status</th>
                 <th scope="col">Background Check Notes</th>
                 <th scope="col">Is Current</th>
-                <th scope="col" class="text-center" style="width: 10rem;">ACTION</th>
+                <th scope="col" class="text-center" style="width: 10rem">
+                  ACTION
+                </th>
               </tr>
             </thead>
             <tbody>
               <tr *ngFor="let emp of employmentHistory">
-                <td class="align-middle" *ngIf="appComService.isShowEditID">{{ emp.employmentHistoryID }}</td>
+                <td class="align-middle" *ngIf="appComService.isShowEditID">
+                  {{ emp.employmentHistoryID }}
+                </td>
                 <td class="align-middle">
                   {{ emp.hireDate | date : "MM/dd/yyyy" }}
                 </td>
@@ -69,7 +75,7 @@
                 <td class="align-middle">{{ emp.backgroundCheckStatus }}</td>
                 <td class="align-middle">{{ emp.backGroundCheckNotes }}</td>
                 <td class="align-middle">{{ emp.isCurrent ? "Yes" : "No" }}</td>
-                <td style="width: 10rem;">
+                <td style="width: 10rem">
                   <div
                     class="d-flex justify-content-between mb-3 me-4"
                     style="min-width: 10rem; max-width: 10rem"
@@ -141,12 +147,16 @@
               <th scope="col">Work St. Code</th>
               <th scope="col">Trans. Date</th>
               <th scope="col">Is Current</th>
-              <th scope="col" class="text-center" style="width: 10rem;">ACTION</th>
+              <th scope="col" class="text-center" style="width: 10rem">
+                ACTION
+              </th>
             </tr>
           </thead>
           <tbody>
             <tr *ngFor="let transfer of transferHistory">
-              <td class="align-middle" *ngIf="appComService.isShowEditID">{{ transfer.transferHistoryID }}</td>
+              <td class="align-middle" *ngIf="appComService.isShowEditID">
+                {{ transfer.transferHistoryID }}
+              </td>
               <td class="align-middle">
                 {{ transfer.branchCode }}
               </td>
@@ -162,7 +172,7 @@
               <td class="align-middle">
                 {{ transfer.isCurrent ? "Yes" : "NO" }}
               </td>
-              <td style="width: 10rem;">
+              <td style="width: 10rem">
                 <div
                   class="d-flex justify-content-between mb-3 me-4"
                   style="min-width: 10rem; max-width: 10rem"
@@ -224,11 +234,15 @@
         <table class="table">
           <thead>
             <tr style="background-color: whitesmoke">
-              <th scope="col" *ngIf="appComService.isShowEditID">Emp. Co. Req. ID</th>
+              <th scope="col" *ngIf="appComService.isShowEditID">
+                Emp. Co. Req. ID
+              </th>
               <th scope="col">Asset ID</th>
               <th scope="col">Status</th>
               <th scope="col">Comp. Date</th>
-              <th scope="col" class="text-center" style="width: 10rem;">ACTION</th>
+              <th scope="col" class="text-center" style="width: 10rem">
+                ACTION
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -237,7 +251,10 @@
                 {{ coReq.employmentCompanyRequirementID }}
               </td>
               <td class="align-middle">
-                {{ coReq.assetIdString }} - <span style="font-weight: 700; color: red;">TBD: DATA PROBLEM</span>
+                {{ coReq.assetIdString }} -
+                <span style="font-weight: 700; color: red"
+                  >TBD: DATA PROBLEM</span
+                >
               </td>
               <td class="align-middle">
                 {{ coReq.learningProgramStatus }}
@@ -245,7 +262,7 @@
               <td class="align-middle">
                 {{ coReq.learningProgramCompletionDate | date : "MM/dd/yyyy" }}
               </td>
-              <td style="width: 10rem;">
+              <td style="width: 10rem">
                 <div
                   class="d-flex justify-content-between mb-3 me-4"
                   style="min-width: 10rem; max-width: 10rem"
@@ -299,22 +316,24 @@
       </div>
     </div>
     <div
-        class="div d-flex justify-content-center mt-5"
-        style="font-size: larger; color: gray"
-        *ngIf="employmentJobTitleHistory.length === 0"
-      >
-        No records found
-      </div>
+      class="div d-flex justify-content-center mt-5"
+      style="font-size: larger; color: gray"
+      *ngIf="employmentJobTitleHistory.length === 0"
+    >
+      No records found
+    </div>
     <div class="row" *ngIf="employmentJobTitleHistory.length !== 0">
       <table class="table">
         <thead>
           <tr style="background-color: whitesmoke">
-            <th scope="col" *ngIf="appComService.isShowEditID">Emp. JobTitle ID</th>
+            <th scope="col" *ngIf="appComService.isShowEditID">
+              Emp. JobTitle ID
+            </th>
             <th scope="col">JobTitle Date</th>
             <th scope="col">Job Title</th>
             <th scope="col">Job Code</th>
             <th scope="col">Is Current</th>
-            <th scope="col" class="text-center" style="width: 10rem;">ACTION</th>
+            <th scope="col" class="text-center" style="width: 10rem">ACTION</th>
           </tr>
         </thead>
         <tbody>
@@ -334,7 +353,7 @@
             <td class="align-middle">
               {{ jobTitle.isCurrent ? "Yes" : "No" }}
             </td>
-            <td  style="width: 10rem;">
+            <td style="width: 10rem">
               <div
                 class="d-flex justify-content-between mb-3 me-4"
                 style="min-width: 10rem; max-width: 10rem"
@@ -367,7 +386,8 @@
 <modal id="modal-edit-emp-history">
   <div class="modal-header">
     <h1 class="modal-title">
-      <strong>{{ agentComService.modeEmploymentHist }}</strong> - Employment History
+      <strong>{{ agentComService.modeEmploymentHist }}</strong> - Employment
+      History
     </h1>
     <!-- <button
           type="button"
@@ -378,7 +398,10 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-employment-hist></app-edit-employment-hist>
+        <app-edit-employment-hist
+          [employeeID]="agentDataService.agentInformation.employeeID"
+          [employmentID]="agentDataService.agentInformation.employmentID"
+        ></app-edit-employment-hist>
       </div>
     </div>
   </div>
@@ -409,8 +432,8 @@
 <modal id="modal-edit-co-req-history">
   <div class="modal-header">
     <h1 class="modal-title">
-      <strong>{{ agentComService.modeCompanyRequirementsHist }}</strong> - Company Requirement
-      History
+      <strong>{{ agentComService.modeCompanyRequirementsHist }}</strong> -
+      Company Requirement History
     </h1>
     <!-- <button
           type="button"
@@ -431,7 +454,8 @@
 <modal id="modal-edit-jobTitle-history">
   <div class="modal-header">
     <h1 class="modal-title">
-      <strong>{{ agentComService.modeEmploymentJobTitleHist }}</strong> - Job Title History
+      <strong>{{ agentComService.modeEmploymentJobTitleHist }}</strong> - Job
+      Title History
     </h1>
     <!-- <button
           type="button"

@@ -2,7 +2,7 @@
 {
     public class InputEmploymentHistItem
     {
-        public int? EmployentID { get; set; }
+        public int? EmploymentID { get; set; }
         public int? EmployeeID { get; set; }
         public int? EmploymentHistoryID { get; set; }
         public DateTime? HireDate { get; set; }

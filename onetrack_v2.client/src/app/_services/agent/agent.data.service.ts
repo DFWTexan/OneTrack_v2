@@ -73,41 +73,7 @@ export class AgentDataService {
     private agentComService: AgentComService
   ) {
     this.agentLicenseAppointments = [];
-  }
-
-  updateAgent(agent: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/UpdateAgentDetails';
-
-    return this.http
-      .put<{
-        success: boolean;
-        statusCode: number;
-        objData: any;
-        errMessage: string;
-      }>(this.apiUrl, agent)
-      .pipe(
-        map((response) => {
-          return response;
-        })
-      );
-  }
-
-  addAgent(agent: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/InsertAgent';
-
-    return this.http
-    .post<{
-      success: boolean;
-      statusCode: number;
-      objData: any;
-      errMessage: string;
-    }>(this.apiUrl, agent)
-    .pipe(
-      map((response) => {
-        return response;
-      })
-    );
-  }
+  } 
 
   fetchAgentInformation(employeeID: number): Observable<AgentInfo> {
     this.apiUrl = environment.apiUrl + 'Agent/GetAgentByEmployeeID/';
@@ -293,6 +259,60 @@ export class AgentDataService {
         })
       );
   }
+
+  // EDITS TO AGENT INFORMATION
+  addAgent(agent: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'Agent/InsertAgent';
+
+    return this.http
+    .post<{
+      success: boolean;
+      statusCode: number;
+      objData: any;
+      errMessage: string;
+    }>(this.apiUrl, agent)
+    .pipe(
+      map((response) => {
+        return response;
+      })
+    );
+  }
+
+  updateAgent(agent: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'Agent/UpdateAgentDetails';
+
+    return this.http
+      .put<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, agent)
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
+  upsertEmploymentHistItem(employmentHistItem: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'Agent/UpsertEmploymentHistItem';
+
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, employmentHistItem)
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
+  
 
   // LICENSE APPOINTMENT MANAGEMENT
   storeLicenseAppointment(appointment: LicenseAppointment) {

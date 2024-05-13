@@ -1193,7 +1193,7 @@ namespace OneTrack_v2.Services
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
 
-                            cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmployentID));
+                            cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
                             cmd.Parameters.Add(new SqlParameter("@EmployeeID", vInput.EmployeeID));
                             cmd.Parameters.Add(new SqlParameter("@HireDate", vInput.HireDate));
                             cmd.Parameters.Add(new SqlParameter("@RehireDate", vInput.RehireDate));
@@ -1201,8 +1201,8 @@ namespace OneTrack_v2.Services
                             cmd.Parameters.Add(new SqlParameter("@HRTermDate", vInput.HrTermDate));
                             cmd.Parameters.Add(new SqlParameter("@HRTermCode", vInput.HrTermCode));
                             cmd.Parameters.Add(new SqlParameter("@ForCause", vInput.IsForCause));
-                            cmd.Parameters.Add(new SqlParameter("@BackgroundStatus", vInput.BackgroundCheckStatus));
-                            cmd.Parameters.Add(new SqlParameter("@BackgroundNote", vInput.BackGroundCheckNotes));
+                            cmd.Parameters.Add(new SqlParameter("@BackgroundCheckStatus", vInput.BackgroundCheckStatus));
+                            cmd.Parameters.Add(new SqlParameter("@BackgroundCheckNote", vInput.BackGroundCheckNotes));
                             cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
                             cmd.Parameters.Add(new SqlParameter("@IsCurrent", vInput.IsCurrent));
                             
@@ -1220,7 +1220,7 @@ namespace OneTrack_v2.Services
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
 
-                            cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmployentID));
+                            cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
                             cmd.Parameters.Add(new SqlParameter("@EmploymentHistoryID", vInput.EmploymentHistoryID));
                             cmd.Parameters.Add(new SqlParameter("@HireDate", vInput.HireDate));
                             cmd.Parameters.Add(new SqlParameter("@RehireDate", vInput.RehireDate));
