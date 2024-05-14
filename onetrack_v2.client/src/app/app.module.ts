@@ -24,7 +24,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SideMenuNavComponent } from './_components';
+// import { SideMenuNavComponent } from './_components';
 import { ModalComponent } from './_components';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -103,12 +103,13 @@ import { AddIndexerComponent } from './team-member/search-team-member/add-indexe
 import { PaginationComponent } from './_components/pagination/pagination.component';
 import { InsertIncentiveLicenseComponent } from './team-member/agent-information/tm-information/insert-incentive-license/insert-incentive-license.component';
 import { LoginComponent } from './_components/login/login.component';
+// import { ModalConfirmationComponent } from './_components/modal-confirmation/modal-confirmation.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ModalComponent,
-    SideMenuNavComponent,
+    // SideMenuNavComponent,
     DashboardComponent,
     CompanyEditComponent,
     CompanyRequirementsComponent,
@@ -184,6 +185,7 @@ import { LoginComponent } from './_components/login/login.component';
     PaginationComponent,
     InsertIncentiveLicenseComponent,
     LoginComponent,
+    // ModalConfirmationComponent,
   ],
   imports: [
     BrowserModule,

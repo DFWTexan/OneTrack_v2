@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
+
+import { AppComService } from './_services';
 
 // interface WeatherForecast {
 //   date: string;
@@ -12,8 +13,9 @@ import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-root',
-  // templateUrl: './app.component.html',
-  template: `<app-side-menu-nav></app-side-menu-nav>`
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+  // template: `<app-side-menu-nav></app-side-menu-nav>`
 })
 export class AppComponent implements OnInit {
   // public forecasts: WeatherForecast[] = [];
@@ -24,33 +26,9 @@ export class AppComponent implements OnInit {
   // isMobile = true;
   // isCollapsed = true;
 
-  constructor(private http: HttpClient) {}
+  constructor(public appComService: AppComService) {}
 
-  ngOnInit() {
-    // this.getForecasts();
-    // this.observer.observe(['(max-width: 800px)']).subscribe((screenSize) => {
-    //   if (screenSize.matches) {
-    //     this.isMobile = true;
-    //   } else {
-    //     this.isMobile = false;
-    //   }
-    // });
-  }
-
-  // getForecasts() {
-  //   this.http.get<WeatherForecast[]>('/weatherforecast').subscribe(
-  //     (result) => {
-  //       this.forecasts = result;
-  //     },
-  //     (error) => {
-  //       console.error(error);
-  //     }
-  //   );
-  // }
-  // toggleMenu() {
-  //   this.sidenav.open(); // On desktop/tablet, the menu can never be fully closed
-  //   this.isCollapsed = !this.isCollapsed;
-  // }
+  ngOnInit() {}
 
   title = 'onetrack_v2';
 }
