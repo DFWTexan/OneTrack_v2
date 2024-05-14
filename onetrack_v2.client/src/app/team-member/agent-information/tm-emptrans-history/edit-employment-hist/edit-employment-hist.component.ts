@@ -125,16 +125,8 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
       empHistItem.EmploymentHistoryID = 0;
     }
 
-    console.log(
-      'EMFTEST (app-edit-employment-hist: onSubmit) - empHistItem => \n',
-      empHistItem
-    );
-
     this.agentService.upsertEmploymentHistItem(empHistItem).subscribe({
       next: (response) => {
-
-        console.log('EMFTEST (app-edit-employment-hist) - response: ', response);
-
         this.closeModal();
       },
       error: (error) => {

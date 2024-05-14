@@ -101,6 +101,40 @@
         </div>
         <mat-divider></mat-divider>
       </mat-expansion-panel>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title style="font-size: large">
+            Audit Log
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div
+          class="row align-middle mb-2"
+          style="
+            background-color: aliceblue;
+            padding: 1rem;
+            border-radius: 1rem;
+            border-color: lightgray;
+            border-width: 1px;
+            border-style: solid;
+          "
+        >
+          <div class="col-md-3">
+            <label for="importDate">Start Date:</label><br />
+            <select
+              class="form-select select-size-med-small"
+              name="importDate"
+              id="importDate"
+              (change)="changeImportDate($event)"
+              [(ngModel)]="workListName"
+            >
+              <option *ngFor="let item of worklistNames" [value]="item">
+                {{ item }}
+              </option>
+            </select>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+      </mat-expansion-panel>
     </mat-accordion>
   </div>
 </div>
