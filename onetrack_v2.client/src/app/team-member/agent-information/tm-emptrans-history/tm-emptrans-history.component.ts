@@ -1,5 +1,6 @@
 import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
 import {
   AgentInfo,
@@ -17,6 +18,7 @@ import {
   ModalService,
   UserAcctInfoDataService,
 } from '../../../_services';
+import { ConfirmDialogComponent } from '../../../_components';
 
 @Component({
   selector: 'app-tm-emptrans-history',
@@ -26,6 +28,8 @@ import {
 @Injectable()
 export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
   agentInfo: AgentInfo = {} as AgentInfo;
+  eventAction: string = '';
+  vObject: any = {};
   subscribeAgentInfo: Subscription;
 
   employmentHistory: EmploymentHistory[] = [];
@@ -38,7 +42,8 @@ export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
     public agentComService: AgentComService,
     protected modalService: ModalService,
     public appComService: AppComService,
-    public userInfoDataService: UserAcctInfoDataService
+    public userInfoDataService: UserAcctInfoDataService,
+    public dialog: MatDialog
   ) {
     this.subscribeAgentInfo = new Subscription();
   }
@@ -62,6 +67,33 @@ export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
   //   this.companyRequirementsHistory = this.agentInfo.compayRequirementsHistory;
   //   this.employmentJobTitleHistory = this.agentInfo.employmentJobTitleHistory;
   // }
+
+  openConfirmDialog(eventAction: string, msg: string, vObject: any): void {
+    this.eventAction = eventAction;
+    this.vObject = vObject;
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+        title: 'Confirm Action',
+        message: 'You are about to DELETE ' + msg,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      // console.log('The dialog was closed');
+      // console.log('Confirmation result:', result);
+      if (result) {
+        switch (this.eventAction) {
+          case 'deleteEmploymentHistory':
+            this.deleteEmploymentHistory(vObject);
+            break;
+          default:
+            break;
+        }
+        this.deleteEmploymentHistory(vObject);
+      }
+    });
+  }
 
   deleteEmploymentHistory(empItem: any): void {
     this.agentDataService

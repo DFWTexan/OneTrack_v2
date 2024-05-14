@@ -18,6 +18,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { RouterModule, Routes } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
@@ -103,6 +104,7 @@ import { AddIndexerComponent } from './team-member/search-team-member/add-indexe
 import { PaginationComponent } from './_components/pagination/pagination.component';
 import { InsertIncentiveLicenseComponent } from './team-member/agent-information/tm-information/insert-incentive-license/insert-incentive-license.component';
 import { LoginComponent } from './_components/login/login.component';
+import { ConfirmDialogComponent } from './_components/confirm-dialog/confirm-dialog.component';
 // import { ModalConfirmationComponent } from './_components/modal-confirmation/modal-confirmation.component';
 
 @NgModule({
@@ -185,6 +187,7 @@ import { LoginComponent } from './_components/login/login.component';
     PaginationComponent,
     InsertIncentiveLicenseComponent,
     LoginComponent,
+    ConfirmDialogComponent,
     // ModalConfirmationComponent,
   ],
   imports: [
@@ -209,6 +212,7 @@ import { LoginComponent } from './_components/login/login.component';
     MatDatepickerModule,
     MatInputModule,
     MatNativeDateModule,
+    MatDialogModule,
     RouterModule.forRoot([])
   ],
   providers: [provideAnimationsAsync(), ConstantsDataService],
