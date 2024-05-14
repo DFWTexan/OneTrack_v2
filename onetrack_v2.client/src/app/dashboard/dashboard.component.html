@@ -119,18 +119,13 @@
           "
         >
           <div class="col-md-3">
-            <label for="importDate">Start Date:</label><br />
-            <select
-              class="form-select select-size-med-small"
-              name="importDate"
-              id="importDate"
-              (change)="changeImportDate($event)"
-              [(ngModel)]="workListName"
-            >
-              <option *ngFor="let item of worklistNames" [value]="item">
-                {{ item }}
-              </option>
-            </select>
+            <label for="startDate">Start Date:</label><br />
+            <input
+              class="form-control input-size-small"
+              type="date"
+              name="startDate"
+              [(ngModel)]="date"
+            />
           </div>
         </div>
         <mat-divider></mat-divider>

@@ -6,13 +6,6 @@ import { AppComService } from './_services';
 // import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from './_components/confirm-dialog/confirm-dialog.component';
 
-// interface WeatherForecast {
-//   date: string;
-//   temperatureC: number;
-//   temperatureF: number;
-//   summary: string;
-// }
-
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
