@@ -70,7 +70,7 @@
           </mat-panel-title>
           <mat-panel-description>
             <!-- Currently I am {{panelOpenState ? 'open' : 'closed'}} -->
-            ## records imported on ##/##/####
+            ## records last imported on ##/##/####
           </mat-panel-description>
         </mat-expansion-panel-header>
         <div
@@ -111,7 +111,7 @@
           class="row align-middle mb-2"
           style="
             background-color: aliceblue;
-            padding: 1rem;
+            padding: 0.5rem;
             border-radius: 1rem;
             border-color: lightgray;
             border-width: 1px;
@@ -124,11 +124,107 @@
               class="form-control input-size-small"
               type="date"
               name="startDate"
-              [(ngModel)]="date"
+              [value]="startDate"
+              [(ngModel)]="startDate"
+              (change)="changesStartDate($event)"
             />
+          </div>
+          <div class="col-md-3">
+            <label for="endDate">End Date:</label><br />
+            <input
+              class="form-control input-size-small"
+              type="date"
+              name="endDate"
+              [value]="endDate"
+              [(ngModel)]="endDate"
+              (change)="changesEndDate($event)"
+            />
+          </div>
+          <div class="col-md-3">
+            <label for="modifiedBy">Modified By:</label><br />
+            <select
+              class="form-select select-size-med-small"
+              name="modifiedBy"
+              id="modifiedBy"
+              (change)="changeModifiedBy($event)"
+              [(ngModel)]="modifiedBySelected"
+            >
+              <option *ngFor="let tech of modifiedBy" [value]="tech">
+                {{ tech }}
+              </option>
+            </select>
           </div>
         </div>
         <mat-divider></mat-divider>
+        <div
+          class="div d-flex justify-content-center mt-5"
+          style="font-size: larger; color: gray"
+          *ngIf="auditLogData.length === 0"
+        >
+          No records found
+        </div>
+        <div class="row" *ngIf="auditLogData.length !== 0">
+          <div class="col mt-3">
+            <table class="table">
+              <thead>
+                <tr style="background-color: whitesmoke">
+                  <th scope="col">MOdify Date</th>
+                  <th scope="col">Modified By</th>
+                  <th scope="col" style="width: 275px;">Audit Field Name</th>
+                  <th scope="col">Audit Action</th>
+                  <th scope="col">Before Value</th>
+                  <th scope="col">After Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let log of auditLogData">
+                  <td class="align-middle">
+                    {{ log.modifyDate | date : "MM/dd/yyyy" }}
+                  </td>
+                  <td class="align-middle">
+                    {{ log.modifiedBy }}
+                  </td>
+                  <td class="align-middle wrap-text" style="width: 275px;">
+                    {{ log.auditFieldName | firstThree }}
+                  </td>
+                  <td class="align-middle">
+                    {{ log.auditAction }}
+                  </td>
+                  <td class="align-middle">
+                    {{ log.auditValueBefore }}
+                  </td>
+                  <td class="align-middle">{{ log.auditValueAfter }}</td>
+
+                  <!-- <td style="width: 10rem">
+                  <div
+                    class="d-flex justify-content-between mb-3 me-4"
+                    style="min-width: 10rem; max-width: 10rem"
+                  >
+                    <button
+                      class="icon-edit-delete-button"
+                      (click)="
+                        agentDataService.storeEmploymentTransferHistory(
+                          'EDIT',
+                          emp
+                        );
+                        modalService.open('modal-edit-emp-history')
+                      "
+                    >
+                      <span class="material-symbols-outlined"> edit </span>
+                    </button>
+                    <button
+                      class="icon-edit-delete-button"
+                      (click)="openConfirmDialog('deleteEmploymentHistory', 'Employment History Item', emp)"
+                    >
+                      <span class="material-symbols-outlined"> delete </span>
+                    </button>
+                  </div>
+                </td> -->
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
       </mat-expansion-panel>
     </mat-accordion>
   </div>

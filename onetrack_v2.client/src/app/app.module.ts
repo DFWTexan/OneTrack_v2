@@ -68,6 +68,7 @@ import { EditLicenseInfoComponent } from './team-member/agent-information/tm-lic
 import { EditTmDetailComponent } from './team-member/agent-information/tm-detail/edit-tm-detail/edit-tm-detail.component';
 import { PhoneFormatPipe } from './_shared/';
 import { SsnFormatPipe } from './_shared/';
+import { FirstThreePipe } from './_shared/';
 import { EditEmploymentHistComponent } from './team-member/agent-information/tm-emptrans-history/edit-employment-hist/edit-employment-hist.component';
 import { EditTransferHistComponent } from './team-member/agent-information/tm-emptrans-history/edit-transfer-hist/edit-transfer-hist.component';
 import { EditCorequirementHistComponent } from './team-member/agent-information/tm-emptrans-history/edit-corequirement-hist/edit-corequirement-hist.component';
@@ -151,6 +152,7 @@ import { ConfirmDialogComponent } from './_components/confirm-dialog/confirm-dia
     EditTmDetailComponent,
     PhoneFormatPipe,
     SsnFormatPipe,
+    FirstThreePipe,
     EditEmploymentHistComponent,
     EditTransferHistComponent,
     EditCorequirementHistComponent,

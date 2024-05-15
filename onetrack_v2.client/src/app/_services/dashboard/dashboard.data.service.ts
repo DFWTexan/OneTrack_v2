@@ -32,4 +32,46 @@ export class DashboardDataService {
         })
       );
   }
+
+  fetchAuditModifiedBy(): Observable<string[]> {  
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'GetAuditModifiedBy')
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  fetchAuditLog(startDate: string = new Date().toISOString(), endDate: string, modifiedBy: string | null) {
+    const queryParams = `?startDate=${startDate}&endDate=${endDate}&modifiedBy=${modifiedBy ? modifiedBy : ''}`;
+
+console.log('EMFTEST (dashboard.data.service: fetchAuditLog) - queryParams => \n', queryParams);
+
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(`${this.apiUrl}GetAuditLog${queryParams}`)
+      .pipe(
+        map((response) => {
+          if (response.success && response.objData) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
 }

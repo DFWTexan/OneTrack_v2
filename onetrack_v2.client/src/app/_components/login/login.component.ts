@@ -20,8 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy{
   ngOnInit(): void {
     this.subscribeLoginMsgChanged = this.appComService.loginErrorMsgChanged.subscribe(
       (errMessage) => {
-          console.log('EMFTEST - (app-login): errMsg - ', errMessage);
-        
+          // console.log('EMFTEST - (app-login): errMsg - ', errMessage);
       }
     );
   }
@@ -33,7 +32,7 @@ export class LoginComponent implements OnInit, OnDestroy{
         form.value.loginInfo.password
       )
       .subscribe((response) => {
-        console.log('EMFTEST - (app-login): response => \n', response);
+        // console.log('EMFTEST - (app-login): response => \n', response);
       });
   }
 

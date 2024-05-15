@@ -29,13 +29,20 @@ export class DashboardComponent implements OnInit, OnDestroy {
   selectedLicenseTech = 'T9999999';
   selectedDate: string | null;
 
+  modifiedBy: string[] = ['Loading...'];
+  modifiedBySelected: string = 'Select Tech';
+  startDate: string = new Date().toISOString().split('T')[0];
+  endDate: string = new Date(new Date().setDate(new Date().getDate() + 1))
+    .toISOString()
+    .split('T')[0];
+  auditLogData: any[] = [];
+
   constructor(
     public appComService: AppComService,
     public workListDataService: WorkListDataService,
     public miscDataService: MiscDataService,
     public dashboardDataService: DashboardDataService
   ) {
-    // this.selectedLicenseTech = null;
     this.selectedDate = null;
   }
 
@@ -44,17 +51,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.worklistNames = worklistNames;
       this.selectedWorkListName = worklistNames[0];
     });
-    // this.miscDataService.fetchWorkListNames().subscribe((worklistNames) => {
-    //   this.worklistNames = worklistNames;
-    //   this.selectedWorkListName = worklistNames[0];
-    // });
-    // this.miscDataService.fetchLicenseTechs().subscribe((licenseTechs) => {
-    //   this.licenseTechs = licenseTechs;
-    //   this.selectedLicenseTech = licenseTechs[0].soeid;
-    // });
-    // this.fetchWorkListData();
+    this.dashboardDataService.fetchAuditModifiedBy().subscribe((modifiedBy) => {
+      this.modifiedBy = ['Select Tech', ...modifiedBy];
+    });
+    this.dashboardDataService
+      .fetchAuditLog(this.startDate, this.endDate, null)
+      .subscribe((auditLogData) => {
+        console.log(
+          'EMFTEST (app-dashboard: ngOnInit) - auditLogData',
+          auditLogData
+        );
+
+        this.auditLogData = auditLogData;
+      });
   }
 
+  // WORKLIST
   fetchWorkListData(): void {
     this.workListDataService
       .fetchWorkListData(
@@ -81,5 +93,57 @@ export class DashboardComponent implements OnInit, OnDestroy {
     this.fetchWorkListData();
   }
 
+  // ADBANKER
+
+  // AUDIT LOG
+  changesStartDate(event: any) {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    this.startDate = value;
+
+console.log('EMFTEST (dashboard: changesStartDate) - startDate => \n', this.startDate);
+
+    this.dashboardDataService
+      .fetchAuditLog(
+        this.startDate,
+        this.endDate,
+        this.modifiedBySelected == 'Select Tech'
+          ? null
+          : this.modifiedBySelected
+      )
+      .subscribe((auditLogData) => {
+        this.auditLogData = auditLogData;
+      });
+  }
+  changesEndDate(event: any) {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    this.endDate = value;
+    this.dashboardDataService
+      .fetchAuditLog(
+        this.startDate,
+        this.endDate,
+        this.modifiedBySelected == 'Select Tech'
+          ? null
+          : this.modifiedBySelected
+      )
+      .subscribe((auditLogData) => {
+        this.auditLogData = auditLogData;
+      });
+  }
+  changeModifiedBy(event: any) {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    this.modifiedBySelected = value;
+    this.dashboardDataService
+      .fetchAuditLog(
+        this.startDate,
+        this.endDate,
+        value == 'Select Tech' ? null : value
+      )
+      .subscribe((auditLogData) => {
+        this.auditLogData = auditLogData;
+      });
+  }
   ngOnDestroy(): void {}
 }

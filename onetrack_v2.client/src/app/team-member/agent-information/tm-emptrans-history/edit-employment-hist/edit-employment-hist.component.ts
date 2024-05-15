@@ -24,6 +24,7 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
   backgroundStatuses: Array<{ lkpValue: string }> = [];
   subscriptionMode: Subscription = new Subscription();
   subscriptionData: Subscription = new Subscription();
+  subscriptionUserinfo: Subscription = new Subscription();
 
   constructor(
     private miscDataService: MiscDataService,
@@ -110,6 +111,15 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
               backgroundCheckStatus: 'Pending',
               isCurrent: true,
             });
+          }
+        }
+      );
+
+    this.subscriptionUserinfo =
+      this.userAcctInfoDataService.userAcctInfoChanged.subscribe(
+        (userAcctInfo) => {
+          if (userAcctInfo.soeid) {
+            this.userAcctInfoDataService.userAcctInfo = userAcctInfo;
           }
         }
       );

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using OneTrack_v2.DbData.Models;
+﻿using Microsoft.AspNetCore.Mvc;
 using OneTrack_v2.Services;
 
 namespace OneTrack_v2.Controllers
@@ -112,5 +110,6 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
     }
 }

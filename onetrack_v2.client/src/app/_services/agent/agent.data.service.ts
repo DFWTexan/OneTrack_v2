@@ -73,7 +73,7 @@ export class AgentDataService {
     private agentComService: AgentComService
   ) {
     this.agentLicenseAppointments = [];
-  } 
+  }
 
   fetchAgentInformation(employeeID: number): Observable<AgentInfo> {
     this.apiUrl = environment.apiUrl + 'Agent/GetAgentByEmployeeID/';
@@ -225,7 +225,7 @@ export class AgentDataService {
       .get<{
         success: boolean;
         statusCode: number;
-        objData: Array<{ licenseLevel: string, sortOrder: number }>;
+        objData: Array<{ licenseLevel: string; sortOrder: number }>;
         errMessage: string;
       }>(this.apiUrl)
       .pipe(
@@ -246,7 +246,7 @@ export class AgentDataService {
       .get<{
         success: boolean;
         statusCode: number;
-        objData: Array<{ licenseIncentive: string, sortOrder: number }>;
+        objData: Array<{ licenseIncentive: string; sortOrder: number }>;
         errMessage: string;
       }>(this.apiUrl)
       .pipe(
@@ -265,17 +265,17 @@ export class AgentDataService {
     this.apiUrl = environment.apiUrl + 'Agent/InsertAgent';
 
     return this.http
-    .post<{
-      success: boolean;
-      statusCode: number;
-      objData: any;
-      errMessage: string;
-    }>(this.apiUrl, agent)
-    .pipe(
-      map((response) => {
-        return response;
-      })
-    );
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, agent)
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
   }
 
   updateAgent(agent: any): Observable<any> {
@@ -297,7 +297,7 @@ export class AgentDataService {
 
   upsertEmploymentHistItem(employmentHistItem: any): Observable<any> {
     this.apiUrl = environment.apiUrl + 'Agent/UpsertEmploymentHistItem';
-  
+
     return this.http
       .post<{
         success: boolean;
@@ -346,7 +346,7 @@ export class AgentDataService {
         })
       );
   }
-  
+
   refreshAgentInfo(agentInfo: AgentInfo) {
     this.agentInfoChanged.next(agentInfo);
   }

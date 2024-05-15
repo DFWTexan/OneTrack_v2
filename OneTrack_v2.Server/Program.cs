@@ -20,6 +20,7 @@ builder.Services.AddScoped<IMiscService, MiscService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IUtilityHelpService, UtilityHelpService>();
 builder.Services.AddScoped<IWorklistService, WorklistService>();
+builder.Services.AddScoped<IDashboardService, DashboardService>();
 
 builder.Services.AddControllers();
 

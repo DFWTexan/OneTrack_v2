@@ -56,6 +56,7 @@ export class UserAcctInfoDataService {
   }
 
   updateUserAcctInfo(userAcctInfo: UserAcctInfo) {
+    this.userAcctInfo = userAcctInfo;
     this.userAcctInfoChanged.next(userAcctInfo);
   }
 }

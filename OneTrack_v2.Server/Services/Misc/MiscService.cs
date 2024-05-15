@@ -2,6 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using OneTrack_v2.DataModel;
 using OneTrack_v2.DbData;
+using OneTrack_v2.DbData.Models;
+using System.Linq.Expressions;
 
 namespace OneTrack_v2.Services
 {
@@ -9,7 +11,7 @@ namespace OneTrack_v2.Services
     {
         private readonly AppDataContext _db;
 
-        public MiscService(AppDataContext db) { _db = db;}
+        public MiscService(AppDataContext db) { _db = db; }
 
         public ReturnResult GetStateProvinces()
         {
@@ -27,7 +29,7 @@ namespace OneTrack_v2.Services
                 result.Success = true;
                 result.StatusCode = 200;
                 result.ObjData = stateProvincses;
-                
+
             }
             catch (Exception ex)
             {
@@ -38,7 +40,7 @@ namespace OneTrack_v2.Services
             return result;
         }
         public ReturnResult GetBranches()
-        {             
+        {
             var result = new ReturnResult();
             try
             {
@@ -72,7 +74,7 @@ namespace OneTrack_v2.Services
                 result.StatusCode = 200;
 
             }
-                       catch (Exception ex)
+            catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
@@ -258,7 +260,7 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                
+
             }
 
             return result;

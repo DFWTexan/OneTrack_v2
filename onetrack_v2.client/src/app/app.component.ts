@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (!environment.production) {
+    if (environment.isDevLogEnabled) {
       this.appComService.updateIsLoggedIn(true);
       this.userInfoService.updateUserAcctInfo({
         displayName: 'Erish Faggett',
