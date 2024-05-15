@@ -54,4 +54,8 @@ export class UserAcctInfoDataService {
         })
       );
   }
+
+  updateUserAcctInfo(userAcctInfo: UserAcctInfo) {
+    this.userAcctInfoChanged.next(userAcctInfo);
+  }
 }
