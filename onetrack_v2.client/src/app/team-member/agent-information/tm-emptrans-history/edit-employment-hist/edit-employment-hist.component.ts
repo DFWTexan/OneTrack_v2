@@ -161,9 +161,29 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
   }
 
   closeModal() {
-    const modalDiv = document.getElementById('modal-edit-emp-history');
-    if (modalDiv != null) {
-      modalDiv.style.display = 'none';
+    // const modalDiv = document.getElementById('modal-edit-emp-history');
+    // if (modalDiv != null) {
+    //   modalDiv.style.display = 'none';
+    // }
+    if (this.employmentHistoryForm.dirty) {
+      if (
+        confirm('You have unsaved changes. Are you sure you want to close?')
+      ) {
+        const modalDiv = document.getElementById('modal-edit-emp-history');
+        if (modalDiv != null) {
+          modalDiv.style.display = 'none';
+        }
+        this.employmentHistoryForm.reset();
+        this.employmentHistoryForm.patchValue({
+          backgroundCheckStatus: 'Pending',
+          isCurrent: true,
+        });
+      }
+    } else {
+      const modalDiv = document.getElementById('modal-edit-emp-history');
+      if (modalDiv != null) {
+        modalDiv.style.display = 'none';
+      }
     }
   }
 

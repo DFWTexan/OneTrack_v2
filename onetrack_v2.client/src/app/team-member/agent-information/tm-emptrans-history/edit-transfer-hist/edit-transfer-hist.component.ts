@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
+import { Component, Injectable, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
@@ -9,6 +9,7 @@ import {
   AgentDataService,
   AppComService,
   ConstantsDataService,
+  UserAcctInfoDataService,
 } from '../../../../_services';
 
 @Component({
@@ -19,6 +20,9 @@ import {
 @Injectable()
 export class EditTransferHistComponent implements OnInit, OnDestroy {
   transferHistoryForm!: FormGroup;
+  @Input() employmentID: number = 0;
+  @Input() employeeID: number = 0;
+  transferHistoryID: number = 0;
   branchCodes: Array<{ branchCode: string }> = [];
   states: any[] = [];
   subscriptionMode: Subscription = new Subscription();
@@ -28,7 +32,8 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
     private conService: ConstantsDataService,
     public agentDataService: AgentDataService,
     public agentComService: AgentComService,
-    public appComService: AppComService
+    public appComService: AppComService,
+    private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {
@@ -38,7 +43,6 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
       workStateAbv: new FormControl(null),
       resStateAbv: new FormControl(null),
       transferDate: new FormControl(null),
-      state: new FormControl(null),
       isCurrent: new FormControl(null),
     });
     this.states = ['Select', ...this.conService.getStates()];
@@ -52,17 +56,19 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
           this.subscriptionData =
             this.agentDataService.transferHistItemChanged.subscribe(
               (transferHistory: any) => {
+                this.transferHistoryID = transferHistory.transferHistoryID;
                 this.transferHistoryForm.patchValue({
                   transferHistoryID: transferHistory.transferHistoryID,
                   branchCode: transferHistory.branchCode,
                   workStateAbv: transferHistory.workStateAbv,
                   resStateAbv: transferHistory.resStateAbv,
-                  transferDate: transferHistory.transferDate ? formatDate(
-                    transferHistory.transferDate,
-                    'yyyy-MM-dd',
-                    'en-US'
-                  ) : null,
-                  state: transferHistory.state,
+                  transferDate: transferHistory.transferDate
+                    ? formatDate(
+                        transferHistory.transferDate,
+                        'yyyy-MM-dd',
+                        'en-US'
+                      )
+                    : null,
                   isCurrent: transferHistory.isCurrent,
                 });
               }
@@ -74,16 +80,44 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(
-      'EMFTest - (app-edit-employment-hist) onSubmit => \n',
-      this.transferHistoryForm.value
-    );
+    let transferHistItem = this.transferHistoryForm.value;
+    transferHistItem.employmentID = this.employmentID;
+    transferHistItem.employeeID = this.employeeID;
+    transferHistItem.transferHistoryID = this.transferHistoryID;
+    transferHistItem.UserSOEID =
+      this.userAcctInfoDataService.userAcctInfo.soeid;
+
+    if (this.agentComService.modeTransferHist === 'INSERT') {
+      transferHistItem.transferHistoryID = 0;
+    }
+
+    this.agentDataService.upsertTransferHistItem(transferHistItem).subscribe({
+      next: (response) => {
+        this.closeModal();
+      },
+      error: (error) => {
+        console.error(error);
+        // handle the error here
+      },
+    });
   }
 
   closeModal() {
-    const modalDiv = document.getElementById('modal-edit-tran-history');
-    if (modalDiv != null) {
-      modalDiv.style.display = 'none';
+    if (this.transferHistoryForm.dirty) {
+      if (
+        confirm('You have unsaved changes. Are you sure you want to close?')
+      ) {
+        const modalDiv = document.getElementById('modal-edit-tran-history');
+        if (modalDiv != null) {
+          modalDiv.style.display = 'none';
+        }
+        this.transferHistoryForm.reset();
+      }
+    } else {
+      const modalDiv = document.getElementById('modal-edit-tran-history');
+      if (modalDiv != null) {
+        modalDiv.style.display = 'none';
+      }
     }
   }
 

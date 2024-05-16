@@ -1,4 +1,4 @@
-import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
+import { Component, Injectable, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
@@ -13,6 +13,8 @@ import { AgentComService, AgentDataService, AppComService } from '../../../../_s
 @Injectable()
 export class EditCorequirementHistComponent implements OnInit, OnDestroy {
   coRequirementsForm!: FormGroup;
+  @Input() employmentID: number = 0;
+  @Input() employeeID: number = 0;
   coReqAssetIDs: Array<{ lkpValue: string }> = [];
   coReqStatuses: Array<{ lkpValue: string }> = [];
   subscriptionMode: Subscription = new Subscription;

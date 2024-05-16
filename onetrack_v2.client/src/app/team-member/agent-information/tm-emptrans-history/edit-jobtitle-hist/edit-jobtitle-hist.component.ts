@@ -1,4 +1,4 @@
-import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
+import { Component, Injectable, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
@@ -18,6 +18,8 @@ import {
 @Injectable()
 export class EditJobtitleHistComponent implements OnInit, OnDestroy {
   jobTitleForm!: FormGroup;
+  @Input() employmentID: number = 0;
+  @Input() employeeID: number = 0;
   jobTitleList: Array<{ jobTitleID: number; jobTitle: string }> = [];
   subscriptionMode: Subscription = new Subscription();
   subscriptionData: Subscription = new Subscription();

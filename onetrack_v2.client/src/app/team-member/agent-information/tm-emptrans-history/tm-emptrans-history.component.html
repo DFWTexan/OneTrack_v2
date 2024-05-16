@@ -96,7 +96,13 @@
                     </button>
                     <button
                       class="icon-edit-delete-button"
-                      (click)="openConfirmDialog('deleteEmploymentHistory', 'Employment History Item', emp)"
+                      (click)="
+                        openConfirmDialog(
+                          'deleteEmploymentHistory',
+                          'Employment History Item',
+                          emp
+                        )
+                      "
                     >
                       <span class="material-symbols-outlined"> delete </span>
                     </button>
@@ -191,7 +197,13 @@
                   >
                     <span class="material-symbols-outlined"> edit </span>
                   </button>
-                  <button class="icon-edit-delete-button">
+                  <button class="icon-edit-delete-button" (click)="
+                  openConfirmDialog(
+                    'deleteTransferHistory',
+                    'Transfer History Item',
+                    transfer
+                  )
+                ">
                     <span class="material-symbols-outlined"> delete </span>
                   </button>
                 </div>
@@ -427,7 +439,10 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-transfer-hist></app-edit-transfer-hist>
+        <app-edit-transfer-hist
+          [employeeID]="agentDataService.agentInformation.employeeID"
+          [employmentID]="agentDataService.agentInformation.employmentID"
+        ></app-edit-transfer-hist>
       </div>
     </div>
   </div>
@@ -449,7 +464,10 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-corequirement-hist></app-edit-corequirement-hist>
+        <app-edit-corequirement-hist
+          [employeeID]="agentDataService.agentInformation.employeeID"
+          [employmentID]="agentDataService.agentInformation.employmentID"
+        ></app-edit-corequirement-hist>
       </div>
     </div>
   </div>
@@ -471,7 +489,10 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-jobtitle-hist></app-edit-jobtitle-hist>
+        <app-edit-jobtitle-hist
+          [employeeID]="agentDataService.agentInformation.employeeID"
+          [employmentID]="agentDataService.agentInformation.employmentID"
+        ></app-edit-jobtitle-hist>
       </div>
     </div>
   </div>

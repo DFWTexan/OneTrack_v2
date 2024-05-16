@@ -27,7 +27,8 @@
         <select
           class="form-select select-size-small"
           type="text"
-          id="licenseStatus"
+          id="branchCode"
+          formControlName="branchCode"
           [value]="transferHistoryForm.get('branchCode')?.value"
         >
           <option *ngFor="let code of branchCodes" [value]="code.branchCode">
@@ -43,6 +44,7 @@
           class="form-select select-size-x-small"
           type="text"
           id="workStateAbv"
+          formControlName="workStateAbv"
           [value]="transferHistoryForm.get('workStateAbv')?.value"
         >
           <option *ngFor="let state of states" [value]="state">
@@ -57,6 +59,7 @@
           class="form-select select-size-x-small"
           type="text"
           id="resStateAbv"
+          formControlName="resStateAbv"
           [value]="transferHistoryForm.get('resStateAbv')?.value"
         >
           <option *ngFor="let state of states" [value]="state">

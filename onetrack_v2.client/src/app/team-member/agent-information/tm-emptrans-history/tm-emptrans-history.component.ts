@@ -87,10 +87,12 @@ export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
           case 'deleteEmploymentHistory':
             this.deleteEmploymentHistory(vObject);
             break;
+          case 'deleteTransferHistory':
+            this.deleteTransferHistory(vObject);
+            break;
           default:
             break;
         }
-        this.deleteEmploymentHistory(vObject);
       }
     });
   }
@@ -106,6 +108,27 @@ export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
         next: (response) => {
           // console.log(
           //   'EMFTEST (app-tm-emptrans-history: deleteEmploymentHistory) - COMPLETED DELETE response => \n',
+          //   response
+          // );
+        },
+        error: (error) => {
+          console.error(error);
+          // handle the error here
+        },
+      });
+  }
+
+  deleteTransferHistory(transferItem: any): void {
+    this.agentDataService
+      .deleteTransferHistItem({
+        employmentID: this.agentDataService.agentInformation.employmentID,
+        transferHistoryID: transferItem.transferHistoryID,
+        userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+      })
+      .subscribe({
+        next: (response) => {
+          // console.log(
+          //   'EMFTEST (app-tm-emptrans-history: deleteTransferHistory) - COMPLETED DELETE response => \n',
           //   response
           // );
         },
