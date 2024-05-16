@@ -1292,6 +1292,102 @@ namespace OneTrack_v2.Services
 
             return result;
         }
+        public ReturnResult UpsertTranserHistItem([FromBody] IputTransferHistoryItem vInput)
+        {             var result = new ReturnResult();
+                   try
+            {
+                if (vInput.TransferHistoryID == 0)
+                {
+                    // INSERT Transfer History
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspAgentTransferHistInsert", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeID", vInput.EmploymentID));
+                            cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
+                            cmd.Parameters.Add(new SqlParameter("@BranchCode", vInput.BranchCode));
+                            cmd.Parameters.Add(new SqlParameter("@ResStateAbv", vInput.ResStateAbv));
+                            cmd.Parameters.Add(new SqlParameter("@WorkStateAbv", vInput.WorkStateAbv));
+                            cmd.Parameters.Add(new SqlParameter("@TransferDate", vInput.TransferDate));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+                            cmd.Parameters.Add(new SqlParameter("@IsCurrent", vInput.IsCurrent));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                else
+                {
+                    // UPDATE Transfer History
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspAgentTransferHistUpdate", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@TransferHistoryID", vInput.TransferHistoryID));
+                            cmd.Parameters.Add(new SqlParameter("@BranchCode", vInput.BranchCode));
+                            cmd.Parameters.Add(new SqlParameter("@ResStateAbv", vInput.ResStateAbv));
+                            cmd.Parameters.Add(new SqlParameter("@WorkStateAbv", vInput.WorkStateAbv));
+                            cmd.Parameters.Add(new SqlParameter("@TransferDate", vInput.TransferDate));
+                            cmd.Parameters.Add(new SqlParameter("@IsCurrent", vInput.IsCurrent));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "Transfer History Item Created/Updated Successfully." };
+                result.StatusCode = 200;
+
+            }
+                       catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;
+        }   
+        public ReturnResult DeleteTransferHistItem([FromBody] IputDeleteTransferHisttoryItem vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspTransferHistoryDelete", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
+                        cmd.Parameters.Add(new SqlParameter("@TransferHistoryID", vInput.TransferHistoryID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "Transfer History Item Deleted Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;
+        }       
         #endregion
 
         #region Private Methods

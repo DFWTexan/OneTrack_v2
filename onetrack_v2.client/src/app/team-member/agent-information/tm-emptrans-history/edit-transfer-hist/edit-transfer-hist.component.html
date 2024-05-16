@@ -35,7 +35,8 @@
           </option>
         </select>
       </div>
-
+    </div>
+    <div class="col">
       <div class="mb-3">
         <label for="workStateAbv" class="form-label">Work State:</label>
         <select
@@ -91,7 +92,11 @@
 
   <div class="row mt-4">
     <div class="col d-flex justify-content-end">
-      <button type="button" class="btn btn-secondary me-3 cancel-button" (click)="closeModal()">
+      <button
+        type="button"
+        class="btn btn-secondary me-3 cancel-button"
+        (click)="closeModal()"
+      >
         Cancel
       </button>
       <button type="submit" class="btn btn-primary save-button">Save</button>

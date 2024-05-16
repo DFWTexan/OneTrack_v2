@@ -178,6 +178,14 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> UpsertTranserHistItem([FromBody] IputTransferHistoryItem Input)
+        {
+            var result = await Task.Run(() => _agentService.UpsertTranserHistItem(Input));
+
+            return StatusCode(result.StatusCode, result);
+        }
         #endregion
 
         #region "Agent Delete"
@@ -185,6 +193,14 @@ namespace OneTrack_v2.Controllers
         public async Task<ActionResult> DeleteEmploymentHistItem([FromBody] IputDeleteEmploymentHistoryItem Input)
         {
             var result = await Task.Run(() => _agentService.DeleteEmploymentHistItem(Input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> DeleteTransferHistItem([FromBody] IputDeleteTransferHisttoryItem Input)
+        {
+            var result = await Task.Run(() => _agentService.DeleteTransferHistItem(Input));
 
             return StatusCode(result.StatusCode, result);
         }

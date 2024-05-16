@@ -347,8 +347,87 @@ export class AgentDataService {
       );
   }
 
-  refreshAgentInfo(agentInfo: AgentInfo) {
-    this.agentInfoChanged.next(agentInfo);
+  // refreshAgentInfo(agentInfo: AgentInfo) {
+  //   this.agentInfoChanged.next(agentInfo);
+  // }
+
+  // EDITS for AGENT TRANSFER HISTORY
+  addTransferHistItem(transferHistItem: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'Agent/InsertTransferHistItem';
+
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, transferHistItem)
+      .pipe(
+        switchMap((response) => {
+          if (response.success && response.statusCode === 200) {
+            return this.fetchAgentInformation(this.agentInformation.employeeID);
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        }),
+        map((agentInfo) => {
+          this.agentInformation = agentInfo;
+          this.agentInfoChanged.next(this.agentInformation);
+          return this.agentInformation;
+        })
+      );
+  }
+
+  upsertTransferHistItem(transferHistItem: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'Agent/UpsertTransferHistItem';
+
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, transferHistItem)
+      .pipe(
+        switchMap((response) => {
+          if (response.success && response.statusCode === 200) {
+            return this.fetchAgentInformation(this.agentInformation.employeeID);
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        }),
+        map((agentInfo) => {
+          this.agentInformation = agentInfo;
+          this.agentInfoChanged.next(this.agentInformation);
+          return this.agentInformation;
+        })
+      );
+  }
+
+  deleteTransferHistItem(transferHistItem: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'Agent/DeleteTransferHistItem';
+
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, transferHistItem)
+      .pipe(
+        switchMap((response) => {
+          if (response.success && response.statusCode === 200) {
+            return this.fetchAgentInformation(this.agentInformation.employeeID);
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        }),
+        map((agentInfo) => {
+          this.agentInformation = agentInfo;
+          this.agentInfoChanged.next(this.agentInformation);
+          return this.agentInformation;
+        })
+      );
   }
 
   // LICENSE APPOINTMENT MANAGEMENT

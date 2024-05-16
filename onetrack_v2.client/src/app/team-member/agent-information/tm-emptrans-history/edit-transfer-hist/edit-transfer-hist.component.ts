@@ -57,11 +57,11 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
                   branchCode: transferHistory.branchCode,
                   workStateAbv: transferHistory.workStateAbv,
                   resStateAbv: transferHistory.resStateAbv,
-                  transferDate: formatDate(
+                  transferDate: transferHistory.transferDate ? formatDate(
                     transferHistory.transferDate,
                     'yyyy-MM-dd',
                     'en-US'
-                  ),
+                  ) : null,
                   state: transferHistory.state,
                   isCurrent: transferHistory.isCurrent,
                 });
