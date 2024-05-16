@@ -153,6 +153,7 @@ namespace OneTrack_v2.DbData
         public virtual DbSet<OputCompanyRequirement> OputCompanyRequirements { get; set; }
         public virtual DbSet<OputEducationRule> OputEducationRules { get; set; }
         public virtual DbSet<OputStateProvince> OputStateProvince { get; set; }
+        public virtual DbSet<OputWorkListDataItem> OputWorkListDataItems { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -4032,6 +4033,7 @@ namespace OneTrack_v2.DbData
             modelBuilder.Entity<OputCompanyRequirement>().ToSqlQuery("OputCompanyRequirement").HasNoKey();
             modelBuilder.Entity<OputEducationRule>().ToSqlQuery("OputEducationRule").HasNoKey();
             modelBuilder.Entity<OputStateProvince>().ToSqlQuery("OputStateProvince").HasNoKey();
+            modelBuilder.Entity<OputWorkListDataItem>().ToSqlQuery("OputWorkListDataItem").HasNoKey();
             #endregion
 
             OnModelCreatingPartial(modelBuilder);

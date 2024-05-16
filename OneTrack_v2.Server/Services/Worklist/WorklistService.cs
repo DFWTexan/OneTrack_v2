@@ -1,4 +1,6 @@
 ﻿using DataModel.Response;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using OneTrack_v2.DbData;
 
 namespace OneTrak_v2.Services
@@ -17,43 +19,46 @@ namespace OneTrak_v2.Services
             try
             {
 
-                var query1 = _db.WorkLists
-                            .Join(_db.WorkListData,
-                                workList => workList.WorkListName,
-                                workListData => workListData.WorkListName,
-                                (workList, workListData) => new { WorkList = workList, WorkListData = workListData })
-                            .Where(x => x.WorkList.IsActive == true &&
-                                        x.WorkListData.ProcessDate == null &&
-                                        x.WorkList.WorkListName == vWorklistName &&
-                                        x.WorkListData.LicenseTech == vLicenseTech)
-                            .Select(x => "WorkListDataID|CreateDate|" + x.WorkList.Fieldlist)
-                            .Distinct()
-                            .FirstOrDefault();
+                var sql = @"
+                        SELECT DISTINCT 
+                            'WorklistDataID|CreateDate|' + FieldList as WorkListData 
+                        FROM dbo.WorkList 
+                        INNER JOIN dbo.WorkListData ON WorkList.WorkListName = WorkListData.WorkListName
+	                    WHERE WorkList.IsActive = 1
+	                        AND ProcessDate IS NULL
+	                        AND WorkList.WorkListNAME = @WorkListName
+	                        AND LicenseTech = @LicenseTech
 
-                var query2 = _db.WorkLists
-                            .Join(_db.WorkListData,
-                                workList => workList.WorkListName,
-                                workListData => workListData.WorkListName,
-                                (workList, workListData) => new { WorkList = workList, WorkListData = workListData })
-                            .Where(x => x.WorkList.IsActive == true &&
-                                        x.WorkListData.ProcessDate == null &&
-                                        x.WorkList.WorkListName == vWorklistName &&
-                                        x.WorkListData.LicenseTech == vLicenseTech &&
-                                        x.WorkListData.WorkListDataId != null)
-                            .Select(x => x.WorkListData.WorkListDataId.ToString() + "|" +
-                                         x.WorkListData.CreateDate.ToString() + "|" +
-                                         x.WorkListData.WorkListData)
-                            .ToList();
+	                    Union all
 
-                if (query1 != null)
-                {
-                    query2 = query2.Prepend(query1).ToList();
-                }
+	                    SELECT 
+                            CONVERT(VARCHAR,WorkListDataID) + '|' 
+	                        + REPLACE(CONVERT(VARCHAR(10), CreateDate, 111), '/', '-')  
+	                        + '|' + WorkListData as WorklistData 
+	                    FROM dbo.WorkList 
+                        INNER JOIN dbo.WorkListData ON WorkList.WorkListName = WorkListData.WorkListName
+	                    WHERE WorkList.IsActive = 1
+	                        AND ProcessDate IS NULL
+	                        AND WorkList.WorkListNAME = @WorkListName
+	                        AND LicenseTech = @LicenseTech
+	                        AND CONVERT(VARCHAR,WorkListDataID) + '|' 
+	                            + REPLACE(CONVERT(VARCHAR(10), CreateDate, 111), '/', '-')  
+	                            + '|' + WorkListData IS NOT NULL ";
 
-                var resultJoin = query2;
+                var parameters = new[]
+                            {
+                                new SqlParameter("@WorkListName", vWorklistName),
+                                new SqlParameter("@WorkListDate", vWorklistDate ?? (object)DBNull.Value),
+                                new SqlParameter("@LicenseTech", vLicenseTech)
+                            };
+
+                var queryWorklistDataResults = _db.OputWorkListDataItems
+                                            .FromSqlRaw(sql, parameters)
+                                            .AsNoTracking()
+                                            .ToList();
 
                 result.Success = true;
-                result.ObjData = resultJoin;
+                result.ObjData = queryWorklistDataResults;
                 result.StatusCode = 200;
 
                 return result;
