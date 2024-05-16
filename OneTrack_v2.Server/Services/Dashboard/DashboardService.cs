@@ -10,14 +10,37 @@ namespace OneTrak_v2.Services
 
         public DashboardService(AppDataContext db) { _db = db;}
 
-        public ReturnResult GetAuditModifiedBy()
+        public ReturnResult GetAuditModifiedBy(bool vIsActive = true)
         {
             var result = new ReturnResult();
             try
             {
-                var modifiedBy = _db.AuditLogs.Select(x => x.ModifiedBy).Distinct().OrderBy(x => x).ToList();
+                if (vIsActive)
+                {
+                    var modifiedBy = _db.AuditLogs
+                        .Join(
+                            _db.LicenseTeches,
+                            auditLog => auditLog.ModifiedBy,
+                            licenseTech => licenseTech.Soeid,
+                            (auditLog, licenseTech) => auditLog.ModifiedBy
+                        )
+                        .Distinct()
+                        .OrderBy(x => x)
+                        .ToList();
 
-                result.ObjData = modifiedBy;
+                    result.ObjData = modifiedBy;
+                }
+                else
+                {
+                    var modifiedBy = _db.AuditLogs
+                        .Select(x => x.ModifiedBy)
+                        .Distinct()
+                        .OrderBy(x => x)
+                        .ToList();
+
+                    result.ObjData = modifiedBy;
+                }
+
                 result.Success = true;
                 result.StatusCode = 200;
             }

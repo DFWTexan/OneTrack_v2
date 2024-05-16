@@ -18,9 +18,9 @@ namespace OneTrak_v2.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> GetAuditModifiedBy()
+        public async Task<ActionResult> GetAuditModifiedBy(bool isActive)
         {
-            var result = await Task.Run(() => _dashboardService.GetAuditModifiedBy());
+            var result = await Task.Run(() => _dashboardService.GetAuditModifiedBy(isActive));
 
             return StatusCode(result.StatusCode, result);
         }

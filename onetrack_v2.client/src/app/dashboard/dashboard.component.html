@@ -39,24 +39,34 @@
               </option>
             </select>
           </div>
-          <div class="col-md-3">
+          <!-- <div class="col-md-3">
             <label for="licenseTech">License Tech:</label><br />
-            TBD...
-          </div>
+            <select
+              class="form-select select-size-med-small"
+              name="modifiedBy"
+              id="modifiedBy"
+              (change)="changeModifiedBy($event)"
+              [(ngModel)]="modifiedBySelected"
+            >
+              <option *ngFor="let tech of modifiedBy" [value]="tech">
+                {{ tech }}
+              </option>
+            </select>
+          </div> -->
           <div class="col-md-3">
-            <label for="date">Date:</label><br />
+            <label for="worklistdate">Date:</label><br />
             <input
               class="form-control input-size-small"
               type="date"
-              name="date"
-              [(ngModel)]="date"
+              name="worklistdate"
+              [(ngModel)]="worklistdate"
             />
           </div>
-          <div
+          <!-- <div
             class="col-md-3 d-flex align-items-center justify-content-center"
           >
             <button class="btn btn-primary" type="submit">Search</button>
-          </div>
+          </div> -->
         </div>
         <mat-divider></mat-divider>
       </mat-expansion-panel>
@@ -124,7 +134,6 @@
               class="form-control input-size-small"
               type="date"
               name="startDate"
-              [value]="startDate"
               [(ngModel)]="startDate"
               (change)="changesStartDate($event)"
             />
@@ -153,6 +162,15 @@
                 {{ tech }}
               </option>
             </select>
+          </div>
+          <div class="col-md-3 d-flex align-items-center">
+            <input
+              class="form-check-input me-2"
+              type="checkbox"
+              id="isTechActive"
+              [(ngModel)]="isTechActive"
+            />
+            <label for="isTechActive" class="form-label d-flex align-items-center mt-3">Only Active Tech</label>
           </div>
         </div>
         <mat-divider></mat-divider>

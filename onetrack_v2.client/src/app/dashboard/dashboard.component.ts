@@ -23,11 +23,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   workListName: string = 'Agent Address Change';
   licenseTech: string = 'T9999999';
-  date: string | null = null;
+  worklistdate: string = new Date().toISOString().split('T')[0];
 
   selectedWorkListName = 'Loading...';
   selectedLicenseTech = 'T9999999';
   selectedDate: string | null;
+  isTechActive: boolean = true;
 
   modifiedBy: string[] = ['Loading...'];
   modifiedBySelected: string = 'Select Tech';
@@ -51,7 +52,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.worklistNames = worklistNames;
       this.selectedWorkListName = worklistNames[0];
     });
-    this.dashboardDataService.fetchAuditModifiedBy().subscribe((modifiedBy) => {
+    this.dashboardDataService.fetchAuditModifiedBy(this.isTechActive).subscribe((modifiedBy) => {
       this.modifiedBy = ['Select Tech', ...modifiedBy];
     });
     this.dashboardDataService

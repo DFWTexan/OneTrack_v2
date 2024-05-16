@@ -33,14 +33,14 @@ export class DashboardDataService {
       );
   }
 
-  fetchAuditModifiedBy(): Observable<string[]> {  
+  fetchAuditModifiedBy(isActive: boolean): Observable<string[]> {  
     return this.http
       .get<{
         success: boolean;
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'GetAuditModifiedBy')
+      }>(this.apiUrl + 'GetAuditModifiedBy', { params: { isActive: isActive.toString() } })
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -54,8 +54,6 @@ export class DashboardDataService {
 
   fetchAuditLog(startDate: string = new Date().toISOString(), endDate: string, modifiedBy: string | null) {
     const queryParams = `?startDate=${startDate}&endDate=${endDate}&modifiedBy=${modifiedBy ? modifiedBy : ''}`;
-
-console.log('EMFTEST (dashboard.data.service: fetchAuditLog) - queryParams => \n', queryParams);
 
     return this.http
       .get<{
