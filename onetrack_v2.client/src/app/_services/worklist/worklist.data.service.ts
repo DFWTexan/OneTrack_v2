@@ -33,10 +33,6 @@ export class WorkListDataService {
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
-
-
-console.log('EMFTEST (worklist.data.service) - response.objData: ', response.objData);
-
             this.worklistData = response.objData;
             this.worklistDataChanged.next(this.worklistData);
             return response.objData;

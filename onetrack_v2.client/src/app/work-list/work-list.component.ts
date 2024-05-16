@@ -43,10 +43,6 @@ export class WorkListComponent implements OnInit {
 
   fetchWorkListData(): void {
 
-    console.log('EMFTEST (app-work-list) - selectedWorkListName: ', this.selectedWorkListName);
-    console.log('EMFTEST (app-work-list) - selectedDate: ', this.selectedDate);
-    console.log('EMFTEST (app-work-list) - selectedLicenseTech: ', this.selectedLicenseTech);
-
     this.workListDataService
       .fetchWorkListData(
         this.selectedWorkListName,
