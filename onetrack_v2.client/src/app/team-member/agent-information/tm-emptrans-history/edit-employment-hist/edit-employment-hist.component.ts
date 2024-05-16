@@ -21,6 +21,7 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
   employmentHistoryForm!: FormGroup;
   @Input() employmentID: number = 0;
   @Input() employeeID: number = 0;
+  employmentHistoryID: number = 0;
   backgroundStatuses: Array<{ lkpValue: string }> = [];
   subscriptionMode: Subscription = new Subscription();
   subscriptionData: Subscription = new Subscription();
@@ -63,6 +64,8 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
             this.subscriptionData =
               this.agentService.employmentTransferHistItemChanged.subscribe(
                 (employmentHistory: any) => {
+                  this.employmentHistoryID =
+                    employmentHistory.employmentHistoryID;
                   this.employmentHistoryForm.patchValue({
                     employmentHistoryID: employmentHistory.employmentHistoryID,
                     hireDate: employmentHistory.hireDate
@@ -129,6 +132,7 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
     let empHistItem: any = this.employmentHistoryForm.value;
     empHistItem.EmployeeID = this.employeeID;
     empHistItem.EmploymentID = this.employmentID;
+    empHistItem.EmploymentHistoryID = this.employmentHistoryID;
     empHistItem.UserSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
     if (this.agentComService.modeEmploymentHist === 'INSERT') {
@@ -144,6 +148,16 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
         // handle the error here
       },
     });
+  }
+
+  alphaNumericOnly(event: any) {
+    const pattern = /^[a-zA-Z0-9]*$/; // alphanumeric pattern
+    let inputChar = String.fromCharCode(event.charCode);
+
+    if (!pattern.test(inputChar)) {
+      // invalid character, prevent input
+      event.preventDefault();
+    }
   }
 
   closeModal() {

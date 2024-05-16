@@ -97,10 +97,13 @@
       <div class="mb-3">
         <label for="hrTermCode" class="form-label">HR Term Code:</label>
         <input
-          class="form-control input-size-small"
+          class="form-control input-size-mini"
           type="text"
           id="hrTermCode"
           formControlName="hrTermCode"
+          pattern="[a-zA-Z0-9]*"
+          (keypress)="alphaNumericOnly($event)"
+          maxlength="2"
         />
         TermCode for Death is "DT"
       </div>

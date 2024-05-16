@@ -32,10 +32,10 @@ export class AppComponent implements OnInit {
     if (environment.isDevLogEnabled) {
       this.appComService.updateIsLoggedIn(true);
       this.userInfoService.updateUserAcctInfo({
-        // displayName: 'Erish Faggett',
-        displayName: 'Dyan Knapp',
-        // soeid: 'T2229513',
-        soeid: 'T3304243', // Dyan Knapp
+        displayName: 'Erish Faggett',
+        // displayName: 'Dyan Knapp',
+        soeid: 'T2229513',
+        // soeid: 'T3304243', // Dyan Knapp
         email: 'erish.faggett@omf.com',
         enabled: true,
         employeeId: '2229513',
