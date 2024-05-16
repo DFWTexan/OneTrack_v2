@@ -7,7 +7,9 @@
       <mat-expansion-panel>
         <mat-expansion-panel-header>
           <mat-panel-title style="font-size: large">
-            My Work List
+            {{ userAcctInfoDataService.userAcctInfo.displayName }} ({{
+              userAcctInfoDataService.userAcctInfo.soeid
+            }}) - Work List
           </mat-panel-title>
           <!-- <mat-panel-description>
               This is a summary of the content
@@ -69,6 +71,31 @@
           </div> -->
         </div>
         <mat-divider></mat-divider>
+        <div class="row" *ngIf="worklistData.length == 0">
+          <div class="col d-flex justify-content-center mt-5">
+            <h3>No data found</h3>
+          </div>
+        </div>
+        <div class="row" *ngIf="worklistData.length > 0">
+          <div class="col">
+            <div class="table">
+              <thead>
+                <tr>
+                  <th>&nbsp;</th>
+                  <th class="input-th-mini" *ngFor="let header of worklistData[0].workListData.split('|')">
+                    {{ header }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="bg-body">
+                <tr *ngFor="let row of worklistData.slice(1)">
+                  <td><input type="checkbox" /></td>
+                  <td class="input-td-mini" *ngFor="let cell of row.workListData.split('|')">{{ cell }}</td>
+                </tr>
+              </tbody>
+            </div>
+          </div>
+        </div>
       </mat-expansion-panel>
       <mat-expansion-panel
         (opened)="panelOpenState = true"
@@ -170,7 +197,11 @@
               id="isTechActive"
               [(ngModel)]="isTechActive"
             />
-            <label for="isTechActive" class="form-label d-flex align-items-center mt-3">Only Active Tech</label>
+            <label
+              for="isTechActive"
+              class="form-label d-flex align-items-center mt-3"
+              >Only Active Tech</label
+            >
           </div>
         </div>
         <mat-divider></mat-divider>
@@ -188,7 +219,7 @@
                 <tr style="background-color: whitesmoke">
                   <th scope="col">MOdify Date</th>
                   <th scope="col">Modified By</th>
-                  <th scope="col" style="width: 275px;">Audit Field Name</th>
+                  <th scope="col" style="width: 275px">Audit Field Name</th>
                   <th scope="col">Audit Action</th>
                   <th scope="col">Before Value</th>
                   <th scope="col">After Value</th>
@@ -202,7 +233,7 @@
                   <td class="align-middle">
                     {{ log.modifiedBy }}
                   </td>
-                  <td class="align-middle wrap-text" style="width: 275px;">
+                  <td class="align-middle wrap-text" style="width: 275px">
                     {{ log.auditFieldName | firstThree }}
                   </td>
                   <td class="align-middle">

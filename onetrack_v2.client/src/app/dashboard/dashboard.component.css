@@ -1,7 +1,18 @@
 .h1-title {
-    margin: 1rem;
-    padding: 1rem;
-    color: primary;
-    font-size: 4rem;
-    font-weight: 700;
+  margin: 1rem;
+  padding: 1rem;
+  color: primary;
+  font-size: 4rem;
+  font-weight: 700;
+}
+
+.input-th-mini {
+  width: 150px;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.input-td-mini {
+  width: 150px;
+  font-size: 1.3rem;
 }

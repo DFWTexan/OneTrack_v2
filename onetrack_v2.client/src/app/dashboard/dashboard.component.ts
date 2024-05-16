@@ -5,6 +5,7 @@ import {
   AppComService,
   DashboardDataService,
   MiscDataService,
+  UserAcctInfoDataService,
   WorkListDataService,
 } from '../_services';
 
@@ -42,7 +43,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
     public appComService: AppComService,
     public workListDataService: WorkListDataService,
     public miscDataService: MiscDataService,
-    public dashboardDataService: DashboardDataService
+    public dashboardDataService: DashboardDataService,
+    public userAcctInfoDataService: UserAcctInfoDataService
   ) {
     this.selectedDate = null;
   }
@@ -52,17 +54,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.worklistNames = worklistNames;
       this.selectedWorkListName = worklistNames[0];
     });
-    this.dashboardDataService.fetchAuditModifiedBy(this.isTechActive).subscribe((modifiedBy) => {
-      this.modifiedBy = ['Select Tech', ...modifiedBy];
-    });
+    this.dashboardDataService
+      .fetchAuditModifiedBy(this.isTechActive)
+      .subscribe((modifiedBy) => {
+        this.modifiedBy = ['Select Tech', ...modifiedBy];
+      });
     this.dashboardDataService
       .fetchAuditLog(this.startDate, this.endDate, null)
       .subscribe((auditLogData) => {
-        console.log(
-          'EMFTEST (app-dashboard: ngOnInit) - auditLogData',
-          auditLogData
-        );
-
         this.auditLogData = auditLogData;
       });
   }
@@ -73,7 +72,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .fetchWorkListData(
         this.selectedWorkListName,
         this.selectedDate,
-        this.selectedLicenseTech
+        this.userAcctInfoDataService.userAcctInfo.soeid
       )
       .subscribe((worklistData) => {
         this.worklistData = worklistData;
@@ -101,8 +100,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     const target = event.target as HTMLInputElement;
     const value = target.value;
     this.startDate = value;
-
-console.log('EMFTEST (dashboard: changesStartDate) - startDate => \n', this.startDate);
 
     this.dashboardDataService
       .fetchAuditLog(

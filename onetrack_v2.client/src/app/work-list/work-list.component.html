@@ -58,7 +58,7 @@
         <thead>
           <tr>
             <th>&nbsp;</th>
-            <th *ngFor="let header of worklistData[0].workListData.split('|')">
+            <th class="input-hdr-mini" *ngFor="let header of worklistData[0].workListData.split('|')">
               {{ header }}
             </th>
           </tr>
@@ -66,7 +66,7 @@
         <tbody class="bg-body">
           <tr *ngFor="let row of worklistData.slice(1)">
             <td><input type="checkbox" /></td>
-            <td *ngFor="let cell of row.workListData.split('|')">{{ cell }}</td>
+            <td class="input-cell-mini" *ngFor="let cell of row.workListData.split('|')">{{ cell }}</td>
           </tr>
         </tbody>
       </div>
