@@ -65,8 +65,7 @@
               ><input
                 type="checkbox"
                 name="chkMgr"
-                [value]="agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[0].mgrEmail
-                "
+                [value]="agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[0].mgrEmail ? agentInfo.mgrHiearchy[0].mgrEmail : 'n/a'"
                 [(ngModel)]="chkMgr"
                 [ngModelOptions]="{ standalone: true }"
                 (change)="onCcChange($event)"
@@ -78,7 +77,7 @@
                 type="checkbox"
                 name="chkDM"
                 [value]="
-                  agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[1].mgrEmail
+                  agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[1].mgrEmail ? agentInfo.mgrHiearchy[1].mgrEmail : 'n/a' 
                 "
                 [(ngModel)]="chkDM"
                 [ngModelOptions]="{ standalone: true }"
@@ -92,7 +91,7 @@
                 type="checkbox"
                 name="chkRD"
                 [value]="
-                  agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[2].mgrEmail
+                  agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[2].mgrEmail ? agentInfo.mgrHiearchy[2].mgrEmail : 'n/a' 
                 "
                 [(ngModel)]="chkRD"
                 [ngModelOptions]="{ standalone: true }"

@@ -217,7 +217,7 @@
             <table class="table">
               <thead>
                 <tr style="background-color: whitesmoke">
-                  <th scope="col">MOdify Date</th>
+                  <th scope="col">Modify Date</th>
                   <th scope="col">Modified By</th>
                   <th scope="col" style="width: 275px">Audit Field Name</th>
                   <th scope="col">Audit Action</th>
@@ -228,7 +228,7 @@
               <tbody>
                 <tr *ngFor="let log of auditLogData">
                   <td class="align-middle">
-                    {{ log.modifyDate | date : "MM/dd/yyyy" }}
+                    {{ log.modifyDate | date : "MM/dd/yyyy, h:mm a" }}
                   </td>
                   <td class="align-middle">
                     {{ log.modifiedBy }}

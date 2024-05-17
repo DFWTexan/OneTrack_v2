@@ -33,7 +33,9 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   modifiedBy: string[] = ['Loading...'];
   modifiedBySelected: string = 'Select Tech';
-  startDate: string = new Date().toISOString().split('T')[0];
+  startDate: string = new Date(new Date().setDate(new Date().getDate() - 1))
+  .toISOString()
+  .split('T')[0];
   endDate: string = new Date(new Date().setDate(new Date().getDate() + 1))
     .toISOString()
     .split('T')[0];

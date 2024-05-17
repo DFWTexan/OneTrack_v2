@@ -74,7 +74,7 @@ namespace OneTrak_v2.Services
                     AuditAction = x.AuditAction,
                     AuditValueBefore = x.AuditValueBefore,
                     AuditValueAfter = x.AuditValueAfter
-                }).ToList();
+                }).OrderByDescending(x => x.ModifyDate).ToList();
 
                 result.ObjData = auditLog;
                 result.Success = true;

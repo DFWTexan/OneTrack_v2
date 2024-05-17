@@ -18,6 +18,7 @@ import {
 })
 @Injectable()
 export class EditEmploymentHistComponent implements OnInit, OnDestroy {
+  isFormSubmitted: boolean = false;
   employmentHistoryForm!: FormGroup;
   @Input() employmentID: number = 0;
   @Input() employeeID: number = 0;
@@ -141,6 +142,7 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
 
     this.agentService.upsertEmploymentHistItem(empHistItem).subscribe({
       next: (response) => {
+        this.isFormSubmitted = true;
         this.closeModal();
       },
       error: (error) => {
@@ -165,7 +167,7 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
     // if (modalDiv != null) {
     //   modalDiv.style.display = 'none';
     // }
-    if (this.employmentHistoryForm.dirty) {
+    if (this.employmentHistoryForm.dirty && !this.isFormSubmitted ) {
       if (
         confirm('You have unsaved changes. Are you sure you want to close?')
       ) {
@@ -180,6 +182,7 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
         });
       }
     } else {
+      this.isFormSubmitted = false;
       const modalDiv = document.getElementById('modal-edit-emp-history');
       if (modalDiv != null) {
         modalDiv.style.display = 'none';
