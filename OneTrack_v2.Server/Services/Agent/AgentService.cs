@@ -1293,8 +1293,9 @@ namespace OneTrack_v2.Services
             return result;
         }
         public ReturnResult UpsertTranserHistItem([FromBody] IputTransferHistoryItem vInput)
-        {             var result = new ReturnResult();
-                   try
+        {
+            var result = new ReturnResult();
+            try
             {
                 if (vInput.TransferHistoryID == 0)
                 {
@@ -1347,14 +1348,14 @@ namespace OneTrack_v2.Services
                 result.StatusCode = 200;
 
             }
-                       catch (Exception ex)
+            catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
             }
 
             return result;
-        }   
+        }
         public ReturnResult DeleteTransferHistItem([FromBody] IputDeleteTransferHisttoryItem vInput)
         {
             var result = new ReturnResult();
@@ -1387,7 +1388,7 @@ namespace OneTrack_v2.Services
             }
 
             return result;
-        }       
+        }
         #endregion
 
         #region Private Methods

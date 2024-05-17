@@ -65,8 +65,7 @@
               ><input
                 type="checkbox"
                 name="chkMgr"
-                [value]="
-                  agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[0].mgrEmail
+                [value]="agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[0].mgrEmail
                 "
                 [(ngModel)]="chkMgr"
                 [ngModelOptions]="{ standalone: true }"

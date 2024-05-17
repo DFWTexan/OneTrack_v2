@@ -12,6 +12,7 @@ import { ModalService } from '../../../_services';
 })
 @Injectable()
 export class TmInformationComponent implements OnInit, OnDestroy {
+  isLoading = false;
   subscribeAgentInfo: Subscription;
   subscribeAgentLicenseAppointments: Subscription;
   agentInfo: AgentInfo = {} as AgentInfo;
@@ -28,8 +29,10 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.isLoading = true;
     this.subscribeAgentInfo = this.agentDataService.agentInfoChanged.subscribe(
       (agentInfo: any) => {
+        this.isLoading = false;
         this.agentInfo = agentInfo;
       }
     );

@@ -379,7 +379,7 @@ export class AgentDataService {
   }
 
   upsertTransferHistItem(transferHistItem: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/UpsertTransferHistItem';
+    this.apiUrl = environment.apiUrl + 'Agent/UpsertTranserHistItem';
 
     return this.http
       .post<{

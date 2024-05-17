@@ -19,6 +19,7 @@ import {
 })
 @Injectable()
 export class EditTransferHistComponent implements OnInit, OnDestroy {
+  isFormSubmitted: boolean = false;
   transferHistoryForm!: FormGroup;
   @Input() employmentID: number = 0;
   @Input() employeeID: number = 0;
@@ -43,7 +44,7 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
       workStateAbv: new FormControl(null),
       resStateAbv: new FormControl(null),
       transferDate: new FormControl(null),
-      isCurrent: new FormControl(null),
+      isCurrent: new FormControl(false),
     });
     this.states = ['Select', ...this.conService.getStates()];
     this.agentDataService.fetchBranchCodes().subscribe((response) => {
@@ -84,7 +85,8 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
     transferHistItem.employmentID = this.employmentID;
     transferHistItem.employeeID = this.employeeID;
     transferHistItem.transferHistoryID = this.transferHistoryID;
-    transferHistItem.UserSOEID =
+    transferHistItem.isCurrent = transferHistItem.isCurrent ? true : false;
+    transferHistItem.userSOEID =
       this.userAcctInfoDataService.userAcctInfo.soeid;
 
     if (this.agentComService.modeTransferHist === 'INSERT') {
@@ -93,6 +95,7 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
 
     this.agentDataService.upsertTransferHistItem(transferHistItem).subscribe({
       next: (response) => {
+        this.isFormSubmitted = true;
         this.closeModal();
       },
       error: (error) => {
@@ -103,7 +106,11 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
   }
 
   closeModal() {
-    if (this.transferHistoryForm.dirty) {
+    // const modalDiv = document.getElementById('modal-edit-tran-history');
+    // if (modalDiv != null) {
+    //   modalDiv.style.display = 'none';
+    // }
+    if (this.transferHistoryForm.dirty && !this.isFormSubmitted) {
       if (
         confirm('You have unsaved changes. Are you sure you want to close?')
       ) {
@@ -114,6 +121,7 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
         this.transferHistoryForm.reset();
       }
     } else {
+      this.isFormSubmitted = false;
       const modalDiv = document.getElementById('modal-edit-tran-history');
       if (modalDiv != null) {
         modalDiv.style.display = 'none';
