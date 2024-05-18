@@ -5,7 +5,7 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { zip } from 'rxjs';
+import { Subscription, zip } from 'rxjs';
 
 import {
   AgentDataService,
@@ -24,6 +24,9 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   states: any[] = ['Loading...'];
   employerAgencies: any[] = [{ valu: '0', label: 'Loading...' }, 'Loading...'];
   branchCodes: any[] = [{ branchCode: 'Loading...' }];
+
+  subsribeDropdownData: Subscription = new Subscription();
+  subscribeBranchCodes: Subscription = new Subscription();
 
   constructor(
     private fb: FormBuilder,
@@ -65,7 +68,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
       this.newAgentForm.get('workState')?.setValue('Select State');
       this.newAgentForm.get('resState')?.setValue('Select State');
     }
-    this.drpdwnDataService
+    this.subsribeDropdownData = this.drpdwnDataService
       .fetchDropdownData('GetEmployerAgencies')
       .subscribe((employerAgencies: { value: string; label: string }[]) => {
         this.employerAgencies = [
@@ -74,10 +77,15 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
         ];
         this.newAgentForm.get('employerAgency')?.setValue(0);
       });
-    this.agentDataService.fetchBranchCodes().subscribe((branchCodes: any[]) => {
-      this.branchCodes = [{ branchCode: 'Select Branch Code' }, ...branchCodes];
-      this.newAgentForm.get('branchCode')?.setValue('Select Branch Code');
-    });
+    this.subscribeBranchCodes = this.agentDataService
+      .fetchBranchCodes()
+      .subscribe((branchCodes: any[]) => {
+        this.branchCodes = [
+          { branchCode: 'Select Branch Code' },
+          ...branchCodes,
+        ];
+        this.newAgentForm.get('branchCode')?.setValue('Select Branch Code');
+      });
   }
 
   // VALIDATION
@@ -139,6 +147,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    // Clean up component
+    this.subsribeDropdownData.unsubscribe();
+    this.subscribeBranchCodes.unsubscribe();
   }
 }
