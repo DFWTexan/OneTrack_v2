@@ -22,7 +22,10 @@
   </div>
   <div class="row">
     <div class="col">
-      <div class="panel panel-default" [style.max-height]="isShowTickle ? '90vh' : 'auto'" style="border-radius: 1rem;">
+      <div class="mt-5 mb-5 d-flex justify-content-center" *ngIf="isLoading">
+        <div class="spinner-border text-primary"></div>
+      </div>
+      <div *ngIf="!isLoading" class="panel panel-default" [style.max-height]="isShowTickle ? '90vh' : 'auto'" style="border-radius: 1rem;">
         <div class="panel-body">
           <div class="row">
             <div class="col" >
@@ -82,37 +85,37 @@
   <div class="row" *ngIf="!isShowLicenseMgmt">
     <div class="col">
       <mat-tab-group>
-        <mat-tab label="TM INFORMATION">
+        <mat-tab label="TM INFORMATION" [disabled]="isLoading">
           <div class="app-tab-container">
             <app-tm-information></app-tm-information>
           </div>
         </mat-tab>
-        <mat-tab label="TM DETAIL">
+        <mat-tab label="TM DETAIL" [disabled]="isLoading">
           <div class="app-tab-container">
             <app-tm-detail></app-tm-detail>
           </div>
         </mat-tab>
-        <mat-tab label="TM EMP/TRANS HISTORY">
+        <mat-tab label="TM EMP/TRANS HISTORY" [disabled]="isLoading">
           <div class="app-tab-container">
             <app-tm-emptrans-history></app-tm-emptrans-history>
           </div>
         </mat-tab>
-        <mat-tab label="TM CONTINUING EDU.">
+        <mat-tab label="TM CONTINUING EDU." [disabled]="isLoading">
           <div class="app-tab-container">
             <app-tm-continuing-edu> </app-tm-continuing-edu>
           </div>
         </mat-tab>
-        <mat-tab label="TM DIARY">
+        <mat-tab label="TM DIARY" [disabled]="isLoading">
           <div class="app-tab-container">
             <app-tm-diary></app-tm-diary>
           </div>
         </mat-tab>
-        <mat-tab label="TM EMAIL">
+        <mat-tab label="TM EMAIL" [disabled]="isLoading">
           <div class="app-tab-container">
             <app-tm-email></app-tm-email>
           </div>
         </mat-tab>
-        <mat-tab label="TM COMMUNICATIONS">
+        <mat-tab label="TM COMMUNICATIONS" [disabled]="isLoading">
           <div class="app-tab-container">
             <app-tm-communications></app-tm-communications>
           </div>

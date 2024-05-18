@@ -12,6 +12,7 @@ import { AgentComService, AgentDataService, AppComService } from '../../_service
 })
 @Injectable()
 export class AgentInformationComponent implements OnInit, OnDestroy {
+  isLoading: boolean = false;
   id: number = 0;
   agentInfo: AgentInfo = {} as AgentInfo;
   isShowLicenseMgmt: boolean = false;
@@ -28,11 +29,13 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.isLoading = true;
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
       this.agentDataService
         .fetchAgentInformation(this.id)
         .subscribe((agentInfo: AgentInfo) => {
+          this.isLoading = false;
           this.agentInfo = agentInfo;
         });
     });

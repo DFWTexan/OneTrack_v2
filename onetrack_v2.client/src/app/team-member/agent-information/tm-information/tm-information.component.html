@@ -3,12 +3,13 @@
     <div class="col-md-12">
       <div class="row d-flex justify-content-start">
         <div class="col d-flex justify-content-center">
-          <button class="btn btn-danger w-100">
+          <button class="btn btn-danger w-100" [disabled]="isLoading">
             <span style="font-size: larger">Delete</span>
           </button>
         </div>
         <div class="col d-flex justify-content-center">
           <button
+            [disabled]="isLoading"
             class="btn btn-primary w-100"
             (click)="modalService.open('modal-edit-tm-info')"
           >
@@ -69,7 +70,7 @@
   </div>
   <div class="row mt-4">
     <div class="col-md-12">
-      <div class="row">
+      <div class="row" *ngIf="!isLoading">
         <div class="col d-flex justify-content-end">
           <button
             class="btn btn-success"
@@ -90,7 +91,7 @@
           </button>
         </div>
       </div>
-      <p style="font-size: larger; font-weight: 600">
+      <p style="font-size: larger; font-weight: 600" *ngIf="!isLoading">
         Agent License & Appointments:
       </p>
       <div class="mt-5 mb-5 d-flex justify-content-center" *ngIf="isLoading">
@@ -103,7 +104,10 @@
       >
         No License records found
       </div>
-      <div class="row" *ngIf="!isLoading && agentInfo.agentLicenseAppointments.length !== 0">
+      <div
+        class="row"
+        *ngIf="!isLoading && agentInfo.agentLicenseAppointments.length !== 0"
+      >
         <div class="col-md-12">
           <mat-expansion-panel
             class="mat-elevation-z4 mb-3"
