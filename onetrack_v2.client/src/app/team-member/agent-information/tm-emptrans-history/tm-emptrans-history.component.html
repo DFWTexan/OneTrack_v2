@@ -393,7 +393,13 @@
                 >
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
-                <button class="icon-edit-delete-button">
+                <button class="icon-edit-delete-button" (click)="
+                openConfirmDialog(
+                  'deleteJobTitleItem',
+                  'Job Title Item',
+                  jobTitle
+                )
+                ">
                   <span class="material-symbols-outlined"> delete </span>
                 </button>
               </div>
