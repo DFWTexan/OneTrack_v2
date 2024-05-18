@@ -30,7 +30,7 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
 
   constructor(
     private miscDataService: MiscDataService,
-    public agentService: AgentDataService,
+    public agentDataService: AgentDataService,
     public agentComService: AgentComService,
     public appComService: AppComService,
     private userAcctInfoDataService: UserAcctInfoDataService
@@ -63,7 +63,7 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
         (mode: string) => {
           if (mode === 'EDIT') {
             this.subscriptionData =
-              this.agentService.employmentTransferHistItemChanged.subscribe(
+              this.agentDataService.employmentTransferHistItemChanged.subscribe(
                 (employmentHistory: any) => {
                   this.employmentHistoryID =
                     employmentHistory.employmentHistoryID;
@@ -140,7 +140,9 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
       empHistItem.EmploymentHistoryID = 0;
     }
 
-    this.agentService.upsertEmploymentHistItem(empHistItem).subscribe({
+    this.agentDataService
+    .upsertEmploymentHistItem(empHistItem)
+    .subscribe({
       next: (response) => {
         this.isFormSubmitted = true;
         this.closeModal();
@@ -167,7 +169,7 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
     // if (modalDiv != null) {
     //   modalDiv.style.display = 'none';
     // }
-    if (this.employmentHistoryForm.dirty && !this.isFormSubmitted ) {
+    if (this.employmentHistoryForm.dirty && !this.isFormSubmitted) {
       if (
         confirm('You have unsaved changes. Are you sure you want to close?')
       ) {

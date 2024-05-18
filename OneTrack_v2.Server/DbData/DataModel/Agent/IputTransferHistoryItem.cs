@@ -13,15 +13,3 @@
         public string? UserSOEID { get; set; }
     }
 }
-
-//{
-//    "employeeID": 49039,
-//    "employmentID": 49160,
-//    "transferHistoryID": 0,
-//    "branchCode": "00010003",
-//    "workStateAbv": "TX",
-//    "resStateAbv": "TX",
-//    "transferDate": null,
-//    "isCurrent": null,
-//    "UserSOEID": "T2229513"
-//}

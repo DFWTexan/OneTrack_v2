@@ -85,6 +85,7 @@ export interface TransferHistory {
 export interface CompanyRequirementsHistory {
   employmentCompanyRequirementID: number;
   assetIdString: string;
+  assetSk: number
   learningProgramStatus: string;
   learningProgramEnrollmentDate: string | null;
   learningProgramCompletionDate: string;
@@ -99,6 +100,7 @@ export interface EmploymentJobTitleHistory {
   isCurrent: boolean;
 }
 export interface ContEduRequiredItem {
+  companyRequirementID: number;
   contEducationRequirementID: number;
   educationStartDate: string | null;
   educationEndDate: string | null;

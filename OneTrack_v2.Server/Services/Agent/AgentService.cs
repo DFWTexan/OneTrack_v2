@@ -1389,6 +1389,105 @@ namespace OneTrack_v2.Services
 
             return result;
         }
+        public ReturnResult UpsertCoRequirementItem([FromBody] IputCoRequirementItem vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                if (vInput.CompanyRequirementID == 0)
+                {
+                    // INSERT CoRequirement
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspEmploymentCompanyRequirementInsert", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            
+                            cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
+                            cmd.Parameters.Add(new SqlParameter("@asset_sk", vInput.AssetSk));
+                            cmd.Parameters.Add(new SqlParameter("@asset_id", vInput.AssetIdString));
+                            cmd.Parameters.Add(new SqlParameter("@learning_program_status", vInput.LearningProgramStatus));
+                            cmd.Parameters.Add(new SqlParameter("@learning_program_enrollment_date", vInput.LearningProgramEnrollmentDate));
+                            cmd.Parameters.Add(new SqlParameter("@learning_program_completion_date", vInput.LearningProgramCompletionDate));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                else
+                {
+                    // UPDATE CoRequirement
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspEmploymentCompanyRequirementUpdate", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@EmploymentCompanyRequirementID", vInput.CompanyRequirementID));
+                            cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
+                            cmd.Parameters.Add(new SqlParameter("@asset_sk", vInput.AssetSk));
+                            cmd.Parameters.Add(new SqlParameter("@asset_id", vInput.AssetIdString));
+                            cmd.Parameters.Add(new SqlParameter("@learning_program_status", vInput.LearningProgramStatus));
+                            cmd.Parameters.Add(new SqlParameter("@learning_program_enrollment_date", vInput.LearningProgramEnrollmentDate));
+                            cmd.Parameters.Add(new SqlParameter("@learning_program_completion_date", vInput.LearningProgramCompletionDate));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "CoRequirement Item Created/Updated Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;  
+
+        }
+        public ReturnResult DeleteCoRequirementItem([FromBody] IputDeleteCoRequirementItem vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspEmploymentCompanyRequirementDelete", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
+                        cmd.Parameters.Add(new SqlParameter("@EmploymentCompanyRequirementID", vInput.CompanyRequirementID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "Transfer History Item Deleted Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;
+        }
         #endregion
 
         #region Private Methods
@@ -1594,8 +1693,10 @@ namespace OneTrack_v2.Services
                                                 .Where(ecr => ecr.EmploymentId == vEmploymentID)
                                                 .Select(ecr => new CompayRequirementsItem
                                                 {
+                                                    CompanyRequirementID = ecr.EmploymentCompanyRequirementId,
                                                     EmploymentCompanyRequirementID = ecr.EmploymentCompanyRequirementId,
                                                     AssetIdString = ecr.AssetId,
+                                                    AssetSk = (int)ecr.AssetSk,
                                                     LearningProgramStatus = ecr.LearningProgramStatus,
                                                     LearningProgramEnrollmentDate = ecr.LearningProgramEnrollmentDate,
                                                     LearningProgramCompletionDate = ecr.LearningProgramCompletionDate

@@ -352,31 +352,31 @@ export class AgentDataService {
   // }
 
   // EDITS for AGENT TRANSFER HISTORY
-  addTransferHistItem(transferHistItem: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/InsertTransferHistItem';
+  // addTransferHistItem(transferHistItem: any): Observable<any> {
+  //   this.apiUrl = environment.apiUrl + 'Agent/InsertTransferHistItem';
 
-    return this.http
-      .post<{
-        success: boolean;
-        statusCode: number;
-        objData: any;
-        errMessage: string;
-      }>(this.apiUrl, transferHistItem)
-      .pipe(
-        switchMap((response) => {
-          if (response.success && response.statusCode === 200) {
-            return this.fetchAgentInformation(this.agentInformation.employeeID);
-          } else {
-            throw new Error(response.errMessage || 'Unknown error');
-          }
-        }),
-        map((agentInfo) => {
-          this.agentInformation = agentInfo;
-          this.agentInfoChanged.next(this.agentInformation);
-          return this.agentInformation;
-        })
-      );
-  }
+  //   return this.http
+  //     .post<{
+  //       success: boolean;
+  //       statusCode: number;
+  //       objData: any;
+  //       errMessage: string;
+  //     }>(this.apiUrl, transferHistItem)
+  //     .pipe(
+  //       switchMap((response) => {
+  //         if (response.success && response.statusCode === 200) {
+  //           return this.fetchAgentInformation(this.agentInformation.employeeID);
+  //         } else {
+  //           throw new Error(response.errMessage || 'Unknown error');
+  //         }
+  //       }),
+  //       map((agentInfo) => {
+  //         this.agentInformation = agentInfo;
+  //         this.agentInfoChanged.next(this.agentInformation);
+  //         return this.agentInformation;
+  //       })
+  //     );
+  // }
 
   upsertTransferHistItem(transferHistItem: any): Observable<any> {
     this.apiUrl = environment.apiUrl + 'Agent/UpsertTranserHistItem';
@@ -414,6 +414,58 @@ export class AgentDataService {
         objData: any;
         errMessage: string;
       }>(this.apiUrl, transferHistItem)
+      .pipe(
+        switchMap((response) => {
+          if (response.success && response.statusCode === 200) {
+            return this.fetchAgentInformation(this.agentInformation.employeeID);
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        }),
+        map((agentInfo) => {
+          this.agentInformation = agentInfo;
+          this.agentInfoChanged.next(this.agentInformation);
+          return this.agentInformation;
+        })
+      );
+  }
+
+  upsertCompanyRequirementsHistItem(companyRequirementsHistItem: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'Agent/UpsertCoRequirementItem';
+
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, companyRequirementsHistItem)
+      .pipe(
+        switchMap((response) => {
+          if (response.success && response.statusCode === 200) {
+            return this.fetchAgentInformation(this.agentInformation.employeeID);
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        }),
+        map((agentInfo) => {
+          this.agentInformation = agentInfo;
+          this.agentInfoChanged.next(this.agentInformation);
+          return this.agentInformation;
+        })
+      );
+  }
+
+  deleteCompanyRequirementsHistItem(companyRequirementsItem: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'Agent/DeleteCoRequirementItem';
+
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, companyRequirementsItem)
       .pipe(
         switchMap((response) => {
           if (response.success && response.statusCode === 200) {

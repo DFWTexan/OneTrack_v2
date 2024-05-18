@@ -1,5 +1,5 @@
 import { Component, Injectable, OnInit, OnDestroy, Input } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 
@@ -40,7 +40,7 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.transferHistoryForm = new FormGroup({
       transferHistoryID: new FormControl({ value: '', disabled: true }),
-      branchCode: new FormControl(null),
+      branchCode: new FormControl({ value: '', disabled: true }, Validators.required),
       workStateAbv: new FormControl(null),
       resStateAbv: new FormControl(null),
       transferDate: new FormControl(null),

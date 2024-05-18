@@ -41,8 +41,10 @@
    }
    public class CompayRequirementsItem
     {
+        public int CompanyRequirementID { get; set; }   
         public int EmploymentCompanyRequirementID { get; set; }
         public string? AssetIdString { get; set; }
+        public int AssetSk { get; set; }
         public string? LearningProgramStatus { get; set; }
         public DateTime? LearningProgramEnrollmentDate { get; set; }
         public DateTime? LearningProgramCompletionDate { get; set; }
