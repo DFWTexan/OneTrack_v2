@@ -8,6 +8,7 @@ import {
   UserAcctInfoDataService,
   WorkListDataService,
 } from '../_services';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-dashboard',
@@ -17,6 +18,8 @@ import {
 export class DashboardComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   panelOpenState = false;
+  subscriptionWorklist: Subscription = new Subscription();
+  subscriptionAuditLog: Subscription = new Subscription();
 
   worklistData: any[] = [];
   worklistNames: string[] = ['Loading...'];
@@ -34,8 +37,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
   modifiedBy: string[] = ['Loading...'];
   modifiedBySelected: string = 'Select Tech';
   startDate: string = new Date(new Date().setDate(new Date().getDate() - 1))
-  .toISOString()
-  .split('T')[0];
+    .toISOString()
+    .split('T')[0];
   endDate: string = new Date(new Date().setDate(new Date().getDate() + 1))
     .toISOString()
     .split('T')[0];
@@ -52,16 +55,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.miscDataService.fetchWorkListNames().subscribe((worklistNames) => {
-      this.worklistNames = worklistNames;
-      this.selectedWorkListName = worklistNames[0];
-    });
+    this.subscriptionWorklist = this.miscDataService
+      .fetchWorkListNames()
+      .subscribe((worklistNames) => {
+        this.worklistNames = worklistNames;
+        this.selectedWorkListName = worklistNames[0];
+      });
     this.dashboardDataService
       .fetchAuditModifiedBy(this.isTechActive)
       .subscribe((modifiedBy) => {
         this.modifiedBy = ['Select Tech', ...modifiedBy];
       });
-    this.dashboardDataService
+    this.subscriptionAuditLog = this.dashboardDataService
       .fetchAuditLog(this.startDate, this.endDate, null)
       .subscribe((auditLogData) => {
         this.auditLogData = auditLogData;
@@ -145,5 +150,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.auditLogData = auditLogData;
       });
   }
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.subscriptionWorklist.unsubscribe();
+    this.subscriptionAuditLog.unsubscribe();
+  }
 }

@@ -51,7 +51,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
           });
       }
     );
-    this.emailDataService
+    this.subscribeEmailComTemplates = this.emailDataService
       .fetchEmailComTemplates()
       .subscribe((emailComTemplates: EmailComTemplate[]) => {
         this.emailComTemplates = emailComTemplates;

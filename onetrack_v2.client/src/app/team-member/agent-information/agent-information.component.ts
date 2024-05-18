@@ -18,6 +18,7 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
   isShowLicenseMgmt: boolean = false;
   subscribeShowLicMgmtChanged: Subscription = new Subscription();
   isShowTickle: boolean = false;
+  subsctibeAgentInfo: Subscription = new Subscription();
   subscribeTickleToggleChanged: Subscription = new Subscription();
 
   constructor(
@@ -32,7 +33,7 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
-      this.agentDataService
+      this.subsctibeAgentInfo = this.agentDataService
         .fetchAgentInformation(this.id)
         .subscribe((agentInfo: AgentInfo) => {
           this.isLoading = false;
@@ -61,6 +62,7 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.subsctibeAgentInfo.unsubscribe();
     this.subscribeShowLicMgmtChanged.unsubscribe();
     this.subscribeTickleToggleChanged.unsubscribe();
   }
