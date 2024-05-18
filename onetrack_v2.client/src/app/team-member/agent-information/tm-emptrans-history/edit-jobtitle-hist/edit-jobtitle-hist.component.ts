@@ -1,5 +1,10 @@
 import { Component, Injectable, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import {
+  FormGroup,
+  FormControl,
+  FormBuilder,
+  Validators,
+} from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 
@@ -8,6 +13,7 @@ import {
   AgentDataService,
   AppComService,
   MiscDataService,
+  UserAcctInfoDataService,
 } from '../../../../_services';
 
 @Component({
@@ -17,6 +23,7 @@ import {
 })
 @Injectable()
 export class EditJobtitleHistComponent implements OnInit, OnDestroy {
+  isFormSubmitted: boolean = false;
   jobTitleForm!: FormGroup;
   @Input() employmentID: number = 0;
   @Input() employeeID: number = 0;
@@ -25,21 +32,21 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
   subscriptionData: Subscription = new Subscription();
 
   constructor(
-    public agentService: AgentDataService,
+    private fb: FormBuilder,
+    public agentDataService: AgentDataService,
     public agentComService: AgentComService,
     public appComService: AppComService,
-    private miscDataService: MiscDataService
+    private miscDataService: MiscDataService,
+    private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {
-    this.jobTitleForm = new FormGroup({
-      employmentJobTitleID: new FormControl({ value: '', disabled: true }),
-      employmentID: new FormControl(null),
-      jobTitleDate: new FormControl(null),
-      jobCode: new FormControl(null),
-      jobTitleID: new FormControl(null),
-      jobTitle: new FormControl(null),
-      isCurrent: new FormControl(null),
+    this.jobTitleForm = this.fb.group({
+      employmentJobTitleID: [''],
+      employmentID: [''],
+      jobTitleDate: ['', Validators.required],
+      jobTitleID: [0, Validators.required],
+      isCurrent: [''],
     });
 
     this.subscriptionMode =
@@ -47,19 +54,16 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
         (mode: string) => {
           if (mode === 'EDIT') {
             this.subscriptionData =
-              this.agentService.employmentJobTitleHistItemChanged.subscribe(
+              this.agentDataService.employmentJobTitleHistItemChanged.subscribe(
                 (jobTitle: any) => {
                   this.jobTitleForm.patchValue({
                     employmentJobTitleID: jobTitle.employmentJobTitleID,
-                    employmentID: jobTitle.employmentID,
                     jobTitleDate: formatDate(
                       jobTitle.jobTitleDate,
                       'yyyy-MM-dd',
                       'en-US'
                     ),
-                    jobCode: jobTitle.jobCode,
                     jobTitleID: jobTitle.jobTitleID,
-                    jobTitle: jobTitle.jobTitle,
                     isCurrent: jobTitle.isCurrent,
                   });
                 }
@@ -80,7 +84,7 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
       .subscribe(
         (jobTitles: Array<{ jobTitleID: number; jobTitle: string }>) => {
           this.jobTitleList = [
-            { jobTitleID: 0, jobTitle: 'Select' },
+            { jobTitleID: 0, jobTitle: 'Select Job Title' },
             ...jobTitles,
           ];
         }
@@ -88,16 +92,76 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(
-      'EMFTest - (app-edit-jobtitle-hist) onSubmit => \n',
-      this.jobTitleForm.value
-    );
+    this.isFormSubmitted = true;
+
+    let jobTitleItem = this.jobTitleForm.value;
+    jobTitleItem.employmentID = this.employmentID;
+    jobTitleItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+
+    if (
+      jobTitleItem.jobTitleDate === '' ||
+      jobTitleItem.jobTitleDate === null
+    ) {
+      this.jobTitleForm.controls['jobTitleDate'].setErrors({
+        invalid: true,
+      });
+    }
+
+    if (jobTitleItem.jobTitleID === 0) {
+      this.jobTitleForm.controls['jobTitleID'].setErrors({
+        invalid: true,
+      });
+    }
+
+    if (this.jobTitleForm.invalid) {
+      return;
+    }
+
+    if (this.agentComService.modeEmploymentJobTitleHist === 'INSERT') {
+      jobTitleItem.employmentJobTitleID = 0;
+    }
+
+    console.log('EMFTEST (app-edit-jobtitle-hist: onSubmit) - jobTitleItem => \n', jobTitleItem);
+
+    this.agentDataService
+      .upsertEmploymentJobTitleHistItem(jobTitleItem)
+      .subscribe({
+        next: (response) => {
+          this.isFormSubmitted = true;
+          this.closeModal();
+        },
+        error: (error) => {
+          console.error(error);
+          // handle the error here
+        },
+      });
   }
 
   closeModal() {
-    const modalDiv = document.getElementById('modal-edit-jobTitle-history');
-    if (modalDiv != null) {
-      modalDiv.style.display = 'none';
+    // const modalDiv = document.getElementById('modal-edit-jobTitle-history');
+    // if (modalDiv != null) {
+    //   modalDiv.style.display = 'none';
+    // }
+    if (this.jobTitleForm.dirty && !this.isFormSubmitted) {
+      if (
+        confirm('You have unsaved changes. Are you sure you want to close?')
+      ) {
+        const modalDiv = document.getElementById('modal-edit-jobTitle-history');
+        if (modalDiv != null) {
+          modalDiv.style.display = 'none';
+        }
+        this.jobTitleForm.reset();
+        this.jobTitleForm.patchValue({
+          jobTitleID: 0,
+          isCurrent: false,
+        });
+      }
+    } else {
+      this.isFormSubmitted = false;
+      const modalDiv = document.getElementById('modal-edit-jobTitle-history');
+      if (modalDiv != null) {
+        modalDiv.style.display = 'none';
+      }
     }
   }
 

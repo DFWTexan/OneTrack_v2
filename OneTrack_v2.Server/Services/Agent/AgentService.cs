@@ -1488,6 +1488,97 @@ namespace OneTrack_v2.Services
 
             return result;
         }
+        public ReturnResult UpsertEmploymentJobTitleItem([FromBody] IputEmploymentJobTitleItem vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                if (vInput.EmploymentJobTitleID == 0)
+                {
+                    // INSERT Employment Job Title
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspEmploymentJobTitleInsert", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
+                            cmd.Parameters.Add(new SqlParameter("@JobTitleID", (int)vInput.JobTitleID));
+                            cmd.Parameters.Add(new SqlParameter("@JobTitleDate", vInput.JobTitleDate));
+                            cmd.Parameters.Add(new SqlParameter("@IsCurrent", vInput.IsCurrent));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                else
+                {
+                    // UPDATE Employment Job Title
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspEmploymentJobTitleUpdate", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@EmploymentJobTitleID", vInput.EmploymentJobTitleID));
+                            cmd.Parameters.Add(new SqlParameter("@JobTitleID", vInput.JobTitleID));
+                            cmd.Parameters.Add(new SqlParameter("@JobTitleDate", vInput.JobTitleDate));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "Employment Job Title Item Created/Updated Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;
+        }
+        public ReturnResult DeleteEmploymentJobTitleItem([FromBody] IputDeleteEmploymentJobTitle vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspEmploymentJobTitleDelete", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
+                        cmd.Parameters.Add(new SqlParameter("@EmploymentJobTitleID", vInput.EmploymentJobTitleID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "Employment Job Title Item Deleted Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;
+        }
         #endregion
 
         #region Private Methods

@@ -482,6 +482,58 @@ export class AgentDataService {
       );
   }
 
+  upsertEmploymentJobTitleHistItem(employmentJobTitleHistItem: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'Agent/UpsertEmploymentJobTitleItem';
+
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, employmentJobTitleHistItem)
+      .pipe(
+        switchMap((response) => {
+          if (response.success && response.statusCode === 200) {
+            return this.fetchAgentInformation(this.agentInformation.employeeID);
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        }),
+        map((agentInfo) => {
+          this.agentInformation = agentInfo;
+          this.agentInfoChanged.next(this.agentInformation);
+          return this.agentInformation;
+        })
+      );
+  }
+
+  deleteEmploymentJobTitleHistItem(employmentJobTitleHistItem: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'Agent/DeleteEmploymentJobTitleItem';
+
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, employmentJobTitleHistItem)
+      .pipe(
+        switchMap((response) => {
+          if (response.success && response.statusCode === 200) {
+            return this.fetchAgentInformation(this.agentInformation.employeeID);
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        }),
+        map((agentInfo) => {
+          this.agentInformation = agentInfo;
+          this.agentInfoChanged.next(this.agentInformation);
+          return this.agentInformation;
+        })
+      );
+  }
+
   // LICENSE APPOINTMENT MANAGEMENT
   storeLicenseAppointment(appointment: LicenseAppointment) {
     this.licenseAppointment = appointment;

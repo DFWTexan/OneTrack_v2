@@ -138,11 +138,6 @@ export class EditCorequirementHistComponent implements OnInit, OnDestroy {
       return;
     }
 
-    console.log(
-      'EMFTEST (app-edit-corequirement-hist: onSubmit) - this.agentComService.modeCompanyRequirementsHist(2): ',
-      this.agentComService.modeCompanyRequirementsHist
-    );
-
     if (this.agentComService.modeCompanyRequirementsHist === 'INSERT') {
       coReqItem.companyRequirementID = 0;
     }

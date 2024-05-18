@@ -30,5 +30,7 @@ namespace OneTrack_v2.Services
         public ReturnResult DeleteTransferHistItem([FromBody] IputDeleteTransferHisttoryItem vInput);
         public ReturnResult UpsertCoRequirementItem([FromBody] IputCoRequirementItem vInput);
         public ReturnResult DeleteCoRequirementItem([FromBody] IputDeleteCoRequirementItem vInput);
+        public ReturnResult UpsertEmploymentJobTitleItem([FromBody] IputEmploymentJobTitleItem vInput);
+        public ReturnResult DeleteEmploymentJobTitleItem([FromBody] IputDeleteEmploymentJobTitle vInput);
     }
 }

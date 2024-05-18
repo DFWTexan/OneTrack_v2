@@ -97,6 +97,7 @@ export interface EmploymentJobTitleHistory {
   jobTitleDate: string;
   jobCode: string;
   jobTitle: string;
+  jobTitleID: number;
   isCurrent: boolean;
 }
 export interface ContEduRequiredItem {

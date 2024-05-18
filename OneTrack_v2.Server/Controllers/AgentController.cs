@@ -194,6 +194,14 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> UpsertEmploymentJobTitleItem([FromBody] IputEmploymentJobTitleItem Input)
+        {
+            var result = await Task.Run(() => _agentService.UpsertEmploymentJobTitleItem(Input));
+
+            return StatusCode(result.StatusCode, result);
+        }
         #endregion
 
         #region "Agent Delete"
@@ -217,6 +225,14 @@ namespace OneTrack_v2.Controllers
         public async Task<ActionResult> DeleteCoRequirementItem([FromBody] IputDeleteCoRequirementItem Input)
         {
             var result = await Task.Run(() => _agentService.DeleteCoRequirementItem(Input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> DeleteEmploymentJobTitleItem([FromBody] IputDeleteEmploymentJobTitle Input)
+        {
+            var result = await Task.Run(() => _agentService.DeleteEmploymentJobTitleItem(Input));
 
             return StatusCode(result.StatusCode, result);
         }
