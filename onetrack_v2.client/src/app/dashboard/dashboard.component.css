@@ -16,3 +16,9 @@
   width: 150px;
   font-size: 1.3rem;
 }
+
+.checkbox-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

@@ -9,6 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 using OneTrak_v2.DataModel;
 using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 using System.Linq;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Database;
+using Microsoft.CodeAnalysis.Elfie.Diagnostics;
+using System.Data.SqlTypes;
+using System.Collections.Generic;
 
 namespace OneTrack_v2.Services
 {
@@ -193,6 +197,7 @@ namespace OneTrack_v2.Services
 
                 var parameters = new[] { new SqlParameter("@EmploymentID", agent.EmploymentID) };
 
+                // Hierarchy Information
                 var queryHierarchyResults = _db.OputAgentHiearchy
                                             .FromSqlRaw(sql, parameters)
                                             .AsNoTracking()
@@ -201,34 +206,38 @@ namespace OneTrack_v2.Services
                 agent.MgrHiearchy = queryHierarchyResults;
                 agent.AgentLicenseAppointments = FillAgentLicenseAppointment(agent.EmploymentID);
 
-                var queryBranchInfo = from bif in _db.Bifs
-                                      where bif.HrDepartmentId == agent.BranchCode.Substring(agent.BranchCode.Length - 8)
-                                      select new
-                                      {
-                                          HrDeptmentID = bif.HrDepartmentId != null ? bif.HrDepartmentId : "",
-                                          OfficeName = bif.Name,
-                                          ScoreNumber = bif.ScoreNumber != null ? bif.ScoreNumber : "",
-                                          StreetAddress1 = bif.Address1,
-                                          StreetAddress2 = bif.Address2,
-                                          StreetZip = bif.ZipCode,
-                                          CustomerPhone = bif.Phone,
-                                          FaxNumber = bif.Fax,
-                                          Email = bif.HrDepartmentId != null ? bif.HrDepartmentId.Substring(bif.HrDepartmentId.Length - 8) + "@xxx.onemainfinancial.com" : ""
-                                      };
-                var branchInfo = queryBranchInfo.AsNoTracking().FirstOrDefault();
+                // Branch Information
+                if (agent.BranchCode != null)
+                {
+                    var queryBranchInfo = from bif in _db.Bifs
+                                          where bif.HrDepartmentId == agent.BranchCode.Substring(agent.BranchCode.Length - 8)
+                                          select new
+                                          {
+                                              HrDeptmentID = bif.HrDepartmentId != null ? bif.HrDepartmentId : "",
+                                              OfficeName = bif.Name,
+                                              ScoreNumber = bif.ScoreNumber != null ? bif.ScoreNumber : "",
+                                              StreetAddress1 = bif.Address1,
+                                              StreetAddress2 = bif.Address2,
+                                              StreetZip = bif.ZipCode,
+                                              CustomerPhone = bif.Phone,
+                                              FaxNumber = bif.Fax,
+                                              Email = bif.HrDepartmentId != null ? bif.HrDepartmentId.Substring(bif.HrDepartmentId.Length - 8) + "@xxx.onemainfinancial.com" : ""
+                                          };
+                    var branchInfo = queryBranchInfo.AsNoTracking().FirstOrDefault();
 
-                agent.BranchDeptScoreNumber = branchInfo.ScoreNumber != null ? branchInfo.ScoreNumber : "";
-                agent.BranchDeptNumber = branchInfo.HrDeptmentID != null ? branchInfo.HrDeptmentID : "";
-                agent.BranchDeptName = branchInfo.OfficeName;
-                agent.BranchDeptStreet1 = branchInfo.StreetAddress1;
-                agent.BranchDeptStreet2 = branchInfo.StreetAddress2;
-                agent.BranchDeptStreetZip = branchInfo.StreetZip;
-                agent.BranchDeptStreetCity = agent.City;
-                agent.BranchDeptStreetState = agent.State;
-                agent.BranchDeptPhone = branchInfo.CustomerPhone;
-                agent.BranchDeptFax = branchInfo.FaxNumber;
-                agent.BranchDeptEmail = branchInfo.Email;
-
+                    agent.BranchDeptScoreNumber = branchInfo.ScoreNumber != null ? branchInfo.ScoreNumber : "";
+                    agent.BranchDeptNumber = branchInfo.HrDeptmentID != null ? branchInfo.HrDeptmentID : "";
+                    agent.BranchDeptName = branchInfo.OfficeName;
+                    agent.BranchDeptStreet1 = branchInfo.StreetAddress1;
+                    agent.BranchDeptStreet2 = branchInfo.StreetAddress2;
+                    agent.BranchDeptStreetZip = branchInfo.StreetZip;
+                    agent.BranchDeptStreetCity = agent.City;
+                    agent.BranchDeptStreetState = agent.State;
+                    agent.BranchDeptPhone = branchInfo.CustomerPhone;
+                    agent.BranchDeptFax = branchInfo.FaxNumber;
+                    agent.BranchDeptEmail = branchInfo.Email;
+                }
+                
                 // Employment History
                 var agentEmpTransHistory = GetEmploymentHistoryInfo(agent.EmploymentID);
 
@@ -1017,12 +1026,128 @@ namespace OneTrack_v2.Services
         }
 
         #region INSERT/UPDATE/DELETE
-        public ReturnResult InsertAgent([FromBody] IputAddAgent vInput)
+        public ReturnResult UpsertAgent([FromBody] IputUpsertAgent vInput)
         {
             var result = new ReturnResult();
             try
             {
-                // TBD: Placeholder method to execute [uspAgentInsert] stored procedure
+                if (vInput.EmployeeID == 0)
+                {
+                    // INSERT
+                    //using (SqlConnection conn = new SqlConnection(_connectionString))
+                    //{
+                    //using (SqlCommand cmd = new SqlCommand("uspAgentInsert", conn))
+                    //{
+                    //    cmd.CommandType = CommandType.StoredProcedure;
+
+                    //    cmd.Parameters.Add(new SqlParameter("@EmployeeSSN", SqlDbType.VarChar, 12) { Value = vInput.EmployeeSSN ?? string.Empty });
+                    //    cmd.Parameters.Add(new SqlParameter("@NationalProducerNumber", SqlDbType.Int) { Value = vInput.NationalProducerNumber });
+                    //    cmd.Parameters.Add(new SqlParameter("@GEID", SqlDbType.VarChar, 15) { Value = vInput.GEID ?? string.Empty });
+                    //    cmd.Parameters.Add(new SqlParameter("@Alias", SqlDbType.VarChar, 50) { Value = vInput.Alias ?? string.Empty });
+                    //    cmd.Parameters.Add(new SqlParameter("@LastName", SqlDbType.VarChar, 50) { Value = vInput.LastName ?? string.Empty });
+                    //    cmd.Parameters.Add(new SqlParameter("@FirstName", SqlDbType.VarChar, 50) { Value = vInput.FirstName ?? string.Empty });
+                    //    cmd.Parameters.Add(new SqlParameter("@MiddleName", SqlDbType.VarChar, 50) { Value = vInput.MiddleName ?? string.Empty });
+                    //    //cmd.Parameters.Add(new SqlParameter("@DateOfBirth", SqlDbType.DateTime) { Value = vInput.DateOfBirth });
+                    //    if (vInput.DateOfBirth != DateTime.MinValue)
+                    //    {
+                    //        cmd.Parameters.Add(new SqlParameter("@DateOfBirth", SqlDbType.DateTime) { Value = vInput.DateOfBirth });
+                    //    }
+                    //    else
+                    //    {
+                    //        cmd.Parameters.Add(new SqlParameter("@DateOfBirth", SqlDbType.DateTime) { Value = DBNull.Value });
+                    //    }
+                    //    cmd.Parameters.Add(new SqlParameter("@SOEID", SqlDbType.VarChar, 15) { Value = vInput.SOEID ?? string.Empty });
+                    //    cmd.Parameters.Add(new SqlParameter("@ExcludeFromRpts", SqlDbType.Bit) { Value = vInput.ExcludeFromRpts });
+                    //    cmd.Parameters.Add(new SqlParameter("@EmployeeStatus", SqlDbType.VarChar, 25) { Value = vInput.EmployeeStatus ?? string.Empty });
+                    //    cmd.Parameters.Add(new SqlParameter("@CompanyID", SqlDbType.Int) { Value = vInput.CompanyID });
+                    //    cmd.Parameters.Add(new SqlParameter("@WorkPhone", SqlDbType.VarChar, 13) { Value = vInput.WorkPhone ?? string.Empty });
+                    //    cmd.Parameters.Add(new SqlParameter("@Email", SqlDbType.VarChar, 50) { Value = vInput.Email ?? string.Empty });
+                    //    cmd.Parameters.Add(new SqlParameter("@LicenseIncentive", SqlDbType.VarChar, 25) { Value = vInput.LicenseIncentive ?? string.Empty });
+                    //    cmd.Parameters.Add(new SqlParameter("@LicenseLevel", SqlDbType.VarChar, 25) { Value = vInput.LicenseLevel ?? string.Empty });
+                    //    cmd.Parameters.Add(new SqlParameter("@Address1", SqlDbType.VarChar, 50) { Value = vInput.Address1 ?? string.Empty });
+                    //    cmd.Parameters.Add(new SqlParameter("@Address2", SqlDbType.VarChar, 50) { Value = vInput.Address2 ?? string.Empty });
+                    //    cmd.Parameters.Add(new SqlParameter("@City", SqlDbType.VarChar, 50) { Value = vInput.City ?? string.Empty });
+                    //    cmd.Parameters.Add(new SqlParameter("@State", SqlDbType.Char, 2) { Value = vInput.State ?? string.Empty });
+                    //    cmd.Parameters.Add(new SqlParameter("@Zip", SqlDbType.VarChar, 12) { Value = vInput.Zip ?? string.Empty });
+                    //    cmd.Parameters.Add(new SqlParameter("@Phone", SqlDbType.VarChar, 13) { Value = vInput.Phone ?? string.Empty });
+                    //    cmd.Parameters.Add(new SqlParameter("@Fax", SqlDbType.VarChar, 13) { Value = vInput.Fax ?? string.Empty });
+                    //    //cmd.Parameters.Add(new SqlParameter("@HireDate", SqlDbType.DateTime) { Value = vInput.HireDate.Date});
+                    //    if (vInput.HireDate != DateTime.MinValue)
+                    //    {
+                    //        cmd.Parameters.Add(new SqlParameter("@HireDate", SqlDbType.DateTime) { Value = vInput.HireDate });
+                    //    }
+                    //    else
+                    //    {
+                    //        cmd.Parameters.Add(new SqlParameter("@HireDate", SqlDbType.DateTime) { Value = DBNull.Value });
+                    //    }
+                    //    cmd.Parameters.Add(new SqlParameter("@UserSOEID", SqlDbType.VarChar, 50) { Value = vInput.UserSOEID ?? string.Empty });
+                    //    cmd.Parameters.Add(new SqlParameter("@BackgroundCheckStatus", SqlDbType.VarChar, 50) { Value = vInput.BackgroundCheckStatus ?? string.Empty });
+                    //    cmd.Parameters.Add(new SqlParameter("@BackgroundCheckNote", SqlDbType.VarChar, 500) { Value = vInput.BackgroundCheckNote ?? string.Empty });
+                    //    cmd.Parameters.Add(new SqlParameter("@BranchCode", SqlDbType.VarChar, 10) { Value = vInput.BranchCode ?? string.Empty });
+                    //    cmd.Parameters.Add(new SqlParameter("@WorkStateAbv", SqlDbType.Char, 2) { Value = vInput.WorkStateAbv ?? string.Empty });
+                    //    cmd.Parameters.Add(new SqlParameter("@ResStateAbv", SqlDbType.Char, 2) { Value = vInput.ResStateAbv ?? string.Empty });
+                    //    cmd.Parameters.Add(new SqlParameter("@JobTitleID", SqlDbType.Int) { Value = vInput.JobTitleID });
+                    //    cmd.Parameters.Add(new SqlParameter("@JobTitleDate", SqlDbType.DateTime) { Value = vInput.JobTitleDate });
+
+
+                    //    conn.Open();
+                    //    cmd.ExecuteNonQuery();
+                    //}
+                    //}
+                    result = InsertAgent_v2(vInput);
+                }
+                else
+                {
+                    // UPDATE
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspAgentDetailsUpdate", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeSSN", SqlDbType.VarChar, 12) { Value = vInput.EmployeeSSN ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeID", SqlDbType.VarChar, 25) { Value = vInput.EmployeeID });
+                            cmd.Parameters.Add(new SqlParameter("@LastName", SqlDbType.VarChar, 50) { Value = vInput.LastName ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@FirstName", SqlDbType.VarChar, 50) { Value = vInput.FirstName ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@MiddleName", SqlDbType.VarChar, 50) { Value = vInput.MiddleName ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@SOEID", SqlDbType.VarChar, 15) { Value = vInput.SOEID ?? string.Empty });
+                            //cmd.Parameters.Add(new SqlParameter("@DateOfBirth", SqlDbType.DateTime) { Value = vInput.DateOfBirth ?? DateTime.MinValue });
+                            if (vInput.DateOfBirth != DateTime.MinValue)
+                            {
+                                cmd.Parameters.Add(new SqlParameter("@DateOfBirth", SqlDbType.DateTime) { Value = vInput.DateOfBirth });
+                            }
+                            else
+                            {
+                                cmd.Parameters.Add(new SqlParameter("@DateOfBirth", SqlDbType.DateTime) { Value = DBNull.Value });
+                            }
+                            cmd.Parameters.Add(new SqlParameter("@NationalProducerNumber", SqlDbType.Int) { Value = vInput.NationalProducerNumber });
+                            cmd.Parameters.Add(new SqlParameter("@GEID", SqlDbType.VarChar, 15) { Value = vInput.GEID ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@Alias", SqlDbType.VarChar, 50) { Value = vInput.Alias ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@ExcludeFromRpts", SqlDbType.Bit) { Value = vInput.ExcludeFromRpts });
+                            cmd.Parameters.Add(new SqlParameter("@Address1", SqlDbType.VarChar, 50) { Value = vInput.Address1 ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@Address2", SqlDbType.VarChar, 50) { Value = vInput.Address2 ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@City", SqlDbType.VarChar, 50) { Value = vInput.City ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@State", SqlDbType.Char, 2) { Value = vInput.State ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@Zip", SqlDbType.VarChar, 12) { Value = vInput.Zip ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@Phone", SqlDbType.VarChar, 13) { Value = vInput.Phone ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@Fax", SqlDbType.VarChar, 13) { Value = vInput.Fax ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@EmploymentID", SqlDbType.Int) { Value = vInput.EmploymentID });
+                            cmd.Parameters.Add(new SqlParameter("@Email", SqlDbType.VarChar, 50) { Value = vInput.Email ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@WorkPhone", SqlDbType.VarChar, 13) { Value = vInput.WorkPhone ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeStatus", SqlDbType.VarChar, 25) { Value = vInput.EmployeeStatus ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@CompanyID", SqlDbType.Int) { Value = vInput.CompanyID });
+                            cmd.Parameters.Add(new SqlParameter("@CERequired", SqlDbType.Bit) { Value = vInput.CERequired });
+                            cmd.Parameters.Add(new SqlParameter("@LicenseLevel", SqlDbType.VarChar, 25) { Value = vInput.LicenseLevel ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@LicenseIncentive", SqlDbType.VarChar, 25) { Value = vInput.LicenseIncentive ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@SecondChance", SqlDbType.Bit) { Value = vInput.SecondChance });
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", SqlDbType.VarChar, 50) { Value = vInput.UserSOEID ?? string.Empty });
+
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
 
                 result.Success = true;
                 result.StatusCode = 200;
@@ -1036,7 +1161,7 @@ namespace OneTrack_v2.Services
 
             return result;
         }
-        public ReturnResult InsertAgent_v2([FromBody] IputAgentInsert vInput)
+        public ReturnResult InsertAgent_v2([FromBody] IputUpsertAgent vInput)
         {
             var result = new ReturnResult();
             try
@@ -1069,7 +1194,8 @@ namespace OneTrack_v2.Services
                             _utilityService.LogAudit("EmployeeSSN", employeeSsnid, vInput.UserSOEID, "INSERT", "EmployeeSSN", null, employeeSsnid.ToString());
 
                         // Address INSERT via stored procedure
-                        var isAddressInsert = ExecuteAddressInsert(vInput, country);
+                        //var isAddressInsert = ExecuteAddressInsert(vInput, country);
+
 
                         // Employee INSERT
                         var employee = new Employee
@@ -1083,7 +1209,7 @@ namespace OneTrack_v2.Services
                             DateOfBirth = vInput.DateOfBirth,
                             NationalProducerNumber = vInput.NationalProducerNumber,
                             EmployeeSsnid = employeeSSN.EmployeeSsnid,
-                            //AddressId = addressId, // TBD: Placeholder for addressId
+                            AddressId = InsertAddress(vInput, country),
                             ExcludeFromRpts = vInput.ExcludeFromRpts
                         };
                         context.Employees.Add(employee);
@@ -1096,13 +1222,89 @@ namespace OneTrack_v2.Services
                             _utilityService.LogAudit("Employee", employeeId, vInput.UserSOEID, "INSERT", "FirstName, MiddleName, LastName", null, employee.EmployeeId.ToString());
 
                         // Employment INSERT 
-                        var isEmploymentInsert = ExecuteEmploymentInsert(vInput, employeeId);
+                        //var isEmploymentInsert = ExecuteEmploymentInsert(vInput, employeeId);
+                        var newEmployment = new Employment
+                        {
+                            EmployeeId = employeeId,
+                            CompanyId = vInput.CompanyID,
+                            IsRehire = false,
+                            EmployeeStatus = vInput.EmployeeStatus,
+                            WorkPhone = vInput.WorkPhone,
+                            Email = vInput.Email,
+                            EmployeeType = null,
+                            Cerequired = vInput.CERequired,
+                            IsCurrent = true,
+                            LicenseIncentive = vInput.LicenseIncentive,
+                            LicenseLevel = vInput.LicenseLevel
+                        };
+                        context.Employments.Add(newEmployment);
+                        context.SaveChanges();
+
+                        // Log audit for Employment INSERT
+                        int employmentId = newEmployment.EmploymentId;
+
+                        if (employmentId > 0)
+                            _utilityService.LogAudit("Employment", employmentId, vInput.UserSOEID, "INSERT", "EmployeeId, CompanyId, EmployeeStatus, WorkPhone, Email, Cerequired, LicenseIncentive, LicenseLevel", null, employmentId.ToString());
+
+                        // INSERT EmploymentHistory record
+                        var employmentHistory = new EmploymentHistory
+                        {
+                            EmploymentId = employmentId,
+                            HireDate = vInput.HireDate,
+                            BackgroundCheckStatus = vInput.BackgroundCheckStatus,
+                            BackGroundCheckNotes = vInput.BackgroundCheckNote,
+                        };
+                        context.EmploymentHistories.Add(employmentHistory);
+                        context.SaveChanges();
+
+                        // Log audit for EmploymentHistory INSERT
+                        int employmentHistoryId = employmentHistory.EmploymentHistoryId;
+
+                        if (employmentHistoryId > 0)
+                            _utilityService.LogAudit("EmploymentHistory", employmentHistoryId, vInput.UserSOEID, "INSERT", "EmploymentId, HireDate, BackgroundCheckStatus, BackGroundCheckNotes", null, employmentHistoryId.ToString());
+
+
+                        // INSERT TransferHistory record
+                        var transferHistory = new TransferHistory
+                        {
+                            EmploymentId = employmentId,
+                            BranchCode = vInput.BranchCode,
+                            ResStateAbv = vInput.ResStateAbv,
+                            WorkStateAbv = vInput.WorkStateAbv,
+                            TransferDate = transferDate,
+                        };
+                        context.TransferHistories.Add(transferHistory);
+                        context.SaveChanges();
+
+                        // Log audit for TransferHistory INSERT
+                        int transferHistoryId = transferHistory.TransferHistoryId;
+
+                        if (transferHistoryId > 0)
+                            _utilityService.LogAudit("TransferHistory", transferHistoryId, vInput.UserSOEID, "INSERT", "EmploymentId, BranchCode, ResStateAbv, WorkStateAbv, TransferDate", null, transferHistoryId.ToString());
+
+
+                        // INSERT EmploymentJobTitle record
+                        string command = "INSERT INTO EmploymentJobTitle (EmploymentId, JobTitleId, JobTitleDate, IsCurrent) OUTPUT INSERTED.EmploymentJobTitleId VALUES (@EmploymentId, @JobTitleId, @JobTitleDate, @IsCurrent)";
+                        var parameters = new[]
+                        {
+                            new SqlParameter("@EmploymentId", employmentId),
+                            new SqlParameter("@JobTitleId", vInput.JobTitleID),
+                            new SqlParameter("@JobTitleDate", vInput.JobTitleDate == DateTime.MinValue ? DBNull.Value : vInput.JobTitleDate),
+                            new SqlParameter("@IsCurrent", true)
+                        };
+                        var newId = context.Database.ExecuteSqlRaw(command, parameters);
+
+                        //command.Parameters.Add("@JobTitleDate", SqlDbType.DateTime, 10).Value = vInput.JobTitleDate == DateTime.MinValue ? DBNull.Value : vInput.JobTitleDate;
+
+                        // Log audit for EmploymentJobTitle INSERT
+                        if (newId > 0)
+                            _utilityService.LogAudit("EmploymentJobTitle", newId, vInput.UserSOEID, "INSERT", "EmploymentId, JobTitleId, JobTitleDate", null, newId.ToString());
 
                         transaction.Commit();
 
-                        var empResult = GetAgentByEmployeeID(employeeId);
+                        var empResult = new { EmployeeID = employeeId, Message = "Success" };
                         result.Success = true;
-                        result.ObjData = empResult.ObjData;
+                        result.ObjData = empResult;
                     }
                     catch (Exception ex)
                     {
@@ -1403,7 +1605,7 @@ namespace OneTrack_v2.Services
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
 
-                            
+
                             cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
                             cmd.Parameters.Add(new SqlParameter("@asset_sk", vInput.AssetSk));
                             cmd.Parameters.Add(new SqlParameter("@asset_id", vInput.AssetIdString));
@@ -1452,7 +1654,7 @@ namespace OneTrack_v2.Services
                 result.ErrMessage = ex.Message;
             }
 
-            return result;  
+            return result;
 
         }
         public ReturnResult DeleteCoRequirementItem([FromBody] IputDeleteCoRequirementItem vInput)
@@ -1582,7 +1784,7 @@ namespace OneTrack_v2.Services
         #endregion
 
         #region Private Methods
-        private bool ExecuteAddressInsert(IputAgentInsert vInput, string? vCountry = null)
+        private bool ExecuteAddressInsert(IputUpsertAgent vInput, string? vCountry = null)
         {
             try
             {
@@ -1616,7 +1818,41 @@ namespace OneTrack_v2.Services
                 return false;
             }
         }
-        private bool ExecuteEmploymentInsert(IputAgentInsert vInput, int vEmployeeId)
+        public int InsertAddress(IputUpsertAgent vInput, string? vCountry = null)
+        {
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand("uspAddressInsert", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add("@AddressType", SqlDbType.VarChar, 20).Value = "Agent";
+                    cmd.Parameters.Add("@Address1", SqlDbType.VarChar, 50).Value = vInput.Address1;
+                    cmd.Parameters.Add("@Address2", SqlDbType.VarChar, 50).Value = vInput.Address2;
+                    cmd.Parameters.Add("@City", SqlDbType.VarChar, 50).Value = vInput.City;
+                    cmd.Parameters.Add("@State", SqlDbType.VarChar, 2).Value = vInput.State;
+                    cmd.Parameters.Add("@Phone", SqlDbType.VarChar, 13).Value = vInput.Phone;
+                    cmd.Parameters.Add("@Country", SqlDbType.DateTime, 10).Value = vCountry;
+                    cmd.Parameters.Add("@Zip", SqlDbType.VarChar, 12).Value = vInput.Zip;
+                    cmd.Parameters.Add("@Fax", SqlDbType.VarChar, 13).Value = vInput.Fax;
+                    cmd.Parameters.Add("@UserSOEID", SqlDbType.VarChar, 50).Value = vInput.UserSOEID;
+
+                    SqlParameter addressIdParam = new SqlParameter("@AddressID", SqlDbType.Int)
+                    {
+                        Direction = ParameterDirection.Output
+                    };
+                    cmd.Parameters.Add(addressIdParam);
+
+                    cmd.ExecuteNonQuery();
+
+                    return (int)addressIdParam.Value;
+                }
+            }
+        }
+
+        private bool ExecuteEmploymentInsert(IputUpsertAgent vInput, int vEmployeeId)
         {
             try
             {
@@ -1627,28 +1863,29 @@ namespace OneTrack_v2.Services
                         command.CommandType = CommandType.StoredProcedure;
 
                         //Employment
-                        command.Parameters.Add("@EmployeeID", SqlDbType.VarChar, 25).Value = vEmployeeId;
-                        command.Parameters.Add("@EmployeeStatus", SqlDbType.VarChar, 25).Value = vInput.EmployeeStatus;
+                        command.Parameters.Add("@EmployeeID", SqlDbType.Int, 0).Value = vEmployeeId;
+                        command.Parameters.Add("@EmployeeStatus", SqlDbType.VarChar, 25).Value = vInput.EmployeeStatus ?? null;
                         command.Parameters.Add("@CompanyID", SqlDbType.Int, 0).Value = vInput.CompanyID;
-                        command.Parameters.Add("@WorkPhone", SqlDbType.VarChar, 13).Value = vInput.WorkPhone;
-                        command.Parameters.Add("@Email", SqlDbType.VarChar, 50).Value = vInput.Email;
-                        command.Parameters.Add("@LicenseIncentive", SqlDbType.VarChar, 25).Value = vInput.LicenseIncentive;
-                        command.Parameters.Add("@LicenseLevel", SqlDbType.VarChar, 25).Value = vInput.LicenseLevel;
+                        command.Parameters.Add("@WorkPhone", SqlDbType.VarChar, 13).Value = vInput.WorkPhone ?? null;
+                        command.Parameters.Add("@Email", SqlDbType.VarChar, 50).Value = vInput.Email ?? null;
+                        command.Parameters.Add("@LicenseIncentive", SqlDbType.VarChar, 25).Value = vInput.LicenseIncentive ?? null;
+                        command.Parameters.Add("@LicenseLevel", SqlDbType.VarChar, 25).Value = vInput.LicenseLevel ?? null;
 
                         //EmploymentHistory
-                        command.Parameters.Add("@HireDate", SqlDbType.DateTime, 10).Value = vInput.HireDate;
-                        command.Parameters.Add("@BackgroundCheckStatus", SqlDbType.VarChar, 50).Value = vInput.BackgroundCheckStatus;
-                        command.Parameters.Add("@BackgroundCheckNote", SqlDbType.VarChar, 500).Value = vInput.BackgroundCheckNote;
+                        command.Parameters.Add("@HireDate", SqlDbType.DateTime, 10).Value = vInput.HireDate.Date == DateTime.MinValue ? DBNull.Value : vInput.HireDate;
+                        //command.Parameters.Add("@HireDate", SqlDbType.DateTime, 10).Value = vInput.HireDate.Date == DateTime.MinValue ? (object)DBNull.Value : vInput.HireDate.Date;
+                        command.Parameters.Add("@BackgroundCheckStatus", SqlDbType.VarChar, 50).Value = vInput.BackgroundCheckStatus ?? null;
+                        command.Parameters.Add("@BackgroundCheckNote", SqlDbType.VarChar, 500).Value = vInput.BackgroundCheckNote ?? null;
 
                         //TransferHistory
-                        command.Parameters.Add("@BranchCode", SqlDbType.DateTime, 50).Value = vInput.BranchCode;
-                        command.Parameters.Add("@ResStateAbv", SqlDbType.DateTime, 2).Value = vInput.ResStateAbv;
-                        command.Parameters.Add("@WorkStateAbv", SqlDbType.DateTime, 2).Value = vInput.WorkStateAbv;
-                        command.Parameters.Add("@UserSOEID", SqlDbType.DateTime, 50).Value = vInput.UserSOEID;
+                        command.Parameters.Add("@BranchCode", SqlDbType.VarChar, 50).Value = vInput.BranchCode ?? null;
+                        command.Parameters.Add("@ResStateAbv", SqlDbType.VarChar, 2).Value = vInput.ResStateAbv ?? null;
+                        command.Parameters.Add("@WorkStateAbv", SqlDbType.VarChar, 2).Value = vInput.WorkStateAbv ?? null;
+                        command.Parameters.Add("@UserSOEID", SqlDbType.VarChar, 50).Value = vInput.UserSOEID;
 
                         //EmploymentJobTitle
-                        command.Parameters.Add("@JobTitleID", SqlDbType.DateTime, 50).Value = vInput.JobTitleID;
-                        command.Parameters.Add("@JobTitleDate", SqlDbType.DateTime, 50).Value = vInput.JobTitleDate;
+                        command.Parameters.Add("@JobTitleID", SqlDbType.Int, 0).Value = vInput.JobTitleID;
+                        command.Parameters.Add("@JobTitleDate", SqlDbType.DateTime, 10).Value = vInput.JobTitleDate == DateTime.MinValue ? DBNull.Value : vInput.JobTitleDate;
 
                         connection.Open();
                         command.ExecuteNonQuery();

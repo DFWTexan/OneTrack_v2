@@ -146,20 +146,20 @@ namespace OneTrack_v2.Controllers
 
         #region "Agent INSERT"
         [HttpPost]
-        public async Task<ActionResult> InsertAgent([FromBody] IputAddAgent Input)
+        public async Task<ActionResult> UpsertAgent([FromBody] IputUpsertAgent Input)
         {
-            var result = await Task.Run(() => _agentService.InsertAgent(Input));
+            var result = await Task.Run(() => _agentService.UpsertAgent(Input));
 
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> InsertAgent_v2([FromBody] IputAgentInsert Input)
-        {
-            var result = await Task.Run(() => _agentService.InsertAgent_v2(Input));  // Implimentation of InsertAgent_v2 Linq Query
+        //[HttpPost]
+        //public async Task<ActionResult> InsertAgent_v2([FromBody] IputUpsertAgent Input)
+        //{
+        //    var result = await Task.Run(() => _agentService.InsertAgent_v2(Input));  // Implimentation of InsertAgent_v2 Linq Query
 
-            return StatusCode(result.StatusCode, result);
-        }
+        //    return StatusCode(result.StatusCode, result);
+        //}
         #endregion
 
         #region "Agent Update"

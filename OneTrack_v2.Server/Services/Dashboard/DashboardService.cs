@@ -10,6 +10,67 @@ namespace OneTrak_v2.Services
 
         public DashboardService(AppDataContext db) { _db = db;}
 
+        public ReturnResult GetAdBankerImportStatus()
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var maxCreateDate = _db.StgADBankerImports.Max(x => x.CreateDate.Date);
+                var count = _db.StgADBankerImports.Count(x => x.CreateDate.Date == maxCreateDate);
+
+                var importStatus = new { RecordCount = count, LastImportDate = maxCreateDate };
+
+                result.ObjData = importStatus;
+                result.Success = true;
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;
+        }   
+        public ReturnResult GetAdBankerImportData(DateTime vStartDate, DateTime vEndDate, bool? vImportStatus = null)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var query = _db.StgADBankerImports.AsQueryable();
+
+                query = query.Where(x => x.CreateDate.Date >= vStartDate.Date && x.CreateDate.Date <= vEndDate.Date);
+
+                if (vImportStatus.HasValue)
+                {
+                    query = query.Where(x => x.IsImportComplete == vImportStatus);
+                }
+
+                var adBankerImportData = query.Select(x => new 
+                {
+                    x.EmployeeId,
+                    x.CourseState,
+                    x.StudentName,
+                    x.CourseTitle,
+                    x.CompletionDate,
+                    x.ReportedDate,
+                    x.TotalCredits,
+                    x.CreateDate,
+                    x.IsImportComplete
+                }).OrderByDescending(x => x.CreateDate).ToList();
+
+                result.ObjData = adBankerImportData;
+                result.Success = true;
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;
+        }
         public ReturnResult GetAuditModifiedBy(bool vIsActive = true)
         {
             var result = new ReturnResult();

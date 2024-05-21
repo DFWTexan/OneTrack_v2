@@ -7,21 +7,40 @@ import { environment } from '../../environments/environment';
 import { DashboardData } from '../../_Models';
 
 @Injectable({
-    providedIn: 'root',
-  })
+  providedIn: 'root',
+})
 export class DashboardDataService {
   private apiUrl: string = environment.apiUrl + 'Dashboard/';
 
   constructor(private http: HttpClient) {}
 
-  fetchDashboardData(): Observable<DashboardData> {
+  // fetchDashboardData(): Observable<DashboardData> {
+  //   return this.http
+  //     .get<{
+  //       success: boolean;
+  //       statusCode: number;
+  //       objData: any;
+  //       errMessage: string;
+  //     }>(this.apiUrl + 'GetDashboardData')
+  //     .pipe(
+  //       map((response) => {
+  //         if (response.success && response.statusCode === 200) {
+  //           return response.objData;
+  //         } else {
+  //           throw new Error(response.errMessage || 'Unknown error');
+  //         }
+  //       })
+  //     );
+  // }
+
+  fetchAdBankerImportInfo(): Observable<DashboardData> {
     return this.http
       .get<{
         success: boolean;
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'GetDashboardData')
+      }>(this.apiUrl + 'GetAdBankerImportStatus')
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -33,14 +52,43 @@ export class DashboardDataService {
       );
   }
 
-  fetchAuditModifiedBy(isActive: boolean): Observable<string[]> {  
+  fetchADBankerData(
+    startDate: string = new Date().toISOString(),
+    endDate: string,
+    importStatus: boolean | null
+  ) {
+    const queryParams = `?startDate=${startDate}&endDate=${endDate}&modifiedBy=${
+      importStatus ? importStatus : ''
+    }`;
+
     return this.http
       .get<{
         success: boolean;
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'GetAuditModifiedBy', { params: { isActive: isActive.toString() } })
+      }>(`${this.apiUrl}GetAdBankerImportData${queryParams}`)
+      .pipe(
+        map((response) => {
+          if (response.success && response.objData) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  fetchAuditModifiedBy(isActive: boolean): Observable<string[]> {
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'GetAuditModifiedBy', {
+        params: { isActive: isActive.toString() },
+      })
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -52,8 +100,14 @@ export class DashboardDataService {
       );
   }
 
-  fetchAuditLog(startDate: string = new Date().toISOString(), endDate: string, modifiedBy: string | null) {
-    const queryParams = `?startDate=${startDate}&endDate=${endDate}&modifiedBy=${modifiedBy ? modifiedBy : ''}`;
+  fetchAuditLog(
+    startDate: string = new Date().toISOString(),
+    endDate: string,
+    modifiedBy: string | null
+  ) {
+    const queryParams = `?startDate=${startDate}&endDate=${endDate}&modifiedBy=${
+      modifiedBy ? modifiedBy : ''
+    }`;
 
     return this.http
       .get<{

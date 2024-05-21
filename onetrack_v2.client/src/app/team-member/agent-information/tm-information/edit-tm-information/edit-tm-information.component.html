@@ -6,14 +6,18 @@
   <div class="row">
     <div class="col">
       <div class="mb-3">
-        <label for="employerAgency" class="form-label">Employer/Agency</label>
+        <label for="companyID" class="form-label">Employer/Agency</label>
         <select
-          id="employerAgency"
+          id="companyID"
           class="form-select form-select-lg select-size-large"
-          formControlName="employerAgency"
+          formControlName="CompanyID"
         >
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
+          <option
+            *ngFor="let agency of employerAgencies"
+            [value]="agency.value"
+          >
+            {{ agency.label }}
+          </option>
         </select>
       </div>
       <div class="mb-3">
@@ -26,23 +30,23 @@
         />
       </div>
       <div class="mb-3">
-        <label for="teamMemberID" class="form-label">Team Member ID</label>
+        <label for="geid" class="form-label">Team Member ID</label>
         <input
           type="text"
-          id="teamMemberID"
+          id="geid"
           class="form-control input-size-small"
-          formControlName="teamMemberID"
+          formControlName="GEID"
         />
       </div>
       <div class="mb-3">
-        <label for="nationalProducerNbr" class="form-label"
+        <label for="nationalProdercerNumber" class="form-label"
           >National Producer #</label
         >
         <input
           type="text"
-          id="nationalProducerNbr"
+          id="nationalProdercerNumber"
           class="form-control input-size-small"
-          formControlName="nationalProducerNbr"
+          formControlName="NationalProducerNumber"
         />
       </div>
       <div class="mb-3">
@@ -50,10 +54,11 @@
         <select
           id="agentStatus"
           class="form-select form-select-lg select-size-small"
-          formControlName="agentStatus"
+          formControlName="EmployeeStatus"
         >
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
+          <option *ngFor="let status of agentStatuses" [value]="status">
+            {{ status }}
+          </option>
         </select>
       </div>
       <div class="mb-3">
@@ -61,10 +66,11 @@
         <select
           id="residentSate"
           class="form-select form-select-lg select-size-small"
-          formControlName="residentSate"
+          formControlName="ResStateAbv"
         >
-          <option value="active">Active</option>
-          <option value="inactive">Inactive</option>
+          <option *ngFor="let state of states" [value]="state">
+            {{ state }}
+          </option>
         </select>
       </div>
       <div class="mb-3 form-check">
@@ -72,7 +78,7 @@
           type="checkbox"
           id="requiresContEdu"
           class="form-check-input"
-          formControlName="requiresContEdu"
+          formControlName="CERequired"
         />
         <label for="requiresContEdu" class="form-check-label"
           >Requires Cont. Education</label
@@ -83,7 +89,7 @@
           type="checkbox"
           id="excludeFromReports"
           class="form-check-input"
-          formControlName="excludeFromReports"
+          formControlName="ExcludeFromRpts"
         />
         <label for="excludeFromReports" class="form-check-label"
           >Exclude from Reports</label
@@ -94,7 +100,11 @@
   <mat-divider></mat-divider>
   <div class="row mt-4">
     <div class="col d-flex justify-content-end">
-      <button type="button" class="btn btn-secondary cancel-button me-3">
+      <button
+        type="button"
+        class="btn btn-secondary cancel-button me-3"
+        (click)="closeModal()"
+      >
         Cancel
       </button>
       <button

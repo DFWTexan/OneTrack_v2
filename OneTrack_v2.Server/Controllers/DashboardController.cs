@@ -18,6 +18,20 @@ namespace OneTrak_v2.Controllers
         }
 
         [HttpGet]
+        public async Task<ActionResult> GetAdBankerImportStatus()
+        {
+            var result = await Task.Run(() => _dashboardService.GetAdBankerImportStatus());
+
+            return StatusCode(result.StatusCode, result);
+        }
+        [HttpGet]
+        public async Task<ActionResult> GetAdBankerImportData(DateTime startDate, DateTime endDate, bool? importStatus = null)
+        {
+            var result = await Task.Run(() => _dashboardService.GetAdBankerImportData(startDate, endDate, importStatus));
+
+            return StatusCode(result.StatusCode, result);
+        }
+        [HttpGet]
         public async Task<ActionResult> GetAuditModifiedBy(bool isActive)
         {
             var result = await Task.Run(() => _dashboardService.GetAuditModifiedBy(isActive));

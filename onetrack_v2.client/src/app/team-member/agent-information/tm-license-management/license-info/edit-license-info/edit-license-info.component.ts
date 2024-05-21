@@ -144,6 +144,34 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
     );
   }
 
+  closeModal() {
+    const modalDiv = document.getElementById('modal-edit-license-info');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+    // if (this.jobTitleForm.dirty && !this.isFormSubmitted) {
+    //   if (
+    //     confirm('You have unsaved changes. Are you sure you want to close?')
+    //   ) {
+    //     const modalDiv = document.getElementById('modal-edit-jobTitle-history');
+    //     if (modalDiv != null) {
+    //       modalDiv.style.display = 'none';
+    //     }
+    //     this.jobTitleForm.reset();
+    //     this.jobTitleForm.patchValue({
+    //       jobTitleID: 0,
+    //       isCurrent: false,
+    //     });
+    //   }
+    // } else {
+    //   this.isFormSubmitted = false;
+    //   const modalDiv = document.getElementById('modal-edit-jobTitle-history');
+    //   if (modalDiv != null) {
+    //     modalDiv.style.display = 'none';
+    //   }
+    // }
+  }
+
   ngOnDestroy(): void {
     this.subscriptionMode.unsubscribe();
     this.subscriptionData.unsubscribe();

@@ -19,13 +19,13 @@
               type="text"
               class="form-control input-size-medium"
               id="firstName"
-              formControlName="firstName"
+              formControlName="FirstName"
               placeholder="First Name"
             />
             <div
               *ngIf="
-                (newAgentForm.controls['firstName'].touched || formSubmitted) &&
-                newAgentForm.controls['firstName'].errors?.['required']
+                (newAgentForm.controls['FirstName'].touched || formSubmitted) &&
+                newAgentForm.controls['FirstName'].errors?.['required']
               "
               class="text-danger"
             >
@@ -38,7 +38,7 @@
               type="text"
               class="form-control input-size-medium"
               id="middleName"
-              formControlName="middleName"
+              formControlName="MiddleName"
               placeholder="Middle Name"
             />
           </div>
@@ -48,13 +48,13 @@
               type="text"
               class="form-control input-size-medium"
               id="lastName"
-              formControlName="lastName"
+              formControlName="LastName"
               placeholder="Last Name"
             />
             <div
               *ngIf="
-                (newAgentForm.controls['lastName'].touched || formSubmitted) &&
-                newAgentForm.controls['lastName'].errors?.['required']
+                (newAgentForm.controls['LastName'].touched || formSubmitted) &&
+                newAgentForm.controls['LastName'].errors?.['required']
               "
               class="text-danger"
             >
@@ -89,7 +89,7 @@
               type="date"
               class="form-control input-size-small"
               id="dob"
-              formControlName="dateOfBirth"
+              formControlName="DateOfBirth"
               placeholder="MM/DD/YYYY"
             />
           </div>
@@ -99,7 +99,7 @@
               type="text"
               class="form-control input-size-small"
               id="employeeSSN"
-              formControlName="employeeSSN"
+              formControlName="EmployeeSSN"
               placeholder="###-##-####"
             />
           </div>
@@ -112,7 +112,7 @@
               type="text"
               class="form-control input-size-small"
               id="teamID"
-              formControlName="teamID"
+              formControlName="GEID"
               placeholder="Team ID"
             />
           </div>
@@ -122,7 +122,7 @@
               type="text"
               class="form-control input-size-small"
               id="soeid"
-              formControlName="soeid"
+              formControlName="SOEID"
               placeholder="SOEID"
             />
           </div>
@@ -132,7 +132,7 @@
               type="text"
               class="form-control input-size-small"
               id="nationalProducerNumber"
-              formControlName="nationalProducerNumber"
+              formControlName="NationalProducerNumber"
               placeholder="Nat. Producer #"
             />
           </div>
@@ -150,7 +150,7 @@
             <select
               class="form-select select-size-med-large"
               id="employerAgency"
-              formControlName="employerAgency"
+              formControlName="CompanyID"
             >
               <option
                 *ngFor="let empAgency of employerAgencies"
@@ -161,10 +161,10 @@
             </select>
             <div
               *ngIf="
-                (newAgentForm.controls['employerAgency'].touched ||
+                (newAgentForm.controls['CompanyID'].touched ||
                   formSubmitted) &&
-                newAgentForm.controls['employerAgency'].errors &&
-                newAgentForm.controls['employerAgency'].errors['invalid']
+                newAgentForm.controls['CompanyID'].errors &&
+                newAgentForm.controls['CompanyID'].errors['invalid']
               "
               class="text-danger"
             >
@@ -176,7 +176,7 @@
             <select
               class="form-select select-size-small"
               id="workState"
-              formControlName="workState"
+              formControlName="WorkStateAbv"
             >
               <option *ngFor="let state of states" [value]="state">
                 {{ state }}
@@ -184,10 +184,10 @@
             </select>
             <div
               *ngIf="
-                (newAgentForm.controls['workState'].touched ||
+                (newAgentForm.controls['WorkStateAbv'].touched ||
                   formSubmitted) &&
-                newAgentForm.controls['workState'].errors &&
-                newAgentForm.controls['workState'].errors['invalid']
+                newAgentForm.controls['WorkStateAbv'].errors &&
+                newAgentForm.controls['WorkStateAbv'].errors['invalid']
               "
               class="text-danger"
             >
@@ -199,7 +199,7 @@
             <select
               class="form-select select-size-small"
               id="resState"
-              formControlName="resState"
+              formControlName="ResStateAbv"
             >
               <option *ngFor="let state of states" [value]="state">
                 {{ state }}
@@ -207,10 +207,10 @@
             </select>
             <div
               *ngIf="
-                (newAgentForm.controls['resState'].touched ||
+                (newAgentForm.controls['ResStateAbv'].touched ||
                   formSubmitted) &&
-                newAgentForm.controls['resState'].errors &&
-                newAgentForm.controls['resState'].errors['invalid']
+                newAgentForm.controls['ResStateAbv'].errors &&
+                newAgentForm.controls['ResStateAbv'].errors['invalid']
               "
               class="text-danger"
             >
@@ -226,7 +226,7 @@
               type="text"
               class="form-control input-size-med-large"
               id="jobTitle"
-              formControlName="jobTitle"
+              formControlName="JobTitleID"
               placeholder="Job Title"
             />
           </div>
@@ -236,7 +236,7 @@
               type="date"
               class="form-control input-size-small"
               id="hireDate"
-              formControlName="hireDate"
+              formControlName="HireDate"
               placeholder="MM/DD/YYYY"
             />
           </div>
@@ -245,7 +245,7 @@
             <select
               class="form-select select-size-med-small"
               id="branchCode"
-              formControlName="branchCode"
+              formControlName="BranchCode"
             >
               <option
                 *ngFor="let code of branchCodes"
@@ -270,7 +270,7 @@
               type="text"
               class="form-control input-size-large"
               id="address1"
-              formControlName="address1"
+              formControlName="Address1"
               placeholder="Address 1"
             />
           </div>
@@ -280,7 +280,7 @@
               type="text"
               class="form-control input-size-large"
               id="address2"
-              formControlName="address2"
+              formControlName="Address2"
               placeholder="Address 2"
             />
           </div>
@@ -293,7 +293,7 @@
               type="text"
               class="form-control input-size-medium"
               id="city"
-              formControlName="city"
+              formControlName="City"
               placeholder="Address 1"
             />
           </div>
@@ -303,7 +303,7 @@
               type="text"
               class="form-control input-size-small"
               id="zip"
-              formControlName="zip"
+              formControlName="Zip"
               placeholder="#####-###"
             />
           </div>
@@ -313,7 +313,7 @@
               type="text"
               class="form-control input-size-medium"
               id="email"
-              formControlName="email"
+              formControlName="Email"
               placeholder="Email"
             />
           </div>
@@ -326,7 +326,7 @@
               type="text"
               class="form-control input-size-small"
               id="homePhone"
-              formControlName="homePhone"
+              formControlName="Phone"
               placeholder="(###)###-####"
             />
           </div>
@@ -336,7 +336,7 @@
               type="text"
               class="form-control input-size-small"
               id="workPhone"
-              formControlName="workPhone"
+              formControlName="WorkPhone"
               placeholder="(###)###-####"
             />
           </div>
@@ -346,7 +346,7 @@
               type="text"
               class="form-control input-size-med-small"
               id="fax"
-              formControlName="fax"
+              formControlName="Fax"
               placeholder="(###)###-####"
             />
           </div>

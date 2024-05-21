@@ -27,8 +27,8 @@ import { EmployeeSearchResult, SearchEmployeeFilter } from '../../_Models';
 export class SearchTeamMemberComponent implements OnInit, OnDestroy {
   loading = false;
   isSubmitted = false;
-  agentStatuses: string[] = [];
-  states: string[] = [];
+  agentStatuses: string[] = ['All', ...this.conService.getAgentStatuses()];
+  states: string[] = this.conService.getStates();
   stateProvinces: string[] = [];
   defaultAgentStatus = 'ALL';
   defaultLicenseStatus = 'ALL';
@@ -56,8 +56,6 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     // LOAD DROPDOWN DATA
-    this.agentStatuses = this.conService.getAgentStatuses();
-    this.states = this.conService.getStates();
     this.stateProvinces = this.conService.getStateProvinces();
     this.subscribeTickleToggleChanged =
       this.appComService.tickleToggleChanged.subscribe(

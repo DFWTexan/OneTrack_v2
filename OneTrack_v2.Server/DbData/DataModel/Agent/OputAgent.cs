@@ -1,4 +1,5 @@
 ﻿using OneTrak_v2.DataModel;
+using System.Security.Cryptography.X509Certificates;
 
 namespace OneTrack_v2.DataModel
 {
@@ -78,6 +79,7 @@ namespace OneTrack_v2.DataModel
 
     public class AgentContEduRequiredItem
     {
+        public int EmployeeEducationId { get; set; }
         public int ContEducationRequirementID { get; set; }
         public DateTime? EducationStartDate { get; set; }
         public DateTime? EducationEndDate { get; set; }

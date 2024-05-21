@@ -66,6 +66,7 @@ namespace OneTrack_v2.DbData
         public virtual DbSet<PreEducation> PreEducations { get; set; }
         public virtual DbSet<Product> Products { get; set; }
         public virtual DbSet<RequiredLicense> RequiredLicenses { get; set; }
+        public virtual DbSet<StgADBankerImport> StgADBankerImports { get; set; }
         public virtual DbSet<StateProvince> StateProvinces { get; set; }
         public virtual DbSet<StgActive> StgActives { get; set; }
         public virtual DbSet<StgAgentStateTable> StgAgentStateTables { get; set; }
@@ -1968,6 +1969,7 @@ namespace OneTrack_v2.DbData
                     .HasForeignKey(d => d.PackageId)
                     .HasConstraintName("FK__RequiredL__Packa__68FD7645");
             });
+            modelBuilder.Entity<StgADBankerImport>().ToTable("stgADBankerImport", "dbo").HasNoKey();
             modelBuilder.Entity<StateProvince>(entity =>
             {
                 entity.HasKey(e => e.StateProvinceAbv).HasName("PK__StateProvince__45943E77");

@@ -261,8 +261,12 @@ export class AgentDataService {
   }
 
   // EDITS TO AGENT INFORMATION
-  addAgent(agent: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/InsertAgent';
+  upsertAgent(agent: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'Agent/UpsertAgent';
+    agent.DateOfBirth = new Date(agent.DateOfBirth);
+    agent.HireDate = new Date(agent.HireDate);
+
+console.log('EMFTEST (upsertAgent) - agent => \n', agent);
 
     return this.http
       .post<{

@@ -11,6 +11,7 @@ import {
   AgentDataService,
   ConstantsDataService,
   DropdownDataService,
+  UserAcctInfoDataService,
 } from '../../_services';
 
 @Component({
@@ -32,33 +33,34 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private conService: ConstantsDataService,
     private drpdwnDataService: DropdownDataService,
-    private agentDataService: AgentDataService
+    private agentDataService: AgentDataService,
+    private userAcctInfoDataService: UserAcctInfoDataService
   ) {
     this.newAgentForm = this.fb.group({
-      firstName: ['', Validators.required],
-      middleName: [''],
-      lastName: ['', Validators.required],
+      FirstName: ['', Validators.required],
+      MiddleName: [''],
+      LastName: ['', Validators.required],
       preferedName: ['', Validators.required],
-      dateOfBirth: [''],
-      employeeSSN: [''],
-      teamID: [''],
-      soeid: [''],
-      nationalProducerNumber: [''],
-      employerAgency: ['', Validators.required],
+      DateOfBirth: ['01/01/0001 00:00:00'],
+      EmployeeSSN: [''],
+      GEID: [''],
+      SOEID: [''],
+      NationalProducerNumber: [0],
+      CompanyID: ['', Validators.required],
       // employerAgency: ['', [Validators.required, this.employerAgencyValidator]],
-      workState: ['', Validators.required],
-      resState: ['', Validators.required],
-      jobTitle: [''],
-      hireDate: ['', Validators.required],
-      branchCode: [''],
-      address1: [''],
-      address2: [''],
-      city: [''],
-      zip: [''],
-      email: [''],
-      homePhone: [''],
-      workPhone: [''],
-      fax: [''],
+      WorkStateAbv: ['', Validators.required],
+      ResStateAbv: ['', Validators.required],
+      JobTitleID: [0],
+      HireDate: ['01/01/0001 00:00:00'],
+      BranchCode: [''],
+      Address1: [''],
+      Address2: [''],
+      City: [''],
+      Zip: [''],
+      Email: [''],
+      Phone: [''],
+      WorkPhone: [''],
+      Fax: [''],
     });
   }
 
@@ -100,9 +102,9 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.formSubmitted = true;
+
     let agent: any = this.newAgentForm.value;
-    // agent.soeid = agent.soeid.toUpperCase();
-    agent.soeid = 'EMFTEST';
+    agent.UserSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
     if (agent.employerAgency === 0 || agent.employerAgency === '') {
       this.newAgentForm.controls['employerAgency'].setErrors({ invalid: true });
@@ -126,10 +128,13 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.agentDataService.addAgent(agent).subscribe({
+    this.agentDataService.upsertAgent(agent).subscribe({
       next: (response) => {
         console.log(response);
+        
         // handle the response here
+console.log('EMFTEST () - Agent added successfully response => \n ', response);
+
       },
       error: (error) => {
         console.error(error);

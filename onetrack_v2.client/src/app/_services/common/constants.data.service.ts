@@ -1,6 +1,5 @@
 export class ConstantsDataService {
   private readonly agentStatuses = [
-    'ALL',
     'Active',
     'Pending',
     'In-Active',
