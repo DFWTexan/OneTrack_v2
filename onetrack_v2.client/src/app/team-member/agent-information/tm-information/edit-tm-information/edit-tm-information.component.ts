@@ -41,60 +41,60 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
     this.subscribeAgentInfo = new Subscription();
   }
 
-  ngOnInit(): void {
-    this.drpdwnDataService
-      .fetchDropdownData('GetEmployerAgencies')
-      .subscribe((employerAgencies: { value: string; label: string }[]) => {
-        this.employerAgencies = employerAgencies;
-      });
-    this.subscribeAgentInfo = this.agentService.agentInfoChanged.subscribe(
-      (agentInfo: any) => {
-        this.agentInfo = agentInfo;
-
-        // Debugging code:
-        // const matchingAgency = this.employerAgencies.find(
-        //   (agency) => agency.value === agentInfo.companyName
-        // );
-        // if (!matchingAgency) {
-        //   console.error(
-        //     'No matching agency found for companyName:',
-        //     agentInfo.companyName
-        //   );
-        // }
-
-        this.form.patchValue({
-          CompanyID: agentInfo.companyID,
-          preferredName: agentInfo.lastName + ', ' + agentInfo.firstName,
-          GEID: agentInfo.geid,
-          NationalProducerNumber: agentInfo.nationalProdercerNumber,
-          EmployeeStatus: agentInfo.employeeStatus,
-          ResStateAbv: agentInfo.state,
-          CERequired: agentInfo.ceRequired,
-          ExcludeFromRpts: agentInfo.excludeFromReports,
-        });
-      }
-    );
-  }
   // ngOnInit(): void {
-  //   forkJoin({
-  //     agentInfo: this.agentService.agentInfoChanged.pipe(take(1)),
-  //     employerAgencies: this.drpdwnDataService.fetchDropdownData('GetEmployerAgencies')
-  //   }).subscribe(({ agentInfo, employerAgencies }) => {
-  //     this.agentInfo = agentInfo;
-  //     this.employerAgencies = employerAgencies;
-
-  //     this.form.patchValue({
-  //       employerAgency: agentInfo.companyName,
-  //       preferredName: agentInfo.lastName + ', ' + agentInfo.firstName,
-  //       teamMemberID: agentInfo.geid,
-  //       nationalProducerNbr: agentInfo.nationalProdercerNumber,
-  //       agentStatus: agentInfo.employeeStatus,
-  //       residentSate: agentInfo.state,
-  //       requiresContEdu: agentInfo.ceRequired ? 'true' : 'false',
-  //       excludeFromReports: agentInfo.excludeFromReports ? 'true' : 'false',
+  //   this.drpdwnDataService
+  //     .fetchDropdownData('GetEmployerAgencies')
+  //     .subscribe((employerAgencies: { value: string; label: string }[]) => {
+  //       this.employerAgencies = employerAgencies;
   //     });
-  //   });
+  //   this.subscribeAgentInfo = this.agentService.agentInfoChanged.subscribe(
+  //     (agentInfo: any) => {
+  //       this.agentInfo = agentInfo;
+
+  //       // Debugging code:
+  //       // const matchingAgency = this.employerAgencies.find(
+  //       //   (agency) => agency.value === agentInfo.companyName
+  //       // );
+  //       // if (!matchingAgency) {
+  //       //   console.error(
+  //       //     'No matching agency found for companyName:',
+  //       //     agentInfo.companyName
+  //       //   );
+  //       // }
+
+  //       this.form.patchValue({
+  //         CompanyID: agentInfo.companyID,
+  //         preferredName: agentInfo.lastName + ', ' + agentInfo.firstName,
+  //         GEID: agentInfo.geid,
+  //         NationalProducerNumber: agentInfo.nationalProdercerNumber,
+  //         EmployeeStatus: agentInfo.employeeStatus,
+  //         ResStateAbv: agentInfo.state,
+  //         CERequired: agentInfo.ceRequired,
+  //         ExcludeFromRpts: agentInfo.excludeFromReports,
+  //       });
+  //     }
+  //   );
   // }
+  ngOnInit(): void {
+    forkJoin({
+      agentInfo: this.agentService.agentInfoChanged.pipe(take(1)),
+      employerAgencies: this.drpdwnDataService.fetchDropdownData('GetEmployerAgencies')
+    }).subscribe(({ agentInfo, employerAgencies }) => {
+      this.agentInfo = agentInfo;
+      this.employerAgencies = employerAgencies;
+
+      this.form.patchValue({
+        CompanyID: agentInfo.companyName,
+        preferredName: agentInfo.lastName + ', ' + agentInfo.firstName,
+        GEID: agentInfo.geid,
+        NationalProducerNumber: agentInfo.nationalProdercerNumber,
+        EmployeeStatus: agentInfo.employeeStatus,
+        ResStateAbv: agentInfo.state,
+        CERequired: agentInfo.ceRequired ? 'true' : 'false',
+        ExcludeFromRpts: agentInfo.excludeFromReports ? 'true' : 'false',
+      });
+    });
+  }
 
   onSubmit() {
     console.log(this.form.value);

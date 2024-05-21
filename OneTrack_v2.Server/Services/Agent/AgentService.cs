@@ -1325,6 +1325,38 @@ namespace OneTrack_v2.Services
 
             return result;
         }
+        public ReturnResult DeleteEmployee(int vEmployeeID, string vUserSOEID)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspEmploymentDelete", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@EmployeeID", vEmployeeID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vUserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.StatusCode = 200;
+                result.ObjData = new { Message = "Delete Successful" };
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;
+        }
         public ReturnResult UpdateAgentDetails([FromBody] IputAgentDetail vInput)
         {
             var result = new ReturnResult();

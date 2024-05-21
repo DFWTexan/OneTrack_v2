@@ -1,9 +1,16 @@
 import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
-import { AgentComService, AgentDataService, AppComService } from '../../../_services';
+import {
+  AgentComService,
+  AgentDataService,
+  AppComService,
+  UserAcctInfoDataService,
+} from '../../../_services';
 import { AgentInfo } from '../../../_Models';
 import { ModalService } from '../../../_services';
+import { ConfirmDialogComponent } from '../../../_components';
 
 @Component({
   selector: 'app-tm-information',
@@ -13,6 +20,8 @@ import { ModalService } from '../../../_services';
 @Injectable()
 export class TmInformationComponent implements OnInit, OnDestroy {
   isLoading = false;
+  eventAction: string = '';
+  vObject: any = {};
   subscribeAgentInfo: Subscription;
   subscribeAgentLicenseAppointments: Subscription;
   agentInfo: AgentInfo = {} as AgentInfo;
@@ -21,7 +30,9 @@ export class TmInformationComponent implements OnInit, OnDestroy {
     private agentDataService: AgentDataService,
     public agentComService: AgentComService,
     protected modalService: ModalService,
-    public appComService: AppComService
+    public appComService: AppComService,
+    private userInfoDataService: UserAcctInfoDataService,
+    public dialog: MatDialog
   ) {
     this.subscribeAgentInfo = new Subscription();
     this.subscribeAgentLicenseAppointments = new Subscription();
@@ -36,6 +47,46 @@ export class TmInformationComponent implements OnInit, OnDestroy {
         this.agentInfo = agentInfo;
       }
     );
+  }
+
+  openConfirmDialog(eventAction: string, msg: string, vObject: any): void {
+    this.eventAction = eventAction;
+    this.vObject = vObject;
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+        title: 'Confirm Action',
+        message:
+          'You are about to DELETE (' +
+          this.agentInfo.geid +
+          ')\n' +
+          this.agentInfo.firstName +
+          ' ' +
+          this.agentInfo.lastName,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.agentDataService
+          .deleteAgent({
+            employeeId: this.agentInfo.employeeID,
+            userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+          })
+          .subscribe({
+            next: (response) => {
+              // console.log(
+              //   'EMFTEST (app-tm-emptrans-history: deleteEmploymentHistory) - COMPLETED DELETE response => \n',
+              //   response
+              // );
+            },
+            error: (error) => {
+              console.error(error);
+              // handle the error here
+            },
+          });
+      }
+    });
   }
 
   setModeLicenseMgmt(mode: string) {

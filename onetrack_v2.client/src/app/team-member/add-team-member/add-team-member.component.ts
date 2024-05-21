@@ -22,12 +22,14 @@ import {
 export class AddTeamMemberComponent implements OnInit, OnDestroy {
   formSubmitted = false;
   newAgentForm: FormGroup;
-  states: any[] = ['Loading...'];
-  employerAgencies: any[] = [{ valu: '0', label: 'Loading...' }, 'Loading...'];
+  states: any[] = ['Select State', ...this.conService.getStates()];
+  employerAgencies: any[] = [{ value: '0', label: 'Loading...' }, 'Loading...'];
   branchCodes: any[] = [{ branchCode: 'Loading...' }];
+  jobTitles: any[] = [{ value: 0, label: 'Loading...' }];
 
   subsribeDropdownData: Subscription = new Subscription();
   subscribeBranchCodes: Subscription = new Subscription();
+  subscribeJobTitles: Subscription = new Subscription(); 
 
   constructor(
     private fb: FormBuilder,
@@ -40,7 +42,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
       FirstName: ['', Validators.required],
       MiddleName: [''],
       LastName: ['', Validators.required],
-      preferedName: ['', Validators.required],
+      preferedName: [''],
       DateOfBirth: ['01/01/0001 00:00:00'],
       EmployeeSSN: [''],
       GEID: [''],
@@ -48,10 +50,10 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
       NationalProducerNumber: [0],
       CompanyID: ['', Validators.required],
       // employerAgency: ['', [Validators.required, this.employerAgencyValidator]],
-      WorkStateAbv: ['', Validators.required],
-      ResStateAbv: ['', Validators.required],
+      WorkStateAbv: ['Select State'],
+      ResStateAbv: ['Select State'],
       JobTitleID: [0],
-      HireDate: ['01/01/0001 00:00:00', Validators.required],
+      HireDate: ['01/01/0001 00:00:00'],
       BranchCode: [''],
       Address1: [''],
       Address2: [''],
@@ -65,11 +67,11 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.states = ['Select State', ...this.conService.getStates()];
-    if (this.newAgentForm) {
-      this.newAgentForm.get('workState')?.setValue('Select State');
-      this.newAgentForm.get('resState')?.setValue('Select State');
-    }
+    // this.states = ['Select State', ...this.conService.getStates()];
+    // if (this.newAgentForm) {
+      // this.newAgentForm.get('workState')?.setValue('Select State');
+      // this.newAgentForm.get('resState')?.setValue('Select State');
+    // }
     this.subsribeDropdownData = this.drpdwnDataService
       .fetchDropdownData('GetEmployerAgencies')
       .subscribe((employerAgencies: { value: string; label: string }[]) => {
@@ -79,6 +81,26 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
         ];
         this.newAgentForm.get('employerAgency')?.setValue(0);
       });
+      
+      // this.subscribeJobTitles = this.drpdwnDataService
+      // .fetchDropdownData('GetJobTitles')
+      // .subscribe((jobTitles: { JobTitleID: string; JobTitle: string }[]) => {
+      //   this.jobTitles = [
+      //     { JobTitleID: 0, JobTitle: 'Select Job Title' },
+      //     ...jobTitles,
+      //   ];
+      //   this.newAgentForm.get('JobTitleID')?.setValue(0);
+      // });
+      this.subscribeJobTitles = this.drpdwnDataService
+      .fetchDropdownData('GetJobTitles')
+      .subscribe((jobTitles: { value: string; label: string }[]) => {
+        this.jobTitles = [
+          { value: '0', label: 'Select Job Title' },
+          ...jobTitles,
+        ];
+        this.newAgentForm.get('JobTitleID')?.setValue(0);
+      });
+
     this.subscribeBranchCodes = this.agentDataService
       .fetchBranchCodes()
       .subscribe((branchCodes: any[]) => {
@@ -110,12 +132,12 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
       this.newAgentForm.controls['employerAgency'].setErrors({ invalid: true });
     }
 
-    if (agent.workState === 'Select State') {
-      this.newAgentForm.controls['workState'].setErrors({ invalid: true });
+    if (agent.WorkStateAbv === 'Select State') {
+      this.newAgentForm.controls['WorkStateAbv'].setErrors({ invalid: true });
     }
 
-    if (agent.resState === 'Select State') {
-      this.newAgentForm.controls['resState'].setErrors({ invalid: true });
+    if (agent.ResStateAbv === 'Select State') {
+      this.newAgentForm.controls['ResStateAbv'].setErrors({ invalid: true });
     }
 
     if (agent.branchCode === 'Select Branch Code') {
@@ -123,7 +145,11 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
       // this.newAgentForm.controls['branchCode'].setErrors({ invalid: true });
     }
 
-    if (!this.newAgentForm.invalid) {
+    if (agent.HireDate === '01/01/0001 00:00:00') {
+      this.newAgentForm.controls['HireDate'].setErrors({ invalid: true });
+    }
+
+    if (this.newAgentForm.invalid) {
       this.newAgentForm.setErrors({ invalid: true });
       return;
     }

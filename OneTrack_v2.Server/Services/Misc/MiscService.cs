@@ -339,10 +339,11 @@ namespace OneTrack_v2.Services
 
                 var query = from j in _db.JobTitles
                             where j.IsActive == true
+                            orderby j.JobTitle1
                             select new
                             {
-                                JobTitleID = j.JobTitleId,
-                                JobTitle = j.JobTitle1
+                                Value = j.JobTitleId,
+                                Label = j.JobTitle1
                             };
 
                 var resultTitles = query.AsNoTracking().ToList();

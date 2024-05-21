@@ -14,6 +14,7 @@ import {
   styleUrl: './insert-incentive-license.component.css',
 })
 export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
+  isFormSubmitted: boolean = false;
   incentiveLicenseForm!: FormGroup;
   defaultLicenseStatus = 'Incentive';
   licenseStates: string[] = [];
@@ -33,8 +34,8 @@ export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
   createForm() {
     this.incentiveLicenseForm = this.fb.group({
       preferredName: [''],
-      licenseState: ['', Validators.required],
-      licenseName: [''],
+      licenseState: ['Select', Validators.required],
+      licenseName: [0, Validators.required],
       licenseStatus: [{ value: 'Incentive', disabled: true }],
       note: [''],
     });
@@ -45,7 +46,7 @@ export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
     this.drpdwnDataService
       .fetchDropdownData('GetLicenseNames')
       .subscribe((licenseNames: { value: string; label: string }[]) => {
-        this.licenseNames = [{ value: '0', label: 'Select' }, ...licenseNames];
+        this.licenseNames = [{ value: '0', label: 'Select Name' }, ...licenseNames];
       });
     this.subscriptionData = this.agentDataService.agentInfoChanged.subscribe(
       (data) => {
@@ -62,6 +63,42 @@ export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
     //   // Handle the invalid form case
     //   console.error('Form is not valid!');
     // }
+  }
+
+  closeModal() {
+
+console.log('EMFTEST (app-insert-incentive-license: closeModal) - this.incentiveLicenseForm.dirty: ', this.incentiveLicenseForm.dirty);
+
+    // const modalDiv = document.getElementById('modal-insert-incentive-license');
+    // if (modalDiv != null) {
+    //   modalDiv.style.display = 'none';
+    // }
+
+    if (this.incentiveLicenseForm.dirty && !this.isFormSubmitted) {
+      if (
+        confirm('You have unsaved changes. Are you sure you want to close?')
+      ) {
+        const modalDiv = document.getElementById(
+          'modal-insert-incentive-license'
+        );
+        if (modalDiv != null) {
+          modalDiv.style.display = 'none';
+        }
+        this.incentiveLicenseForm.reset();
+        // this.incentiveLicenseForm.patchValue({
+        //   jobTitleID: 0,
+        //   isCurrent: false,
+        // });
+      }
+    } else {
+      this.isFormSubmitted = false;
+      const modalDiv = document.getElementById(
+        'modal-insert-incentive-license'
+      );
+      if (modalDiv != null) {
+        modalDiv.style.display = 'none';
+      }
+    }
   }
 
   cancel() {

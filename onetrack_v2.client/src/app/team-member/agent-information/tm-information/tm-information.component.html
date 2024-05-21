@@ -3,7 +3,13 @@
     <div class="col-md-12">
       <div class="row d-flex justify-content-start">
         <div class="col d-flex justify-content-center">
-          <button class="btn btn-danger w-100" [disabled]="isLoading">
+          <button class="btn btn-danger w-100" [disabled]="isLoading" (click)="
+          openConfirmDialog(
+            'deleteJobTitleItem',
+            'Job Title Item',
+            {teamNbr: agentInfo.jobTitle, id: agentInfo.geid, teamMemberName: agentInfo.firstName + ' ' + agentInfo.lastName}
+          )
+          ">
             <span style="font-size: larger">Delete</span>
           </button>
         </div>

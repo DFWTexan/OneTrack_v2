@@ -15,14 +15,15 @@ namespace OneTrack_v2.Services
         public ReturnResult GetContEducationRequired(int vEmploymentID);
         public ReturnResult GetDiary(int vEmploymentID = 0);
         public ReturnResult GetCommunications(int vEmploymentID);
-        public ReturnResult GetLicenseApplcationInfo(int EmployeeLicenseID);
+        public ReturnResult GetLicenseApplcationInfo(int vEmployeeLicenseID);
         public ReturnResult GetBranchCodes();
         public ReturnResult GetCoRequirementAssetIDs();
         public ReturnResult GetCoRequirementStatuses();
         public ReturnResult GetLicLevels();
         public ReturnResult GetLicIncentives();
-        public ReturnResult UpsertAgent([FromBody] IputUpsertAgent Input);
-        public ReturnResult InsertAgent_v2([FromBody] IputUpsertAgent Input);
+        public ReturnResult UpsertAgent([FromBody] IputUpsertAgent vInput);
+        public ReturnResult InsertAgent_v2([FromBody] IputUpsertAgent vInput);
+        public ReturnResult DeleteEmployee(int vEmployeeID, string vUserSOEID);
         public ReturnResult UpdateAgentDetails([FromBody] IputAgentDetail vInput);
         public ReturnResult UpsertEmploymentHistItem([FromBody] InputEmploymentHistItem vInput);
         public ReturnResult DeleteEmploymentHistItem([FromBody] IputDeleteEmploymentHistoryItem vInput);

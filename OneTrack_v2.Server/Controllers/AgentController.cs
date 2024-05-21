@@ -146,9 +146,9 @@ namespace OneTrack_v2.Controllers
 
         #region "Agent INSERT"
         [HttpPost]
-        public async Task<ActionResult> UpsertAgent([FromBody] IputUpsertAgent Input)
+        public async Task<ActionResult> UpsertAgent([FromBody] IputUpsertAgent input)
         {
-            var result = await Task.Run(() => _agentService.UpsertAgent(Input));
+            var result = await Task.Run(() => _agentService.UpsertAgent(input));
 
             return StatusCode(result.StatusCode, result);
         }
@@ -164,41 +164,41 @@ namespace OneTrack_v2.Controllers
 
         #region "Agent Update"
         [HttpPost]
-        public async Task<ActionResult> UpdateAgentDetails([FromBody] IputAgentDetail Input)
+        public async Task<ActionResult> UpdateAgentDetails([FromBody] IputAgentDetail input)
         {
-            var result = await Task.Run(() => _agentService.UpdateAgentDetails(Input));
+            var result = await Task.Run(() => _agentService.UpdateAgentDetails(input));
 
             return StatusCode(result.StatusCode, result);
         }
 
         [HttpPost]
-        public async Task<ActionResult> UpsertEmploymentHistItem([FromBody] InputEmploymentHistItem Input)
+        public async Task<ActionResult> UpsertEmploymentHistItem([FromBody] InputEmploymentHistItem input)
         {
-            var result = await Task.Run(() => _agentService.UpsertEmploymentHistItem(Input));
+            var result = await Task.Run(() => _agentService.UpsertEmploymentHistItem(input));
 
             return StatusCode(result.StatusCode, result);
         }
 
         [HttpPost]
-        public async Task<ActionResult> UpsertTranserHistItem([FromBody] IputTransferHistoryItem Input)
+        public async Task<ActionResult> UpsertTranserHistItem([FromBody] IputTransferHistoryItem input)
         {
-            var result = await Task.Run(() => _agentService.UpsertTranserHistItem(Input));
+            var result = await Task.Run(() => _agentService.UpsertTranserHistItem(input));
 
             return StatusCode(result.StatusCode, result);
         }
 
         [HttpPost]
-        public async Task<ActionResult> UpsertCoRequirementItem([FromBody] IputCoRequirementItem Input)
+        public async Task<ActionResult> UpsertCoRequirementItem([FromBody] IputCoRequirementItem input)
         {
-            var result = await Task.Run(() => _agentService.UpsertCoRequirementItem(Input));
+            var result = await Task.Run(() => _agentService.UpsertCoRequirementItem(input));
 
             return StatusCode(result.StatusCode, result);
         }
 
         [HttpPost]
-        public async Task<ActionResult> UpsertEmploymentJobTitleItem([FromBody] IputEmploymentJobTitleItem Input)
+        public async Task<ActionResult> UpsertEmploymentJobTitleItem([FromBody] IputEmploymentJobTitleItem input)
         {
-            var result = await Task.Run(() => _agentService.UpsertEmploymentJobTitleItem(Input));
+            var result = await Task.Run(() => _agentService.UpsertEmploymentJobTitleItem(input));
 
             return StatusCode(result.StatusCode, result);
         }
@@ -206,33 +206,41 @@ namespace OneTrack_v2.Controllers
 
         #region "Agent Delete"
         [HttpPost]
-        public async Task<ActionResult> DeleteEmploymentHistItem([FromBody] IputDeleteEmploymentHistoryItem Input)
+        public async Task<ActionResult> DeleteEmploymentHistItem([FromBody] IputDeleteEmploymentHistoryItem input)
         {
-            var result = await Task.Run(() => _agentService.DeleteEmploymentHistItem(Input));
+            var result = await Task.Run(() => _agentService.DeleteEmploymentHistItem(input));
 
             return StatusCode(result.StatusCode, result);
         }
 
         [HttpPost]
-        public async Task<ActionResult> DeleteTransferHistItem([FromBody] IputDeleteTransferHisttoryItem Input)
+        public async Task<ActionResult> DeleteEmployee([FromBody] IputDeleteEmployee input)
         {
-            var result = await Task.Run(() => _agentService.DeleteTransferHistItem(Input));
+            var result = await Task.Run(() => _agentService.DeleteEmployee(input.EmployeeID, input.UserSOEID));
 
             return StatusCode(result.StatusCode, result);
         }
 
         [HttpPost]
-        public async Task<ActionResult> DeleteCoRequirementItem([FromBody] IputDeleteCoRequirementItem Input)
+        public async Task<ActionResult> DeleteTransferHistItem([FromBody] IputDeleteTransferHisttoryItem input)
         {
-            var result = await Task.Run(() => _agentService.DeleteCoRequirementItem(Input));
+            var result = await Task.Run(() => _agentService.DeleteTransferHistItem(input));
 
             return StatusCode(result.StatusCode, result);
         }
 
         [HttpPost]
-        public async Task<ActionResult> DeleteEmploymentJobTitleItem([FromBody] IputDeleteEmploymentJobTitle Input)
+        public async Task<ActionResult> DeleteCoRequirementItem([FromBody] IputDeleteCoRequirementItem input)
         {
-            var result = await Task.Run(() => _agentService.DeleteEmploymentJobTitleItem(Input));
+            var result = await Task.Run(() => _agentService.DeleteCoRequirementItem(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> DeleteEmploymentJobTitleItem([FromBody] IputDeleteEmploymentJobTitle input)
+        {
+            var result = await Task.Run(() => _agentService.DeleteEmploymentJobTitleItem(input));
 
             return StatusCode(result.StatusCode, result);
         }

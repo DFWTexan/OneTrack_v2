@@ -299,6 +299,24 @@ console.log('EMFTEST (upsertAgent) - agent => \n', agent);
       );
   }
 
+  deleteAgent(agent: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'Agent/DeleteAgent';
+
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, agent)
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
+  // AGENT - EDITS for EMPLOYMENT HISTORY
   upsertEmploymentHistItem(employmentHistItem: any): Observable<any> {
     this.apiUrl = environment.apiUrl + 'Agent/UpsertEmploymentHistItem';
 
