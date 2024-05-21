@@ -51,7 +51,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
       WorkStateAbv: ['', Validators.required],
       ResStateAbv: ['', Validators.required],
       JobTitleID: [0],
-      HireDate: ['01/01/0001 00:00:00'],
+      HireDate: ['01/01/0001 00:00:00', Validators.required],
       BranchCode: [''],
       Address1: [''],
       Address2: [''],
@@ -131,7 +131,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     this.agentDataService.upsertAgent(agent).subscribe({
       next: (response) => {
         console.log(response);
-        
+
         // handle the response here
 console.log('EMFTEST () - Agent added successfully response => \n ', response);
 

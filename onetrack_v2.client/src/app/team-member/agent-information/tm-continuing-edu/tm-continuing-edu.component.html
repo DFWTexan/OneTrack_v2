@@ -74,10 +74,10 @@
       </div>
     </div>
   </div>
-  <div class="row" *ngIf="agentInfo.contEduCompletedItems.length == 0">
+  <div class="row" *ngIf="agentInfo?.contEduCompletedItems?.length == 0">
     No records found.
   </div>
-  <div class="row mt-3">
+  <div class="row mt-3" *ngIf="agentInfo?.contEduCompletedItems?.length != 0">
     <div class="col d-flex">
       <div class="table">
         <thead>
@@ -91,7 +91,7 @@
           </tr>
         </thead>
         <tbody class="bg-body">
-          <tr *ngFor="let ce of agentInfo.contEduCompletedItems">
+          <tr *ngFor="let ce of agentInfo?.contEduCompletedItems">
             <!-- <td>{{ ce.contEducationRequirementID }}</td> -->
             <td>{{ ce.educationName }}</td>
             <td>{{ ce.contEducationTakenDate | date }}</td>
