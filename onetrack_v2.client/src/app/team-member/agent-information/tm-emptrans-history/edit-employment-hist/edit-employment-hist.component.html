@@ -138,7 +138,7 @@
       <button type="button" class="btn btn-secondary me-3 cancel-button" (click)="closeModal()">
         Cancel
       </button>
-      <button type="submit" class="btn btn-primary save-button">Save</button>
+      <button type="submit" class="btn btn-primary save-button" [disabled]="!employmentHistoryForm.valid">Save</button>
     </div>
   </div>
 </form>

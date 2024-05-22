@@ -102,7 +102,7 @@
       >
         Cancel
       </button>
-      <button type="submit" class="btn btn-primary save-button">Save</button>
+      <button type="submit" class="btn btn-primary save-button" [disabled]="!transferHistoryForm.valid">Save</button>
     </div>
   </div>
 </form>

@@ -1813,6 +1813,122 @@ namespace OneTrack_v2.Services
 
             return result;
         }
+        public ReturnResult UpsertAgentLicense([FromBody] IputUpsertAgentLicense vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                if (vInput.EmployeeLicenseID == 0)
+                {
+                    // INSERT Agent License
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspAgentLicenseInsert", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeID", vInput.EmployeeID));
+                            cmd.Parameters.Add(new SqlParameter("@AscEmployeeLicenseID", vInput.AscEmployeeLicenseID ?? 0));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseID", vInput.LicenseID ?? 0));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseExpireDate", vInput.LicenseExpireDate));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseStatus", vInput.LicenseStatus ?? ""));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseNumber", vInput.LicenseNumber));
+                            cmd.Parameters.Add(new SqlParameter("@Reinstatement", vInput.Reinstatement ?? false));
+                            cmd.Parameters.Add(new SqlParameter("@Required", vInput.Required ?? false));
+                            cmd.Parameters.Add(new SqlParameter("@NonResident", vInput.NonResident ?? false));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseEffectiveDate", vInput.LicenseEffectiveDate));
+                            cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseIssueDate", vInput.LicenseIssueDate));
+                            cmd.Parameters.Add(new SqlParameter("@LineOfAuthorityIssueDate", vInput.LineOfAuthorityIssueDate));
+                            //cmd.Parameters.Add(new SqlParameter("@SentToAgentDate", vInput.SentToAgentDate == DateOnly.MinValue ? DBNull : vInput.Se));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseNote", vInput.LicenseNote));
+
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                else
+                {
+                    // UPDATE Agent License
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspAgentLicenseUpdate", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeLicenseID", vInput.EmployeeLicenseID));
+                            cmd.Parameters.Add(new SqlParameter("@AscEmployeeLicenseID", vInput.AscEmployeeLicenseID));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseID", vInput.LicenseID));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseExpireDate", vInput.LicenseExpireDate));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseStatus", vInput.LicenseStatus));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseNumber", vInput.LicenseNumber));
+                            cmd.Parameters.Add(new SqlParameter("@Reinstatement", vInput.Reinstatement));
+                            cmd.Parameters.Add(new SqlParameter("@Required", vInput.Required));
+                            cmd.Parameters.Add(new SqlParameter("@NonResident", vInput.NonResident));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseEffectiveDate", vInput.LicenseEffectiveDate));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseIssueDate", vInput.LicenseIssueDate));
+                            cmd.Parameters.Add(new SqlParameter("@LineOfAuthorityIssueDate", vInput.LineOfAuthorityIssueDate));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseNote", vInput.LicenseNote));
+                            cmd.Parameters.Add(new SqlParameter("@AppointmentStatus", vInput.AppointmentStatus));
+                            cmd.Parameters.Add(new SqlParameter("@CompanyID", vInput.CompanyID));
+                            cmd.Parameters.Add(new SqlParameter("@CarrierDate", vInput.CarrierDate));
+                            cmd.Parameters.Add(new SqlParameter("@AppointmentEffectiveDate", vInput.AppointmentEffectiveDate));
+                            cmd.Parameters.Add(new SqlParameter("@AppointmentExpireDate", vInput.AppointmentExpireDate));
+                            cmd.Parameters.Add(new SqlParameter("@AppointmentTerminationDate", vInput.AppointmentTerminationDate));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+                        }
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "Employment Agent Lincense Created/Updated Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+            return result;
+        }
+        public ReturnResult DeleteAgentLicense([FromBody] IputDeleteAgentLincense vInput)
+        {
+
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspEmployeeLicenseDelete", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@EmployeeLicenseID", vInput.EmployeeLicenseID));
+                        cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "Employment Agent License Deleted Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;  
+        }
         #endregion
 
         #region Private Methods
@@ -1884,54 +2000,54 @@ namespace OneTrack_v2.Services
             }
         }
 
-        private bool ExecuteEmploymentInsert(IputUpsertAgent vInput, int vEmployeeId)
-        {
-            try
-            {
-                using (var connection = new SqlConnection(_connectionString))
-                {
-                    using (var command = new SqlCommand("[uspAgentEmploymentInsert]", connection))
-                    {
-                        command.CommandType = CommandType.StoredProcedure;
+        //private bool ExecuteEmploymentInsert(IputUpsertAgent vInput, int vEmployeeId)
+        //{
+        //    try
+        //    {
+        //        using (var connection = new SqlConnection(_connectionString))
+        //        {
+        //            using (var command = new SqlCommand("[uspAgentEmploymentInsert]", connection))
+        //            {
+        //                command.CommandType = CommandType.StoredProcedure;
 
-                        //Employment
-                        command.Parameters.Add("@EmployeeID", SqlDbType.Int, 0).Value = vEmployeeId;
-                        command.Parameters.Add("@EmployeeStatus", SqlDbType.VarChar, 25).Value = vInput.EmployeeStatus ?? null;
-                        command.Parameters.Add("@CompanyID", SqlDbType.Int, 0).Value = vInput.CompanyID;
-                        command.Parameters.Add("@WorkPhone", SqlDbType.VarChar, 13).Value = vInput.WorkPhone ?? null;
-                        command.Parameters.Add("@Email", SqlDbType.VarChar, 50).Value = vInput.Email ?? null;
-                        command.Parameters.Add("@LicenseIncentive", SqlDbType.VarChar, 25).Value = vInput.LicenseIncentive ?? null;
-                        command.Parameters.Add("@LicenseLevel", SqlDbType.VarChar, 25).Value = vInput.LicenseLevel ?? null;
+        //                //Employment
+        //                command.Parameters.Add("@EmployeeID", SqlDbType.Int, 0).Value = vEmployeeId;
+        //                command.Parameters.Add("@EmployeeStatus", SqlDbType.VarChar, 25).Value = vInput.EmployeeStatus ?? null;
+        //                command.Parameters.Add("@CompanyID", SqlDbType.Int, 0).Value = vInput.CompanyID;
+        //                command.Parameters.Add("@WorkPhone", SqlDbType.VarChar, 13).Value = vInput.WorkPhone ?? null;
+        //                command.Parameters.Add("@Email", SqlDbType.VarChar, 50).Value = vInput.Email ?? null;
+        //                command.Parameters.Add("@LicenseIncentive", SqlDbType.VarChar, 25).Value = vInput.LicenseIncentive ?? null;
+        //                command.Parameters.Add("@LicenseLevel", SqlDbType.VarChar, 25).Value = vInput.LicenseLevel ?? null;
 
-                        //EmploymentHistory
-                        command.Parameters.Add("@HireDate", SqlDbType.DateTime, 10).Value = vInput.HireDate.Date == DateTime.MinValue ? DBNull.Value : vInput.HireDate;
-                        //command.Parameters.Add("@HireDate", SqlDbType.DateTime, 10).Value = vInput.HireDate.Date == DateTime.MinValue ? (object)DBNull.Value : vInput.HireDate.Date;
-                        command.Parameters.Add("@BackgroundCheckStatus", SqlDbType.VarChar, 50).Value = vInput.BackgroundCheckStatus ?? null;
-                        command.Parameters.Add("@BackgroundCheckNote", SqlDbType.VarChar, 500).Value = vInput.BackgroundCheckNote ?? null;
+        //                //EmploymentHistory
+        //                command.Parameters.Add("@HireDate", SqlDbType.DateTime, 10).Value = vInput.HireDate.Date == DateTime.MinValue ? DBNull.Value : vInput.HireDate;
+        //                //command.Parameters.Add("@HireDate", SqlDbType.DateTime, 10).Value = vInput.HireDate.Date == DateTime.MinValue ? (object)DBNull.Value : vInput.HireDate.Date;
+        //                command.Parameters.Add("@BackgroundCheckStatus", SqlDbType.VarChar, 50).Value = vInput.BackgroundCheckStatus ?? null;
+        //                command.Parameters.Add("@BackgroundCheckNote", SqlDbType.VarChar, 500).Value = vInput.BackgroundCheckNote ?? null;
 
-                        //TransferHistory
-                        command.Parameters.Add("@BranchCode", SqlDbType.VarChar, 50).Value = vInput.BranchCode ?? null;
-                        command.Parameters.Add("@ResStateAbv", SqlDbType.VarChar, 2).Value = vInput.ResStateAbv ?? null;
-                        command.Parameters.Add("@WorkStateAbv", SqlDbType.VarChar, 2).Value = vInput.WorkStateAbv ?? null;
-                        command.Parameters.Add("@UserSOEID", SqlDbType.VarChar, 50).Value = vInput.UserSOEID;
+        //                //TransferHistory
+        //                command.Parameters.Add("@BranchCode", SqlDbType.VarChar, 50).Value = vInput.BranchCode ?? null;
+        //                command.Parameters.Add("@ResStateAbv", SqlDbType.VarChar, 2).Value = vInput.ResStateAbv ?? null;
+        //                command.Parameters.Add("@WorkStateAbv", SqlDbType.VarChar, 2).Value = vInput.WorkStateAbv ?? null;
+        //                command.Parameters.Add("@UserSOEID", SqlDbType.VarChar, 50).Value = vInput.UserSOEID;
 
-                        //EmploymentJobTitle
-                        command.Parameters.Add("@JobTitleID", SqlDbType.Int, 0).Value = vInput.JobTitleID;
-                        command.Parameters.Add("@JobTitleDate", SqlDbType.DateTime, 10).Value = vInput.JobTitleDate == DateTime.MinValue ? DBNull.Value : vInput.JobTitleDate;
+        //                //EmploymentJobTitle
+        //                command.Parameters.Add("@JobTitleID", SqlDbType.Int, 0).Value = vInput.JobTitleID;
+        //                command.Parameters.Add("@JobTitleDate", SqlDbType.DateTime, 10).Value = vInput.JobTitleDate == DateTime.MinValue ? DBNull.Value : vInput.JobTitleDate;
 
-                        connection.Open();
-                        command.ExecuteNonQuery();
-                    }
-                }
+        //                connection.Open();
+        //                command.ExecuteNonQuery();
+        //            }
+        //        }
 
-                return true;
-            }
-            catch (Exception ex)
-            {
-                return false;
-            }
+        //        return true;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return false;
+        //    }
 
-        }
+        //}
         private List<OputAgentLicenseAppointments> FillAgentLicenseAppointment(int vEmploymentID)
         {
             var queryEmployeeLicenses = from employeeLicense in _db.EmployeeLicenses
