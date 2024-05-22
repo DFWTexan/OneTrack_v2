@@ -201,6 +201,31 @@ namespace OneTrack_v2.Services
 
             return result;
         }
+        public ReturnResult GetLicenseNumericNames(string vStateAbv)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var resultLicNames = _db.Licenses
+                                .Where(license => license.StateProvinceAbv == vStateAbv)
+                                .GroupBy(l => new { l.LicenseId, l.LicenseName })
+                                .AsNoTracking()
+                                .Select(g => new { Value = g.Key.LicenseId, Label = g.Key.LicenseName })
+                                .ToList();
+
+                result.Success = true;
+                result.ObjData = resultLicNames;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;
+        }
         public ReturnResult GetEmailTemplates()
         {
             var result = new ReturnResult();

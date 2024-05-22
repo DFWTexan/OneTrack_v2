@@ -10,6 +10,7 @@ namespace OneTrack_v2.Services
         public ReturnResult GetEmployerAgencies();
         public ReturnResult GetLicenseStatuses();
         public ReturnResult GetLicenseNames();
+        public ReturnResult GetLicenseNumericNames(string vStateAbv);
         public ReturnResult GetEmailTemplates();
         public ReturnResult GetTicklerMessageTypes();
         public ReturnResult WorkListNames();

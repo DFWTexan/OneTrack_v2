@@ -25,7 +25,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
   licenseMgmtData: AgentLicenseAppointments[] = [];
   licenseStates: string[] = [];
   licenseStatuses: { value: string; label: string }[] = [];
-  licenseNames: { value: string; label: string }[] = [];
+  licenseNames: { value: number; label: string }[] = [];
   affiliatedLicenses: string[] = ['None'];
   subscriptionMode: Subscription = new Subscription();
   subscriptionData: Subscription = new Subscription();
@@ -33,7 +33,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
   constructor(
     private conService: ConstantsDataService,
     private drpdwnDataService: DropdownDataService,
-    private agentDataService: AgentDataService,
+    public agentDataService: AgentDataService,
     public agentComService: AgentComService,
     public appComService: AppComService,
     private userInfoDataService: UserAcctInfoDataService,
@@ -44,7 +44,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       employeeID: [''],
       employmentID: [''],
       ascEmployeeLicenseID: [''],
-      licenseID: ['Select', Validators.required],
+      licenseID: [0, Validators.required],
       licenseExpireDate: [''],
       licenseStatus: ['Select', Validators.required],
       licenseNumber: [''],
@@ -76,32 +76,31 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.licenseStates = ['Select', ...this.conService.getStates()];
-    // this.drpdwnDataService
-    //   .fetchDropdownData('GetLicenseStatuses')
-    //   .subscribe((licenseStatuses: { value: string; label: string }[]) => {
-    //     this.licenseStatuses = [
-    //       { value: 'Select', label: 'Select' },
-    //       ...licenseStatuses,
-    //     ];
-    //   });
     this.drpdwnDataService
       .fetchDropdownData('GetLicenseStatuses')
       .subscribe((licenseStatuses: { value: string; label: string }[]) => {
         this.licenseStatuses = [
           { value: 'Select', label: 'Select' },
-          ...licenseStatuses.filter(item => item.value !== 'All' && item.label !== 'All'),
+          ...licenseStatuses.filter(
+            (item) => item.value !== 'All' && item.label !== 'All'
+          ),
         ];
       });
-    this.drpdwnDataService
-      .fetchDropdownData('GetLicenseNames')
-      .subscribe((licenseNames: { value: string; label: string }[]) => {
-        this.licenseNames = [
-          { value: 'Select', label: 'Select' },
-          ...licenseNames,
-        ];
-      });
+
     this.subscriptionMode =
       this.agentComService.modeLicenseMgmtChanged.subscribe((mode: string) => {
+        this.drpdwnDataService
+          .fetchDropdownNumericData(
+            'GetLicenseNumericNames',
+            this.agentDataService.agentInformation.branchDeptStreetState
+          )
+          .subscribe((licenseNames: { value: number; label: string }[]) => {
+            this.licenseNames = [
+              { value: 0, label: 'Select' },
+              ...licenseNames,
+            ];
+          });
+
         if (mode === 'EDIT') {
           this.subscriptionData =
             this.agentDataService.licenseMgmtDataIndexChanged.subscribe(
@@ -155,12 +154,13 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
         } else {
           this.licenseForm.reset();
           this.licenseForm.patchValue({
-            agentName:
-              this.agentDataService.agentInformation.lastName +
-              ', ' +
-              this.agentDataService.agentInformation.firstName,
-            licenseState: 'Select',
-            licenseID: 'Select',
+            // agentName:
+            //   this.agentDataService.agentInformation.lastName +
+            //   ', ' +
+            //   this.agentDataService.agentInformation.firstName,
+            licenseState:
+              this.agentDataService.agentInformation.branchDeptStreetState,
+            licenseID: 0,
             licenseStatus: 'Select',
             sentToAgentDate: '01/01/0001 00:00:00',
           });
@@ -177,13 +177,12 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
     );
 
     let licenseInfo: any = this.licenseForm.value;
+    licenseInfo.employeeID = this.agentDataService.agentInformation.employeeID;
+    licenseInfo.employmentID =
+      this.agentDataService.agentInformation.employmentID;
     licenseInfo.UserSOEID = this.userInfoDataService.userAcctInfo.soeid;
 
-    // if (licenseInfo.licenseState === 'Select') {
-    //   this.licenseForm.controls['licenseState'].setErrors({ invalid: true });
-    // }
-
-    if (licenseInfo.licenseID === 'Select') {
+    if (licenseInfo.licenseID === 0) {
       this.licenseForm.controls['licenseID'].setErrors({ invalid: true });
     }
 
@@ -196,26 +195,25 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
     }
 
     if (this.licenseForm.invalid) {
-
-console.log('EMFTEST (app-edit-license-info: onSubmit) - this.licenseForm.invalid: ', this.licenseForm.invalid);
-
       this.licenseForm.setErrors({ invalid: true });
       return;
     }
 
-    //     this.agentDataService.upsertAgent(agent).subscribe({
-    //       next: (response) => {
-    //         console.log(response);
+    this.agentDataService.upsertAgentLicense(licenseInfo).subscribe({
+      next: (response) => {
+        console.log(response);
 
-    //         // handle the response here
-    // console.log('EMFTEST () - Agent added successfully response => \n ', response);
-
-    //       },
-    //       error: (error) => {
-    //         console.error(error);
-    //         // handle the error here
-    //       },
-    //     });
+        // handle the response here
+        console.log(
+          'EMFTEST () - Agent License added successfully response => \n ',
+          response
+        );
+      },
+      error: (error) => {
+        console.error(error);
+        // handle the error here
+      },
+    });
   }
 
   closeModal() {

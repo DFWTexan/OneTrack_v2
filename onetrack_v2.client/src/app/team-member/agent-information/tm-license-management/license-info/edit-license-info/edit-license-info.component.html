@@ -3,7 +3,9 @@
     <div class="col">
       <div class="mb-3">
         <label for="agentName" class="form-label"> Agent Name: </label><br />
-        <span>{{ licenseForm.get("agentName")?.value }}</span>
+        <span>{{ this.agentDataService.agentInformation.lastName +
+          ', ' +
+          this.agentDataService.agentInformation.firstName }}</span>
       </div>
 
       <div class="mb-3" *ngIf="agentComService.modeLicenseMgmt !== 'ADD'">
@@ -25,6 +27,8 @@
           class="form-select select-size-x-small"
           type="text"
           id="licenseState"
+          [value]="agentDataService.agentInformation.branchDeptStreetState"
+          disabled
         >
           <option *ngFor="let state of licenseStates" [value]="state">
             {{ state }}

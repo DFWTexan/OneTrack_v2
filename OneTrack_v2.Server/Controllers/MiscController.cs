@@ -63,6 +63,15 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
+
+        [HttpGet("{stateAbv}")]
+        public async Task<IActionResult> GetLicenseNumericNames(string stateAbv)
+        {
+            var result = await Task.Run(() => _miscService.GetLicenseNumericNames(stateAbv));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
         [HttpGet]
         public async Task<IActionResult> GetEmailTemplates()
         {

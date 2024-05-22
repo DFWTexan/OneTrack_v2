@@ -1821,34 +1821,76 @@ namespace OneTrack_v2.Services
                 if (vInput.EmployeeLicenseID == 0)
                 {
                     // INSERT Agent License
-                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    //using (SqlConnection conn = new SqlConnection(_connectionString))
+                    //{
+                    //    using (SqlCommand cmd = new SqlCommand("uspAgentLicenseInsert", conn))
+                    //    {
+                    //        cmd.CommandType = CommandType.StoredProcedure;
+                    //        cmd.Parameters.Add(new SqlParameter("@EmployeeID", vInput.EmployeeID));
+                    //        cmd.Parameters.Add(new SqlParameter("@AscEmployeeLicenseID", vInput.AscEmployeeLicenseID ?? 0));
+                    //        cmd.Parameters.Add(new SqlParameter("@LicenseID", vInput.LicenseID ?? 0));
+                    //        cmd.Parameters.Add(new SqlParameter("@LicenseExpireDate", vInput.LicenseExpireDate));
+                    //        cmd.Parameters.Add(new SqlParameter("@LicenseStatus", vInput.LicenseStatus ?? ""));
+                    //        cmd.Parameters.Add(new SqlParameter("@LicenseNumber", vInput.LicenseNumber));
+                    //        cmd.Parameters.Add(new SqlParameter("@Reinstatement", vInput.Reinstatement ?? false));
+                    //        cmd.Parameters.Add(new SqlParameter("@Required", vInput.Required ?? false));
+                    //        cmd.Parameters.Add(new SqlParameter("@NonResident", vInput.NonResident ?? false));
+                    //        cmd.Parameters.Add(new SqlParameter("@LicenseEffectiveDate", vInput.LicenseEffectiveDate));
+                    //        cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
+                    //        cmd.Parameters.Add(new SqlParameter("@LicenseIssueDate", vInput.LicenseIssueDate));
+                    //        cmd.Parameters.Add(new SqlParameter("@LineOfAuthorityIssueDate", vInput.LineOfAuthorityIssueDate));
+                    //        //cmd.Parameters.Add(new SqlParameter("@SentToAgentDate", vInput.SentToAgentDate == DateOnly.MinValue ? DBNull : vInput.Se));
+                    //        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+                    //        cmd.Parameters.Add(new SqlParameter("@LicenseNote", vInput.LicenseNote));
+                    //        conn.Open();
+                    //        cmd.ExecuteNonQuery();
+                    //    }
+                    //}
+                    using (var context = new AppDataContext())
+                    using (var transaction = context.Database.BeginTransaction())
                     {
-                        using (SqlCommand cmd = new SqlCommand("uspAgentLicenseInsert", conn))
+                        try
                         {
-                            cmd.CommandType = CommandType.StoredProcedure;
+                            // INSERT into EmployeeLicense and log audit
+                            var employeeLicense = new EmployeeLicense
+                            {
+                                AscEmployeeLicenseId = vInput.AscEmployeeLicenseID,
+                                LicenseId = vInput.LicenseID,
+                                LicenseExpireDate = vInput.LicenseExpireDate,
+                                LicenseStatus = vInput.LicenseStatus,
+                                LicenseNumber = vInput.LicenseNumber,
+                                Reinstatement = vInput.Reinstatement,
+                                Required = vInput.Required,
+                                NonResident = vInput.NonResident,
+                                LicenseEffectiveDate = vInput.LicenseEffectiveDate,
+                                LicenseIssueDate = vInput.LicenseIssueDate,
+                                LineOfAuthorityIssueDate = vInput.LineOfAuthorityIssueDate,
+                                LicenseNote = vInput.LicenseNote,
+                            };  
+                            context.EmployeeLicenses.Add(employeeLicense);
+                            context.SaveChanges();
 
-                            cmd.Parameters.Add(new SqlParameter("@EmployeeID", vInput.EmployeeID));
-                            cmd.Parameters.Add(new SqlParameter("@AscEmployeeLicenseID", vInput.AscEmployeeLicenseID ?? 0));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseID", vInput.LicenseID ?? 0));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseExpireDate", vInput.LicenseExpireDate));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseStatus", vInput.LicenseStatus ?? ""));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseNumber", vInput.LicenseNumber));
-                            cmd.Parameters.Add(new SqlParameter("@Reinstatement", vInput.Reinstatement ?? false));
-                            cmd.Parameters.Add(new SqlParameter("@Required", vInput.Required ?? false));
-                            cmd.Parameters.Add(new SqlParameter("@NonResident", vInput.NonResident ?? false));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseEffectiveDate", vInput.LicenseEffectiveDate));
-                            cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseIssueDate", vInput.LicenseIssueDate));
-                            cmd.Parameters.Add(new SqlParameter("@LineOfAuthorityIssueDate", vInput.LineOfAuthorityIssueDate));
-                            //cmd.Parameters.Add(new SqlParameter("@SentToAgentDate", vInput.SentToAgentDate == DateOnly.MinValue ? DBNull : vInput.Se));
-                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseNote", vInput.LicenseNote));
+                            // Log audit for EmployeeSSN insertion
+                            int employeeLicenseId = employeeLicense.EmployeeLicenseId;
 
+                            if (employeeLicenseId > 0)
+                                _utilityService.LogAudit("EmployeeLicense", employeeLicenseId, vInput.UserSOEID, "INSERT", "EmployeeLicense", null, employeeLicenseId.ToString());
 
-                            conn.Open();
-                            cmd.ExecuteNonQuery();
+                            transaction.Commit();
+
+                            result.Success = true;
+                            result.ObjData = new { EmployeeLicenseID = employeeLicenseId, Message = "Success" };
+                        }
+                        catch (Exception ex)
+                        {
+                            transaction.Rollback();
+                            // Log or handle error
+                            //_utilityService.ExecuteErrorHandling(); // Placeholder for error handling stored procedure call
+                            result.StatusCode = 500;
+                            result.ErrMessage = ex.Message;
                         }
                     }
+
                 }
                 else
                 {
