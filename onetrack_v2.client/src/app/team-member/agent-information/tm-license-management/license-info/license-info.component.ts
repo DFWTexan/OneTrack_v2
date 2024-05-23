@@ -1,9 +1,16 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 
 import { AgentLicenseAppointments } from '../../../../_Models';
-import { AgentComService, AgentDataService, AppComService, ModalService, UserAcctInfoDataService } from '../../../../_services';
+import {
+  AgentComService,
+  AgentDataService,
+  AppComService,
+  ModalService,
+  UserAcctInfoDataService,
+} from '../../../../_services';
 import { ConfirmDialogComponent } from '../../../../_components';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-license-info',
@@ -23,7 +30,8 @@ export class LicenseInfoComponent implements OnInit {
     protected modalService: ModalService,
     public appComService: AppComService,
     private userInfoDataService: UserAcctInfoDataService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -74,9 +82,11 @@ export class LicenseInfoComponent implements OnInit {
       data: {
         title: 'Confirm Action',
         message:
-          'You are about to DELETE agent license ' + this.vObject.licenseName + ' - (' +
+          'You are about to DELETE agent license ' +
+          this.vObject.licenseName +
+          ' - (' +
           this.vObject.employeeLicenseID +
-          ')'
+          ')',
       },
     });
 
@@ -94,7 +104,16 @@ export class LicenseInfoComponent implements OnInit {
               //   'EMFTEST (app-tm-emptrans-history: deleteEmploymentHistory) - COMPLETED DELETE response => \n',
               //   response
               // );
-             
+              this.agentComService.showLicenseMgmt();
+              this.router
+                .navigateByUrl('/', { skipLocationChange: true })
+                .then(() => {
+                  this.router.navigate([
+                    'team/agent-info',
+                    this.agentDataService.agentInformation.employeeID,
+                    'tm-info',
+                  ]);
+                });
             },
             error: (error) => {
               console.error(error);

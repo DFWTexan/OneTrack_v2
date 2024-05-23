@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
+import { Component, OnInit, Injectable, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
@@ -20,13 +20,14 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
   isShowTickle: boolean = false;
   subsctibeAgentInfo: Subscription = new Subscription();
   subscribeTickleToggleChanged: Subscription = new Subscription();
+  subscibeAgentInfoChanged: Subscription = new Subscription();
 
   constructor(
     private agentDataService: AgentDataService,
     private route: ActivatedRoute,
     private agentComService: AgentComService,
     private appComService: AppComService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit() {
@@ -52,6 +53,7 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
       this.appComService.tickleToggleChanged.subscribe((tickleToggle: boolean) => {
         this.isShowTickle = tickleToggle;
       });
+
   }
 
   exitLicenseMgmt() {
@@ -65,5 +67,6 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
     this.subsctibeAgentInfo.unsubscribe();
     this.subscribeShowLicMgmtChanged.unsubscribe();
     this.subscribeTickleToggleChanged.unsubscribe();
+    this.subscibeAgentInfoChanged.unsubscribe();
   }
 }
