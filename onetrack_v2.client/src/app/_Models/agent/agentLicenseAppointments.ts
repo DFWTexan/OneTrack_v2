@@ -5,6 +5,7 @@ export interface AgentLicenseAppointments {
     lineOfAuthority: string;
     licenseStatus: string;
     employmentID: number;
+    licenseID: number;
     licenseName: string;
     licenseNumber: string | null;
     resNoneRes: string | null;

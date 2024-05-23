@@ -1,7 +1,9 @@
 import { Component, OnInit, Injectable } from '@angular/core';
 
 import { AgentLicenseAppointments } from '../../../../_Models';
-import { AgentComService, AgentDataService, AppComService, ModalService } from '../../../../_services';
+import { AgentComService, AgentDataService, AppComService, ModalService, UserAcctInfoDataService } from '../../../../_services';
+import { ConfirmDialogComponent } from '../../../../_components';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-license-info',
@@ -12,12 +14,16 @@ import { AgentComService, AgentDataService, AppComService, ModalService } from '
 export class LicenseInfoComponent implements OnInit {
   licenseMgmtData: AgentLicenseAppointments[] = [];
   currentIndex: number = 0;
+  eventAction: string = '';
+  vObject: any = {};
 
   constructor(
     protected agentDataService: AgentDataService,
     public agentComService: AgentComService,
     protected modalService: ModalService,
-    public appComService: AppComService
+    public appComService: AppComService,
+    private userInfoDataService: UserAcctInfoDataService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit() {
@@ -58,5 +64,44 @@ export class LicenseInfoComponent implements OnInit {
 
   setModeLicenseMgmt(mode: string) {
     this.agentComService.modeLicenseMgmtModal(mode);
+  }
+
+  openConfirmDialog(eventAction: string, msg: string, vObject: any): void {
+    this.eventAction = eventAction;
+    this.vObject = vObject;
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+        title: 'Confirm Action',
+        message:
+          'You are about to DELETE agent license ' + this.vObject.licenseName + ' - (' +
+          this.vObject.employeeLicenseID +
+          ')'
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.agentDataService
+          .deleteAgentLicense({
+            employmentID: this.vObject.employmentID,
+            employeeLicenseID: this.vObject.employeeLicenseID,
+            userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+          })
+          .subscribe({
+            next: (response) => {
+              // console.log(
+              //   'EMFTEST (app-tm-emptrans-history: deleteEmploymentHistory) - COMPLETED DELETE response => \n',
+              //   response
+              // );
+             
+            },
+            error: (error) => {
+              console.error(error);
+              // handle the error here
+            },
+          });
+      }
+    });
   }
 }

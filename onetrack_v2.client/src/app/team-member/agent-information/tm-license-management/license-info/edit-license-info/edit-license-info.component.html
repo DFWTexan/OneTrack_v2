@@ -3,9 +3,11 @@
     <div class="col">
       <div class="mb-3">
         <label for="agentName" class="form-label"> Agent Name: </label><br />
-        <span>{{ this.agentDataService.agentInformation.lastName +
-          ', ' +
-          this.agentDataService.agentInformation.firstName }}</span>
+        <span>{{
+          this.agentDataService.agentInformation.lastName +
+            ", " +
+            this.agentDataService.agentInformation.firstName
+        }}</span>
       </div>
 
       <div class="mb-3" *ngIf="agentComService.modeLicenseMgmt !== 'ADD'">
@@ -16,8 +18,8 @@
             id="employeeLicenseId"
             class="form-control input-size-small"
             formControlName="employeeLicenseId"
-          /> -->
-        </label>
+          /> --> </label
+        ><br />
         <span>{{ licenseForm.get("employeeLicenseId")?.value }}</span>
       </div>
 
@@ -27,8 +29,8 @@
           class="form-select select-size-x-small"
           type="text"
           id="licenseState"
-          [value]="agentDataService.agentInformation.branchDeptStreetState"
-          disabled
+          formControlName="licenseState"
+          (change)="onChangeLicenseState($event)"
         >
           <option *ngFor="let state of licenseStates" [value]="state">
             {{ state }}
@@ -209,6 +211,46 @@
           id="licenseExpireDate"
           formControlName="licenseExpireDate"
         />
+      </div>
+
+      <div class="mb-3 d-flex align-items-center">
+        <input
+          class="form-check-input me-2"
+          type="checkbox"
+          id="required"
+          formControlName="required"
+        />
+        <label for="required" class="form-label d-flex align-items-center mt-3"
+          >Required
+        </label>
+      </div>
+
+      <div class="mb-3 d-flex align-items-center">
+        <input
+          class="form-check-input me-2"
+          type="checkbox"
+          id="reinstatement"
+          formControlName="reinstatement"
+        />
+        <label
+          for="reinstatement"
+          class="form-label d-flex align-items-center mt-3"
+          >Reinstatement
+        </label>
+      </div>
+
+      <div class="mb-3 d-flex align-items-center">
+        <input
+          class="form-check-input me-2"
+          type="checkbox"
+          id="nonResident"
+          formControlName="nonResident"
+        />
+        <label
+          for="nonResident"
+          class="form-label d-flex align-items-center mt-3"
+          >Non-Resident
+        </label>
       </div>
     </div>
   </div>

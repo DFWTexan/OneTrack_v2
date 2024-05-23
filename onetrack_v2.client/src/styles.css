@@ -163,11 +163,12 @@ body {
 }
 
 .icon-edit-delete-button:hover {
-  color: grey; /* Change this to the color you want on hover */
+  color: grey; 
 }
 
 .icon-edit-delete-button:active {
-  transform: scale(0.9); /* This creates a "pressed" effect when clicked */
+  transform: scale(0.9);
+  color: #DDA0DD;
 }
 
 .sticky-header {

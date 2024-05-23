@@ -2,6 +2,7 @@ import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
+
 import {
   AgentComService,
   AgentDataService,
@@ -98,8 +99,24 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   }
 
   toggleLicenseMgmt(index: number) {
+    alert('Plese be patient - Loading Agent License Mgmt...');
+    // this.showLoadingDialog('toggleLicenseMgmt', 'Loading Agent License Mgmt...', null);
     this.agentDataService.storeLicenseMgmtDataIndex(index);
     this.agentComService.showLicenseMgmt();
+  }
+
+  showLoadingDialog(eventAction: string, msg: string, vObject: any): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: { message: msg },
+      disableClose: true  // This prevents the user from closing the dialog
+    });
+  
+    // Close the dialog when a value is set
+    this.agentDataService.agentInfoChanged.subscribe((agentInfo: any) => {
+      if (agentInfo) {
+        dialogRef.close();
+      }
+    });
   }
 
   ngOnDestroy() {

@@ -21,4 +21,13 @@
   padding-bottom: 2.5rem;
 }
 
+.click-effect {
+  transition: transform 0.1s;
+}
+
+.click-effect:active {
+  transform: scale(0.95);
+  color: #DDA0DD;
+}
+
 

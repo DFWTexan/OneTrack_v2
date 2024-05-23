@@ -35,7 +35,16 @@
       >
         <span class="material-symbols-outlined"> edit </span>
       </button>
-      <button class="icon-edit-delete-button">
+      <button
+        class="icon-edit-delete-button"
+        (click)="
+          openConfirmDialog('deleteAgentLicense', 'Agent License', {
+            employmentID: licenseMgmtData[currentIndex].employmentID,
+            employeeLicenseID: licenseMgmtData[currentIndex].employeeLicenseId,
+            licenseName: licenseMgmtData[currentIndex].licenseName,
+          })
+        "
+      >
         <span class="material-symbols-outlined"> delete </span>
       </button>
     </div>
@@ -59,11 +68,19 @@
     <div class="col">
       <p>
         <strong>Affilliated License:</strong> <br />
-        {{ licenseMgmtData[currentIndex].ascLicenseName == null ? "None" : licenseMgmtData[currentIndex].ascLicenseName }}
+        {{
+          licenseMgmtData[currentIndex].ascLicenseName == null
+            ? "None"
+            : licenseMgmtData[currentIndex].ascLicenseName
+        }}
       </p>
       <p>
         <strong>Note:</strong> <br />
-        {{ licenseMgmtData[currentIndex].licenseNote == null ? "N/A" : licenseMgmtData[currentIndex].licenseNote}}
+        {{
+          licenseMgmtData[currentIndex].licenseNote == null
+            ? "N/A"
+            : licenseMgmtData[currentIndex].licenseNote
+        }}
       </p>
     </div>
 
@@ -140,7 +157,7 @@
           <th>Effective Date</th>
           <th>Expire Date</th>
           <th>Termination Date</th>
-          <th class="text-center" style="width: 10rem;">ACTION</th>
+          <th class="text-center" style="width: 10rem">ACTION</th>
         </tr>
       </thead>
       <tbody class="bg-body">
@@ -150,7 +167,9 @@
           "
         >
           <td>{{ appointment.appointmentStatus }}</td>
-          <td *ngIf="appComService.isShowEditID">{{ appointment.licenseID }}</td>
+          <td *ngIf="appComService.isShowEditID">
+            {{ appointment.licenseID }}
+          </td>
           <td>{{ appointment.companyID }}</td>
           <td>{{ appointment.companyAbv }}</td>
           <td>{{ appointment.carrierDate | date : "MM/dd/yyyy" }}</td>
@@ -195,7 +214,9 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-license-info [currentIndex]="agentDataService.licenseMgmtDataIndex"></app-edit-license-info>
+        <app-edit-license-info
+          [currentIndex]="agentDataService.licenseMgmtDataIndex"
+        ></app-edit-license-info>
       </div>
     </div>
   </div>

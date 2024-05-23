@@ -1854,6 +1854,7 @@ namespace OneTrack_v2.Services
                             // INSERT into EmployeeLicense and log audit
                             var employeeLicense = new EmployeeLicense
                             {
+                                EmploymentId = vInput.EmploymentID,
                                 AscEmployeeLicenseId = vInput.AscEmployeeLicenseID,
                                 LicenseId = vInput.LicenseID,
                                 LicenseExpireDate = vInput.LicenseExpireDate,
@@ -2105,6 +2106,7 @@ namespace OneTrack_v2.Services
                                             LineOfAuthority = lineOfAuthority.LineOfAuthorityAbv,
                                             LicenseStatus = employeeLicense.LicenseStatus,
                                             EmploymentID = employeeLicense.EmploymentId,
+                                            LicenseID = license.LicenseId,
                                             LicenseName = license.LicenseName,
                                             LicenseNumber = employeeLicense.LicenseNumber,
                                             OriginalIssueDate = employeeLicense.LicenseIssueDate,

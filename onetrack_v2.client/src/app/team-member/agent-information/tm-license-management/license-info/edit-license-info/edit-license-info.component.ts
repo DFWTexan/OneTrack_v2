@@ -27,6 +27,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
   licenseStatuses: { value: string; label: string }[] = [];
   licenseNames: { value: number; label: string }[] = [];
   affiliatedLicenses: string[] = ['None'];
+  defaultLicenseState: string = null || 'Select';
   subscriptionMode: Subscription = new Subscription();
   subscriptionData: Subscription = new Subscription();
 
@@ -46,6 +47,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       ascEmployeeLicenseID: [''],
       licenseID: [0, Validators.required],
       licenseExpireDate: [''],
+      licenseState: ['Select'],
       licenseStatus: ['Select', Validators.required],
       licenseNumber: [''],
       reinstatement: [''],
@@ -119,6 +121,9 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
             this.licenseMgmtData[this.currentIndex].licenseEffectiveDate;
           let licenseExpirationDate =
             this.licenseMgmtData[this.currentIndex].licenseExpirationDate;
+          this.defaultLicenseState =
+            this.licenseMgmtData[this.currentIndex].licenseState;
+
           this.licenseForm.patchValue({
             agentName:
               this.agentDataService.agentInformation.lastName +
@@ -128,12 +133,13 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
               this.licenseMgmtData[this.currentIndex].employeeLicenseId,
             licenseState: this.licenseMgmtData[this.currentIndex].licenseState,
             licenseName: this.licenseMgmtData[this.currentIndex].licenseName,
+            licenseID: this.licenseMgmtData[this.currentIndex].licenseID,
             licenseNumber:
               this.licenseMgmtData[this.currentIndex].licenseNumber,
             licenseStatus:
               this.licenseMgmtData[this.currentIndex].licenseStatus,
             affiliatedLicense: 'SELECT-TBD...',
-            originalIssueDate: originalIssueDate
+            licenseIssueDate: originalIssueDate
               ? formatDate(originalIssueDate, 'yyyy-MM-dd', 'en-US')
               : null,
             lineOfAuthIssueDate: lineOfAuthIssueDate
@@ -142,13 +148,15 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
             licenseEffectiveDate: licenseEffectiveDate
               ? formatDate(licenseEffectiveDate, 'yyyy-MM-dd', 'en-US')
               : null,
-            licenseExpirationDate: licenseExpirationDate
+            licenseExpireDate: licenseExpirationDate
               ? formatDate(licenseExpirationDate, 'yyyy-MM-dd', 'en-US')
               : null,
-            licenseNotes: 'TBD...',
-            required: 'Yes',
-            reinstatementDate: 'TBD...',
-            resNoneRes: this.licenseMgmtData[this.currentIndex].resNoneRes,
+            licenseNote: this.licenseMgmtData[this.currentIndex].licenseNote,
+            required: this.licenseMgmtData[this.currentIndex].required,
+            // reinstatementDate: this.licenseMgmtData[this.currentIndex].reinstatementDate,
+            nonResident: this.licenseMgmtData[this.currentIndex].resNoneRes,
+            reinstatement:
+              this.licenseMgmtData[this.currentIndex].reinstatement,
             employmentID: this.licenseMgmtData[this.currentIndex].employmentID,
           });
         } else {
@@ -160,6 +168,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
             //   this.agentDataService.agentInformation.firstName,
             licenseState:
               this.agentDataService.agentInformation.branchDeptStreetState,
+
             licenseID: 0,
             licenseStatus: 'Select',
             sentToAgentDate: '01/01/0001 00:00:00',
@@ -201,13 +210,16 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
 
     this.agentDataService.upsertAgentLicense(licenseInfo).subscribe({
       next: (response) => {
-        console.log(response);
-
+        
+        const modalDiv = document.getElementById('modal-edit-license-info');
+        if (modalDiv != null) {
+          modalDiv.style.display = 'none';
+        }
         // handle the response here
-        console.log(
-          'EMFTEST () - Agent License added successfully response => \n ',
-          response
-        );
+        // console.log(
+        //   'EMFTEST () - Agent License added successfully response => \n ',
+        //   response
+        // );
       },
       error: (error) => {
         console.error(error);
@@ -217,15 +229,11 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
   }
 
   closeModal() {
-    // const modalDiv = document.getElementById('modal-edit-license-info');
-    // if (modalDiv != null) {
-    //   modalDiv.style.display = 'none';
-    // }
-
     if (this.licenseForm.dirty && !this.isFormSubmitted) {
       if (
         confirm('You have unsaved changes. Are you sure you want to close?')
       ) {
+        
         const modalDiv = document.getElementById('modal-edit-license-info');
         if (modalDiv != null) {
           modalDiv.style.display = 'none';
@@ -242,6 +250,22 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       if (modalDiv != null) {
         modalDiv.style.display = 'none';
       }
+    }
+  }
+
+  onChangeLicenseState(event: any) {
+    this.licenseForm.patchValue({
+      licenseState: event.target.value,
+    });
+
+    if (
+      event.target.value !==
+      this.agentDataService.agentInformation.branchDeptStreetState
+    ) {
+      alert(
+        'Selection is different than Agent Work State: ' +
+          this.agentDataService.agentInformation.branchDeptStreetState
+      );
     }
   }
 
