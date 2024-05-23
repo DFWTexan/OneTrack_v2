@@ -1,25 +1,37 @@
 <div style="margin-left: 1.5rem; margin-right: 1.5rem;">
+  
   <div class="row mt-3">
-    <div class="col d-flex align-items-center">
-      <div class="h1-title ms-3">Agent Information</div>
-      <div class="h2-title ms-3" *ngIf="isShowLicenseMgmt">
-        License Management
+    <ng-container *ngIf="isShowLicenseMgmt">
+      <div class="col d-flex align-items-center">
+        <div class="h1-title ms-3">Agent Information</div>
+        <div class="h2-title ms-3">
+          License Management
+        </div>
       </div>
-    </div>
-    <div
-      class="col d-flex justify-content-end mt-1 me-3"
-      *ngIf="isShowLicenseMgmt"
-    >
-      <button
-        class="btn btn-link"
-        style="font-size: 2rem"
-        (click)="exitLicenseMgmt()"
+      <!-- BEGIN - LicenseMgmt Exit -->
+      <div
+        class="col d-flex justify-content-end mt-1 me-3"
       >
-        Exit License Mgmt
-        <span class="material-symbols-outlined"> move_item </span>
-      </button>
-    </div>
+        <button
+          class="btn btn-link"
+          style="font-size: 2rem"
+          (click)="exitLicenseMgmt()"
+        >
+          Exit License Mgmt
+          <span class="material-symbols-outlined"> move_item </span>
+        </button>
+      </div>
+      <!-- END - LicenseMgmt Exit -->
+    </ng-container> 
+    
+    <ng-container *ngIf="!isShowLicenseMgmt">
+      <div class="col d-flex align-items-center">
+        <div class="h1-title ms-3">Agent Information</div>
+      </div>
+    </ng-container>
   </div>
+
+  <!-- BEGIN - Header -->
   <div class="row">
     <div class="col">
       <div class="mt-5 mb-5 d-flex justify-content-center" *ngIf="isLoading">
@@ -79,10 +91,11 @@
       <app-tickler-mgmt></app-tickler-mgmt>
     </div>
   </div>
+  <!-- END -Header -->
 
   <mat-divider></mat-divider>
 
-  <div class="row" *ngIf="!isShowLicenseMgmt">
+  <ng-container class="row" *ngIf="!isShowLicenseMgmt">
     <div class="col">
       <mat-tab-group>
         <mat-tab label="TM INFORMATION" [disabled]="isLoading">
@@ -122,10 +135,10 @@
         </mat-tab>
       </mat-tab-group>
     </div>
-  </div>
-  <div class="row" *ngIf="isShowLicenseMgmt">
+  </ng-container>
+  <ng-container class="row" *ngIf="isShowLicenseMgmt">
     <div class="col">
       <app-tm-license-management></app-tm-license-management>
     </div>
-  </div>
+  </ng-container>
 </div>
