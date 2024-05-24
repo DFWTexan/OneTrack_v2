@@ -1867,6 +1867,7 @@ namespace OneTrack_v2.Services
                                 LicenseIssueDate = vInput.LicenseIssueDate,
                                 LineOfAuthorityIssueDate = vInput.LineOfAuthorityIssueDate,
                                 LicenseNote = vInput.LicenseNote,
+                                
                             };  
                             context.EmployeeLicenses.Add(employeeLicense);
                             context.SaveChanges();
@@ -1922,6 +1923,9 @@ namespace OneTrack_v2.Services
                             cmd.Parameters.Add(new SqlParameter("@AppointmentExpireDate", vInput.AppointmentExpireDate));
                             cmd.Parameters.Add(new SqlParameter("@AppointmentTerminationDate", vInput.AppointmentTerminationDate));
                             cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
                         }
                     }
                 }

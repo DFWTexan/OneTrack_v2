@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
 
 import { AgentLicenseAppointments } from '../../../../_Models';
 import {
@@ -11,6 +11,7 @@ import {
 import { ConfirmDialogComponent } from '../../../../_components';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-license-info',
@@ -18,8 +19,9 @@ import { Router } from '@angular/router';
   styleUrl: './license-info.component.css',
 })
 @Injectable()
-export class LicenseInfoComponent implements OnInit {
+export class LicenseInfoComponent implements OnInit, OnDestroy {
   licenseMgmtData: AgentLicenseAppointments[] = [];
+  subscriptionAgentInfo: Subscription = new Subscription();
   currentIndex: number = 0;
   eventAction: string = '';
   vObject: any = {};
@@ -39,8 +41,16 @@ export class LicenseInfoComponent implements OnInit {
     // this.agentDataService.licenseMgmtDataIndexChanged.subscribe((index: number) => {
     //   this.currentIndex = index;
     // });
+
     this.licenseMgmtData =
       this.agentDataService.agentInformation.agentLicenseAppointments;
+
+    // TBD: Need to get the data from the service with a subscription (NOT WORKING YET)
+    // this.subscriptionAgentInfo = this.agentDataService.agentInfoChanged.subscribe(
+    //   (agentInfo) => {
+    //     this.licenseMgmtData = agentInfo.agentLicenseAppointments;
+    //   }
+    // );
   }
 
   // Pagination
@@ -122,5 +132,9 @@ export class LicenseInfoComponent implements OnInit {
           });
       }
     });
+  }
+
+  ngOnDestroy() {
+    this.subscriptionAgentInfo.unsubscribe();
   }
 }

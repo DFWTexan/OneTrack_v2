@@ -44,28 +44,28 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       // INSERT FORM FIELDS HERE
       employeeID: [''],
       employmentID: [''],
-      ascEmployeeLicenseID: [''],
+      ascEmployeeLicenseID: [0],
       licenseID: [0, Validators.required],
-      licenseExpireDate: [''],
+      licenseExpireDate: [null],
       licenseState: ['Select'],
       licenseStatus: ['Select', Validators.required],
       licenseNumber: [''],
       reinstatement: [''],
       required: [''],
       nonResident: [''],
-      licenseEffectiveDate: [''],
-      licenseIssueDate: [''],
-      lineOfAuthorityIssueDate: [''],
-      sentToAgentDate: ['01/01/0001 00:00:00', Validators.required],
+      licenseEffectiveDate: [null],
+      licenseIssueDate: ['01/01/0001 00:00:00', Validators.required],
+      lineOfAuthorityIssueDate: [null],
+      sentToAgentDate: [null],
       licenseNote: [''],
       // UPDATE FORM FIELDS HERE
       employeeLicenseId: [{ value: '', disabled: true }],
       appointmentStatus: [''],
-      companyID: [''],
-      carrierDate: [''],
-      appointmentEffectiveDate: [''],
-      appointmentExpireDate: [''],
-      appointmentTerminationDate: [''],
+      companyID: [0],
+      carrierDate: [null],
+      appointmentEffectiveDate: [null],
+      appointmentExpireDate: [null],
+      appointmentTerminationDate: [null],
 
       // licenseState: ['', Validators.required],
       // agentName: [{ value: '', disabled: true }],
@@ -144,7 +144,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
               : null,
             lineOfAuthIssueDate: lineOfAuthIssueDate
               ? formatDate(lineOfAuthIssueDate, 'yyyy-MM-dd', 'en-US')
-              : null,
+              : '01/01/0001 00:00:00',
             licenseEffectiveDate: licenseEffectiveDate
               ? formatDate(licenseEffectiveDate, 'yyyy-MM-dd', 'en-US')
               : null,
@@ -180,16 +180,23 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.isFormSubmitted = true;
 
-    console.log(
-      'EMFTest (app-edit-license-info: onSubmit) - this.licenseForm.value  => \n',
-      this.licenseForm.value
-    );
+    // console.log(
+    //   'EMFTest (app-edit-license-info: onSubmit) - this.licenseForm.value  => \n',
+    //   this.licenseForm.value
+    // );
 
     let licenseInfo: any = this.licenseForm.value;
     licenseInfo.employeeID = this.agentDataService.agentInformation.employeeID;
     licenseInfo.employmentID =
       this.agentDataService.agentInformation.employmentID;
     licenseInfo.UserSOEID = this.userInfoDataService.userAcctInfo.soeid;
+
+    if (this.agentComService.modeLicenseMgmt == 'EDIT') {
+      licenseInfo.employeeLicenseId =
+        this.licenseMgmtData[this.currentIndex].employeeLicenseId;
+    } else {
+      licenseInfo.employeeLicenseId = 0;
+    }
 
     if (licenseInfo.licenseID === 0) {
       this.licenseForm.controls['licenseID'].setErrors({ invalid: true });
@@ -199,8 +206,14 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       this.licenseForm.controls['licenseStatus'].setErrors({ invalid: true });
     }
 
-    if (licenseInfo.sentToAgentDate === '01/01/0001 00:00:00') {
-      this.licenseForm.controls['sentToAgentDate'].setErrors({ invalid: true });
+    // if (licenseInfo.sentToAgentDate === '01/01/0001 00:00:00') {
+    //   this.licenseForm.controls['sentToAgentDate'].setErrors({ invalid: true });
+    // }
+
+    if (licenseInfo.licenseIssueDate === '01/01/0001 00:00:00') {
+      this.licenseForm.controls['licenseIssueDate'].setErrors({
+        invalid: true,
+      });
     }
 
     if (this.licenseForm.invalid) {
@@ -210,7 +223,6 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
 
     this.agentDataService.upsertAgentLicense(licenseInfo).subscribe({
       next: (response) => {
-        
         const modalDiv = document.getElementById('modal-edit-license-info');
         if (modalDiv != null) {
           modalDiv.style.display = 'none';
@@ -233,7 +245,6 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       if (
         confirm('You have unsaved changes. Are you sure you want to close?')
       ) {
-        
         const modalDiv = document.getElementById('modal-edit-license-info');
         if (modalDiv != null) {
           modalDiv.style.display = 'none';

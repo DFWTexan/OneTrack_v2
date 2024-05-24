@@ -92,6 +92,9 @@ export class AgentDataService {
             this.agentInformation = response.objData;
             this.diaryItems = this.agentInformation.diaryItems;
             this.diaryItemsChanged.next(this.diaryItems);
+            this.agentLicenseAppointmentsChanged.next(
+              this.agentInformation.agentLicenseAppointments
+            );
             this.fetchAgentLicenseAppointments(response.objData.employmentID);
             return response.objData;
           } else {
@@ -266,8 +269,6 @@ export class AgentDataService {
     agent.DateOfBirth = new Date(agent.DateOfBirth);
     agent.HireDate = new Date(agent.HireDate);
 
-console.log('EMFTEST (upsertAgent) - agent => \n', agent);
-
     return this.http
       .post<{
         success: boolean;
@@ -337,6 +338,9 @@ console.log('EMFTEST (upsertAgent) - agent => \n', agent);
         map((agentInfo) => {
           this.agentInformation = agentInfo;
           this.agentInfoChanged.next(this.agentInformation);
+          this.agentLicenseAppointmentsChanged.next(
+            this.agentInformation.agentLicenseAppointments
+          );
           return this.agentInformation;
         })
       );
@@ -504,7 +508,9 @@ console.log('EMFTEST (upsertAgent) - agent => \n', agent);
       );
   }
 
-  upsertCompanyRequirementsHistItem(companyRequirementsHistItem: any): Observable<any> {
+  upsertCompanyRequirementsHistItem(
+    companyRequirementsHistItem: any
+  ): Observable<any> {
     this.apiUrl = environment.apiUrl + 'Agent/UpsertCoRequirementItem';
 
     return this.http
@@ -530,7 +536,9 @@ console.log('EMFTEST (upsertAgent) - agent => \n', agent);
       );
   }
 
-  deleteCompanyRequirementsHistItem(companyRequirementsItem: any): Observable<any> {
+  deleteCompanyRequirementsHistItem(
+    companyRequirementsItem: any
+  ): Observable<any> {
     this.apiUrl = environment.apiUrl + 'Agent/DeleteCoRequirementItem';
 
     return this.http
@@ -556,7 +564,9 @@ console.log('EMFTEST (upsertAgent) - agent => \n', agent);
       );
   }
 
-  upsertEmploymentJobTitleHistItem(employmentJobTitleHistItem: any): Observable<any> {
+  upsertEmploymentJobTitleHistItem(
+    employmentJobTitleHistItem: any
+  ): Observable<any> {
     this.apiUrl = environment.apiUrl + 'Agent/UpsertEmploymentJobTitleItem';
 
     return this.http
@@ -582,7 +592,9 @@ console.log('EMFTEST (upsertAgent) - agent => \n', agent);
       );
   }
 
-  deleteEmploymentJobTitleHistItem(employmentJobTitleHistItem: any): Observable<any> {
+  deleteEmploymentJobTitleHistItem(
+    employmentJobTitleHistItem: any
+  ): Observable<any> {
     this.apiUrl = environment.apiUrl + 'Agent/DeleteEmploymentJobTitleItem';
 
     return this.http
