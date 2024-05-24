@@ -103,14 +103,13 @@
       <p>
         <strong>Org Issue Date:</strong> <br />
         {{
-          licenseMgmtData[currentIndex].originalIssueDate | date : "MM/dd/yyyy"
+          licenseMgmtData[currentIndex].originalIssueDate ? (licenseMgmtData[currentIndex].originalIssueDate | date:'MM/dd/yyyy') : 'N/A'
         }}
       </p>
       <p>
         <strong>LOA Issue Date:</strong> <br />
         {{
-          licenseMgmtData[currentIndex].lineOfAuthIssueDate
-            | date : "MM/dd/yyyy"
+          licenseMgmtData[currentIndex].lineOfAuthIssueDate ? (licenseMgmtData[currentIndex].lineOfAuthIssueDate | date : "MM/dd/yyyy") : 'N/A'
         }}
       </p>
     </div>
@@ -119,15 +118,13 @@
       <p>
         <strong>Effective Date:</strong> <br />
         {{
-          licenseMgmtData[currentIndex].licenseEffectiveDate
-            | date : "MM/dd/yyyy"
+          licenseMgmtData[currentIndex].licenseEffectiveDate ? (licenseMgmtData[currentIndex].licenseEffectiveDate | date : "MM/dd/yyyy") : 'N/A'
         }}
       </p>
       <p>
         <strong>Expire Date:</strong> <br />
         {{
-          licenseMgmtData[currentIndex].licenseExpirationDate
-            | date : "MM/dd/yyyy"
+          licenseMgmtData[currentIndex].licenseExpirationDate ? (licenseMgmtData[currentIndex].licenseExpirationDate | date : "MM/dd/yyyy") : 'N/A'
         }}
       </p>
     </div>
