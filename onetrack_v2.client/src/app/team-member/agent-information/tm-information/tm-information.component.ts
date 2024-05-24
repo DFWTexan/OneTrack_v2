@@ -12,6 +12,7 @@ import {
 import { AgentInfo } from '../../../_Models';
 import { ModalService } from '../../../_services';
 import { ConfirmDialogComponent } from '../../../_components';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tm-information',
@@ -33,7 +34,8 @@ export class TmInformationComponent implements OnInit, OnDestroy {
     protected modalService: ModalService,
     public appComService: AppComService,
     private userInfoDataService: UserAcctInfoDataService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private router: Router
   ) {
     this.subscribeAgentInfo = new Subscription();
     this.subscribeAgentLicenseAppointments = new Subscription();
@@ -103,6 +105,9 @@ export class TmInformationComponent implements OnInit, OnDestroy {
     // this.showLoadingDialog('toggleLicenseMgmt', 'Loading Agent License Mgmt...', null);
     this.agentDataService.storeLicenseMgmtDataIndex(index);
     this.agentComService.showLicenseMgmt();
+
+    // this.router.navigateByUrl('/team/agent-license-info');
+
   }
 
   showLoadingDialog(eventAction: string, msg: string, vObject: any): void {
