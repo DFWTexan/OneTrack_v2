@@ -31,6 +31,7 @@ import { TmEmailComponent } from './team-member/agent-information/tm-email/tm-em
 import { TmCommunicationsComponent } from './team-member/agent-information/tm-communications/tm-communications.component';
 import { TicklerInfoComponent } from './_components/tickler-mgmt/tickler-info/tickler-info.component';
 import { TicklerSearchComponent } from './_components/tickler-mgmt/tickler-search/tickler-search.component';
+import { LicensInfoPageComponent } from './team-member/agent-information/tm-license-management/license-info-page/licens-info-page.component';
 
 const routes: Routes = [
   // Dashboard
@@ -76,7 +77,7 @@ const routes: Routes = [
     ]
   },
   // Agent License Info
-  { path: 'team/agent-license-info', component: LicenseInfoComponent},
+  // { path: 'team/agent-license-info', component: LicensInfoPageComponent},
   // Reports
   { path: 'reports', component: ReportsComponent },
   // Work List
