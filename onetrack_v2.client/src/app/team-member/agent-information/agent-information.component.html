@@ -95,7 +95,7 @@
 
   <mat-divider></mat-divider>
 
-  <ng-container class="row" *ngIf="!isShowLicenseMgmt">
+  <!-- <ng-container class="row" *ngIf="!isShowLicenseMgmt">
     <div class="col">
       <mat-tab-group>
         <mat-tab label="TM INFORMATION" [disabled]="isLoading">
@@ -140,5 +140,6 @@
     <div class="col">
       <app-tm-license-management></app-tm-license-management>
     </div>
-  </ng-container>
+  </ng-container> -->
+  <router-outlet></router-outlet>
 </div>

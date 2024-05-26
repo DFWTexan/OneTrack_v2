@@ -1,9 +1,19 @@
-import { Component, OnInit, Injectable, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Injectable,
+  OnDestroy,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { AgentInfo } from '../../_Models';
-import { AgentComService, AgentDataService, AppComService } from '../../_services';
+import {
+  AgentComService,
+  AgentDataService,
+  AppComService,
+} from '../../_services';
 
 @Component({
   selector: 'app-agent-information',
@@ -27,7 +37,7 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private agentComService: AgentComService,
     private appComService: AppComService,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -50,11 +60,19 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
       );
 
     this.subscribeTickleToggleChanged =
-      this.appComService.tickleToggleChanged.subscribe((tickleToggle: boolean) => {
-        this.isShowTickle = tickleToggle;
-      });
-
+      this.appComService.tickleToggleChanged.subscribe(
+        (tickleToggle: boolean) => {
+          this.isShowTickle = tickleToggle;
+        }
+      );
   }
+
+  // viewLicenseMgmt() {
+  //   this.agentComService.showLicenseMgmt();
+  //   this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+  //     this.router.navigate(['team/agent-info', this.id, 'tm-license-mgmt']);
+  //   });
+  // }
 
   exitLicenseMgmt() {
     this.agentComService.showLicenseMgmt();

@@ -22,16 +22,18 @@ import { ReportsComponent } from './reports/reports/reports.component';
 import { WorkListComponent } from './work-list/work-list.component';
 import { AgentInformationComponent } from './team-member/agent-information/agent-information.component';
 import { EmfTestPageComponent } from './emf-test/emf-test-page.component';
-import { TmInformationComponent } from './team-member/agent-information/tm-information/tm-information.component';
-import { TmDetailComponent } from './team-member/agent-information/tm-detail/tm-detail.component';
-import { TmEmptransHistoryComponent } from './team-member/agent-information/tm-emptrans-history/tm-emptrans-history.component';
-import { TmContinuingEduComponent } from './team-member/agent-information/tm-continuing-edu/tm-continuing-edu.component';
-import { TmDiaryComponent } from './team-member/agent-information/tm-diary/tm-diary.component';
-import { TmEmailComponent } from './team-member/agent-information/tm-email/tm-email.component';
-import { TmCommunicationsComponent } from './team-member/agent-information/tm-communications/tm-communications.component';
+import { TmInfoManagementComponent } from './team-member/agent-information/tm-info-management/tm-info-management.component';
+import { TmLicenseManagementComponent } from './team-member/agent-information/tm-license-management/tm-license-management.component'; 
+
+// import { TmInformationComponent } from './team-member/agent-information/tm-info-management/tm-information/tm-information.component'
+// import { TmDetailComponent } from './team-member/agent-information/tm-info-management/tm-detail/tm-detail.component';
+// import { TmEmptransHistoryComponent } from './team-member/agent-information/tm-info-management/tm-emptrans-history/tm-emptrans-history.component';
+// import { TmContinuingEduComponent } from './team-member/agent-information/tm-info-management/tm-continuing-edu/tm-continuing-edu.component';
+// import { TmDiaryComponent } from './team-member/agent-information/tm-info-management/tm-diary/tm-diary.component';
+// import { TmEmailComponent } from './team-member/agent-information/tm-info-management/tm-email/tm-email.component';
+// import { TmCommunicationsComponent } from './team-member/agent-information/tm-info-management/tm-communications/tm-communications.component';
 import { TicklerInfoComponent } from './_components/tickler-mgmt/tickler-info/tickler-info.component';
 import { TicklerSearchComponent } from './_components/tickler-mgmt/tickler-search/tickler-search.component';
-import { LicensInfoPageComponent } from './team-member/agent-information/tm-license-management/license-info-page/licens-info-page.component';
 
 const routes: Routes = [
   // Dashboard
@@ -65,14 +67,14 @@ const routes: Routes = [
     component: AgentInformationComponent,
     children: [
       { path: '', redirectTo: 'tm-info', pathMatch: 'full' },
-      { path: 'tm-info', component: TmInformationComponent },
-      { path: 'tm-license', component: LicenseInfoComponent },
-      { path: 'tm-detail', component: TmDetailComponent },
-      { path: 'tm-emp-tran-his', component: TmEmptransHistoryComponent },
-      { path: 'tm-con-ed', component: TmContinuingEduComponent },
-      { path: 'tm-diary', component: TmDiaryComponent },
-      { path: 'tm-email', component: TmEmailComponent },
-      { path: 'tm-communications', component: TmCommunicationsComponent },
+      { path: 'tm-info-mgmt', component: TmInfoManagementComponent },
+      { path: 'tm-license-mgmt', component: TmLicenseManagementComponent },
+      // { path: 'tm-detail', component: TmDetailComponent },
+      // { path: 'tm-emp-tran-his', component: TmEmptransHistoryComponent },
+      // { path: 'tm-con-ed', component: TmContinuingEduComponent },
+      // { path: 'tm-diary', component: TmDiaryComponent },
+      // { path: 'tm-email', component: TmEmailComponent },
+      // { path: 'tm-communications', component: TmCommunicationsComponent },
       // other child routes...
     ]
   },
