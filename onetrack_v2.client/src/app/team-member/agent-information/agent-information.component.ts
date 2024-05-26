@@ -35,7 +35,7 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
   constructor(
     private agentDataService: AgentDataService,
     private route: ActivatedRoute,
-    private agentComService: AgentComService,
+    public agentComService: AgentComService,
     private appComService: AppComService,
     private router: Router
   ) {}
@@ -55,6 +55,9 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
     this.subscribeShowLicMgmtChanged =
       this.agentComService.isShowLicenseMgmtChanged.subscribe(
         (showLicenseMgmt: boolean) => {
+
+console.log('EMFTEST (app-agent-information) - showLicenseMgmt: ', showLicenseMgmt);
+
           this.isShowLicenseMgmt = showLicenseMgmt;
         }
       );
@@ -77,7 +80,7 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
   exitLicenseMgmt() {
     this.agentComService.showLicenseMgmt();
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['team/agent-info', this.id, 'tm-info']);
+      this.router.navigate(['../../team/agent-info', this.id, 'tm-info-mgmt']);
     });
   }
 

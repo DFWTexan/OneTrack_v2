@@ -1,7 +1,7 @@
 <div style="margin-left: 1.5rem; margin-right: 1.5rem;">
   
   <div class="row mt-3">
-    <ng-container *ngIf="isShowLicenseMgmt">
+    <ng-container *ngIf="agentComService.isShowLicenseMgmt">
       <div class="col d-flex align-items-center">
         <div class="h1-title ms-3">Agent Information</div>
         <div class="h2-title ms-3">
@@ -24,7 +24,7 @@
       <!-- END - LicenseMgmt Exit -->
     </ng-container> 
     
-    <ng-container *ngIf="!isShowLicenseMgmt">
+    <ng-container *ngIf="!agentComService.isShowLicenseMgmt">
       <div class="col d-flex align-items-center">
         <div class="h1-title ms-3">Agent Information</div>
       </div>
