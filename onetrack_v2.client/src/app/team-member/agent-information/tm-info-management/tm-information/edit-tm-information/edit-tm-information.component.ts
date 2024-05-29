@@ -31,69 +31,37 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
   agentStatuses: string[] = this.conService.getAgentStatuses();
   employerAgencies: { value: string; label: string }[] = [];
   agentInfo: AgentInfo = {} as AgentInfo;
-  subscribeAgentInfo: Subscription;
+  private subscriptions = new Subscription();
 
   constructor(
     private conService: ConstantsDataService,
     private agentService: AgentDataService,
     private drpdwnDataService: DropdownDataService
-  ) {
-    this.subscribeAgentInfo = new Subscription();
-  }
+  ) {}
 
-  // ngOnInit(): void {
-  //   this.drpdwnDataService
-  //     .fetchDropdownData('GetEmployerAgencies')
-  //     .subscribe((employerAgencies: { value: string; label: string }[]) => {
-  //       this.employerAgencies = employerAgencies;
-  //     });
-  //   this.subscribeAgentInfo = this.agentService.agentInfoChanged.subscribe(
-  //     (agentInfo: any) => {
-  //       this.agentInfo = agentInfo;
-
-  //       // Debugging code:
-  //       // const matchingAgency = this.employerAgencies.find(
-  //       //   (agency) => agency.value === agentInfo.companyName
-  //       // );
-  //       // if (!matchingAgency) {
-  //       //   console.error(
-  //       //     'No matching agency found for companyName:',
-  //       //     agentInfo.companyName
-  //       //   );
-  //       // }
-
-  //       this.form.patchValue({
-  //         CompanyID: agentInfo.companyID,
-  //         preferredName: agentInfo.lastName + ', ' + agentInfo.firstName,
-  //         GEID: agentInfo.geid,
-  //         NationalProducerNumber: agentInfo.nationalProdercerNumber,
-  //         EmployeeStatus: agentInfo.employeeStatus,
-  //         ResStateAbv: agentInfo.state,
-  //         CERequired: agentInfo.ceRequired,
-  //         ExcludeFromRpts: agentInfo.excludeFromReports,
-  //       });
-  //     }
-  //   );
-  // }
   ngOnInit(): void {
-    forkJoin({
-      agentInfo: this.agentService.agentInfoChanged.pipe(take(1)),
-      employerAgencies: this.drpdwnDataService.fetchDropdownData('GetEmployerAgencies')
-    }).subscribe(({ agentInfo, employerAgencies }) => {
-      this.agentInfo = agentInfo;
-      this.employerAgencies = employerAgencies;
+    this.subscriptions.add(
+      forkJoin({
+        agentInfo: this.agentService.agentInfoChanged.pipe(take(1)),
+        employerAgencies: this.drpdwnDataService.fetchDropdownData(
+          'GetEmployerAgencies'
+        ),
+      }).subscribe(({ agentInfo, employerAgencies }) => {
+        this.agentInfo = agentInfo;
+        this.employerAgencies = employerAgencies;
 
-      this.form.patchValue({
-        CompanyID: agentInfo.companyName,
-        preferredName: agentInfo.lastName + ', ' + agentInfo.firstName,
-        GEID: agentInfo.geid,
-        NationalProducerNumber: agentInfo.nationalProdercerNumber,
-        EmployeeStatus: agentInfo.employeeStatus,
-        ResStateAbv: agentInfo.state,
-        CERequired: agentInfo.ceRequired ? 'true' : 'false',
-        ExcludeFromRpts: agentInfo.excludeFromReports ? 'true' : 'false',
-      });
-    });
+        this.form.patchValue({
+          CompanyID: agentInfo.companyName,
+          preferredName: agentInfo.lastName + ', ' + agentInfo.firstName,
+          GEID: agentInfo.geid,
+          NationalProducerNumber: agentInfo.nationalProdercerNumber,
+          EmployeeStatus: agentInfo.employeeStatus,
+          ResStateAbv: agentInfo.state,
+          CERequired: agentInfo.ceRequired ? 'true' : 'false',
+          ExcludeFromRpts: agentInfo.excludeFromReports ? 'true' : 'false',
+        });
+      })
+    );
   }
 
   onSubmit() {
@@ -129,7 +97,7 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscribeAgentInfo.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }
 function injectable(): (
