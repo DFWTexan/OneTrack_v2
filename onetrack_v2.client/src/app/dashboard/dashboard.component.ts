@@ -171,8 +171,6 @@ export class DashboardComponent implements OnInit, OnDestroy {
     const value = target.value;
     this.adBankerImportStatus = value;
 
-console.log('EMFTEST (onChangeImportStaus) - value: ', value);
-
     // this.dashboardDataService
     //   .fetchADBankerData(
     //     this.startDate,

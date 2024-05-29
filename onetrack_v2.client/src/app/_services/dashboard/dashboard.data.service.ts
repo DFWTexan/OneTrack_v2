@@ -58,11 +58,7 @@ export class DashboardDataService {
     importStatus: string | null
   ) {
 
-    console.log('EMFTEST (fetchADBankerData) - (1)importStatus: ', importStatus);
-
     const queryParams = `?startDate=${startDate}&endDate=${endDate}&importStatus=${importStatus}`;
-
-    console.log('EMFTEST (fetchADBankerData) - queryParams: ', queryParams);
 
     return this.http
       .get<{

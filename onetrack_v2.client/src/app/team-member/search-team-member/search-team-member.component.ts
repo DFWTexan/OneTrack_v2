@@ -1,12 +1,5 @@
-import {
-  Component,
-  OnInit,
-  Injectable,
-  OnDestroy,
-} from '@angular/core';
-import {
-  NgForm,
-} from '@angular/forms';
+import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
+import { NgForm } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { Subscription } from 'rxjs';
 
@@ -35,6 +28,9 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
   isShowTickle: boolean = true;
   subscribeTickleToggleChanged: Subscription = new Subscription();
 
+  // Dropdown-Data-Service subscriptions
+  private subscriptions = new Subscription();
+
   // Dropdown-Data-Service
   branchNames: { value: string; label: string }[] = [];
   selectedBranch: string | null = null;
@@ -58,37 +54,48 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // LOAD DROPDOWN DATA
     this.stateProvinces = this.conService.getStateProvinces();
-    this.subscribeTickleToggleChanged =
+    this.subscriptions.add(
       this.appComService.tickleToggleChanged.subscribe(
         (tickleToggle: boolean) => {
           this.isShowTickle = tickleToggle;
         }
-      );
-    this.drpdwnDataService
-      .fetchDropdownData('GetBranches')
-      .subscribe((branchNames: { value: string; label: string }[]) => {
-        this.branchNames = branchNames;
-      });
-    this.drpdwnDataService
-      .fetchDropdownData('GetScoreNumbers')
-      .subscribe((scoreNumbers: { value: string; label: string }[]) => {
-        this.scoreNumbers = scoreNumbers;
-      });
-    this.drpdwnDataService
-      .fetchDropdownData('GetEmployerAgencies')
-      .subscribe((employerAgencies: { value: string; label: string }[]) => {
-        this.employerAgencies = employerAgencies;
-      });
-    this.drpdwnDataService
-      .fetchDropdownData('GetLicenseStatuses')
-      .subscribe((licenseStatuses: { value: string; label: string }[]) => {
-        this.licenseStatuses = licenseStatuses;
-      });
-    this.drpdwnDataService
-      .fetchDropdownData('GetLicenseNames')
-      .subscribe((licenseNames: { value: string; label: string }[]) => {
-        this.licenseNames = licenseNames;
-      });
+      )
+    );
+    this.subscriptions.add(
+      this.drpdwnDataService
+        .fetchDropdownData('GetBranches')
+        .subscribe((branchNames: { value: string; label: string }[]) => {
+          this.branchNames = branchNames;
+        })
+    );
+    this.subscriptions.add(
+      this.drpdwnDataService
+        .fetchDropdownData('GetScoreNumbers')
+        .subscribe((scoreNumbers: { value: string; label: string }[]) => {
+          this.scoreNumbers = scoreNumbers;
+        })
+    );
+    this.subscriptions.add(
+      this.drpdwnDataService
+        .fetchDropdownData('GetEmployerAgencies')
+        .subscribe((employerAgencies: { value: string; label: string }[]) => {
+          this.employerAgencies = employerAgencies;
+        })
+    );
+    this.subscriptions.add(
+      this.drpdwnDataService
+        .fetchDropdownData('GetLicenseStatuses')
+        .subscribe((licenseStatuses: { value: string; label: string }[]) => {
+          this.licenseStatuses = licenseStatuses;
+        })
+    );
+    this.subscriptions.add(
+      this.drpdwnDataService
+        .fetchDropdownData('GetLicenseNames')
+        .subscribe((licenseNames: { value: string; label: string }[]) => {
+          this.licenseNames = licenseNames;
+        })
+    );
   }
 
   onAgentStatusSelectionChange(event: MatSelectChange) {
@@ -135,6 +142,6 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscribeTickleToggleChanged.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

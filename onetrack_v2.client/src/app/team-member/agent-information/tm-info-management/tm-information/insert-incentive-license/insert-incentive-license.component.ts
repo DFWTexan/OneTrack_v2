@@ -20,7 +20,8 @@ export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
   licenseStates: string[] = [];
   licenseNames: { value: string; label: string }[] = [];
   agentName: string = '';
-  subscriptionData: Subscription = new Subscription();
+
+  private subscriptions = new Subscription();
 
   constructor(
     private fb: FormBuilder,
@@ -43,15 +44,20 @@ export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.licenseStates = ['Select', ...this.conService.getStates()];
-    this.drpdwnDataService
-      .fetchDropdownData('GetLicenseNames')
-      .subscribe((licenseNames: { value: string; label: string }[]) => {
-        this.licenseNames = [{ value: '0', label: 'Select Name' }, ...licenseNames];
-      });
-    this.subscriptionData = this.agentDataService.agentInfoChanged.subscribe(
-      (data) => {
+    this.subscriptions.add(
+      this.drpdwnDataService
+        .fetchDropdownData('GetLicenseNames')
+        .subscribe((licenseNames: { value: string; label: string }[]) => {
+          this.licenseNames = [
+            { value: '0', label: 'Select Name' },
+            ...licenseNames,
+          ];
+        })
+    );
+    this.subscriptions.add(
+      this.agentDataService.agentInfoChanged.subscribe((data) => {
         this.agentName = data.lastName + ', ' + data.firstName;
-      }
+      })
     );
   }
 
@@ -66,9 +72,6 @@ export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
   }
 
   closeModal() {
-
-console.log('EMFTEST (app-insert-incentive-license: closeModal) - this.incentiveLicenseForm.dirty: ', this.incentiveLicenseForm.dirty);
-
     // const modalDiv = document.getElementById('modal-insert-incentive-license');
     // if (modalDiv != null) {
     //   modalDiv.style.display = 'none';
@@ -107,6 +110,6 @@ console.log('EMFTEST (app-insert-incentive-license: closeModal) - this.incentive
   }
 
   ngOnDestroy() {
-    this.subscriptionData.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

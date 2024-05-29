@@ -29,7 +29,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
 
   subsribeDropdownData: Subscription = new Subscription();
   subscribeBranchCodes: Subscription = new Subscription();
-  subscribeJobTitles: Subscription = new Subscription(); 
+  subscribeJobTitles: Subscription = new Subscription();
 
   constructor(
     private fb: FormBuilder,
@@ -69,8 +69,8 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   ngOnInit() {
     // this.states = ['Select State', ...this.conService.getStates()];
     // if (this.newAgentForm) {
-      // this.newAgentForm.get('workState')?.setValue('Select State');
-      // this.newAgentForm.get('resState')?.setValue('Select State');
+    // this.newAgentForm.get('workState')?.setValue('Select State');
+    // this.newAgentForm.get('resState')?.setValue('Select State');
     // }
     this.subsribeDropdownData = this.drpdwnDataService
       .fetchDropdownData('GetEmployerAgencies')
@@ -81,17 +81,17 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
         ];
         this.newAgentForm.get('employerAgency')?.setValue(0);
       });
-      
-      // this.subscribeJobTitles = this.drpdwnDataService
-      // .fetchDropdownData('GetJobTitles')
-      // .subscribe((jobTitles: { JobTitleID: string; JobTitle: string }[]) => {
-      //   this.jobTitles = [
-      //     { JobTitleID: 0, JobTitle: 'Select Job Title' },
-      //     ...jobTitles,
-      //   ];
-      //   this.newAgentForm.get('JobTitleID')?.setValue(0);
-      // });
-      this.subscribeJobTitles = this.drpdwnDataService
+
+    // this.subscribeJobTitles = this.drpdwnDataService
+    // .fetchDropdownData('GetJobTitles')
+    // .subscribe((jobTitles: { JobTitleID: string; JobTitle: string }[]) => {
+    //   this.jobTitles = [
+    //     { JobTitleID: 0, JobTitle: 'Select Job Title' },
+    //     ...jobTitles,
+    //   ];
+    //   this.newAgentForm.get('JobTitleID')?.setValue(0);
+    // });
+    this.subscribeJobTitles = this.drpdwnDataService
       .fetchDropdownData('GetJobTitles')
       .subscribe((jobTitles: { value: string; label: string }[]) => {
         this.jobTitles = [
@@ -156,11 +156,13 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
 
     this.agentDataService.upsertAgent(agent).subscribe({
       next: (response) => {
-        console.log(response);
+        // console.log(response);
 
         // handle the response here
-console.log('EMFTEST () - Agent added successfully response => \n ', response);
-
+        // console.log(
+        //   'EMFTEST () - Agent added successfully response => \n ',
+        //   response
+        // );
       },
       error: (error) => {
         console.error(error);
@@ -180,5 +182,6 @@ console.log('EMFTEST () - Agent added successfully response => \n ', response);
   ngOnDestroy() {
     this.subsribeDropdownData.unsubscribe();
     this.subscribeBranchCodes.unsubscribe();
+    this.subscribeJobTitles.unsubscribe();
   }
 }

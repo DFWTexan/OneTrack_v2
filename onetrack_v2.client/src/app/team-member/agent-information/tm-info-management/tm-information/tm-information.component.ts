@@ -2,7 +2,6 @@ import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
-
 import {
   AgentComService,
   AgentDataService,
@@ -24,9 +23,9 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   isLoading = false;
   eventAction: string = '';
   vObject: any = {};
-  subscribeAgentInfo: Subscription;
-  subscribeAgentLicenseAppointments: Subscription;
   agentInfo: AgentInfo = {} as AgentInfo;
+
+  private subscriptions = new Subscription();
 
   constructor(
     private agentDataService: AgentDataService,
@@ -36,19 +35,16 @@ export class TmInformationComponent implements OnInit, OnDestroy {
     private userInfoDataService: UserAcctInfoDataService,
     public dialog: MatDialog,
     private router: Router
-  ) {
-    this.subscribeAgentInfo = new Subscription();
-    this.subscribeAgentLicenseAppointments = new Subscription();
-    this.agentInfo.agentLicenseAppointments = [];
-  }
+  ) {}
 
   ngOnInit() {
     this.isLoading = true;
-    this.subscribeAgentInfo = this.agentDataService.agentInfoChanged.subscribe(
-      (agentInfo: any) => {
+
+    this.subscriptions.add(
+      this.agentDataService.agentInfoChanged.subscribe((agentInfo: any) => {
         this.isLoading = false;
         this.agentInfo = agentInfo;
-      }
+      })
     );
   }
 
@@ -71,23 +67,25 @@ export class TmInformationComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.agentDataService
-          .deleteAgent({
-            employeeId: this.agentInfo.employeeID,
-            userSOEID: this.userInfoDataService.userAcctInfo.soeid,
-          })
-          .subscribe({
-            next: (response) => {
-              // console.log(
-              //   'EMFTEST (app-tm-emptrans-history: deleteEmploymentHistory) - COMPLETED DELETE response => \n',
-              //   response
-              // );
-            },
-            error: (error) => {
-              console.error(error);
-              // handle the error here
-            },
-          });
+        this.subscriptions.add(
+          this.agentDataService
+            .deleteAgent({
+              employeeId: this.agentInfo.employeeID,
+              userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+            })
+            .subscribe({
+              next: (response) => {
+                // console.log(
+                //   'EMFTEST (app-tm-emptrans-history: deleteEmploymentHistory) - COMPLETED DELETE response => \n',
+                //   response
+                // );
+              },
+              error: (error) => {
+                console.error(error);
+                // handle the error here
+              },
+            })
+        );
       }
     });
   }
@@ -108,27 +106,31 @@ export class TmInformationComponent implements OnInit, OnDestroy {
 
     // this.router.navigateByUrl('/team/agent-license-info');
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-      this.router.navigate(['team/agent-info', this.agentDataService.agentInformation.employeeID, 'tm-license-mgmt']);
+      this.router.navigate([
+        'team/agent-info',
+        this.agentDataService.agentInformation.employeeID,
+        'tm-license-mgmt',
+      ]);
     });
-
   }
 
   showLoadingDialog(eventAction: string, msg: string, vObject: any): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       data: { message: msg },
-      disableClose: true  // This prevents the user from closing the dialog
+      disableClose: true, // This prevents the user from closing the dialog
     });
-  
+
     // Close the dialog when a value is set
-    this.agentDataService.agentInfoChanged.subscribe((agentInfo: any) => {
-      if (agentInfo) {
-        dialogRef.close();
-      }
-    });
+    this.subscriptions.add(
+      this.agentDataService.agentInfoChanged.subscribe((agentInfo: any) => {
+        if (agentInfo) {
+          dialogRef.close();
+        }
+      })
+    );
   }
 
   ngOnDestroy() {
-    this.subscribeAgentInfo.unsubscribe();
-    this.subscribeAgentLicenseAppointments.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

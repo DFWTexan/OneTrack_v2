@@ -8,7 +8,11 @@ import {
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 
-import { AppComService, UserAcctInfoDataService } from './_services';
+import {
+  AppComService,
+  DropdownDataService,
+  UserAcctInfoDataService,
+} from './_services';
 import { environment } from './environments/environment';
 
 @Injectable()
@@ -25,6 +29,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     public appComService: AppComService,
+    private drpdwnDataService: DropdownDataService,
     private userInfoService: UserAcctInfoDataService
   ) {}
 
