@@ -114,14 +114,13 @@ export class LicenseInfoComponent implements OnInit, OnDestroy {
               //   'EMFTEST (app-tm-emptrans-history: deleteEmploymentHistory) - COMPLETED DELETE response => \n',
               //   response
               // );
-              this.agentComService.showLicenseMgmt();
               this.router
                 .navigateByUrl('/', { skipLocationChange: true })
                 .then(() => {
                   this.router.navigate([
                     'team/agent-info',
                     this.agentDataService.agentInformation.employeeID,
-                    'tm-info',
+                    'tm-license-mgmt',
                   ]);
                 });
             },
