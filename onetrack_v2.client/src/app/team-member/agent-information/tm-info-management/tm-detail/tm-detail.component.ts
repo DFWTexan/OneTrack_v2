@@ -12,24 +12,23 @@ import { AgentInfo } from '../../../../_Models';
 @Injectable()
 export class TmDetailComponent implements OnInit, OnDestroy {
   agentInfo: AgentInfo = {} as AgentInfo;
-  subscribeAgentInfo: Subscription;
+
+  private subscriptions = new Subscription();
 
   constructor(
     private agentDataService: AgentDataService,
     protected modalService: ModalService
-  ) {
-    this.subscribeAgentInfo = new Subscription();
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.subscribeAgentInfo = this.agentDataService.agentInfoChanged.subscribe(
-      (agentInfo: any) => {
+    this.subscriptions.add(
+      this.agentDataService.agentInfoChanged.subscribe((agentInfo: any) => {
         this.agentInfo = agentInfo;
-      }
+      })
     );
   }
 
   ngOnDestroy(): void {
-    this.subscribeAgentInfo.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

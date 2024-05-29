@@ -1,7 +1,11 @@
 import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { AgentComService, AgentDataService, AppComService } from '../../../../../_services';
+import {
+  AgentComService,
+  AgentDataService,
+  AppComService,
+} from '../../../../../_services';
 import { formatDate } from '@angular/common';
 
 @Component({
@@ -12,8 +16,8 @@ import { formatDate } from '@angular/common';
 @Injectable()
 export class EditHoursTakenComponent implements OnInit, OnDestroy {
   contEduCompletedItemForm!: FormGroup;
-  subscriptionMode: Subscription = new Subscription();
-  subscriptionData: Subscription = new Subscription();
+
+  private subscriptions = new Subscription();
 
   constructor(
     public agentService: AgentDataService,
@@ -31,11 +35,11 @@ export class EditHoursTakenComponent implements OnInit, OnDestroy {
       additionalNotes: new FormControl(null),
     });
 
-    this.subscriptionMode =
+    this.subscriptions.add(
       this.agentComService.modeContEduHoursTakenChanged.subscribe(
         (mode: string) => {
           if (mode === 'EDIT') {
-            this.subscriptionData =
+            this.subscriptions.add(
               this.agentService.contEduHoursTakenChanged.subscribe(
                 (contEduCompletedItem: any) => {
                   this.contEduCompletedItemForm.patchValue({
@@ -57,7 +61,8 @@ export class EditHoursTakenComponent implements OnInit, OnDestroy {
                     additionalNotes: contEduCompletedItem.additionalNotes,
                   });
                 }
-              );
+              )
+            );
           } else {
             this.contEduCompletedItemForm.reset();
             this.contEduCompletedItemForm.patchValue({
@@ -67,13 +72,13 @@ export class EditHoursTakenComponent implements OnInit, OnDestroy {
             });
           }
         }
-      );
+      )
+    );
   }
 
   onFormSubmit(): void {}
 
   ngOnDestroy(): void {
-    this.subscriptionMode.unsubscribe();
-    this.subscriptionData.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

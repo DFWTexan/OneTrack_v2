@@ -3,7 +3,11 @@ import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
-import { AgentInfo, EmailComTemplate, ManagerHierarchy } from '../../../../_Models';
+import {
+  AgentInfo,
+  EmailComTemplate,
+  ManagerHierarchy,
+} from '../../../../_Models';
 import { AgentDataService, EmailDataService } from '../../../../_services';
 
 @Component({
@@ -18,8 +22,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   emailComTemplates: EmailComTemplate[] = [];
   selectedTemplate: number = 33;
   htmlContent: SafeHtml = '' as SafeHtml;
-  subscribeAgentInfo: Subscription;
-  subscribeEmailComTemplates: Subscription;
+  private subscriptions = new Subscription();
 
   ccEmail: string[] = [];
   chkMgr: boolean = false;
@@ -32,40 +35,45 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     private emailDataService: EmailDataService,
     public agentDataService: AgentDataService,
     private sanitizer: DomSanitizer
-  ) {
-    this.subscribeAgentInfo = new Subscription();
-    this.subscribeEmailComTemplates = new Subscription();
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.subscribeAgentInfo = this.agentDataService.agentInfoChanged.subscribe(
-      (agentInfo: AgentInfo) => {
-        this.agentInfo = agentInfo;
-        // this.mgrHierarchy = this.agentInfo.mgrHiearchy;
-
-        this.emailDataService
-          .fetchEmailComTemplateByID(33, this.agentInfo.employmentID)
-          .subscribe((rawHtmlContent: string) => {
-            this.htmlContent =
-              this.sanitizer.bypassSecurityTrustHtml(rawHtmlContent);
-          });
-      }
+    this.subscriptions.add(
+      this.agentDataService.agentInfoChanged.subscribe(
+        (agentInfo: AgentInfo) => {
+          this.agentInfo = agentInfo;
+          // this.mgrHierarchy = this.agentInfo.mgrHiearchy;
+          this.subscriptions.add(
+            this.emailDataService
+              .fetchEmailComTemplateByID(33, this.agentInfo.employmentID)
+              .subscribe((rawHtmlContent: string) => {
+                this.htmlContent =
+                  this.sanitizer.bypassSecurityTrustHtml(rawHtmlContent);
+              })
+          );
+        }
+      )
     );
-    this.subscribeEmailComTemplates = this.emailDataService
-      .fetchEmailComTemplates()
-      .subscribe((emailComTemplates: EmailComTemplate[]) => {
-        this.emailComTemplates = emailComTemplates;
-      });
+
+    this.subscriptions.add(
+      this.emailDataService
+        .fetchEmailComTemplates()
+        .subscribe((emailComTemplates: EmailComTemplate[]) => {
+          this.emailComTemplates = emailComTemplates;
+        })
+    );
   }
 
   onTemplateChange(event: Event): void {
     const target = event.target as HTMLInputElement;
     const value = target.value;
-    this.emailDataService
-      .fetchEmailComTemplateByID(+value, this.agentInfo.employmentID)
-      .subscribe((template: string) => {
-        this.htmlContent = template;
-      });
+    this.subscriptions.add(
+      this.emailDataService
+        .fetchEmailComTemplateByID(+value, this.agentInfo.employmentID)
+        .subscribe((template: string) => {
+          this.htmlContent = template;
+        })
+    );
   }
 
   onCcChange(event: Event): void {
@@ -87,7 +95,6 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscribeAgentInfo.unsubscribe();
-    this.subscribeEmailComTemplates.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

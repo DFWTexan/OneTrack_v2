@@ -1,7 +1,12 @@
 import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { AgentComService, AgentDataService, AppComService, ModalService } from '../../../../_services';
+import {
+  AgentComService,
+  AgentDataService,
+  AppComService,
+  ModalService,
+} from '../../../../_services';
 import { AgentInfo } from '../../../../_Models';
 
 @Component({
@@ -12,23 +17,22 @@ import { AgentInfo } from '../../../../_Models';
 @Injectable()
 export class TmContinuingEduComponent implements OnInit, OnDestroy {
   agentInfo: AgentInfo = {} as AgentInfo;
-  subscribeAgentInfo: Subscription;
   sumHoursRequired: number = 0;
   sumHoursTaken: number = 0;
   totalHoursRemaining: number = 0;
+
+  private subscriptions = new Subscription();
 
   constructor(
     public agentDataService: AgentDataService,
     public agentComService: AgentComService,
     protected modalService: ModalService,
     public appComService: AppComService
-  ) {
-    this.subscribeAgentInfo = new Subscription();
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.subscribeAgentInfo = this.agentDataService.agentInfoChanged.subscribe(
-      (agentInfo: any) => {
+    this.subscriptions.add(
+      this.agentDataService.agentInfoChanged.subscribe((agentInfo: any) => {
         this.agentInfo = agentInfo;
 
         this.sumHoursRequired = this.agentInfo.contEduRequiredItems.reduce(
@@ -40,11 +44,11 @@ export class TmContinuingEduComponent implements OnInit, OnDestroy {
           0
         );
         this.totalHoursRemaining = this.sumHoursRequired - this.sumHoursTaken;
-      }
+      })
     );
   }
 
   ngOnDestroy(): void {
-    this.subscribeAgentInfo.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

@@ -3,7 +3,10 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 
-import { AgentDataService, ConstantsDataService } from '../../../../../_services';
+import {
+  AgentDataService,
+  ConstantsDataService,
+} from '../../../../../_services';
 import { AgentInfo } from '../../../../../_Models';
 
 @Component({
@@ -38,18 +41,17 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
   licenseLevels: any[] = [];
   licenseIncentives: any[] = [];
   agentInfo: AgentInfo = {} as AgentInfo;
-  subscribeAgentInfo: Subscription;
+
+  private subscriptions = new Subscription();
 
   constructor(
     private conService: ConstantsDataService,
     private agentService: AgentDataService
-  ) {
-    this.subscribeAgentInfo = new Subscription();
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.subscribeAgentInfo = this.agentService.agentInfoChanged.subscribe(
-      (agentInfo: any) => {
+    this.subscriptions.add(
+      this.agentService.agentInfoChanged.subscribe((agentInfo: any) => {
         this.agentInfo = agentInfo;
         let dateOfBirth = this.agentInfo.dateOfBirth;
         this.form.patchValue({
@@ -71,26 +73,33 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
             : null,
           licenseLevel: agentInfo.licenseLevel,
           licenseIncentive: agentInfo.licenseIncentive,
-          secondChance:
-            agentInfo.isLicenseincentiveSecondChance,
+          secondChance: agentInfo.isLicenseincentiveSecondChance,
         });
-      }
+      })
     );
+
     this.states = ['Select State', ...this.conService.getStates()];
-    this.agentService.fetchLicenseLevels().subscribe((licenseLevels: any[]) => {
-      this.licenseLevels = [
-        { value: 'Select License Level' },
-        ...licenseLevels,
-      ];
-    });
-    this.agentService
-      .fetchLicenseIncentives()
-      .subscribe((licIncentives: any[]) => {
-        this.licenseIncentives = [
-          { value: 'Select Incentive' },
-          ...licIncentives,
-        ];
-      });
+    this.subscriptions.add(
+      this.agentService
+        .fetchLicenseLevels()
+        .subscribe((licenseLevels: any[]) => {
+          this.licenseLevels = [
+            { value: 'Select License Level' },
+            ...licenseLevels,
+          ];
+        })
+    );
+
+    this.subscriptions.add(
+      this.agentService
+        .fetchLicenseIncentives()
+        .subscribe((licIncentives: any[]) => {
+          this.licenseIncentives = [
+            { value: 'Select Incentive' },
+            ...licIncentives,
+          ];
+        })
+    );
   }
 
   onSubmit() {
@@ -99,7 +108,6 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
 
     let agent: any = this.form.value;
     // agent.soeid = agent.soeid.toUpperCase();
-    agent.soeid = 'EMFTEST';
 
     // if (agent.employerAgency === 0 || agent.employerAgency === '') {
     //   this.newAgentForm.controls['employerAgency'].setErrors({ invalid: true });
@@ -123,16 +131,18 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.agentService.updateAgent(agent).subscribe({
-      next: (response) => {
-        console.log(response);
-        // handle the response here
-      },
-      error: (error) => {
-        console.error(error);
-        // handle the error here
-      },
-    });
+    this.subscriptions.add(
+      this.agentService.updateAgent(agent).subscribe({
+        next: (response) => {
+          console.log(response);
+          // handle the response here
+        },
+        error: (error) => {
+          console.error(error);
+          // handle the error here
+        },
+      })
+    );
   }
 
   closeModal() {
@@ -143,7 +153,7 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscribeAgentInfo.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }
 

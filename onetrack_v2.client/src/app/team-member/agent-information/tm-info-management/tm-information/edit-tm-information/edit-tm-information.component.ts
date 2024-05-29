@@ -31,6 +31,7 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
   agentStatuses: string[] = this.conService.getAgentStatuses();
   employerAgencies: { value: string; label: string }[] = [];
   agentInfo: AgentInfo = {} as AgentInfo;
+  
   private subscriptions = new Subscription();
 
   constructor(

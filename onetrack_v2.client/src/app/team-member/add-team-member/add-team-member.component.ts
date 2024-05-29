@@ -27,9 +27,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   branchCodes: any[] = [{ branchCode: 'Loading...' }];
   jobTitles: any[] = [{ value: 0, label: 'Loading...' }];
 
-  subsribeDropdownData: Subscription = new Subscription();
-  subscribeBranchCodes: Subscription = new Subscription();
-  subscribeJobTitles: Subscription = new Subscription();
+  private subscriptions = new Subscription();
 
   constructor(
     private fb: FormBuilder,
@@ -67,49 +65,41 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-    // this.states = ['Select State', ...this.conService.getStates()];
-    // if (this.newAgentForm) {
-    // this.newAgentForm.get('workState')?.setValue('Select State');
-    // this.newAgentForm.get('resState')?.setValue('Select State');
-    // }
-    this.subsribeDropdownData = this.drpdwnDataService
-      .fetchDropdownData('GetEmployerAgencies')
-      .subscribe((employerAgencies: { value: string; label: string }[]) => {
-        this.employerAgencies = [
-          { valu: '0', label: 'Select Employer/Agency' },
-          ...employerAgencies,
-        ];
-        this.newAgentForm.get('employerAgency')?.setValue(0);
-      });
+    this.subscriptions.add(
+      this.drpdwnDataService
+        .fetchDropdownData('GetEmployerAgencies')
+        .subscribe((employerAgencies: { value: string; label: string }[]) => {
+          this.employerAgencies = [
+            { valu: '0', label: 'Select Employer/Agency' },
+            ...employerAgencies,
+          ];
+          this.newAgentForm.get('employerAgency')?.setValue(0);
+        })
+    );
 
-    // this.subscribeJobTitles = this.drpdwnDataService
-    // .fetchDropdownData('GetJobTitles')
-    // .subscribe((jobTitles: { JobTitleID: string; JobTitle: string }[]) => {
-    //   this.jobTitles = [
-    //     { JobTitleID: 0, JobTitle: 'Select Job Title' },
-    //     ...jobTitles,
-    //   ];
-    //   this.newAgentForm.get('JobTitleID')?.setValue(0);
-    // });
-    this.subscribeJobTitles = this.drpdwnDataService
-      .fetchDropdownData('GetJobTitles')
-      .subscribe((jobTitles: { value: string; label: string }[]) => {
-        this.jobTitles = [
-          { value: '0', label: 'Select Job Title' },
-          ...jobTitles,
-        ];
-        this.newAgentForm.get('JobTitleID')?.setValue(0);
-      });
+    this.subscriptions.add(
+      this.drpdwnDataService
+        .fetchDropdownData('GetJobTitles')
+        .subscribe((jobTitles: { value: string; label: string }[]) => {
+          this.jobTitles = [
+            { value: '0', label: 'Select Job Title' },
+            ...jobTitles,
+          ];
+          this.newAgentForm.get('JobTitleID')?.setValue(0);
+        })
+    );
 
-    this.subscribeBranchCodes = this.agentDataService
-      .fetchBranchCodes()
-      .subscribe((branchCodes: any[]) => {
-        this.branchCodes = [
-          { branchCode: 'Select Branch Code' },
-          ...branchCodes,
-        ];
-        this.newAgentForm.get('branchCode')?.setValue('Select Branch Code');
-      });
+    this.subscriptions.add(
+      this.agentDataService
+        .fetchBranchCodes()
+        .subscribe((branchCodes: any[]) => {
+          this.branchCodes = [
+            { branchCode: 'Select Branch Code' },
+            ...branchCodes,
+          ];
+          this.newAgentForm.get('branchCode')?.setValue('Select Branch Code');
+        })
+    );
   }
 
   // VALIDATION
@@ -157,7 +147,6 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     this.agentDataService.upsertAgent(agent).subscribe({
       next: (response) => {
         // console.log(response);
-
         // handle the response here
         // console.log(
         //   'EMFTEST () - Agent added successfully response => \n ',
@@ -180,8 +169,6 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subsribeDropdownData.unsubscribe();
-    this.subscribeBranchCodes.unsubscribe();
-    this.subscribeJobTitles.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

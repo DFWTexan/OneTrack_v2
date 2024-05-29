@@ -281,7 +281,7 @@
             type="date"
             name="startDate"
             [(ngModel)]="startDate"
-            (change)="changesStartDate($event)"
+            (change)="onChangesStartDate($event)"
           />
         </div>
         <div class="col-md-3">
@@ -292,7 +292,7 @@
             name="endDate"
             [value]="endDate"
             [(ngModel)]="endDate"
-            (change)="changesEndDate($event)"
+            (change)="onChangesEndDate($event)"
           />
         </div>
         <div class="col-md-3">
@@ -301,7 +301,7 @@
             class="form-select select-size-med-small"
             name="modifiedBy"
             id="modifiedBy"
-            (change)="changeModifiedBy($event)"
+            (change)="onChangeModifiedBy($event)"
             [(ngModel)]="modifiedBySelected"
           >
             <option *ngFor="let tech of modifiedBy" [value]="tech">

@@ -28,8 +28,7 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
   @Input() employmentID: number = 0;
   @Input() employeeID: number = 0;
   jobTitleList: Array<{ jobTitleID: number; jobTitle: string }> = [];
-  subscriptionMode: Subscription = new Subscription();
-  subscriptionData: Subscription = new Subscription();
+  private subscriptions = new Subscription();
 
   constructor(
     private fb: FormBuilder,
@@ -49,11 +48,11 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
       isCurrent: [''],
     });
 
-    this.subscriptionMode =
+    this.subscriptions.add(
       this.agentComService.modeEmploymentJobTitleHistChanged.subscribe(
         (mode: string) => {
           if (mode === 'EDIT') {
-            this.subscriptionData =
+            this.subscriptions.add(
               this.agentDataService.employmentJobTitleHistItemChanged.subscribe(
                 (jobTitle: any) => {
                   this.jobTitleForm.patchValue({
@@ -67,7 +66,8 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
                     isCurrent: jobTitle.isCurrent,
                   });
                 }
-              );
+              )
+            );
           } else {
             this.jobTitleForm.reset();
             this.jobTitleForm.patchValue({
@@ -77,18 +77,21 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
             });
           }
         }
-      );
+      )
+    );
 
-    this.miscDataService
-      .fetchJobTitles()
-      .subscribe(
-        (jobTitles: Array<{ jobTitleID: number; jobTitle: string }>) => {
-          this.jobTitleList = [
-            { jobTitleID: 0, jobTitle: 'Select Job Title' },
-            ...jobTitles,
-          ];
-        }
-      );
+    this.subscriptions.add(
+      this.miscDataService
+        .fetchJobTitles()
+        .subscribe(
+          (jobTitles: Array<{ jobTitleID: number; jobTitle: string }>) => {
+            this.jobTitleList = [
+              { jobTitleID: 0, jobTitle: 'Select Job Title' },
+              ...jobTitles,
+            ];
+          }
+        )
+    );
   }
 
   onSubmit() {
@@ -121,20 +124,25 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
       jobTitleItem.employmentJobTitleID = 0;
     }
 
-    console.log('EMFTEST (app-edit-jobtitle-hist: onSubmit) - jobTitleItem => \n', jobTitleItem);
+    console.log(
+      'EMFTEST (app-edit-jobtitle-hist: onSubmit) - jobTitleItem => \n',
+      jobTitleItem
+    );
 
-    this.agentDataService
-      .upsertEmploymentJobTitleHistItem(jobTitleItem)
-      .subscribe({
-        next: (response) => {
-          this.isFormSubmitted = true;
-          this.closeModal();
-        },
-        error: (error) => {
-          console.error(error);
-          // handle the error here
-        },
-      });
+    this.subscriptions.add(
+      this.agentDataService
+        .upsertEmploymentJobTitleHistItem(jobTitleItem)
+        .subscribe({
+          next: (response) => {
+            this.isFormSubmitted = true;
+            this.closeModal();
+          },
+          error: (error) => {
+            console.error(error);
+            // handle the error here
+          },
+        })
+    );
   }
 
   closeModal() {
@@ -166,7 +174,6 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptionMode.unsubscribe();
-    this.subscriptionData.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }
