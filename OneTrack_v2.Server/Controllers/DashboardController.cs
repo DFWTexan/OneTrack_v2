@@ -25,9 +25,9 @@ namespace OneTrak_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
         [HttpGet]
-        public async Task<ActionResult> GetAdBankerImportData(DateTime startDate, DateTime endDate, bool? importStatus = null)
+        public async Task<ActionResult> GetAdBankerImportData(DateTime startDate, DateTime endDate, string importStatus)
         {
-            var result = await Task.Run(() => _dashboardService.GetAdBankerImportData(startDate, endDate, importStatus));
+            var result = await Task.Run(() => _dashboardService.GetAdBankerImportData(startDate, endDate, importStatus == "All" ? null : importStatus == "Success" ? true : false));
 
             return StatusCode(result.StatusCode, result);
         }

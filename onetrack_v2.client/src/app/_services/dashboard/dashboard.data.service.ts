@@ -55,11 +55,14 @@ export class DashboardDataService {
   fetchADBankerData(
     startDate: string = new Date().toISOString(),
     endDate: string,
-    importStatus: boolean | null
+    importStatus: string | null
   ) {
-    const queryParams = `?startDate=${startDate}&endDate=${endDate}&modifiedBy=${
-      importStatus ? importStatus : ''
-    }`;
+
+    console.log('EMFTEST (fetchADBankerData) - (1)importStatus: ', importStatus);
+
+    const queryParams = `?startDate=${startDate}&endDate=${endDate}&importStatus=${importStatus}`;
+
+    console.log('EMFTEST (fetchADBankerData) - queryParams: ', queryParams);
 
     return this.http
       .get<{

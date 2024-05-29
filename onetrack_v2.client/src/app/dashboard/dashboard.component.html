@@ -33,7 +33,7 @@
             name="workListName"
             id="workListName"
             [value]="selectedWorkListName"
-            (change)="changeWorkListName($event)"
+            (change)="onChangeWorkListName($event)"
             [(ngModel)]="workListName"
           >
             <option *ngFor="let item of worklistNames" [value]="item">
@@ -143,7 +143,7 @@
             type="date"
             name="adBankerStartDate"
             [(ngModel)]="adBankerStartDate"
-            (change)="changeADBankerStartDate($event)"
+            (change)="onChangeADBankerStartDate($event)"
           />
         </div>
         <div class="col-md-3">
@@ -154,7 +154,7 @@
             name="adBankerEndDate"
             [value]="adBankerEndDate"
             [(ngModel)]="adBankerEndDate"
-            (change)="changeADBankerEndDate($event)"
+            (change)="onChangeADBankerEndDate($event)"
           />
         </div>
         <div class="col-md-3">
@@ -163,7 +163,7 @@
             class="form-select select-size-med-small"
             name="modifiedBy"
             id="modifiedBy"
-            (change)="changeImportStaus($event)"
+            (change)="onChangeImportStaus($event)"
             [(ngModel)]="adBankerImportStatus"
           >
             <option
@@ -195,8 +195,8 @@
                 <th scope="col">Completion</th>
                 <th scope="col">Reported</th>
                 <th scope="col">Credits</th>
-                <th scope="col">Imported</th>
-                <th scope="col">ACTION</th>
+                <th scope="col">Import Date</th>
+                <th scope="col">Completed</th>
               </tr>
             </thead>
             <tbody style="font-size: smaller;">

@@ -108,14 +108,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
       });
   }
 
-  changeWorkListName(event: any) {
+  onChangeWorkListName(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;
     this.selectedWorkListName = value;
     this.fetchWorkListData();
   }
 
-  changeImportDate(event: any) {
+  onChangeImportDate(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;
     this.selectedDate = value;
@@ -128,18 +128,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
       .fetchADBankerData(
         this.adBankerStartDate,
         this.adBankerEndDate,
-        this.adBankerImportStatus == 'All'
-          ? null
-          : this.adBankerImportStatus == 'Success'
-          ? true
-          : false
+        this.adBankerImportStatus
       )
       .subscribe((data) => {
         this.adBankerData = data;
       });
   }
 
-  changeADBankerStartDate(event: any) {
+  onChangeADBankerStartDate(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;
     this.startDate = value;
@@ -155,7 +151,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     //   });
     this.getAdBankerData();
   }
-  changeADBankerEndDate(event: any) {
+  onChangeADBankerEndDate(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;
     this.endDate = value;
@@ -170,10 +166,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
     //   });
     this.getAdBankerData();
   }
-  changeImportStaus(event: any) {
+  onChangeImportStaus(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;
     this.adBankerImportStatus = value;
+
+console.log('EMFTEST (onChangeImportStaus) - value: ', value);
+
     // this.dashboardDataService
     //   .fetchADBankerData(
     //     this.startDate,
