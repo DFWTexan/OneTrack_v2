@@ -110,10 +110,6 @@ export class LicenseInfoComponent implements OnInit, OnDestroy {
           })
           .subscribe({
             next: (response) => {
-              // console.log(
-              //   'EMFTEST (app-tm-emptrans-history: deleteEmploymentHistory) - COMPLETED DELETE response => \n',
-              //   response
-              // );
               this.router
                 .navigateByUrl('/', { skipLocationChange: true })
                 .then(() => {

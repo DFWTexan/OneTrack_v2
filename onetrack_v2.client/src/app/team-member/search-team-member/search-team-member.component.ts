@@ -37,6 +37,7 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
 
   // Dropdown-Data-Service
   branchNames: { value: string; label: string }[] = [];
+  selectedBranch: string | null = null;
   scoreNumbers: { value: string; label: string }[] = [];
   employerAgencies: { value: string; label: string }[] = [];
   licenseStatuses: { value: string; label: string }[] = [];
