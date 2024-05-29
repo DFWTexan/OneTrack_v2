@@ -18,38 +18,35 @@ export class TmDiaryComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   agentInfo: AgentInfo = {} as AgentInfo;
   diaryItems: DiaryItem[] = [];
-  subscribeAgentInfo: Subscription;
-  subscribeDiaryData: Subscription;
+  
+  private subscriptions = new Subscription();
 
   constructor(
     public agentDataService: AgentDataService,
     public agentComService: AgentComService,
     protected modalService: ModalService,
     public paginationComService: PaginationComService
-  ) {
-    this.subscribeAgentInfo = new Subscription();
-    this.subscribeDiaryData = new Subscription();
-  }
+  ) {}
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.subscribeAgentInfo = this.agentDataService.agentInfoChanged.subscribe(
-      (agentInfo: any) => {
+    this.subscriptions.add(
+      this.agentDataService.agentInfoChanged.subscribe((agentInfo: any) => {
         this.agentInfo = agentInfo;
-      }
+      })
     );
-    this.subscribeDiaryData = this.agentDataService.diaryItemsChanged.subscribe(
-      (diaryData: any) => {
+
+    this.subscriptions.add(
+      this.agentDataService.diaryItemsChanged.subscribe((diaryData: any) => {
         this.diaryItems = diaryData;
         this.paginationComService.updateDisplayItems(this.diaryItems);
         this.paginationComService.updatePaginatedResults();
         this.isLoading = false;
-      }
+      })
     );
   }
 
   ngOnDestroy(): void {
-    this.subscribeAgentInfo.unsubscribe();
-    this.subscribeDiaryData.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

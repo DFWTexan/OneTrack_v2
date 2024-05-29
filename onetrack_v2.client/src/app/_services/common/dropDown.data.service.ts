@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
-// import { Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 
@@ -9,11 +9,16 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class DropdownDataService {
-  // private branchNames: string[] = [];
-  // private scoreNumbers: string[] = [];
-  // private employerAgencies: string[] = [];
-  // private licenseStatuses: string[] = [];
-  // private licenseNames: string[] = [];
+  public branchNames: { value: string; label: string }[] = [];
+  branchNamesChanged = new Subject<{ value: string; label: string }[]>();
+  public scoreNumbers: { value: number; label: string }[] = [];
+  scoreNumbersChanged = new Subject<{ value: number; label: string }[]>();
+  public employerAgencies: { value: number; label: string }[] = [];
+  employerAgenciesChanged = new Subject<{ value: number; label: string }[]>();
+  public licenseStatuses: { value: number; label: string }[] = [];
+  licenseStatusesChanged = new Subject<{ value: number; label: string }[]>();
+  public licenseNames: { value: number; label: string }[] = [];
+  licenseNamesChanged = new Subject<{ value: number; label: string }[]>();
 
   private url: string = environment.apiUrl + 'Misc/';
 
@@ -44,6 +49,31 @@ export class DropdownDataService {
           }
         })
       );
+  }
+
+  updateBranchNames(branchNames: { value: string; label: string }[]) {
+    this.branchNames = branchNames;
+    this.branchNamesChanged.next([...this.branchNames]);
+  }
+
+  updateScoreNumbers(scoreNumbers: { value: number; label: string }[]) {
+    this.scoreNumbers = scoreNumbers;
+    this.scoreNumbersChanged.next([...this.scoreNumbers]);
+  }
+
+  updateEmployerAgencies(employerAgencies: { value: number; label: string }[]) {
+    this.employerAgencies = employerAgencies;
+    this.employerAgenciesChanged.next([...this.employerAgencies]);
+  }
+
+  updateLicenseStatuses(licenseStatuses: { value: number; label: string }[]) {
+    this.licenseStatuses = licenseStatuses;
+    this.licenseStatusesChanged.next([...this.licenseStatuses]);
+  }
+
+  updateLicenseNames(licenseNames: { value: number; label: string }[]) {
+    this.licenseNames = licenseNames;
+    this.licenseNamesChanged.next([...this.licenseNames]);
   }
 
   fetchDropdownNumericData(vEndpoint: string, vValue: string | null = null) {

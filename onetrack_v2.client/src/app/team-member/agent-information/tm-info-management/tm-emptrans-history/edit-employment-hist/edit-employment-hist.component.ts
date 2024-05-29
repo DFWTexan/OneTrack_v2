@@ -24,9 +24,7 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
   @Input() employeeID: number = 0;
   employmentHistoryID: number = 0;
   backgroundStatuses: Array<{ lkpValue: string }> = [];
-  subscriptionMode: Subscription = new Subscription();
-  subscriptionData: Subscription = new Subscription();
-  subscriptionUserinfo: Subscription = new Subscription();
+  private subscriptions = new Subscription();
 
   constructor(
     private miscDataService: MiscDataService,
@@ -58,11 +56,11 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
         this.backgroundStatuses = [{ lkpValue: 'N/A' }, ...backgroundStatuses];
       });
 
-    this.subscriptionMode =
+    this.subscriptions.add(
       this.agentComService.modeEmploymentHistChanged.subscribe(
         (mode: string) => {
           if (mode === 'EDIT') {
-            this.subscriptionData =
+            this.subscriptions.add(
               this.agentDataService.employmentTransferHistItemChanged.subscribe(
                 (employmentHistory: any) => {
                   this.employmentHistoryID =
@@ -108,7 +106,8 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
                     employeeID: employmentHistory.employeeID,
                   });
                 }
-              );
+              )
+            );
           } else {
             this.employmentHistoryForm.reset();
             this.employmentHistoryForm.patchValue({
@@ -117,16 +116,18 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
             });
           }
         }
-      );
+      )
+    );
 
-    this.subscriptionUserinfo =
+    this.subscriptions.add(
       this.userAcctInfoDataService.userAcctInfoChanged.subscribe(
         (userAcctInfo) => {
           if (userAcctInfo.soeid) {
             this.userAcctInfoDataService.userAcctInfo = userAcctInfo;
           }
         }
-      );
+      )
+    );
   }
 
   onSubmit() {
@@ -140,18 +141,18 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
       empHistItem.EmploymentHistoryID = 0;
     }
 
-    this.agentDataService
-    .upsertEmploymentHistItem(empHistItem)
-    .subscribe({
-      next: (response) => {
-        this.isFormSubmitted = true;
-        this.closeModal();
-      },
-      error: (error) => {
-        console.error(error);
-        // handle the error here
-      },
-    });
+    this.subscriptions.add(
+      this.agentDataService.upsertEmploymentHistItem(empHistItem).subscribe({
+        next: (response) => {
+          this.isFormSubmitted = true;
+          this.closeModal();
+        },
+        error: (error) => {
+          console.error(error);
+          // handle the error here
+        },
+      })
+    );
   }
 
   alphaNumericOnly(event: any) {
@@ -193,7 +194,6 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptionMode.unsubscribe();
-    this.subscriptionData.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

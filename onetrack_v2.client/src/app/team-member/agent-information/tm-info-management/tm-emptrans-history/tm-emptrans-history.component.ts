@@ -30,7 +30,7 @@ export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
   agentInfo: AgentInfo = {} as AgentInfo;
   eventAction: string = '';
   vObject: any = {};
-  subscribeAgentInfo: Subscription;
+  private subscriptions = new Subscription();
 
   employmentHistory: EmploymentHistory[] = [];
   transferHistory: TransferHistory[] = [];
@@ -44,29 +44,18 @@ export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
     public appComService: AppComService,
     public userInfoDataService: UserAcctInfoDataService,
     public dialog: MatDialog
-  ) {
-    this.subscribeAgentInfo = new Subscription();
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.subscribeAgentInfo = this.agentDataService.agentInfoChanged.subscribe(
-      (agentInfo: any) => {
-        // this.agentInfo = agentInfo;
+    this.subscriptions.add(
+      this.agentDataService.agentInfoChanged.subscribe((agentInfo: any) => {
         this.employmentHistory = agentInfo.employmentHistory;
         this.transferHistory = agentInfo.transferHistory;
         this.companyRequirementsHistory = agentInfo.compayRequirementsHistory;
         this.employmentJobTitleHistory = agentInfo.employmentJobTitleHistory;
-      }
+      })
     );
   }
-
-  // onNgOnChanges(): void {
-  //   this.agentInfo = this.agentDataService.getAgentInfo();
-  //   this.employmentHistory = this.agentInfo.employmentHistory;
-  //   this.transferHistory = this.agentInfo.transferHistory;
-  //   this.companyRequirementsHistory = this.agentInfo.compayRequirementsHistory;
-  //   this.employmentJobTitleHistory = this.agentInfo.employmentJobTitleHistory;
-  // }
 
   openConfirmDialog(eventAction: string, msg: string, vObject: any): void {
     this.eventAction = eventAction;
@@ -80,8 +69,6 @@ export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
-      // console.log('The dialog was closed');
-      // console.log('Confirmation result:', result);
       if (result) {
         switch (this.eventAction) {
           case 'deleteEmploymentHistory':
@@ -104,24 +91,26 @@ export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
   }
 
   deleteEmploymentHistory(empItem: any): void {
-    this.agentDataService
-      .deleteEmploymentHistItem({
-        employmentID: this.agentDataService.agentInformation.employmentID,
-        employmentHistoryID: empItem.employmentHistoryID,
-        userSOEID: this.userInfoDataService.userAcctInfo.soeid,
-      })
-      .subscribe({
-        next: (response: any) => {
-          // console.log(
-          //   'EMFTEST (app-tm-emptrans-history: deleteEmploymentHistory) - COMPLETED DELETE response => \n',
-          //   response
-          // );
-        },
-        error: (error: any) => {
-          console.error(error);
-          // handle the error here
-        },
-      });
+    this.subscriptions.add(
+      this.agentDataService
+        .deleteEmploymentHistItem({
+          employmentID: this.agentDataService.agentInformation.employmentID,
+          employmentHistoryID: empItem.employmentHistoryID,
+          userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+        })
+        .subscribe({
+          next: (response: any) => {
+            // console.log(
+            //   'EMFTEST (app-tm-emptrans-history: deleteEmploymentHistory) - COMPLETED DELETE response => \n',
+            //   response
+            // );
+          },
+          error: (error: any) => {
+            console.error(error);
+            // handle the error here
+          },
+        })
+    );
   }
 
   deleteTransferHistory(transferItem: any): void {
@@ -188,6 +177,6 @@ export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscribeAgentInfo.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

@@ -11,8 +11,8 @@ import { formatDate } from '@angular/common';
 })
 export class EditDiaryEntryComponent implements OnInit, OnDestroy {
   diaryItemForm!: FormGroup;
-  subscriptionMode: Subscription = new Subscription();
-  subscriptionData: Subscription = new Subscription();
+
+  private subscriptions = new Subscription();
 
   constructor(
     public agentService: AgentDataService,
@@ -21,47 +21,44 @@ export class EditDiaryEntryComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.diaryItemForm = new FormGroup({
-      diaryID:new FormControl({ value: '', disabled: true }),
+      diaryID: new FormControl({ value: '', disabled: true }),
       soeid: new FormControl({ value: '', disabled: true }),
       diaryName: new FormControl({ value: '', disabled: true }),
       diaryDate: new FormControl({ value: '', disabled: true }),
-      notes: new FormControl(null)
+      notes: new FormControl(null),
     });
 
-    this.subscriptionMode =
-      this.agentComService.modeDiaryChanged.subscribe(
-        (mode: string) => {
-          if (mode === 'EDIT') {
-            this.subscriptionData =
-              this.agentService.diaryEntryChanged.subscribe(
-                (diaryItem: any) => {
-                  this.diaryItemForm.patchValue({
-                    diaryID: diaryItem.diaryID,
-                    soeid: diaryItem.soeid,
-                    diaryName: diaryItem.diaryName,
-                    diaryDate: formatDate(
-                      diaryItem.diaryDate,
-                      'yyyy-MM-dd',
-                      'en-US'
-                    ),
-                    notes: diaryItem.notes
-                  });
-                }
-              );
-          } else {
-            this.diaryItemForm.reset();
-            this.diaryItemForm.patchValue({
-              // soeid: this.agentService.agentInfo.soeid,
-              // diaryName: this.agentService.agentInfo.agentName,
-              diaryDate: formatDate(new Date(), 'yyyy-MM-dd', 'en-US'),
-            });
-          }
+    this.subscriptions.add(
+      this.agentComService.modeDiaryChanged.subscribe((mode: string) => {
+        if (mode === 'EDIT') {
+          this.subscriptions.add(
+            this.agentService.diaryEntryChanged.subscribe((diaryItem: any) => {
+              this.diaryItemForm.patchValue({
+                diaryID: diaryItem.diaryID,
+                soeid: diaryItem.soeid,
+                diaryName: diaryItem.diaryName,
+                diaryDate: formatDate(
+                  diaryItem.diaryDate,
+                  'yyyy-MM-dd',
+                  'en-US'
+                ),
+                notes: diaryItem.notes,
+              });
+            })
+          );
+        } else {
+          this.diaryItemForm.reset();
+          this.diaryItemForm.patchValue({
+            // soeid: this.agentService.agentInfo.soeid,
+            // diaryName: this.agentService.agentInfo.agentName,
+            diaryDate: formatDate(new Date(), 'yyyy-MM-dd', 'en-US'),
+          });
         }
-      );
+      })
+    );
   }
 
   ngOnDestroy(): void {
-    this.subscriptionMode.unsubscribe();
-    this.subscriptionData.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

@@ -146,7 +146,7 @@
               <mat-form-field>
                 <mat-label>Branch Name</mat-label>
                 <mat-select
-                  ngModel
+                [(ngModel)]="selectedBranch"
                   name="BranchCode"
                   placeholder="Select Branch Name"
                 >
@@ -154,7 +154,9 @@
                   <mat-option
                     *ngFor="let branchName of branchNames"
                     [value]="branchName.value"
-                    >{{ branchName.label }}</mat-option
+                    >
+                    {{ branchName.label }}
+                    </mat-option
                   >
                 </mat-select>
               </mat-form-field>
@@ -233,7 +235,11 @@
 
   <mat-divider *ngIf="isSubmitted && !loading"></mat-divider>
 
-  <div class="row mt-3 mb-3" style="font-size: larger" *ngIf="isSubmitted && !loading">
+  <div
+    class="row mt-3 mb-3"
+    style="font-size: larger"
+    *ngIf="isSubmitted && !loading"
+  >
     <div class="col d-flex justify-content-center">
       <span class="me-2" style="font-weight: 700">{{
         searchEmployeeResult.length | number

@@ -28,8 +28,7 @@ export class EditCorequirementHistComponent implements OnInit, OnDestroy {
   @Input() employeeID: number = 0;
   coReqAssetIDs: Array<{ lkpValue: string }> = [];
   coReqStatuses: Array<{ lkpValue: string }> = [];
-  subscriptionMode: Subscription = new Subscription();
-  subscriptionData: Subscription = new Subscription();
+  private subscriptions = new Subscription();
 
   constructor(
     private fb: FormBuilder,
@@ -57,11 +56,11 @@ export class EditCorequirementHistComponent implements OnInit, OnDestroy {
       this.coReqStatuses = [{ lkpValue: 'Select Status' }, ...response];
     });
 
-    this.subscriptionMode =
+    this.subscriptions.add(
       this.agentComService.modeCompanyRequirementsHistChanged.subscribe(
         (mode: string) => {
           if (mode === 'EDIT') {
-            this.subscriptionData =
+            this.subscriptions.add(
               this.agentDataService.companyRequirementsHistItemChanged.subscribe(
                 (coRequirement: any) => {
                   this.coRequirementsForm.patchValue({
@@ -81,7 +80,8 @@ export class EditCorequirementHistComponent implements OnInit, OnDestroy {
                     ),
                   });
                 }
-              );
+              )
+            );
           } else {
             this.coRequirementsForm.reset();
             this.coRequirementsForm.patchValue({
@@ -100,7 +100,8 @@ export class EditCorequirementHistComponent implements OnInit, OnDestroy {
             });
           }
         }
-      );
+      )
+    );
   }
 
   onSubmit() {
@@ -142,18 +143,20 @@ export class EditCorequirementHistComponent implements OnInit, OnDestroy {
       coReqItem.companyRequirementID = 0;
     }
 
-    this.agentDataService
-      .upsertCompanyRequirementsHistItem(coReqItem)
-      .subscribe({
-        next: (response) => {
-          this.isFormSubmitted = true;
-          this.closeModal();
-        },
-        error: (error) => {
-          console.error(error);
-          // handle the error here
-        },
-      });
+    this.subscriptions.add(
+      this.agentDataService
+        .upsertCompanyRequirementsHistItem(coReqItem)
+        .subscribe({
+          next: (response) => {
+            this.isFormSubmitted = true;
+            this.closeModal();
+          },
+          error: (error) => {
+            console.error(error);
+            // handle the error here
+          },
+        })
+    );
   }
 
   closeModal() {
@@ -185,7 +188,6 @@ export class EditCorequirementHistComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscriptionMode.unsubscribe();
-    this.subscriptionData.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

@@ -100,7 +100,7 @@
       [totalItems]="paginationComService.displayItems.length"
       [itemsPerPage]="paginationComService.itemsPerPage"
       (pageChange)="
-        paginationComService.currentPage = $event;
+        paginationComService.currentPage = $any($event);
         paginationComService.updatePaginatedResults()
       "
     >

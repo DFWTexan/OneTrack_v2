@@ -1881,7 +1881,7 @@ namespace OneTrack_v2.Services
                             transaction.Commit();
 
                             result.Success = true;
-                            result.ObjData = new { EmployeeLicenseID = employeeLicenseId, Message = "Success" };
+                            result.ObjData = employeeLicense;
                         }
                         catch (Exception ex)
                         {

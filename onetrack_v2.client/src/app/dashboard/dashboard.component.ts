@@ -18,9 +18,8 @@ import { Subscription } from 'rxjs';
 export class DashboardComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   panelOpenState = false;
-  subscriptionAdBankerImportInfo: Subscription = new Subscription();
-  subscriptionWorklist: Subscription = new Subscription();
-  subscriptionAuditLog: Subscription = new Subscription();
+  
+  private subscriptions = new Subscription();
 
   adBankerImportInfo: any = {};
   worklistData: any[] = [];
@@ -71,27 +70,37 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscriptionWorklist = this.miscDataService
+    this.subscriptions.add(
+      this.miscDataService
       .fetchWorkListNames()
       .subscribe((worklistNames) => {
         this.worklistNames = worklistNames;
         this.selectedWorkListName = worklistNames[0];
-      });
-    this.subscriptionAdBankerImportInfo = this.dashboardDataService
+      })
+    ); 
+    
+    this.subscriptions.add(
+      this.dashboardDataService
       .fetchAdBankerImportInfo()
       .subscribe((adBankerImportInfo) => {
         this.adBankerImportInfo = adBankerImportInfo;
-      });
+      })
+    );
+    
     this.dashboardDataService
       .fetchAuditModifiedBy(this.isTechActive)
       .subscribe((modifiedBy) => {
         this.modifiedBy = ['Select Tech', ...modifiedBy];
       });
-    this.subscriptionAuditLog = this.dashboardDataService
-      .fetchAuditLog(this.startDate, this.endDate, null)
-      .subscribe((auditLogData) => {
-        this.auditLogData = auditLogData;
-      });
+
+      this.subscriptions.add(
+        this.dashboardDataService
+        .fetchAuditLog(this.startDate, this.endDate, null)
+        .subscribe((auditLogData) => {
+          this.auditLogData = auditLogData;
+        })
+      );
+    
       this.getAdBankerData();
   }
 
@@ -108,14 +117,14 @@ export class DashboardComponent implements OnInit, OnDestroy {
       });
   }
 
-  changeWorkListName(event: any) {
+  onChangeWorkListName(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;
     this.selectedWorkListName = value;
     this.fetchWorkListData();
   }
 
-  changeImportDate(event: any) {
+  onChangeImportDate(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;
     this.selectedDate = value;
@@ -124,22 +133,21 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   // ADBANKER
   getAdBankerData(): void {
-    this.dashboardDataService
+    this.subscriptions.add(
+      this.dashboardDataService
       .fetchADBankerData(
         this.adBankerStartDate,
         this.adBankerEndDate,
-        this.adBankerImportStatus == 'All'
-          ? null
-          : this.adBankerImportStatus == 'Success'
-          ? true
-          : false
+        this.adBankerImportStatus
       )
       .subscribe((data) => {
         this.adBankerData = data;
-      });
+      })
+    );
+    
   }
 
-  changeADBankerStartDate(event: any) {
+  onChangeADBankerStartDate(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;
     this.startDate = value;
@@ -155,7 +163,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
     //   });
     this.getAdBankerData();
   }
-  changeADBankerEndDate(event: any) {
+  onChangeADBankerEndDate(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;
     this.endDate = value;
@@ -170,10 +178,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     //   });
     this.getAdBankerData();
   }
-  changeImportStaus(event: any) {
+  onChangeImportStaus(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;
     this.adBankerImportStatus = value;
+
     // this.dashboardDataService
     //   .fetchADBankerData(
     //     this.startDate,
@@ -187,12 +196,13 @@ export class DashboardComponent implements OnInit, OnDestroy {
   }
 
   // AUDIT LOG
-  changesStartDate(event: any) {
+  onChangesStartDate(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;
     this.startDate = value;
 
-    this.dashboardDataService
+    this.subscriptions.add(
+      this.dashboardDataService
       .fetchAuditLog(
         this.startDate,
         this.endDate,
@@ -202,13 +212,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
       )
       .subscribe((auditLogData) => {
         this.auditLogData = auditLogData;
-      });
+      })  
+    );
+    
   }
-  changesEndDate(event: any) {
+  onChangesEndDate(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;
     this.endDate = value;
-    this.dashboardDataService
+
+    this.subscriptions.add(
+      this.dashboardDataService
       .fetchAuditLog(
         this.startDate,
         this.endDate,
@@ -218,13 +232,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
       )
       .subscribe((auditLogData) => {
         this.auditLogData = auditLogData;
-      });
+      })
+    );
+    
   }
-  changeModifiedBy(event: any) {
+  onChangeModifiedBy(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;
     this.modifiedBySelected = value;
-    this.dashboardDataService
+
+    this.subscriptions.add(
+      this.dashboardDataService
       .fetchAuditLog(
         this.startDate,
         this.endDate,
@@ -232,10 +250,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
       )
       .subscribe((auditLogData) => {
         this.auditLogData = auditLogData;
-      });
+      })
+    );
+    
   }
   ngOnDestroy(): void {
-    this.subscriptionWorklist.unsubscribe();
-    this.subscriptionAuditLog.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }
