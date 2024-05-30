@@ -69,7 +69,7 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
     console.log(this.form.value);
   }
 
-  closeModal() {
+  onCloseModal() {
     const modalDiv = document.getElementById('modal-edit-tm-info');
     if (modalDiv != null) {
       modalDiv.style.display = 'none';

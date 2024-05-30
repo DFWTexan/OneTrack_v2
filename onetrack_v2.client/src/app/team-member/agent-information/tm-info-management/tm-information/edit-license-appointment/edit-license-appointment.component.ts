@@ -63,6 +63,13 @@ export class EditLicenseAppointmentComponent implements OnInit, OnDestroy {
     );
   }
 
+  onCancel() {
+    const modalDiv = document.getElementById('modal-edit-license-appt');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }
