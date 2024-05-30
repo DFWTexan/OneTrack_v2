@@ -14,5 +14,10 @@ export class AddIndexerComponent {
     // some code here
   }
 
-  cancel() {}
+  onCancel() {
+    const modalDiv = document.getElementById('modal-document-index');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+  }
 }

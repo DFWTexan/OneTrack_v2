@@ -29,12 +29,12 @@ export class AppComponent implements OnInit {
 
   constructor(
     public appComService: AppComService,
-    private drpdwnDataService: DropdownDataService,
+    // private drpdwnDataService: DropdownDataService,
     private userInfoService: UserAcctInfoDataService
   ) {}
 
   ngOnInit() {
-    if (environment.isDevLogEnabled) {
+    if (environment.isDevLoginEnabled) {
       this.appComService.updateIsLoggedIn(true);
       this.userInfoService.updateUserAcctInfo({
         displayName: 'Erish Faggett',

@@ -11,5 +11,10 @@ export class AddTicklerComponent {
     // some code here
   }
 
-  cancel() {}
+  onCancel() {
+    const modalDiv = document.getElementById('modal-new-tickler');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+  }
 }

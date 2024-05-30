@@ -4,7 +4,7 @@
 
 export const environment = {
     production: false,
-    isDevLogEnabled: true,
+    isDevLoginEnabled: true,
     isShowEditID: false,
     apiUrl: 'https://localhost:7249/api/',
   };
