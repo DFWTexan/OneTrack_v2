@@ -26,8 +26,8 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
   transferHistoryID: number = 0;
   branchCodes: Array<{ branchCode: string }> = [];
   states: any[] = [];
-  subscriptionMode: Subscription = new Subscription();
-  subscriptionData: Subscription = new Subscription();
+
+  private subscriptions = new Subscription();
 
   constructor(
     private conService: ConstantsDataService,
@@ -40,7 +40,7 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.transferHistoryForm = new FormGroup({
       transferHistoryID: new FormControl({ value: '', disabled: true }),
-      branchCode: new FormControl({ value: '', disabled: true }, Validators.required),
+      branchCode: new FormControl('', Validators.required),
       workStateAbv: new FormControl(null),
       resStateAbv: new FormControl(null),
       transferDate: new FormControl(null),
@@ -51,10 +51,10 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
       this.branchCodes = [{ branchCode: 'Select' }, ...response];
     });
 
-    this.subscriptionMode =
+    this.subscriptions.add(
       this.agentComService.modeTransferHistChanged.subscribe((mode: string) => {
         if (mode === 'EDIT') {
-          this.subscriptionData =
+          this.subscriptions.add(
             this.agentDataService.transferHistItemChanged.subscribe(
               (transferHistory: any) => {
                 this.transferHistoryID = transferHistory.transferHistoryID;
@@ -73,11 +73,13 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
                   isCurrent: transferHistory.isCurrent,
                 });
               }
-            );
+            )
+          );
         } else {
           this.transferHistoryForm.reset();
         }
-      });
+      })
+    );
   }
 
   onSubmit() {
@@ -92,6 +94,8 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
     if (this.agentComService.modeTransferHist === 'INSERT') {
       transferHistItem.transferHistoryID = 0;
     }
+
+console.log('EMFTEST (app-edit-transfer-hist: onSubmit) - transferHistItem', transferHistItem);
 
     this.agentDataService.upsertTransferHistItem(transferHistItem).subscribe({
       next: (response) => {
@@ -130,7 +134,6 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscriptionMode.unsubscribe();
-    this.subscriptionData.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

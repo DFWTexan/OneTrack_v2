@@ -5,8 +5,7 @@
 >
   <div class="row">
     <div class="col">
-
-      <div class="mb-3" *ngIf="appComService.isShowEditID" >
+      <div class="mb-3" *ngIf="appComService.isShowEditID">
         <label for="companyRequirementID" class="form-label"
           >Co. Requirement ID:</label
         >
@@ -19,7 +18,9 @@
       </div>
 
       <div class="mb-3">
-        <label for="assetIdString" class="form-label"> Asset ID: <span class="text-danger">*</span></label>
+        <label for="assetIdString" class="form-label">
+          Asset ID: <span class="text-danger">*</span></label
+        >
         <select
           class="form-select select-size-medium"
           type="text"
@@ -33,9 +34,11 @@
         </select>
         <div
           *ngIf="
-            (coRequirementsForm.controls['assetIdString'].touched || isFormSubmitted) &&
+            (coRequirementsForm.controls['assetIdString'].touched ||
+              isFormSubmitted) &&
             coRequirementsForm.controls['assetIdString'].errors &&
-            coRequirementsForm.controls['assetIdString'].errors['invalid']
+            (coRequirementsForm.controls['assetIdString'].errors['invalid'] ||
+              coRequirementsForm.controls['assetIdString'].errors['required'])
           "
           class="text-danger"
         >
@@ -55,9 +58,14 @@
         />
         <div
           *ngIf="
-            (coRequirementsForm.controls['learningProgramEnrollmentDate'].touched || isFormSubmitted) &&
-            coRequirementsForm.controls['learningProgramEnrollmentDate'].errors &&
-            coRequirementsForm.controls['learningProgramEnrollmentDate'].errors['invalid']
+            (coRequirementsForm.controls['learningProgramEnrollmentDate']
+              .touched ||
+              isFormSubmitted) &&
+            coRequirementsForm.controls['learningProgramEnrollmentDate']
+              .errors &&
+            coRequirementsForm.controls['learningProgramEnrollmentDate'].errors[
+              'invalid'
+            ]
           "
           class="text-danger"
         >
@@ -67,7 +75,9 @@
     </div>
     <div class="col">
       <div class="mb-3">
-        <label for="learningProgramStatus" class="form-label">Status: <span class="text-danger">*</span></label>
+        <label for="learningProgramStatus" class="form-label"
+          >Status: <span class="text-danger">*</span></label
+        >
         <select
           class="form-select select-size-small"
           type="text"
@@ -81,9 +91,12 @@
         </select>
         <div
           *ngIf="
-            (coRequirementsForm.controls['learningProgramStatus'].touched || isFormSubmitted) &&
+            (coRequirementsForm.controls['learningProgramStatus'].touched ||
+              isFormSubmitted) &&
             coRequirementsForm.controls['learningProgramStatus'].errors &&
-            coRequirementsForm.controls['learningProgramStatus'].errors['invalid']
+            coRequirementsForm.controls['learningProgramStatus'].errors[
+              'invalid'
+            ]
           "
           class="text-danger"
         >
@@ -112,11 +125,17 @@
       <button
         type="button"
         class="btn btn-secondary me-3 cancel-button"
-        (click)="closeModal()"
+        (click)="onCloseModal()"
       >
         Cancel
       </button>
-      <button type="submit" class="btn btn-primary save-button" [disabled]="!coRequirementsForm.valid">Save</button>
+      <button
+        type="submit"
+        class="btn btn-primary save-button"
+        [disabled]="!coRequirementsForm.valid"
+      >
+        Save
+      </button>
     </div>
   </div>
 </form>

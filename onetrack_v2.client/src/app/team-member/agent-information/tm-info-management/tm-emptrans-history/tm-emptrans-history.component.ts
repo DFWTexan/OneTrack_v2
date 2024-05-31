@@ -30,6 +30,7 @@ export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
   agentInfo: AgentInfo = {} as AgentInfo;
   eventAction: string = '';
   vObject: any = {};
+  
   private subscriptions = new Subscription();
 
   employmentHistory: EmploymentHistory[] = [];

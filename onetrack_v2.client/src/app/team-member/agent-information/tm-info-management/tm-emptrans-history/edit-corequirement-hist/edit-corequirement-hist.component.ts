@@ -65,7 +65,12 @@ export class EditCorequirementHistComponent implements OnInit, OnDestroy {
                 (coRequirement: any) => {
                   this.coRequirementsForm.patchValue({
                     companyRequirementID: coRequirement.companyRequirementID,
-                    assetIdString: coRequirement.assetIdString,
+                    // assetIdString: coRequirement.assetIdString,
+                    assetIdString: this.coReqAssetIDs.includes(
+                      coRequirement.assetIdString
+                    )
+                      ? coRequirement.assetIdString
+                      : 'Select Asset ID',
                     assetSk: coRequirement.assetSk,
                     learningProgramStatus: coRequirement.learningProgramStatus,
                     learningProgramEnrollmentDate: formatDate(
@@ -117,6 +122,9 @@ export class EditCorequirementHistComponent implements OnInit, OnDestroy {
       });
     }
 
+    // Mark the control as touched
+    // this.coRequirementsForm.controls['assetIdString'].markAsTouched();
+
     if (coReqItem.learningProgramStatus === 'Select Status') {
       this.coRequirementsForm.controls['learningProgramStatus'].setErrors({
         invalid: true,
@@ -149,7 +157,7 @@ export class EditCorequirementHistComponent implements OnInit, OnDestroy {
         .subscribe({
           next: (response) => {
             this.isFormSubmitted = true;
-            this.closeModal();
+            this.onCloseModal();
           },
           error: (error) => {
             console.error(error);
@@ -159,7 +167,7 @@ export class EditCorequirementHistComponent implements OnInit, OnDestroy {
     );
   }
 
-  closeModal() {
+  onCloseModal() {
     // const modalDiv = document.getElementById('modal-edit-co-req-history');
     // if (modalDiv != null) {
     //   modalDiv.style.display = 'none';

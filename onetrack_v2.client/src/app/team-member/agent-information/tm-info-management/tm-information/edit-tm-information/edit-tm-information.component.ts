@@ -51,9 +51,6 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
         this.agentInfo = agentInfo;
         this.employerAgencies = employerAgencies;
 
-        console.log('EMFTEST (edit-tm-information) - agentInfo => \n', agentInfo);
-        console.log('EMFTEST (edit-tm-information) - employerAgencies: ', employerAgencies);
-
         this.form.patchValue({
           CompanyID: agentInfo.companyID,
           preferredName: agentInfo.lastName + ', ' + agentInfo.firstName,

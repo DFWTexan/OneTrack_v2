@@ -141,7 +141,9 @@
                   *ngIf="license.licenseAppointments.length > 0"
                   class="row d-flex justify-content-end"
                 >
-                  {{ license.licenseAppointments.length }} appointments - Issue Date: {{ license.originalIssueDate | date : "MM/dd/yyyy" }} - Status: {{ license.licenseStatus }}
+                  {{ license.licenseAppointments.length }} appointments - Issue
+                  Date: {{ license.originalIssueDate | date : "MM/dd/yyyy" }} -
+                  Status: {{ license.licenseStatus }}
                 </div>
               </mat-panel-description>
             </mat-expansion-panel-header>
