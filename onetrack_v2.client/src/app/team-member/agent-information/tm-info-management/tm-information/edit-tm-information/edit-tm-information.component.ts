@@ -17,7 +17,7 @@ import { AgentInfo } from '../../../../../_Models';
 @Injectable()
 export class EditTmInformationComponent implements OnInit, OnDestroy {
   form = new FormGroup({
-    CompanyID: new FormControl(''),
+    CompanyID: new FormControl(0),
     preferredName: new FormControl(''),
     GEID: new FormControl(''),
     NationalProducerNumber: new FormControl(''),
@@ -51,8 +51,11 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
         this.agentInfo = agentInfo;
         this.employerAgencies = employerAgencies;
 
+        console.log('EMFTEST (edit-tm-information) - agentInfo => \n', agentInfo);
+        console.log('EMFTEST (edit-tm-information) - employerAgencies: ', employerAgencies);
+
         this.form.patchValue({
-          CompanyID: agentInfo.companyName,
+          CompanyID: agentInfo.companyID,
           preferredName: agentInfo.lastName + ', ' + agentInfo.firstName,
           GEID: agentInfo.geid,
           NationalProducerNumber: agentInfo.nationalProdercerNumber,
