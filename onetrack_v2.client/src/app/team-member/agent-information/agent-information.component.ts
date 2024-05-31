@@ -55,9 +55,6 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
     this.subscribeShowLicMgmtChanged =
       this.agentComService.isShowLicenseMgmtChanged.subscribe(
         (showLicenseMgmt: boolean) => {
-
-console.log('EMFTEST (app-agent-information) - showLicenseMgmt: ', showLicenseMgmt);
-
           this.isShowLicenseMgmt = showLicenseMgmt;
         }
       );

@@ -57,14 +57,14 @@ export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
     );
   }
 
-  openConfirmDialog(eventAction: string, msg: string, vObject: any): void {
+  onOpenConfirmDialog(eventAction: string, msg: string, vObject: any): void {
     this.eventAction = eventAction;
     this.vObject = vObject;
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '250px',
       data: {
         title: 'Confirm Action',
-        message: 'You are about to DELETE ' + msg,
+        message: 'You are about to DELETE' + msg,
       },
     });
 
