@@ -23,6 +23,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { SharedRoutingModule } from './shared-routing.module';
 
 import { ConfirmDialogComponent } from '../_components/confirm-dialog/confirm-dialog.component';
+import { InfoDialogComponent } from '../_components/info-dialog/info-dialog.component';
 import { ModalComponent } from '../_components/modal/modal.component';
 import { PhoneFormatPipe } from '../_shared/Pipe-Phone-Format';
 import { SsnFormatPipe } from '../_shared/Pipe-SSN-Format';
@@ -33,6 +34,7 @@ import { EditLicenseComponent } from '../admin/license-edit/edit-license/edit-li
 @NgModule({
   declarations: [
     ConfirmDialogComponent,
+    InfoDialogComponent,
     ModalComponent,
     PhoneFormatPipe,
     SsnFormatPipe,
@@ -65,6 +67,7 @@ import { EditLicenseComponent } from '../admin/license-edit/edit-license/edit-li
   ],
   exports: [
     ConfirmDialogComponent,
+    InfoDialogComponent,
     ModalComponent,
     PhoneFormatPipe,
     SsnFormatPipe,

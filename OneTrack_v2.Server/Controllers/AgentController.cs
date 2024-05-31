@@ -222,9 +222,9 @@ namespace OneTrack_v2.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> DeleteEmployee([FromBody] IputDeleteEmployee input)
+        public async Task<ActionResult> DeleteAgentEmployee([FromBody] IputDeleteEmployee input)
         {
-            var result = await Task.Run(() => _agentService.DeleteEmployee(input.EmployeeID, input.UserSOEID));
+            var result = await Task.Run(() => _agentService.DeleteAgentEmployee(input.EmployeeID, input.UserSOEID));
 
             return StatusCode(result.StatusCode, result);
         }

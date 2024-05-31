@@ -207,7 +207,7 @@ namespace OneTrack_v2.Services
                 agent.AgentLicenseAppointments = FillAgentLicenseAppointment(agent.EmploymentID);
 
                 // Branch Information
-                if (agent.BranchCode != null)
+                if (agent.BranchCode != null && agent.BranchCode != "00000000")
                 {
                     var queryBranchInfo = from bif in _db.Bifs
                                           where bif.HrDepartmentId == agent.BranchCode.Substring(agent.BranchCode.Length - 8)
@@ -1325,7 +1325,7 @@ namespace OneTrack_v2.Services
 
             return result;
         }
-        public ReturnResult DeleteEmployee(int vEmployeeID, string vUserSOEID)
+        public ReturnResult DeleteAgentEmployee(int vEmployeeID, string vUserSOEID)
         {
             var result = new ReturnResult();
             try

@@ -301,7 +301,7 @@ export class AgentDataService {
   }
 
   deleteAgent(agent: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/DeleteAgent';
+    this.apiUrl = environment.apiUrl + 'Agent/DeleteAgentEmployee';
 
     return this.http
       .post<{
