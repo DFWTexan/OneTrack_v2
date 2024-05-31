@@ -56,14 +56,13 @@
           id="jobTitleID"
           formControlName="jobTitleID"
         >
-          <option *ngFor="let title of jobTitleList" [value]="title.jobTitleID">
-            {{ title.jobTitle }}
+          <option *ngFor="let title of jobTitles" [value]="title.value">
+            {{ title.label }}
           </option>
         </select>
         <div
           *ngIf="
-            (jobTitleForm.controls['jobTitleID'].touched ||
-              isFormSubmitted) &&
+            (jobTitleForm.controls['jobTitleID'].touched || isFormSubmitted) &&
             jobTitleForm.controls['jobTitleID'].errors &&
             jobTitleForm.controls['jobTitleID'].errors['invalid']
           "
@@ -96,7 +95,13 @@
       >
         Cancel
       </button>
-      <button type="submit" class="btn btn-primary save-button" [disabled]="!jobTitleForm.valid">Save</button>
+      <button
+        type="submit"
+        class="btn btn-primary save-button"
+        [disabled]="!jobTitleForm.valid"
+      >
+        Save
+      </button>
     </div>
   </div>
 </form>

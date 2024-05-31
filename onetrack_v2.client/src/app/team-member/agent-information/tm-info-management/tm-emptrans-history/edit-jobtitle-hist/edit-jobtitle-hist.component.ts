@@ -27,7 +27,7 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
   jobTitleForm!: FormGroup;
   @Input() employmentID: number = 0;
   @Input() employeeID: number = 0;
-  jobTitleList: Array<{ jobTitleID: number; jobTitle: string }> = [];
+  jobTitles: Array<{ value: number; label: string }> = [];
   private subscriptions = new Subscription();
 
   constructor(
@@ -47,6 +47,22 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
       jobTitleID: [0, Validators.required],
       isCurrent: [''],
     });
+
+    this.subscriptions.add(
+      this.miscDataService
+        .fetchJobTitles()
+        .subscribe(
+          (jobTitles: Array<{ value: number; label: string }>) => {
+
+console.log('EMFTEST (app-edit-jobtitle-hist: ngOnInit) - jobTitles => \n', jobTitles);
+
+            this.jobTitles = [
+              { value: 0, label: 'Select Job Title' },
+              ...jobTitles,
+            ];
+          }
+        )
+    );
 
     this.subscriptions.add(
       this.agentComService.modeEmploymentJobTitleHistChanged.subscribe(
@@ -78,19 +94,6 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
           }
         }
       )
-    );
-
-    this.subscriptions.add(
-      this.miscDataService
-        .fetchJobTitles()
-        .subscribe(
-          (jobTitles: Array<{ jobTitleID: number; jobTitle: string }>) => {
-            this.jobTitleList = [
-              { jobTitleID: 0, jobTitle: 'Select Job Title' },
-              ...jobTitles,
-            ];
-          }
-        )
     );
   }
 

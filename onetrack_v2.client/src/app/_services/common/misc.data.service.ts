@@ -107,7 +107,7 @@ export class MiscDataService {
       .get<{
         success: boolean;
         statusCode: number;
-        objData: Array<{ jobTitleID: number, jobTitle: string }>;
+        objData: Array<{ value: number, label: string }>;
         errMessage: string;
       }>(url)
       .pipe(
