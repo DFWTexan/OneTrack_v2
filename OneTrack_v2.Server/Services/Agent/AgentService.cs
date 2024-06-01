@@ -785,6 +785,7 @@ namespace OneTrack_v2.Services
 
             return result;
         }
+        
         public ReturnResult GetLicenseApplcationInfo(int vEmployeeLicenseID)
         {
             var result = new ReturnResult();
@@ -967,6 +968,7 @@ namespace OneTrack_v2.Services
 
             return result;
         }
+        
         public ReturnResult GetLicLevels()
         {
             ReturnResult result = new ReturnResult();
@@ -1965,6 +1967,159 @@ namespace OneTrack_v2.Services
 
                 result.Success = true;
                 result.ObjData = new { Message = "Employment Agent License Deleted Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;  
+        }
+        public ReturnResult UpsertConEduTaken([FromBody] IputUpsertConEduTaken vInput)
+        {
+
+            var result = new ReturnResult();
+            try
+            {
+                if (vInput.EmployeeEducationID == 0)
+                {
+                    // INSERT Continuing Education Taken
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspAgentContEducationTakenInsert", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@ContEducationID", vInput.ContEducationID));
+                            cmd.Parameters.Add(new SqlParameter("@ContEducationRequirementID", vInput.ContEducationRequirementID));
+                            cmd.Parameters.Add(new SqlParameter("@ContEducationTakenDate", vInput.ContEducationTakenDate));
+                            cmd.Parameters.Add(new SqlParameter("@CreditHoursTaken", vInput.CreditHoursTaken));
+                            cmd.Parameters.Add(new SqlParameter("@AdditionalNotes", vInput.AdditionalNotes));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                else
+                {
+                    // UPDATE Continuing Education Taken
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspContinuingEducationTakenUpdate", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeEducationID", vInput.EmployeeEducationID));
+                            cmd.Parameters.Add(new SqlParameter("@ContEducationID", vInput.ContEducationID));
+                            cmd.Parameters.Add(new SqlParameter("@ContEducationTakenDate", vInput.ContEducationTakenDate));
+                            cmd.Parameters.Add(new SqlParameter("@CreditHoursTaken", vInput.CreditHoursTaken));
+                            cmd.Parameters.Add(new SqlParameter("@AdditionalNotes", vInput.AdditionalNotes));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "Continuing Education Taken Item Created/Updated Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;  
+        }
+        public ReturnResult DeleteConEduTaken([FromBody] IputDeleteConEduTaken vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspEmployeeContEducationDelete", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@EmployeeEducationID", vInput.EmployeeEducationID));
+                        cmd.Parameters.Add(new SqlParameter("@ContEducationRequirementID", vInput.ContEducationRequirementID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "Continuing Education Taken Item Deleted Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+
+            return result;
+        }
+        public ReturnResult UpsertDiaryItem([FromBody] IputUpsertDiaryItem vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                if (vInput.DiaryID == 0)
+                {
+                    // INSERT Diary
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspAgentDiaryInsert", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
+                            cmd.Parameters.Add(new SqlParameter("@SOEID", vInput.SOEID));
+                            cmd.Parameters.Add(new SqlParameter("@DiaryDate", vInput.DiaryDate));
+                            cmd.Parameters.Add(new SqlParameter("@DiaryName", vInput.DiaryName));
+                            cmd.Parameters.Add(new SqlParameter("@Notes", vInput.Notes));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                else
+                {
+                    // UPDATE Diary
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspAgentDiaryUpdate", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@DiaryID", vInput.DiaryID.ToString()));
+                            cmd.Parameters.Add(new SqlParameter("@Notes", vInput.Notes));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "Diary Item Created/Updated Successfully." };
                 result.StatusCode = 200;
 
             }

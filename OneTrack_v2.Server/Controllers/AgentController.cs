@@ -210,6 +210,22 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> UpsertConEduTaken([FromBody] IputUpsertConEduTaken input)
+        {
+            var result = await Task.Run(() => _agentService.UpsertConEduTaken(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UpsertDiaryItem([FromBody] IputUpsertDiaryItem input)
+        {
+            var result = await Task.Run(() => _agentService.UpsertDiaryItem(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
         #endregion
 
         #region "Agent Delete"
@@ -257,6 +273,14 @@ namespace OneTrack_v2.Controllers
         public async Task<ActionResult> DeleteAgentLicense([FromBody] IputDeleteAgentLincense input)
         {
             var result = await Task.Run(() => _agentService.DeleteAgentLicense(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> DeleteConEduTaken([FromBody] IputDeleteConEduTaken input)
+        {
+            var result = await Task.Run(() => _agentService.DeleteConEduTaken(input));
 
             return StatusCode(result.StatusCode, result);
         }

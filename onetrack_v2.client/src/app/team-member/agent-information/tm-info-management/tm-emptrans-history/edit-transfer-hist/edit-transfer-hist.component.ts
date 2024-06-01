@@ -94,22 +94,21 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
     if (this.agentComService.modeTransferHist === 'INSERT') {
       transferHistItem.transferHistoryID = 0;
     }
-
-console.log('EMFTEST (app-edit-transfer-hist: onSubmit) - transferHistItem', transferHistItem);
-
-    this.agentDataService.upsertTransferHistItem(transferHistItem).subscribe({
-      next: (response) => {
-        this.isFormSubmitted = true;
-        this.closeModal();
-      },
-      error: (error) => {
-        console.error(error);
-        // handle the error here
-      },
-    });
+    this.subscriptions.add(
+      this.agentDataService.upsertTransferHistItem(transferHistItem).subscribe({
+        next: (response) => {
+          this.isFormSubmitted = true;
+          this.onCloseModal();
+        },
+        error: (error) => {
+          console.error(error);
+          // handle the error here
+        },
+      })
+    );
   }
 
-  closeModal() {
+  onCloseModal() {
     // const modalDiv = document.getElementById('modal-edit-tran-history');
     // if (modalDiv != null) {
     //   modalDiv.style.display = 'none';

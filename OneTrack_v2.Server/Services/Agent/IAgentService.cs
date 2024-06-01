@@ -35,5 +35,8 @@ namespace OneTrack_v2.Services
         public ReturnResult DeleteEmploymentJobTitleItem([FromBody] IputDeleteEmploymentJobTitle vInput);
         public ReturnResult UpsertAgentLicense([FromBody] IputUpsertAgentLicense vInput);
         public ReturnResult DeleteAgentLicense([FromBody] IputDeleteAgentLincense vInput);
+        public ReturnResult UpsertConEduTaken([FromBody] IputUpsertConEduTaken vInput);
+        public ReturnResult DeleteConEduTaken([FromBody] IputDeleteConEduTaken vInput);
+        public ReturnResult UpsertDiaryItem([FromBody] IputUpsertDiaryItem vInput);
     }
 }

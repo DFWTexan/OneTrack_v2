@@ -1,7 +1,20 @@
 <div class="container app-component-container" style="width: 90%">
   <form (ngSubmit)="onSubmit(f)" #f="ngForm">
     <div id="email" ngModelGroup="emailForm" #emailForm="ngModelGroup">
-      <div class="row bg-body p-3">
+      <div
+        class="row p-3 mb-3"
+        style="
+          background-color: black;
+          color: white;
+          opacity: 0.8;
+          border-radius: 1rem;
+          padding: 1rem;
+          border-style: solid;
+          border-color: gainsboro;
+          border-width: 1px;
+          box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+        "
+      >
         <div class="col">
           <label for="emailTemaplate">Email Template:</label>
           <select
@@ -33,118 +46,146 @@
           </button>
         </div>
       </div>
+      <div
+        class="row bg-body p-3 mb-5"
+        style="
+          border-radius: 1rem;
+          padding: 1rem;
+          border-style: solid;
+          border-color: gainsboro;
+          border-width: 1px;
+          box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+        "
+      >
+        <div>
+          <div class="col">
+            <table>
+              <tbody>
+                <tr>
+                  <td
+                    class="pe-3 text-align-end"
+                    style="font-size: larger; font-weight: 600"
+                  >
+                    To:
+                  </td>
+                  <td>{{ agentInfo.email }}</td>
+                </tr>
+                <tr>
+                  <td
+                    class="pe-3 text-align-end"
+                    style="font-size: larger; font-weight: 600"
+                  >
+                    Cc:
+                  </td>
+                  <td>
+                    <div>{{ ccEmail.join(", ") }}</div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="col align-items-start">
+            <div class="checkbox">
+              <label
+                ><input
+                  type="checkbox"
+                  name="chkMgr"
+                  [value]="
+                    agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[0].mgrEmail
+                      ? agentInfo.mgrHiearchy[0].mgrEmail
+                      : 'n/a'
+                  "
+                  [(ngModel)]="chkMgr"
+                  [ngModelOptions]="{ standalone: true }"
+                  (change)="onCcChange($event)"
+                />Cc: Mgr</label
+              >
+            </div>
+            <div class="checkbox">
+              <label
+                ><input
+                  type="checkbox"
+                  name="chkDM"
+                  [value]="
+                    agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[1].mgrEmail
+                      ? agentInfo.mgrHiearchy[1].mgrEmail
+                      : 'n/a'
+                  "
+                  [(ngModel)]="chkDM"
+                  [ngModelOptions]="{ standalone: true }"
+                  (change)="onCcChange($event)"
+                />Cc: DM</label
+              >
+            </div>
+            <div class="checkbox">
+              <label
+                ><input
+                  type="checkbox"
+                  name="chkRD"
+                  [value]="
+                    agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[2].mgrEmail
+                      ? agentInfo.mgrHiearchy[2].mgrEmail
+                      : 'n/a'
+                  "
+                  [(ngModel)]="chkRD"
+                  [ngModelOptions]="{ standalone: true }"
+                  (change)="onCcChange($event)"
+                />Cc: RD</label
+              >
+            </div>
+          </div>
+          <div class="col">
+            <div class="mb-3">
+              <span style="font-size: larger; font-weight: 400">Mgr</span> -
+              <span style="color: grey">{{
+                agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[0].mgrName
+              }}</span>
+            </div>
+            <div class="mb-3">
+              <span style="font-size: larger; font-weight: 400">DM</span> -
+              <span style="color: grey">{{
+                agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[1].mgrName
+              }}</span>
+            </div>
+            <div>
+              <span style="font-size: larger; font-weight: 400">RD</span> -
+              <span style="color: grey">{{
+                agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[2].mgrName
+              }}</span>
+            </div>
+          </div>
+        </div>
 
-      <div class="row bg-body p-3">
-        <div class="col">
-          <table>
-            <tbody>
-              <tr>
-                <td
-                  class="pe-3 text-align-end"
-                  style="font-size: larger; font-weight: 600"
-                >
-                  To:
-                </td>
-                <td>{{ agentInfo.email }}</td>
-              </tr>
-              <tr>
-                <td
-                  class="pe-3 text-align-end"
-                  style="font-size: larger; font-weight: 600"
-                >
-                  Cc:
-                </td>
-                <td><div>{{ ccEmail.join(', ') }}</div></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <div class="col align-items-start">
-          <div class="checkbox">
-            <label
-              ><input
-                type="checkbox"
-                name="chkMgr"
-                [value]="agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[0].mgrEmail ? agentInfo.mgrHiearchy[0].mgrEmail : 'n/a'"
-                [(ngModel)]="chkMgr"
-                [ngModelOptions]="{ standalone: true }"
-                (change)="onCcChange($event)"
-              />Cc: Mgr</label>
-          </div>
-          <div class="checkbox">
-            <label
-              ><input
-                type="checkbox"
-                name="chkDM"
-                [value]="
-                  agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[1].mgrEmail ? agentInfo.mgrHiearchy[1].mgrEmail : 'n/a' 
-                "
-                [(ngModel)]="chkDM"
-                [ngModelOptions]="{ standalone: true }"
-                (change)="onCcChange($event)"
-              />Cc: DM</label
-            >
-          </div>
-          <div class="checkbox">
-            <label
-              ><input
-                type="checkbox"
-                name="chkRD"
-                [value]="
-                  agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[2].mgrEmail ? agentInfo.mgrHiearchy[2].mgrEmail : 'n/a' 
-                "
-                [(ngModel)]="chkRD"
-                [ngModelOptions]="{ standalone: true }"
-                (change)="onCcChange($event)"
-              />Cc: RD</label
-            >
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <span style="font-size: larger; font-weight: 400">Mgr</span> -
-            <span style="color: grey;">{{ agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[0].mgrName }}</span>
-          </div>
-          <div class="mb-3">
-            <span style="font-size: larger; font-weight: 400">DM</span> -
-            <span style="color: grey;">{{ agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[1].mgrName }}</span>
-          </div>
-          <div>
-            <span style="font-size: larger; font-weight: 400">RD</span> -
-            <span style="color: grey;">{{ agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[2].mgrName }}</span>
-          </div>
-        </div>
-      </div>
-
-      <div class="row bg-body p-3">
-        <div class="col">
-          <label for="emailSubject">Subject:</label>
-          <input
-            class="form-control input-size-large"
-            type="text"
-            ngModel
-            id="emailSubject"
-            name="emailSubject"
-            [(ngModel)]="emailSubject"
-            [ngModelOptions]="{ standalone: true }"
-          />
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <label for="formFile" class="form-label">Add Attachment: </label>
+        <div class="row bg-body p-3">
+          <div class="col">
+            <label for="emailSubject">Subject:</label>
             <input
-              class="form-control"
-              type="file"
-              id="formFile"
-              name="emailFile"
+              class="form-control input-size-large"
+              type="text"
+              ngModel
+              id="emailSubject"
+              name="emailSubject"
+              [(ngModel)]="emailSubject"
+              [ngModelOptions]="{ standalone: true }"
             />
           </div>
+          <div class="col">
+            <div class="mb-3">
+              <label for="formFile" class="form-label">Add Attachment: </label>
+              <input
+                class="form-control"
+                type="file"
+                id="formFile"
+                name="emailFile"
+              />
+            </div>
+          </div>
         </div>
-      </div>
-      <!-- <mat-divider></mat-divider> -->
-      <div class="row bg-body mt-1 p-2">
-        <div class="col">
-          <div [innerHTML]="htmlContent"></div>
+        <!-- <mat-divider></mat-divider> -->
+        <div class="row bg-body mt-1 p-2">
+          <div class="col">
+            <div [innerHTML]="htmlContent"></div>
+          </div>
         </div>
       </div>
     </div>

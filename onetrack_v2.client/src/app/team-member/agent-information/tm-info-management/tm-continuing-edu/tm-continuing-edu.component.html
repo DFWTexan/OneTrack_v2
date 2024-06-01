@@ -10,7 +10,14 @@
 
   <div class="row mt-3">
     <div class="col d-flex">
-      <table class="table">
+      <table
+        class="table"
+        style="
+          border-radius: 1rem;
+          padding: 1rem;
+          box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+        "
+      >
         <thead>
           <tr style="background-color: gainsboro">
             <th scope="col">Cont. Ed. ID</th>
@@ -32,17 +39,25 @@
   </div>
 
   <div class="row mt-3">
-    <table class="bg-body">
+    <table
+      class="bg-body p-3"
+      style="
+        border-radius: 1rem;
+        border-radius: 1rem;
+        padding: 1rem;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+      "
+    >
       <thead>
         <tr>
-          <th class="p-3" style="color: dodgerblue">Hours Required</th>
+          <th class="p-3 ms-5" style="color: dodgerblue">Hours Required</th>
           <th class="p-3" style="color: dodgerblue">- Hours Taken</th>
           <th class="p-3" style="color: dodgerblue">= Hours Remaining</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td class="ps-3 pb-3" style="font-size: large">
+          <td class="ps-3 ms-5 pb-3" style="font-size: large">
             {{ sumHoursRequired }}
           </td>
           <td class="ps-3 pb-3" style="font-size: large">
@@ -138,7 +153,10 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-hours-taken></app-edit-hours-taken>
+        <app-edit-hours-taken
+          [employeeID]="agentDataService.agentInformation.employeeID"
+          [employmentID]="agentDataService.agentInformation.employmentID"
+        ></app-edit-hours-taken>
       </div>
     </div>
   </div>
