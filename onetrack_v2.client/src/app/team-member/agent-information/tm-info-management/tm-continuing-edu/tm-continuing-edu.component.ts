@@ -6,8 +6,11 @@ import {
   AgentDataService,
   AppComService,
   ModalService,
+  UserAcctInfoDataService,
 } from '../../../../_services';
 import { AgentInfo } from '../../../../_Models';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../../../_components';
 
 @Component({
   selector: 'app-tm-continuing-edu',
@@ -17,6 +20,7 @@ import { AgentInfo } from '../../../../_Models';
 @Injectable()
 export class TmContinuingEduComponent implements OnInit, OnDestroy {
   agentInfo: AgentInfo = {} as AgentInfo;
+  vObject: any = {};
   sumHoursRequired: number = 0;
   sumHoursTaken: number = 0;
   totalHoursRemaining: number = 0;
@@ -27,7 +31,9 @@ export class TmContinuingEduComponent implements OnInit, OnDestroy {
     public agentDataService: AgentDataService,
     public agentComService: AgentComService,
     protected modalService: ModalService,
-    public appComService: AppComService
+    public appComService: AppComService,
+    public userInfoDataService: UserAcctInfoDataService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +52,42 @@ export class TmContinuingEduComponent implements OnInit, OnDestroy {
         this.totalHoursRemaining = this.sumHoursRequired - this.sumHoursTaken;
       })
     );
+  }
+
+  onOpenConfirmDialog( msg: string, vObject: any): void {
+    this.vObject = vObject;
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+        title: 'Confirm Action',
+        message: 'You are about to DELETE ' + msg,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.subscriptions.add(
+          this.agentDataService
+            .deleteContEduHoursTaken({
+              contEducationRequirementID: vObject.contEducationRequirementID,
+              employeeEducationID: vObject.employeeEducationID,
+              userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+            })
+            .subscribe({
+              next: (response: any) => {
+                // console.log(
+                //   'EMFTEST (app-tm-emptrans-history: deleteEmploymentHistory) - COMPLETED DELETE response => \n',
+                //   response
+                // );
+              },
+              error: (error: any) => {
+                console.error(error);
+                // handle the error here
+              },
+            })
+        );
+      }
+    });
   }
 
   ngOnDestroy(): void {

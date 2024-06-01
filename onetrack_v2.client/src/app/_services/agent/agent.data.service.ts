@@ -620,6 +620,84 @@ export class AgentDataService {
       );
   }
 
+  upsertContEduHoursTaken(contEduHoursTaken: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'Agent/UpsertConEduTaken';
+
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, contEduHoursTaken)
+      .pipe(
+        switchMap((response) => {
+          if (response.success && response.statusCode === 200) {
+            return this.fetchAgentInformation(this.agentInformation.employeeID);
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        }),
+        map((agentInfo) => {
+          this.agentInformation = agentInfo;
+          this.agentInfoChanged.next(this.agentInformation);
+          return this.agentInformation;
+        })
+      );
+  }
+
+  deleteContEduHoursTaken(contEduHoursTaken: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'Agent/DeleteConEduTaken';
+
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, contEduHoursTaken)
+      .pipe(
+        switchMap((response) => {
+          if (response.success && response.statusCode === 200) {
+            return this.fetchAgentInformation(this.agentInformation.employeeID);
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        }),
+        map((agentInfo) => {
+          this.agentInformation = agentInfo;
+          this.agentInfoChanged.next(this.agentInformation);
+          return this.agentInformation;
+        })
+      );
+  }
+
+  upsertDiaryEntry(diaryEntry: any): Observable<any> {  
+    this.apiUrl = environment.apiUrl + 'Agent/UpsertDiaryItem';
+
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, diaryEntry)
+      .pipe(
+        switchMap((response) => {
+          if (response.success && response.statusCode === 200) {
+            return this.fetchAgentInformation(this.agentInformation.employeeID);
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        }),
+        map((agentInfo) => {
+          this.agentInformation = agentInfo;
+          this.agentInfoChanged.next(this.agentInformation);
+          return this.agentInformation;
+        })
+      );
+  }
+
   // LICENSE APPOINTMENT MANAGEMENT
   storeLicenseAppointment(appointment: LicenseAppointment) {
     this.licenseAppointment = appointment;

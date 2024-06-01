@@ -126,7 +126,12 @@
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
                 <button class="icon-edit-delete-button">
-                  <span class="material-symbols-outlined"> delete </span>
+                  <span class="material-symbols-outlined" (click)="
+                  onOpenConfirmDialog(
+                    'Continuing Education Item ' + ce.employeeEducationID + '. Do you want to proceed?',
+                    ce
+                  )
+                "> delete </span>
                 </button>
               </div>
             </td>

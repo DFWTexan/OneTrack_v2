@@ -24,7 +24,7 @@ export class EditHoursTakenComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   constructor(
-    public agentService: AgentDataService,
+    public agentDataService: AgentDataService,
     public agentComService: AgentComService,
     public appComService: AppComService,
     private userAcctInfoDataService: UserAcctInfoDataService
@@ -45,7 +45,7 @@ export class EditHoursTakenComponent implements OnInit, OnDestroy {
         (mode: string) => {
           if (mode === 'EDIT') {
             this.subscriptions.add(
-              this.agentService.contEduHoursTakenChanged.subscribe(
+              this.agentDataService.contEduHoursTakenChanged.subscribe(
                 (contEduCompletedItem: any) => {
                   this.contEduCompletedItemForm.patchValue({
                     employeeEducationID:
@@ -85,23 +85,27 @@ export class EditHoursTakenComponent implements OnInit, OnDestroy {
     let contEduCompletedItem = this.contEduCompletedItemForm.value;
     contEduCompletedItem.employmentID = this.employmentID;
     contEduCompletedItem.employeeID = this.employeeID;
-    
+
     contEduCompletedItem.userSOEID =
       this.userAcctInfoDataService.userAcctInfo.soeid;
 
     if (this.agentComService.modeContEduHoursTaken === 'INSERT') {
       contEduCompletedItem.ContEducationID = 0;
     }
-    // this.agentDataService.upsertTransferHistItem(transferHistItem).subscribe({
-    //   next: (response) => {
-    //     this.isFormSubmitted = true;
-    //     this.onCloseModal();
-    //   },
-    //   error: (error) => {
-    //     console.error(error);
-    //     // handle the error here
-    //   },
-    // });
+    this.subscriptions.add(
+      this.agentDataService
+        .upsertContEduHoursTaken(contEduCompletedItem)
+        .subscribe({
+          next: (response) => {
+            this.isFormSubmitted = true;
+            this.onCloseModal();
+          },
+          error: (error) => {
+            console.error(error);
+            // handle the error here
+          },
+        })
+    );
   }
 
   onCloseModal() {

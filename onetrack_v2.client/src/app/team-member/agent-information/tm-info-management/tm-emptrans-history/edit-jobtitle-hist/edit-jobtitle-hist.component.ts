@@ -54,8 +54,6 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
         .subscribe(
           (jobTitles: Array<{ value: number; label: string }>) => {
 
-console.log('EMFTEST (app-edit-jobtitle-hist: ngOnInit) - jobTitles => \n', jobTitles);
-
             this.jobTitles = [
               { value: 0, label: 'Select Job Title' },
               ...jobTitles,
