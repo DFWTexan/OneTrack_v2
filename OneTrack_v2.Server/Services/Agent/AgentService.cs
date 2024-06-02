@@ -281,9 +281,11 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-8807-12007].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             };
 
             return result;
@@ -340,9 +342,11 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-8807-85005].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -396,10 +400,11 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-8807-85045].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
-                
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -434,9 +439,11 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-8807-82545].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -612,9 +619,11 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-8807-27711].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -660,9 +669,11 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-8807-27710].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -735,9 +746,11 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-8807-29710].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -795,9 +808,11 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-8807-29715].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -895,9 +910,11 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-8807-79715].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -924,9 +941,11 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-8907-79715].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -954,10 +973,11 @@ namespace OneTrack_v2.Services
             }
             catch (Exception ex)
             {
-                result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-8907-79735].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -985,10 +1005,11 @@ namespace OneTrack_v2.Services
             }
             catch (Exception ex)
             {
-                result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-1907-79715].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -1186,10 +1207,11 @@ namespace OneTrack_v2.Services
             }
             catch (Exception ex)
             {
-                result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-6509-90422].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -1344,20 +1366,22 @@ namespace OneTrack_v2.Services
                         transaction.Rollback();
                         // Log or handle error
                         //_utilityService.ExecuteErrorHandling(); // Placeholder for error handling stored procedure call
-                        result.StatusCode = 500;
-                        result.ErrMessage = ex.Message;
+                        result.Success = false;
+                        result.ObjData = null;
+                        result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-6509-90421].";
 
-                        _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                        _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
                     }
                 }
 
             }
             catch (Exception ex)
             {
-                result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-6509-90121].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -1388,10 +1412,11 @@ namespace OneTrack_v2.Services
             }
             catch (Exception ex)
             {
-                result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-6509-90523].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -1447,10 +1472,11 @@ namespace OneTrack_v2.Services
             }
             catch (Exception ex)
             {
-                result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-6509-49334].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -1528,10 +1554,11 @@ namespace OneTrack_v2.Services
             }
             catch (Exception ex)
             {
-                result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-6509-69493].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -1563,10 +1590,11 @@ namespace OneTrack_v2.Services
             }
             catch (Exception ex)
             {
-                result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-6509-70513].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -1629,10 +1657,11 @@ namespace OneTrack_v2.Services
             }
             catch (Exception ex)
             {
-                result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-6509-73602].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -2096,7 +2125,7 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ObjData = null;
-                result.ErrMessage = "Server Error - Please Contact Support [REF# TM-5900-8988504].";
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-6158-79881].";
 
                 _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID" );
             }
@@ -2131,9 +2160,10 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-6168-09881].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -2191,9 +2221,10 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-6168-98881].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             }
 
             return result;  
