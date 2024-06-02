@@ -1,6 +1,7 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
 using Microsoft.Extensions.Configuration;
+using DataModel.Response;
 
 namespace OneTrack_v2.Services
 {
@@ -39,6 +40,11 @@ namespace OneTrack_v2.Services
             }
         }
 
+        public void LogInfo(string vInfoText, string vInfoSource)
+        {
+            CreateLog("OneTrakV2-Error", vInfoText, null, "INFO");
+        }
+
         public void LogError(string vErrorText, string vErrorSource, object errorObject, string? vUserSOEID = null)
         {
             //using (var connection = new SqlConnection(_connectionString))
@@ -56,16 +62,10 @@ namespace OneTrack_v2.Services
                 //    command.ExecuteNonQuery();
                 //}
             //}
-            CreateLog("OneTrakV2", vErrorText);
+            CreateLog("OneTrakV2-Error", vErrorText, null, "ERROR");
         }
 
-        public void ExecuteErrorHandling()
-        {
-            // Placeholder method to execute usp_GetErrorInfo stored procedure for error handling
-            throw new NotImplementedException();
-        }
-
-        private void CreateLog(string strApplication, string strErrorMsg, string? strAdditionalInfo = null)
+        private void CreateLog(string strApplication, string strMsg, string? strAdditionalInfo = null, string msgType = "ERROR")
         {
             // Build the configuration
             var configuration = new ConfigurationBuilder()
@@ -90,7 +90,7 @@ namespace OneTrack_v2.Services
                     using (TextWriter tw = new StreamWriter(path))
                     {
                         tw.WriteLine(strApplication + " ***** " + System.DateTime.Now.ToString() + Environment.NewLine);
-                        tw.WriteLine("ERROR => " + strErrorMsg + Environment.NewLine);
+                        tw.WriteLine(msgType + " => " + strMsg + Environment.NewLine);
                         tw.WriteLine(strAdditionalInfo + Environment.NewLine);
                         tw.WriteLine(Environment.NewLine);
                     }
@@ -101,7 +101,7 @@ namespace OneTrack_v2.Services
                     using (StreamWriter w = File.AppendText(path))
                     {
                         w.WriteLine(strApplication + " ***** " + System.DateTime.Now.ToString() + Environment.NewLine);
-                        w.WriteLine("ERROR => " + strErrorMsg + Environment.NewLine);
+                        w.WriteLine(msgType + " => " + strMsg + Environment.NewLine);
                         w.WriteLine(strAdditionalInfo + Environment.NewLine);
                         w.WriteLine(Environment.NewLine);
                     }
@@ -115,6 +115,22 @@ namespace OneTrack_v2.Services
 
             }
 
+        }
+
+        public ReturnResult ExceptionReturnResult(Exception vException)
+        {
+            var errors = new List<string> { vException.Message };
+
+            if (vException.InnerException != null)
+                errors.Add(vException.InnerException.Message);
+
+            return new ReturnResult() { StatusCode = 500, Success = false, ObjData = null, Errors = errors};
+        }
+
+        public void ExecuteErrorHandling()
+        {
+            // Placeholder method to execute usp_GetErrorInfo stored procedure for error handling
+            throw new NotImplementedException();
         }
     }
 }

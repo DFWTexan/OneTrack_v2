@@ -2095,12 +2095,13 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# TM-5900-8988504].";
 
                 _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID" );
             }
 
-            return result;  
+            return result;
         }
         public ReturnResult DeleteConEduTaken([FromBody] IputDeleteConEduTaken vInput)
         {

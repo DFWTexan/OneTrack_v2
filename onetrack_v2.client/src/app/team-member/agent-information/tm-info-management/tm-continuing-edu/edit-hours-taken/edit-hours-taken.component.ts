@@ -5,6 +5,7 @@ import {
   AgentComService,
   AgentDataService,
   AppComService,
+  ErrorMessageService,
   UserAcctInfoDataService,
 } from '../../../../../_services';
 import { formatDate } from '@angular/common';
@@ -25,6 +26,7 @@ export class EditHoursTakenComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   constructor(
+    public errorMessageService: ErrorMessageService,
     public agentDataService: AgentDataService,
     public agentComService: AgentComService,
     public appComService: AppComService,
@@ -91,16 +93,14 @@ export class EditHoursTakenComponent implements OnInit, OnDestroy {
     contEduCompletedItem.userSOEID =
       this.userAcctInfoDataService.userAcctInfo.soeid;
 
-      if (this.contEduCompletedItemForm.invalid) {
-        this.contEduCompletedItemForm.setErrors({ invalid: true });
-        return;
-      }
+    if (this.contEduCompletedItemForm.invalid) {
+      this.contEduCompletedItemForm.setErrors({ invalid: true });
+      return;
+    }
 
     if (this.agentComService.modeContEduHoursTaken === 'INSERT') {
       contEduCompletedItem.ContEducationID = 0;
     }
-
-console.log('EMFTES (app-edit-hours-taken: onSubmit) - contEduCompletedItem => \n', contEduCompletedItem);
 
     this.subscriptions.add(
       this.agentDataService
@@ -111,8 +111,16 @@ console.log('EMFTES (app-edit-hours-taken: onSubmit) - contEduCompletedItem => \
             this.onCloseModal();
           },
           error: (error) => {
-            console.error(error);
-            // handle the error here
+            if (error.error && error.error.errMessage) {
+              this.errorMessageService.setErrorMessage(error.error.errMessage);
+            }
+
+            const modalDiv = document.getElementById(
+              'modal-edit-edu-hours-taken'
+            );
+            if (modalDiv != null) {
+              modalDiv.style.display = 'none';
+            }
           },
         })
     );

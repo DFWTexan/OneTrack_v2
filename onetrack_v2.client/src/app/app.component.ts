@@ -11,6 +11,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import {
   AppComService,
   DropdownDataService,
+  ErrorMessageService,
   UserAcctInfoDataService,
 } from './_services';
 import { environment } from './environments/environment';
@@ -28,6 +29,7 @@ export class AppComponent implements OnInit {
   // isCollapsed = true;
 
   constructor(
+    public errorMessageService: ErrorMessageService,
     public appComService: AppComService,
     // private drpdwnDataService: DropdownDataService,
     private userInfoService: UserAcctInfoDataService
