@@ -2098,7 +2098,7 @@ namespace OneTrack_v2.Services
                 result.ObjData = null;
                 result.ErrMessage = "Server Error - Please Contact Support [REF# TM-5900-8988504].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID" );
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID" );
             }
 
             return result;

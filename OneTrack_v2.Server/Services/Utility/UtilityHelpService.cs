@@ -62,7 +62,7 @@ namespace OneTrack_v2.Services
                 //    command.ExecuteNonQuery();
                 //}
             //}
-            CreateLog("OneTrakV2-Error", vErrorText, null, "ERROR");
+            CreateLog("OneTrakV2-Error", vErrorText, vErrorSource, "ERROR");
         }
 
         private void CreateLog(string strApplication, string strMsg, string? strAdditionalInfo = null, string msgType = "ERROR")
@@ -90,8 +90,11 @@ namespace OneTrack_v2.Services
                     using (TextWriter tw = new StreamWriter(path))
                     {
                         tw.WriteLine(strApplication + " ***** " + System.DateTime.Now.ToString() + Environment.NewLine);
-                        tw.WriteLine(msgType + " => " + strMsg + Environment.NewLine);
-                        tw.WriteLine(strAdditionalInfo + Environment.NewLine);
+                        //tw.WriteLine(msgType == "ERROR" ? strAdditionalInfo : "INFO" + " => " + strMsg + Environment.NewLine);
+                        string strLog = string.Format("{0} => {1}", msgType == "ERROR" ? strAdditionalInfo : "INFO", strMsg);
+                        
+                        tw.WriteLine(strLog + Environment.NewLine);
+                        //tw.WriteLine(strAdditionalInfo + Environment.NewLine);
                         tw.WriteLine(Environment.NewLine);
                     }
 
@@ -101,8 +104,11 @@ namespace OneTrack_v2.Services
                     using (StreamWriter w = File.AppendText(path))
                     {
                         w.WriteLine(strApplication + " ***** " + System.DateTime.Now.ToString() + Environment.NewLine);
-                        w.WriteLine(msgType + " => " + strMsg + Environment.NewLine);
-                        w.WriteLine(strAdditionalInfo + Environment.NewLine);
+                        //w.WriteLine(msgType == "ERROR" ? strAdditionalInfo : "INFO" + " => " + strMsg + Environment.NewLine);
+                        string strLog = string.Format("{0} => {1}", msgType == "ERROR" ? strAdditionalInfo : "INFO", strMsg);
+
+                        w.WriteLine(strLog + Environment.NewLine);
+                        //w.WriteLine(strAdditionalInfo + Environment.NewLine);
                         w.WriteLine(Environment.NewLine);
                     }
                 }
