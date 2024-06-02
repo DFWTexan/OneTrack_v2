@@ -90,6 +90,7 @@ namespace OneTrak_v2.Services
                 retResult.Success = false;
                 retResult.StatusCode = 500;
                 retResult.ErrMessage = ex.Message;
+
             }
 
             return retResult;

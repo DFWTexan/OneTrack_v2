@@ -3,6 +3,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using OneTrack_v2.DbData;
 using OneTrack_v2.DbData.Models;
+using OneTrack_v2.Services;
 using OneTrak_v2.DataModel;
 using System.Linq;
 
@@ -11,10 +12,12 @@ namespace OneTrak_v2.Services
     public class TicklerMgmtService : ITicklerMgmtService
     {
         private readonly AppDataContext _db;
+        private readonly IUtilityHelpService _utilityService;
 
-        public TicklerMgmtService(AppDataContext db)
+        public TicklerMgmtService(AppDataContext db, IUtilityHelpService utilityHelpService)
         {
             _db = db;
+            _utilityService = utilityHelpService;
         }
 
         public ReturnResult GetStockTickler()
@@ -42,14 +45,16 @@ namespace OneTrak_v2.Services
                 result.ObjData = resultStockTicklers;
                 result.StatusCode = 200;
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             };
+
+            return result;
         }
 
         public ReturnResult GetTicklerInfo(int vTicklerID = 0, int vLicenseTechID = 0, int vEmploymentID = 0)
@@ -99,14 +104,16 @@ namespace OneTrak_v2.Services
                 result.ObjData = resultTicklers;
                 result.StatusCode = 200;
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
+
+            return result;
         }
 
         public ReturnResult GetLicenseTech(int vLicenseTechID = 0, string? vSOEID = null)
@@ -139,14 +146,16 @@ namespace OneTrak_v2.Services
                 result.ObjData = resultLicTechs;
                 result.StatusCode = 200;
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
+
+            return result;
         }
     }
 }

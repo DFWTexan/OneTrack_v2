@@ -1,14 +1,16 @@
 ﻿using DataModel.Response;
 using OneTrack_v2.DbData;
 using OneTrack_v2.DbData.Models;
+using OneTrack_v2.Services;
 
 namespace OneTrak_v2.Services
 {
     public class DashboardService : IDashboardService
     {
         private readonly AppDataContext _db;
+        private readonly IUtilityHelpService _utilityService;
 
-        public DashboardService(AppDataContext db) { _db = db;}
+        public DashboardService(AppDataContext db, IUtilityHelpService utilityHelpService) { _db = db; _utilityService = utilityHelpService; }
 
         public ReturnResult GetAdBankerImportStatus()
         {
@@ -28,10 +30,12 @@ namespace OneTrak_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
-        }   
+        }
         public ReturnResult GetAdBankerImportData(DateTime vStartDate, DateTime vEndDate, bool? vImportStatus = null)
         {
             var result = new ReturnResult();
@@ -46,7 +50,7 @@ namespace OneTrak_v2.Services
                     query = query.Where(x => x.IsImportComplete == vImportStatus);
                 }
 
-                var adBankerImportData = query.Select(x => new 
+                var adBankerImportData = query.Select(x => new
                 {
                     x.EmployeeId,
                     x.CourseState,
@@ -67,6 +71,8 @@ namespace OneTrak_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -109,6 +115,8 @@ namespace OneTrak_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -145,6 +153,8 @@ namespace OneTrak_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;

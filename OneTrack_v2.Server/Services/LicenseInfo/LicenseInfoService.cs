@@ -2,16 +2,19 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using OneTrack_v2.DbData;
+using OneTrack_v2.Services;
 
 namespace OneTrak_v2.Services
 {
     public class LicenseInfoService : ILicenseInfoService
     {
         private readonly AppDataContext _db;
+        private readonly IUtilityHelpService _utilityService;
 
-        public LicenseInfoService(AppDataContext db)
+        public LicenseInfoService(AppDataContext db, IUtilityHelpService utilityHelpService)
         {
             _db = db;
+			_utilityService = utilityHelpService;
         }
 
         public ReturnResult GetIncentiveInfo(int vEmployeelicenseID)
@@ -248,6 +251,8 @@ namespace OneTrak_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -278,6 +283,8 @@ namespace OneTrak_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -340,6 +347,8 @@ namespace OneTrak_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -399,6 +408,8 @@ namespace OneTrak_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -430,6 +441,8 @@ namespace OneTrak_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -472,6 +485,8 @@ namespace OneTrak_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;

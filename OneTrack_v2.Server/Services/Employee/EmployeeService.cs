@@ -13,15 +13,17 @@ namespace OneTrack_v2.Services
     public class EmployeeService : IEmployeeService
     {
         private readonly AppDataContext _db;
+        private readonly IUtilityHelpService _utilityService;
         //private readonly UtilityService.Utility _utility;
 
         //private readonly IConfiguration _config;
         //private readonly IWebHostEnvironment _env;
         //private readonly ILogger _logger;
 
-        public EmployeeService(AppDataContext db)
+        public EmployeeService(AppDataContext db, IUtilityHelpService utilityHelpService)
         {
             _db = db;
+            _utilityService = utilityHelpService;
         }
 
         /// <summary>
@@ -236,6 +238,7 @@ namespace OneTrack_v2.Services
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
                 //_logger.LogError(ex, "Error in EmployeeService.SearchEmployee()");
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
             return result;
         }

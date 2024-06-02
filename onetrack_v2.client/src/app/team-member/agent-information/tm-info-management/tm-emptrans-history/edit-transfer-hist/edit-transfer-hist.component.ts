@@ -91,9 +91,15 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
     transferHistItem.userSOEID =
       this.userAcctInfoDataService.userAcctInfo.soeid;
 
+    if (this.transferHistoryForm.invalid) {
+      this.transferHistoryForm.setErrors({ invalid: true });
+      return;
+    }
+
     if (this.agentComService.modeTransferHist === 'INSERT') {
       transferHistItem.transferHistoryID = 0;
     }
+
     this.subscriptions.add(
       this.agentDataService.upsertTransferHistItem(transferHistItem).subscribe({
         next: (response) => {

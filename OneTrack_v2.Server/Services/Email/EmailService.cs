@@ -95,14 +95,16 @@ namespace OneTrack_v2.Services
                 result.Success = true;
                 result.StatusCode = 200;
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
+
+            return result;
         }
     }
 }

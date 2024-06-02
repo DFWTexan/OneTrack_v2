@@ -282,6 +282,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             };
 
             return result;
@@ -339,6 +341,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -388,14 +392,17 @@ namespace OneTrack_v2.Services
                 result.ObjData = appointments;
                 result.StatusCode = 200;
 
-                return result;
             }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
-                return result;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                
             }
+
+            return result;
         }
 
         /// <summary>
@@ -428,6 +435,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -604,6 +613,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -650,6 +661,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -723,6 +736,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -781,6 +796,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -879,6 +896,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -906,6 +925,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -935,6 +956,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -964,6 +987,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -994,6 +1019,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
             return result;
         }
@@ -1023,6 +1050,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
             return result;
         }
@@ -1159,6 +1188,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -1315,6 +1346,8 @@ namespace OneTrack_v2.Services
                         //_utilityService.ExecuteErrorHandling(); // Placeholder for error handling stored procedure call
                         result.StatusCode = 500;
                         result.ErrMessage = ex.Message;
+
+                        _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
                     }
                 }
 
@@ -1323,6 +1356,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -1355,6 +1390,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -1412,6 +1449,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -1491,6 +1530,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -1524,6 +1565,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -1588,6 +1631,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -1621,6 +1666,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -1686,6 +1733,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -1720,6 +1769,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -1778,6 +1829,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -1811,6 +1864,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -1892,6 +1947,8 @@ namespace OneTrack_v2.Services
                             //_utilityService.ExecuteErrorHandling(); // Placeholder for error handling stored procedure call
                             result.StatusCode = 500;
                             result.ErrMessage = ex.Message;
+
+                            _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
                         }
                     }
 
@@ -1941,6 +1998,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
             return result;
         }
@@ -1974,13 +2033,14 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;  
         }
         public ReturnResult UpsertConEduTaken([FromBody] IputUpsertConEduTaken vInput)
         {
-
             var result = new ReturnResult();
             try
             {
@@ -2036,6 +2096,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID" );
             }
 
             return result;  
@@ -2069,6 +2131,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -2127,6 +2191,8 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
             return result;  

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using System.Data;
+using Microsoft.Extensions.Configuration;
 
 namespace OneTrack_v2.Services
 {
@@ -38,10 +39,82 @@ namespace OneTrack_v2.Services
             }
         }
 
+        public void LogError(string vErrorText, string vErrorSource, object errorObject, string? vUserSOEID = null)
+        {
+            //using (var connection = new SqlConnection(_connectionString))
+            //{
+            //    //using (var command = new SqlCommand("[uspErrorLog]", connection))
+                //{
+                //    command.CommandType = CommandType.StoredProcedure;
+
+                //    command.Parameters.Add("@ErrorText", SqlDbType.VarChar, 500).Value = vErrorText;
+                //    command.Parameters.Add("@ErrorSource", SqlDbType.VarChar, 500).Value = vErrorSource;
+                //    command.Parameters.Add("@ErrorObject", SqlDbType.VarChar, 500).Value = errorObject;
+                //    command.Parameters.Add("@UserSOEID", SqlDbType.VarChar, 50).Value = vUserSOEID;
+
+                //    connection.Open();
+                //    command.ExecuteNonQuery();
+                //}
+            //}
+            CreateLog("OneTrakV2", vErrorText);
+        }
+
         public void ExecuteErrorHandling()
         {
             // Placeholder method to execute usp_GetErrorInfo stored procedure for error handling
             throw new NotImplementedException();
+        }
+
+        private void CreateLog(string strApplication, string strErrorMsg, string? strAdditionalInfo = null)
+        {
+            // Build the configuration
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            // Get the environment
+            var environment = configuration["Environment"];
+
+            // Get the OneTrakV2LogPath for the current environment
+            var oneTrakV2LogPath = configuration[$"EnvironmentSettings:{environment}:OneTrakV2LogPath"];
+
+            try
+            {
+                string path = oneTrakV2LogPath + strApplication + "_" + System.DateTime.Today.ToString("yyyy-MM-dd") + ".log";
+
+                if (!File.Exists(path))
+                {
+                    File.Create(path).Dispose();
+
+                    using (TextWriter tw = new StreamWriter(path))
+                    {
+                        tw.WriteLine(strApplication + " ***** " + System.DateTime.Now.ToString() + Environment.NewLine);
+                        tw.WriteLine("ERROR => " + strErrorMsg + Environment.NewLine);
+                        tw.WriteLine(strAdditionalInfo + Environment.NewLine);
+                        tw.WriteLine(Environment.NewLine);
+                    }
+
+                }
+                else if (File.Exists(path))
+                {
+                    using (StreamWriter w = File.AppendText(path))
+                    {
+                        w.WriteLine(strApplication + " ***** " + System.DateTime.Now.ToString() + Environment.NewLine);
+                        w.WriteLine("ERROR => " + strErrorMsg + Environment.NewLine);
+                        w.WriteLine(strAdditionalInfo + Environment.NewLine);
+                        w.WriteLine(Environment.NewLine);
+                    }
+                }
+
+            }
+
+            catch (Exception myex)
+            {
+                //SendEmail("wcfOneTrak Error", myex.Message.ToString() + Environment.NewLine + myex.StackTrace.ToString() + Environment.NewLine + myex.TargetSite.Name.ToString());
+
+            }
+
         }
     }
 }

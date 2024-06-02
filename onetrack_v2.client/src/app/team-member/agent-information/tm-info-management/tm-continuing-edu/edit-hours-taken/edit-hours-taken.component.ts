@@ -18,6 +18,7 @@ import { formatDate } from '@angular/common';
 export class EditHoursTakenComponent implements OnInit, OnDestroy {
   isFormSubmitted: boolean = false;
   contEduCompletedItemForm!: FormGroup;
+  contEducationID: number = 0;
   @Input() employmentID: number = 0;
   @Input() employeeID: number = 0;
 
@@ -47,6 +48,7 @@ export class EditHoursTakenComponent implements OnInit, OnDestroy {
             this.subscriptions.add(
               this.agentDataService.contEduHoursTakenChanged.subscribe(
                 (contEduCompletedItem: any) => {
+                  this.contEducationID = contEduCompletedItem.contEducationID;
                   this.contEduCompletedItemForm.patchValue({
                     employeeEducationID:
                       contEduCompletedItem.employeeEducationID,
@@ -85,13 +87,21 @@ export class EditHoursTakenComponent implements OnInit, OnDestroy {
     let contEduCompletedItem = this.contEduCompletedItemForm.value;
     contEduCompletedItem.employmentID = this.employmentID;
     contEduCompletedItem.employeeID = this.employeeID;
-
+    contEduCompletedItem.contEducationID = this.contEducationID;
     contEduCompletedItem.userSOEID =
       this.userAcctInfoDataService.userAcctInfo.soeid;
+
+      if (this.contEduCompletedItemForm.invalid) {
+        this.contEduCompletedItemForm.setErrors({ invalid: true });
+        return;
+      }
 
     if (this.agentComService.modeContEduHoursTaken === 'INSERT') {
       contEduCompletedItem.ContEducationID = 0;
     }
+
+console.log('EMFTES (app-edit-hours-taken: onSubmit) - contEduCompletedItem => \n', contEduCompletedItem);
+
     this.subscriptions.add(
       this.agentDataService
         .upsertContEduHoursTaken(contEduCompletedItem)
