@@ -11,6 +11,7 @@ import {
   AgentDataService,
   ConstantsDataService,
   DropdownDataService,
+  ErrorMessageService,
   UserAcctInfoDataService,
 } from '../../_services';
 
@@ -30,6 +31,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   constructor(
+    public errorMessageService: ErrorMessageService,
     private fb: FormBuilder,
     private conService: ConstantsDataService,
     private drpdwnDataService: DropdownDataService,
@@ -154,8 +156,9 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
         // );
       },
       error: (error) => {
-        console.error(error);
-        // handle the error here
+        if (error.error && error.error.errMessage) {
+          this.errorMessageService.setErrorMessage(error.error.errMessage);
+        }
       },
     });
   }

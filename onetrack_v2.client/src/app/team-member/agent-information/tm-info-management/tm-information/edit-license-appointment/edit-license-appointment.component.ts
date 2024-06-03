@@ -2,7 +2,7 @@ import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { AgentDataService } from '../../../../../_services';
+import { AgentDataService, ErrorMessageService } from '../../../../../_services';
 import { LicenseAppointment } from '../../../../../_Models';
 
 @Component({
@@ -29,7 +29,9 @@ export class EditLicenseAppointmentComponent implements OnInit, OnDestroy {
   licenseAppointment: LicenseAppointment = {} as LicenseAppointment;
   private subscriptions = new Subscription();
 
-  constructor(private agentService: AgentDataService) {}
+  constructor(
+    public errorMessageService: ErrorMessageService,
+    private agentService: AgentDataService) {}
 
   ngOnInit(): void {
     this.subscriptions.add(
@@ -61,6 +63,11 @@ export class EditLicenseAppointmentComponent implements OnInit, OnDestroy {
       'EMFTest - (app-edit-license-appointment) onSubmit => \n',
       this.form.value
     );
+
+    // ERROR: TBD
+    // if (error.error && error.error.errMessage) {
+    //   this.errorMessageService.setErrorMessage(error.error.errMessage);
+    // }
   }
 
   onCancel() {

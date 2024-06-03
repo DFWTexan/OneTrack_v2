@@ -12,6 +12,7 @@ import {
   AgentComService,
   AgentDataService,
   AppComService,
+  ErrorMessageService,
   UserAcctInfoDataService,
 } from '../../../../../_services';
 
@@ -31,6 +32,7 @@ export class EditCorequirementHistComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   constructor(
+    private errorMessageService: ErrorMessageService,
     private fb: FormBuilder,
     public agentDataService: AgentDataService,
     public agentComService: AgentComService,
@@ -160,8 +162,9 @@ export class EditCorequirementHistComponent implements OnInit, OnDestroy {
             this.onCloseModal();
           },
           error: (error) => {
-            console.error(error);
-            // handle the error here
+            if (error.error && error.error.errMessage) {
+              this.errorMessageService.setErrorMessage(error.error.errMessage);
+            }
           },
         })
     );

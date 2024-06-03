@@ -7,6 +7,7 @@ import {
   AgentComService,
   AgentDataService,
   AppComService,
+  ErrorMessageService,
   MiscDataService,
   UserAcctInfoDataService,
 } from '../../../../../_services';
@@ -27,6 +28,7 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   constructor(
+    private errorMessageService: ErrorMessageService,
     private miscDataService: MiscDataService,
     public agentDataService: AgentDataService,
     public agentComService: AgentComService,
@@ -148,8 +150,9 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
           this.closeModal();
         },
         error: (error) => {
-          console.error(error);
-          // handle the error here
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+          }
         },
       })
     );

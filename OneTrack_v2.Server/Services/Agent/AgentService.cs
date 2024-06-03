@@ -2096,15 +2096,20 @@ namespace OneTrack_v2.Services
                 }
                 else
                 {
+                    var contEducationID = _db.EmployeeContEducations
+                                        .Where(q => q.EmployeeEducationId == vInput.EmployeeEducationID)
+                                        .Select(q => q.ContEducationId)
+                                        .FirstOrDefault();
+
                     // UPDATE Continuing Education Taken
                     using (SqlConnection conn = new SqlConnection(_connectionString))
                     {
-                        using (SqlCommand cmd = new SqlCommand("uspContinuingEducationTakenUpdate", conn))
+                        using (SqlCommand cmd = new SqlCommand("uspAgentContEducationTakenUpdate", conn))
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
 
                             cmd.Parameters.Add(new SqlParameter("@EmployeeEducationID", vInput.EmployeeEducationID));
-                            cmd.Parameters.Add(new SqlParameter("@ContEducationID", vInput.ContEducationID));
+                            cmd.Parameters.Add(new SqlParameter("@ContEducationID", contEducationID));
                             cmd.Parameters.Add(new SqlParameter("@ContEducationTakenDate", vInput.ContEducationTakenDate));
                             cmd.Parameters.Add(new SqlParameter("@CreditHoursTaken", vInput.CreditHoursTaken));
                             cmd.Parameters.Add(new SqlParameter("@AdditionalNotes", vInput.AdditionalNotes));

@@ -20,13 +20,14 @@ export class EditHoursTakenComponent implements OnInit, OnDestroy {
   isFormSubmitted: boolean = false;
   contEduCompletedItemForm!: FormGroup;
   contEducationID: number = 0;
+  employeeEducationID: number = 0;
   @Input() employmentID: number = 0;
   @Input() employeeID: number = 0;
 
   private subscriptions = new Subscription();
 
   constructor(
-    public errorMessageService: ErrorMessageService,
+    private errorMessageService: ErrorMessageService,
     public agentDataService: AgentDataService,
     public agentComService: AgentComService,
     public appComService: AppComService,
@@ -51,6 +52,8 @@ export class EditHoursTakenComponent implements OnInit, OnDestroy {
               this.agentDataService.contEduHoursTakenChanged.subscribe(
                 (contEduCompletedItem: any) => {
                   this.contEducationID = contEduCompletedItem.contEducationID;
+                  this.employeeEducationID =
+                    contEduCompletedItem.employeeEducationID;
                   this.contEduCompletedItemForm.patchValue({
                     employeeEducationID:
                       contEduCompletedItem.employeeEducationID,
@@ -90,6 +93,7 @@ export class EditHoursTakenComponent implements OnInit, OnDestroy {
     contEduCompletedItem.employmentID = this.employmentID;
     contEduCompletedItem.employeeID = this.employeeID;
     contEduCompletedItem.contEducationID = this.contEducationID;
+    contEduCompletedItem.employeeEducationID = this.employeeEducationID;
     contEduCompletedItem.userSOEID =
       this.userAcctInfoDataService.userAcctInfo.soeid;
 
@@ -99,7 +103,7 @@ export class EditHoursTakenComponent implements OnInit, OnDestroy {
     }
 
     if (this.agentComService.modeContEduHoursTaken === 'INSERT') {
-      contEduCompletedItem.ContEducationID = 0;
+      contEduCompletedItem.employeeEducationID = 0;
     }
 
     this.subscriptions.add(

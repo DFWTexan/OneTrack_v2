@@ -6,6 +6,7 @@ import {
   AgentDataService,
   ConstantsDataService,
   DropdownDataService,
+  ErrorMessageService,
 } from '../../../../../_services';
 import { AgentInfo } from '../../../../../_Models';
 
@@ -35,6 +36,7 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   constructor(
+    public errorMessageService: ErrorMessageService,
     private conService: ConstantsDataService,
     private agentService: AgentDataService,
     private drpdwnDataService: DropdownDataService
@@ -67,6 +69,11 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     console.log(this.form.value);
+
+    // ERROR: TBF
+    // if (error.error && error.error.errMessage) {
+    //   this.errorMessageService.setErrorMessage(error.error.errMessage);
+    // }
   }
 
   onCloseModal() {

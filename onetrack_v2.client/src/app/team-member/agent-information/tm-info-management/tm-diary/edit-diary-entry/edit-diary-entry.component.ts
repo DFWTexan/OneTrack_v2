@@ -1,7 +1,7 @@
 import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { AgentComService, AgentDataService } from '../../../../../_services';
+import { AgentComService, AgentDataService, ErrorMessageService } from '../../../../../_services';
 import { formatDate } from '@angular/common';
 
 @Component({
@@ -15,6 +15,7 @@ export class EditDiaryEntryComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   constructor(
+    private errorMessageService: ErrorMessageService,
     public agentService: AgentDataService,
     public agentComService: AgentComService
   ) {}
@@ -57,6 +58,12 @@ export class EditDiaryEntryComponent implements OnInit, OnDestroy {
       })
     );
   }
+
+onSubmit() {
+  // if (error.error && error.error.errMessage) {
+  //   this.errorMessageService.setErrorMessage(error.error.errMessage);
+  // }
+}
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();

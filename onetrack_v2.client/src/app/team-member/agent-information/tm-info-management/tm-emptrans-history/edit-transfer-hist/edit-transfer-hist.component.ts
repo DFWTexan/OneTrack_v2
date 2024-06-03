@@ -9,6 +9,7 @@ import {
   AgentDataService,
   AppComService,
   ConstantsDataService,
+  ErrorMessageService,
   UserAcctInfoDataService,
 } from '../../../../../_services';
 
@@ -30,6 +31,7 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   constructor(
+    public errorMessageService: ErrorMessageService,
     private conService: ConstantsDataService,
     public agentDataService: AgentDataService,
     public agentComService: AgentComService,
@@ -107,8 +109,9 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
           this.onCloseModal();
         },
         error: (error) => {
-          console.error(error);
-          // handle the error here
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+          }
         },
       })
     );

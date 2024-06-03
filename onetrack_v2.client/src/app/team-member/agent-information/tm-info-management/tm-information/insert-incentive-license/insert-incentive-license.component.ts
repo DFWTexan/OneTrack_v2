@@ -6,6 +6,7 @@ import {
   AgentDataService,
   ConstantsDataService,
   DropdownDataService,
+  ErrorMessageService,
 } from '../../../../../_services';
 
 @Component({
@@ -24,6 +25,7 @@ export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   constructor(
+    public errorMessageService: ErrorMessageService,
     private fb: FormBuilder,
     private conService: ConstantsDataService,
     private drpdwnDataService: DropdownDataService,
@@ -68,6 +70,11 @@ export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
     // } else {
     //   // Handle the invalid form case
     //   console.error('Form is not valid!');
+    // }
+
+    // ERROR: TBD...
+    // if (error.error && error.error.errMessage) {
+    //   this.errorMessageService.setErrorMessage(error.error.errMessage);
     // }
   }
 

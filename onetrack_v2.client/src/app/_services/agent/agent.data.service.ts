@@ -20,6 +20,7 @@ import {
   TransferHistory,
 } from '../../_Models';
 import { AgentComService } from './agentInfo.com.service';
+import { ErrorMessageService } from '../error/error.message.service';
 
 @Injectable({
   providedIn: 'root',
@@ -70,7 +71,8 @@ export class AgentDataService {
 
   constructor(
     private http: HttpClient,
-    private agentComService: AgentComService
+    private agentComService: AgentComService,
+    public errorMessageService: ErrorMessageService
   ) {
     this.agentLicenseAppointments = [];
   }
@@ -581,6 +583,7 @@ export class AgentDataService {
           if (response.success && response.statusCode === 200) {
             return this.fetchAgentInformation(this.agentInformation.employeeID);
           } else {
+            this.errorMessageService.setErrorMessage(response.errMessage);
             throw new Error(response.errMessage || 'Unknown error');
           }
         }),
@@ -635,6 +638,7 @@ export class AgentDataService {
           if (response.success && response.statusCode === 200) {
             return this.fetchAgentInformation(this.agentInformation.employeeID);
           } else {
+            this.errorMessageService.setErrorMessage(response.errMessage);
             throw new Error(response.errMessage || 'Unknown error');
           }
         }),
@@ -672,7 +676,7 @@ export class AgentDataService {
       );
   }
 
-  upsertDiaryEntry(diaryEntry: any): Observable<any> {  
+  upsertDiaryEntry(diaryEntry: any): Observable<any> {
     this.apiUrl = environment.apiUrl + 'Agent/UpsertDiaryItem';
 
     return this.http
