@@ -2239,6 +2239,42 @@ namespace OneTrack_v2.Services
 
             return result;  
         }
+        public ReturnResult DeleteDiaryItem([FromBody] IputDeleteDiaryItem vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspDiaryDelete", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@DiaryID", vInput.DiaryID));
+                        cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "Diary Item Deleted Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-6168-098591].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
+            }
+
+            return result;
+        }
         #endregion
 
         #region Private Methods

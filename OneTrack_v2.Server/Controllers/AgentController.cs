@@ -284,6 +284,14 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> DeleteDiaryItem([FromBody] IputDeleteDiaryItem input)
+        {
+            var result = await Task.Run(() => _agentService.DeleteDiaryItem(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
         #endregion
     }
 }

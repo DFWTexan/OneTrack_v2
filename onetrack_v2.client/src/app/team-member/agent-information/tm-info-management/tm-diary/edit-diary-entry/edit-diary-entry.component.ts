@@ -1,10 +1,11 @@
-import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
+import { Component, Injectable, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import {
   AgentComService,
   AgentDataService,
   ErrorMessageService,
+  UserAcctInfoDataService,
 } from '../../../../../_services';
 import { formatDate } from '@angular/common';
 
@@ -14,14 +15,19 @@ import { formatDate } from '@angular/common';
   styleUrl: './edit-diary-entry.component.css',
 })
 export class EditDiaryEntryComponent implements OnInit, OnDestroy {
+  isFormSubmitted: boolean = false;
   diaryItemForm!: FormGroup;
+  diaryID: number = 0;
+  @Input() employmentID: number = 0;
+  @Input() employeeID: number = 0;
 
   private subscriptions = new Subscription();
 
   constructor(
     private errorMessageService: ErrorMessageService,
-    public agentService: AgentDataService,
-    public agentComService: AgentComService
+    public agentDataService: AgentDataService,
+    public agentComService: AgentComService,
+    private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {
@@ -37,61 +43,98 @@ export class EditDiaryEntryComponent implements OnInit, OnDestroy {
       this.agentComService.modeDiaryChanged.subscribe((mode: string) => {
         if (mode === 'EDIT') {
           this.subscriptions.add(
-            this.agentService.diaryEntryChanged.subscribe((diaryItem: any) => {
-              this.diaryItemForm.patchValue({
-                diaryID: diaryItem.diaryID,
-                soeid: diaryItem.soeid,
-                diaryName: diaryItem.diaryName,
-                diaryDate: formatDate(
-                  diaryItem.diaryDate,
-                  'yyyy-MM-dd',
-                  'en-US'
-                ),
-                notes: diaryItem.notes,
-              });
-            })
+            this.agentDataService.diaryEntryChanged.subscribe(
+              (diaryItem: any) => {
+                this.diaryID = diaryItem.diaryID;
+                this.diaryItemForm.patchValue({
+                  diaryID: diaryItem.diaryID,
+                  soeid: diaryItem.soeid,
+                  diaryName: diaryItem.diaryName,
+                  diaryDate: formatDate(
+                    diaryItem.diaryDate,
+                    'yyyy-MM-dd',
+                    'en-US'
+                  ),
+                  notes: diaryItem.notes,
+                });
+              }
+            )
           );
         } else {
           this.diaryItemForm.reset();
           this.diaryItemForm.patchValue({
-            // soeid: this.agentService.agentInfo.soeid,
+            soeid: this.userAcctInfoDataService.userAcctInfo.soeid,
             // diaryName: this.agentService.agentInfo.agentName,
-            diaryDate: formatDate(new Date(), 'yyyy-MM-dd', 'en-US'),
+            // diaryDate: formatDate(new Date(), 'yyyy-MM-dd', 'en-US'),
+            diaryDate: formatDate(new Date(), 'MM/dd/yyyy - h:mm a', 'en-US'),
           });
         }
       })
     );
   }
 
-  onSubmit() {
-    // if (error.error && error.error.errMessage) {
-    //   this.errorMessageService.setErrorMessage(error.error.errMessage);
-    // }
+  onSubmit(): void {
+    let diaryItem = this.diaryItemForm.value;
+    diaryItem.diaryID = this.diaryID;
+    diaryItem.employmentID = this.employmentID;
+    diaryItem.employeeID = this.employeeID;
+    diaryItem.diaryDate = new Date(diaryItem.diaryDate);
+    diaryItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+    
+    if (this.diaryItemForm.invalid) {
+      this.diaryItemForm.setErrors({ invalid: true });
+      return;
+    }
+
+    if (this.agentComService.modeContEduHoursTaken === 'INSERT') {
+      diaryItem.diaryID = 0;
+    }
+
+    this.subscriptions.add(
+      this.agentDataService.upsertDiaryEntry(diaryItem).subscribe({
+        next: (response) => {
+          this.isFormSubmitted = true;
+          this.onCloseModal();
+        },
+        error: (error) => {
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+          }
+
+          const modalDiv = document.getElementById(
+            'modal-edit-edu-hours-taken'
+          );
+          if (modalDiv != null) {
+            modalDiv.style.display = 'none';
+          }
+        },
+      })
+    );
   }
 
   onCloseModal() {
-    const modalDiv = document.getElementById('modal-edit-diary-entry');
-    if (modalDiv != null) {
-      modalDiv.style.display = 'none';
-    }
-
-    // if (this.contEduCompletedItemForm.dirty && !this.isFormSubmitted) {
-    //   if (
-    //     confirm('You have unsaved changes. Are you sure you want to close?')
-    //   ) {
-    //     const modalDiv = document.getElementById('modal-edit-diary-entry');
-    //     if (modalDiv != null) {
-    //       modalDiv.style.display = 'none';
-    //     }
-    //     this.contEduCompletedItemForm.reset();
-    //   }
-    // } else {
-    //   this.isFormSubmitted = false;
-    //   const modalDiv = document.getElementById('modal-edit-diary-entry');
-    //   if (modalDiv != null) {
-    //     modalDiv.style.display = 'none';
-    //   }
+    // const modalDiv = document.getElementById('modal-edit-diary-entry');
+    // if (modalDiv != null) {
+    //   modalDiv.style.display = 'none';
     // }
+
+    if (this.diaryItemForm.dirty && !this.isFormSubmitted) {
+      if (
+        confirm('You have unsaved changes. Are you sure you want to close?')
+      ) {
+        const modalDiv = document.getElementById('modal-edit-diary-entry');
+        if (modalDiv != null) {
+          modalDiv.style.display = 'none';
+        }
+        this.diaryItemForm.reset();
+      }
+    } else {
+      this.isFormSubmitted = false;
+      const modalDiv = document.getElementById('modal-edit-diary-entry');
+      if (modalDiv != null) {
+        modalDiv.style.display = 'none';
+      }
+    }
   }
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();

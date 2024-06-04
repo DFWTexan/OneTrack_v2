@@ -626,7 +626,10 @@ export class AgentDataService {
   upsertContEduHoursTaken(contEduHoursTaken: any): Observable<any> {
     this.apiUrl = environment.apiUrl + 'Agent/UpsertConEduTaken';
 
-console.log('EMFTEST (upsertContEduHoursTaken) - contEduHoursTaken => \n', contEduHoursTaken);
+    console.log(
+      'EMFTEST (upsertContEduHoursTaken) - contEduHoursTaken => \n',
+      contEduHoursTaken
+    );
 
     return this.http
       .post<{
@@ -680,6 +683,32 @@ console.log('EMFTEST (upsertContEduHoursTaken) - contEduHoursTaken => \n', contE
 
   upsertDiaryEntry(diaryEntry: any): Observable<any> {
     this.apiUrl = environment.apiUrl + 'Agent/UpsertDiaryItem';
+
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, diaryEntry)
+      .pipe(
+        switchMap((response) => {
+          if (response.success && response.statusCode === 200) {
+            return this.fetchAgentInformation(this.agentInformation.employeeID);
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        }),
+        map((agentInfo) => {
+          this.agentInformation = agentInfo;
+          this.agentInfoChanged.next(this.agentInformation);
+          return this.agentInformation;
+        })
+      );
+  }
+
+  deleteDiaryEntry(diaryEntry: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'Agent/DeleteDiaryItem';
 
     return this.http
       .post<{

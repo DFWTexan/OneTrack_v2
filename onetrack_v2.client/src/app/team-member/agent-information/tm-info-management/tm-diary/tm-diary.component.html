@@ -83,7 +83,14 @@
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
                 <button class="icon-edit-delete-button" type="button">
-                  <span class="material-symbols-outlined"> delete </span>
+                  <span class="material-symbols-outlined" (click)="
+                  onOpenConfirmDialog(
+                    'Diary Item ' +
+                    diary.diaryID +
+                      '. Do you want to proceed?',
+                      diary
+                  )
+                "> delete </span>
                 </button>
               </div>
             </td>
@@ -123,7 +130,10 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-diary-entry></app-edit-diary-entry>
+        <app-edit-diary-entry
+          [employeeID]="agentDataService.agentInformation.employeeID"
+          [employmentID]="agentDataService.agentInformation.employmentID"
+        ></app-edit-diary-entry>
       </div>
     </div>
   </div>
