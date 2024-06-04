@@ -2075,6 +2075,11 @@ namespace OneTrack_v2.Services
             {
                 if (vInput.EmployeeEducationID == 0)
                 {
+                    var contEducationID = _db.EmployeeContEducations
+                                        .Where(q => q.ContEducationRequirementId == vInput.ContEducationRequirementID)
+                                        .Select(q => q.ContEducationId)
+                                        .FirstOrDefault();  
+
                     // INSERT Continuing Education Taken
                     using (SqlConnection conn = new SqlConnection(_connectionString))
                     {
@@ -2082,7 +2087,7 @@ namespace OneTrack_v2.Services
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
 
-                            cmd.Parameters.Add(new SqlParameter("@ContEducationID", vInput.ContEducationID));
+                            cmd.Parameters.Add(new SqlParameter("@ContEducationID", contEducationID));
                             cmd.Parameters.Add(new SqlParameter("@ContEducationRequirementID", vInput.ContEducationRequirementID));
                             cmd.Parameters.Add(new SqlParameter("@ContEducationTakenDate", vInput.ContEducationTakenDate));
                             cmd.Parameters.Add(new SqlParameter("@CreditHoursTaken", vInput.CreditHoursTaken));

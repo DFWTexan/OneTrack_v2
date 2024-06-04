@@ -28,7 +28,7 @@
         class="btn btn-success"
         type="button"
         (click)="
-          agentDataService.storeContEduHoursTaken('INSERT', null);
+          agentDataService.storeDiaryEntry('INSERT', null);
           modalService.open('modal-edit-diary-entry')
         "
       >
@@ -112,7 +112,7 @@
 <modal id="modal-edit-diary-entry">
   <div class="modal-header">
     <h1 class="modal-title">
-      <strong>{{ agentComService.modeContEduHoursTaken }}</strong> - Diary Entry
+      <strong>{{ agentComService.modeDiary }}</strong> - Diary Entry
     </h1>
     <!-- <button
           type="button"

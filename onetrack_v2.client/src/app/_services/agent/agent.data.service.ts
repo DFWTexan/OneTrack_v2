@@ -626,6 +626,8 @@ export class AgentDataService {
   upsertContEduHoursTaken(contEduHoursTaken: any): Observable<any> {
     this.apiUrl = environment.apiUrl + 'Agent/UpsertConEduTaken';
 
+console.log('EMFTEST (upsertContEduHoursTaken) - contEduHoursTaken => \n', contEduHoursTaken);
+
     return this.http
       .post<{
         success: boolean;

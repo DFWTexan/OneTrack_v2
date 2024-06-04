@@ -55,7 +55,7 @@ if (app.Environment.IsDevelopment())
 // Use CORS with the specified policy
 app.UseCors("AllowLocalhost4200");
 
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 
 app.UseAuthorization();
 

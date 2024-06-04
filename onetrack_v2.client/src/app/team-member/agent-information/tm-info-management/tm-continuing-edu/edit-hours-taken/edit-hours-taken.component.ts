@@ -21,6 +21,7 @@ export class EditHoursTakenComponent implements OnInit, OnDestroy {
   contEduCompletedItemForm!: FormGroup;
   contEducationID: number = 0;
   employeeEducationID: number = 0;
+  contEducationRequirementID: number = 0;
   @Input() employmentID: number = 0;
   @Input() employeeID: number = 0;
 
@@ -36,9 +37,9 @@ export class EditHoursTakenComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.contEduCompletedItemForm = new FormGroup({
-      employeeEducationID: new FormControl({ value: '', disabled: true }),
+      employeeEducationID: new FormControl({ value: 0, disabled: true }),
       educationName: new FormControl(null),
-      contEducationRequirementID: new FormControl(null),
+      contEducationRequirementID: new FormControl(0),
       contEducationTakenDate: new FormControl(null),
       creditHoursTaken: new FormControl(null),
       additionalNotes: new FormControl(null),
@@ -54,12 +55,16 @@ export class EditHoursTakenComponent implements OnInit, OnDestroy {
                   this.contEducationID = contEduCompletedItem.contEducationID;
                   this.employeeEducationID =
                     contEduCompletedItem.employeeEducationID;
+                  // this.contEducationRequirementID =
+                  //   this.agentDataService.agentInformation.contEduRequiredItems[0].contEducationRequirementID;
                   this.contEduCompletedItemForm.patchValue({
                     employeeEducationID:
                       contEduCompletedItem.employeeEducationID,
                     educationName: contEduCompletedItem.educationName,
                     contEducationRequirementID:
-                      contEduCompletedItem.contEducationRequirementID,
+                      contEduCompletedItem.contEducationRequirementID
+                        ? contEduCompletedItem.contEducationRequirementID
+                        : 0,
                     contEducationTakenDate: formatDate(
                       contEduCompletedItem.contEducationTakenDate,
                       'yyyy-MM-dd',
@@ -92,6 +97,8 @@ export class EditHoursTakenComponent implements OnInit, OnDestroy {
     let contEduCompletedItem = this.contEduCompletedItemForm.value;
     contEduCompletedItem.employmentID = this.employmentID;
     contEduCompletedItem.employeeID = this.employeeID;
+    contEduCompletedItem.contEducationRequirementID =
+      this.agentDataService.agentInformation.contEduRequiredItems[0].contEducationRequirementID;
     contEduCompletedItem.contEducationID = this.contEducationID;
     contEduCompletedItem.employeeEducationID = this.employeeEducationID;
     contEduCompletedItem.userSOEID =

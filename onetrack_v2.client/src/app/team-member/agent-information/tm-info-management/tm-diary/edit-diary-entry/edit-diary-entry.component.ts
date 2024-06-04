@@ -1,7 +1,11 @@
 import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { AgentComService, AgentDataService, ErrorMessageService } from '../../../../../_services';
+import {
+  AgentComService,
+  AgentDataService,
+  ErrorMessageService,
+} from '../../../../../_services';
 import { formatDate } from '@angular/common';
 
 @Component({
@@ -59,12 +63,36 @@ export class EditDiaryEntryComponent implements OnInit, OnDestroy {
     );
   }
 
-onSubmit() {
-  // if (error.error && error.error.errMessage) {
-  //   this.errorMessageService.setErrorMessage(error.error.errMessage);
-  // }
-}
+  onSubmit() {
+    // if (error.error && error.error.errMessage) {
+    //   this.errorMessageService.setErrorMessage(error.error.errMessage);
+    // }
+  }
 
+  onCloseModal() {
+    const modalDiv = document.getElementById('modal-edit-diary-entry');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+
+    // if (this.contEduCompletedItemForm.dirty && !this.isFormSubmitted) {
+    //   if (
+    //     confirm('You have unsaved changes. Are you sure you want to close?')
+    //   ) {
+    //     const modalDiv = document.getElementById('modal-edit-diary-entry');
+    //     if (modalDiv != null) {
+    //       modalDiv.style.display = 'none';
+    //     }
+    //     this.contEduCompletedItemForm.reset();
+    //   }
+    // } else {
+    //   this.isFormSubmitted = false;
+    //   const modalDiv = document.getElementById('modal-edit-diary-entry');
+    //   if (modalDiv != null) {
+    //     modalDiv.style.display = 'none';
+    //   }
+    // }
+  }
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }

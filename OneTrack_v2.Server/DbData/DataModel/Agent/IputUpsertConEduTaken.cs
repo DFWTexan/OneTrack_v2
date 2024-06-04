@@ -2,9 +2,9 @@
 {
     public class IputUpsertConEduTaken
     {
-        public int EmployeeEducationID { get; set; }
-        public int ContEducationID { get; set; }
-        public int ContEducationRequirementID { get; set; }
+        public int EmployeeEducationID { get; set; } = 0;
+        public int ContEducationID { get; set; } = 0;
+        public int ContEducationRequirementID { get; set; } = 0;
 
         public DateTime ContEducationTakenDate { get; set; }
         public decimal CreditHoursTaken { get; set; }
