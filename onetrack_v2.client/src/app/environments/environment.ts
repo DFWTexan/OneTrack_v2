@@ -6,7 +6,8 @@ export const environment = {
     production: false,
     isDevLoginEnabled: true,
     isShowEditID: false,
-    apiUrl: 'https://localhost:7249/api/',
+    // apiUrl: 'https://localhost:7249/api/',
+    apiUrl: 'http://localhost:5000/api/',
   };
   
   /*
