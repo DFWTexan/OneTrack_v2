@@ -365,7 +365,11 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-insert-incentive-license></app-insert-incentive-license>
+        <app-insert-incentive-license
+          [employeeID]="agentDataService.agentInformation.employeeID"
+          [employmentID]="agentDataService.agentInformation.employmentID"
+          [branchState]="agentDataService.agentInformation.branchDeptStreetState ?? ''"
+        ></app-insert-incentive-license>
       </div>
     </div>
   </div>

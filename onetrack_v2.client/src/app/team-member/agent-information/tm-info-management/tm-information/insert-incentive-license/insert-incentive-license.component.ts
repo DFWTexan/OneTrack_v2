@@ -1,12 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, input } from '@angular/core';
 import { NgForm, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import {
+  AgentComService,
   AgentDataService,
   ConstantsDataService,
   DropdownDataService,
   ErrorMessageService,
+  UserAcctInfoDataService,
 } from '../../../../../_services';
 
 @Component({
@@ -16,10 +18,13 @@ import {
 })
 export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
   isFormSubmitted: boolean = false;
+  @Input() employeeID: number = 0;
+  @Input() employmentID: number = 0;
+  @Input() branchState: string | null = null;
   incentiveLicenseForm!: FormGroup;
   defaultLicenseStatus = 'Incentive';
   licenseStates: string[] = [];
-  licenseNames: { value: string; label: string }[] = [];
+  licenseNames: { value: number; label: string }[] = [];
   agentName: string = '';
 
   private subscriptions = new Subscription();
@@ -29,16 +34,17 @@ export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private conService: ConstantsDataService,
     private drpdwnDataService: DropdownDataService,
-    private agentDataService: AgentDataService
+    private agentDataService: AgentDataService,
+    private agentComService: AgentComService,
+    private userAcctInfoDataService: UserAcctInfoDataService
   ) {
     this.createForm();
   }
 
   createForm() {
     this.incentiveLicenseForm = this.fb.group({
-      preferredName: [''],
       licenseState: ['Select', Validators.required],
-      licenseName: [0, Validators.required],
+      licenseID: [0, Validators.required],
       licenseStatus: [{ value: 'Incentive', disabled: true }],
       note: [''],
     });
@@ -46,39 +52,105 @@ export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.licenseStates = ['Select', ...this.conService.getStates()];
-    this.subscriptions.add(
-      this.drpdwnDataService
-        .fetchDropdownData('GetLicenseNames')
-        .subscribe((licenseNames: { value: string; label: string }[]) => {
-          this.licenseNames = [
-            { value: '0', label: 'Select Name' },
-            ...licenseNames,
-          ];
-        })
-    );
+    // this.subscriptions.add(
+    //   this.drpdwnDataService
+    //     .fetchDropdownNumericData(
+    //       'GetLicenseNumericNames',
+    //       this.agentDataService.agentInformation.branchDeptStreetState
+    //     )
+    //     .subscribe((licenseNames: { value: number; label: string }[]) => {
+    //       this.licenseNames = [{ value: 0, label: 'Select' }, ...licenseNames];
+    //     })
+    // );
     this.subscriptions.add(
       this.agentDataService.agentInfoChanged.subscribe((data) => {
         this.agentName = data.lastName + ', ' + data.firstName;
       })
     );
+    this.incentiveLicenseForm.patchValue({
+      licenseState: this.branchState,
+      licenseID: 0,
+      licenseStatus: 'Incentive',
+    });
+    this.getStateLicenseNames(this.agentDataService.agentInformation.branchDeptStreetState ?? 'Select');
+  }
+
+  getStateLicenseNames(state: string) {
+    if (state === 'Select') {
+      return;
+    }
+    this.subscriptions.add(
+      this.drpdwnDataService
+        .fetchDropdownNumericData(
+          'GetLicenseNumericNames',
+          state
+        )
+        .subscribe((licenseNames: { value: number; label: string }[]) => {
+          this.licenseNames = [{ value: 0, label: 'Select' }, ...licenseNames];
+        })
+    );
   }
 
   onSubmit() {
-    // if (form.valid) {
-    //   // Your submission logic here
-    //   console.log('Form Submitted!', this.incentiveLicenseForm);
-    // } else {
-    //   // Handle the invalid form case
-    //   console.error('Form is not valid!');
-    // }
+    let incentiveLicenseItem = this.incentiveLicenseForm.value;
+    incentiveLicenseItem.employeeLicenseID = 0;
+    incentiveLicenseItem.employeeID = this.employeeID;
+    incentiveLicenseItem.employmentID = this.employmentID;
+    incentiveLicenseItem.userSOEID =
+      this.userAcctInfoDataService.userAcctInfo.soeid;
 
-    // ERROR: TBD...
-    // if (error.error && error.error.errMessage) {
-    //   this.errorMessageService.setErrorMessage(error.error.errMessage);
-    // }
+    if (this.incentiveLicenseForm.invalid) {
+      this.incentiveLicenseForm.setErrors({ invalid: true });
+      return;
+    }
+
+    this.subscriptions.add(
+      this.agentDataService.upsertAgentLicense(incentiveLicenseItem).subscribe({
+        next: (response) => {
+          this.isFormSubmitted = true;
+          this.incentiveLicenseForm.reset();
+          this.incentiveLicenseForm.patchValue({
+            licenseState: this.branchState,
+            licenseID: 0,
+            licenseStatus: 'Incentive',
+          });
+          this.onCloseModal();
+        },
+        error: (error) => {
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+          }
+
+          const modalDiv = document.getElementById(
+            'modal-insert-incentive-license'
+          );
+          if (modalDiv != null) {
+            modalDiv.style.display = 'none';
+          }
+        },
+      })
+    );
   }
 
-  closeModal() {
+  onChangeLicenseState(event: any) {
+    this.incentiveLicenseForm.patchValue({
+      licenseState: event.target.value,
+    });
+
+    if (
+      event.target.value !==
+      this.agentDataService.agentInformation.branchDeptStreetState
+    ) {
+      alert(
+        'Selection is different than Agent Work State: ' +
+          this.agentDataService.agentInformation.branchDeptStreetState
+      );
+    }
+
+    this.getStateLicenseNames(event.target.value);
+  }
+
+  onCloseModal() {
     // const modalDiv = document.getElementById('modal-insert-incentive-license');
     // if (modalDiv != null) {
     //   modalDiv.style.display = 'none';

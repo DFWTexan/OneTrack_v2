@@ -32,7 +32,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   constructor(
-    private agentDataService: AgentDataService,
+    public agentDataService: AgentDataService,
     public agentComService: AgentComService,
     protected modalService: ModalService,
     public appComService: AppComService,
@@ -125,22 +125,6 @@ export class TmInformationComponent implements OnInit, OnDestroy {
       });
     }, 500); // Adjust the delay as needed
   }
-
-  // showLoadingDialog(eventAction: string, msg: string, vObject: any): void {
-  //   const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-  //     data: { message: msg },
-  //     disableClose: true, // This prevents the user from closing the dialog
-  //   });
-
-  //   // Close the dialog when a value is set
-  //   this.subscriptions.add(
-  //     this.agentDataService.agentInfoChanged.subscribe((agentInfo: any) => {
-  //       if (agentInfo) {
-  //         dialogRef.close();
-  //       }
-  //     })
-  //   );
-  // }
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();

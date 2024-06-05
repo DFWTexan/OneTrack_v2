@@ -1,5 +1,4 @@
 <form [formGroup]="incentiveLicenseForm" (ngSubmit)="onSubmit()">
-  
   <div class="row">
     <div class="col ms-3">
       <div class="form-group">
@@ -42,12 +41,12 @@
         /> -->
       </div>
       <div class="form-group">
-        <label for="licenseName">License Name:</label>
+        <label for="licenseID">License Name:</label>
         <select
           class="form-select select-size-medium"
           type="text"
-          id="licenseName"
-          formControlName="licenseName"
+          id="licenseID"
+          formControlName="licenseID"
         >
           <option *ngFor="let name of licenseNames" [value]="name.value">
             {{ name.label }}
@@ -56,8 +55,9 @@
       </div>
     </div>
   </div>
+
   <div class="row">
-    <div class="col  ms-3">
+    <div class="col ms-3">
       <div class="form-group">
         <label for="note">Note:</label>
         <textarea
@@ -65,20 +65,11 @@
           name="note"
           class="form-control"
           formControlName="note"
-          style="width: 90%;"
+          style="width: 90%"
         ></textarea>
       </div>
     </div>
   </div>
-  
-
-  
-
-  
-
-  
-
-  
 
   <mat-divider></mat-divider>
 
@@ -87,14 +78,14 @@
       <button
         type="button"
         class="btn btn-secondary cancel-button me-3"
-        (click)="closeModal()"
+        (click)="onCloseModal()"
       >
         Cancel
       </button>
       <button
         type="submit"
         class="btn btn-primary save-button"
-        (click)="onSubmit()"
+        [disabled]="incentiveLicenseForm.pristine"
       >
         Save
       </button>

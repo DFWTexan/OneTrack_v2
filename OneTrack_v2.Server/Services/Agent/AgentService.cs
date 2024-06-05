@@ -237,7 +237,7 @@ namespace OneTrack_v2.Services
                     agent.BranchDeptFax = branchInfo.FaxNumber;
                     agent.BranchDeptEmail = branchInfo.Email;
                 }
-                
+
                 // Employment History
                 var agentEmpTransHistory = GetEmploymentHistoryInfo(agent.EmploymentID);
 
@@ -817,7 +817,7 @@ namespace OneTrack_v2.Services
 
             return result;
         }
-        
+
         public ReturnResult GetLicenseApplcationInfo(int vEmployeeLicenseID)
         {
             var result = new ReturnResult();
@@ -1014,7 +1014,7 @@ namespace OneTrack_v2.Services
 
             return result;
         }
-        
+
         public ReturnResult GetLicLevels()
         {
             ReturnResult result = new ReturnResult();
@@ -1935,50 +1935,39 @@ namespace OneTrack_v2.Services
                     using (var context = new AppDataContext())
                     using (var transaction = context.Database.BeginTransaction())
                     {
-                        try
+
+                        // INSERT into EmployeeLicense and log audit
+                        var employeeLicense = new EmployeeLicense
                         {
-                            // INSERT into EmployeeLicense and log audit
-                            var employeeLicense = new EmployeeLicense
-                            {
-                                EmploymentId = vInput.EmploymentID,
-                                AscEmployeeLicenseId = vInput.AscEmployeeLicenseID,
-                                LicenseId = vInput.LicenseID,
-                                LicenseExpireDate = vInput.LicenseExpireDate,
-                                LicenseStatus = vInput.LicenseStatus,
-                                LicenseNumber = vInput.LicenseNumber,
-                                Reinstatement = vInput.Reinstatement,
-                                Required = vInput.Required,
-                                NonResident = vInput.NonResident,
-                                LicenseEffectiveDate = vInput.LicenseEffectiveDate,
-                                LicenseIssueDate = vInput.LicenseIssueDate,
-                                LineOfAuthorityIssueDate = vInput.LineOfAuthorityIssueDate,
-                                LicenseNote = vInput.LicenseNote,
-                                
-                            };  
-                            context.EmployeeLicenses.Add(employeeLicense);
-                            context.SaveChanges();
+                            EmploymentId = vInput.EmploymentID,
+                            AscEmployeeLicenseId = vInput.AscEmployeeLicenseID,
+                            LicenseId = vInput.LicenseID,
+                            LicenseExpireDate = vInput.LicenseExpireDate,
+                            LicenseStatus = vInput.LicenseStatus,
+                            LicenseNumber = vInput.LicenseNumber,
+                            Reinstatement = vInput.Reinstatement,
+                            Required = vInput.Required,
+                            NonResident = vInput.NonResident,
+                            LicenseEffectiveDate = vInput.LicenseEffectiveDate,
+                            LicenseIssueDate = vInput.LicenseIssueDate,
+                            LineOfAuthorityIssueDate = vInput.LineOfAuthorityIssueDate,
+                            LicenseNote = vInput.LicenseNote,
 
-                            // Log audit for EmployeeSSN insertion
-                            int employeeLicenseId = employeeLicense.EmployeeLicenseId;
+                        };
+                        context.EmployeeLicenses.Add(employeeLicense);
+                        context.SaveChanges();
 
-                            if (employeeLicenseId > 0)
-                                _utilityService.LogAudit("EmployeeLicense", employeeLicenseId, vInput.UserSOEID, "INSERT", "EmployeeLicense", null, employeeLicenseId.ToString());
+                        // Log audit for EmployeeSSN insertion
+                        int employeeLicenseId = employeeLicense.EmployeeLicenseId;
 
-                            transaction.Commit();
+                        if (employeeLicenseId > 0)
+                            _utilityService.LogAudit("EmployeeLicense", employeeLicenseId, vInput.UserSOEID, "INSERT", "EmployeeLicense", null, employeeLicenseId.ToString());
 
-                            result.Success = true;
-                            result.ObjData = employeeLicense;
-                        }
-                        catch (Exception ex)
-                        {
-                            transaction.Rollback();
-                            // Log or handle error
-                            //_utilityService.ExecuteErrorHandling(); // Placeholder for error handling stored procedure call
-                            result.StatusCode = 500;
-                            result.ErrMessage = ex.Message;
+                        transaction.Commit();
 
-                            _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
-                        }
+                        result.Success = true;
+                        result.ObjData = employeeLicense;
+
                     }
 
                 }
@@ -2026,9 +2015,11 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-6158-72181].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             }
             return result;
         }
@@ -2066,7 +2057,7 @@ namespace OneTrack_v2.Services
                 _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
 
-            return result;  
+            return result;
         }
         public ReturnResult UpsertConEduTaken([FromBody] IputUpsertConEduTaken vInput)
         {
@@ -2078,7 +2069,7 @@ namespace OneTrack_v2.Services
                     var contEducationID = _db.EmployeeContEducations
                                         .Where(q => q.ContEducationRequirementId == vInput.ContEducationRequirementID)
                                         .Select(q => q.ContEducationId)
-                                        .FirstOrDefault();  
+                                        .FirstOrDefault();
 
                     // INSERT Continuing Education Taken
                     using (SqlConnection conn = new SqlConnection(_connectionString))
@@ -2134,10 +2125,11 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
+                result.Success = false;
                 result.ObjData = null;
                 result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-6158-79881].";
 
-                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID" );
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             }
 
             return result;
@@ -2237,7 +2229,7 @@ namespace OneTrack_v2.Services
                 _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
             }
 
-            return result;  
+            return result;
         }
         public ReturnResult DeleteDiaryItem([FromBody] IputDeleteDiaryItem vInput)
         {
