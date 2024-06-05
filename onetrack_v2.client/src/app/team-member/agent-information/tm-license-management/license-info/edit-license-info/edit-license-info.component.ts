@@ -91,8 +91,6 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
         ];
       });
 
-      this.getStateLicenseNames(this.agentDataService.agentInformation.branchDeptStreetState ?? 'Select');
-
       this.subscriptions.add(
         this.agentComService.modeLicenseMgmtChanged.subscribe((mode: string) => {
           // this.drpdwnDataService
@@ -106,6 +104,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
           //       ...licenseNames,
           //     ];
           //   });
+          this.getStateLicenseNames(this.agentDataService.agentInformation.branchDeptStreetState ?? 'Select');
   
           if (mode === 'EDIT') {
             this.subscriptions.add(
@@ -307,6 +306,8 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
           this.agentDataService.agentInformation.branchDeptStreetState
       );
     }
+
+    this.getStateLicenseNames(event.target.value);
   }
 
   ngOnDestroy(): void {

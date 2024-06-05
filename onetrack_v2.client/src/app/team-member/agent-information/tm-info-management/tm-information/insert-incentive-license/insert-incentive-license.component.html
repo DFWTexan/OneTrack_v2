@@ -20,6 +20,7 @@
           type="text"
           id="licenseState"
           formControlName="licenseState"
+          (change)="onChangeLicenseState($event)"
         >
           <option *ngFor="let state of licenseStates" [value]="state">
             {{ state }}
