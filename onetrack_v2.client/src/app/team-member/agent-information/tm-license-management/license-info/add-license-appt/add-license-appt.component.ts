@@ -62,35 +62,41 @@ export class AddLicenseApptComponent implements OnInit, OnDestroy {
     licenseApptItem.employeeLicenseID = this.employeeLicenseID;
     licenseApptItem.UserSOEID = this.userInfoDataService.userAcctInfo.soeid;
 
+    if (licenseApptItem.appointmentStatus === 'Select') {
+      licenseApptItem.appointmentStatus = '';
+    }
+
     if (this.licenseApptForm.invalid) {
       this.licenseApptForm.setErrors({ invalid: true });
       return;
     }
 
-    this.subscriptions.add(
-      this.agentDataService.addLicenseAppointment(licenseApptItem).subscribe({
-        next: (response) => {
-          const modalDiv = document.getElementById('modal-add-license-appt');
-          if (modalDiv != null) {
-            modalDiv.style.display = 'none';
-          }
-          // handle the response here
-          // console.log(
-          //   'EMFTEST () - Agent License added successfully response => \n ',
-          //   response
-          // );
-        },
-        error: (error) => {
-          if (error.error && error.error.errMessage) {
-            this.errorMessageService.setErrorMessage(error.error.errMessage);
-          }
-          const modalDiv = document.getElementById('modal-add-license-appt');
-          if (modalDiv != null) {
-            modalDiv.style.display = 'none';
-          }
-        },
-      })
-    );
+console.log('EMFTEST (app-add-license-appt: onSubmit) - licenseApptItem => \n ', licenseApptItem);
+
+    // this.subscriptions.add(
+    //   this.agentDataService.addLicenseAppointment(licenseApptItem).subscribe({
+    //     next: (response) => {
+    //       const modalDiv = document.getElementById('modal-add-license-appt');
+    //       if (modalDiv != null) {
+    //         modalDiv.style.display = 'none';
+    //       }
+    //       // handle the response here
+    //       // console.log(
+    //       //   'EMFTEST () - Agent License added successfully response => \n ',
+    //       //   response
+    //       // );
+    //     },
+    //     error: (error) => {
+    //       if (error.error && error.error.errMessage) {
+    //         this.errorMessageService.setErrorMessage(error.error.errMessage);
+    //       }
+    //       const modalDiv = document.getElementById('modal-add-license-appt');
+    //       if (modalDiv != null) {
+    //         modalDiv.style.display = 'none';
+    //       }
+    //     },
+    //   })
+    // );
   }
 
   onCloseModal() {

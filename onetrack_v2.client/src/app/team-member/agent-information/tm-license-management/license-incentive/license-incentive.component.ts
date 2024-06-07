@@ -1,4 +1,6 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 import {
   // AgentLicApplicationInfo,
@@ -11,7 +13,6 @@ import {
   LicIncentiveInfoDataService,
   ModalService,
 } from '../../../../_services';
-import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-license-incentive',
@@ -19,12 +20,14 @@ import { NgForm } from '@angular/forms';
   styleUrl: './license-incentive.component.css',
 })
 @Injectable()
-export class LicenseIncentiveComponent implements OnInit {
+export class LicenseIncentiveComponent implements OnInit, OnDestroy {
   modeEdit: boolean = false;
   licenseMgmtData: AgentLicenseAppointments[] = [];
   licenseIncentiveInfo: LicenseIncentiveInfo = {} as LicenseIncentiveInfo;
   currentIndex: number = 0;
   panelOpenState = false;
+
+  private subscriptions = new Subscription();
 
   constructor(
     public agentDataService: AgentDataService,
@@ -40,13 +43,17 @@ export class LicenseIncentiveComponent implements OnInit {
     this.agentDataService.fetchAgentLicApplicationInfo(
       this.licenseMgmtData[this.currentIndex].employeeLicenseId
     );
-    this.licIncentiveInfoDataService
+
+    this.subscriptions.add(
+      this.licIncentiveInfoDataService
       .fetchLicIncentiveInfo(
         this.licenseMgmtData[this.currentIndex].employeeLicenseId
       )
       .subscribe((licenseIncentiveInfo: LicenseIncentiveInfo) => {
         this.licenseIncentiveInfo = licenseIncentiveInfo;
-      });
+      })
+    );
+    
   }
 
   onEditToggle() {
@@ -83,5 +90,9 @@ export class LicenseIncentiveComponent implements OnInit {
 
   isDisplayNext(): boolean {
     return this.currentIndex < this.licenseMgmtData.length - 1;
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }

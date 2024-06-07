@@ -6,7 +6,7 @@
   <div class="row">
     <div class="col">
       <!-- <div class="mb-3" *ngIf="agentComService.modeLicenseMgmt !== 'ADD' && appComService.isShowEditID">
-          <label for="employeeLicenseId" class="form-label">Employee License ID:</label
+          <label for="employeeLicenseId" class="form-label">License ID:</label
           ><br />
           <span>{{ licenseForm.get("employeeLicenseId")?.value }}</span>
         </div> -->
@@ -26,7 +26,7 @@
           </option>
         </select>
       </div>
-      <div class="mb-3">
+      <!-- <div class="mb-3">
         <label for="companyID" class="form-label"
           >License Name: <span class="text-danger">*</span></label
         >
@@ -51,30 +51,8 @@
         >
           Please select Company Name
         </div>
-      </div>
+      </div> -->
 
-      <!-- <div class="mb-3">
-          <label for="licenseNumber" class="form-label">
-            License Number:
-            <input
-              type="text"
-              id="licenseNumber"
-              class="form-control input-size-small"
-              formControlName="licenseNumber"
-            />
-          </label>
-        </div> -->
-
-      <!-- <div class="form-group">
-          <label for="licenseNote">Notes:</label>
-          <textarea
-            rows="5"
-            id="licenseNote"
-            type="text"
-            formControlName="licenseNote"
-            class="form-control"
-          ></textarea>
-        </div> -->
     </div>
     <div class="col">
       <div class="mb-3">
@@ -122,175 +100,6 @@
         />
       </div>
     </div>
-
-    <!-- <div class="col">
-        <div class="mb-3 d-flex align-items-center">
-          <input
-            class="form-check-input me-2"
-            type="checkbox"
-            id="required"
-            formControlName="required"
-          />
-          <label for="required" class="form-label d-flex align-items-center mt-3"
-            >Required
-          </label>
-        </div>
-  
-        <div class="mb-3 d-flex align-items-center">
-          <input
-            class="form-check-input me-2"
-            type="checkbox"
-            id="reinstatement"
-            formControlName="reinstatement"
-          />
-          <label
-            for="reinstatement"
-            class="form-label d-flex align-items-center mt-3"
-            >Reinstatement
-          </label>
-        </div>
-  
-        <div class="mb-3 d-flex align-items-center">
-          <input
-            class="form-check-input me-2"
-            type="checkbox"
-            id="nonResident"
-            formControlName="nonResident"
-          />
-          <label
-            for="nonResident"
-            class="form-label d-flex align-items-center mt-3"
-            >Non-Resident
-          </label>
-        </div>
-  
-        <div class="mb-3">
-          <label for="licenseStatus" class="form-label"
-            >License Status: <span class="text-danger">*</span></label
-          >
-          <select
-            class="form-select select-size-x-small"
-            type="text"
-            id="licenseStatus"
-            formControlName="licenseStatus"
-          >
-            <option *ngFor="let status of licenseStatuses" [value]="status.value">
-              {{ status.label }}
-            </option>
-          </select>
-          <div
-            *ngIf="
-              (licenseForm.controls['licenseStatus'].touched ||
-                isFormSubmitted) &&
-              licenseForm.controls['licenseStatus'].errors &&
-              licenseForm.controls['licenseStatus'].errors['invalid']
-            "
-            class="text-danger"
-          >
-            Please select License Status
-          </div>
-        </div>
-  
-        <div class="mb-3">
-          <label for="affiliatedLicense" class="form-label"
-            >Affiliated License:</label
-          >
-          <select
-            class="form-select select-size-x-small"
-            type="text"
-            id="affiliatedLicense"
-          >
-            <option *ngFor="let affLic of affiliatedLicenses" [value]="affLic">
-              {{ affLic }}
-            </option>
-          </select>
-        </div>
-      </div> -->
-
-    <!-- <div class="col">
-        
-  
-        <div class="mb-3" *ngIf="agentComService.modeLicenseMgmt == 'ADD'">
-          <label for="sentToAgentDate" class="form-label"
-            >Sent to Agent Date: </label
-          >
-          <input
-            class="form-control input-size-small"
-            type="date"
-            id="sentToAgentDate"
-            formControlName="sentToAgentDate"
-          />
-        </div>
-  
-        <div class="mb-3">
-          <label for="licenseIssueDate" class="form-label"
-            >Original Issue Date: <span class="text-danger">*</span></label
-          >
-          <input
-            class="form-control input-size-small"
-            type="date"
-            id="licenseIssueDate"
-            formControlName="licenseIssueDate"
-          />
-          <div
-            *ngIf="
-              (licenseForm.controls['licenseIssueDate'].touched ||
-                isFormSubmitted) &&
-              licenseForm.controls['licenseIssueDate'].errors &&
-              licenseForm.controls['licenseIssueDate'].errors['invalid']
-            "
-            class="text-danger"
-          >
-            Please select Issue Date
-          </div>
-        </div>
-  
-        <div class="mb-3">
-          <label for="lineOfAuthorityIssueDate" class="form-label"
-            >Line Of Auth. Issue Date:</label
-          >
-          <input
-            class="form-control input-size-small"
-            type="date"
-            id="lineOfAuthorityIssueDate"
-            formControlName="lineOfAuthorityIssueDate"
-          />
-        </div>
-  
-        <div class="mb-3" *ngIf="agentComService.modeLicenseMgmt == 'EDIT'">
-          <label for="licenseEffectiveDate" class="form-label"
-            >Effective Date:</label
-          >
-          <input
-            class="form-control input-size-small"
-            type="date"
-            id="licenseEffectiveDate"
-            formControlName="licenseEffectiveDate"
-          />
-        </div>
-  
-        <div class="mb-3" *ngIf="agentComService.modeLicenseMgmt == 'ADD'">
-          <label for="renewalDate" class="form-label">Renewal Date:</label>
-          <input
-            class="form-control input-size-small"
-            type="date"
-            id="renewalDate"
-            formControlName="reinstatement"
-          />
-        </div>
-  
-        <div class="mb-3">
-          <label for="licenseExpireDate" class="form-label"
-            >Expiration Date:</label
-          >
-          <input
-            class="form-control input-size-small"
-            type="date"
-            id="licenseExpireDate"
-            formControlName="licenseExpireDate"
-          />
-        </div>
-    </div> -->
   </div>
 
   <mat-divider></mat-divider>
