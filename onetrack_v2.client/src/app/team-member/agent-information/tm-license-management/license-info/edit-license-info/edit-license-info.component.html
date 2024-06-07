@@ -1,4 +1,4 @@
-<form [formGroup]="licenseForm" style="padding: 0.5rem">
+<form [formGroup]="licenseForm" (ngSubmit)="onSubmit()" style="padding: 0.5rem">
   <div class="row">
     <div class="col">
       <div class="mb-3">
@@ -281,7 +281,7 @@
       <button
         type="button"
         class="btn btn-secondary cancel-button me-3"
-        (click)="closeModal()"
+        (click)="onCloseModal()"
       >
         Cancel
       </button>

@@ -1,4 +1,10 @@
 export class ConstantsDataService {
+  private readonly appointmentstatuses = [
+    'Active',
+    'Pending',
+    'In-Active',
+    'History',
+  ];
   private readonly agentStatuses = [
     'Active',
     'Pending',
@@ -124,6 +130,10 @@ export class ConstantsDataService {
     'SK',
     'YT',
   ];
+
+  getAppointmentStatuses() {
+    return this.appointmentstatuses;
+  }
 
   getAgentStatuses() {
     return this.agentStatuses;

@@ -348,6 +348,36 @@ export class AgentDataService {
       );
   }
 
+  addLicenseAppointment(appointment: LicenseAppointment): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'Agent/AddLicenseAppointment';
+
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, appointment)
+      .pipe(
+        switchMap((response) => {
+          if (response.success && response.statusCode === 200) {
+            return this.fetchAgentLicenseAppointments(
+              this.agentInformation.employmentID
+            );
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        }),
+        map((appointments) => {
+          this.agentInformation.agentLicenseAppointments = appointments;
+          this.agentLicenseAppointmentsChanged.next(
+            this.agentInformation.agentLicenseAppointments
+          );
+          return appointments;
+        })
+      );
+  }
+
   deleteAgentLicense(licenseInfo: any): Observable<any> {
     this.apiUrl = environment.apiUrl + 'Agent/DeleteAgentLicense';
 

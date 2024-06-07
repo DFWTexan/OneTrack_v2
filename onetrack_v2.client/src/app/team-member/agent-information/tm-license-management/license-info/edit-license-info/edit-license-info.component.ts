@@ -268,7 +268,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
     
   }
 
-  closeModal() {
+  onCloseModal() {
     if (this.licenseForm.dirty && !this.isFormSubmitted) {
       if (
         confirm('You have unsaved changes. Are you sure you want to close?')

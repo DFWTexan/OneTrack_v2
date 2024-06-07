@@ -21,6 +21,7 @@ import { LicenseInfoComponent } from '../team-member/agent-information/tm-licens
 import { LicenseApplicationComponent } from '../team-member/agent-information/tm-license-management/license-application/license-application.component';
 import { LicenseRenewalComponent } from '../team-member/agent-information/tm-license-management/license-renewal/license-renewal.component';
 import { LicenseIncentiveComponent } from '../team-member/agent-information/tm-license-management/license-incentive/license-incentive.component';
+import { AddLicenseApptComponent } from './agent-information/tm-license-management/license-info/add-license-appt/add-license-appt.component';
 import { EditLicenseInfoComponent } from '../team-member/agent-information/tm-license-management/license-info/edit-license-info/edit-license-info.component';
 import { EditTmDetailComponent } from '../team-member/agent-information/tm-info-management/tm-detail/edit-tm-detail/edit-tm-detail.component';
 
@@ -72,6 +73,7 @@ import { TmInfoManagementComponent } from '../team-member/agent-information/tm-i
     LicenseRenewalComponent,
     LicenseIncentiveComponent,
     EditLicenseInfoComponent,
+    AddLicenseApptComponent,
     EditEmploymentHistComponent,
     EditTransferHistComponent,
     EditCorequirementHistComponent,
