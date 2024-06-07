@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OneTrak_v2.DataModel;
 using OneTrak_v2.Services;
 
 namespace OneTrak_v2.Server.Controllers
@@ -59,6 +60,14 @@ namespace OneTrak_v2.Server.Controllers
         public async Task<ActionResult> GetAffiliatedLicenses(string stateProvinceAbv, int licenseID)
         {
             var result = await Task.Run(() => _licenseInfo.GetAffiliatedLicenses(stateProvinceAbv, licenseID));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AddLicenseAppointment([FromBody] IputAddLicenseAppointment input)
+        {
+            var result = await Task.Run(() => _licenseInfo.AddLicenseAppointment(input));
 
             return StatusCode(result.StatusCode, result);
         }

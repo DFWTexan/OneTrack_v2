@@ -104,6 +104,10 @@ export class TmInformationComponent implements OnInit, OnDestroy {
     this.agentDataService.storeLicenseAppointment(appointment);
   }
 
+  storeLicApptLicenseID(licenseID: number) {
+    this.agentDataService.storeLicApptLicenseID(licenseID);
+  }
+
   toggleLicenseMgmt(index: number) {
     const dialogRef = this.dialog.open(InfoDialogComponent, {
       data: { message: 'Loading Agent License Mgmt...' },

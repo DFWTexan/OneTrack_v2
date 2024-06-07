@@ -76,7 +76,7 @@ export class DropdownDataService {
     this.licenseNamesChanged.next([...this.licenseNames]);
   }
 
-  fetchDropdownNumericData(vEndpoint: string, vValue: string | null = null) {
+  fetchDropdownNumericData(vEndpoint: string, vValue: any | null = null) {
     const url = this.url + vEndpoint + (vValue ? '/' + vValue : '');
     return this.http
       .get<{

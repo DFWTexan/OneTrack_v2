@@ -256,6 +256,7 @@
                             class="icon-edit-delete-button"
                             (click)="
                               storeLicAppointment(appointment);
+                              storeLicApptLicenseID(license.licenseID);
                               modalService.open('modal-edit-license-appt')
                             "
                           >

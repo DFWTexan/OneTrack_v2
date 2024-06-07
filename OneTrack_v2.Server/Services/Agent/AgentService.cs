@@ -2260,6 +2260,7 @@ namespace OneTrack_v2.Services
             {
                 result.StatusCode = 500;
                 result.ObjData = null;
+                result.Success = false;
                 result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-6168-098591].";
 
                 _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");

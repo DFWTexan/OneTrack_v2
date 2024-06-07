@@ -120,5 +120,13 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
+        [HttpGet("{licenseID}")]
+        public async Task<IActionResult> GetCoAbvByLicenseID(int licenseID)
+        {
+            var result = await Task.Run(() => _miscService.GetCoAbvByLicenseID(licenseID));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
     }
 }

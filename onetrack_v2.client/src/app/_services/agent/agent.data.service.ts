@@ -30,6 +30,8 @@ export class AgentDataService {
   agentInformation: AgentInfo = {} as AgentInfo;
   agentInfoChanged = new Subject<AgentInfo>();
   // AGENT LICENSE APPOINTMENTS
+  agentLicApptLicenseID: number = 0;
+  agentLicApptLicenseIDChanged = new Subject<number>();
   agentLicenseAppointments: AgentLicenseAppointments[];
   agentLicenseAppointmentsChanged = new Subject<AgentLicenseAppointments[]>();
   licenseAppointment: LicenseAppointment = {} as LicenseAppointment;
@@ -344,36 +346,6 @@ export class AgentDataService {
             this.agentInformation.agentLicenseAppointments
           );
           return this.agentInformation;
-        })
-      );
-  }
-
-  addLicenseAppointment(appointment: LicenseAppointment): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/AddLicenseAppointment';
-
-    return this.http
-      .post<{
-        success: boolean;
-        statusCode: number;
-        objData: any;
-        errMessage: string;
-      }>(this.apiUrl, appointment)
-      .pipe(
-        switchMap((response) => {
-          if (response.success && response.statusCode === 200) {
-            return this.fetchAgentLicenseAppointments(
-              this.agentInformation.employmentID
-            );
-          } else {
-            throw new Error(response.errMessage || 'Unknown error');
-          }
-        }),
-        map((appointments) => {
-          this.agentInformation.agentLicenseAppointments = appointments;
-          this.agentLicenseAppointmentsChanged.next(
-            this.agentInformation.agentLicenseAppointments
-          );
-          return appointments;
         })
       );
   }
@@ -767,6 +739,11 @@ export class AgentDataService {
   storeLicenseAppointment(appointment: LicenseAppointment) {
     this.licenseAppointment = appointment;
     this.licenseAppointmentChanged.next(this.licenseAppointment);
+  }
+
+  storeLicApptLicenseID(licenseID: number) {
+    this.agentLicApptLicenseID = licenseID;
+    this.agentLicApptLicenseIDChanged.next(this.agentLicApptLicenseID);
   }
 
   storeLicenseMgmtDataIndex(index: number) {

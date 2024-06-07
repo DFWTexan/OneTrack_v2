@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using OneTrack_v2.DataModel;
 using OneTrack_v2.DbData;
 using OneTrack_v2.DbData.Models;
+using System.ComponentModel;
 using System.Linq.Expressions;
 
 namespace OneTrack_v2.Services
@@ -402,6 +403,33 @@ namespace OneTrack_v2.Services
 
                 result.Success = true;
                 result.ObjData = resultTitles;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+            }
+
+            return result;
+        }
+        public ReturnResult GetCoAbvByLicenseID(int vLicenseID)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var query = from c in _db.Companies
+                            join p in _db.LicenseCompanies on c.CompanyId equals p.CompanyId
+                            where c.CompanyType == "InsuranceCo" && p.IsActive == true && p.LicenseId == vLicenseID
+                            select new { value = c.CompanyId, label = c.CompanyAbv };
+
+                var resultCompanies = query.AsNoTracking().ToList();
+
+                result.Success = true;
+                result.ObjData = resultCompanies;
                 result.StatusCode = 200;
 
             }

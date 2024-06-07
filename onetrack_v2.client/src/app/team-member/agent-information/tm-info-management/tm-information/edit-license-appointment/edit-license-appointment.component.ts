@@ -1,8 +1,14 @@
 import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { AgentDataService, ErrorMessageService } from '../../../../../_services';
+import {
+  AgentDataService,
+  DropdownDataService,
+  ErrorMessageService,
+  LicIncentiveInfoDataService,
+  UserAcctInfoDataService,
+} from '../../../../../_services';
 import { LicenseAppointment } from '../../../../../_Models';
 
 @Component({
@@ -12,18 +18,17 @@ import { LicenseAppointment } from '../../../../../_Models';
 })
 @Injectable()
 export class EditLicenseAppointmentComponent implements OnInit, OnDestroy {
-  form = new FormGroup({
+  isFormSubmitted: boolean = false;
+  companyAbbreviations: { value: number; label: string }[] = [];
+  form = this.fb.group({
     licenseID: new FormControl({ value: '', disabled: true }),
     employeeAppointmentID: new FormControl({ value: '', disabled: true }),
-    appointmentEffectiveDate: new FormControl(''),
     appointmentStatus: new FormControl(''),
-    employeeLicenseID: new FormControl(''),
+    companyID: new FormControl(''),
     carrierDate: new FormControl(''),
+    appointmentEffectiveDate: new FormControl(''),
     appointmentExpireDate: new FormControl(''),
     appointmentTerminationDate: new FormControl(''),
-    companyID: new FormControl(''),
-    retentionDate: new FormControl(''),
-    companyAbbr: new FormControl(''),
   });
 
   licenseAppointment: LicenseAppointment = {} as LicenseAppointment;
@@ -31,27 +36,52 @@ export class EditLicenseAppointmentComponent implements OnInit, OnDestroy {
 
   constructor(
     public errorMessageService: ErrorMessageService,
-    private agentService: AgentDataService) {}
+    private agentDataService: AgentDataService,
+    private licIncentiveInfoDataService: LicIncentiveInfoDataService,
+    private userInfoDataService: UserAcctInfoDataService,
+    private dropdownDataService: DropdownDataService,
+    private fb: FormBuilder
+  ) {}
 
   ngOnInit(): void {
     this.subscriptions.add(
-      this.agentService.licenseAppointmentChanged.subscribe(
+      this.agentDataService.licenseAppointmentChanged.subscribe(
         (licenseAppointment: any) => {
+          this.subscriptions.add(
+            this.agentDataService.agentLicApptLicenseIDChanged.subscribe(
+              (agentLicApptLicenseID: any) => {
+                this.subscriptions.add(
+                  this.dropdownDataService
+                    .fetchDropdownNumericData(
+                      'GetCoAbvByLicenseID',
+                      agentLicApptLicenseID
+                    )
+                    .subscribe((response) => {
+
+console.log('EMFTEST (edit-license-appointment: ngOnInit) - response => \n ', response);  
+
+                      this.companyAbbreviations = response;
+                    })
+                );
+              }
+            )
+          );
+
           this.licenseAppointment = licenseAppointment;
           this.form.patchValue({
             licenseID: licenseAppointment.licenseID,
             employeeAppointmentID: licenseAppointment.employeeAppointmentID,
+            appointmentStatus: licenseAppointment.appointmentStatus,
+            companyID: licenseAppointment.companyID,
+            carrierDate: licenseAppointment.carrierDate,
             appointmentEffectiveDate:
               licenseAppointment.appointmentEffectiveDate,
-            appointmentStatus: licenseAppointment.appointmentStatus,
-            employeeLicenseID: licenseAppointment.employeeLicenseID,
-            carrierDate: licenseAppointment.carrierDate,
             appointmentExpireDate: licenseAppointment.appointmentExpireDate,
             appointmentTerminationDate:
               licenseAppointment.appointmentTerminationDate,
-            companyID: licenseAppointment.companyID,
-            retentionDate: licenseAppointment.retentionDate,
-            companyAbbr: 'TBD...',
+            // employeeLicenseID: licenseAppointment.employeeLicenseID,
+            // retentionDate: licenseAppointment.retentionDate,
+            // companyAbbr: 'TBD...',
           });
         }
       )
@@ -59,15 +89,58 @@ export class EditLicenseAppointmentComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(
-      'EMFTest - (app-edit-license-appointment) onSubmit => \n',
-      this.form.value
-    );
-
     // ERROR: TBD
     // if (error.error && error.error.errMessage) {
     //   this.errorMessageService.setErrorMessage(error.error.errMessage);
     // }
+    this.isFormSubmitted = true;
+
+    let licenseApptItem: any = this.form.value;
+    licenseApptItem.employeeID =
+      this.agentDataService.agentInformation.employeeID;
+    // licenseApptItem.employeeLicenseID = this.employeeLicenseID;
+    licenseApptItem.UserSOEID = this.userInfoDataService.userAcctInfo.soeid;
+
+    if (licenseApptItem.appointmentStatus === 'Select') {
+      licenseApptItem.appointmentStatus = '';
+    }
+
+    if (this.form.invalid) {
+      this.form.setErrors({ invalid: true });
+      return;
+    }
+
+    console.log(
+      'EMFTEST (app-add-license-appt: onSubmit) - licenseApptItem => \n ',
+      licenseApptItem
+    );
+
+    this.subscriptions.add(
+      this.licIncentiveInfoDataService
+        .updateLicenseAppointment(licenseApptItem)
+        .subscribe({
+          next: (response) => {
+            const modalDiv = document.getElementById('modal-edit-license-appt');
+            if (modalDiv != null) {
+              modalDiv.style.display = 'none';
+            }
+            // handle the response here
+            // console.log(
+            //   'EMFTEST () - Agent License added successfully response => \n ',
+            //   response
+            // );
+          },
+          error: (error) => {
+            if (error.error && error.error.errMessage) {
+              this.errorMessageService.setErrorMessage(error.error.errMessage);
+            }
+            const modalDiv = document.getElementById('modal-edit-license-appt');
+            if (modalDiv != null) {
+              modalDiv.style.display = 'none';
+            }
+          },
+        })
+    );
   }
 
   onCancel() {

@@ -1,20 +1,27 @@
 ﻿using DataModel.Response;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using OneTrack_v2.DbData;
 using OneTrack_v2.Services;
+using OneTrak_v2.DataModel;
+using System.Data;
 
 namespace OneTrak_v2.Services
 {
     public class LicenseInfoService : ILicenseInfoService
     {
+        private readonly IConfiguration _config;
         private readonly AppDataContext _db;
         private readonly IUtilityHelpService _utilityService;
+        private readonly string? _connectionString;
 
-        public LicenseInfoService(AppDataContext db, IUtilityHelpService utilityHelpService)
+        public LicenseInfoService(AppDataContext db, IUtilityHelpService utilityHelpService, IConfiguration config)
         {
             _db = db;
-			_utilityService = utilityHelpService;
+            _config = config;
+            _utilityService = utilityHelpService;
+            _connectionString = _config.GetConnectionString(name: "DefaultConnection");
         }
 
         public ReturnResult GetIncentiveInfo(int vEmployeelicenseID)
@@ -492,5 +499,92 @@ namespace OneTrak_v2.Services
             return result;
 
         }
-	}
+        
+		#region INSERT/UPDATE/DELETE
+        public ReturnResult AddLicenseAppointment([FromBody] IputAddLicenseAppointment vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspAppointmentInsert", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@EmployeeID", vInput.EmployeeID));
+                        cmd.Parameters.Add(new SqlParameter("@EmployeeLicenseID", vInput.EmployeeLicenseID));
+                        cmd.Parameters.Add(new SqlParameter("@CompanyID", vInput.CompanyID));
+                        cmd.Parameters.Add(new SqlParameter("@CarrierDate", vInput.CarrierDate));
+                        cmd.Parameters.Add(new SqlParameter("@AppointmentEffectiveDate", vInput.AppointmentEffectiveDate));
+                        cmd.Parameters.Add(new SqlParameter("@AppointmentExpireDate", vInput.AppointmentExpireDate));
+                        cmd.Parameters.Add(new SqlParameter("@AppointmentTerminationDate", vInput.AppointmentTerminationDate));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "License Appointment Added Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ObjData = null;
+                result.Success = false;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# LINFO-6128-198791].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
+            }
+
+            return result;
+        }
+        public ReturnResult UpdateLicenseAppointment([FromBody] IputUpdateLicenseAppointment vInput)
+		{
+            var result = new ReturnResult();
+            try
+			{
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+				{
+                    using (SqlCommand cmd = new SqlCommand("uspAppointmentInsert", conn))
+					{
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@EmployeeAppointmentID", vInput.EmployeeAppointmentID));
+                        cmd.Parameters.Add(new SqlParameter("@AppointmentStatus", vInput.AppointmentStatus));
+                        cmd.Parameters.Add(new SqlParameter("@CompanyID", vInput.CompanyID));
+                        cmd.Parameters.Add(new SqlParameter("@CarrierDate", vInput.CarrierDate));
+                        cmd.Parameters.Add(new SqlParameter("@AppointmentEffectiveDate", vInput.AppointmentEffectiveDate));
+                        cmd.Parameters.Add(new SqlParameter("@AppointmentExpireDate", vInput.AppointmentExpireDate));
+                        cmd.Parameters.Add(new SqlParameter("@AppointmentTerminationDate", vInput.AppointmentTerminationDate));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "License Appointment Updated Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+			{
+                result.StatusCode = 500;
+                result.ObjData = null;
+                result.Success = false;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# LINFO-6128-192719].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
+            }
+
+            return result;
+        }
+        #endregion
+    }
 }

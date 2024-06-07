@@ -39,5 +39,6 @@ namespace OneTrack_v2.Services
         public ReturnResult DeleteConEduTaken([FromBody] IputDeleteConEduTaken vInput);
         public ReturnResult UpsertDiaryItem([FromBody] IputUpsertDiaryItem vInput);
         public ReturnResult DeleteDiaryItem([FromBody] IputDeleteDiaryItem vInput);
+        
     }
 }

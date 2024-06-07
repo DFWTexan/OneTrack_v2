@@ -17,5 +17,6 @@ namespace OneTrack_v2.Services
         public ReturnResult GetLicenseTeches();
         public ReturnResult GetBackgroundStatuses();
         public ReturnResult GetJobTitles();
+        public ReturnResult GetCoAbvByLicenseID(int vLicenseID);
     }
 }
