@@ -19,9 +19,9 @@
         public string? LicenseExpireDate { get; set; }
         public bool Reinstatement { get; set; }
         public bool Required { get; set; }
-        public bool NonResident { get; set; }
+        public bool NonResident { get; set; } = false;
         public string? BranchCode { get; set; }
-        public string? AscLicense { get; set; }
+        public string? AscLicense { get; set; } = null;
         public int? AscEmployeeLicenseID { get; set; }
         public string? LicenseNote { get; set; }
         public int? EmploymentLicenseIncentiveID { get; set; }
