@@ -29,7 +29,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
   licenseNames: { value: number; label: string }[] = [];
   affiliatedLicenses: string[] = ['None'];
   defaultLicenseState: string = null || 'Select';
-  
+
   private subscriptions = new Subscription();
 
   constructor(
@@ -68,120 +68,117 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       appointmentEffectiveDate: [null],
       appointmentExpireDate: [null],
       appointmentTerminationDate: [null],
-
-      // licenseState: ['', Validators.required],
-      // agentName: [{ value: '', disabled: true }],
-      // affiliatedLicense: [''],
-      // originalIssueDate: ['', Validators.required],
-      // reinstatementDate: [''],
-      // notes: [''],
-    });
+});
   }
 
   ngOnInit(): void {
     this.licenseStates = ['Select', ...this.conService.getStates()];
-    this.drpdwnDataService
-      .fetchDropdownData('GetLicenseStatuses')
-      .subscribe((licenseStatuses: { value: string; label: string }[]) => {
-        this.licenseStatuses = [
-          { value: 'Select', label: 'Select' },
-          ...licenseStatuses.filter(
-            (item) => item.value !== 'All' && item.label !== 'All'
-          ),
-        ];
-      });
 
-      this.subscriptions.add(
-        this.agentComService.modeLicenseMgmtChanged.subscribe((mode: string) => {
-          // this.drpdwnDataService
-          //   .fetchDropdownNumericData(
-          //     'GetLicenseNumericNames',
-          //     this.agentDataService.agentInformation.branchDeptStreetState
-          //   )
-          //   .subscribe((licenseNames: { value: number; label: string }[]) => {
-          //     this.licenseNames = [
-          //       { value: 0, label: 'Select' },
-          //       ...licenseNames,
-          //     ];
-          //   });
-          this.getStateLicenseNames(this.agentDataService.agentInformation.branchDeptStreetState ?? 'Select');
-  
-          if (mode === 'EDIT') {
-            this.subscriptions.add(
-              this.agentDataService.licenseMgmtDataIndexChanged.subscribe(
-                (licenseMgmtDataIndex: any) => {
-                  this.currentIndex = licenseMgmtDataIndex;
-                }
-              )
-            );
-              
-  
-            this.licenseMgmtData =
-              this.agentDataService.agentInformation.agentLicenseAppointments;
-            let originalIssueDate =
-              this.licenseMgmtData[this.currentIndex].originalIssueDate;
-            let lineOfAuthIssueDate =
-              this.licenseMgmtData[this.currentIndex].lineOfAuthIssueDate;
-            let licenseEffectiveDate =
-              this.licenseMgmtData[this.currentIndex].licenseEffectiveDate;
-            let licenseExpirationDate =
-              this.licenseMgmtData[this.currentIndex].licenseExpirationDate;
-            this.defaultLicenseState =
-              this.licenseMgmtData[this.currentIndex].licenseState;
-  
-            this.licenseForm.patchValue({
-              agentName:
-                this.agentDataService.agentInformation.lastName +
-                ', ' +
-                this.agentDataService.agentInformation.firstName,
-              employeeLicenseId:
-                this.licenseMgmtData[this.currentIndex].employeeLicenseId,
-              licenseState: this.licenseMgmtData[this.currentIndex].licenseState,
-              licenseName: this.licenseMgmtData[this.currentIndex].licenseName,
-              licenseID: this.licenseMgmtData[this.currentIndex].licenseID,
-              licenseNumber:
-                this.licenseMgmtData[this.currentIndex].licenseNumber,
-              licenseStatus:
-                this.licenseMgmtData[this.currentIndex].licenseStatus,
-              affiliatedLicense: 'SELECT-TBD...',
-              licenseIssueDate: originalIssueDate
-                ? formatDate(originalIssueDate, 'yyyy-MM-dd', 'en-US')
-                : null,
-              lineOfAuthIssueDate: lineOfAuthIssueDate
-                ? formatDate(lineOfAuthIssueDate, 'yyyy-MM-dd', 'en-US')
-                : '01/01/0001 00:00:00',
-              licenseEffectiveDate: licenseEffectiveDate
-                ? formatDate(licenseEffectiveDate, 'yyyy-MM-dd', 'en-US')
-                : null,
-              licenseExpireDate: licenseExpirationDate
-                ? formatDate(licenseExpirationDate, 'yyyy-MM-dd', 'en-US')
-                : null,
-              licenseNote: this.licenseMgmtData[this.currentIndex].licenseNote,
-              required: this.licenseMgmtData[this.currentIndex].required,
-              // reinstatementDate: this.licenseMgmtData[this.currentIndex].reinstatementDate,
-              nonResident: this.licenseMgmtData[this.currentIndex].resNoneRes,
-              reinstatement:
-                this.licenseMgmtData[this.currentIndex].reinstatement,
-              employmentID: this.licenseMgmtData[this.currentIndex].employmentID,
-            });
-          } else {
-            this.licenseForm.reset();
-            this.licenseForm.patchValue({
-              // agentName:
-              //   this.agentDataService.agentInformation.lastName +
-              //   ', ' +
-              //   this.agentDataService.agentInformation.firstName,
-              licenseState:
-                this.agentDataService.agentInformation.branchDeptStreetState,
-  
-              licenseID: 0,
-              licenseStatus: 'Select',
-              sentToAgentDate: '01/01/0001 00:00:00',
-            });
-          }
+    this.subscriptions.add(
+      this.drpdwnDataService
+        .fetchDropdownData('GetLicenseStatuses')
+        .subscribe((licenseStatuses: { value: string; label: string }[]) => {
+          this.licenseStatuses = [
+            { value: 'Select', label: 'Select' },
+            ...licenseStatuses.filter(
+              (item) => item.value !== 'All' && item.label !== 'All'
+            ),
+          ];
         })
-      );
-      
+    );
+
+    this.subscriptions.add(
+      this.agentComService.modeLicenseMgmtChanged.subscribe((mode: string) => {
+        // this.drpdwnDataService
+        //   .fetchDropdownNumericData(
+        //     'GetLicenseNumericNames',
+        //     this.agentDataService.agentInformation.branchDeptStreetState
+        //   )
+        //   .subscribe((licenseNames: { value: number; label: string }[]) => {
+        //     this.licenseNames = [
+        //       { value: 0, label: 'Select' },
+        //       ...licenseNames,
+        //     ];
+        //   });
+        this.getStateLicenseNames(
+          this.agentDataService.agentInformation.branchDeptStreetState ??
+            'Select'
+        );
+
+        if (mode === 'EDIT') {
+          this.subscriptions.add(
+            this.agentDataService.licenseMgmtDataIndexChanged.subscribe(
+              (licenseMgmtDataIndex: any) => {
+                this.currentIndex = licenseMgmtDataIndex;
+              }
+            )
+          );
+
+          this.licenseMgmtData =
+            this.agentDataService.agentInformation.agentLicenseAppointments;
+          let originalIssueDate =
+            this.licenseMgmtData[this.currentIndex].originalIssueDate;
+          let lineOfAuthIssueDate =
+            this.licenseMgmtData[this.currentIndex].lineOfAuthIssueDate;
+          let licenseEffectiveDate =
+            this.licenseMgmtData[this.currentIndex].licenseEffectiveDate;
+          let licenseExpirationDate =
+            this.licenseMgmtData[this.currentIndex].licenseExpirationDate;
+          this.defaultLicenseState =
+            this.licenseMgmtData[this.currentIndex].licenseState;
+
+          this.licenseForm.patchValue({
+            agentName:
+              this.agentDataService.agentInformation.lastName +
+              ', ' +
+              this.agentDataService.agentInformation.firstName,
+            employeeLicenseId:
+              this.licenseMgmtData[this.currentIndex].employeeLicenseId,
+            licenseState: this.licenseMgmtData[this.currentIndex].licenseState,
+            licenseName: this.licenseMgmtData[this.currentIndex].licenseName,
+            licenseID: this.licenseMgmtData[this.currentIndex].licenseID,
+            licenseNumber:
+              this.licenseMgmtData[this.currentIndex].licenseNumber,
+            licenseStatus:
+              this.licenseMgmtData[this.currentIndex].licenseStatus,
+            affiliatedLicense: 'SELECT-TBD...',
+            licenseIssueDate: originalIssueDate
+              ? formatDate(originalIssueDate, 'yyyy-MM-dd', 'en-US')
+              : null,
+            lineOfAuthIssueDate: lineOfAuthIssueDate
+              ? formatDate(lineOfAuthIssueDate, 'yyyy-MM-dd', 'en-US')
+              : '01/01/0001 00:00:00',
+            licenseEffectiveDate: licenseEffectiveDate
+              ? formatDate(licenseEffectiveDate, 'yyyy-MM-dd', 'en-US')
+              : null,
+            licenseExpireDate: licenseExpirationDate
+              ? formatDate(licenseExpirationDate, 'yyyy-MM-dd', 'en-US')
+              : null,
+            licenseNote: this.licenseMgmtData[this.currentIndex].licenseNote,
+            required: this.licenseMgmtData[this.currentIndex].required,
+            // reinstatementDate: this.licenseMgmtData[this.currentIndex].reinstatementDate,
+            nonResident: this.licenseMgmtData[this.currentIndex].resNoneRes,
+            reinstatement:
+              this.licenseMgmtData[this.currentIndex].reinstatement,
+            employmentID: this.licenseMgmtData[this.currentIndex].employmentID,
+          });
+        } else {
+          this.licenseForm.reset();
+          this.licenseForm.patchValue({
+            // agentName:
+            //   this.agentDataService.agentInformation.lastName +
+            //   ', ' +
+            //   this.agentDataService.agentInformation.firstName,
+            licenseState:
+              this.agentDataService.agentInformation.branchDeptStreetState,
+
+            licenseID: 0,
+            licenseStatus: 'Select',
+            sentToAgentDate: '01/01/0001 00:00:00',
+          });
+        }
+      })
+    );
   }
 
   getStateLicenseNames(state: string) {
@@ -190,10 +187,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
     }
     this.subscriptions.add(
       this.drpdwnDataService
-        .fetchDropdownNumericData(
-          'GetLicenseNumericNames',
-          state
-        )
+        .fetchDropdownNumericData('GetLicenseNumericNames', state)
         .subscribe((licenseNames: { value: number; label: string }[]) => {
           this.licenseNames = [{ value: 0, label: 'Select' }, ...licenseNames];
         })
@@ -224,10 +218,6 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       this.licenseForm.controls['licenseStatus'].setErrors({ invalid: true });
     }
 
-    // if (licenseInfo.sentToAgentDate === '01/01/0001 00:00:00') {
-    //   this.licenseForm.controls['sentToAgentDate'].setErrors({ invalid: true });
-    // }
-
     if (licenseInfo.licenseIssueDate === '01/01/0001 00:00:00') {
       this.licenseForm.controls['licenseIssueDate'].setErrors({
         invalid: true,
@@ -256,16 +246,13 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
           if (error.error && error.error.errMessage) {
             this.errorMessageService.setErrorMessage(error.error.errMessage);
           }
-          const modalDiv = document.getElementById(
-            'modal-edit-license-info'
-          );
+          const modalDiv = document.getElementById('modal-edit-license-info');
           if (modalDiv != null) {
             modalDiv.style.display = 'none';
           }
         },
       })
     );
-    
   }
 
   onCloseModal() {

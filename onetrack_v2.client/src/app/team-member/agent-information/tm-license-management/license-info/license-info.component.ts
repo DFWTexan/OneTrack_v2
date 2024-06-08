@@ -20,11 +20,14 @@ import { Subscription } from 'rxjs';
 })
 @Injectable()
 export class LicenseInfoComponent implements OnInit, OnDestroy {
-  licenseMgmtData: AgentLicenseAppointments[] = [];
+  licenseMgmtData: AgentLicenseAppointments[] =
+    [] as AgentLicenseAppointments[];
   subscriptionAgentInfo: Subscription = new Subscription();
   currentIndex: number = 0;
   eventAction: string = '';
   vObject: any = {};
+
+  private subscriptions = new Subscription();
 
   constructor(
     protected agentDataService: AgentDataService,
@@ -38,19 +41,18 @@ export class LicenseInfoComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentIndex = this.agentDataService.licenseMgmtDataIndex;
-    // this.agentDataService.licenseMgmtDataIndexChanged.subscribe((index: number) => {
-    //   this.currentIndex = index;
-    // });
-
+    
     this.licenseMgmtData =
       this.agentDataService.agentInformation.agentLicenseAppointments;
 
-    // TBD: Need to get the data from the service with a subscription (NOT WORKING YET)
-    // this.subscriptionAgentInfo = this.agentDataService.agentInfoChanged.subscribe(
-    //   (agentInfo) => {
-    //     this.licenseMgmtData = agentInfo.agentLicenseAppointments;
-    //   }
-    // );
+    this.subscriptions.add(
+      (this.subscriptionAgentInfo =
+        this.agentDataService.agentLicenseAppointmentsChanged.subscribe(
+          (agentLicenseAppointments) => {
+            this.licenseMgmtData = agentLicenseAppointments;
+          }
+        ))
+    );
   }
 
   // Pagination
