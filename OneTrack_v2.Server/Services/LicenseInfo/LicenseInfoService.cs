@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using OneTrack_v2.DbData;
 using OneTrack_v2.Services;
 using OneTrak_v2.DataModel;
+using OneTrak_v2.Server.DbData.DataModel.LincenseInfo;
 using System.Data;
 
 namespace OneTrak_v2.Services
@@ -259,7 +260,7 @@ namespace OneTrak_v2.Services
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, null);
             }
 
             return result;
@@ -291,7 +292,7 @@ namespace OneTrak_v2.Services
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, null);
             }
 
             return result;
@@ -355,7 +356,7 @@ namespace OneTrak_v2.Services
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, null);
             }
 
             return result;
@@ -416,7 +417,7 @@ namespace OneTrak_v2.Services
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, null);
             }
 
             return result;
@@ -449,7 +450,7 @@ namespace OneTrak_v2.Services
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, null);
             }
 
             return result;
@@ -493,7 +494,7 @@ namespace OneTrak_v2.Services
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, null);
             }
 
             return result;
@@ -538,7 +539,7 @@ namespace OneTrak_v2.Services
                 result.Success = false;
                 result.ErrMessage = "Server Error - Please Contact Support [REF# LINFO-6128-198791].";
 
-                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
             }
 
             return result;
@@ -580,11 +581,48 @@ namespace OneTrak_v2.Services
                 result.Success = false;
                 result.ErrMessage = "Server Error - Please Contact Support [REF# LINFO-6128-192719].";
 
-                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
             }
 
             return result;
         }
+        public ReturnResult DeleteLicenseAppointment([FromBody] IputDeleteLicenseAppointment vInput)
+		{
+			var result = new ReturnResult();
+            try
+			{
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+				{
+                    using (SqlCommand cmd = new SqlCommand("uspEmployeeAppointmentDelete", conn))
+					{
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@EmployeeAppointmentID", vInput.EmployeeAppointmentID));
+                        cmd.Parameters.Add(new SqlParameter("@EmployeeLicenseID", vInput.EmployeeLicenseID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "License Appointment Deleted Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+			{
+                result.StatusCode = 500;
+                result.ObjData = null;
+                result.Success = false;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# LINFO-6128-198733].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;
+		}
         #endregion
     }
 }

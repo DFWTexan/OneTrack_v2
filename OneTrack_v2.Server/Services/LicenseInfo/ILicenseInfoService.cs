@@ -1,6 +1,7 @@
 ﻿using DataModel.Response;
 using Microsoft.AspNetCore.Mvc;
 using OneTrak_v2.DataModel;
+using OneTrak_v2.Server.DbData.DataModel.LincenseInfo;
 
 namespace OneTrak_v2.Services
 {
@@ -14,5 +15,6 @@ namespace OneTrak_v2.Services
         public ReturnResult GetAffiliatedLicenses(string vStateProvinceAbv, int vLicenseID);
         public ReturnResult AddLicenseAppointment([FromBody] IputAddLicenseAppointment vInput);
         public ReturnResult UpdateLicenseAppointment([FromBody] IputUpdateLicenseAppointment vInput);
+        public ReturnResult DeleteLicenseAppointment([FromBody] IputDeleteLicenseAppointment vInput);
     }
 }

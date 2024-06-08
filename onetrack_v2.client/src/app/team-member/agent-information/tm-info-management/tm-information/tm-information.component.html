@@ -7,7 +7,7 @@
             class="btn btn-danger w-100"
             [disabled]="isLoading"
             (click)="
-              openConfirmDialog('deleteJobTitleItem', 'Job Title Item', {
+              openConfirmDialog('deleteAgent', 'Job Title Item', {
                 teamNbr: agentInfo.jobTitle,
                 id: agentInfo.geid,
                 teamMemberName: agentInfo.firstName + ' ' + agentInfo.lastName
@@ -268,7 +268,12 @@
                             </span>
                           </button>
                           <button class="icon-edit-delete-button">
-                            <span class="material-symbols-outlined">
+                            <span class="material-symbols-outlined" (click)="
+                            openConfirmDialog('deleteLicAppt', 'License Appointment', {
+                              employeeAppointmentID: appointment.employeeAppointmentID,
+                              employeeLicenseID: appointment.employeeLicenseID,
+                            })
+                          ">
                               delete
                             </span>
                           </button>
