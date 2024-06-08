@@ -5,7 +5,7 @@
       style="font-size: larger"
     >
       <strong style="margin-right: 1rem">License Name:</strong
-      >{{ licenseMgmtData[currentIndex].licenseName}}
+      >{{ licenseMgmtData[currentIndex].licenseName }}
     </div>
 
     <div class="col d-flex justify-content-center mb-3 mt-1">
@@ -182,7 +182,9 @@
           <td *ngIf="appComService.isShowEditID">
             {{ appointment.licenseID }}
           </td>
-          <td *ngIf="appComService.isShowEditID">{{ appointment.companyID }}</td>
+          <td *ngIf="appComService.isShowEditID">
+            {{ appointment.companyID }}
+          </td>
           <td>{{ appointment.companyAbv }}</td>
           <td>{{ appointment.carrierDate | date : "MM/dd/yyyy" }}</td>
           <td>
@@ -198,14 +200,26 @@
                 class="icon-edit-delete-button"
                 (click)="
                   agentDataService.storeLicenseAppointment(appointment);
-                  storeLicApptLicenseID(licenseMgmtData[currentIndex].licenseID);
+                  storeLicApptLicenseID(
+                    licenseMgmtData[currentIndex].licenseID
+                  );
                   modalService.open('modal-edit-license-appt')
                 "
               >
                 <span class="material-symbols-outlined"> edit </span>
               </button>
               <button class="icon-edit-delete-button">
-                <span class="material-symbols-outlined"> delete </span>
+                <span
+                  class="material-symbols-outlined"
+                  (click)="
+                openConfirmDialog('deleteLicAppt', 'License Appointment', {
+                  employeeAppointmentID: appointment.employeeAppointmentID,
+                  employeeLicenseID: appointment.employeeLicenseID,
+                })
+              "
+                >
+                  delete
+                </span>
               </button>
             </div>
           </td>

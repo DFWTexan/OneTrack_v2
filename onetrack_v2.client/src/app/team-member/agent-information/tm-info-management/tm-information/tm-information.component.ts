@@ -127,6 +127,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
                     //   response
                     // );
                     // this.location.back();
+                    alert('License Appointment Deleted');
                   },
                   error: (error) => {
                     console.error(error);

@@ -5,6 +5,7 @@ import {
   AgentComService,
   AgentDataService,
   AppComService,
+  LicIncentiveInfoDataService,
   ModalService,
   UserAcctInfoDataService,
 } from '../../../../_services';
@@ -35,6 +36,7 @@ export class LicenseInfoComponent implements OnInit, OnDestroy {
     protected modalService: ModalService,
     public appComService: AppComService,
     private userInfoDataService: UserAcctInfoDataService,
+    private licenseIncentiveInfoDataService: LicIncentiveInfoDataService,
     public dialog: MatDialog,
     private router: Router
   ) {}
@@ -89,46 +91,94 @@ export class LicenseInfoComponent implements OnInit, OnDestroy {
   openConfirmDialog(eventAction: string, msg: string, vObject: any): void {
     this.eventAction = eventAction;
     this.vObject = vObject;
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      width: '250px',
-      data: {
-        title: 'Confirm Action',
-        message:
-          'You are about to DELETE agent license ' +
-          this.vObject.licenseName +
-          ' - (' +
-          this.vObject.employeeLicenseID +
-          ')',
-      },
-    });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.agentDataService
-          .deleteAgentLicense({
-            employmentID: this.vObject.employmentID,
-            employeeLicenseID: this.vObject.employeeLicenseID,
-            userSOEID: this.userInfoDataService.userAcctInfo.soeid,
-          })
-          .subscribe({
-            next: (response) => {
-              this.router
-                .navigateByUrl('/', { skipLocationChange: true })
-                .then(() => {
-                  this.router.navigate([
-                    'team/agent-info',
-                    this.agentDataService.agentInformation.employeeID,
-                    'tm-license-mgmt',
-                  ]);
-                });
-            },
-            error: (error) => {
-              console.error(error);
-              // handle the error here
+    switch (eventAction) {
+      case 'deleteLicense':
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+          width: '250px',
+          data: {
+            title: 'Confirm Action',
+            message:
+              'You are about to DELETE agent license ' +
+              this.vObject.licenseName +
+              ' - (' +
+              this.vObject.employeeLicenseID +
+              ')',
+          },
+        });
+    
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.agentDataService
+              .deleteAgentLicense({
+                employmentID: this.vObject.employmentID,
+                employeeLicenseID: this.vObject.employeeLicenseID,
+                userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+              })
+              .subscribe({
+                next: (response) => {
+                  this.router
+                    .navigateByUrl('/', { skipLocationChange: true })
+                    .then(() => {
+                      this.router.navigate([
+                        'team/agent-info',
+                        this.agentDataService.agentInformation.employeeID,
+                        'tm-license-mgmt',
+                      ]);
+                    });
+                },
+                error: (error) => {
+                  console.error(error);
+                  // handle the error here
+                },
+              });
+          }
+        });
+        break;
+        case 'deleteLicAppt':
+          const dialogRef_LicAppt = this.dialog.open(ConfirmDialogComponent, {
+            width: '250px',
+            data: {
+              title: 'Confirm Action',
+              message:
+                'You are about to DELETE license appointment ' +
+                vObject.employeeAppointmentID +
+                '. Do you want to proceed?'
             },
           });
-      }
-    });
+      
+          dialogRef_LicAppt.afterClosed().subscribe((result) => {
+            if (result) {
+              this.licenseIncentiveInfoDataService
+                .deleteLicenseAppointment({
+                  employmentID: this.vObject.employmentID,
+                  employeeLicenseID: this.vObject.employeeLicenseID,
+                  userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+                })
+                .subscribe({
+                  next: (response) => {
+                    // this.router
+                    //   .navigateByUrl('/', { skipLocationChange: true })
+                    //   .then(() => {
+                    //     this.router.navigate([
+                    //       'team/agent-info',
+                    //       this.agentDataService.agentInformation.employeeID,
+                    //       'tm-license-mgmt',
+                    //     ]);
+                    //   });
+                  },
+                  error: (error) => {
+                    console.error(error);
+                    // handle the error here
+                  },
+                });
+            }
+          });
+          break;
+      default:
+        break;
+    }
+    
   }
 
   storeLicApptLicenseID(licenseID: number) {
