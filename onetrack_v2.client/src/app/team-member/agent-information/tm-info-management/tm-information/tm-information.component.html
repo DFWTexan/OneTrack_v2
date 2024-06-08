@@ -212,7 +212,7 @@
                       </th>
                       <th scope="col">Appt ID</th>
                       <th scope="col">Status</th>
-                      <th scope="col">Company ID</th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">Company ID</th>
                       <th scope="col">Co. Abv.</th>
                       <th scope="col">Carrier Date</th>
                       <th scope="col">Eff. Date</th>
@@ -230,7 +230,7 @@
                       </td>
                       <td>{{ appointment.employeeAppointmentID }}</td>
                       <td>{{ appointment.appointmentStatus }}</td>
-                      <td>{{ appointment.companyID }}</td>
+                      <td *ngIf="appComService.isShowEditID">{{ appointment.companyID }}</td>
                       <td>{{ appointment.companyAbv }}</td>
                       <td>
                         {{ appointment.carrierDate | date : "MM/dd/yyyy" }}
