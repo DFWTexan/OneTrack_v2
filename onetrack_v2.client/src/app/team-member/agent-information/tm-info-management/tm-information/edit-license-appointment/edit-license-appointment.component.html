@@ -14,17 +14,31 @@
           formControlName="licenseID"
         />
       </div> -->
-
       <div class="mb-3">
-        <label for="appointmentStatus" class="form-label"> Status:</label>
-        <input
-          class="form-select form-select-lg select-size-small"
+        <label for="appointmentStatus" class="form-label">
+          Status: <span class="text-danger">*</span></label
+        >
+        <select
+          class="form-select select-size-small"
           type="text"
           id="appointmentStatus"
           formControlName="appointmentStatus"
-        />
+        >
+          <option *ngFor="let status of appointmentStatuses" [value]="status">
+            {{ status }}
+          </option>
+        </select>
+        <div
+          *ngIf="
+            (form.controls['appointmentStatus'].touched || isFormSubmitted) &&
+            form.controls['appointmentStatus'].errors &&
+            form.controls['appointmentStatus'].errors['invalid']
+          "
+          class="text-danger"
+        >
+          Please select Appointment Status
+        </div>
       </div>
-
       <!-- <div class="mb-3">
         <label for="employeeAppointmentID" class="form-label">Appt. ID:</label>
         <input
@@ -34,18 +48,18 @@
           formControlName="employeeAppointmentID"
         />
       </div> -->
-
       <div class="mb-3">
-        <label for="companyID" class="form-label"
-          >Company Abv: <span class="text-danger">*</span></label
-        >
+        <label for="companyID" class="form-label">Company Abv:</label>
         <select
-          class="form-select select-size-medium"
+          class="form-select select-size-small"
           type="text"
           id="companyID"
           formControlName="companyID"
         >
-          <option *ngFor="let abbr of companyAbbreviations" [value]="abbr.value">
+          <option
+            *ngFor="let abbr of companyAbbreviations"
+            [value]="abbr.value"
+          >
             {{ abbr.label }}
           </option>
         </select>
@@ -61,8 +75,8 @@
           Please select Company Name
         </div> -->
       </div>
-
     </div>
+
     <div class="col">
       <div class="mb-3">
         <label for="carrierDate" class="form-label">Carrier Date:</label>
@@ -73,7 +87,6 @@
           formControlName="carrierDate"
         />
       </div>
-
       <div class="mb-3">
         <label for="appointmentEffectiveDate" class="form-label"
           >Effective Date:</label
@@ -86,6 +99,7 @@
         />
       </div>
     </div>
+    
     <div class="col">
       <div class="mb-3">
         <label for="appointmentExpireDate" class="form-label"
@@ -98,7 +112,6 @@
           formControlName="appointmentExpireDate"
         />
       </div>
-
       <div class="mb-3">
         <label for="appointmentTerminationDate" class="form-label"
           >Termination Date:</label
@@ -124,7 +137,13 @@
       >
         Cancel
       </button>
-      <button type="submit" class="btn btn-primary save-button">Save</button>
+      <button
+        type="submit"
+        class="btn btn-primary save-button"
+        [disabled]="form.pristine"
+      >
+        Save
+      </button>
     </div>
   </div>
 </form>

@@ -62,14 +62,16 @@ export class AddLicenseApptComponent implements OnInit, OnDestroy {
           this.agentDataService.agentLicApptLicenseID
         )
         .subscribe((response) => {
-          this.companyAbbreviations = [{value: 0, label: 'Select'}, ...response];
+          this.companyAbbreviations = [
+            { value: 0, label: 'Select' },
+            ...response,
+          ];
         })
     );
 
     // this.subscriptions.add(
     //   this.agentDataService.agentLicApptLicenseIDChanged.subscribe(
     //     (agentLicApptLicenseID: any) => {
-
     //     }
     //   )
     // );

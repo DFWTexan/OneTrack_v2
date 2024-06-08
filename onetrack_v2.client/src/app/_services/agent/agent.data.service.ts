@@ -863,4 +863,10 @@ export class AgentDataService {
     this.diaryEntry = diaryEntry || {};
     this.diaryEntryChanged.next(this.diaryEntry);
   }
+
+  // SUBJECT UPDATES
+  updateAgentLicenseAppointments(appointments: AgentLicenseAppointments[]) {
+    this.agentLicenseAppointments = appointments;
+    this.agentLicenseAppointmentsChanged.next(this.agentLicenseAppointments);
+  }
 }

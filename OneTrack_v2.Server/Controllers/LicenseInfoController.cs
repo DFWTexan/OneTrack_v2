@@ -71,5 +71,13 @@ namespace OneTrak_v2.Server.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> UpdateLicenseAppointment([FromBody] IputUpdateLicenseAppointment input)
+        {
+            var result = await Task.Run(() => _licenseInfo.UpdateLicenseAppointment(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
     }
 }

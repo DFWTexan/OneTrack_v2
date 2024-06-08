@@ -163,8 +163,8 @@
         <tr style="background-color: gainsboro; border-radius: 5rem">
           <th>Status</th>
           <th *ngIf="appComService.isShowEditID">License ID</th>
-          <th>Company ID</th>
-          <th>Co. Abbr.</th>
+          <th *ngIf="appComService.isShowEditID">Company ID</th>
+          <th>Company Abv.</th>
           <th>Carrier Date</th>
           <th>Effective Date</th>
           <th>Expire Date</th>
@@ -182,7 +182,7 @@
           <td *ngIf="appComService.isShowEditID">
             {{ appointment.licenseID }}
           </td>
-          <td>{{ appointment.companyID }}</td>
+          <td *ngIf="appComService.isShowEditID">{{ appointment.companyID }}</td>
           <td>{{ appointment.companyAbv }}</td>
           <td>{{ appointment.carrierDate | date : "MM/dd/yyyy" }}</td>
           <td>
@@ -198,6 +198,7 @@
                 class="icon-edit-delete-button"
                 (click)="
                   agentDataService.storeLicenseAppointment(appointment);
+                  storeLicApptLicenseID(licenseMgmtData[currentIndex].licenseID);
                   modalService.open('modal-edit-license-appt')
                 "
               >

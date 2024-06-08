@@ -550,7 +550,7 @@ namespace OneTrak_v2.Services
 			{
                 using (SqlConnection conn = new SqlConnection(_connectionString))
 				{
-                    using (SqlCommand cmd = new SqlCommand("uspAppointmentInsert", conn))
+                    using (SqlCommand cmd = new SqlCommand("uspAppointmentUpdate", conn))
 					{
                         cmd.CommandType = CommandType.StoredProcedure;
 

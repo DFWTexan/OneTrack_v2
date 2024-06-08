@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 
 import {
   AgentDataService,
+  ConstantsDataService,
   DropdownDataService,
   ErrorMessageService,
   LicIncentiveInfoDataService,
@@ -21,6 +22,11 @@ export class EditLicenseAppointmentComponent implements OnInit, OnDestroy {
   isFormSubmitted: boolean = false;
   companyAbbreviations: { value: number; label: string }[] = [];
   licenseAppointment: LicenseAppointment = {} as LicenseAppointment;
+  appointmentStatuses: any[] = [
+    'Select',
+    ...this.conService.getAppointmentStatuses(),
+  ];
+  employeeAppointmentID: number = 0;
   form = this.fb.group({
     licenseID: new FormControl({ value: '', disabled: true }),
     employeeAppointmentID: new FormControl({ value: '', disabled: true }),
@@ -31,11 +37,12 @@ export class EditLicenseAppointmentComponent implements OnInit, OnDestroy {
     appointmentExpireDate: new FormControl(''),
     appointmentTerminationDate: new FormControl(''),
   });
-  
+
   private subscriptions = new Subscription();
 
   constructor(
     public errorMessageService: ErrorMessageService,
+    private conService: ConstantsDataService,
     private agentDataService: AgentDataService,
     private licIncentiveInfoDataService: LicIncentiveInfoDataService,
     private userInfoDataService: UserAcctInfoDataService,
@@ -65,6 +72,7 @@ export class EditLicenseAppointmentComponent implements OnInit, OnDestroy {
           );
 
           this.licenseAppointment = licenseAppointment;
+          this.employeeAppointmentID = licenseAppointment.employeeAppointmentID;
           this.form.patchValue({
             licenseID: licenseAppointment.licenseID,
             employeeAppointmentID: licenseAppointment.employeeAppointmentID,
@@ -86,16 +94,12 @@ export class EditLicenseAppointmentComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    // ERROR: TBD
-    // if (error.error && error.error.errMessage) {
-    //   this.errorMessageService.setErrorMessage(error.error.errMessage);
-    // }
     this.isFormSubmitted = true;
 
     let licenseApptItem: any = this.form.value;
     licenseApptItem.employeeID =
       this.agentDataService.agentInformation.employeeID;
-    // licenseApptItem.employeeLicenseID = this.employeeLicenseID;
+    licenseApptItem.employeeAppointmentID = this.employeeAppointmentID;
     licenseApptItem.UserSOEID = this.userInfoDataService.userAcctInfo.soeid;
 
     if (licenseApptItem.appointmentStatus === 'Select') {

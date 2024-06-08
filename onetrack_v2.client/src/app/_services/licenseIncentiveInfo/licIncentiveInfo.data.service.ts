@@ -78,7 +78,7 @@ export class LicIncentiveInfoDataService {
     this.apiUrl = environment.apiUrl + 'LicenseInfo/UpdateLicenseAppointment';
 
     return this.http
-      .put<{
+      .post<{
         success: boolean;
         statusCode: number;
         objData: any;
@@ -95,11 +95,13 @@ export class LicIncentiveInfoDataService {
           }
         }),
         map((appointments) => {
-          this.agentDataService.agentInformation.agentLicenseAppointments =
-            appointments;
-          this.agentDataService.agentLicenseAppointmentsChanged.next(
-            this.agentDataService.agentInformation.agentLicenseAppointments
-          );
+          // this.agentDataService.agentInformation.agentLicenseAppointments =
+          //   appointments;
+          // this.agentDataService.agentLicenseAppointmentsChanged.next(
+          //   this.agentDataService.agentInformation.agentLicenseAppointments
+          // );
+
+          // this.agentDataService.updateAgentLicenseAppointments(appointments);
           return appointments;
         })
       );

@@ -129,6 +129,10 @@ export class LicenseInfoComponent implements OnInit, OnDestroy {
     });
   }
 
+  storeLicApptLicenseID(licenseID: number) {
+    this.agentDataService.storeLicApptLicenseID(licenseID);
+  }
+
   ngOnDestroy() {
     this.subscriptionAgentInfo.unsubscribe();
   }
