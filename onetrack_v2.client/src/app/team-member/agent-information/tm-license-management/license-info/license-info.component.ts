@@ -151,7 +151,7 @@ export class LicenseInfoComponent implements OnInit, OnDestroy {
             if (result) {
               this.licenseIncentiveInfoDataService
                 .deleteLicenseAppointment({
-                  employmentID: this.vObject.employmentID,
+                  employeeAppointmentID: this.vObject.employeeAppointmentID,
                   employeeLicenseID: this.vObject.employeeLicenseID,
                   userSOEID: this.userInfoDataService.userAcctInfo.soeid,
                 })
