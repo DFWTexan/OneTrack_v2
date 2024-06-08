@@ -13,7 +13,7 @@
 
       <div class="mb-3">
         <label for="appointmentStatus" class="form-label"
-          >Appointment Status:</label
+          >Appointment Status: <span class="text-danger">*</span></label
         >
         <select
           class="form-select select-size-small"
@@ -25,19 +25,31 @@
             {{ status }}
           </option>
         </select>
-      </div>
-      <!-- <div class="mb-3">
-        <label for="companyID" class="form-label"
-          >License Name: <span class="text-danger">*</span></label
+        <div
+          *ngIf="
+            (licenseApptForm.controls['appointmentStatus'].touched ||
+              isFormSubmitted) &&
+            licenseApptForm.controls['appointmentStatus'].errors &&
+            licenseApptForm.controls['appointmentStatus'].errors['invalid']
+          "
+          class="text-danger"
         >
+          Please select Appointment Status
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="companyID" class="form-label">Company Abv: </label>
         <select
-          class="form-select select-size-medium"
+          class="form-select select-size-small"
           type="text"
           id="companyID"
           formControlName="companyID"
         >
-          <option *ngFor="let company of companyNames" [value]="company.value">
-            {{ company.label }}
+          <option
+            *ngFor="let abbr of companyAbbreviations"
+            [value]="abbr.value"
+          >
+            {{ abbr.label }}
           </option>
         </select>
         <div
@@ -51,8 +63,7 @@
         >
           Please select Company Name
         </div>
-      </div> -->
-
+      </div>
     </div>
     <div class="col">
       <div class="mb-3">

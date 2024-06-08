@@ -105,6 +105,9 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   }
 
   storeLicApptLicenseID(licenseID: number) {
+
+console.log('EMFTEST (app-tm-information: storeLicApptLicenseID) - licenseID: ', licenseID);
+
     this.agentDataService.storeLicApptLicenseID(licenseID);
   }
 

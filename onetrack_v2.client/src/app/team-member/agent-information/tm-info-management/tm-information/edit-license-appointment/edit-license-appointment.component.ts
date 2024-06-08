@@ -20,6 +20,7 @@ import { LicenseAppointment } from '../../../../../_Models';
 export class EditLicenseAppointmentComponent implements OnInit, OnDestroy {
   isFormSubmitted: boolean = false;
   companyAbbreviations: { value: number; label: string }[] = [];
+  licenseAppointment: LicenseAppointment = {} as LicenseAppointment;
   form = this.fb.group({
     licenseID: new FormControl({ value: '', disabled: true }),
     employeeAppointmentID: new FormControl({ value: '', disabled: true }),
@@ -30,8 +31,7 @@ export class EditLicenseAppointmentComponent implements OnInit, OnDestroy {
     appointmentExpireDate: new FormControl(''),
     appointmentTerminationDate: new FormControl(''),
   });
-
-  licenseAppointment: LicenseAppointment = {} as LicenseAppointment;
+  
   private subscriptions = new Subscription();
 
   constructor(
@@ -57,9 +57,6 @@ export class EditLicenseAppointmentComponent implements OnInit, OnDestroy {
                       agentLicApptLicenseID
                     )
                     .subscribe((response) => {
-
-console.log('EMFTEST (edit-license-appointment: ngOnInit) - response => \n ', response);  
-
                       this.companyAbbreviations = response;
                     })
                 );

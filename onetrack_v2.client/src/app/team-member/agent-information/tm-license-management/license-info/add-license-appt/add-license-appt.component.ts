@@ -20,6 +20,7 @@ import {
 export class AddLicenseApptComponent implements OnInit, OnDestroy {
   isFormSubmitted: boolean = false;
   licenseApptForm: FormGroup;
+  companyAbbreviations: { value: number; label: string }[] = [];
   @Input() employeeID: number = 0;
   @Input() employeeLicenseID: number = 0;
   appointmentStatuses: any[] = [
@@ -38,6 +39,7 @@ export class AddLicenseApptComponent implements OnInit, OnDestroy {
     public appComService: AppComService,
     private licIncentiveInfoDataService: LicIncentiveInfoDataService,
     private userInfoDataService: UserAcctInfoDataService,
+    private dropdownDataService: DropdownDataService,
     private fb: FormBuilder
   ) {
     this.licenseApptForm = this.fb.group({
@@ -52,7 +54,29 @@ export class AddLicenseApptComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.subscriptions.add(
+      this.dropdownDataService
+        .fetchDropdownNumericData(
+          'GetCoAbvByLicenseID',
+          this.agentDataService.agentLicApptLicenseID
+        )
+        .subscribe((response) => {
+          this.companyAbbreviations = [{value: 0, label: 'Select'}, ...response];
+        })
+    );
+
+    // this.subscriptions.add(
+    //   this.agentDataService.agentLicApptLicenseIDChanged.subscribe(
+    //     (agentLicApptLicenseID: any) => {
+
+    //     }
+    //   )
+    // );
+    this.licenseApptForm.patchValue({
+      companyID: 0,
+    });
+  }
 
   onSubmit() {
     this.isFormSubmitted = true;
@@ -72,31 +96,36 @@ export class AddLicenseApptComponent implements OnInit, OnDestroy {
       return;
     }
 
-console.log('EMFTEST (app-add-license-appt: onSubmit) - licenseApptItem => \n ', licenseApptItem);
+    console.log(
+      'EMFTEST (app-add-license-appt: onSubmit) - licenseApptItem => \n ',
+      licenseApptItem
+    );
 
     this.subscriptions.add(
-      this.licIncentiveInfoDataService.addLicenseAppointment(licenseApptItem).subscribe({
-        next: (response) => {
-          const modalDiv = document.getElementById('modal-add-license-appt');
-          if (modalDiv != null) {
-            modalDiv.style.display = 'none';
-          }
-          // handle the response here
-          // console.log(
-          //   'EMFTEST () - Agent License added successfully response => \n ',
-          //   response
-          // );
-        },
-        error: (error) => {
-          if (error.error && error.error.errMessage) {
-            this.errorMessageService.setErrorMessage(error.error.errMessage);
-          }
-          const modalDiv = document.getElementById('modal-add-license-appt');
-          if (modalDiv != null) {
-            modalDiv.style.display = 'none';
-          }
-        },
-      })
+      this.licIncentiveInfoDataService
+        .addLicenseAppointment(licenseApptItem)
+        .subscribe({
+          next: (response) => {
+            const modalDiv = document.getElementById('modal-add-license-appt');
+            if (modalDiv != null) {
+              modalDiv.style.display = 'none';
+            }
+            // handle the response here
+            // console.log(
+            //   'EMFTEST () - Agent License added successfully response => \n ',
+            //   response
+            // );
+          },
+          error: (error) => {
+            if (error.error && error.error.errMessage) {
+              this.errorMessageService.setErrorMessage(error.error.errMessage);
+            }
+            const modalDiv = document.getElementById('modal-add-license-appt');
+            if (modalDiv != null) {
+              modalDiv.style.display = 'none';
+            }
+          },
+        })
     );
   }
 
