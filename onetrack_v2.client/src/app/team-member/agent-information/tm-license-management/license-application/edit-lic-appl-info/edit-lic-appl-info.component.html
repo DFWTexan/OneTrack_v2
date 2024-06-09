@@ -5,7 +5,7 @@
 >
   <div class="row">
     <div class="col">
-      <div class="mb-3" *ngIf="agentComService.modeLicAppInfo === 'EDIT'">
+      <div class="mb-3" *ngIf="agentComService.modeLicAppInfo === 'EDIT' && appComService.isShowEditID">
         <label for="licenseApplicationID" class="form-label"
           >License Appl. ID:</label
         >
@@ -16,7 +16,40 @@
           formControlName="licenseApplicationID"
         />
       </div>
+      <div class="mb-3">
+        <label for="applicationStatus" class="form-label">Status:</label>
+        <!-- <input
+          class="form-control input-size-small"
+          type="text"
+          id="applicationStatus"
+          formControlName="applicationStatus"
+        /> -->
+        <select
+          class="form-select select-size-small"
+          type="text"
+          id="applicationStatus"
+          formControlName="applicationStatus"
+        >
+          <option
+            *ngFor="let status of applicationStatuses"
+            [value]="status"
+          >
+            {{ status }}
+          </option>
+        </select>
+      </div>
+      <!-- <div class="mb-3">
+        <label for="applicationType" class="form-label">Type:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="applicationType"
+          formControlName="applicationType"
+        />
+      </div> -->
+    </div>
 
+    <div class="col">
       <div class="mb-3">
         <label for="sentToAgentDate" class="form-label">Sent to Agent:</label>
         <input
@@ -26,7 +59,6 @@
           formControlName="sentToAgentDate"
         />
       </div>
-
       <div class="mb-3">
         <label for="recFromAgentDate" class="form-label"
           >Sent From Agent:</label
@@ -38,7 +70,9 @@
           formControlName="recFromAgentDate"
         />
       </div>
+    </div>
 
+    <div class="col">
       <div class="mb-3">
         <label for="sentToStateDate" class="form-label">Sent To State:</label>
         <input
@@ -48,7 +82,6 @@
           formControlName="sentToStateDate"
         />
       </div>
-
       <div class="mb-3">
         <label for="recFromStateDate" class="form-label"
           >Rec. From State:</label
@@ -60,26 +93,6 @@
           formControlName="recFromStateDate"
         />
       </div>
-
-      <div class="mb-3">
-        <label for="applicationStatus" class="form-label">Status:</label>
-        <input
-          class="form-control input-size-small"
-          type="text"
-          id="applicationStatus"
-          formControlName="applicationStatus"
-        />
-      </div>
-
-      <div class="mb-3">
-        <label for="applicationType" class="form-label">Type:</label>
-        <input
-          class="form-control input-size-small"
-          type="text"
-          id="applicationType"
-          formControlName="applicationType"
-        />
-      </div>
     </div>
   </div>
 
@@ -87,7 +100,11 @@
 
   <div class="row mt-4">
     <div class="col d-flex justify-content-end">
-      <button type="button" class="btn btn-secondary me-3 cancel-button">
+      <button
+        type="button"
+        class="btn btn-secondary me-3 cancel-button"
+        (click)="onCloseModal()"
+      >
         Cancel
       </button>
       <button type="submit" class="btn btn-primary save-button">Save</button>

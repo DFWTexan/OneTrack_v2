@@ -3,7 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 
-import { AgentComService, AgentDataService } from '../../../../../_services';
+import { AgentComService, AgentDataService, AppComService, ConstantsDataService, ErrorMessageService } from '../../../../../_services';
 
 @Component({
   selector: 'app-edit-lic-appl-info',
@@ -12,13 +12,18 @@ import { AgentComService, AgentDataService } from '../../../../../_services';
 })
 @Injectable()
 export class EditLicApplInfoComponent implements OnInit, OnDestroy {
+  isFormSubmitted: boolean = false;
   licApplicationForm!: FormGroup;
-  subscriptionMode: Subscription = new Subscription();
-  subscriptionData: Subscription = new Subscription();
+  applicationStatuses: string [] = ['Select', ...this.constDataService.getApplicationStatuses()];
+
+  private subscriptions = new Subscription();
 
   constructor(
+    private errorMessageService: ErrorMessageService,
+    private constDataService: ConstantsDataService,
     public agentService: AgentDataService,
-    public agentComService: AgentComService
+    public agentComService: AgentComService,
+    public appComService: AppComService,
   ) {}
 
   ngOnInit(): void {
@@ -32,10 +37,10 @@ export class EditLicApplInfoComponent implements OnInit, OnDestroy {
       applicationType: new FormControl(null),
     });
 
-    this.subscriptionMode =
+    this.subscriptions.add(
       this.agentComService.modeLicAppInfoChanged.subscribe((mode: string) => {
         if (mode === 'EDIT') {
-          this.subscriptionData =
+          this.subscriptions.add(
             this.agentService.licenseApplicationItemChanged.subscribe(
               (licApplication: any) => {
                 this.licApplicationForm.patchValue({
@@ -64,19 +69,52 @@ export class EditLicApplInfoComponent implements OnInit, OnDestroy {
                   applicationType: licApplication.applicationType,
                 });
               }
-            );
+            )
+          );
         } else {
           this.licApplicationForm.reset();
+          this.licApplicationForm.patchValue({
+            applicationStatus: 'Select',
+            applicationType: 'Select',
+          });
         }
-      });
+      })
+    );
   }
 
   onSubmit() {
     // ...
   }
 
+  onCloseModal() {
+    const modalDiv = document.getElementById('modal-edit-lic-appl-info');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+    // if (this.licApplicationForm.dirty && !this.isFormSubmitted) {
+    //   if (
+    //     confirm('You have unsaved changes. Are you sure you want to close?')
+    //   ) {
+    //     const modalDiv = document.getElementById('modal-edit-lic-appl-info');
+    //     if (modalDiv != null) {
+    //       modalDiv.style.display = 'none';
+    //     }
+    //     this.licApplicationForm.reset();
+    //     this.licApplicationForm.patchValue({
+    //       backgroundCheckStatus: 'Pending',
+    //       isCurrent: true,
+    //     });
+    //   }
+    // } else {
+    //   this.isFormSubmitted = false;
+    //   const modalDiv = document.getElementById('modal-edit-lic-appl-info');
+    //   if (modalDiv != null) {
+    //     modalDiv.style.display = 'none';
+    //   }
+    // }
+  }
+
   ngOnDestroy() {
-    this.subscriptionMode.unsubscribe();
-    this.subscriptionData.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

@@ -16,5 +16,7 @@ namespace OneTrak_v2.Services
         public ReturnResult AddLicenseAppointment([FromBody] IputAddLicenseAppointment vInput);
         public ReturnResult UpdateLicenseAppointment([FromBody] IputUpdateLicenseAppointment vInput);
         public ReturnResult DeleteLicenseAppointment([FromBody] IputDeleteLicenseAppointment vInput);
+        public ReturnResult UpsertLicenseApplication([FromBody] IputUpsertLicenseApplication vInput);
+        public ReturnResult DeleteLicenseApplication([FromBody] IputDeleteLicenseApplication vInput);
     }
 }

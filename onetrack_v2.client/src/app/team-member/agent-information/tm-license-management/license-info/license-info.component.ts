@@ -93,7 +93,7 @@ export class LicenseInfoComponent implements OnInit, OnDestroy {
     this.vObject = vObject;
 
     switch (eventAction) {
-      case 'deleteLicense':
+      case 'deleteAgentLicense':
         const dialogRef = this.dialog.open(ConfirmDialogComponent, {
           width: '250px',
           data: {
@@ -103,7 +103,7 @@ export class LicenseInfoComponent implements OnInit, OnDestroy {
               this.vObject.licenseName +
               ' - (' +
               this.vObject.employeeLicenseID +
-              ')',
+              '). Do you want to proceed?',
           },
         });
     

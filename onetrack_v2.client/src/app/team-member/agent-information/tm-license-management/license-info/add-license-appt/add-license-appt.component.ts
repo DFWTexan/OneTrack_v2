@@ -98,11 +98,6 @@ export class AddLicenseApptComponent implements OnInit, OnDestroy {
       return;
     }
 
-    console.log(
-      'EMFTEST (app-add-license-appt: onSubmit) - licenseApptItem => \n ',
-      licenseApptItem
-    );
-
     this.subscriptions.add(
       this.licIncentiveInfoDataService
         .addLicenseAppointment(licenseApptItem)

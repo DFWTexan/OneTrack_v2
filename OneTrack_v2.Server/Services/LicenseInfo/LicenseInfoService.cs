@@ -623,6 +623,118 @@ namespace OneTrak_v2.Services
 
             return result;
 		}
+        public ReturnResult UpsertLicenseApplication([FromBody] IputUpsertLicenseApplication vInput)
+		{
+            var result = new ReturnResult();
+            try
+            {
+                if (vInput.LicenseApplicationID == 0)
+                {
+                   // INSERT Continuing Education Taken
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspLicenseApplicationsInsert", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeLicenseID", vInput.EmployeeLicenseID));
+                            cmd.Parameters.Add(new SqlParameter("@ApplicationStatus", vInput.ApplicationStatus));
+                            cmd.Parameters.Add(new SqlParameter("@ApplicationType", vInput.ApplicationType));
+                            cmd.Parameters.Add(new SqlParameter("@RenewalDate", vInput.RenewalDate));
+                            cmd.Parameters.Add(new SqlParameter("@RenewalMethod", vInput.RenewalMethod));
+                            cmd.Parameters.Add(new SqlParameter("@SentToAgentDate", vInput.SentToAgentDate));
+                            cmd.Parameters.Add(new SqlParameter("@RecFromAgentDate", vInput.RecFromAgentDate));
+                            cmd.Parameters.Add(new SqlParameter("@SentToStateDate", vInput.SentToStateDate));
+                            cmd.Parameters.Add(new SqlParameter("@RecFromStateDate", vInput.RecFromStateDate));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                else
+                {
+                    // UPDATE Continuing Education Taken
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspLicenseApplicationUpdate", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@LicenseApplicationID", vInput.LicenseApplicationID));
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeLicenseID", vInput.EmployeeLicenseID));
+                            cmd.Parameters.Add(new SqlParameter("@ApplicationStatus", vInput.ApplicationStatus));
+                            cmd.Parameters.Add(new SqlParameter("@ApplicationType", vInput.ApplicationType));
+                            cmd.Parameters.Add(new SqlParameter("@RenewalDate", vInput.RenewalDate));
+                            cmd.Parameters.Add(new SqlParameter("@RenewalMethod", vInput.RenewalMethod));
+                            cmd.Parameters.Add(new SqlParameter("@SentToAgentDate", vInput.SentToAgentDate));
+                            cmd.Parameters.Add(new SqlParameter("@RecFromAgentDate", vInput.RecFromAgentDate));
+                            cmd.Parameters.Add(new SqlParameter("@SentToStateDate", vInput.SentToStateDate));
+                            cmd.Parameters.Add(new SqlParameter("@RecFromStateDate", vInput.RecFromStateDate));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "License Application Created/Updated Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# LINFO-6158-39882].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;
+
+        }
+        public ReturnResult DeleteLicenseApplication([FromBody] IputDeleteLicenseApplication vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspEmployeeAppointmentDelete", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@LicenseApplicationID", vInput.LicenseApplicationID));
+                        cmd.Parameters.Add(new SqlParameter("@EmployeeLicenseID", vInput.EmployeeLicenseID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "License Application Deleted Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ObjData = null;
+                result.Success = false;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# LINFO-6328-19743].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;
+        }
         #endregion
     }
 }

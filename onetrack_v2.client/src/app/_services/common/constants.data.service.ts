@@ -12,6 +12,15 @@ export class ConstantsDataService {
     'Leave',
     'Terminated',
   ];
+  private readonly applicationStatuses = [
+    'Accepted',
+    'Discontinued',
+    'History',
+    'Pending',
+    'Lost',
+    'Rejected',
+    'Resubmitted',
+  ];
   private readonly states = [
     'AL',
     'AK',
@@ -64,7 +73,6 @@ export class ConstantsDataService {
     'WI',
     'WY',
   ];
-
   private readonly stateProvince = [
     'AL',
     'AK',
@@ -130,6 +138,10 @@ export class ConstantsDataService {
     'SK',
     'YT',
   ];
+
+  getApplicationStatuses() {
+    return this.applicationStatuses;
+  }
 
   getAppointmentStatuses() {
     return this.appointmentstatuses;
