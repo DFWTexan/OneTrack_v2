@@ -229,7 +229,7 @@ namespace OneTrack_v2.Controllers
         #endregion
 
         #region "Agent Delete"
-        [HttpPost]
+        [HttpPut]
         public async Task<ActionResult> DeleteEmploymentHistItem([FromBody] IputDeleteEmploymentHistoryItem input)
         {
             var result = await Task.Run(() => _agentService.DeleteEmploymentHistItem(input));
@@ -237,7 +237,7 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<ActionResult> DeleteAgentEmployee([FromBody] IputDeleteEmployee input)
         {
             var result = await Task.Run(() => _agentService.DeleteAgentEmployee(input.EmployeeID, input.UserSOEID));
@@ -245,7 +245,7 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<ActionResult> DeleteTransferHistItem([FromBody] IputDeleteTransferHisttoryItem input)
         {
             var result = await Task.Run(() => _agentService.DeleteTransferHistItem(input));
@@ -253,7 +253,7 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<ActionResult> DeleteCoRequirementItem([FromBody] IputDeleteCoRequirementItem input)
         {
             var result = await Task.Run(() => _agentService.DeleteCoRequirementItem(input));
@@ -261,7 +261,7 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<ActionResult> DeleteEmploymentJobTitleItem([FromBody] IputDeleteEmploymentJobTitle input)
         {
             var result = await Task.Run(() => _agentService.DeleteEmploymentJobTitleItem(input));
@@ -269,7 +269,7 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<ActionResult> DeleteAgentLicense([FromBody] IputDeleteAgentLincense input)
         {
             var result = await Task.Run(() => _agentService.DeleteAgentLicense(input));
@@ -277,7 +277,7 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<ActionResult> DeleteConEduTaken([FromBody] IputDeleteConEduTaken input)
         {
             var result = await Task.Run(() => _agentService.DeleteConEduTaken(input));
@@ -285,7 +285,7 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<ActionResult> DeleteDiaryItem([FromBody] IputDeleteDiaryItem input)
         {
             var result = await Task.Run(() => _agentService.DeleteDiaryItem(input));

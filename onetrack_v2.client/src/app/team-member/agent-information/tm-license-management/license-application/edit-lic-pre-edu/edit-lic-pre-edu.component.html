@@ -4,64 +4,16 @@
   class="container app-modal-container"
 >
   <div class="row">
-    <div class="col">
-        <div class="mb-3" *ngIf="agentComService.modeLicPreEdu === 'EDIT'">
-            <label for="preEducationID" class="form-label">Pre Edu ID:</label>
-            <input
-              class="form-control input-size-small"
-              type="text"
-              id="preEducationID"
-              formControlName="preEducationID"
-            />
-          </div>
+    <div class="col" *ngIf="agentComService.modeLicPreEdu === 'EDIT' && appComService.isShowEditID">
       <div class="mb-3">
-        <label for="status" class="form-label">Status:</label>
+        <label for="preEducationID" class="form-label">Pre Edu ID:</label>
         <input
           class="form-control input-size-small"
           type="text"
-          id="status"
-          formControlName="status"
+          id="preEducationID"
+          formControlName="preEducationID"
         />
       </div>
-      <div class="mb-3">
-        <label for="educationStartDate" class="form-label">Start:</label>
-        <input
-          class="form-control input-size-small"
-          type="date"
-          id="educationStartDate"
-          formControlName="educationStartDate"
-        />
-      </div>
-      <div class="mb-3">
-        <label for="educationEndDate" class="form-label">End:</label>
-        <input
-          class="form-control input-size-small"
-          type="date"
-          id="educationEndDate"
-          formControlName="educationEndDate"
-        />
-      </div>
-      
-      <div class="mb-3">
-        <label for="companyID" class="form-label">Company ID:</label>
-        <input
-          class="form-control input-size-small"
-          type="text"
-          id="companyID"
-          formControlName="companyID"
-        />
-      </div>
-
-      <div class="mb-3">
-        <label for="educationName" class="form-label">Name:</label>
-        <input
-          class="form-control input-size-small"
-          type="text"
-          id="educationName"
-          formControlName="educationName"
-        />
-      </div>
-
       <div class="mb-3">
         <label for="employeeLicenseID" class="form-label"
           >Employee License ID:</label
@@ -73,17 +25,83 @@
           formControlName="employeeLicenseID"
         />
       </div>
-
+    </div>
+    <div class="col">
       <div class="mb-3">
-        <label for="additionalNotes" class="form-label"
-          >Additional Notes:</label
+        <label for="status" class="form-label">Status:</label>
+        <select
+          class="form-select select-size-small"
+          type="text"
+          id="status"
+          formControlName="status"
+        >
+          <option *ngFor="let status of preEduStatuses" [value]="status">
+            {{ status }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="preEducationID" class="form-label">Class Name:</label>
+        <!-- <input
+          class="form-control input-size-small"
+          type="text"
+          id="educationName"
+          formControlName="educationName"
+        /> -->
+        <select
+          class="form-select select-size-small"
+          type="text"
+          id="preEducationID"
+          formControlName="preEducationID"
+        >
+          <option *ngFor="let name of preEduNames" [value]="name.value">
+            {{ name.label }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col">
+      <div class="mb-3">
+        <label for="educationStartDate" class="form-label"
+          >Pre Edu. Scheduled:</label
         >
         <input
           class="form-control input-size-small"
-          type="text"
+          type="date"
+          id="educationStartDate"
+          formControlName="educationStartDate"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="educationEndDate" class="form-label">Pre Edu. Taken:</label>
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="educationEndDate"
+          formControlName="educationEndDate"
+        />
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col ">
+      <div class="d-flex mb-3">
+        <label for="additionalNotes" class="form-label"
+          >Additional Notes:</label
+        >
+        <!-- <input
+          class="form-control input-size-small"
+          type="textarea"
           id="additionalNotes"
           formControlName="additionalNotes"
-        />
+        /> -->
+        <textarea
+          id="additionalNotes"
+          name="additionalNotes"
+          class="form-control"
+          formControlName="additionalNotes"
+          style="width: 90%"
+        ></textarea>
       </div>
     </div>
   </div>
@@ -92,7 +110,11 @@
 
   <div class="row mt-4">
     <div class="col d-flex justify-content-end">
-      <button type="button" class="btn btn-secondary me-3 cancel-button">
+      <button
+        type="button"
+        class="btn btn-secondary me-3 cancel-button"
+        (click)="onCloseModal()"
+      >
         Cancel
       </button>
       <button type="submit" class="btn btn-primary save-button">Save</button>

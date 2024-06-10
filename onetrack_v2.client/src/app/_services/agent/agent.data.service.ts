@@ -92,10 +92,12 @@ export class AgentDataService {
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
-            this.agentInfoChanged.next(response.objData);
             this.agentInformation = response.objData;
+            this.agentInfoChanged.next(response.objData);
+            
             this.diaryItems = this.agentInformation.diaryItems;
             this.diaryItemsChanged.next(this.diaryItems);
+            this.agentLicenseAppointments = this.agentInformation.agentLicenseAppointments;
             this.agentLicenseAppointmentsChanged.next(
               this.agentInformation.agentLicenseAppointments
             );
@@ -308,7 +310,7 @@ export class AgentDataService {
     this.apiUrl = environment.apiUrl + 'Agent/DeleteAgentEmployee';
 
     return this.http
-      .post<{
+      .put<{
         success: boolean;
         statusCode: number;
         objData: any;
@@ -354,7 +356,7 @@ export class AgentDataService {
     this.apiUrl = environment.apiUrl + 'Agent/DeleteAgentLicense';
 
     return this.http
-      .post<{
+      .put<{
         success: boolean;
         statusCode: number;
         objData: any;
@@ -407,7 +409,7 @@ export class AgentDataService {
     this.apiUrl = environment.apiUrl + 'Agent/DeleteEmploymentHistItem';
 
     return this.http
-      .post<{
+      .put<{
         success: boolean;
         statusCode: number;
         objData: any;
@@ -490,7 +492,7 @@ export class AgentDataService {
     this.apiUrl = environment.apiUrl + 'Agent/DeleteTransferHistItem';
 
     return this.http
-      .post<{
+      .put<{
         success: boolean;
         statusCode: number;
         objData: any;
@@ -546,7 +548,7 @@ export class AgentDataService {
     this.apiUrl = environment.apiUrl + 'Agent/DeleteCoRequirementItem';
 
     return this.http
-      .post<{
+      .put<{
         success: boolean;
         statusCode: number;
         objData: any;
@@ -603,7 +605,7 @@ export class AgentDataService {
     this.apiUrl = environment.apiUrl + 'Agent/DeleteEmploymentJobTitleItem';
 
     return this.http
-      .post<{
+      .put<{
         success: boolean;
         statusCode: number;
         objData: any;
@@ -661,7 +663,7 @@ export class AgentDataService {
     this.apiUrl = environment.apiUrl + 'Agent/DeleteConEduTaken';
 
     return this.http
-      .post<{
+      .put<{
         success: boolean;
         statusCode: number;
         objData: any;
@@ -713,7 +715,7 @@ export class AgentDataService {
     this.apiUrl = environment.apiUrl + 'Agent/DeleteDiaryItem';
 
     return this.http
-      .post<{
+      .put<{
         success: boolean;
         statusCode: number;
         objData: any;
@@ -734,7 +736,7 @@ export class AgentDataService {
         })
       );
   }
-
+  // === | === | === | === | === | === | === | === | === | === | === | === | === | === | === | === | === | === | === | === | ===
   // LICENSE APPOINTMENT MANAGEMENT
   storeLicenseAppointment(appointment: LicenseAppointment) {
     this.licenseAppointment = appointment;

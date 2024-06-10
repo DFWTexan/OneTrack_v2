@@ -111,7 +111,7 @@ export class LicIncentiveInfoDataService {
     this.apiUrl = environment.apiUrl + 'LicenseInfo/DeleteLicenseAppointment';
 
     return this.http
-      .post<{
+      .put<{
         success: boolean;
         statusCode: number;
         objData: any;
@@ -177,7 +177,7 @@ export class LicIncentiveInfoDataService {
     this.apiUrl = environment.apiUrl + 'LicenseInfo/DeleteLicenseApplication';
 
     return this.http
-      .post<{
+      .put<{
         success: boolean;
         statusCode: number;
         objData: any;
@@ -187,7 +187,7 @@ export class LicIncentiveInfoDataService {
         switchMap((response) => {
           if (response.success && response.statusCode === 200) {
             return this.agentDataService.fetchAgentInformation(
-              this.agentDataService.agentInformation.employmentID
+              this.agentDataService.agentInformation.employeeID
             );
           } else {
             throw new Error(response.errMessage || 'Unknown error');
@@ -202,6 +202,72 @@ export class LicIncentiveInfoDataService {
 
           // this.agentDataService.updateAgentLicenseApplications(licApplications);
           return licApplications;
+        })
+      );
+  }
+
+  upsertLicensePreEducationItem(licPreEduItem: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'LicenseInfo/UpsertLicensePreEducation';
+
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, licPreEduItem)
+      .pipe(
+        switchMap((response) => {
+          if (response.success && response.statusCode === 200) {
+            return this.agentDataService.fetchAgentInformation(
+              this.agentDataService.agentInformation.employeeID
+            );
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        }),
+        map((licPreEdus) => {
+          // this.agentDataService.agentInformation.agentLicensePreEducations =
+          //   licPreEdus;
+          // this.agentDataService.agentLicensePreEducationsChanged.next(
+          //   this.agentDataService.agentInformation.agentLicensePreEducations
+          // );
+
+          // this.agentDataService.updateAgentLicensePreEducations(licPreEdus);
+          return licPreEdus;
+        })
+      );
+  }
+
+  deleteLicensePreEducationItem(licPreEduItem: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'LicenseInfo/DeleteLicensePreEducation';
+
+    return this.http
+      .put<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, licPreEduItem)
+      .pipe(
+        switchMap((response) => {
+          if (response.success && response.statusCode === 200) {
+            return this.agentDataService.fetchAgentInformation(
+              this.agentDataService.agentInformation.employeeID
+            );
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        }),
+        map((licPreEdus) => {
+          // this.agentDataService.agentInformation.agentLicensePreEducations =
+          //   licPreEdus;
+          // this.agentDataService.agentLicensePreEducationsChanged.next(
+          //   this.agentDataService.agentInformation.agentLicensePreEducations
+          // );
+
+          // this.agentDataService.updateAgentLicensePreEducations(licPreEdus);
+          return licPreEdus;
         })
       );
   }

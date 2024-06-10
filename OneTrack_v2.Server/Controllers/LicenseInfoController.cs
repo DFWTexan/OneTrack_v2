@@ -81,7 +81,7 @@ namespace OneTrak_v2.Server.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<ActionResult> DeleteLicenseAppointment([FromBody] IputDeleteLicenseAppointment input)
         {
             var result = await Task.Run(() => _licenseInfo.DeleteLicenseAppointment(input));
@@ -97,10 +97,26 @@ namespace OneTrak_v2.Server.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<ActionResult> DeleteLicenseApplication([FromBody] IputDeleteLicenseApplication input)
         {
             var result = await Task.Run(() => _licenseInfo.DeleteLicenseApplication(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UpsertLicensePreEducation([FromBody] IputUpsertLicensePreEducation input)
+        {
+            var result = await Task.Run(() => _licenseInfo.UpsertLicensePreEducation(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> DeleteLicensePreEducation([FromBody] IputDeleteLicensePreEducation input)
+        {
+            var result = await Task.Run(() => _licenseInfo.DeleteLicensePreEducation(input));
 
             return StatusCode(result.StatusCode, result);
         }

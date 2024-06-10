@@ -1,4 +1,5 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import {
   AgentLicApplicationInfo,
@@ -17,12 +18,14 @@ import {
   styleUrl: './license-application.component.css',
 })
 @Injectable()
-export class LicenseApplicationComponent implements OnInit {
+export class LicenseApplicationComponent implements OnInit, OnDestroy {
   licenseMgmtData: AgentLicenseAppointments[] = [];
   currentIndex: number = 0;
   panelOpenState = false;
   agentLicApplicationInfo: AgentLicApplicationInfo =
     {} as AgentLicApplicationInfo;
+
+    private subscriptions = new Subscription();
 
   constructor(
     public agentDataService: AgentDataService,
@@ -39,13 +42,25 @@ export class LicenseApplicationComponent implements OnInit {
     this.currentIndex = this.agentDataService.licenseMgmtDataIndex;
     this.licenseMgmtData =
       this.agentDataService.agentInformation.agentLicenseAppointments;
-    this.agentDataService
+    
+      this.getData();
+      
+  }
+
+  onChildCallGetData(): void {
+    this.getData();
+  }
+
+  getData() {
+    this.subscriptions.add(
+      this.agentDataService
       .fetchAgentLicApplicationInfo(
         this.licenseMgmtData[this.currentIndex].employeeLicenseId
       )
       .subscribe((agentLicApplicationInfo: AgentLicApplicationInfo) => {
         this.agentLicApplicationInfo = agentLicApplicationInfo;
-      });
+      })
+    );
   }
 
   // Pagination
@@ -73,5 +88,9 @@ export class LicenseApplicationComponent implements OnInit {
 
   isDisplayNext(): boolean {
     return this.currentIndex < this.licenseMgmtData.length - 1;
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 }

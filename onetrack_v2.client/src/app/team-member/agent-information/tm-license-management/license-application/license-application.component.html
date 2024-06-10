@@ -94,7 +94,7 @@
                 <th scope="col">Rec. From Agent</th>
                 <th scope="col">Sent to State</th>
                 <th scope="col">Rec. From State</th>
-                <th scope="col" style="width: 10rem;">Action</th>
+                <th scope="col" style="width: 10rem">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -122,11 +122,8 @@
                 <td class="align-middle">
                   {{ licApplication.recFromStateDate | date : "MM/dd/yyyy" }}
                 </td>
-                <td style="width: 10rem;">
-                  <div
-                    class="d-flex justify-content-between mb-3 me-4"
-                    
-                  >
+                <td style="width: 10rem">
+                  <div class="d-flex justify-content-between mb-3 me-4">
                     <button
                       class="icon-edit-delete-button"
                       (click)="
@@ -206,7 +203,7 @@
                 <th scope="col">Scheduled Date</th>
                 <th scope="col">Taken Date</th>
                 <th scope="col">PreEdu Notes</th>
-                <th scope="col" style="width: 10rem;">Action</th>
+                <th scope="col" style="width: 10rem">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -234,11 +231,8 @@
                 <td class="align-middle">
                   {{ licPreEdu.additionalNotes }}
                 </td>
-                <td>
-                  <div
-                    class="d-flex justify-content-between mb-3 me-4"
-                    style="min-width: 10rem; max-width: 10rem"
-                  >
+                <td style="min-width: 10rem; max-width: 10rem">
+                  <div class="d-flex justify-content-between mb-3 me-4">
                     <button
                       class="icon-edit-delete-button"
                       (click)="
@@ -315,7 +309,9 @@
                 <th scope="col">Scheduled Date</th>
                 <th scope="col">Taken Date</th>
                 <th scope="col">Exam Notes</th>
-                <th scope="col" class="text-center" style="width: 10rem;">Action</th>
+                <th scope="col" class="text-center" style="width: 10rem">
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -343,11 +339,8 @@
                 <td class="align-middle">
                   {{ preExam.additionalNotes }}
                 </td>
-                <td>
-                  <div
-                    class="d-flex justify-content-between mb-3 me-4"
-                    style="min-width: 10rem; max-width: 10rem"
-                  >
+                <td style="min-width: 10rem; max-width: 10rem">
+                  <div class="d-flex justify-content-between mb-3 me-4">
                     <button
                       class="icon-edit-delete-button"
                       (click)="
@@ -409,7 +402,7 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-lic-pre-edu></app-edit-lic-pre-edu>
+        <app-edit-lic-pre-edu (callParentGetData)="onChildCallGetData()"></app-edit-lic-pre-edu>
       </div>
     </div>
   </div>

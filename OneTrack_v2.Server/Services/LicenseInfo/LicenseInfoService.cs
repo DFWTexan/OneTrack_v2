@@ -735,6 +735,111 @@ namespace OneTrak_v2.Services
 
             return result;
         }
+        public ReturnResult UpsertLicensePreEducation([FromBody] IputUpsertLicensePreEducation vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                if (vInput.EmployeeLicensePreEducationID == 0)
+                {
+                    // INSERT Continuing Pre Education
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspLicensePreEducationInsert", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeLicenseID", vInput.EmployeeLicenseID));
+                            cmd.Parameters.Add(new SqlParameter("@Status", vInput.Status));
+                            cmd.Parameters.Add(new SqlParameter("@EducationEndDate", vInput.EducationEndDate));
+                            cmd.Parameters.Add(new SqlParameter("@PreEducationID", vInput.PreEducationID));
+                            cmd.Parameters.Add(new SqlParameter("@EducationStartDate", vInput.EducationStartDate));
+                            cmd.Parameters.Add(new SqlParameter("@AdditionalNotes", vInput.AdditionalNotes));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                else
+                {
+                    // UPDATE Continuing Pre Education
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspEmployeeLicensePreEducationUpdate", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeLicensePreEducationID", vInput.EmployeeLicensePreEducationID));
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeLicenseID", vInput.EmployeeLicenseID));
+                            cmd.Parameters.Add(new SqlParameter("@Status", vInput.Status));
+                            cmd.Parameters.Add(new SqlParameter("@EducationEndDate", vInput.EducationEndDate));
+                            cmd.Parameters.Add(new SqlParameter("@PreEducationID", vInput.PreEducationID));
+                            cmd.Parameters.Add(new SqlParameter("@EducationStartDate", vInput.EducationStartDate));
+                            cmd.Parameters.Add(new SqlParameter("@AdditionalNotes", vInput.AdditionalNotes));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "License Pre-Education Created/Updated Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# LINFO-6158-79812].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;  
+        }
+        public ReturnResult DeleteLicensePreEducation([FromBody] IputDeleteLicensePreEducation vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspEmployeeLicenseePreEducationDelete", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@EmployeeLicensePreEducationID", vInput.EmployeeLicensePreEducationID));
+                        cmd.Parameters.Add(new SqlParameter("@EmployeeLicenseID", vInput.EmployeeLicenseID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "License Pre-Education Deleted Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ObjData = null;
+                result.Success = false;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# LINFO-6328-19049].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;
+        }
         #endregion
     }
 }

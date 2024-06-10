@@ -13,7 +13,8 @@ namespace OneTrack_v2.Services
         private readonly AppDataContext _db;
         private readonly IUtilityHelpService _utilityService;
 
-        public MiscService(AppDataContext db, IUtilityHelpService utilityHelpService) { 
+        public MiscService(AppDataContext db, IUtilityHelpService utilityHelpService)
+        {
             _db = db;
             _utilityService = utilityHelpService;
         }
@@ -41,7 +42,7 @@ namespace OneTrack_v2.Services
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, "MISC-GetStateProvinces", new { }, null);
             }
 
             return result;
@@ -84,9 +85,10 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
+                result.Success = false;
                 result.ErrMessage = ex.Message;
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, "MISC-GetBranches", new { }, null);
             }
 
             return result;
@@ -128,9 +130,10 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
+                result.Success = false;
                 result.ErrMessage = ex.Message;
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, "MISC-GetScoreNumbers", new { }, null);
             }
 
             return result;
@@ -154,9 +157,10 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
+                result.Success = false;
                 result.ErrMessage = ex.Message;
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, "MISC-GetEmployerAgencies", new { }, null);
             }
 
             return result;
@@ -181,9 +185,10 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
+                result.Success = false;
                 result.ErrMessage = ex.Message;
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, "MISC-GetLicenseStatuses", new { }, null);
             }
 
             return result;
@@ -211,9 +216,10 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
+                result.Success = false;
                 result.ErrMessage = ex.Message;
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, "MISC-GetLicenseNames", new { }, null);
             }
 
             return result;
@@ -238,9 +244,10 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
+                result.Success = false;
                 result.ErrMessage = ex.Message;
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, "MISC-GetLicenseNumericNames", new { }, null);
             }
 
             return result;
@@ -259,9 +266,10 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
+                result.Success = false;
                 result.ErrMessage = ex.Message;
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, "MISC-GetEmailTemplates", new { }, null);
             }
 
             return result;
@@ -280,9 +288,10 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
+                result.Success = false;
                 result.ErrMessage = ex.Message;
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, "MISC-GetTicklerMessageTypes", new { }, null);
             }
 
             return result;
@@ -307,9 +316,10 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
+                result.Success = false;
                 result.ErrMessage = ex.Message;
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, "MISC-WorkListNames", new { }, null);
             }
 
             return result;
@@ -346,9 +356,10 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
+                result.Success = false;
                 result.ErrMessage = ex.Message;
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, "MISC-GetLicenseTeches", new { }, null);
             }
             return result;
         }
@@ -377,9 +388,10 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
+                result.Success = false;
                 result.ErrMessage = ex.Message;
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, "MISC-GetBackgroundStatuses", new { }, null);
             }
 
             return result;
@@ -409,9 +421,10 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
+                result.Success = false;
                 result.ErrMessage = ex.Message;
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, "MISC-GetJobTitles", new { }, null);
             }
 
             return result;
@@ -436,9 +449,37 @@ namespace OneTrack_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
+                result.Success = false;
                 result.ErrMessage = ex.Message;
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, "MISC-GetCoAbvByLicenseID", new { }, null);
+            }
+
+            return result;
+        }
+        public ReturnResult GetPreEducationByStateAbv(string vStateAbv)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var query = from e in _db.PreEducations
+                            where e.StateProvinceAbv == vStateAbv
+                            select new { value = e.PreEducationId, label = string.Format("{0}{1}", e.EducationName, e.DeliveryMethod == "Online" ? " - Online" : null) };
+
+                var resultPreEducations = query.AsNoTracking().ToList();
+
+                result.Success = true;
+                result.ObjData = resultPreEducations;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "MISC-GetPreEducationByStateAbv", new { }, null);
             }
 
             return result;

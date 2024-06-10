@@ -21,6 +21,17 @@ export class ConstantsDataService {
     'Rejected',
     'Resubmitted',
   ];
+  private readonly preEducationStatuses = [
+    'Extend 1',
+    'Extend 2',
+    'Extend 3',
+    'Extend 3+',
+    'Pending',
+    'Taken',
+    'No Show',
+    'Rescheduled',
+    'Cancelled',
+  ];
   private readonly states = [
     'AL',
     'AK',
@@ -138,6 +149,10 @@ export class ConstantsDataService {
     'SK',
     'YT',
   ];
+
+  getPreEducationStatuses() {
+    return this.preEducationStatuses;
+  }
 
   getApplicationStatuses() {
     return this.applicationStatuses;

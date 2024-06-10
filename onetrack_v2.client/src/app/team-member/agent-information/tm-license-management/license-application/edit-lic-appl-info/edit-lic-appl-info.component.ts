@@ -59,6 +59,13 @@ export class EditLicApplInfoComponent implements OnInit, OnDestroy {
     });
 
     this.currentIndex = this.agentDataService.licenseMgmtDataIndex;
+    this.subscriptions.add(
+      this.agentDataService.licenseMgmtDataIndexChanged.subscribe(
+        (index: number) => {
+          this.currentIndex = index;
+        }
+      )
+    );
 
     this.licenseMgmtData =
       this.agentDataService.agentInformation.agentLicenseAppointments;
@@ -110,25 +117,21 @@ export class EditLicApplInfoComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(
-      'EMFTEST (app-edit-lic-appl-info: onSubmit) - licApplicationForm => \n',
-      this.licApplicationForm.value
-    );
-
     let licApplicationItem: any = this.licApplicationForm.value;
-    licApplicationItem.employeeLicenseID = this.licenseMgmtData[this.currentIndex].employeeLicenseId;
+    licApplicationItem.employeeLicenseID =
+      this.licenseMgmtData[this.currentIndex].employeeLicenseId;
     licApplicationItem.applicationType = 'Initial Application';
     licApplicationItem.UserSOEID =
       this.userAcctInfoDataService.userAcctInfo.soeid;
 
+    if (this.licApplicationForm.invalid) {
+      this.licApplicationForm.setErrors({ invalid: true });
+      return;
+    }
+
     if (this.agentComService.modeLicAppInfo === 'INSERT') {
       licApplicationItem.licenseApplicationID = 0;
     }
-
-    console.log(
-      'EMFTEST (app-edit-lic-appl-info: onSubmit) - licApplicationItem => \n',
-      licApplicationItem
-    );
 
     this.subscriptions.add(
       this.licApplicationDataService
