@@ -25,6 +25,7 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
   @Input() employeeID: number = 0;
   employmentHistoryID: number = 0;
   backgroundStatuses: Array<{ lkpValue: string }> = [];
+  
   private subscriptions = new Subscription();
 
   constructor(

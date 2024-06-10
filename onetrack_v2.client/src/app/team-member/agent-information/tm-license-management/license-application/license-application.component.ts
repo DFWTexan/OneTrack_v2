@@ -7,6 +7,7 @@ import {
 import {
   AgentComService,
   AgentDataService,
+  AppComService,
   ModalService,
 } from '../../../../_services';
 
@@ -26,6 +27,7 @@ export class LicenseApplicationComponent implements OnInit {
   constructor(
     public agentDataService: AgentDataService,
     public agentComService: AgentComService,
+    public appComService: AppComService,
     protected modalService: ModalService
   ) {
     this.agentDataService.agentLicApplicationInfo.licenseApplicationItems = [];

@@ -23,7 +23,6 @@ import { Subscription } from 'rxjs';
 export class LicenseInfoComponent implements OnInit, OnDestroy {
   licenseMgmtData: AgentLicenseAppointments[] =
     [] as AgentLicenseAppointments[];
-  subscriptionAgentInfo: Subscription = new Subscription();
   currentIndex: number = 0;
   eventAction: string = '';
   vObject: any = {};
@@ -43,17 +42,16 @@ export class LicenseInfoComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentIndex = this.agentDataService.licenseMgmtDataIndex;
-    
+
     this.licenseMgmtData =
       this.agentDataService.agentInformation.agentLicenseAppointments;
 
     this.subscriptions.add(
-      (this.subscriptionAgentInfo =
-        this.agentDataService.agentLicenseAppointmentsChanged.subscribe(
-          (agentLicenseAppointments) => {
-            this.licenseMgmtData = agentLicenseAppointments;
-          }
-        ))
+      this.agentDataService.agentLicenseAppointmentsChanged.subscribe(
+        (agentLicenseAppointments) => {
+          this.licenseMgmtData = agentLicenseAppointments;
+        }
+      )
     );
   }
 
@@ -106,7 +104,7 @@ export class LicenseInfoComponent implements OnInit, OnDestroy {
               '). Do you want to proceed?',
           },
         });
-    
+
         dialogRef.afterClosed().subscribe((result) => {
           if (result) {
             this.agentDataService
@@ -135,50 +133,49 @@ export class LicenseInfoComponent implements OnInit, OnDestroy {
           }
         });
         break;
-        case 'deleteLicAppt':
-          const dialogRef_LicAppt = this.dialog.open(ConfirmDialogComponent, {
-            width: '250px',
-            data: {
-              title: 'Confirm Action',
-              message:
-                'You are about to DELETE license appointment ' +
-                vObject.employeeAppointmentID +
-                '. Do you want to proceed?'
-            },
-          });
-      
-          dialogRef_LicAppt.afterClosed().subscribe((result) => {
-            if (result) {
-              this.licenseIncentiveInfoDataService
-                .deleteLicenseAppointment({
-                  employeeAppointmentID: this.vObject.employeeAppointmentID,
-                  employeeLicenseID: this.vObject.employeeLicenseID,
-                  userSOEID: this.userInfoDataService.userAcctInfo.soeid,
-                })
-                .subscribe({
-                  next: (response) => {
-                    // this.router
-                    //   .navigateByUrl('/', { skipLocationChange: true })
-                    //   .then(() => {
-                    //     this.router.navigate([
-                    //       'team/agent-info',
-                    //       this.agentDataService.agentInformation.employeeID,
-                    //       'tm-license-mgmt',
-                    //     ]);
-                    //   });
-                  },
-                  error: (error) => {
-                    console.error(error);
-                    // handle the error here
-                  },
-                });
-            }
-          });
-          break;
+      case 'deleteLicAppt':
+        const dialogRef_LicAppt = this.dialog.open(ConfirmDialogComponent, {
+          width: '250px',
+          data: {
+            title: 'Confirm Action',
+            message:
+              'You are about to DELETE license appointment ' +
+              vObject.employeeAppointmentID +
+              '. Do you want to proceed?',
+          },
+        });
+
+        dialogRef_LicAppt.afterClosed().subscribe((result) => {
+          if (result) {
+            this.licenseIncentiveInfoDataService
+              .deleteLicenseAppointment({
+                employeeAppointmentID: this.vObject.employeeAppointmentID,
+                employeeLicenseID: this.vObject.employeeLicenseID,
+                userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+              })
+              .subscribe({
+                next: (response) => {
+                  // this.router
+                  //   .navigateByUrl('/', { skipLocationChange: true })
+                  //   .then(() => {
+                  //     this.router.navigate([
+                  //       'team/agent-info',
+                  //       this.agentDataService.agentInformation.employeeID,
+                  //       'tm-license-mgmt',
+                  //     ]);
+                  //   });
+                },
+                error: (error) => {
+                  console.error(error);
+                  // handle the error here
+                },
+              });
+          }
+        });
+        break;
       default:
         break;
     }
-    
   }
 
   storeLicApptLicenseID(licenseID: number) {
@@ -186,6 +183,6 @@ export class LicenseInfoComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.subscriptionAgentInfo.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

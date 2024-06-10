@@ -139,4 +139,70 @@ export class LicIncentiveInfoDataService {
         })
       );
   }
+
+  upsertLicenseApplicationItem(licApplicationItem: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'LicenseInfo/UpsertLicenseApplication';
+
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, licApplicationItem)
+      .pipe(
+        switchMap((response) => {
+          if (response.success && response.statusCode === 200) {
+            return this.agentDataService.fetchAgentInformation(
+              this.agentDataService.agentInformation.employeeID
+            );
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        }),
+        map((licApplications) => {
+          // this.agentDataService.agentInformation.agentLicenseApplications =
+          //   licApplications;
+          // this.agentDataService.agentLicenseApplicationsChanged.next(
+          //   this.agentDataService.agentInformation.agentLicenseApplications
+          // );
+
+          // this.agentDataService.updateAgentLicenseApplications(licApplications);
+          return licApplications;
+        })
+      );
+  }
+
+  deleteLicenseApplicationItem(licApplicationItem: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'LicenseInfo/DeleteLicenseApplication';
+
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, licApplicationItem)
+      .pipe(
+        switchMap((response) => {
+          if (response.success && response.statusCode === 200) {
+            return this.agentDataService.fetchAgentInformation(
+              this.agentDataService.agentInformation.employmentID
+            );
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        }),
+        map((licApplications) => {
+          // this.agentDataService.agentInformation.agentLicenseApplications =
+          //   licApplications;
+          // this.agentDataService.agentLicenseApplicationsChanged.next(
+          //   this.agentDataService.agentInformation.agentLicenseApplications
+          // );
+
+          // this.agentDataService.updateAgentLicenseApplications(licApplications);
+          return licApplications;
+        })
+      );
+  }
 }
