@@ -1,4 +1,11 @@
-import { Component, Injectable, OnInit, OnDestroy, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  Injectable,
+  OnInit,
+  OnDestroy,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
@@ -69,13 +76,13 @@ export class EditLicPreEduComponent implements OnInit, OnDestroy {
 
     this.licenseMgmtData =
       this.agentDataService.agentInformation.agentLicenseAppointments;
-      this.subscriptions.add(
-        this.agentDataService.licenseMgmtDataChanged.subscribe(
-          (licenseMgmtData: AgentLicenseAppointments) => {
-            this.licenseMgmtData = [licenseMgmtData];
-          }
-        )
-      );
+    this.subscriptions.add(
+      this.agentDataService.licenseMgmtDataChanged.subscribe(
+        (licenseMgmtData: AgentLicenseAppointments) => {
+          this.licenseMgmtData = [licenseMgmtData];
+        }
+      )
+    );
 
     this.subscriptions.add(
       this.dropdownDataService
@@ -151,7 +158,7 @@ export class EditLicPreEduComponent implements OnInit, OnDestroy {
           next: (response) => {
             this.isFormSubmitted = true;
             this.forceCloseModal();
-            this.callParentGetData.emit(); // Emit the event here
+            this.callParentGetData.emit();
           },
           error: (error) => {
             if (error.error && error.error.errMessage) {
@@ -162,7 +169,6 @@ export class EditLicPreEduComponent implements OnInit, OnDestroy {
         })
     );
     // statement to execure getData in parent component
-  
   }
 
   forceCloseModal() {

@@ -1,4 +1,11 @@
-import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  Injectable,
+  OnInit,
+  OnDestroy,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
@@ -21,6 +28,7 @@ import { AgentLicenseAppointments } from '../../../../../_Models';
 })
 @Injectable()
 export class EditLicApplInfoComponent implements OnInit, OnDestroy {
+  @Output() callParentGetData = new EventEmitter<void>();
   isFormSubmitted: boolean = false;
   licApplicationForm!: FormGroup;
   applicationStatuses: string[] = [
@@ -140,6 +148,7 @@ export class EditLicApplInfoComponent implements OnInit, OnDestroy {
           next: (response) => {
             this.isFormSubmitted = true;
             this.forceCloseModal();
+            this.callParentGetData.emit();
           },
           error: (error) => {
             if (error.error && error.error.errMessage) {
