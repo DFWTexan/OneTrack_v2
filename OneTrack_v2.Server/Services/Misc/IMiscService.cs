@@ -19,5 +19,6 @@ namespace OneTrack_v2.Services
         public ReturnResult GetJobTitles();
         public ReturnResult GetCoAbvByLicenseID(int vLicenseID);
         public ReturnResult GetPreEducationByStateAbv(string vStateAbv);
+        public ReturnResult GetPreExamByStateAbv(string vStateAbv);
     }
 }

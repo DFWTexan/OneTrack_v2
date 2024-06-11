@@ -271,4 +271,70 @@ export class LicIncentiveInfoDataService {
         })
       );
   }
+
+  upsertLicensePreExamItem(licPreExamItem: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'LicenseInfo/UpsertLicensePreExam';
+
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, licPreExamItem)
+      .pipe(
+        switchMap((response) => {
+          if (response.success && response.statusCode === 200) {
+            return this.agentDataService.fetchAgentInformation(
+              this.agentDataService.agentInformation.employeeID
+            );
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        }),
+        map((licPreExams) => {
+          // this.agentDataService.agentInformation.agentLicensePreExams =
+          //   licPreExams;
+          // this.agentDataService.agentLicensePreExamsChanged.next(
+          //   this.agentDataService.agentInformation.agentLicensePreExams
+          // );
+
+          // this.agentDataService.updateAgentLicensePreExams(licPreExams);
+          return licPreExams;
+        })
+      );
+  }
+
+  deleteLicensePreExamItem(licPreExamItem: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'LicenseInfo/DeleteLicensePreExam';
+
+    return this.http
+      .put<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, licPreExamItem)
+      .pipe(
+        switchMap((response) => {
+          if (response.success && response.statusCode === 200) {
+            return this.agentDataService.fetchAgentInformation(
+              this.agentDataService.agentInformation.employeeID
+            );
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        }),
+        map((licPreExams) => {
+          // this.agentDataService.agentInformation.agentLicensePreExams =
+          //   licPreExams;
+          // this.agentDataService.agentLicensePreExamsChanged.next(
+          //   this.agentDataService.agentInformation.agentLicensePreExams
+          // );
+
+          // this.agentDataService.updateAgentLicensePreExams(licPreExams);
+          return licPreExams;
+        })
+      );
+  }
 }

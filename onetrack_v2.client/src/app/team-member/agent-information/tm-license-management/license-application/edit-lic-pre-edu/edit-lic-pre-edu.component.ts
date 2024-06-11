@@ -137,8 +137,8 @@ export class EditLicPreEduComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {
     let licPreEduItem: any = this.licPreEduForm.value;
-    // licApplicationItem.employeeLicenseID =
-    //   this.licenseMgmtData[this.currentIndex].employeeLicenseId;
+    licPreEduItem.employeeLicenseID =
+      this.licenseMgmtData[this.currentIndex].employeeLicenseId;
     // licApplicationItem.applicationType = 'Initial Application';
     licPreEduItem.UserSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
@@ -168,7 +168,6 @@ export class EditLicPreEduComponent implements OnInit, OnDestroy {
           },
         })
     );
-    // statement to execure getData in parent component
   }
 
   forceCloseModal() {

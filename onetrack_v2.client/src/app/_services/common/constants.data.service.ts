@@ -32,6 +32,13 @@ export class ConstantsDataService {
     'Rescheduled',
     'Cancelled',
   ];
+  private readonly preExamStatuses = [
+    'Pending',
+    'Passed',
+    'Failed',
+    'No Show',
+    'Rescheduled',
+  ];
   private readonly states = [
     'AL',
     'AK',
@@ -149,6 +156,10 @@ export class ConstantsDataService {
     'SK',
     'YT',
   ];
+
+  getPreExamStatuses() {
+    return this.preExamStatuses;
+  }
 
   getPreEducationStatuses() {
     return this.preEducationStatuses;

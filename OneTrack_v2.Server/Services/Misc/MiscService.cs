@@ -484,5 +484,32 @@ namespace OneTrack_v2.Services
 
             return result;
         }
+        public ReturnResult GetPreExamByStateAbv(string vStateAbv)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var query = from e in _db.Exams
+                            where e.StateProvinceAbv == vStateAbv
+                            select new { value = e.ExamId, label = e.ExamName };
+
+                var resultPreEducations = query.AsNoTracking().ToList();
+
+                result.Success = true;
+                result.ObjData = resultPreEducations;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "MISC-GetPreExamByStateAbv", new { }, null);
+            }
+
+            return result;
+        }
     }
 }

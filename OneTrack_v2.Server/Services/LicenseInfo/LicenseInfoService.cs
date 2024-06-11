@@ -840,6 +840,112 @@ namespace OneTrak_v2.Services
 
             return result;
         }
+        public ReturnResult UpsertLicensePreExam([FromBody] IputUpsertLicApplPreExam vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                if (vInput.EmployeeLicensePreExamID == 0)
+                {
+                    // INSERT Continuing Pre Exam
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspLicenseExamStatusInsert", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeLicenseID", vInput.EmployeeLicenseID));
+                            cmd.Parameters.Add(new SqlParameter("@ExamID", vInput.ExamID));
+                            cmd.Parameters.Add(new SqlParameter("@ExamTakenDate", vInput.ExamTakenDate));
+                            cmd.Parameters.Add(new SqlParameter("@Status", vInput.Status));
+                            cmd.Parameters.Add(new SqlParameter("@ExamScheduleDate", vInput.ExamScheduleDate));
+                            cmd.Parameters.Add(new SqlParameter("@AdditionalNotes", vInput.AdditionalNotes));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                else
+                {
+                    // UPDATE Continuing Pre Exam
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspLicenseExamStatusUpdate", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeLicensePreExamID", vInput.EmployeeLicensePreExamID));
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeLicenseID", vInput.EmployeeLicenseID));
+                            cmd.Parameters.Add(new SqlParameter("@ExamTakenDate", vInput.ExamTakenDate));
+                            cmd.Parameters.Add(new SqlParameter("@Status", vInput.Status));
+                            cmd.Parameters.Add(new SqlParameter("@ExamID", vInput.ExamID));
+                            cmd.Parameters.Add(new SqlParameter("@ExamScheduleDate", vInput.ExamScheduleDate));
+                            cmd.Parameters.Add(new SqlParameter("@AdditionalNotes", vInput.AdditionalNotes));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "License Pre-Exam Created/Updated Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# LINFO-6358-19812].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;
+        }
+        public ReturnResult DeleteLicensePreExam([FromBody] IputDeleteLicApplPreExam vInput)
+        {
+
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspEmployeeLicenseExamStatusDelete", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@EmployeeLicenseID", vInput.EmployeeLicenseID));
+                        cmd.Parameters.Add(new SqlParameter("@EmployeeLicensePreExamID", vInput.EmployeeLicensePreExamID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "License Pre-Exam Deleted Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ObjData = null;
+                result.Success = false;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# LINFO-6328-19740].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;
+        }
         #endregion
     }
 }

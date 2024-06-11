@@ -4,16 +4,14 @@
   class="container app-modal-container"
 >
   <div class="row">
-    <div class="col">
-      <div class="mb-3" *ngIf="agentComService.modeLicPreExam === 'EDIT'">
-        <label for="employeeLicensePreExamID" class="form-label"
-          >License PreExam ID:</label
-        >
+    <div class="col" *ngIf="agentComService.modeLicPreEdu === 'EDIT' && appComService.isShowEditID">
+      <div class="mb-3">
+        <label for="preEducationID" class="form-label">Pre Edu ID:</label>
         <input
           class="form-control input-size-small"
           type="text"
-          id="employeeLicensePreExamID"
-          formControlName="employeeLicensePreExamID"
+          id="preEducationID"
+          formControlName="preEducationID"
         />
       </div>
       <div class="mb-3">
@@ -27,35 +25,46 @@
           formControlName="employeeLicenseID"
         />
       </div>
+    </div>
+    <div class="col">
       <div class="mb-3">
         <label for="status" class="form-label">Status:</label>
-        <input
-          class="form-control input-size-small"
+        <select
+          class="form-select select-size-small"
           type="text"
           id="status"
           formControlName="status"
-        />
+        >
+          <option *ngFor="let status of preExamStatuses" [value]="status">
+            {{ status }}
+          </option>
+        </select>
       </div>
       <div class="mb-3">
-        <label for="examID" class="form-label">Exam ID:</label>
-        <input
+        <label for="examID" class="form-label">Class Name:</label>
+        <!-- <input
           class="form-control input-size-small"
+          type="text"
+          id="educationName"
+          formControlName="educationName"
+        /> -->
+        <select
+          class="form-select select-size-small"
           type="text"
           id="examID"
           formControlName="examID"
-        />
+        >
+          <option *ngFor="let name of preExamNames" [value]="name.value">
+            {{ name.label }}
+          </option>
+        </select>
       </div>
+    </div>
+    <div class="col">
       <div class="mb-3">
-        <label for="examName" class="form-label">Exam Name:</label>
-        <input
-          class="form-control input-size-small"
-          type="text"
-          id="examName"
-          formControlName="examName"
-        />
-      </div>
-      <div class="mb-3">
-        <label for="examScheduleDate" class="form-label">Scheduled:</label>
+        <label for="examScheduleDate" class="form-label"
+          >Pre Exam Scheduled:</label
+        >
         <input
           class="form-control input-size-small"
           type="date"
@@ -64,7 +73,7 @@
         />
       </div>
       <div class="mb-3">
-        <label for="examTakenDate" class="form-label">Taken:</label>
+        <label for="examTakenDate" class="form-label">Pre Exam Taken:</label>
         <input
           class="form-control input-size-small"
           type="date"
@@ -72,16 +81,27 @@
           formControlName="examTakenDate"
         />
       </div>
-      <div class="mb-3">
+    </div>
+  </div>
+  <div class="row">
+    <div class="col ">
+      <div class="d-flex mb-3">
         <label for="additionalNotes" class="form-label"
           >Additional Notes:</label
         >
-        <input
+        <!-- <input
           class="form-control input-size-small"
-          type="text"
+          type="textarea"
           id="additionalNotes"
           formControlName="additionalNotes"
-        />
+        /> -->
+        <textarea
+          id="additionalNotes"
+          name="additionalNotes"
+          class="form-control"
+          formControlName="additionalNotes"
+          style="width: 90%"
+        ></textarea>
       </div>
     </div>
   </div>
@@ -90,7 +110,11 @@
 
   <div class="row mt-4">
     <div class="col d-flex justify-content-end">
-      <button type="button" class="btn btn-secondary me-3 cancel-button">
+      <button
+        type="button"
+        class="btn btn-secondary me-3 cancel-button"
+        (click)="onCloseModal()"
+      >
         Cancel
       </button>
       <button type="submit" class="btn btn-primary save-button">Save</button>

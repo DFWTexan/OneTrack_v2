@@ -136,5 +136,13 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
+        [HttpGet("{stateAbv}")]
+        public async Task<IActionResult> GetPreExamByStateAbv(string stateAbv)
+        {
+            var result = await Task.Run(() => _miscService.GetPreExamByStateAbv(stateAbv));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
     }
 }

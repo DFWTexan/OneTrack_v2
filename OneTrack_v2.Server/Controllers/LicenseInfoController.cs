@@ -120,5 +120,21 @@ namespace OneTrak_v2.Server.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> UpsertLicensePreExam([FromBody] IputUpsertLicApplPreExam input)
+        {
+            var result = await Task.Run(() => _licenseInfo.UpsertLicensePreExam(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> DeleteLicensePreExam([FromBody] IputDeleteLicApplPreExam input)
+        {
+            var result = await Task.Run(() => _licenseInfo.DeleteLicensePreExam(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
     }
 }
