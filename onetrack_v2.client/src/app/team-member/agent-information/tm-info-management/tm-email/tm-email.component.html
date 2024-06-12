@@ -57,7 +57,7 @@
           box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
         "
       >
-        <div>
+        
           <div class="col">
             <table>
               <tbody>
@@ -91,7 +91,7 @@
                   type="checkbox"
                   name="chkMgr"
                   [value]="
-                    agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[0].mgrEmail
+                    agentInfo && agentInfo.mgrHiearchy && agentInfo.mgrHiearchy.length > 0
                       ? agentInfo.mgrHiearchy[0].mgrEmail
                       : 'n/a'
                   "
@@ -107,7 +107,7 @@
                   type="checkbox"
                   name="chkDM"
                   [value]="
-                    agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[1].mgrEmail
+                    agentInfo && agentInfo.mgrHiearchy && agentInfo.mgrHiearchy.length > 0
                       ? agentInfo.mgrHiearchy[1].mgrEmail
                       : 'n/a'
                   "
@@ -123,7 +123,7 @@
                   type="checkbox"
                   name="chkRD"
                   [value]="
-                    agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[2].mgrEmail
+                    agentInfo && agentInfo.mgrHiearchy && agentInfo.mgrHiearchy.length > 0
                       ? agentInfo.mgrHiearchy[2].mgrEmail
                       : 'n/a'
                   "
@@ -138,23 +138,29 @@
             <div class="mb-3">
               <span style="font-size: larger; font-weight: 400">Mgr</span> -
               <span style="color: grey">{{
-                agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[0].mgrName
+                agentInfo && agentInfo.mgrHiearchy && agentInfo.mgrHiearchy.length > 0
+                  ? agentInfo.mgrHiearchy[0].mgrName
+                  : 'n/a'
               }}</span>
             </div>
             <div class="mb-3">
               <span style="font-size: larger; font-weight: 400">DM</span> -
               <span style="color: grey">{{
-                agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[1].mgrName
+                agentInfo && agentInfo.mgrHiearchy && agentInfo.mgrHiearchy.length > 0
+                  ? agentInfo.mgrHiearchy[1].mgrName
+                  : 'n/a' 
               }}</span>
             </div>
             <div>
               <span style="font-size: larger; font-weight: 400">RD</span> -
               <span style="color: grey">{{
-                agentInfo.mgrHiearchy && agentInfo.mgrHiearchy[2].mgrName
+                agentInfo && agentInfo.mgrHiearchy && agentInfo.mgrHiearchy.length > 0
+                  ? agentInfo.mgrHiearchy[2].mgrName
+                  : 'n/a'
               }}</span>
             </div>
           </div>
-        </div>
+        
 
         <div class="row bg-body p-3">
           <div class="col">

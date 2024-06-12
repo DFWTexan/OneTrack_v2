@@ -42,7 +42,6 @@ export class TmEmailComponent implements OnInit, OnDestroy {
       this.agentDataService.agentInfoChanged.subscribe(
         (agentInfo: AgentInfo) => {
           this.agentInfo = agentInfo;
-          // this.mgrHierarchy = this.agentInfo.mgrHiearchy;
           this.subscriptions.add(
             this.emailDataService
               .fetchEmailComTemplateByID(33, this.agentInfo.employmentID)
