@@ -1,4 +1,7 @@
 import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { AgentLicenseAppointments } from '../../../../_Models';
 import {
@@ -10,9 +13,6 @@ import {
   UserAcctInfoDataService,
 } from '../../../../_services';
 import { ConfirmDialogComponent } from '../../../../_components';
-import { MatDialog } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-license-info',

@@ -137,7 +137,14 @@
                       <span class="material-symbols-outlined"> edit </span>
                     </button>
                     <button class="icon-edit-delete-button">
-                      <span class="material-symbols-outlined"> delete </span>
+                      <span class="material-symbols-outlined" (click)="
+                      openConfirmDialog('deleteLicenseApplication', 'Application', {
+                        employeeLicenseID: licenseMgmtData[currentIndex].employeeLicenseId,
+                        licenseApplicationID: licApplication.licenseApplicationID,
+                        employeeLicensePreEducationID: null,
+                        employeeLicensePreExamID: null,
+                      })
+                    "> delete </span>
                     </button>
                   </div>
                 </td>
@@ -243,7 +250,14 @@
                       <span class="material-symbols-outlined"> edit </span>
                     </button>
                     <button class="icon-edit-delete-button">
-                      <span class="material-symbols-outlined"> delete </span>
+                      <span class="material-symbols-outlined" (click)="
+                      openConfirmDialog('deleteLicensePreEducation', 'Pre Education', {
+                        employeeLicenseID: licenseMgmtData[currentIndex].employeeLicenseId,
+                        licenseApplicationID: null,
+                        employeeLicensePreEducationID: licPreEdu.employeeLicensePreEducationID,
+                        employeeLicensePreExamID: null,
+                      })
+                    "> delete </span>
                     </button>
                   </div>
                 </td>
@@ -351,7 +365,19 @@
                       <span class="material-symbols-outlined"> edit </span>
                     </button>
                     <button class="icon-edit-delete-button">
-                      <span class="material-symbols-outlined"> delete </span>
+                      <span
+                        class="material-symbols-outlined"
+                        (click)="
+                      openConfirmDialog('deleteLicensePreExam', 'Pre Exam', {
+                        employeeLicenseID: licenseMgmtData[currentIndex].employeeLicenseId,
+                        licenseApplicationID: null,
+                        employeeLicensePreEducationID: null,
+                        employeeLicensePreExamID: preExam.employeeLicensePreExamID,
+                      })
+                    "
+                      >
+                        delete
+                      </span>
                     </button>
                   </div>
                 </td>
@@ -381,7 +407,9 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-lic-appl-info (callParentGetData)="onChildCallGetData()"></app-edit-lic-appl-info>
+        <app-edit-lic-appl-info
+          (callParentGetData)="onChildCallGetData()"
+        ></app-edit-lic-appl-info>
       </div>
     </div>
   </div>
@@ -402,7 +430,9 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-lic-pre-edu (callParentGetData)="onChildCallGetData()"></app-edit-lic-pre-edu>
+        <app-edit-lic-pre-edu
+          (callParentGetData)="onChildCallGetData()"
+        ></app-edit-lic-pre-edu>
       </div>
     </div>
   </div>
@@ -423,7 +453,9 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-lic-pre-exam (callParentGetData)="onChildCallGetData()"></app-edit-lic-pre-exam>
+        <app-edit-lic-pre-exam
+          (callParentGetData)="onChildCallGetData()"
+        ></app-edit-lic-pre-exam>
       </div>
     </div>
   </div>

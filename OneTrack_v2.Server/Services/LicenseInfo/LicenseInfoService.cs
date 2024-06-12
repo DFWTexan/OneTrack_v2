@@ -705,7 +705,7 @@ namespace OneTrak_v2.Services
             {
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
-                    using (SqlCommand cmd = new SqlCommand("uspEmployeeAppointmentDelete", conn))
+                    using (SqlCommand cmd = new SqlCommand("uspLicenseApplicationDelete", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
@@ -916,7 +916,7 @@ namespace OneTrak_v2.Services
             {
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
-                    using (SqlCommand cmd = new SqlCommand("uspEmployeeLicenseExamStatusDelete", conn))
+                    using (SqlCommand cmd = new SqlCommand("uspLicenseExamStatusDelete", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
