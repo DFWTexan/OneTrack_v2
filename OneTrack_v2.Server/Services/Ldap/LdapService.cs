@@ -1,6 +1,7 @@
 ﻿using DataModel.Response;
 using OneTrak_v2.Services.Model;
 using System.DirectoryServices.AccountManagement;
+using System.Net.NetworkInformation;
 using System.DirectoryServices.ActiveDirectory;
 using System.DirectoryServices.Protocols;
 using System.Net;
@@ -94,6 +95,29 @@ namespace OneTrak_v2.Services
             }
 
             return retResult;
+        }
+
+        protected bool PingServer(string serverName)
+        {
+            try
+            {
+                Ping pingSender = new Ping();
+                PingReply reply = pingSender.Send(serverName);
+
+                if (reply.Status == IPStatus.Success)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception ex)
+            {
+                // Log exception message or do something with it
+                return false;
+            }
         }
     }
 }
