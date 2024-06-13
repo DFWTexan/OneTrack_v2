@@ -5,6 +5,7 @@
 >
   <div class="row">
     <div class="col">
+
       <div class="mb-3" *ngIf="agentComService.modeLicAppInfo === 'EDIT'">
         <label for="licenseApplicationID" class="form-label"
           >License Appl. ID:</label
@@ -16,7 +17,21 @@
           formControlName="licenseApplicationID"
         />
       </div>
-
+      <div class="mb-3">
+        <label for="renewalMethod" class="form-label">Renewal Method:</label>
+        <select
+          class="form-select select-size-small"
+          type="text"
+          id="renewalMethod"
+          formControlName="renewalMethod"
+        >
+          <option *ngFor="let renewal of renewalMethods" [value]="renewal">
+            {{ renewal }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col">
       <div class="mb-3">
         <label for="sentToAgentDate" class="form-label">Sent to Agent:</label>
         <input
@@ -26,10 +41,9 @@
           formControlName="sentToAgentDate"
         />
       </div>
-
       <div class="mb-3">
         <label for="recFromAgentDate" class="form-label"
-          >Sent From Agent:</label
+          >Recv. From Agent:</label
         >
         <input
           class="form-control input-size-small"
@@ -38,7 +52,8 @@
           formControlName="recFromAgentDate"
         />
       </div>
-
+    </div>
+    <div class="col">
       <div class="mb-3">
         <label for="sentToStateDate" class="form-label">Sent To State:</label>
         <input
@@ -48,26 +63,13 @@
           formControlName="sentToStateDate"
         />
       </div>
-
       <div class="mb-3">
-        <label for="recFromStateDate" class="form-label"
-          >Renewed Date:</label
-        >
+        <label for="renewalDate" class="form-label">Renewed Date:</label>
         <input
           class="form-control input-size-small"
           type="date"
-          id="recFromStateDate"
-          formControlName="recFromStateDate"
-        />
-      </div>
-
-     <div class="mb-3">
-        <label for="renewalMethod" class="form-label">Renewal Method:</label>
-        <input
-          class="form-control input-size-small"
-          type="text"
-          id="renewalMethod"
-          formControlName="renewalMethod"
+          id="renewalDate"
+          formControlName="renewalDate"
         />
       </div>
     </div>
@@ -77,11 +79,14 @@
 
   <div class="row mt-4">
     <div class="col d-flex justify-content-end">
-      <button type="button" class="btn btn-secondary me-3 cancel-button">
+      <button
+        type="button"
+        class="btn btn-secondary me-3 cancel-button"
+        (click)="onCloseModal()"
+      >
         Cancel
       </button>
       <button type="submit" class="btn btn-primary save-button">Save</button>
     </div>
   </div>
 </form>
-

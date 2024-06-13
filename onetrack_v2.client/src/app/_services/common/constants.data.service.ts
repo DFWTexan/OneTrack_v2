@@ -39,6 +39,12 @@ export class ConstantsDataService {
     'No Show',
     'Rescheduled',
   ];
+  private readonly licenseRenewalMethods = [
+    'NIPR',
+    'Paper',
+    'SIRCON',
+    'State Website',
+  ]
   private readonly states = [
     'AL',
     'AK',
@@ -156,6 +162,10 @@ export class ConstantsDataService {
     'SK',
     'YT',
   ];
+
+  getLicenseRenewalMethods() {
+    return this.licenseRenewalMethods;
+  }
 
   getPreExamStatuses() {
     return this.preExamStatuses;
