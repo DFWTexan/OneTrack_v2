@@ -232,10 +232,11 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.agentDataService.upsertAgentLicense(licenseInfo).subscribe({
         next: (response) => {
-          const modalDiv = document.getElementById('modal-edit-license-info');
-          if (modalDiv != null) {
-            modalDiv.style.display = 'none';
-          }
+          // const modalDiv = document.getElementById('modal-edit-license-info');
+          // if (modalDiv != null) {
+          //   modalDiv.style.display = 'none';
+          // }
+          this.forceCloseModal();
           // handle the response here
           // console.log(
           //   'EMFTEST () - Agent License added successfully response => \n ',
@@ -246,13 +247,22 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
           if (error.error && error.error.errMessage) {
             this.errorMessageService.setErrorMessage(error.error.errMessage);
           }
-          const modalDiv = document.getElementById('modal-edit-license-info');
-          if (modalDiv != null) {
-            modalDiv.style.display = 'none';
-          }
+          // const modalDiv = document.getElementById('modal-edit-license-info');
+          // if (modalDiv != null) {
+          //   modalDiv.style.display = 'none';
+          // }
+          this.forceCloseModal();
         },
       })
     );
+  }
+
+  forceCloseModal() {
+    this.isFormSubmitted = false;
+    const modalDiv = document.getElementById('modal-edit-license-info');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
   }
 
   onCloseModal() {
@@ -260,10 +270,11 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       if (
         confirm('You have unsaved changes. Are you sure you want to close?')
       ) {
-        const modalDiv = document.getElementById('modal-edit-license-info');
-        if (modalDiv != null) {
-          modalDiv.style.display = 'none';
-        }
+        // const modalDiv = document.getElementById('modal-edit-license-info');
+        // if (modalDiv != null) {
+        //   modalDiv.style.display = 'none';
+        // }
+        this.forceCloseModal();
         this.licenseForm.reset();
         // this.licenseForm.patchValue({
         //   jobTitleID: 0,
@@ -272,10 +283,11 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       }
     } else {
       this.isFormSubmitted = false;
-      const modalDiv = document.getElementById('modal-edit-license-info');
-      if (modalDiv != null) {
-        modalDiv.style.display = 'none';
-      }
+      // const modalDiv = document.getElementById('modal-edit-license-info');
+      // if (modalDiv != null) {
+      //   modalDiv.style.display = 'none';
+      // }
+      this.forceCloseModal();
     }
   }
 

@@ -103,10 +103,10 @@
               {{ licRenewal.sentToStateDate | date : "MM/dd/yyyy" }}
             </td>
             <td class="align-middle">
-              {{ licRenewal.recFromStateDate | date : "MM/dd/yyyy" }}
+              {{ licRenewal.renewalDate | date : "MM/dd/yyyy" }}
             </td>
             <td class="align-middle">
-              {{ licRenewal.applicationType }}
+              {{ licRenewal.renewalMethod }}
             </td>
             <td>
               <div
@@ -142,7 +142,7 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-license-renewal></app-edit-license-renewal>
+        <app-edit-license-renewal (callParentGetData)="onChildCallGetData()"></app-edit-license-renewal>
       </div>
     </div>
   </div>
