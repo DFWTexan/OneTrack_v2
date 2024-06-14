@@ -1,5 +1,6 @@
 import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
 import {
   AgentLicApplicationInfo,
@@ -8,8 +9,12 @@ import {
 import {
   AgentComService,
   AgentDataService,
+  ErrorMessageService,
+  LicIncentiveInfoDataService,
   ModalService,
+  UserAcctInfoDataService,
 } from '../../../../_services';
+import { ConfirmDialogComponent } from '../../../../_components';
 
 @Component({
   selector: 'app-license-renewal',
@@ -22,13 +27,19 @@ export class LicenseRenewalComponent implements OnInit, OnDestroy {
   currentIndex: number = 0;
   agentLicApplicationInfo: AgentLicApplicationInfo =
     {} as AgentLicApplicationInfo;
+  eventAction: string = '';
+  vObject: any = {};
 
   private subscriptions = new Subscription();
 
   constructor(
+    private errorMessageService: ErrorMessageService,
     public agentDataService: AgentDataService,
     public agentComService: AgentComService,
-    protected modalService: ModalService
+    private licenseDataService: LicIncentiveInfoDataService,
+    protected modalService: ModalService,
+    private userInfoDataService: UserAcctInfoDataService,
+    public dialog: MatDialog
   ) {
     this.agentDataService.agentLicApplicationInfo.licenseRenewalItems = [];
   }
@@ -63,7 +74,6 @@ export class LicenseRenewalComponent implements OnInit, OnDestroy {
     //   })
     // );
     this.getData();
-    
   }
 
   onChildCallGetData(): void {
@@ -109,7 +119,45 @@ export class LicenseRenewalComponent implements OnInit, OnDestroy {
   //   return this.currentIndex < this.licenseMgmtData.length - 1;
   // }
 
+  openConfirmDialog(eventAction: string, msg: string, vObject: any): void {
+    this.eventAction = eventAction;
+    this.vObject = vObject;
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+        title: 'Confirm Action',
+        message: `You are about to DELETE ${msg} - (${vObject.licenseApplicationID}). Do you want to proceed?`,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.subscriptions.add(
+          this.licenseDataService
+            .deleteLicenseApplicationItem({
+              licenseApplicationID: this.vObject.licenseApplicationID,
+              employeeLicenseID: this.vObject.employeeLicenseID,
+              userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+            })
+            .subscribe({
+              next: (response) => {
+                this.getData();
+              },
+              error: (error) => {
+                if (error.error && error.error.errMessage) {
+                  this.errorMessageService.setErrorMessage(
+                    error.error.errMessage
+                  );
+                }
+              },
+            })
+        );
+      }
+    });
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
-  } 
+  }
 }

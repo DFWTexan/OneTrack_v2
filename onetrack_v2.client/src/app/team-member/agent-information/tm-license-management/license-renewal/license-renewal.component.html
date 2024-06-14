@@ -65,71 +65,78 @@
     </div>
   </div>
   <div
-      class="row"
-      *ngIf="
-        agentDataService.agentLicApplicationInfo.licenseRenewalItems.length !==
-        0
-      "
-    >
-      <table class="table">
-        <thead>
-          <tr style="background-color: gainsboro; border-radius: 5rem">
-            <th class="ms-2">Renewal ID</th>
-            <th>Sent to Agent</th>
-            <th>Rec. From Agent</th>
-            <th>Sent to State</th>
-            <th>Renewal Date</th>
-            <th>Renewal Method</th>
-            <th  class="text-center" style="width: 10rem">Action</th>
-          </tr>
-        </thead>
-        <tbody class="bg-body">
-          <tr
-            *ngFor="
-              let licRenewal of agentDataService.agentLicApplicationInfo
-                .licenseRenewalItems
-            "
-          >
-            <td class="align-middle">
-              {{ licRenewal.licenseApplicationID }}
-            </td>
-            <td class="align-middle">
-              {{ licRenewal.sentToAgentDate | date : "MM/dd/yyyy" }}
-            </td>
-            <td class="align-middle">
-              {{ licRenewal.recFromAgentDate | date : "MM/dd/yyyy" }}
-            </td>
-            <td class="align-middle">
-              {{ licRenewal.sentToStateDate | date : "MM/dd/yyyy" }}
-            </td>
-            <td class="align-middle">
-              {{ licRenewal.renewalDate | date : "MM/dd/yyyy" }}
-            </td>
-            <td class="align-middle">
-              {{ licRenewal.renewalMethod }}
-            </td>
-            <td>
-              <div
-                class="d-flex justify-content-between mb-3 me-4"
+    class="row"
+    *ngIf="
+      agentDataService.agentLicApplicationInfo.licenseRenewalItems.length !== 0
+    "
+  >
+    <table class="table">
+      <thead>
+        <tr style="background-color: gainsboro; border-radius: 5rem">
+          <th class="ms-2">Renewal ID</th>
+          <th>Sent to Agent</th>
+          <th>Rec. From Agent</th>
+          <th>Sent to State</th>
+          <th>Renewal Date</th>
+          <th>Renewal Method</th>
+          <th class="text-center" style="width: 10rem">Action</th>
+        </tr>
+      </thead>
+      <tbody class="bg-body">
+        <tr
+          *ngFor="
+            let licRenewal of agentDataService.agentLicApplicationInfo
+              .licenseRenewalItems
+          "
+        >
+          <td class="align-middle">
+            {{ licRenewal.licenseApplicationID }}
+          </td>
+          <td class="align-middle">
+            {{ licRenewal.sentToAgentDate | date : "MM/dd/yyyy" }}
+          </td>
+          <td class="align-middle">
+            {{ licRenewal.recFromAgentDate | date : "MM/dd/yyyy" }}
+          </td>
+          <td class="align-middle">
+            {{ licRenewal.sentToStateDate | date : "MM/dd/yyyy" }}
+          </td>
+          <td class="align-middle">
+            {{ licRenewal.renewalDate | date : "MM/dd/yyyy" }}
+          </td>
+          <td class="align-middle">
+            {{ licRenewal.renewalMethod }}
+          </td>
+          <td>
+            <div class="d-flex justify-content-between mb-3 me-4">
+              <button
+                class="icon-edit-delete-button"
+                (click)="
+                  agentDataService.storeLicRenewal('EDIT', licRenewal);
+                  modalService.open('modal-edit-lic-renewal')
+                "
               >
-                <button
-                  class="icon-edit-delete-button"
+                <span class="material-symbols-outlined"> edit </span>
+              </button>
+              <button class="icon-edit-delete-button">
+                <span
+                  class="material-symbols-outlined"
                   (click)="
-                    agentDataService.storeLicRenewal('EDIT', licRenewal);
-                    modalService.open('modal-edit-lic-renewal')
-                  "
+                  openConfirmDialog('deleteLicenseRenewal', 'License Renewal', {
+                    employeeLicenseID: licenseMgmtData[currentIndex].employeeLicenseId,
+                    licenseApplicationID: licRenewal.licenseApplicationID,
+                  })
+                "
                 >
-                  <span class="material-symbols-outlined"> edit </span>
-                </button>
-                <button class="icon-edit-delete-button">
-                  <span class="material-symbols-outlined"> delete </span>
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+                  delete
+                </span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
 
 <!-- Modal: EDIT-LIC-RENEWAL -->
@@ -142,7 +149,9 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-license-renewal (callParentGetData)="onChildCallGetData()"></app-edit-license-renewal>
+        <app-edit-license-renewal
+          (callParentGetData)="onChildCallGetData()"
+        ></app-edit-license-renewal>
       </div>
     </div>
   </div>
