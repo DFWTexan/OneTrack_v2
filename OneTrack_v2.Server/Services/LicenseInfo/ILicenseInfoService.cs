@@ -22,5 +22,6 @@ namespace OneTrak_v2.Services
         public ReturnResult DeleteLicensePreEducation([FromBody] IputDeleteLicensePreEducation vInput);
         public ReturnResult UpsertLicensePreExam([FromBody] IputUpsertLicApplPreExam vInput);
         public ReturnResult DeleteLicensePreExam([FromBody] IputDeleteLicApplPreExam vInput);
+        public ReturnResult UpdateLicenseIncentive([FromBody] IputUpdateLicenseIncentive vInput);
     }
 }

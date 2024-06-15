@@ -349,8 +349,8 @@ namespace OneTrak_v2.Services
                 result.Success = true;
                 result.ObjData = queryBMMgrs;
                 result.StatusCode = 200;
-			
-			}
+
+            }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
@@ -411,7 +411,7 @@ namespace OneTrak_v2.Services
                 result.Success = true;
                 result.ObjData = queryDMMrgs;
                 result.StatusCode = 200;
-			}
+            }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
@@ -444,7 +444,7 @@ namespace OneTrak_v2.Services
                 result.Success = true;
                 result.ObjData = queryTechNames;
                 result.StatusCode = 200;
-			}
+            }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
@@ -483,12 +483,12 @@ namespace OneTrak_v2.Services
                                              (employeeLicense.LicenseNumber ?? "")
                             };
 
-				var affiliatedLicenses = query.AsNoTracking().ToList();	
+                var affiliatedLicenses = query.AsNoTracking().ToList();
 
                 result.Success = true;
-				result.ObjData = affiliatedLicenses;
+                result.ObjData = affiliatedLicenses;
                 result.StatusCode = 200;
-			}
+            }
             catch (Exception ex)
             {
                 result.StatusCode = 500;
@@ -500,8 +500,8 @@ namespace OneTrak_v2.Services
             return result;
 
         }
-        
-		#region INSERT/UPDATE/DELETE
+
+        #region INSERT/UPDATE/DELETE
         public ReturnResult AddLicenseAppointment([FromBody] IputAddLicenseAppointment vInput)
         {
             var result = new ReturnResult();
@@ -545,14 +545,14 @@ namespace OneTrak_v2.Services
             return result;
         }
         public ReturnResult UpdateLicenseAppointment([FromBody] IputUpdateLicenseAppointment vInput)
-		{
+        {
             var result = new ReturnResult();
             try
-			{
+            {
                 using (SqlConnection conn = new SqlConnection(_connectionString))
-				{
+                {
                     using (SqlCommand cmd = new SqlCommand("uspAppointmentUpdate", conn))
-					{
+                    {
                         cmd.CommandType = CommandType.StoredProcedure;
 
                         cmd.Parameters.Add(new SqlParameter("@EmployeeAppointmentID", vInput.EmployeeAppointmentID));
@@ -575,7 +575,7 @@ namespace OneTrak_v2.Services
 
             }
             catch (Exception ex)
-			{
+            {
                 result.StatusCode = 500;
                 result.ObjData = null;
                 result.Success = false;
@@ -587,14 +587,14 @@ namespace OneTrak_v2.Services
             return result;
         }
         public ReturnResult DeleteLicenseAppointment([FromBody] IputDeleteLicenseAppointment vInput)
-		{
-			var result = new ReturnResult();
+        {
+            var result = new ReturnResult();
             try
-			{
+            {
                 using (SqlConnection conn = new SqlConnection(_connectionString))
-				{
+                {
                     using (SqlCommand cmd = new SqlCommand("uspEmployeeAppointmentDelete", conn))
-					{
+                    {
                         cmd.CommandType = CommandType.StoredProcedure;
 
                         cmd.Parameters.Add(new SqlParameter("@EmployeeAppointmentID", vInput.EmployeeAppointmentID));
@@ -612,7 +612,7 @@ namespace OneTrak_v2.Services
 
             }
             catch (Exception ex)
-			{
+            {
                 result.StatusCode = 500;
                 result.ObjData = null;
                 result.Success = false;
@@ -622,15 +622,15 @@ namespace OneTrak_v2.Services
             }
 
             return result;
-		}
+        }
         public ReturnResult UpsertLicenseApplication([FromBody] IputUpsertLicenseApplication vInput)
-		{
+        {
             var result = new ReturnResult();
             try
             {
                 if (vInput.LicenseApplicationID == 0)
                 {
-                   // INSERT Continuing Education Taken
+                    // INSERT Continuing Education Taken
                     using (SqlConnection conn = new SqlConnection(_connectionString))
                     {
                         using (SqlCommand cmd = new SqlCommand("uspLicenseApplicationsInsert", conn))
@@ -801,7 +801,7 @@ namespace OneTrak_v2.Services
                 _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
             }
 
-            return result;  
+            return result;
         }
         public ReturnResult DeleteLicensePreEducation([FromBody] IputDeleteLicensePreEducation vInput)
         {
@@ -945,6 +945,75 @@ namespace OneTrak_v2.Services
             }
 
             return result;
+        }
+        public ReturnResult UpdateLicenseIncentive([FromBody] IputUpdateLicenseIncentive vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspEmploymentLicenseIncentiveUpdate", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@EmployeeLicenseID", vInput.EmploymentLicenseIncentiveID));
+                        cmd.Parameters.Add(new SqlParameter("@RollOutGroup", vInput.DMEmploymentID));
+                        cmd.Parameters.Add(new SqlParameter("@DMEmploymentID", vInput.CCdBMEmploymentID));
+                        cmd.Parameters.Add(new SqlParameter("@CCdBMEmploymentID", vInput.CCd2BMEmploymentID));
+                        cmd.Parameters.Add(new SqlParameter("@DMSentBySOEID", vInput.CCd2BMEmploymentID));
+                        cmd.Parameters.Add(new SqlParameter("@DMSentDate", vInput.CCOkToSellBMEmploymentID));
+                        cmd.Parameters.Add(new SqlParameter("@DMApprovalDate", vInput.DMSentBySOEID));
+                        cmd.Parameters.Add(new SqlParameter("@DMDeclinedDate", vInput.DM10DaySentBySOEID));
+                        cmd.Parameters.Add(new SqlParameter("@DM10DaySentDate", vInput.DM20DaySentBySOEID));
+                        cmd.Parameters.Add(new SqlParameter("@DM10DaySentBySOEID", vInput.TMSentBySOEID));
+                        cmd.Parameters.Add(new SqlParameter("@DM20DaySentDate", vInput.TM10DaySentBySOEID));
+                        cmd.Parameters.Add(new SqlParameter("@DM20DaySentBySOEID", vInput.TMOkToSellSentBySOEID));
+                        cmd.Parameters.Add(new SqlParameter("@DMComment", vInput.TM45DaySentBySOEID));
+                        cmd.Parameters.Add(new SqlParameter("@TMSentBySOEID", vInput.TMExceptionDate));
+                        cmd.Parameters.Add(new SqlParameter("@TMSentDate", vInput.TMOMSApprtoSendToHRDate));
+                        cmd.Parameters.Add(new SqlParameter("@CCd2BMEmploymentID", vInput.TMSentToHRDate));
+                        cmd.Parameters.Add(new SqlParameter("@TMApprovalDate", vInput.IncetivePeriodDate));
+                        cmd.Parameters.Add(new SqlParameter("@TMDeclinedDate", vInput.IncentiveStatus));
+                        cmd.Parameters.Add(new SqlParameter("@TM10DaySentDate", vInput.Notes));
+                        cmd.Parameters.Add(new SqlParameter("@TM10DaySentBySOEID", vInput.Notes));
+                        cmd.Parameters.Add(new SqlParameter("@TM45DaySentDate", vInput.Notes));
+                        cmd.Parameters.Add(new SqlParameter("@TM45DaySentBySOEID", vInput.Notes));
+                        cmd.Parameters.Add(new SqlParameter("@TMExceptionDate", vInput.Notes));
+                        cmd.Parameters.Add(new SqlParameter("@TMException", vInput.Notes));
+                        cmd.Parameters.Add(new SqlParameter("@TMComment", vInput.Notes));
+                        cmd.Parameters.Add(new SqlParameter("@TMOkToSellSentBySOEID", vInput.Notes));
+                        cmd.Parameters.Add(new SqlParameter("@TMOkToSellSentDate", vInput.Notes));
+                        cmd.Parameters.Add(new SqlParameter("@CCOkToSellBMEmploymentID", vInput.Notes));
+                        cmd.Parameters.Add(new SqlParameter("@TMOMSApprtoSendToHRDate", vInput.Notes));
+                        cmd.Parameters.Add(new SqlParameter("@TMSentToHRDate", vInput.Notes));
+                        cmd.Parameters.Add(new SqlParameter("@IncetivePeriodDate", vInput.Notes));
+                        cmd.Parameters.Add(new SqlParameter("@IncentiveStatus", vInput.Notes));
+                        cmd.Parameters.Add(new SqlParameter("@Notes", vInput.Notes));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "License License Incentive Updated Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ObjData = null;
+                result.Success = false;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# LINFO-6323-49745].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;
+
         }
         #endregion
     }

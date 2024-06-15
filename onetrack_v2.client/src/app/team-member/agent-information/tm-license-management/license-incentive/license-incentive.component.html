@@ -1,10 +1,12 @@
-<div class="container app-component-container">
+<div class="mb-5" style="margin-left: 0.5rem; margin-right: 0.5rem">
   <div class="row">
     <div
       class="col d-flex justify-content-start align-items-center"
       style="font-size: larger"
     >
-      <strong style="margin-right: 1rem">License Name:</strong>
+      <strong style="margin-left: 0.5rem; margin-right: 1rem"
+        >License Name:</strong
+      >
       {{ licenseMgmtData[currentIndex].licenseName }}
       <button
         *ngIf="!modeEdit"
@@ -44,12 +46,19 @@
   </div>
 
   <!-- DISPLAY -->
-  <div class="row bg-body p-1">
+  <div
+    class="row bg-body p-1"
+    style="
+      border-radius: 1rem;
+      padding: 1rem;
+      box-shadow: 0 0 10px 0 rgba(230, 210, 210, 0.1);
+    "
+  >
     <div class="col">
       <!-- mode: DISPLAY -->
       <table class="table" *ngIf="!modeEdit">
         <thead>
-          <tr style="background-color: whitesmoke">
+          <tr style="background-color: #ffa500">
             <th scope="col">IncentiveID</th>
             <th scope="col">Rollout Group</th>
             <th scope="col">DM Mgr</th>
@@ -76,7 +85,9 @@
                 licenseIncentiveInfo.cCdBRMgrJobTitle
               }}
             </td>
-            <td><div>&nbsp;<br>{{ licenseIncentiveInfo.dmSentBy }}</div></td>
+            <td>
+              <div>&nbsp;<br />{{ licenseIncentiveInfo.dmSentBy }}</div>
+            </td>
             <td style="font-size: smaller">
               {{ licenseIncentiveInfo.dmApprovalDate }}
             </td>
@@ -93,7 +104,7 @@
             <td></td>
             <td colspan="6">
               <div>
-                <span style="font-weight: 600; color: grey;"> DM Comment: </span>
+                <span style="font-weight: 600; color: grey"> DM Comment: </span>
                 <div>{{ licenseIncentiveInfo.dmComment }}</div>
               </div>
             </td>
@@ -107,7 +118,7 @@
       <!-- mode: DISPLAY -->
       <table class="table" *ngIf="!modeEdit">
         <thead>
-          <tr style="background-color: whitesmoke">
+          <tr style="background-color: #ffa500">
             <th scope="col">Program Eligible</th>
             <th scope="col">Sent To TM</th>
             <th scope="col">CCd BM Mgr</th>
@@ -134,18 +145,19 @@
             <td></td>
             <td colspan="4">
               <div>
-                <span style="font-weight: 600; color: grey;"> TM Comment: </span>
+                <span style="font-weight: 600; color: grey"> TM Comment: </span>
                 {{ licenseIncentiveInfo.tmComment }}
               </div>
             </td>
             <td></td>
             <td colspan="4">
               <div>
-                <span style="font-weight: 600; color: grey;">Exeption Reason: </span>
+                <span style="font-weight: 600; color: grey"
+                  >Exeption Reason:
+                </span>
                 {{ licenseIncentiveInfo.tmException }}
-
-            </div>
-          </td>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
@@ -156,7 +168,7 @@
       <!-- mode: DISPLAY -->
       <table class="table" *ngIf="!modeEdit">
         <thead>
-          <tr style="background-color: whitesmoke">
+          <tr style="background-color: #ffa500">
             <th scope="col">Completed In 90 Days</th>
             <th scope="col">Ok To Sell Sent To TM</th>
             <th scope="col">CC'd BM Mgr</th>
@@ -171,26 +183,26 @@
         </thead>
         <tbody>
           <tr>
-              <td>{{ licenseIncentiveInfo.completedIn90Days }}</td>
-              <td></td>
-              <td></td>
-              <td>{{ licenseIncentiveInfo.originalIssueDate }}</td>
-              <td>{{ licenseIncentiveInfo.certificationDate }}</td>
-              <td>{{ licenseIncentiveInfo.mod2Date }}</td>
-              <td>{{ licenseIncentiveInfo.appointmentEffectiveDate }}</td>
-              <td></td>
-              <td></td>
-              <td>{{ licenseIncentiveInfo.incentiveStatus }}</td>
-            </tr>
-            <tr>
-              <td></td>
-              <td colspan="8">
-                <div>
-                  <span style="font-weight: 600; color: grey;">Notes: </span>
-                  {{ licenseIncentiveInfo.notes }}
-                </div>
-              </td>
-            </tr>
+            <td>{{ licenseIncentiveInfo.completedIn90Days }}</td>
+            <td></td>
+            <td></td>
+            <td>{{ licenseIncentiveInfo.originalIssueDate }}</td>
+            <td>{{ licenseIncentiveInfo.certificationDate }}</td>
+            <td>{{ licenseIncentiveInfo.mod2Date }}</td>
+            <td>{{ licenseIncentiveInfo.appointmentEffectiveDate }}</td>
+            <td></td>
+            <td></td>
+            <td>{{ licenseIncentiveInfo.incentiveStatus }}</td>
+          </tr>
+          <tr>
+            <td></td>
+            <td colspan="8">
+              <div>
+                <span style="font-weight: 600; color: grey">Notes: </span>
+                {{ licenseIncentiveInfo.notes }}
+              </div>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -218,12 +230,15 @@
       </div>
     </div>
 
-    <div class="row bg-body">
+    <div
+      class="row bg-body"
+      
+    >
       <div class="col">
         <!-- mode: EDIT -->
         <table class="table">
           <thead>
-            <tr style="background-color: whitesmoke">
+            <tr style="background-color: #ffa500">
               <th scope="col">Rollout Group</th>
               <th scope="col">DM Mgr</th>
               <th scope="col">CCd BM Mgr</th>
@@ -235,14 +250,27 @@
             </tr>
           </thead>
           <tbody>
-            <!-- <tr *ngFor="let license of licenseMgmtData[currentIndex].licenseAppointments">
-                        <td>{{ license.licenseNumber }}</td>
-                        <td>{{ license.licenseType }}</td>
-                        <td>{{ license.licenseStatus }}</td>
-                        <td>{{ license.licenseExpirationDate }}</td>
-                        <td>{{ license.licenseState }}</td>
-                        <td>{{ license.licenseIncentive }}</td>
-                      </tr> -->
+            <tr>
+              <td>
+                <select
+                  class="form-select select-size-x-small"
+                  type="text"
+                  id="licenseState"
+                  formControlName="licenseState"
+                >
+                  <!-- <option *ngFor="let state of licenseStates" [value]="state">
+                  {{ state }}
+                </option> -->
+                </select>
+              </td>
+              <td>TBD</td>
+              <td>TBD</td>
+              <td>TBD</td>
+              <td>TBD</td>
+              <td>TBD</td>
+              <td>TBD</td>
+              <td>TBD</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -253,7 +281,7 @@
         <!-- mode: EDIT -->
         <table class="table">
           <thead>
-            <tr style="background-color: whitesmoke">
+            <tr style="background-color: #ffa500">
               <th scope="col">Sent To TM</th>
               <th scope="col">CCd BM Mgr</th>
               <th scope="col">Date TM Approved</th>
@@ -282,7 +310,7 @@
         <!-- mode: EDIT -->
         <table class="table">
           <thead>
-            <tr style="background-color: whitesmoke">
+            <tr style="background-color: #ffa500">
               <th scope="col">Ok To Sell Sent To TM</th>
               <th scope="col">CC'd BM Mgr</th>
               <th scope="col">OMS Appr To Send To HR</th>

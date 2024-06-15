@@ -136,5 +136,13 @@ namespace OneTrak_v2.Server.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> UpdateLicenseIncentive([FromBody] IputUpdateLicenseIncentive input)
+        {
+            var result = await Task.Run(() => _licenseInfo.UpdateLicenseIncentive(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
     }
 }
