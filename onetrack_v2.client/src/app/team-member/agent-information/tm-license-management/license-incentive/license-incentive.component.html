@@ -230,12 +230,9 @@
       </div>
     </div>
 
-    <div
-      class="row bg-body"
-      
-    >
+    <div class="row bg-body">
       <div class="col">
-        <!-- mode: EDIT -->
+        <!-- mode: EDIT (DM) -->
         <table class="table">
           <thead>
             <tr style="background-color: #ffa500">
@@ -255,21 +252,126 @@
                 <select
                   class="form-select select-size-x-small"
                   type="text"
-                  id="licenseState"
-                  formControlName="licenseState"
+                  id="RollOutGroup"
+                  formControlName="RollOutGroup"
                 >
                   <!-- <option *ngFor="let state of licenseStates" [value]="state">
                   {{ state }}
                 </option> -->
                 </select>
               </td>
-              <td>TBD</td>
-              <td>TBD</td>
-              <td>TBD</td>
-              <td>TBD</td>
-              <td>TBD</td>
-              <td>TBD</td>
-              <td>TBD</td>
+              <td>
+                <select
+                  class="form-select select-size-small"
+                  type="text"
+                  id="DMEmploymentID"
+                  formControlName="DMEmploymentID"
+                >
+                  <!-- <option *ngFor="let state of licenseStates" [value]="state">
+                {{ state }}
+              </option> -->
+                </select>
+              </td>
+              <td>
+                <select
+                  class="form-select select-size-small"
+                  type="text"
+                  id="CCdBMEmploymentID"
+                  formControlName="CCdBMEmploymentID"
+                >
+                  <!-- <option *ngFor="let state of licenseStates" [value]="state">
+              {{ state }}
+            </option> -->
+                </select>
+              </td>
+              <td>
+                <input
+                  type="date"
+                  id="DMSentDate"
+                  class="form-control input-size-small"
+                  formControlName="DMSentDate"
+                />
+              </td>
+              <td>
+                <input
+                  type="date"
+                  id="DMApprovalDate"
+                  class="form-control input-size-small"
+                  formControlName="DMApprovalDate"
+                />
+              </td>
+              <td>
+                <input
+                  type="date"
+                  id="DMDeclinedDate"
+                  class="form-control input-size-small"
+                  formControlName="DMDeclinedDate"
+                />
+              </td>
+              <td>
+                <input
+                  type="date"
+                  id="DMFollowupByDate1"
+                  class="form-control input-size-small"
+                  formControlName="DMFollowupByDate1"
+                />
+              </td>
+              <td>
+                <input
+                  type="date"
+                  id="DMFollowupByDate2"
+                  class="form-control input-size-small"
+                  formControlName="DMFollowupByDate2"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td colspan="2">
+                <span style="font-weight: 500">DM Comment</span><br /><textarea
+                  class="form-control"
+                  style="width: 80%"
+                  formControlName="DMComment"
+                ></textarea>
+              </td>
+              <td>
+                <select
+                  class="form-select select-size-small"
+                  type="text"
+                  id="DMSentBySOEID"
+                  formControlName="DMSentBySOEID"
+                >
+                  <!-- <option *ngFor="let state of licenseStates" [value]="state">
+            {{ state }}
+          </option> -->
+                </select>
+              </td>
+              <td></td>
+              <td></td>
+              <td>
+                <select
+                  class="form-select select-size-small"
+                  type="text"
+                  id="DMFollowupBySOEID1"
+                  formControlName="DMFollowupBySOEID1"
+                >
+                  <!-- <option *ngFor="let state of licenseStates" [value]="state">
+          {{ state }}
+        </option> -->
+                </select>
+              </td>
+              <td>
+                <select
+                  class="form-select select-size-small"
+                  type="text"
+                  id="DMFollowupBySOEID2"
+                  formControlName="DMFollowupBySOEID2"
+                >
+                  <!-- <option *ngFor="let state of licenseStates" [value]="state">
+          {{ state }}
+        </option> -->
+                </select>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -278,7 +380,7 @@
 
     <div class="row bg-body">
       <div class="col">
-        <!-- mode: EDIT -->
+        <!-- mode: EDIT (TM) -->
         <table class="table">
           <thead>
             <tr style="background-color: #ffa500">
@@ -289,17 +391,104 @@
               <th scope="col">TM Followup By N/A</th>
               <th scope="col">TM 45 Day FollowUp</th>
               <th scope="col">Exception Start Date</th>
+              <th scope="col"></th>
             </tr>
           </thead>
           <tbody>
-            <!-- <tr *ngFor="let license of licenseMgmtData[currentIndex].licenseAppointments">
-                    <td>{{ license.licenseNumber }}</td>
-                    <td>{{ license.licenseType }}</td>
-                    <td>{{ license.licenseStatus }}</td>
-                    <td>{{ license.licenseExpirationDate }}</td>
-                    <td>{{ license.licenseState }}</td>
-                    <td>{{ license.licenseIncentive }}</td>
-                  </tr> -->
+            <tr>
+              <td>
+                <input
+                  type="date"
+                  id="TMSentDate"
+                  class="form-control input-size-small"
+                  formControlName="TMSentDate"
+                />
+              </td>
+              <td>
+                <select
+                  class="form-select select-size-small"
+                  type="text"
+                  id="CCd2BMEmploymentID"
+                  formControlName="CCd2BMEmploymentID"
+                >
+                  <!-- <option *ngFor="let state of licenseStates" [value]="state">
+        {{ state }}
+      </option> -->
+                </select>
+              </td>
+              <td>
+                <input
+                  type="date"
+                  id="TMApprovalDate"
+                  class="form-control input-size-small"
+                  formControlName="TMApprovalDate"
+                />
+              </td>
+              <td>
+                <input
+                  type="date"
+                  id="TMDeclinedDate"
+                  class="form-control input-size-small"
+                  formControlName="TMDeclinedDate"
+                />
+              </td>
+              <td>
+                <input
+                  type="date"
+                  id="TM10DaySentDate"
+                  class="form-control input-size-small"
+                  formControlName="TM10DaySentDate"
+                />
+              </td>
+              <td>
+                <input
+                  type="date"
+                  id="TM45DaySentDate"
+                  class="form-control input-size-small"
+                  formControlName="TM45DaySentDate"
+                />
+              </td>
+              <td>
+                <input
+                  type="date"
+                  id="TMExceptionDate"
+                  class="form-control input-size-small"
+                  formControlName="TMExceptionDate"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <select
+                  class="form-select select-size-small"
+                  type="text"
+                  id="TMSentBySOEID"
+                  formControlName="TMSentBySOEID"
+                >
+                  <!-- <option *ngFor="let state of licenseStates" [value]="state">
+              {{ state }}
+            </option> -->
+                </select>
+              </td>
+              <td colspan="2">
+                <span style="font-weight: 500">TM Comment</span><br /><textarea
+                  class="form-control"
+                  style="width: 80%"
+                  formControlName="TMComment"
+                ></textarea>
+              </td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td colspan="2">
+                <span style="font-weight: 500">Exception Reason</span
+                ><br /><textarea
+                  class="form-control"
+                  style="width: 98%"
+                  formControlName="TMException"
+                ></textarea>
+              </td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -320,14 +509,75 @@
             </tr>
           </thead>
           <tbody>
-            <!-- <tr *ngFor="let license of licenseMgmtData[currentIndex].licenseAppointments">
-                <td>{{ license.licenseNumber }}</td>
-                <td>{{ license.licenseType }}</td>
-                <td>{{ license.licenseStatus }}</td>
-                <td>{{ license.licenseExpirationDate }}</td>
-                <td>{{ license.licenseState }}</td>
-                <td>{{ license.licenseIncentive }}</td>
-              </tr> -->
+            <tr>
+              <td>
+                <input
+                  type="date"
+                  id="TMOkToSellSentDate"
+                  class="form-control input-size-small"
+                  formControlName="TMOkToSellSentDate"
+                />
+              </td>
+              <td>
+                <select
+                  class="form-select select-size-small"
+                  type="text"
+                  id="CCOkToSellBMEmploymentID"
+                  formControlName="CCOkToSellBMEmploymentID"
+                >
+                  <!-- <option *ngFor="let state of licenseStates" [value]="state">
+              {{ state }}
+            </option> -->
+                </select>
+              </td>
+              <td>
+                <input
+                  type="date"
+                  id="TMOMSApprtoSendToHRDate"
+                  class="form-control input-size-small"
+                  formControlName="TMOMSApprtoSendToHRDate"
+                />
+              </td>
+              <td>&nbsp;</td>
+              <td>
+                <input
+                  type="date"
+                  id="IncetivePeriodDate"
+                  class="form-control input-size-small"
+                  formControlName="IncetivePeriodDate"
+                />
+              </td>
+              <td>
+                <select
+                  class="form-select select-size-small"
+                  type="text"
+                  id="CCOkToSellBMEmploymentID"
+                  formControlName="CCOkToSellBMEmploymentID"
+                >
+                  <!-- <option *ngFor="let state of licenseStates" [value]="state">
+              {{ state }}
+            </option> -->
+                </select>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <select
+                  class="form-select select-size-small"
+                  type="text"
+                  id="IncentiveStatus"
+                  formControlName="IncentiveStatus"
+                >
+                  <!-- <option *ngFor="let state of licenseStates" [value]="state">
+              {{ state }}
+            </option> -->
+                </select>
+              </td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td>&nbsp;</td>
+              <td colspan="2"><span style="font-weight: 500;">Notes</span><br/><textarea class="form-control" style="width: 98%;"></textarea></td>
+            </tr>
           </tbody>
         </table>
       </div>
