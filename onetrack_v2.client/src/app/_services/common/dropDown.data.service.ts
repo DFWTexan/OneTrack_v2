@@ -51,6 +51,33 @@ export class DropdownDataService {
       );
   }
 
+  fetchDropdownNumberValueData(vEndpoint: string) {
+    const url = this.url + vEndpoint;
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: { value: number; label: string }[];
+        errMessage: string;
+      }>(url)
+      .pipe(
+        map((response) => {
+          // Check if the response is successful and has data
+          if (response.success && response.objData) {
+            // Map the objData to the desired format
+            return response.objData.map((item) => ({
+              value: item.value, // Assuming you want to map 'key' to 'value'
+              label: item.label, // 'value' is mapped to 'label'
+            }));
+          } else {
+            // Handle the case where response is not successful or objData is not available
+            // This can be adjusted based on how you want to handle errors or empty data
+            return [];
+          }
+        })
+      );
+  }
+
   updateBranchNames(branchNames: { value: string; label: string }[]) {
     this.branchNames = branchNames;
     this.branchNamesChanged.next([...this.branchNames]);

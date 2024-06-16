@@ -1,6 +1,7 @@
 select {
   height: 2.5rem;
   box-sizing: border-box;
+  font-size: small;
 }
 
 input {

@@ -367,8 +367,8 @@ namespace OneTrak_v2.Services
             try
             {
                 var sql = @"SELECT    
-								 m1.EmploymentID AS DMMgrEmploymentID,
-								(ISNULL(e1.LastName, '') + CASE WHEN e1.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(e1.FirstName, '') + ' ' + ISNULL(e1.MiddleName, '') ) AS DMMgrName
+								 m1.EmploymentID AS Value,
+								(ISNULL(e1.LastName, '') + CASE WHEN e1.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(e1.FirstName, '') + ' ' + ISNULL(e1.MiddleName, '') ) AS Label
 							FROM dbo.Employee e
 							INNER JOIN dbo.Employment m ON e.EmployeeID = m.EmployeeID 
 						--DM
@@ -382,8 +382,8 @@ namespace OneTrak_v2.Services
 							UNION
 
 							SELECT    
-								 m1.EmploymentID AS DMMgrEmploymentID,
-								(ISNULL(e1.LastName, '') + CASE WHEN e1.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(e1.FirstName, '') + ' ' + ISNULL(e1.MiddleName, '') ) AS DMMgrName
+								 m1.EmploymentID AS Value,
+								(ISNULL(e1.LastName, '') + CASE WHEN e1.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(e1.FirstName, '') + ' ' + ISNULL(e1.MiddleName, '') ) AS Label
 							FROM dbo.EmploymentLicenseIncentive eli
 						--DM
 							LEFT OUTER JOIN [dbo].[Employment] m1 ON eli.DMEmploymentID = m1.EmploymentID
@@ -395,10 +395,6 @@ namespace OneTrak_v2.Services
 							GROUP BY
 								 m1.EmploymentID,
 								(ISNULL(e1.LastName, '') + CASE WHEN e1.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(e1.FirstName, '') + ' ' + ISNULL(e1.MiddleName, '') )
-
-							UNION
-
-							SELECT '0' AS DMMgrEmploymentID, 'DMMgrName'
 
 							ORDER BY
 								(ISNULL(e1.LastName, '') + CASE WHEN e1.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(e1.FirstName, '') + ' ' + ISNULL(e1.MiddleName, '') ) ";

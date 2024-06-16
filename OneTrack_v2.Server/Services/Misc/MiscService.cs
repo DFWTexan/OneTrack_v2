@@ -511,5 +511,200 @@ namespace OneTrack_v2.Services
 
             return result;
         }
+        public ReturnResult GetAgentStautes()
+        {             var result = new ReturnResult();
+            try
+            {
+                var query = from s in _db.LkpTypeStatuses
+                            where s.LkpField == "AgentStatus"
+                            orderby s.SortOrder, s.LkpValue
+                            select new { value = s.LkpValue, label = s.LkpValue };
+
+                var resultAgentStatuses = query.AsNoTracking().ToList();
+
+                result.Success = true;
+                result.ObjData = resultAgentStatuses;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "MISC-GetAgentStautes", new { }, null);
+            }
+
+            return result;
+        }
+        public ReturnResult GetAppointmentStatuses()
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var query = from s in _db.LkpTypeStatuses
+                            where s.LkpField == "AppointmentStatus"
+                            orderby s.SortOrder, s.LkpValue
+                            select new { value = s.LkpValue, label = s.LkpValue };
+
+                var resultAppointmentStatuses = query.AsNoTracking().ToList();
+
+                result.Success = true;
+                result.ObjData = resultAppointmentStatuses;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "MISC-GetAppointmentStatuses", new { }, null);
+            }
+
+            return result;
+        }
+        public ReturnResult GetApplicationsStatuses()
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var query = from s in _db.LkpTypeStatuses
+                            where s.LkpField == "ApplicationStatus"
+                            orderby s.SortOrder, s.LkpValue
+                            select new { value = s.LkpValue, label = s.LkpValue };
+
+                var resultApplicationStatuses = query.AsNoTracking().ToList();
+
+                result.Success = true;
+                result.ObjData = resultApplicationStatuses;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "MISC-GetApplicationsStatuses", new { }, null);
+            }
+
+            return result;
+        }
+        public ReturnResult GetPreEducationStatuses()
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var query = from s in _db.LkpTypeStatuses
+                            where s.LkpField == "PreEdStatus"
+                            orderby s.SortOrder, s.LkpValue
+                            select new { value = s.LkpValue, label = s.LkpValue };
+
+                var resultPreEducationStatuses = query.AsNoTracking().ToList();
+
+                result.Success = true;
+                result.ObjData = resultPreEducationStatuses;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "MISC-GetPreEducationStatuses", new { }, null);
+            }
+
+            return result;
+        }
+        public ReturnResult GetPreExamStatuses()
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var query = from s in _db.LkpTypeStatuses
+                            where s.LkpField == "ExamStatus"
+                            orderby s.SortOrder, s.LkpValue
+                            select new { value = s.LkpValue, label = s.LkpValue };
+
+                var resultPreExamStatuses = query.AsNoTracking().ToList();
+
+                result.Success = true;
+                result.ObjData = resultPreExamStatuses;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "MISC-GetPreExamStatuses", new { }, null);
+            }
+
+            return result;
+        }
+        public ReturnResult GetRenewalMethods()
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var query = from s in _db.LkpTypeStatuses
+                            where s.LkpField == "RenewalMethod"
+                            orderby s.SortOrder, s.LkpValue
+                            select new { value = s.LkpValue, label = s.LkpValue };
+
+                var resultRenewalMethods = query.AsNoTracking().ToList();
+
+                result.Success = true;
+                result.ObjData = resultRenewalMethods;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "MISC-GetRenewalMethods", new { }, null);
+            }
+
+            return result;
+        }
+        public ReturnResult GetRollOutGroups()
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var query = from s in _db.LkpTypeStatuses
+                            where s.LkpField == "RollOutGroup"
+                            orderby s.SortOrder, s.LkpValue
+                            select new { value = s.LkpValue, label = s.LkpValue };
+
+                var resultRollOutGroups = query.AsNoTracking().ToList();
+
+                result.Success = true;
+                result.ObjData = resultRollOutGroups;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "MISC-RollOutGroups", new { }, null);
+            }
+
+            return result;
+        }
     }
 }

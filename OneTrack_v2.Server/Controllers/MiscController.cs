@@ -144,5 +144,60 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
+        [HttpGet]
+        public async Task<ActionResult> GetAgentStautes()
+        {
+            var result = await Task.Run(() => _miscService.GetAgentStautes());
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetAppointmentStatuses()
+        {
+            var result = await Task.Run(() => _miscService.GetAppointmentStatuses());
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetApplicationsStatuses()
+        {
+            var result = await Task.Run(() => _miscService.GetApplicationsStatuses());
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetPreEducationStatuses()
+        {
+            var result = await Task.Run(() => _miscService.GetPreEducationStatuses());
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetPreExamStatuses()
+        {
+            var result = await Task.Run(() => _miscService.GetPreExamStatuses());
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetRenewalMethods()
+        {
+            var result = await Task.Run(() => _miscService.GetRenewalMethods());
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetRollOutGroups()
+        {
+            var result = await Task.Run(() => _miscService.GetRollOutGroups());
+
+            return StatusCode(result.StatusCode, result);
+        }
     }
 }

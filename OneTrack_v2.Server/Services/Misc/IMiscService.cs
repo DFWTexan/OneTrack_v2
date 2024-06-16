@@ -20,5 +20,13 @@ namespace OneTrack_v2.Services
         public ReturnResult GetCoAbvByLicenseID(int vLicenseID);
         public ReturnResult GetPreEducationByStateAbv(string vStateAbv);
         public ReturnResult GetPreExamByStateAbv(string vStateAbv);
+        public ReturnResult GetAgentStautes();
+        public ReturnResult GetAppointmentStatuses();
+        public ReturnResult GetApplicationsStatuses();
+        public ReturnResult GetPreEducationStatuses();
+        public ReturnResult GetPreExamStatuses();
+        public ReturnResult GetRenewalMethods();
+        public ReturnResult GetRollOutGroups();
+
     }
 }
