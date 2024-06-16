@@ -2,7 +2,7 @@
 {
     public class OputIncentiveBMMgr
     {
-        public required int BMMgrEmploymentID { get; set; }
-        public required string BMMgrName { get; set; }
+        public required int Value { get; set; }
+        public required string Label { get; set; }
     }
 }

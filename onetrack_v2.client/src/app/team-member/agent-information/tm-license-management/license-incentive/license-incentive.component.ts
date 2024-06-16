@@ -1,6 +1,6 @@
 import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Subscription, forkJoin } from 'rxjs';
 
 import {
   // AgentLicApplicationInfo,
@@ -32,6 +32,10 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
   panelOpenState = false;
   rolloutGroups: { value: string; label: string }[] = [];
   dmManagers: { value: number; label: string }[] = [];
+  dmEmploymentIDValue: any = 0;
+  bmManagers: { value: number; label: string }[] = [];
+  ccdBMEmploymentIDValue: any = 0;
+  licenseTeches: { value: string; label: string }[] = [];
 
   private subscriptions = new Subscription();
 
@@ -81,161 +85,188 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
     this.licenseMgmtData =
       this.agentDataService.agentInformation.agentLicenseAppointments;
 
-    this.subscriptions.add(
-      this.drpdwnDataService
-        .fetchDropdownData('GetRollOutGroups')
-        .subscribe((rolloutGroups: { value: string; label: string }[]) => {
-          this.rolloutGroups = [{value: 'OneTrak', label: 'OneTrak'}, ...rolloutGroups];
-        })
-    );
+    // this.subscriptions.add(
+    //   this.drpdwnDataService
+    //     .fetchDropdownData('GetRollOutGroups')
+    //     .subscribe((rolloutGroups: { value: string; label: string }[]) => {
+    //       this.rolloutGroups = [
+    //         { value: 'OneTrak', label: 'OneTrak' },
+    //         ...rolloutGroups,
+    //       ];
+    //     })
+    // );
+
+    // this.subscriptions.add(
+    //   this.licIncentiveInfoDataService
+    //     .fetchDMManagers()
+    //     .subscribe((dmManagers: { value: number; label: string }[]) => {
+    //       this.dmManagers = dmManagers;
+    //     })
+    // );
+
+    // this.subscriptions.add(
+    //   this.licIncentiveInfoDataService
+    //     .fetchBMManagers()
+    //     .subscribe((bmManagers: { value: number; label: string }[]) => {
+    //       this.bmManagers = bmManagers;
+    //     })
+    // );
+
+    const fetchDropdownData$ =
+      this.drpdwnDataService.fetchDropdownData('GetRollOutGroups');
+    const fetchDMManagers$ = this.licIncentiveInfoDataService.fetchDMManagers();
+    const fetchBMManagers$ = this.licIncentiveInfoDataService.fetchBMManagers();
+    const fectchLicenseTeches$ = this.licIncentiveInfoDataService.fetchLicenseTeches();
 
     this.subscriptions.add(
-      this.licIncentiveInfoDataService
-        .fetchDMManagers()
-        .subscribe((dmManagers: { value: number; label: string }[]) => {
+      forkJoin([
+        fetchDropdownData$,
+        fetchDMManagers$,
+        fetchBMManagers$,
+        fectchLicenseTeches$,
+      ]).subscribe(([rolloutGroups, dmManagers, bmManagers, licenseTeches]) => {
+        this.rolloutGroups = [
+          { value: 'OneTrak', label: 'OneTrak' },
+          ...rolloutGroups,
+        ];
+        this.dmManagers = dmManagers;
+        this.bmManagers = bmManagers;
+        this.licenseTeches = licenseTeches;
 
-console.log('EMFTEST (ngOnInit) - dmManagers => \n', dmManagers);
+        this.subscriptions.add(
+          this.licIncentiveInfoDataService
+            .fetchLicIncentiveInfo(
+              this.licenseMgmtData[this.currentIndex].employeeLicenseId
+            )
+            .subscribe((licenseIncentiveInfo: LicenseIncentiveInfo) => {
+              
+              this.licenseIncentiveInfo = licenseIncentiveInfo;
 
-          this.dmManagers = dmManagers;
-        })
-    );
+              this.dmEmploymentIDValue = this.dmManagers.find(
+                (mgr) => mgr.label === licenseIncentiveInfo.dmMgrName
+              )?.value;
+              this.ccdBMEmploymentIDValue = this.bmManagers.find(
+                (mgr) => mgr.label === licenseIncentiveInfo.cCdBRMgrName
+              )?.value;
 
-    this.subscriptions.add(
-      this.licIncentiveInfoDataService
-        .fetchLicIncentiveInfo(
-          this.licenseMgmtData[this.currentIndex].employeeLicenseId
-        )
-        .subscribe((licenseIncentiveInfo: LicenseIncentiveInfo) => {
-          console.log(
-            'EMFTEST (ngOnInit) - licenseIncentiveInfo => \n',
-            licenseIncentiveInfo
-          );
-
-          this.licenseIncentiveInfo = licenseIncentiveInfo;
-
-          let dmEmploymentIDValue = this.dmManagers.find(mgr => mgr.label === licenseIncentiveInfo.dmMgrName)?.value;
-          // if (correspondingValue) {
-          //   this.incentiveUpdateForm.patchValue({
-          //     DMEmploymentID: correspondingValue
-          //   });
-          // }
-
-          this.incentiveUpdateForm.patchValue({
-            RollOutGroup: licenseIncentiveInfo.rollOutGroup,
-            DMEmploymentID: dmEmploymentIDValue || 0,
-            // CCdBMEmploymentID: licenseIncentiveInfo.ccdBmEmploymentId,
-            DMSentDate: licenseIncentiveInfo.dmSentDate
-              ? formatDate(
-                  licenseIncentiveInfo.dmSentDate,
-                  'yyyy-MM-dd',
-                  'en-US'
-                )
-              : null,
-            DMApprovalDate: licenseIncentiveInfo.dmApprovalDate
-              ? formatDate(
-                  licenseIncentiveInfo.dmApprovalDate,
-                  'yyyy-MM-dd',
-                  'en-US'
-                )
-              : null,
-            DMDeclinedDate: licenseIncentiveInfo.dmDeclinedDate
-              ? formatDate(
-                  licenseIncentiveInfo.dmDeclinedDate,
-                  'yyyy-MM-dd',
-                  'en-US'
-                )
-              : null,
-            // DM10DaySentDate: licenseIncentiveInfo.dm10DaySentDate
-            //   ? formatDate(
-            //       licenseIncentiveInfo.dm10DaySentDate,
-            //       'yyyy-MM-dd',
-            //       'en-US'
-            //     )
-            //   : null,
-            // DM20DaySentDate: licenseIncentiveInfo.dm20DaySentDate
-            //   ? formatDate(
-            //       licenseIncentiveInfo.dm20DaySentDate,
-            //       'yyyy-MM-dd',
-            //       'en-US'
-            //     )
-            //   : null,
-            DMComment: licenseIncentiveInfo.dmComment,
-            // DMSentBySOEID: licenseIncentiveInfo.dmSentBySoeid,
-            // DM10DaySentBySOEID: licenseIncentiveInfo.dm10DaySentBySoeid,
-            // DM20DaySentBySOEID: licenseIncentiveInfo.dm20DaySentBySoeid,
-            TMSentDate: licenseIncentiveInfo.tmSentDate
-              ? formatDate(
-                  licenseIncentiveInfo.tmSentDate,
-                  'yyyy-MM-dd',
-                  'en-US'
-                )
-              : null,
-            // CCd2BMEmploymentID: licenseIncentiveInfo.ccd2BmEmploymentId,
-            TMApprovalDate: licenseIncentiveInfo.tmApprovalDate
-              ? formatDate(
-                  licenseIncentiveInfo.tmApprovalDate,
-                  'yyyy-MM-dd',
-                  'en-US'
-                )
-              : null,
-            TMDeclinedDate: licenseIncentiveInfo.tmDeclinedDate
-              ? formatDate(
-                  licenseIncentiveInfo.tmDeclinedDate,
-                  'yyyy-MM-dd',
-                  'en-US'
-                )
-              : null,
-            // TM10DaySentDate: licenseIncentiveInfo.tm10DaySentDate
-            //   ? formatDate(
-            //       licenseIncentiveInfo.tm10DaySentDate,
-            //       'yyyy-MM-dd',
-            //       'en-US'
-            //     )
-            //   : null,
-            // TM45DaySentDate: licenseIncentiveInfo.tm45DaySentDate
-            //   ? formatDate(
-            //       licenseIncentiveInfo.tm45DaySentDate,
-            //       'yyyy-MM-dd',
-            //       'en-US'
-            //     )
-            //   : null,
-            TMExceptionDate: licenseIncentiveInfo.tmExceptionDate
-              ? formatDate(
-                  licenseIncentiveInfo.tmExceptionDate,
-                  'yyyy-MM-dd',
-                  'en-US'
-                )
-              : null,
-            // TMSentBySOEID: licenseIncentiveInfo.tmSentBySoeid,
-            TMComment: licenseIncentiveInfo.tmComment,
-            TMException: licenseIncentiveInfo.tmException,
-            TMOkToSellSentDate: licenseIncentiveInfo.tmOkToSellSentDate
-              ? formatDate(
-                  licenseIncentiveInfo.tmOkToSellSentDate,
-                  'yyyy-MM-dd',
-                  'en-US'
-                )
-              : null,
-            // CCOkToSellBMEmploymentID: licenseIncentiveInfo.ccOkToSellBmEmploymentId,
-            // TMOMSApprtoSendToHRDate: licenseIncentiveInfo.tmoMsApprToSendToHrDate
-            //   ? formatDate(
-            //       licenseIncentiveInfo.tmoMsApprToSendToHrDate,
-            //       'yyyy-MM-dd',
-            //       'en-US'
-            //     )
-            //   : null,
-            // IncetivePeriodDate: licenseIncentiveInfo.incentivePeriodDate
-            //   ? formatDate(
-            //       licenseIncentiveInfo.incentivePeriodDate,
-            //       'yyyy-MM-dd',
-            //       'en-US'
-            //     )
-            //   : null,
-            IncentiveStatus: licenseIncentiveInfo.incentiveStatus,
-            // TMOkToSellSentBySOEID: licenseIncentiveInfo.tmOkToSellSentBySoeid,
-            Notes: licenseIncentiveInfo.notes,
-          });
-        })
+              this.incentiveUpdateForm.patchValue({
+                RollOutGroup: licenseIncentiveInfo.rollOutGroup,
+                DMEmploymentID: this.dmEmploymentIDValue || 0,
+                CCdBMEmploymentID: this.ccdBMEmploymentIDValue || 0,
+                DMSentDate: licenseIncentiveInfo.dmSentDate
+                  ? formatDate(
+                      licenseIncentiveInfo.dmSentDate,
+                      'yyyy-MM-dd',
+                      'en-US'
+                    )
+                  : null,
+                DMApprovalDate: licenseIncentiveInfo.dmApprovalDate
+                  ? formatDate(
+                      licenseIncentiveInfo.dmApprovalDate,
+                      'yyyy-MM-dd',
+                      'en-US'
+                    )
+                  : null,
+                DMDeclinedDate: licenseIncentiveInfo.dmDeclinedDate
+                  ? formatDate(
+                      licenseIncentiveInfo.dmDeclinedDate,
+                      'yyyy-MM-dd',
+                      'en-US'
+                    )
+                  : null,
+                // DM10DaySentDate: licenseIncentiveInfo.dm10DaySentDate
+                //   ? formatDate(
+                //       licenseIncentiveInfo.dm10DaySentDate,
+                //       'yyyy-MM-dd',
+                //       'en-US'
+                //     )
+                //   : null,
+                // DM20DaySentDate: licenseIncentiveInfo.dm20DaySentDate
+                //   ? formatDate(
+                //       licenseIncentiveInfo.dm20DaySentDate,
+                //       'yyyy-MM-dd',
+                //       'en-US'
+                //     )
+                //   : null,
+                DMComment: licenseIncentiveInfo.dmComment,
+                DMSentBySOEID: licenseIncentiveInfo.dmSentBy,
+                DM10DaySentBySOEID: licenseIncentiveInfo.dM10DaySentBy,
+                DM20DaySentBySOEID: licenseIncentiveInfo.dM20DaySentBy,
+                TMSentDate: licenseIncentiveInfo.tmSentDate
+                  ? formatDate(
+                      licenseIncentiveInfo.tmSentDate,
+                      'yyyy-MM-dd',
+                      'en-US'
+                    )
+                  : null,
+                // CCd2BMEmploymentID: licenseIncentiveInfo.ccd2BmEmploymentId,
+                TMApprovalDate: licenseIncentiveInfo.tmApprovalDate
+                  ? formatDate(
+                      licenseIncentiveInfo.tmApprovalDate,
+                      'yyyy-MM-dd',
+                      'en-US'
+                    )
+                  : null,
+                TMDeclinedDate: licenseIncentiveInfo.tmDeclinedDate
+                  ? formatDate(
+                      licenseIncentiveInfo.tmDeclinedDate,
+                      'yyyy-MM-dd',
+                      'en-US'
+                    )
+                  : null,
+                // TM10DaySentDate: licenseIncentiveInfo.tm10DaySentDate
+                //   ? formatDate(
+                //       licenseIncentiveInfo.tm10DaySentDate,
+                //       'yyyy-MM-dd',
+                //       'en-US'
+                //     )
+                //   : null,
+                // TM45DaySentDate: licenseIncentiveInfo.tm45DaySentDate
+                //   ? formatDate(
+                //       licenseIncentiveInfo.tm45DaySentDate,
+                //       'yyyy-MM-dd',
+                //       'en-US'
+                //     )
+                //   : null,
+                TMExceptionDate: licenseIncentiveInfo.tmExceptionDate
+                  ? formatDate(
+                      licenseIncentiveInfo.tmExceptionDate,
+                      'yyyy-MM-dd',
+                      'en-US'
+                    )
+                  : null,
+                TMSentBySOEID: licenseIncentiveInfo.tmSentBy,
+                TMComment: licenseIncentiveInfo.tmComment,
+                TMException: licenseIncentiveInfo.tmException,
+                TMOkToSellSentDate: licenseIncentiveInfo.tmOkToSellSentDate
+                  ? formatDate(
+                      licenseIncentiveInfo.tmOkToSellSentDate,
+                      'yyyy-MM-dd',
+                      'en-US'
+                    )
+                  : null,
+                // CCOkToSellBMEmploymentID: licenseIncentiveInfo.ccOkToSellBmEmploymentId,
+                // TMOMSApprtoSendToHRDate: licenseIncentiveInfo.tmoMsApprToSendToHrDate
+                //   ? formatDate(
+                //       licenseIncentiveInfo.tmoMsApprToSendToHrDate,
+                //       'yyyy-MM-dd',
+                //       'en-US'
+                //     )
+                //   : null,
+                // IncetivePeriodDate: licenseIncentiveInfo.incentivePeriodDate
+                //   ? formatDate(
+                //       licenseIncentiveInfo.incentivePeriodDate,
+                //       'yyyy-MM-dd',
+                //       'en-US'
+                //     )
+                //   : null,
+                IncentiveStatus: licenseIncentiveInfo.incentiveStatus,
+                // TMOkToSellSentBySOEID: licenseIncentiveInfo.tmOkToSellSentBySoeid,
+                Notes: licenseIncentiveInfo.notes,
+              });
+            })
+        );
+      })
     );
   }
 

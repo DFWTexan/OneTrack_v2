@@ -2,7 +2,7 @@
 {
     public class OputIncentiveTechName
     {
-        public required string SOEID { get; set; }
-        public required string TechName { get; set; }
+        public required string Value { get; set; }
+        public required string Label { get; set; }
     }
 }

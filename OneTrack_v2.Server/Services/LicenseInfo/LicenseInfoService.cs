@@ -303,8 +303,8 @@ namespace OneTrak_v2.Services
             try
             {
                 var sql = @"SELECT    
-								m2.EmploymentID AS BMMgrEmploymentID,
-								(ISNULL(e2.LastName, '') + CASE WHEN e2.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(e2.FirstName, '') + ' ' + ISNULL(e2.MiddleName, '') ) AS BMMgrName
+								m2.EmploymentID AS Value,
+								(ISNULL(e2.LastName, '') + CASE WHEN e2.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(e2.FirstName, '') + ' ' + ISNULL(e2.MiddleName, '') ) AS Label
 							FROM dbo.Employee e 
 							INNER JOIN dbo.Employment m ON e.EmployeeID = m.EmployeeID 
 						--CCdBM
@@ -318,8 +318,8 @@ namespace OneTrak_v2.Services
 							UNION
 
 							SELECT    
-								m2.EmploymentID AS BMMgrEmploymentID,
-								(ISNULL(e2.LastName, '') + CASE WHEN e2.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(e2.FirstName, '') + ' ' + ISNULL(e2.MiddleName, '') ) AS BMMgrName
+								m2.EmploymentID AS Value,
+								(ISNULL(e2.LastName, '') + CASE WHEN e2.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(e2.FirstName, '') + ' ' + ISNULL(e2.MiddleName, '') ) AS Label
 							FROM dbo.EmploymentLicenseIncentive eli
 						--CCdBM
 							LEFT OUTER JOIN [dbo].[Employment] m2 ON eli.CCdBMEmploymentID = m2.EmploymentID 
@@ -333,10 +333,6 @@ namespace OneTrak_v2.Services
 							GROUP BY
 								m2.EmploymentID,
 								(ISNULL(e2.LastName, '') + CASE WHEN e2.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(e2.FirstName, '') + ' ' + ISNULL(e2.MiddleName, '') ) 
-
-							UNION
-
-							SELECT '0' AS BMMgrEmploymentID, 'BMMgrName'
 
 							ORDER BY
 								(ISNULL(e2.LastName, '') + CASE WHEN e2.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(e2.FirstName, '') + ' ' + ISNULL(e2.MiddleName, '') ) ";
@@ -423,18 +419,21 @@ namespace OneTrak_v2.Services
             var result = new ReturnResult();
             try
             {
-                var sql = @"SELECT [SOEID], ISNULL((ISNULL(lt.LastName, '') + CASE WHEN lt.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(lt.FirstName, '') + ' ' ),'UNKNOWN') AS TechName
+                var sql = @"SELECT 
+                                [SOEID] as Value
+                                , ISNULL((ISNULL(lt.LastName, '') + CASE WHEN lt.LastName IS NULL THEN NULL ELSE ', ' END +  ISNULL(lt.FirstName, '') + ' ' ),'UNKNOWN') AS Label
 							FROM [dbo].[LicenseTech] lt
 							WHERE [IsActive] = 1
 							UNION
-							SELECT '0' AS SOEID, 'TechName' AS TechName
+							SELECT '0' AS Value, 'TechName' AS Label
 							UNION
-							SELECT 'OneTrak' AS SOEID, 'OneTrak' AS TechName
-							ORDER BY TechName ";
+							SELECT 'OneTrak' AS Value, 'OneTrak' AS Label ";
+							//ORDER BY TechName ";
 
                 var queryTechNames = _db.OputIncentiveTechName
                                        .FromSqlRaw(sql)
                                        .AsNoTracking()
+                                       .OrderBy(x => x.Label)
                                        .ToList();
 
                 result.Success = true;

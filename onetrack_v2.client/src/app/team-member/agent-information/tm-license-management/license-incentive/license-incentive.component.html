@@ -288,9 +288,9 @@
                     id="CCdBMEmploymentID"
                     formControlName="CCdBMEmploymentID"
                   >
-                    <!-- <option *ngFor="let state of licenseStates" [value]="state">
-                {{ state }}
-              </option> -->
+                    <option *ngFor="let mgr of bmManagers" [value]="mgr.value">
+                      {{ mgr.label }}
+                    </option>
                   </select>
                 </td>
                 <td>
@@ -351,9 +351,12 @@
                     id="DMSentBySOEID"
                     formControlName="DMSentBySOEID"
                   >
-                    <!-- <option *ngFor="let state of licenseStates" [value]="state">
-              {{ state }}
-            </option> -->
+                    <option
+                      *ngFor="let techs of licenseTeches"
+                      [value]="techs.value"
+                    >
+                      {{ techs.label }}
+                    </option>
                   </select>
                 </td>
                 <td></td>
@@ -365,9 +368,12 @@
                     id="DM10DaySentBySOEID"
                     formControlName="DM10DaySentBySOEID"
                   >
-                    <!-- <option *ngFor="let state of licenseStates" [value]="state">
-            {{ state }}
-          </option> -->
+                    <option
+                      *ngFor="let techs of licenseTeches"
+                      [value]="techs.value"
+                    >
+                      {{ techs.label }}
+                    </option>
                   </select>
                 </td>
                 <td>
@@ -377,9 +383,12 @@
                     id="DM20DaySentBySOEID"
                     formControlName="DM20DaySentBySOEID"
                   >
-                    <!-- <option *ngFor="let state of licenseStates" [value]="state">
-            {{ state }}
-          </option> -->
+                    <option
+                      *ngFor="let techs of licenseTeches"
+                      [value]="techs.value"
+                    >
+                      {{ techs.label }}
+                    </option>
                   </select>
                 </td>
               </tr>
@@ -421,9 +430,9 @@
                     id="CCd2BMEmploymentID"
                     formControlName="CCd2BMEmploymentID"
                   >
-                    <!-- <option *ngFor="let state of licenseStates" [value]="state">
-          {{ state }}
-        </option> -->
+                    <option *ngFor="let mgr of bmManagers" [value]="mgr.value">
+                      {{ mgr.label }}
+                    </option>
                   </select>
                 </td>
                 <td>
@@ -475,9 +484,12 @@
                     id="TMSentBySOEID"
                     formControlName="TMSentBySOEID"
                   >
-                    <!-- <option *ngFor="let state of licenseStates" [value]="state">
-                {{ state }}
-              </option> -->
+                    <option
+                      *ngFor="let techs of licenseTeches"
+                      [value]="techs.value"
+                    >
+                      {{ techs.label }}
+                    </option>
                   </select>
                 </td>
                 <td colspan="2">
@@ -536,9 +548,9 @@
                     id="CCOkToSellBMEmploymentID"
                     formControlName="CCOkToSellBMEmploymentID"
                   >
-                    <!-- <option *ngFor="let state of licenseStates" [value]="state">
-                {{ state }}
-              </option> -->
+                    <option *ngFor="let mgr of bmManagers" [value]="mgr.value">
+                      {{ mgr.label }}
+                    </option>
                   </select>
                 </td>
                 <td>
@@ -579,9 +591,12 @@
                     id="TMOkToSellSentBySOEID"
                     formControlName="TMOkToSellSentBySOEID"
                   >
-                    <!-- <option *ngFor="let state of licenseStates" [value]="state">
-                {{ state }}
-              </option> -->
+                    <option
+                      *ngFor="let techs of licenseTeches"
+                      [value]="techs.value"
+                    >
+                      {{ techs.label }}
+                    </option>
                   </select>
                 </td>
                 <td>&nbsp;</td>
