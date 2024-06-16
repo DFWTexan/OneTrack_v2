@@ -15,6 +15,9 @@
   margin-right: 2rem;
 }
 
+.page-button:hover {
+  color: grey; 
+}
 
 .appointment-edit-button {
   padding-right: 2.5rem;

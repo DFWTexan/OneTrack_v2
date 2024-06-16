@@ -1,4 +1,12 @@
 export class ConstantsDataService {
+  private readonly incentiveStatuses = [
+    'DM-Declined',
+    'HR-Terminated',
+    'Non-Qualified',
+    'Pending',
+    'Qualified',
+    'TM-Declined',
+  ];
   private readonly appointmentstatuses = [
     'Active',
     'Pending',
@@ -44,7 +52,7 @@ export class ConstantsDataService {
     'Paper',
     'SIRCON',
     'State Website',
-  ]
+  ];
   private readonly states = [
     'AL',
     'AK',
@@ -162,6 +170,10 @@ export class ConstantsDataService {
     'SK',
     'YT',
   ];
+
+  getIncentiveStatuses() {
+    return this.incentiveStatuses;
+  }
 
   getLicenseRenewalMethods() {
     return this.licenseRenewalMethods;

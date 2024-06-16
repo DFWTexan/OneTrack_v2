@@ -10,6 +10,7 @@ import {
 import {
   AgentComService,
   AgentDataService,
+  ConstantsDataService,
   DropdownDataService,
   LicIncentiveInfoDataService,
   ModalService,
@@ -36,11 +37,13 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
   bmManagers: { value: number; label: string }[] = [];
   ccdBMEmploymentIDValue: any = 0;
   licenseTeches: { value: string; label: string }[] = [];
+  incentiveStatuses: string[] = this.conService.getIncentiveStatuses();
 
   private subscriptions = new Subscription();
 
   constructor(
     public agentDataService: AgentDataService,
+    private conService: ConstantsDataService,
     public agentComService: AgentComService,
     private drpdwnDataService: DropdownDataService,
     public licIncentiveInfoDataService: LicIncentiveInfoDataService,
@@ -84,34 +87,7 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
     this.currentIndex = this.agentDataService.licenseMgmtDataIndex;
     this.licenseMgmtData =
       this.agentDataService.agentInformation.agentLicenseAppointments;
-
-    // this.subscriptions.add(
-    //   this.drpdwnDataService
-    //     .fetchDropdownData('GetRollOutGroups')
-    //     .subscribe((rolloutGroups: { value: string; label: string }[]) => {
-    //       this.rolloutGroups = [
-    //         { value: 'OneTrak', label: 'OneTrak' },
-    //         ...rolloutGroups,
-    //       ];
-    //     })
-    // );
-
-    // this.subscriptions.add(
-    //   this.licIncentiveInfoDataService
-    //     .fetchDMManagers()
-    //     .subscribe((dmManagers: { value: number; label: string }[]) => {
-    //       this.dmManagers = dmManagers;
-    //     })
-    // );
-
-    // this.subscriptions.add(
-    //   this.licIncentiveInfoDataService
-    //     .fetchBMManagers()
-    //     .subscribe((bmManagers: { value: number; label: string }[]) => {
-    //       this.bmManagers = bmManagers;
-    //     })
-    // );
-
+    
     const fetchDropdownData$ =
       this.drpdwnDataService.fetchDropdownData('GetRollOutGroups');
     const fetchDMManagers$ = this.licIncentiveInfoDataService.fetchDMManagers();
@@ -142,6 +118,7 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
               
               this.licenseIncentiveInfo = licenseIncentiveInfo;
 
+              // Set the dropdown values
               this.dmEmploymentIDValue = this.dmManagers.find(
                 (mgr) => mgr.label === licenseIncentiveInfo.dmMgrName
               )?.value;
@@ -157,11 +134,17 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
               let dM20DaySentByValue = this.licenseTeches.find(
                 (tech) => tech.label === licenseIncentiveInfo.dM20DaySentBy
               )?.value;
+              let ccd2BmEmploymentIdValue = this.bmManagers.find(
+                (mgr) => mgr.label === licenseIncentiveInfo.cCd2BRMgrName
+              )?.value;
               let tmSentByValue = this.licenseTeches.find(
                 (tech) => tech.label === licenseIncentiveInfo.tmSentBy
               )?.value;
               let tmOkToSellSentByValue = this.licenseTeches.find(
                 (tech) => tech.label === licenseIncentiveInfo.tmOkToSellSentBy
+              )?.value;
+              let ccOkToSellBmEmploymentIdValue = this.bmManagers.find(
+                (mgr) => mgr.label === licenseIncentiveInfo.cCdOkToSellBRMgrName
               )?.value;
 
               this.incentiveUpdateForm.patchValue({
@@ -189,20 +172,20 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
                       'en-US'
                     )
                   : null,
-                // DM10DaySentDate: licenseIncentiveInfo.dm10DaySentDate
-                //   ? formatDate(
-                //       licenseIncentiveInfo.dm10DaySentDate,
-                //       'yyyy-MM-dd',
-                //       'en-US'
-                //     )
-                //   : null,
-                // DM20DaySentDate: licenseIncentiveInfo.dm20DaySentDate
-                //   ? formatDate(
-                //       licenseIncentiveInfo.dm20DaySentDate,
-                //       'yyyy-MM-dd',
-                //       'en-US'
-                //     )
-                //   : null,
+                DM10DaySentDate: licenseIncentiveInfo.dM10DaySentDate
+                  ? formatDate(
+                      licenseIncentiveInfo.dM10DaySentDate,
+                      'yyyy-MM-dd',
+                      'en-US'
+                    )
+                  : null,
+                DM20DaySentDate: licenseIncentiveInfo.dM20DaySentDate
+                  ? formatDate(
+                      licenseIncentiveInfo.dM20DaySentDate,
+                      'yyyy-MM-dd',
+                      'en-US'
+                    )
+                  : null,
                 DMComment: licenseIncentiveInfo.dmComment,
                 DMSentBySOEID: dmSentByValue || 0,
                 DM10DaySentBySOEID: dM10DaySentByValue || 0,
@@ -214,7 +197,7 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
                       'en-US'
                     )
                   : null,
-                // CCd2BMEmploymentID: licenseIncentiveInfo.ccd2BmEmploymentId,
+                CCd2BMEmploymentID: ccd2BmEmploymentIdValue || 0,
                 TMApprovalDate: licenseIncentiveInfo.tmApprovalDate
                   ? formatDate(
                       licenseIncentiveInfo.tmApprovalDate,
@@ -229,20 +212,20 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
                       'en-US'
                     )
                   : null,
-                // TM10DaySentDate: licenseIncentiveInfo.tm10DaySentDate
-                //   ? formatDate(
-                //       licenseIncentiveInfo.tm10DaySentDate,
-                //       'yyyy-MM-dd',
-                //       'en-US'
-                //     )
-                //   : null,
-                // TM45DaySentDate: licenseIncentiveInfo.tm45DaySentDate
-                //   ? formatDate(
-                //       licenseIncentiveInfo.tm45DaySentDate,
-                //       'yyyy-MM-dd',
-                //       'en-US'
-                //     )
-                //   : null,
+                TM10DaySentDate: licenseIncentiveInfo.tM10DaySentDate
+                  ? formatDate(
+                      licenseIncentiveInfo.tM10DaySentDate,
+                      'yyyy-MM-dd',
+                      'en-US'
+                    )
+                  : null,
+                TM45DaySentDate: licenseIncentiveInfo.tM45DaySentDate
+                  ? formatDate(
+                      licenseIncentiveInfo.tM45DaySentDate,
+                      'yyyy-MM-dd',
+                      'en-US'
+                    )
+                  : null,
                 TMExceptionDate: licenseIncentiveInfo.tmExceptionDate
                   ? formatDate(
                       licenseIncentiveInfo.tmExceptionDate,
@@ -260,21 +243,21 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
                       'en-US'
                     )
                   : null,
-                // CCOkToSellBMEmploymentID: licenseIncentiveInfo.ccOkToSellBmEmploymentId,
-                // TMOMSApprtoSendToHRDate: licenseIncentiveInfo.tmoMsApprToSendToHrDate
-                //   ? formatDate(
-                //       licenseIncentiveInfo.tmoMsApprToSendToHrDate,
-                //       'yyyy-MM-dd',
-                //       'en-US'
-                //     )
-                //   : null,
-                // IncetivePeriodDate: licenseIncentiveInfo.incentivePeriodDate
-                //   ? formatDate(
-                //       licenseIncentiveInfo.incentivePeriodDate,
-                //       'yyyy-MM-dd',
-                //       'en-US'
-                //     )
-                //   : null,
+                CCOkToSellBMEmploymentID: ccOkToSellBmEmploymentIdValue || 0,
+                TMOMSApprtoSendToHRDate: licenseIncentiveInfo.tmomsApprtoSendToHRDate
+                  ? formatDate(
+                      licenseIncentiveInfo.tmomsApprtoSendToHRDate,
+                      'yyyy-MM-dd',
+                      'en-US'
+                    )
+                  : null,
+                IncetivePeriodDate: licenseIncentiveInfo.incetivePeriodDate
+                  ? formatDate(
+                      licenseIncentiveInfo.incetivePeriodDate,
+                      'yyyy-MM-dd',
+                      'en-US'
+                    )
+                  : null,
                 IncentiveStatus: licenseIncentiveInfo.incentiveStatus,
                 TMOkToSellSentBySOEID: tmOkToSellSentByValue || 0,
                 Notes: licenseIncentiveInfo.notes,

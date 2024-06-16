@@ -16,3 +16,21 @@ table tr {
 table td {
   border: none;
 }
+
+.page-button {
+  border-style: none;
+  background-color: transparent;
+  height: 1rem;
+  width: 1rem;
+  margin: 1rem;
+  transition: color 0.3s ease;
+}
+
+.page-button:hover {
+  color: grey; 
+}
+
+.page-button:active {
+  transform: scale(0.9);
+  /* color: #DDA0DD; */
+}
