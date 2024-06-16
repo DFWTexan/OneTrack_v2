@@ -148,6 +148,21 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
               this.ccdBMEmploymentIDValue = this.bmManagers.find(
                 (mgr) => mgr.label === licenseIncentiveInfo.cCdBRMgrName
               )?.value;
+              let dmSentByValue = this.licenseTeches.find(
+                (tech) => tech.label === licenseIncentiveInfo.dmSentBy
+              )?.value;
+              let dM10DaySentByValue = this.licenseTeches.find(
+                (tech) => tech.label === licenseIncentiveInfo.dM10DaySentBy
+              )?.value;
+              let dM20DaySentByValue = this.licenseTeches.find(
+                (tech) => tech.label === licenseIncentiveInfo.dM20DaySentBy
+              )?.value;
+              let tmSentByValue = this.licenseTeches.find(
+                (tech) => tech.label === licenseIncentiveInfo.tmSentBy
+              )?.value;
+              let tmOkToSellSentByValue = this.licenseTeches.find(
+                (tech) => tech.label === licenseIncentiveInfo.tmOkToSellSentBy
+              )?.value;
 
               this.incentiveUpdateForm.patchValue({
                 RollOutGroup: licenseIncentiveInfo.rollOutGroup,
@@ -189,9 +204,9 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
                 //     )
                 //   : null,
                 DMComment: licenseIncentiveInfo.dmComment,
-                DMSentBySOEID: licenseIncentiveInfo.dmSentBy,
-                DM10DaySentBySOEID: licenseIncentiveInfo.dM10DaySentBy,
-                DM20DaySentBySOEID: licenseIncentiveInfo.dM20DaySentBy,
+                DMSentBySOEID: dmSentByValue || 0,
+                DM10DaySentBySOEID: dM10DaySentByValue || 0,
+                DM20DaySentBySOEID: dM20DaySentByValue || 0,
                 TMSentDate: licenseIncentiveInfo.tmSentDate
                   ? formatDate(
                       licenseIncentiveInfo.tmSentDate,
@@ -235,7 +250,7 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
                       'en-US'
                     )
                   : null,
-                TMSentBySOEID: licenseIncentiveInfo.tmSentBy,
+                TMSentBySOEID: tmSentByValue || 0,
                 TMComment: licenseIncentiveInfo.tmComment,
                 TMException: licenseIncentiveInfo.tmException,
                 TMOkToSellSentDate: licenseIncentiveInfo.tmOkToSellSentDate
@@ -261,7 +276,7 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
                 //     )
                 //   : null,
                 IncentiveStatus: licenseIncentiveInfo.incentiveStatus,
-                // TMOkToSellSentBySOEID: licenseIncentiveInfo.tmOkToSellSentBySoeid,
+                TMOkToSellSentBySOEID: tmOkToSellSentByValue || 0,
                 Notes: licenseIncentiveInfo.notes,
               });
             })
