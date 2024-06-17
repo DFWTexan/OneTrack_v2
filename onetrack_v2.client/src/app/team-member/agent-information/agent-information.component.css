@@ -1,0 +1,5 @@
+.btn-link:active {
+  /* font-size: 1.5rem !important; */
+  border-color: grey !important;
+  border-width: 1px !important;
+}

@@ -6,6 +6,8 @@ import { Subscription } from 'rxjs';
 import {
   AgentDataService,
   ConstantsDataService,
+  ErrorMessageService,
+  UserAcctInfoDataService,
 } from '../../../../../_services';
 import { AgentInfo } from '../../../../../_Models';
 
@@ -45,8 +47,10 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   constructor(
+    private errorMessageService: ErrorMessageService,
     private conService: ConstantsDataService,
-    private agentService: AgentDataService
+    private agentService: AgentDataService,
+    private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {
@@ -138,8 +142,9 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
           // handle the response here
         },
         error: (error) => {
-          console.error(error);
-          // handle the error here
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+          }
         },
       })
     );

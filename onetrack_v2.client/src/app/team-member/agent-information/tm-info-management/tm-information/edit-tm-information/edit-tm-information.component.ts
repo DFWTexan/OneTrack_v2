@@ -7,6 +7,7 @@ import {
   ConstantsDataService,
   DropdownDataService,
   ErrorMessageService,
+  UserAcctInfoDataService,
 } from '../../../../../_services';
 import { AgentInfo } from '../../../../../_Models';
 
@@ -39,7 +40,8 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
     public errorMessageService: ErrorMessageService,
     private conService: ConstantsDataService,
     private agentService: AgentDataService,
-    private drpdwnDataService: DropdownDataService
+    private drpdwnDataService: DropdownDataService,
+    private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {
