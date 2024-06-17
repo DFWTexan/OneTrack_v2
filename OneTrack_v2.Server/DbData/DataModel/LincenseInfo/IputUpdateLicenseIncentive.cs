@@ -18,7 +18,7 @@
         public string? DMComment { get; set; } = string.Empty;
         public string? TMSentBySOEID { get; set; } = string.Empty;
         public DateTime? TMSentDate { get; set; } = null;
-        public string? CCd2BMEmploymentID { get; set; } = string.Empty;
+        public int? CCd2BMEmploymentID { get; set; } = null;
         public DateTime? TMApprovalDate { get; set; } = null;
         public DateTime? TMDeclinedDate { get; set; } = null;
         public DateTime? TM10DaySentDate { get; set; } = null;
@@ -30,7 +30,7 @@
         public string? TMComment { get; set; } = string.Empty;
         public string? TMOkToSellSentBySOEID { get; set; } = string.Empty;
         public DateTime? TMOkToSellSentDate { get; set; } = null;
-        public string? CCOkToSellBMEmploymentID { get; set; } = string.Empty;
+        public int? CCOkToSellBMEmploymentID { get; set; } = null;
         public DateTime? TMOMSApprtoSendToHRDate { get; set; } = null;
         public DateTime? TMSentToHRDate { get; set; } = null;
         public DateTime? IncetivePeriodDate { get; set; } = null;

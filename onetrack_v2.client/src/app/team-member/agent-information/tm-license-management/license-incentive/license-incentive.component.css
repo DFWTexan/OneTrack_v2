@@ -15,6 +15,7 @@ table tr {
 
 table td {
   border: none;
+  font-size: small;
 }
 
 .btn-grey {
@@ -40,5 +41,5 @@ table td {
 
 .page-button:active {
   transform: scale(0.9);
-  /* color: #DDA0DD; */
+  color: #ffa500;
 }

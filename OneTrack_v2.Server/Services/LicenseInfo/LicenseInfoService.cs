@@ -946,51 +946,150 @@ namespace OneTrak_v2.Services
             var result = new ReturnResult();
             try
             {
-                using (SqlConnection conn = new SqlConnection(_connectionString))
+                //using (SqlConnection conn = new SqlConnection(_connectionString))
+                //{
+                //    using (SqlCommand cmd = new SqlCommand("uspEmploymentLicenseIncentiveUpdate", conn))
+                //    {
+                //        cmd.CommandType = CommandType.StoredProcedure;
+                //        cmd.Parameters.Add(new SqlParameter("@EmploymentLicenseIncentiveID", vInput.EmploymentLicenseIncentiveID));
+                //        cmd.Parameters.Add(new SqlParameter("@RollOutGroup", vInput.DMEmploymentID));
+                //        cmd.Parameters.Add(new SqlParameter("@DMEmploymentID", vInput.CCdBMEmploymentID));
+                //        cmd.Parameters.Add(new SqlParameter("@CCdBMEmploymentID", vInput.CCd2BMEmploymentID));
+                //        cmd.Parameters.Add(new SqlParameter("@DMSentBySOEID", vInput.CCd2BMEmploymentID));
+                //        cmd.Parameters.Add(new SqlParameter("@DMSentDate", vInput.CCOkToSellBMEmploymentID));
+                //        cmd.Parameters.Add(new SqlParameter("@DMApprovalDate", vInput.DMSentBySOEID));
+                //        cmd.Parameters.Add(new SqlParameter("@DMDeclinedDate", vInput.DM10DaySentBySOEID));
+                //        cmd.Parameters.Add(new SqlParameter("@DM10DaySentDate", vInput.DM20DaySentBySOEID));
+                //        cmd.Parameters.Add(new SqlParameter("@DM10DaySentBySOEID", vInput.TMSentBySOEID));
+                //        cmd.Parameters.Add(new SqlParameter("@DM20DaySentDate", vInput.TM10DaySentBySOEID));
+                //        cmd.Parameters.Add(new SqlParameter("@DM20DaySentBySOEID", vInput.TMOkToSellSentBySOEID));
+                //        cmd.Parameters.Add(new SqlParameter("@DMComment", vInput.TM45DaySentBySOEID));
+                //        cmd.Parameters.Add(new SqlParameter("@TMSentBySOEID", vInput.TMExceptionDate));
+                //        cmd.Parameters.Add(new SqlParameter("@TMSentDate", vInput.TMOMSApprtoSendToHRDate));
+                //        cmd.Parameters.Add(new SqlParameter("@CCd2BMEmploymentID", vInput.TMSentToHRDate));
+                //        cmd.Parameters.Add(new SqlParameter("@TMApprovalDate", vInput.IncetivePeriodDate));
+                //        cmd.Parameters.Add(new SqlParameter("@TMDeclinedDate", vInput.IncentiveStatus));
+                //        cmd.Parameters.Add(new SqlParameter("@TM10DaySentDate", vInput.Notes));
+                //        cmd.Parameters.Add(new SqlParameter("@TM10DaySentBySOEID", vInput.Notes));
+                //        cmd.Parameters.Add(new SqlParameter("@TM45DaySentDate", vInput.Notes));
+                //        cmd.Parameters.Add(new SqlParameter("@TM45DaySentBySOEID", vInput.Notes));
+                //        cmd.Parameters.Add(new SqlParameter("@TMExceptionDate", vInput.Notes));
+                //        cmd.Parameters.Add(new SqlParameter("@TMException", vInput.Notes));
+                //        cmd.Parameters.Add(new SqlParameter("@TMComment", vInput.Notes));
+                //        cmd.Parameters.Add(new SqlParameter("@TMOkToSellSentBySOEID", vInput.Notes));
+                //        cmd.Parameters.Add(new SqlParameter("@TMOkToSellSentDate", vInput.Notes));
+                //        cmd.Parameters.Add(new SqlParameter("@CCOkToSellBMEmploymentID", vInput.Notes));
+                //        cmd.Parameters.Add(new SqlParameter("@TMOMSApprtoSendToHRDate", vInput.Notes));
+                //        cmd.Parameters.Add(new SqlParameter("@TMSentToHRDate", vInput.Notes));
+                //        cmd.Parameters.Add(new SqlParameter("@IncetivePeriodDate", vInput.Notes));
+                //        cmd.Parameters.Add(new SqlParameter("@IncentiveStatus", vInput.Notes));
+                //        cmd.Parameters.Add(new SqlParameter("@Notes", vInput.Notes));
+                //        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+                //        conn.Open();
+                //        cmd.ExecuteNonQuery();
+                //    }
+                //}
+
+                // Attempt to retrieve the existing record from the database
+                var incentive = _db.EmploymentLicenseIncentives.FirstOrDefault(i => i.EmploymentLicenseIncentiveId == vInput.EmploymentLicenseIncentiveID);
+
+                if (incentive == null)
                 {
-                    using (SqlCommand cmd = new SqlCommand("uspEmploymentLicenseIncentiveUpdate", conn))
-                    {
-                        cmd.CommandType = CommandType.StoredProcedure;
-
-                        cmd.Parameters.Add(new SqlParameter("@EmployeeLicenseID", vInput.EmploymentLicenseIncentiveID));
-                        cmd.Parameters.Add(new SqlParameter("@RollOutGroup", vInput.DMEmploymentID));
-                        cmd.Parameters.Add(new SqlParameter("@DMEmploymentID", vInput.CCdBMEmploymentID));
-                        cmd.Parameters.Add(new SqlParameter("@CCdBMEmploymentID", vInput.CCd2BMEmploymentID));
-                        cmd.Parameters.Add(new SqlParameter("@DMSentBySOEID", vInput.CCd2BMEmploymentID));
-                        cmd.Parameters.Add(new SqlParameter("@DMSentDate", vInput.CCOkToSellBMEmploymentID));
-                        cmd.Parameters.Add(new SqlParameter("@DMApprovalDate", vInput.DMSentBySOEID));
-                        cmd.Parameters.Add(new SqlParameter("@DMDeclinedDate", vInput.DM10DaySentBySOEID));
-                        cmd.Parameters.Add(new SqlParameter("@DM10DaySentDate", vInput.DM20DaySentBySOEID));
-                        cmd.Parameters.Add(new SqlParameter("@DM10DaySentBySOEID", vInput.TMSentBySOEID));
-                        cmd.Parameters.Add(new SqlParameter("@DM20DaySentDate", vInput.TM10DaySentBySOEID));
-                        cmd.Parameters.Add(new SqlParameter("@DM20DaySentBySOEID", vInput.TMOkToSellSentBySOEID));
-                        cmd.Parameters.Add(new SqlParameter("@DMComment", vInput.TM45DaySentBySOEID));
-                        cmd.Parameters.Add(new SqlParameter("@TMSentBySOEID", vInput.TMExceptionDate));
-                        cmd.Parameters.Add(new SqlParameter("@TMSentDate", vInput.TMOMSApprtoSendToHRDate));
-                        cmd.Parameters.Add(new SqlParameter("@CCd2BMEmploymentID", vInput.TMSentToHRDate));
-                        cmd.Parameters.Add(new SqlParameter("@TMApprovalDate", vInput.IncetivePeriodDate));
-                        cmd.Parameters.Add(new SqlParameter("@TMDeclinedDate", vInput.IncentiveStatus));
-                        cmd.Parameters.Add(new SqlParameter("@TM10DaySentDate", vInput.Notes));
-                        cmd.Parameters.Add(new SqlParameter("@TM10DaySentBySOEID", vInput.Notes));
-                        cmd.Parameters.Add(new SqlParameter("@TM45DaySentDate", vInput.Notes));
-                        cmd.Parameters.Add(new SqlParameter("@TM45DaySentBySOEID", vInput.Notes));
-                        cmd.Parameters.Add(new SqlParameter("@TMExceptionDate", vInput.Notes));
-                        cmd.Parameters.Add(new SqlParameter("@TMException", vInput.Notes));
-                        cmd.Parameters.Add(new SqlParameter("@TMComment", vInput.Notes));
-                        cmd.Parameters.Add(new SqlParameter("@TMOkToSellSentBySOEID", vInput.Notes));
-                        cmd.Parameters.Add(new SqlParameter("@TMOkToSellSentDate", vInput.Notes));
-                        cmd.Parameters.Add(new SqlParameter("@CCOkToSellBMEmploymentID", vInput.Notes));
-                        cmd.Parameters.Add(new SqlParameter("@TMOMSApprtoSendToHRDate", vInput.Notes));
-                        cmd.Parameters.Add(new SqlParameter("@TMSentToHRDate", vInput.Notes));
-                        cmd.Parameters.Add(new SqlParameter("@IncetivePeriodDate", vInput.Notes));
-                        cmd.Parameters.Add(new SqlParameter("@IncentiveStatus", vInput.Notes));
-                        cmd.Parameters.Add(new SqlParameter("@Notes", vInput.Notes));
-                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
-
-                        conn.Open();
-                        cmd.ExecuteNonQuery();
-                    }
+                    // Handle the case where the incentive was not found
+                    return new ReturnResult { StatusCode = 500, ObjData = null, Success = false, ErrMessage = "Incentive not found." };
                 }
+
+                incentive.RollOutGroup = vInput.RollOutGroup;
+                incentive.DmemploymentId = vInput.DMEmploymentID;
+                incentive.Ccd2BmemploymentId = vInput.CCdBMEmploymentID;
+                incentive.Ccd2BmemploymentId = vInput.CCd2BMEmploymentID;
+                incentive.DmsentBySoeid = vInput.DMSentBySOEID;
+                incentive.DmsentDate = vInput.DMSentDate;
+                incentive.DmapprovalDate = vInput.DMApprovalDate;
+                incentive.DmdeclinedDate = vInput.DMDeclinedDate;
+                incentive.Dm10daySentDate = vInput.DM10DaySentDate;
+                incentive.Dm10daySentBySoeid = vInput.DM10DaySentBySOEID;
+                incentive.Dm20daySentDate = vInput.DM20DaySentDate;
+                incentive.Dm20daySentBySoeid = vInput.DM20DaySentBySOEID;
+                incentive.Dmcomment = vInput.DMComment;
+                incentive.TmsentBySoeid = vInput.TMSentBySOEID;
+                incentive.TmsentDate = vInput.TMSentDate;
+                incentive.TmapprovalDate = vInput.TMApprovalDate;
+                incentive.TmdeclinedDate = vInput.TMDeclinedDate;
+                incentive.Tm10daySentDate = vInput.TM10DaySentDate;
+                incentive.Tm10daySentBySoeid = vInput.TM10DaySentBySOEID;
+                incentive.Tm45daySentDate = vInput.TM45DaySentDate;
+                incentive.Tm45daySentBySoeid = vInput.TM45DaySentBySOEID;
+                incentive.TmexceptionDate = vInput.TMExceptionDate;
+                incentive.Tmexception = vInput.TMException;
+                incentive.Tmcomment = vInput.TMComment;
+                incentive.TmokToSellSentBySoeid = vInput.TMOkToSellSentBySOEID;
+                incentive.TmokToSellSentDate = vInput.TMOkToSellSentDate;
+                incentive.CcokToSellBmemploymentId = vInput.CCOkToSellBMEmploymentID;
+                incentive.TmomsapprtoSendToHrdate = vInput.TMOMSApprtoSendToHRDate;
+                incentive.TmsentToHrdate = vInput.TMSentToHRDate;
+                incentive.IncetivePeriodDate = vInput.IncetivePeriodDate;
+                incentive.IncentiveStatus = vInput.IncentiveStatus;
+                incentive.Notes = vInput.Notes;
+
+                _db.SaveChangesAsync();
+
+                // AUDIT LOG
+                //using (SqlConnection conn = new SqlConnection(_connectionString))
+                //{
+                //    using (SqlCommand cmd = new SqlCommand("uspAuditLog", conn))
+                //    {
+                //        cmd.CommandType = CommandType.StoredProcedure;
+                //        cmd.Parameters.Add(new SqlParameter("@BaseTableName", "EmploymentLicenseIncentive"));
+                //        cmd.Parameters.Add(new SqlParameter("@BaseTableKeyValue", null));
+                //        cmd.Parameters.Add(new SqlParameter("@ModifiedBy", vInput.UserSOEID));
+                //        cmd.Parameters.Add(new SqlParameter("@AuditAction", "UPDATE"));
+                        
+                //        cmd.Parameters.Add(new SqlParameter("@Field1Name", vInput.LicenseStatus ?? ""));
+                //        cmd.Parameters.Add(new SqlParameter("@Field1ValueBefore", vInput.LicenseNumber));
+                //        cmd.Parameters.Add(new SqlParameter("@Field1ValueAfter", vInput.Reinstatement ?? false));
+
+                //        cmd.Parameters.Add(new SqlParameter("@Field2Name", vInput.LicenseStatus ?? ""));
+                //        cmd.Parameters.Add(new SqlParameter("@Field2ValueBefore", vInput.LicenseNumber));
+                //        cmd.Parameters.Add(new SqlParameter("@Field2ValueAfter", vInput.Reinstatement ?? false));
+
+                //        cmd.Parameters.Add(new SqlParameter("@Field3Name", vInput.LicenseStatus ?? ""));
+                //        cmd.Parameters.Add(new SqlParameter("@Field3ValueBefore", vInput.LicenseNumber));
+                //        cmd.Parameters.Add(new SqlParameter("@Field3ValueAfter", vInput.Reinstatement ?? false));
+
+                //        cmd.Parameters.Add(new SqlParameter("@Field4Name", vInput.LicenseStatus ?? ""));
+                //        cmd.Parameters.Add(new SqlParameter("@Field4ValueBefore", vInput.LicenseNumber));
+                //        cmd.Parameters.Add(new SqlParameter("@Field4ValueAfter", vInput.Reinstatement ?? false));
+
+                //        cmd.Parameters.Add(new SqlParameter("@Field5Name", vInput.LicenseStatus ?? ""));
+                //        cmd.Parameters.Add(new SqlParameter("@Field5ValueBefore", vInput.LicenseNumber));
+                //        cmd.Parameters.Add(new SqlParameter("@Field5ValueAfter", vInput.Reinstatement ?? false));
+
+                //        cmd.Parameters.Add(new SqlParameter("@Field6Name", vInput.LicenseStatus ?? ""));
+                //        cmd.Parameters.Add(new SqlParameter("@Field6ValueBefore", vInput.LicenseNumber));
+                //        cmd.Parameters.Add(new SqlParameter("@Field6ValueAfter", vInput.Reinstatement ?? false));
+
+                //        cmd.Parameters.Add(new SqlParameter("@Field7Name", vInput.LicenseStatus ?? ""));
+                //        cmd.Parameters.Add(new SqlParameter("@Field7ValueBefore", vInput.LicenseNumber));
+                //        cmd.Parameters.Add(new SqlParameter("@Field7ValueAfter", vInput.Reinstatement ?? false));
+
+                //        cmd.Parameters.Add(new SqlParameter("@Field8Name", vInput.LicenseStatus ?? ""));
+                //        cmd.Parameters.Add(new SqlParameter("@Field8ValueBefore", vInput.LicenseNumber));
+                //        cmd.Parameters.Add(new SqlParameter("@Field8ValueAfter", vInput.Reinstatement ?? false));
+
+                //        cmd.Parameters.Add(new SqlParameter("@Field9Name", vInput.LicenseStatus ?? ""));
+                //        cmd.Parameters.Add(new SqlParameter("@Field9ValueBefore", vInput.LicenseNumber));
+                //        cmd.Parameters.Add(new SqlParameter("@Field9ValueAfter", vInput.Reinstatement ?? false));
+
+                //        cmd.Parameters.Add(new SqlParameter("@Field10Name", vInput.LicenseStatus ?? ""));
+                //        cmd.Parameters.Add(new SqlParameter("@Field10ValueBefore", vInput.LicenseNumber));
+                //        cmd.Parameters.Add(new SqlParameter("@Field10ValueAfter", vInput.Reinstatement ?? false));
+
+
+                //        conn.Open();
+                //        cmd.ExecuteNonQuery();
+                //    }
+                //}
 
                 result.Success = true;
                 result.ObjData = new { Message = "License License Incentive Updated Successfully." };

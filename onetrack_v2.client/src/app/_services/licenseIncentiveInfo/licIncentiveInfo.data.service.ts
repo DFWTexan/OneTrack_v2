@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { map, switchMap } from 'rxjs/operators';
+import { catchError, map, switchMap } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 import { LicenseAppointment, LicenseIncentiveInfo } from '../../_Models';
 import { AgentDataService } from '../agent/agent.data.service';
+import { ErrorMessageService } from '../error/error.message.service';
 
 @Injectable({
   providedIn: 'root',
@@ -23,6 +24,10 @@ export class LicIncentiveInfoDataService {
   fetchLicIncentiveInfo(
     employeeLicenseId: number
   ): Observable<LicenseIncentiveInfo> {
+
+console.log('EMFTEST (INFO) - fetchLicIncentiveInfo() called');
+console
+
     return this.http
       .get<{
         success: boolean;
@@ -393,5 +398,81 @@ export class LicIncentiveInfoDataService {
           return licPreExams;
         })
       );
+  }
+
+  // updateLicenseIncentiveInfo(licenseIncentiveInfo: any) {
+  //   this.apiUrl = environment.apiUrl + 'LicenseInfo/UpdateLicenseIncentive';
+  //   return this.http
+  //     .post<{
+  //       success: boolean;
+  //       statusCode: number;
+  //       objData: any;
+  //       errMessage: string;
+  //     }>(this.apiUrl, licenseIncentiveInfo)
+  //     .pipe(
+  //       switchMap((response) => {
+  //         if (response.success && response.statusCode === 200) {
+  //           return this.fetchLicIncentiveInfo(
+  //             licenseIncentiveInfo.employeeLicenseID
+  //           );
+  //         } else {
+  //           throw new Error(response.errMessage || 'Unknown error');
+  //         }
+  //       }),
+  //       catchError((error) => {
+  //         console.error('EMFTEST (ERROR) - Server error: ', error);
+  //         // if (error.error && error.error.errMessage) {
+  //         //   this.errorMessageService.setErrorMessage(error.error.errMessage);
+  //         // }
+  //         throw error;
+  //       })
+  //     );
+  // }
+  // updateLicenseIncentiveInfo(licenseIncentiveInfo: any) {
+  //   this.apiUrl = environment.apiUrl + 'LicenseInfo/UpdateLicenseIncentive';
+  //   return this.http
+  //     .post<{
+  //       success: boolean;
+  //       statusCode: number;
+  //       objData: any;
+  //       errMessage: string;
+  //     }>(this.apiUrl, licenseIncentiveInfo)
+  //     .pipe(
+  //       map((response) => {
+  //         if (response.success && response.statusCode === 200) {
+  //           return response;
+  //         } else {
+  //           throw new Error(response.errMessage || 'Unknown error');
+  //         }
+  //       }),
+  //       catchError((error) => {
+  //         console.error('EMFTEST (ERROR) - Server error: ', error);
+  //         throw error;
+  //       })
+  //     );
+  // }
+  updateLicenseIncentiveInfo(licenseIncentiveInfo: any): Promise<any> {
+    this.apiUrl = environment.apiUrl + 'LicenseInfo/UpdateLicenseIncentive';
+  
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, licenseIncentiveInfo)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            // return response;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        }),
+        catchError((error) => {
+          console.error('EMFTEST (ERROR) - Server error: ', error);
+          throw error;
+        })
+      ).toPromise();
   }
 }

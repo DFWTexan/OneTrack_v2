@@ -168,7 +168,7 @@ body {
 
 .icon-edit-delete-button:active {
   transform: scale(0.9);
-  color: #DDA0DD;
+  color: #ffa500;
 }
 
 .sticky-header {

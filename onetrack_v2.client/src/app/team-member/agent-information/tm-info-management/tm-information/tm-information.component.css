@@ -30,7 +30,7 @@
 
 .click-effect:active {
   transform: scale(0.95);
-  color: #DDA0DD;
+  color: #ffa500;
 }
 
 
