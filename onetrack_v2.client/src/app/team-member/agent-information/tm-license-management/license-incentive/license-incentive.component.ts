@@ -25,6 +25,7 @@ import { formatDate } from '@angular/common';
 @Injectable()
 export class LicenseIncentiveComponent implements OnInit, OnDestroy {
   isFormSubmitted: boolean = false;
+  isPageDirty: boolean = false;
   incentiveUpdateForm: FormGroup;
   modeEdit: boolean = false;
   licenseMgmtData: AgentLicenseAppointments[] = [];
@@ -266,6 +267,10 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
         );
       })
     );
+  }
+
+  setDirty() {
+    this.isPageDirty = true;
   }
 
   onEditToggle() {

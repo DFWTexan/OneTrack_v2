@@ -17,6 +17,14 @@ table td {
   border: none;
 }
 
+.btn-grey {
+  color: grey;
+}
+
+.btn-dodger-blue {
+  color: DodgerBlue;
+}
+
 .page-button {
   border-style: none;
   background-color: transparent;
