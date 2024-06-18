@@ -57,16 +57,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   }
 
   onChildCallRefreshData(data: any) {
-    
-    console.log('EMFTEST (app-tm-information: onChildCallRefreshData) - data => \n', data);
-
-    // this.subscriptions.add(
-    //   this.agentDataService.agentInfoChanged.subscribe((agentInfo: any) => {
-    //     this.isLoading = false;
-    //     this.agentInfo = agentInfo;
-    //   })
-    // );
-    this.agentInfo = data;
+    // this.agentInfo = data;
   }
 
   openConfirmDialog(eventAction: string, msg: string, vObject: any): void {
@@ -98,10 +89,6 @@ export class TmInformationComponent implements OnInit, OnDestroy {
                 })
                 .subscribe({
                   next: (response) => {
-                    // console.log(
-                    //   'EMFTEST (app-tm-emptrans-history: deleteEmploymentHistory) - COMPLETED DELETE response => \n',
-                    //   response
-                    // );
                     this.location.back();
                   },
                   error: (error) => {
@@ -136,11 +123,6 @@ export class TmInformationComponent implements OnInit, OnDestroy {
                 })
                 .subscribe({
                   next: (response) => {
-                    // console.log(
-                    //   'EMFTEST (app-tm-emptrans-history: deleteEmploymentHistory) - COMPLETED DELETE response => \n',
-                    //   response
-                    // );
-                    // this.location.back();
                     alert('License Appointment Deleted');
                   },
                   error: (error) => {
