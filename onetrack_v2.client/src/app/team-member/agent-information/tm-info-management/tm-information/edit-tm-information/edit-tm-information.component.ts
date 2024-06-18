@@ -18,6 +18,7 @@ import { AgentInfo } from '../../../../../_Models';
 })
 @Injectable()
 export class EditTmInformationComponent implements OnInit, OnDestroy {
+  isFormSubmitted: boolean = false;
   form = new FormGroup({
     CompanyID: new FormControl(0),
     preferredName: new FormControl(''),
@@ -25,8 +26,8 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
     NationalProducerNumber: new FormControl(''),
     EmployeeStatus: new FormControl(''),
     ResStateAbv: new FormControl(''),
-    CERequired: new FormControl(''),
-    ExcludeFromRpts: new FormControl(''),
+    CERequired: new FormControl(false),
+    ExcludeFromRpts: new FormControl(false),
   });
 
   states: string[] = this.conService.getStates();
@@ -39,7 +40,7 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
   constructor(
     public errorMessageService: ErrorMessageService,
     private conService: ConstantsDataService,
-    private agentService: AgentDataService,
+    private agentDataService: AgentDataService,
     private drpdwnDataService: DropdownDataService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
@@ -47,7 +48,7 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.subscriptions.add(
       forkJoin({
-        agentInfo: this.agentService.agentInfoChanged.pipe(take(1)),
+        agentInfo: this.agentDataService.agentInfoChanged.pipe(take(1)),
         employerAgencies: this.drpdwnDataService.fetchDropdownData(
           'GetEmployerAgencies'
         ),
@@ -62,20 +63,54 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
           NationalProducerNumber: agentInfo.nationalProdercerNumber,
           EmployeeStatus: agentInfo.employeeStatus,
           ResStateAbv: agentInfo.state,
-          CERequired: agentInfo.ceRequired ? 'true' : 'false',
-          ExcludeFromRpts: agentInfo.excludeFromReports ? 'true' : 'false',
+          CERequired: agentInfo.ceRequired ? true : false,
+          ExcludeFromRpts: agentInfo.excludeFromReports ? true : false,
         });
       })
     );
   }
 
   onSubmit() {
-    console.log(this.form.value);
+    this.isFormSubmitted = true;
 
-    // ERROR: TBF
-    // if (error.error && error.error.errMessage) {
-    //   this.errorMessageService.setErrorMessage(error.error.errMessage);
-    // }
+    let agentDetailItem: any = this.form.value;
+    agentDetailItem.EmployeeID =
+      this.agentDataService.agentInformation.employeeID;
+      agentDetailItem.employmentID = this.agentDataService.agentInformation.employmentID;
+      agentDetailItem.UserSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+
+    if (this.form.invalid) {
+      this.form.setErrors({ invalid: true });
+      return;
+    }
+
+    this.subscriptions.add(
+      this.agentDataService
+        .updateAgent(agentDetailItem)
+        .subscribe({
+          next: (response) => {
+            this.forceCloseModal();
+            // handle the response here
+            // console.log(
+            //   'EMFTEST () - Agent License added successfully response => \n ',
+            //   response
+            // );
+          },
+          error: (error) => {
+            if (error.error && error.error.errMessage) {
+              this.errorMessageService.setErrorMessage(error.error.errMessage);
+            }
+            this.forceCloseModal();
+          },
+        })
+    );
+  }
+
+forceCloseModal() { 
+    const modalDiv = document.getElementById('modal-edit-tm-info');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
   }
 
   onCloseModal() {

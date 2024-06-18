@@ -65,7 +65,7 @@
         <label for="residentSate" class="form-label">Resident State</label>
         <select
           id="residentSate"
-          class="form-select form-select-lg select-size-small"
+          class="form-select form-select-lg select-size-x-small"
           formControlName="ResStateAbv"
         >
           <option *ngFor="let state of states" [value]="state">
@@ -73,6 +73,8 @@
           </option>
         </select>
       </div>
+    </div>
+    <div class="col">
       <div class="mb-3 form-check">
         <input
           type="checkbox"

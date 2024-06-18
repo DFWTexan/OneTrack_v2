@@ -108,7 +108,7 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.formSubmitted = true;
-    console.log(this.form.value);
+    console.log('EMFTEST () - this.form.value => \n', this.form.value);
 
     let agent: any = this.form.value;
     // agent.soeid = agent.soeid.toUpperCase();
@@ -130,7 +130,7 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
     //   // this.newAgentForm.controls['branchCode'].setErrors({ invalid: true });
     // }
 
-    if (!this.form.invalid) {
+    if (this.form.invalid) {
       this.form.setErrors({ invalid: true });
       return;
     }

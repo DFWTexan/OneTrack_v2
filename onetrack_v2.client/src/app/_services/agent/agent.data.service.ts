@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { catchError, map, switchMap, tap } from 'rxjs/operators';
 // import { Subject } from 'rxjs';
 
 import { environment } from '../../environments/environment';
@@ -94,10 +94,11 @@ export class AgentDataService {
           if (response.success && response.statusCode === 200) {
             this.agentInformation = response.objData;
             this.agentInfoChanged.next(response.objData);
-            
+
             this.diaryItems = this.agentInformation.diaryItems;
             this.diaryItemsChanged.next(this.diaryItems);
-            this.agentLicenseAppointments = this.agentInformation.agentLicenseAppointments;
+            this.agentLicenseAppointments =
+              this.agentInformation.agentLicenseAppointments;
             this.agentLicenseAppointmentsChanged.next(
               this.agentInformation.agentLicenseAppointments
             );
@@ -293,7 +294,7 @@ export class AgentDataService {
     this.apiUrl = environment.apiUrl + 'Agent/UpdateAgentDetails';
 
     return this.http
-      .put<{
+      .post<{
         success: boolean;
         statusCode: number;
         objData: any;
@@ -302,6 +303,10 @@ export class AgentDataService {
       .pipe(
         map((response) => {
           return response;
+        }),
+        catchError((error) => {
+          console.error('Error:', error);
+          throw error;
         })
       );
   }

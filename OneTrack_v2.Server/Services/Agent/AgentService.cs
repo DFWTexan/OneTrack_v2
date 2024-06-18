@@ -1472,11 +1472,12 @@ namespace OneTrack_v2.Services
             }
             catch (Exception ex)
             {
+                result.StatusCode = 500;
                 result.Success = false;
                 result.ObjData = null;
                 result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-6509-49334].";
 
-                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
 
             return result;
