@@ -47,6 +47,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading = true;
 
+    this.agentInfo = this.agentDataService.agentInformation;
     this.subscriptions.add(
       this.agentDataService.agentInfoChanged.subscribe((agentInfo: any) => {
         this.isLoading = false;
@@ -59,6 +60,13 @@ export class TmInformationComponent implements OnInit, OnDestroy {
     
     console.log('EMFTEST (app-tm-information: onChildCallRefreshData) - data => \n', data);
 
+    // this.subscriptions.add(
+    //   this.agentDataService.agentInfoChanged.subscribe((agentInfo: any) => {
+    //     this.isLoading = false;
+    //     this.agentInfo = agentInfo;
+    //   })
+    // );
+    this.agentInfo = data;
   }
 
   openConfirmDialog(eventAction: string, msg: string, vObject: any): void {

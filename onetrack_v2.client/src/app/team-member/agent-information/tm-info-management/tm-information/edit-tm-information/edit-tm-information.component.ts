@@ -90,13 +90,8 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
         .updateAgent(agentDetailItem)
         .subscribe({
           next: (response) => {
-            this.callParentRefreshData.emit(agentDetailItem);
+            this.callParentRefreshData.emit(response);
             this.forceCloseModal();
-            // handle the response here
-            // console.log(
-            //   'EMFTEST () - Agent License added successfully response => \n ',
-            //   response
-            // );
           },
           error: (error) => {
             if (error.error && error.error.errMessage) {

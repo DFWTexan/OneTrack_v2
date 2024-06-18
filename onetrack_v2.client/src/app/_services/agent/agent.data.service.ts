@@ -82,6 +82,9 @@ export class AgentDataService {
   fetchAgentInformation(employeeID: number): Observable<AgentInfo> {
     this.apiUrl = environment.apiUrl + 'Agent/GetAgentByEmployeeID/';
 
+    console.log('EMFTEST (fetchAgentInformation) - apiUrl => FUNKY!!!');
+    // console.log('EMFTEST (fetchAgentInformation) - employeeID => \n', employeeID);
+
     return this.http
       .get<{
         success: boolean;
@@ -92,8 +95,11 @@ export class AgentDataService {
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
+
+console.log('EMFTEST (fetchAgentInformation) - response.objData => \n', response.objData);
+
             this.agentInformation = response.objData;
-            this.agentInfoChanged.next(response.objData);
+            this.agentInfoChanged.next(this.agentInformation);
 
             this.diaryItems = this.agentInformation.diaryItems;
             this.diaryItemsChanged.next(this.diaryItems);
@@ -293,6 +299,23 @@ export class AgentDataService {
   updateAgent(agent: any): Observable<any> {
     this.apiUrl = environment.apiUrl + 'Agent/UpdateAgentDetails';
 
+    // return this.http
+    //   .post<{
+    //     success: boolean;
+    //     statusCode: number;
+    //     objData: any;
+    //     errMessage: string;
+    //   }>(this.apiUrl, agent)
+    //   .pipe(
+    //     tap(() => this.fetchAgentInformation(agent.EmployeeID)),
+    //     map((response) => {
+    //       return response;
+    //     }),
+    //     catchError((error) => {
+    //       console.error('Error:', error);
+    //       throw error;
+    //     })
+    //   );
     return this.http
       .post<{
         success: boolean;
@@ -301,12 +324,20 @@ export class AgentDataService {
         errMessage: string;
       }>(this.apiUrl, agent)
       .pipe(
-        map((response) => {
-          return response;
+        switchMap((response) => {
+          if (response.success && response.statusCode === 200) {
+            return this.fetchAgentInformation(agent.EmployeeID);
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
         }),
-        catchError((error) => {
-          console.error('Error:', error);
-          throw error;
+        map((agentInfo) => {
+          // this.agentInformation = agentInfo;
+          // this.agentInfoChanged.next(this.agentInformation);
+          // this.agentLicenseAppointmentsChanged.next(
+          //   this.agentInformation.agentLicenseAppointments
+          // );
+          return this.agentInformation;
         })
       );
   }

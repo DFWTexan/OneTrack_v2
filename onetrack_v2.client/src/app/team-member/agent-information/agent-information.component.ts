@@ -26,11 +26,9 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
   id: number = 0;
   agentInfo: AgentInfo = {} as AgentInfo;
   isShowLicenseMgmt: boolean = false;
-  subscribeShowLicMgmtChanged: Subscription = new Subscription();
   isShowTickle: boolean = false;
-  subsctibeAgentInfo: Subscription = new Subscription();
-  subscribeTickleToggleChanged: Subscription = new Subscription();
-  subscibeAgentInfoChanged: Subscription = new Subscription();
+  
+  private subscriptions = new Subscription();
 
   constructor(
     private agentDataService: AgentDataService,
@@ -44,27 +42,42 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
-      this.subsctibeAgentInfo = this.agentDataService
+
+      this.subscriptions.add(
+        this.agentDataService
         .fetchAgentInformation(this.id)
         .subscribe((agentInfo: AgentInfo) => {
           this.isLoading = false;
           this.agentInfo = agentInfo;
-        });
+        })
+      );
     });
 
-    this.subscribeShowLicMgmtChanged =
+    this.subscriptions.add(
+      this.agentDataService.agentInfoChanged.subscribe(
+        (agentInfo: AgentInfo) => {
+          this.isLoading = false;
+          this.agentInfo = agentInfo;
+        }
+      )
+    );
+
+    this.subscriptions.add(
       this.agentComService.isShowLicenseMgmtChanged.subscribe(
         (showLicenseMgmt: boolean) => {
           this.isShowLicenseMgmt = showLicenseMgmt;
         }
-      );
-
-    this.subscribeTickleToggleChanged =
+      )
+    );
+    
+    this.subscriptions.add(
       this.appComService.tickleToggleChanged.subscribe(
         (tickleToggle: boolean) => {
           this.isShowTickle = tickleToggle;
         }
-      );
+      )
+    );
+    
   }
 
   // viewLicenseMgmt() {
@@ -82,9 +95,6 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subsctibeAgentInfo.unsubscribe();
-    this.subscribeShowLicMgmtChanged.unsubscribe();
-    this.subscribeTickleToggleChanged.unsubscribe();
-    this.subscibeAgentInfoChanged.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }
