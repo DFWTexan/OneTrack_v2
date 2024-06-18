@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
+import { Component, Injectable, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription, forkJoin, take } from 'rxjs';
 
@@ -18,6 +18,7 @@ import { AgentInfo } from '../../../../../_Models';
 })
 @Injectable()
 export class EditTmInformationComponent implements OnInit, OnDestroy {
+  @Output() callParentRefreshData = new EventEmitter<any>();
   isFormSubmitted: boolean = false;
   form = new FormGroup({
     CompanyID: new FormControl(0),
@@ -89,6 +90,7 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
         .updateAgent(agentDetailItem)
         .subscribe({
           next: (response) => {
+            this.callParentRefreshData.emit(agentDetailItem);
             this.forceCloseModal();
             // handle the response here
             // console.log(

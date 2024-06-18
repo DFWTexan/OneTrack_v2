@@ -55,6 +55,12 @@ export class TmInformationComponent implements OnInit, OnDestroy {
     );
   }
 
+  onChildCallRefreshData(data: any) {
+    
+    console.log('EMFTEST (app-tm-information: onChildCallRefreshData) - data => \n', data);
+
+  }
+
   openConfirmDialog(eventAction: string, msg: string, vObject: any): void {
     this.eventAction = eventAction;
     this.vObject = vObject;

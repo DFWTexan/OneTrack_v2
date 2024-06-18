@@ -170,9 +170,6 @@ export class EditLicenseRenewalComponent implements OnInit, OnDestroy {
       return;
     }
 
-
-console.log('EMFTEST (onSubmit) - licenseRenewalInfo => \n ', licenseRenewalInfo);
-
     this.subscriptions.add(
       this.licApplicationDataService
         .upsertLicenseApplicationItem(licenseRenewalInfo)

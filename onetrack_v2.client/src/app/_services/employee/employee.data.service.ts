@@ -20,6 +20,9 @@ export class EmployeeDataService {
   fetchEmployeeSearch(
     vSearchEmployee: SearchEmployeeFilter
   ): Observable<EmployeeSearchResult[]> {
+
+console.log('EMFTEST (employee.data.service: fetchEmployeeSearch) - vSearchEmployee => \n', vSearchEmployee);
+
     return this.http
       .put<{
         success: boolean;

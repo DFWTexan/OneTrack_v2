@@ -4,7 +4,7 @@
     {
         //public int CompanyID { get; set; } = 0;
         public string? EmployeeSSN { get; set; } = null;
-        public string? GEID { get; set; } = null;
+        public string? TeamMemberGEID { get; set; } = null;
         public string? SCORENumber { get; set; } = null;
         public int? NationalProducerNumber { get; set; } = 0;
         public string? LastName { get; set; } = null;
