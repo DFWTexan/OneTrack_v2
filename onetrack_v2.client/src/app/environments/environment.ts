@@ -8,9 +8,11 @@ export const environment = {
     isShowEditID: false,
     // LOCAL
     // apiUrl: 'https://localhost:7249/api/',
-    apiUrl: 'http://localhost:5000/api/',
+    // apiUrl: 'http://localhost:5000/api/',
     // DEVELOPMENT
-    // apiUrl: 'http://ftapid101/OneTrakV2/api/',
+    apiUrl: 'http://ftapid101/OneTrakV2/api/',
+    // QUALITY
+    // apiUrl: 'http://ftapiq101/OneTrakV2/api/',
   };
   
   /*
