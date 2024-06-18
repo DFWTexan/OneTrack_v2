@@ -82,6 +82,8 @@ namespace OneTrack_v2.Services
                                 GEID = employee.Geid,
                                 LastName = employee.LastName,
                                 FirstName = employee.FirstName,
+                                Suffix = employee.Suffix,
+                                Alias = employee.Alias,
                                 MiddleName = employee.MiddleName,
                                 JobTitle = jobTitle.JobTitle1,
                                 JobDate = employmentJobTitle.JobTitleDate,

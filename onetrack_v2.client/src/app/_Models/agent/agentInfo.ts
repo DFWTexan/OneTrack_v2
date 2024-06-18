@@ -11,6 +11,8 @@ export interface AgentInfo {
   lastName: string;
   firstName: string;
   middleName: string | null;
+  suffix: string | null;
+  alias: string | null;
   jobTitle: string | null;
   jobDate: string | null;
   employeeSSN: string;

@@ -22,7 +22,7 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
   isFormSubmitted: boolean = false;
   form = new FormGroup({
     CompanyID: new FormControl(0),
-    preferredName: new FormControl(''),
+    Alias: new FormControl(''),
     GEID: new FormControl(''),
     NationalProducerNumber: new FormControl(''),
     EmployeeStatus: new FormControl(''),
@@ -59,7 +59,7 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
 
         this.form.patchValue({
           CompanyID: agentInfo.companyID,
-          preferredName: agentInfo.lastName + ', ' + agentInfo.firstName,
+          Alias: agentInfo.alias,
           GEID: agentInfo.geid,
           NationalProducerNumber: agentInfo.nationalProdercerNumber,
           EmployeeStatus: agentInfo.employeeStatus,
@@ -78,6 +78,9 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
     agentDetailItem.EmployeeID =
       this.agentDataService.agentInformation.employeeID;
       agentDetailItem.employmentID = this.agentDataService.agentInformation.employmentID;
+      agentDetailItem.FirstName = this.agentDataService.agentInformation.firstName;
+      agentDetailItem.LastName = this.agentDataService.agentInformation.lastName;
+      agentDetailItem.MiddleName = this.agentDataService.agentInformation.middleName;
       agentDetailItem.UserSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
     if (this.form.invalid) {
