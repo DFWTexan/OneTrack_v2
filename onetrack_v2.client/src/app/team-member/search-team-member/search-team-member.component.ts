@@ -52,6 +52,10 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.fetchData();
+  }
+
+  fetchData() {
     // LOAD DROPDOWN DATA
     this.stateProvinces = this.conService.getStateProvinces();
     this.subscriptions.add(
@@ -134,7 +138,7 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
       BranchCode: form.value.searchFilter.BranchCode || null,
       AgentStatus: this.selectedAgentStatuses || null,
       ScoreNumber: form.value.searchFilter.ScoreNumber || null,
-      CompanyID: form.value.searchFilter.EmployerAgency || null,
+      CompanyID: form.value.searchFilter.EmployerAgency || 0,
       LicStatus: this.selectedLicenseStatuses || null,
       LicState: form.value.searchFilter.LicState || null,
       LicenseName: form.value.searchFilter.LicenseName || null,
@@ -144,6 +148,15 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
       this.loading = false;
       this.searchEmployeeResult = results;
     });
+  }
+
+  onReset(form: NgForm) {
+    // form.resetForm();
+    // this.fetchData();
+    form.controls['LastName'].reset();
+
+    this.isSubmitted = false;
+    this.searchEmployeeResult = [];
   }
 
   ngOnDestroy(): void {
