@@ -34,10 +34,10 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
   // Dropdown-Data-Service
   branchNames: { value: string; label: string }[] = [];
   selectedBranch: string | null = null;
-  scoreNumbers: { value: string; label: string }[] = [];
-  employerAgencies: { value: string; label: string }[] = [];
-  licenseStatuses: { value: string; label: string }[] = [];
-  licenseNames: { value: string; label: string }[] = [];
+  scoreNumbers: { value: number; label: string }[] = [];
+  employerAgencies: { value: number; label: string }[] = [];
+  licenseStatuses: { value: number; label: string }[] = [];
+  licenseNames: { value: number; label: string }[] = [];
 
   selectedAgentStatuses: string[] = [];
   selectedLicenseStatuses: string[] = [];
@@ -61,40 +61,45 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
         }
       )
     );
+    this.branchNames = this.drpdwnDataService.branchNames;
     this.subscriptions.add(
-      this.drpdwnDataService
-        .fetchDropdownData('GetBranches')
-        .subscribe((branchNames: { value: string; label: string }[]) => {
+      this.drpdwnDataService.branchNamesChanged.subscribe(
+        (branchNames: { value: string; label: string }[]) => {
           this.branchNames = branchNames;
-        })
+        }
+      )
     );
+    this.scoreNumbers = this.drpdwnDataService.scoreNumbers;
     this.subscriptions.add(
-      this.drpdwnDataService
-        .fetchDropdownData('GetScoreNumbers')
-        .subscribe((scoreNumbers: { value: string; label: string }[]) => {
+      this.drpdwnDataService.scoreNumbersChanged.subscribe(
+        (scoreNumbers: { value: number; label: string }[]) => {
           this.scoreNumbers = scoreNumbers;
-        })
+        }
+      )
     );
+    this.employerAgencies = this.drpdwnDataService.employerAgencies;
     this.subscriptions.add(
-      this.drpdwnDataService
-        .fetchDropdownData('GetEmployerAgencies')
-        .subscribe((employerAgencies: { value: string; label: string }[]) => {
+      this.drpdwnDataService.employerAgenciesChanged.subscribe(
+        (employerAgencies: { value: number; label: string }[]) => {
           this.employerAgencies = employerAgencies;
-        })
+        }
+      )
     );
+    this.licenseStatuses = this.drpdwnDataService.licenseStatuses;
     this.subscriptions.add(
-      this.drpdwnDataService
-        .fetchDropdownData('GetLicenseStatuses')
-        .subscribe((licenseStatuses: { value: string; label: string }[]) => {
+      this.drpdwnDataService.licenseStatusesChanged.subscribe(
+        (licenseStatuses: { value: number; label: string }[]) => {
           this.licenseStatuses = licenseStatuses;
-        })
+        }
+      )
     );
+    this.licenseNames = this.drpdwnDataService.licenseNames;
     this.subscriptions.add(
-      this.drpdwnDataService
-        .fetchDropdownData('GetLicenseNames')
-        .subscribe((licenseNames: { value: string; label: string }[]) => {
+      this.drpdwnDataService.licenseNamesChanged.subscribe(
+        (licenseNames: { value: number; label: string }[]) => {
           this.licenseNames = licenseNames;
-        })
+        }
+      )
     );
   }
 

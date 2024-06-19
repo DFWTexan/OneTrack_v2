@@ -4,9 +4,11 @@ import {
   OnInit,
   Inject,
   Injectable,
+  OnDestroy,
 } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
+import { Subscription } from 'rxjs';
 
 import {
   AppComService,
@@ -22,16 +24,17 @@ import { environment } from './environments/environment';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
   // @ViewChild(MatSidenav)
   // sidenav!: MatSidenav;
   // isMobile = true;
   // isCollapsed = true;
+  private subscriptions = new Subscription();
 
   constructor(
     public errorMessageService: ErrorMessageService,
     public appComService: AppComService,
-    // private drpdwnDataService: DropdownDataService,
+    private drpdwnDataService: DropdownDataService,
     private userInfoService: UserAcctInfoDataService
   ) {}
 
@@ -54,7 +57,53 @@ export class AppComponent implements OnInit {
         isSuperUser: true,
       });
     }
+
+    // DROPDOWN DATA
+    this.subscriptions.add(
+      this.drpdwnDataService
+        .fetchDropdownData('GetBranches')
+        .subscribe((branchNames: { value: string; label: string }[]) => {
+          // this.branchNames = branchNames;
+          this.drpdwnDataService.updateBranchNames(branchNames);
+        })
+    );
+    this.subscriptions.add(
+      this.drpdwnDataService
+        .fetchDropdownNumberValueData('GetScoreNumbers')
+        .subscribe((scoreNumbers: { value: number; label: string }[]) => {
+          // this.scoreNumbers = scoreNumbers;
+          this.drpdwnDataService.updateScoreNumbers(scoreNumbers);
+        })
+    );
+    this.subscriptions.add(
+      this.drpdwnDataService
+        .fetchDropdownNumberValueData('GetEmployerAgencies')
+        .subscribe((employerAgencies: { value: number; label: string }[]) => {
+          // this.employerAgencies = employerAgencies;
+          this.drpdwnDataService.updateEmployerAgencies(employerAgencies);
+        })
+    );
+    this.subscriptions.add(
+      this.drpdwnDataService
+        .fetchDropdownNumberValueData('GetLicenseStatuses')
+        .subscribe((licenseStatuses: { value: number; label: string }[]) => {
+          // this.licenseStatuses = licenseStatuses;
+          this.drpdwnDataService.updateLicenseStatuses(licenseStatuses);
+        })
+    );
+    this.subscriptions.add(
+      this.drpdwnDataService
+        .fetchDropdownNumberValueData('GetLicenseNames')
+        .subscribe((licenseNames: { value: number; label: string }[]) => {
+          // this.licenseNames = licenseNames;
+          this.drpdwnDataService.updateLicenseNames(licenseNames);
+        })
+    );
   }
 
   title = 'onetrack_v2';
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
+  }
 }

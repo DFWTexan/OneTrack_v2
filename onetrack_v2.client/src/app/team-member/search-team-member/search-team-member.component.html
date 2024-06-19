@@ -179,7 +179,7 @@
                     [value]="licenseStatus.value"
                     [disabled]="
                       selectedLicenseStatuses.includes('All') &&
-                      licenseStatus.value !== 'All'
+                      licenseStatus.label !== 'All'
                     "
                     >{{ licenseStatus.label }}</mat-option
                   >
