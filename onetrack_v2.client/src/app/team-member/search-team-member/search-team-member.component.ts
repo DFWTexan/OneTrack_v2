@@ -119,7 +119,7 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
     this.isSubmitted = true;
     const searchFilter: SearchEmployeeFilter = {
       EmployeeSSN: form.value.searchFilter.EmployeeSSN || null,
-      TeamMemberGEID: form.value.searchFilter.TeamMemberGEID || 0,
+      TeamMemberGEID: form.value.searchFilter.TeamMemberGEID || null,
       NationalProducerNumber:
         form.value.searchFilter.NationalProducerNumber || 0,
       LastName: form.value.searchFilter.LastName || null,
