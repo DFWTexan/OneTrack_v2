@@ -65,7 +65,7 @@ namespace OneTrack_v2.Services
         ///            State = "  "
         ///        }
         /// </returns>
-        public async Task<ReturnResult> SearchEmployee(string? vEmployeeSSN = null, string? vGEID = null, string? vSCORENumber = null,
+        public async Task<ReturnResult> SearchEmployee(string? vEmployeeSSN = null, string? vGEID = null, string? vSCORENumber = null, int? vCompanyID = 0,
             string? vLastName = null, string? vFirstName = null, List<string>? vAgentStatus = null, string? vResState = null, string? vWrkState = null, string? vBranchCode = null, 
             int? vEmployeeLicenseID = 0, List<string>? vLicStatus = null, string? vLicState = null, string? vLicenseName = null, int? vNationalProducerNumber = 0)
         {
@@ -205,7 +205,7 @@ namespace OneTrack_v2.Services
 
                 var parameters = new[]
                                 {
-                                    new SqlParameter("@vchCompanyID", DBNull.Value),
+                                    new SqlParameter("@vchCompanyID", vCompanyID == 0 ? (object)DBNull.Value : vCompanyID),
                                     new SqlParameter("@vchEmployeeSSN", vEmployeeSSN ?? (object)DBNull.Value),
                                     new SqlParameter("@vchGEID", vGEID ?? (object)DBNull.Value),
                                     new SqlParameter("@vchSCORENumber", vSCORENumber ?? (object)DBNull.Value),

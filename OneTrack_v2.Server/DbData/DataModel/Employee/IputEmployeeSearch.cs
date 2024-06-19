@@ -2,7 +2,7 @@
 {
     public class IputEmployeeSearch
     {
-        //public int CompanyID { get; set; } = 0;
+        public int? CompanyID { get; set; } = 0;
         public string? EmployeeSSN { get; set; } = null;
         public string? TeamMemberGEID { get; set; } = null;
         public string? SCORENumber { get; set; } = null;

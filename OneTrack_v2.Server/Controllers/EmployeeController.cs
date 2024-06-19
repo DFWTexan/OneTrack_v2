@@ -36,7 +36,7 @@ namespace OneTrack_v2.Controllers
         [HttpPut]
         public async Task<IActionResult> SearchEmployee_v2([FromBody] IputEmployeeSearch vInput)
         {
-            var result = await Task.Run(() => _employeeService.SearchEmployee(vInput.EmployeeSSN, vInput.TeamMemberGEID, vInput.SCORENumber, vInput.LastName, vInput.FirstName,
+            var result = await Task.Run(() => _employeeService.SearchEmployee(vInput.EmployeeSSN, vInput.TeamMemberGEID, vInput.SCORENumber, vInput.CompanyID, vInput.LastName, vInput.FirstName, 
                vInput.AgentStatus, vInput.ResState, vInput.WrkState, vInput.BranchCode, vInput.EmployeeLicenseID, vInput.LicStatus, vInput.LicState, vInput.LicenseName, vInput.NationalProducerNumber));
 
             return StatusCode(result.StatusCode, result);

@@ -9,7 +9,7 @@ export interface SearchEmployeeFilter {
   BranchCode: string | null;
   AgentStatus: string[] | ["All"];
   ScoreNumber: string | null;
-  EmployerAgency: string | null;
+  CompanyID: number | null;
   LicStatus: string[] | ['All'];
   LicState: string | null;
   LicenseName: string | null;

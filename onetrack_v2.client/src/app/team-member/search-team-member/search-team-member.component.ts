@@ -134,7 +134,7 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
       BranchCode: form.value.searchFilter.BranchCode || null,
       AgentStatus: this.selectedAgentStatuses || null,
       ScoreNumber: form.value.searchFilter.ScoreNumber || null,
-      EmployerAgency: form.value.searchFilter.EmployerAgency || null,
+      CompanyID: form.value.searchFilter.EmployerAgency || null,
       LicStatus: this.selectedLicenseStatuses || null,
       LicState: form.value.searchFilter.LicState || null,
       LicenseName: form.value.searchFilter.LicenseName || null,
