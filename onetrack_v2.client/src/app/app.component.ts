@@ -11,6 +11,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Subscription } from 'rxjs';
 
 import {
+  AgentDataService,
   AppComService,
   DropdownDataService,
   ErrorMessageService,
@@ -29,12 +30,15 @@ export class AppComponent implements OnInit, OnDestroy {
   // sidenav!: MatSidenav;
   // isMobile = true;
   // isCollapsed = true;
+  branchCodes: any[] = [];
+
   private subscriptions = new Subscription();
 
   constructor(
     public errorMessageService: ErrorMessageService,
     public appComService: AppComService,
     private drpdwnDataService: DropdownDataService,
+    private agentDataService: AgentDataService,
     private userInfoService: UserAcctInfoDataService
   ) {}
 
@@ -97,6 +101,29 @@ export class AppComponent implements OnInit, OnDestroy {
         .subscribe((licenseNames: { value: number; label: string }[]) => {
           // this.licenseNames = licenseNames;
           this.drpdwnDataService.updateLicenseNames(licenseNames);
+        })
+    );
+    this.subscriptions.add(
+      this.drpdwnDataService
+        .fetchDropdownNumberValueData('GetJobTitles')
+        .subscribe((jobTitles: { value: number; label: string }[]) => {
+        //   this.jobTitles = [
+        //     { value: '0', label: 'Select Job Title' },
+        //     ...jobTitles,
+        //   ];
+        //   this.newAgentForm.get('JobTitleID')?.setValue(0);
+        this.drpdwnDataService.updateJobTitles(jobTitles);
+        })
+    );
+    this.subscriptions.add(
+      this.agentDataService
+        .fetchBranchCodes()
+        .subscribe((branchCodes: any[]) => {
+          this.branchCodes = [
+            { branchCode: 'Select Branch Code' },
+            ...branchCodes,
+          ];
+          // this.newAgentForm.get('branchCode')?.setValue('Select Branch Code');
         })
     );
   }

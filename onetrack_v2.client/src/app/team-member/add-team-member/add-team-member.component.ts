@@ -48,13 +48,13 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
       GEID: [''],
       SOEID: [''],
       NationalProducerNumber: [0],
-      CompanyID: ['', Validators.required],
-      // employerAgency: ['', [Validators.required, this.employerAgencyValidator]],
+      CompanyID: [0],
+      // employerAgency: [0],
       WorkStateAbv: ['Select State'],
       ResStateAbv: ['Select State'],
       JobTitleID: [0],
       HireDate: ['01/01/0001 00:00:00'],
-      BranchCode: [''],
+      BranchCode: ['Select Branch Code'],
       Address1: [''],
       Address2: [''],
       City: [''],
@@ -67,41 +67,85 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // this.subscriptions.add(
+    //   this.drpdwnDataService
+    //     .fetchDropdownData('GetEmployerAgencies')
+    //     .subscribe((employerAgencies: { value: string; label: string }[]) => {
+    //       this.employerAgencies = [
+    //         { valu: '0', label: 'Select Employer/Agency' },
+    //         ...employerAgencies,
+    //       ];
+    //       this.newAgentForm.get('employerAgency')?.setValue(0);
+    //     })
+    // );
+
+    // this.employerAgencies = this.drpdwnDataService.employerAgencies;
+    this.employerAgencies = [
+      { valu: '0', label: 'Select Employer/Agency' },
+      ...this.drpdwnDataService.employerAgencies,
+    ];
+    this.newAgentForm.get('employerAgency')?.setValue(0);
     this.subscriptions.add(
-      this.drpdwnDataService
-        .fetchDropdownData('GetEmployerAgencies')
-        .subscribe((employerAgencies: { value: string; label: string }[]) => {
+      this.drpdwnDataService.employerAgenciesChanged.subscribe(
+        (employerAgencies: { value: number; label: string }[]) => {
+          // this.employerAgencies = employerAgencies;
           this.employerAgencies = [
             { valu: '0', label: 'Select Employer/Agency' },
             ...employerAgencies,
           ];
-          this.newAgentForm.get('employerAgency')?.setValue(0);
-        })
+          this.newAgentForm.get('CompanyID')?.setValue(0);
+        }
+      )
     );
 
+    // this.subscriptions.add(
+    //   this.drpdwnDataService
+    //     .fetchDropdownData('GetJobTitles')
+    //     .subscribe((jobTitles: { value: string; label: string }[]) => {
+    //       this.jobTitles = [
+    //         { value: '0', label: 'Select Job Title' },
+    //         ...jobTitles,
+    //       ];
+    //       this.newAgentForm.get('JobTitleID')?.setValue(0);
+    //     })
+    // );
+    this.jobTitles = [
+      { value: 0, label: 'Select Job Title' },
+      ...this.drpdwnDataService.jobTitles,
+    ];
+    this.newAgentForm.get('JobTitleID')?.setValue(0);
     this.subscriptions.add(
-      this.drpdwnDataService
-        .fetchDropdownData('GetJobTitles')
-        .subscribe((jobTitles: { value: string; label: string }[]) => {
+      this.drpdwnDataService.jobTitlesChanged.subscribe(
+        (jobTitles: { value: number; label: string }[]) => {
+          // this.jobTitles = [
+          //   { value: '0', label: 'Select Job Title' },
+          //   ...jobTitles,
+          // ];
           this.jobTitles = [
-            { value: '0', label: 'Select Job Title' },
+            { value: 0, label: 'Select Job Title' },
             ...jobTitles,
           ];
           this.newAgentForm.get('JobTitleID')?.setValue(0);
-        })
+        }
+      )
     );
 
-    this.subscriptions.add(
-      this.agentDataService
-        .fetchBranchCodes()
-        .subscribe((branchCodes: any[]) => {
-          this.branchCodes = [
-            { branchCode: 'Select Branch Code' },
-            ...branchCodes,
-          ];
-          this.newAgentForm.get('branchCode')?.setValue('Select Branch Code');
-        })
-    );
+    // this.subscriptions.add(
+    //   this.agentDataService
+    //     .fetchBranchCodes()
+    //     .subscribe((branchCodes: any[]) => {
+    //       this.branchCodes = [
+    //         { branchCode: 'Select Branch Code' },
+    //         ...branchCodes,
+    //       ];
+    //       this.newAgentForm.get('branchCode')?.setValue('Select Branch Code');
+    //     })
+    // );
+    this.branchCodes = [
+      { branchCode: 'Select Branch Code' },
+      ...this.agentDataService.branchCodes,
+    ];
+    this.newAgentForm.get('branchCode')?.setValue('Select Branch Code');
   }
 
   // VALIDATION

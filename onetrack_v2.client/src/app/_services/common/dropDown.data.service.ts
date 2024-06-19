@@ -19,6 +19,8 @@ export class DropdownDataService {
   licenseStatusesChanged = new Subject<{ value: number; label: string }[]>();
   public licenseNames: { value: number; label: string }[] = [];
   licenseNamesChanged = new Subject<{ value: number; label: string }[]>();
+  public jobTitles: { value: number; label: string }[] = [];
+  jobTitlesChanged = new Subject<{ value: number; label: string }[]>();
 
   private url: string = environment.apiUrl + 'Misc/';
 
@@ -101,6 +103,11 @@ export class DropdownDataService {
   updateLicenseNames(licenseNames: { value: number; label: string }[]) {
     this.licenseNames = licenseNames;
     this.licenseNamesChanged.next([...this.licenseNames]);
+  }
+
+  updateJobTitles(jobTitles: { value: number; label: string }[]) {
+    this.jobTitles = jobTitles;
+    this.jobTitlesChanged.next([...this.jobTitles]);
   }
 
   fetchDropdownNumericData(vEndpoint: string, vValue: any | null = null) {

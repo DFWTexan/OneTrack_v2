@@ -42,6 +42,7 @@ export class AgentDataService {
   licenseMgmtDataIndexChanged = new Subject<number>();
   // EMP TRANSFER HISTORY
   branchCodes: Array<{ branchCode: string }> = [];
+  branchCodesChanged = new Subject<Array<{ branchCode: string }>>();
   employmentTransferHistItem: any = {};
   employmentTransferHistItemChanged = new Subject<any>();
   transferHistItem: any = {};
@@ -878,5 +879,10 @@ export class AgentDataService {
   updateAgentLicenseAppointments(appointments: AgentLicenseAppointments[]) {
     this.agentLicenseAppointments = appointments;
     this.agentLicenseAppointmentsChanged.next(this.agentLicenseAppointments);
+  }
+
+  updateBrachCodes(branchCodes: Array<{ branchCode: string }>) {
+    this.branchCodes = branchCodes;
+    this.branchCodesChanged.next(this.branchCodes);
   }
 }
