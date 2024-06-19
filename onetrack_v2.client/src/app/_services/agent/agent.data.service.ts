@@ -294,23 +294,6 @@ export class AgentDataService {
   updateAgent(agent: any): Observable<any> {
     this.apiUrl = environment.apiUrl + 'Agent/UpdateAgentDetails';
 
-    // return this.http
-    //   .post<{
-    //     success: boolean;
-    //     statusCode: number;
-    //     objData: any;
-    //     errMessage: string;
-    //   }>(this.apiUrl, agent)
-    //   .pipe(
-    //     tap(() => this.fetchAgentInformation(agent.EmployeeID)),
-    //     map((response) => {
-    //       return response;
-    //     }),
-    //     catchError((error) => {
-    //       console.error('Error:', error);
-    //       throw error;
-    //     })
-    //   );
     return this.http
       .post<{
         success: boolean;
@@ -321,14 +304,18 @@ export class AgentDataService {
       .pipe(
         switchMap((response) => {
           if (response.success && response.statusCode === 200) {
-            return this.fetchAgentInformation(agent.EmployeeID);
+            return this.fetchAgentInformation(this.agentInformation.employeeID);
           } else {
             throw new Error(response.errMessage || 'Unknown error');
           }
         }),
         map((agentInfo) => {
           return this.agentInformation;
-        })
+        }),
+            catchError((error) => {
+              console.error('Error:', error);
+              throw error;
+            })
       );
   }
 
@@ -654,12 +641,7 @@ export class AgentDataService {
   }
 
   upsertContEduHoursTaken(contEduHoursTaken: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/UpsertConEduTaken';
-
-    console.log(
-      'EMFTEST (upsertContEduHoursTaken) - contEduHoursTaken => \n',
-      contEduHoursTaken
-    );
+    this.apiUrl = environment.apiUrl + 'Agent/UpsertConEduTaken';  
 
     return this.http
       .post<{
