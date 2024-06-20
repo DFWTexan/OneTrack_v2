@@ -15,6 +15,7 @@ import {
   AppComService,
   DropdownDataService,
   ErrorMessageService,
+  LicIncentiveInfoDataService,
   UserAcctInfoDataService,
 } from './_services';
 import { environment } from './environments/environment';
@@ -39,6 +40,7 @@ export class AppComponent implements OnInit, OnDestroy {
     public appComService: AppComService,
     private drpdwnDataService: DropdownDataService,
     private agentDataService: AgentDataService,
+    public licIncentiveInfoDataService: LicIncentiveInfoDataService,
     private userInfoService: UserAcctInfoDataService
   ) {}
 
@@ -107,12 +109,12 @@ export class AppComponent implements OnInit, OnDestroy {
       this.drpdwnDataService
         .fetchDropdownNumberValueData('GetJobTitles')
         .subscribe((jobTitles: { value: number; label: string }[]) => {
-        //   this.jobTitles = [
-        //     { value: '0', label: 'Select Job Title' },
-        //     ...jobTitles,
-        //   ];
-        //   this.newAgentForm.get('JobTitleID')?.setValue(0);
-        this.drpdwnDataService.updateJobTitles(jobTitles);
+          //   this.jobTitles = [
+          //     { value: '0', label: 'Select Job Title' },
+          //     ...jobTitles,
+          //   ];
+          //   this.newAgentForm.get('JobTitleID')?.setValue(0);
+          this.drpdwnDataService.updateJobTitles(jobTitles);
         })
     );
     this.subscriptions.add(
@@ -124,6 +126,35 @@ export class AppComponent implements OnInit, OnDestroy {
             ...branchCodes,
           ];
           // this.newAgentForm.get('branchCode')?.setValue('Select Branch Code');
+        })
+    );
+    this.subscriptions.add(
+      this.drpdwnDataService
+        .fetchDropdownData('GetRollOutGroups')
+        .subscribe((rollOutGroups: { value: string; label: string }[]) => {
+          // this.branchNames = branchNames;
+          this.drpdwnDataService.updateRollOutGroups(rollOutGroups);
+        })
+    );
+    this.subscriptions.add(
+      this.licIncentiveInfoDataService
+        .fetchDMManagers()
+        .subscribe((dmManagers: any[]) => {
+          this.licIncentiveInfoDataService.updateDMManagers(dmManagers);
+        })
+    );
+    this.subscriptions.add(
+      this.licIncentiveInfoDataService
+        .fetchBMManagers()
+        .subscribe((licIncentives: any[]) => {
+          this.licIncentiveInfoDataService.updateBMManagers(licIncentives);
+        })
+    );
+    this.subscriptions.add(
+      this.licIncentiveInfoDataService
+        .fetchLicenseTeches()
+        .subscribe((licTeches: any[]) => {
+          this.licIncentiveInfoDataService.updateLicenseTeches(licTeches);
         })
     );
   }

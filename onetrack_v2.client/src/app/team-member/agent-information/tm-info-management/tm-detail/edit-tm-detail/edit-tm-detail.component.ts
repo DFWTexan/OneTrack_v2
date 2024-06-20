@@ -38,7 +38,7 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
     secondChance: new FormControl(''),
   });
 
-  formSubmitted = false;
+  isFormSubmitted = false;
   states: any[] = ['Loading...'];
   licenseLevels: any[] = [];
   licenseIncentives: any[] = [];
@@ -107,11 +107,43 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.formSubmitted = true;
+    this.isFormSubmitted = true;
     console.log('EMFTEST () - this.form.value => \n', this.form.value);
 
+    if (!this.form || !this.agentInfo) {
+      // Handle the case where this.form or this.agentInfo is null or undefined
+      return;
+  }
     let agent: any = this.form.value;
-    // agent.soeid = agent.soeid.toUpperCase();
+    
+    agent.employeeSSN = this.agentInfo.employeeSSN.replace(/-/g, '');
+    agent.employeeID = this.agentInfo.employeeID;
+    //--> agent.lastName = this.agentInfo.lastName.toUpperCase();
+    //--> agent.firstName = this.agentInfo.firstName.toUpperCase();
+    //--> agent.middleName = this.agentInfo?.middleName?.toUpperCase();
+    //--> agent.soeid = this.agentInfo.soeid;
+    //--> agent.dateOfBirth = this.agentInfo.dateOfBirth;
+    agent.nationalProducerNumber = this.agentInfo.nationalProdercerNumber;
+    //--> agent.geid = this.agentInfo.geid;
+    //--> agent.alias = this.agentInfo.alias;
+    //--> agent.excludeFromRpts = this.agentInfo.excludeFromReports;
+    //--> agent.address1 = this.agentInfo.address1;
+    //--> agent.address2 = this.agentInfo?.address2;
+    //--> agent.city = this.agentInfo.city;
+    //--> agent.state = this.agentInfo.state;
+    //--> agent.zip = this.agentInfo.zip; 
+    //--> agent.phone = this.agentInfo.phone;
+    agent.fax = this.agentInfo.branchDeptFax;
+    agent.employmentID = this.agentInfo.employmentID;
+    //--> agent.email = this.agentInfo.email;
+    agent.workPhone = this.agentInfo.phone;
+    agent.employeeStatus = this.agentInfo.employeeStatus;
+    agent.companyID = this.agentInfo.companyID;
+    agent.ceRequired = this.agentInfo.ceRequired;
+    agent.licenseLevel = this.agentInfo.licenseLevel;
+    agent.licenseIncentive = this.agentInfo.licenseIncentive;
+    agent.secondChance = this.agentInfo.isLicenseincentiveSecondChance;
+    agent.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
     // if (agent.employerAgency === 0 || agent.employerAgency === '') {
     //   this.newAgentForm.controls['employerAgency'].setErrors({ invalid: true });
@@ -138,8 +170,7 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.agentService.updateAgent(agent).subscribe({
         next: (response) => {
-          console.log(response);
-          // handle the response here
+          this.forceCloseModal();
         },
         error: (error) => {
           if (error.error && error.error.errMessage) {
@@ -150,10 +181,28 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
     );
   }
 
-  closeModal() {
+  forceCloseModal() {
     const modalDiv = document.getElementById('modal-edit-tm-detail');
     if (modalDiv != null) {
       modalDiv.style.display = 'none';
+    }
+  }
+
+  closeModal() {
+    // const modalDiv = document.getElementById('modal-edit-tm-detail');
+    // if (modalDiv != null) {
+    //   modalDiv.style.display = 'none';
+    // }
+    if (this.form.dirty && !this.isFormSubmitted) {
+      if (
+        confirm('You have unsaved changes. Are you sure you want to close?')
+      ) {
+        this.forceCloseModal();
+        this.form.reset();
+      }
+    } else {
+      this.isFormSubmitted = false;
+      this.forceCloseModal();
     }
   }
 

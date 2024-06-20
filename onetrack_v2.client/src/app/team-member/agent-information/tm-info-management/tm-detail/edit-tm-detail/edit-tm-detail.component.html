@@ -16,7 +16,7 @@
         </label>
         <div
           *ngIf="
-                (form.controls['firstName'].touched || formSubmitted) &&
+                (form.controls['firstName'].touched || isFormSubmitted) &&
                 form.controls['firstName'].errors?.['required']
               "
           class="text-danger"
@@ -49,7 +49,7 @@
         </label>
         <div
           *ngIf="
-                (form.controls['lastName'].touched || formSubmitted) &&
+                (form.controls['lastName'].touched || isFormSubmitted) &&
                 form.controls['lastName'].errors?.['required']
               "
           class="text-danger"

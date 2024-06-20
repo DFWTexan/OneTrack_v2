@@ -10,6 +10,8 @@ import { environment } from '../../environments/environment';
 })
 export class DropdownDataService {
   public branchNames: { value: string; label: string }[] = [];
+  public rollOutGroups: { value: string; label: string }[] = [];
+  rollOutGroupsChanged = new Subject<{ value: string; label: string }[]>();
   branchNamesChanged = new Subject<{ value: string; label: string }[]>();
   public scoreNumbers: { value: number; label: string }[] = [];
   scoreNumbersChanged = new Subject<{ value: number; label: string }[]>();
@@ -80,6 +82,11 @@ export class DropdownDataService {
       );
   }
 
+  updateRollOutGroups(rollOutGroups: { value: string; label: string }[]) {
+    this.rollOutGroups = rollOutGroups;
+    this.rollOutGroupsChanged.next(rollOutGroups);
+  }
+  
   updateBranchNames(branchNames: { value: string; label: string }[]) {
     this.branchNames = branchNames;
     this.branchNamesChanged.next([...this.branchNames]);

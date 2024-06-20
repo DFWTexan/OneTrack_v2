@@ -16,6 +16,14 @@ export class LicIncentiveInfoDataService {
   licenseIncentiveInfo: LicenseIncentiveInfo = {} as LicenseIncentiveInfo;
   licenseIncentiveInfoChanged = new Subject<LicenseIncentiveInfo[]>();
 
+  // DATA
+  dmManagers: any[] = [];
+  dmManagersChanged = new Subject<any[]>();
+  bmManagers: any[] = [];
+  bmManagersChanged = new Subject<any[]>();
+  licenseTeches: any[] = [];
+  licenseTechesChanged = new Subject<any[]>();
+
   constructor(
     private http: HttpClient,
     private agentDataService: AgentDataService
@@ -24,10 +32,6 @@ export class LicIncentiveInfoDataService {
   fetchLicIncentiveInfo(
     employeeLicenseId: number
   ): Observable<LicenseIncentiveInfo> {
-
-console.log('EMFTEST (INFO) - fetchLicIncentiveInfo() called');
-console
-
     return this.http
       .get<{
         success: boolean;
@@ -67,6 +71,11 @@ console
       );
   }
 
+  updateDMManagers(dmManagers: any) {
+    this.dmManagers = dmManagers;
+    this.dmManagersChanged.next(this.dmManagers);
+  }
+
   fetchBMManagers(): Observable<any> {
     return this.http
       .get<{
@@ -86,6 +95,11 @@ console
       );
   }
 
+  updateBMManagers(bmManagers: any) {
+    this.bmManagers = bmManagers;
+    this.bmManagersChanged.next(this.bmManagers);
+  }
+
   fetchLicenseTeches(): Observable<any> {
     return this.http
       .get<{
@@ -103,6 +117,11 @@ console
           }
         })
       );
+  }
+
+  updateLicenseTeches(licenseTeches: any) {
+    this.licenseTeches = licenseTeches;
+    this.licenseTechesChanged.next(this.licenseTeches);
   }
 
   addLicenseAppointment(appointment: LicenseAppointment): Observable<any> {
@@ -453,7 +472,7 @@ console
   // }
   updateLicenseIncentiveInfo(licenseIncentiveInfo: any): Promise<any> {
     this.apiUrl = environment.apiUrl + 'LicenseInfo/UpdateLicenseIncentive';
-  
+
     return this.http
       .post<{
         success: boolean;
@@ -473,6 +492,7 @@ console
           console.error('EMFTEST (ERROR) - Server error: ', error);
           throw error;
         })
-      ).toPromise();
+      )
+      .toPromise();
   }
 }
