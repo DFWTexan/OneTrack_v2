@@ -81,6 +81,34 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
       agentDetailItem.FirstName = this.agentDataService.agentInformation.firstName;
       agentDetailItem.LastName = this.agentDataService.agentInformation.lastName;
       agentDetailItem.MiddleName = this.agentDataService.agentInformation.middleName;
+
+      agentDetailItem.employeeSSN = this.agentInfo.employeeSSN.replace(/-/g, '');
+      agentDetailItem.employeeID = this.agentInfo.employeeID;
+      agentDetailItem.lastName = this.agentInfo.lastName.toUpperCase();
+      agentDetailItem.firstName = this.agentInfo.firstName.toUpperCase();
+      agentDetailItem.middleName = this.agentInfo?.middleName?.toUpperCase();
+      agentDetailItem.soeid = this.agentInfo.soeid;
+      agentDetailItem.dateOfBirth = this.agentInfo.dateOfBirth;
+      //--> agentDetailItem.nationalProducerNumber = this.agentInfo.nationalProdercerNumber;
+      //--> agentDetailItem.geid = this.agentInfo.geid;
+      //--> agentDetailItem.alias = this.agentInfo.alias;
+      //--> agentDetailItem.excludeFromRpts = this.agentInfo.excludeFromReports;
+      agentDetailItem.address1 = this.agentInfo.address1;
+      agentDetailItem.address2 = this.agentInfo?.address2;
+      agentDetailItem.city = this.agentInfo.city;
+      agentDetailItem.state = this.agentInfo.state;
+      agentDetailItem.zip = this.agentInfo.zip;  
+      agentDetailItem.phone = this.agentInfo.phone;
+      agentDetailItem.fax = this.agentInfo.branchDeptFax;
+      agentDetailItem.email = this.agentInfo.email;
+      agentDetailItem.workPhone = this.agentInfo.phone;
+      //--> agentDetailItem.employeeStatus = this.agentInfo.employeeStatus;
+      //--> agentDetailItem.companyID = this.agentInfo.companyID;
+      agentDetailItem.ceRequired = this.agentInfo.ceRequired;
+      agentDetailItem.licenseLevel = this.agentInfo.licenseLevel;
+      agentDetailItem.licenseIncentive = this.agentInfo.licenseIncentive;
+      agentDetailItem.secondChance = this.agentInfo.isLicenseincentiveSecondChance;
+
       agentDetailItem.UserSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
     if (this.form.invalid) {

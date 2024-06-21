@@ -1,4 +1,4 @@
-<div class="container app-component-container" style="overflow-x: hidden;">
+<div class="container app-component-container" style="overflow-x: hidden">
   <div class="row">
     <div class="col-md-12">
       <div class="row d-flex justify-content-start">
@@ -125,6 +125,7 @@
               let license of agentInfo.agentLicenseAppointments;
               let i = index
             "
+            [expanded]="true"
           >
             <mat-expansion-panel-header>
               <mat-panel-title>
@@ -137,13 +138,13 @@
                 </div>
               </mat-panel-title>
               <mat-panel-description>
-                <div
-                  *ngIf="license.licenseAppointments.length > 0"
-                  class="row d-flex justify-content-end"
-                >
-                  {{ license.licenseAppointments.length }} appointments - Issue
-                  Date: {{ license.originalIssueDate | date : "MM/dd/yyyy" }} -
-                  Status: {{ license.licenseStatus }}
+                <div *ngIf="license.licenseAppointments.length > 0" class="row">
+                  <div class="col d-flex justify-content-end">
+                    {{ license.licenseAppointments.length }} appointments - Issue Date: {{ license.originalIssueDate | date : "MM/dd/yyyy" }} - Status:
+                    <span class="ms-2" [ngStyle]="{ color: license.licenseStatus === 'Active' ? 'green' : '' }">
+                      {{ license.licenseStatus }}
+                    </span>
+                  </div>
                 </div>
               </mat-panel-description>
             </mat-expansion-panel-header>
@@ -311,7 +312,9 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-tm-information (callParentRefreshData)="onChildCallRefreshData($event)"></app-edit-tm-information>
+        <app-edit-tm-information
+          (callParentRefreshData)="onChildCallRefreshData($event)"
+        ></app-edit-tm-information>
       </div>
     </div>
   </div>
