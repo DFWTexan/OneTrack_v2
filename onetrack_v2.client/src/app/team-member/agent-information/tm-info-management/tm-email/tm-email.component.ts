@@ -15,7 +15,7 @@ import {
   EmailComTemplate,
   ManagerHierarchy,
 } from '../../../../_Models';
-import { AgentDataService, EmailDataService } from '../../../../_services';
+import { AgentDataService, EmailDataService, UserAcctInfoDataService } from '../../../../_services';
 
 @Component({
   selector: 'app-tm-email',
@@ -49,6 +49,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   constructor(
     private emailDataService: EmailDataService,
     public agentDataService: AgentDataService,
+    public userInfoDataService: UserAcctInfoDataService,
     private sanitizer: DomSanitizer
   ) {}
 
@@ -118,18 +119,20 @@ export class TmEmailComponent implements OnInit, OnDestroy {
 
   onSubmit(form: NgForm) {
     let emailContent: any = {};
-    emailContent.to = this.agentInfo.email;
+
+    emailContent.emailTo = this.agentInfo.email;
     emailContent.ccEmail = this.ccEmail;
     emailContent.subject = this.emailSubject;
     emailContent.emailTemplateID = this.selectedTemplate;
     emailContent.emailBody = this.emailBody;
+    emailContent.userSOEID =
+      this.userInfoDataService.userAcctInfo.soeid;
 
-    // console.log('EMFTEST (Email: onSubmit) - form => \n', form);
-    console.log(
-      'EMFTEST (Email: onSubmit) - this.emailBody => \n',
-      this.emailBody
-    );
-    console.log('EMFTEST (Email: onSubmit) - emailContent => \n', emailContent);
+    this.emailDataService.sendEmail(emailContent).subscribe((response) => {
+      if (response.success && response.statusCode === 200) {
+        this.isSubmitted = true;
+      }
+    });
   }
 
   ngOnDestroy(): void {

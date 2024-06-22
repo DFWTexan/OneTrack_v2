@@ -43,19 +43,43 @@ export class EmailDataService {
       );
   }
 
-  fetchEmailComTemplateByID(communicationID: number, employmentID: number): Observable<string> {
+  fetchEmailComTemplateByID(
+    communicationID: number,
+    employmentID: number
+  ): Observable<string> {
     return this.http
       .get<{
         success: boolean;
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'GetEmailTemplate/' + communicationID + '/' + employmentID)
+      }>(
+        this.apiUrl + 'GetEmailTemplate/' + communicationID + '/' + employmentID
+      )
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
             this.htmlContent = response.objData;
             this.htmlContentChanged.next(this.htmlContent);
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  sendEmail(sendEmailData: any): Observable<any> {
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: boolean;
+        errMessage: string;
+      }>(this.apiUrl + 'Send', sendEmailData)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
             return response.objData;
           } else {
             throw new Error(response.errMessage || 'Unknown error');
