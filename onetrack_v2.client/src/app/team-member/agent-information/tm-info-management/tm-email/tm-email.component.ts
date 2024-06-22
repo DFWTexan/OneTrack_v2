@@ -1,4 +1,11 @@
-import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  Injectable,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -17,11 +24,18 @@ import { AgentDataService, EmailDataService } from '../../../../_services';
 })
 @Injectable()
 export class TmEmailComponent implements OnInit, OnDestroy {
+  @ViewChild('container') container!: ElementRef;
+  isSubmitted = false;
   agentInfo: AgentInfo = {} as AgentInfo;
   // mgrHierarchy: ManagerHierarchy[] = [];
+  emailTemplateID: number = 33;
+  emailTemplate: string = 'APP-{Message}';
   emailComTemplates: EmailComTemplate[] = [];
   selectedTemplate: number = 33;
+  htmlHeaderContent: SafeHtml = '' as SafeHtml;
+  htmlFooterContent: SafeHtml = '' as SafeHtml;
   htmlContent: SafeHtml = '' as SafeHtml;
+
   private subscriptions = new Subscription();
 
   ccEmail: string[] = [];
@@ -30,6 +44,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   chkRD: boolean = false;
   emailSubject: string = '';
   emailFile: string = '';
+  emailBody: string = '';
 
   constructor(
     private emailDataService: EmailDataService,
@@ -42,12 +57,19 @@ export class TmEmailComponent implements OnInit, OnDestroy {
       this.agentDataService.agentInfoChanged.subscribe(
         (agentInfo: AgentInfo) => {
           this.agentInfo = agentInfo;
+
           this.subscriptions.add(
             this.emailDataService
               .fetchEmailComTemplateByID(33, this.agentInfo.employmentID)
-              .subscribe((rawHtmlContent: string) => {
-                this.htmlContent =
-                  this.sanitizer.bypassSecurityTrustHtml(rawHtmlContent);
+              .subscribe((rawHtmlContent: any) => {
+                // this.htmlContent =
+                //   this.sanitizer.bypassSecurityTrustHtml(rawHtmlContent);
+                this.htmlHeaderContent = this.sanitizer.bypassSecurityTrustHtml(
+                  rawHtmlContent.header
+                );
+                this.htmlFooterContent = this.sanitizer.bypassSecurityTrustHtml(
+                  rawHtmlContent.footer
+                );
               })
           );
         }
@@ -66,11 +88,16 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   onTemplateChange(event: Event): void {
     const target = event.target as HTMLInputElement;
     const value = target.value;
+
+    this.emailTemplateID = +value;
+
     this.subscriptions.add(
       this.emailDataService
         .fetchEmailComTemplateByID(+value, this.agentInfo.employmentID)
-        .subscribe((template: string) => {
-          this.htmlContent = template;
+        .subscribe((rawHtmlContent: string) => {
+          // this.htmlContent = template;
+          this.htmlContent =
+                  this.sanitizer.bypassSecurityTrustHtml(rawHtmlContent);
         })
     );
   }
@@ -90,7 +117,19 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm) {
-    console.log(form);
+    let emailContent: any = {};
+    emailContent.to = this.agentInfo.email;
+    emailContent.ccEmail = this.ccEmail;
+    emailContent.subject = this.emailSubject;
+    emailContent.emailTemplateID = this.selectedTemplate;
+    emailContent.emailBody = this.emailBody;
+
+    // console.log('EMFTEST (Email: onSubmit) - form => \n', form);
+    console.log(
+      'EMFTEST (Email: onSubmit) - this.emailBody => \n',
+      this.emailBody
+    );
+    console.log('EMFTEST (Email: onSubmit) - emailContent => \n', emailContent);
   }
 
   ngOnDestroy(): void {

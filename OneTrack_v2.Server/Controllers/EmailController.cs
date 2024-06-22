@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OneTrack_v2.Services;
+using OneTrak_v2.DataModel;
 
 namespace OneTrak_v2.Controllers
 {
@@ -29,6 +30,14 @@ namespace OneTrak_v2.Controllers
         public async Task<ActionResult> GetEmailTemplate(int communicationID, int employmentID)
         {
             var result = await Task.Run(() => _emailService.GetEmailTemplate(communicationID, employmentID));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Send([FromBody] IputSendEmail input)
+        {
+            var result = await Task.Run(() => _emailService.Send(input));
 
             return StatusCode(result.StatusCode, result);
         }
