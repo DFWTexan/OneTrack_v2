@@ -46,6 +46,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                 string strLicenseTechTitle = managerInfo.LicTechTitle ?? "";
                 string strLicenseTechPhone = managerInfo.LicTechPhone ?? "";
 
+                emailHdrHTML = emailHdrHTML + @"<div><div>";
                 emailHdrHTML = emailHdrHTML + @"<table style = ""width: 800px;""> ";
                 emailHdrHTML = emailHdrHTML + @"<tr> ";
                 emailHdrHTML = emailHdrHTML + @"<td style = ""text-align: left; background-color: #F69200;""> <span style = ""font-family: Arial; color: #FFFFFF; font-size: 16pt; font-weight: bold; font-style: normal; text-decoration: none;"">OneMain Insurance Licensing Department</span></td> ";
@@ -99,6 +100,8 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                 emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
                 emailHdrHTML = emailHdrHTML + @"</tr> ";
                 emailHdrHTML = emailHdrHTML + @"</table> ";
+                emailHdrHTML = emailHdrHTML + @"</div>";
+
 
                 //strHTML = strHTML + @"<tr> ";
                 //strHTML = strHTML + @"<td colspan = ""3"">";
@@ -108,6 +111,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                 //strHTML = strHTML + @"<td> &nbsp;</td> ";
                 //strHTML = strHTML + @"</tr> ";
 
+                emailHdrHTML = emailHdrHTML + @"<div>";
                 emailFtrHTML = emailFtrHTML + @"<table style = ""width: 800px;""> ";
                 emailFtrHTML = emailFtrHTML + @"<tr> ";
                 emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
@@ -149,6 +153,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                 emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
                 emailFtrHTML = emailFtrHTML + @"</tr> ";
                 emailFtrHTML = emailFtrHTML + @"</table> ";
+                emailHdrHTML = emailHdrHTML + @"</div></div>";
                 //strHTML = strHTML + @"</html> ";
             }
             //catch (SqlException mySQLEx)

@@ -4,6 +4,7 @@ import {
   Injectable,
   OnDestroy,
   OnInit,
+  SecurityContext,
   ViewChild,
 } from '@angular/core';
 import { NgForm } from '@angular/forms';
@@ -15,7 +16,12 @@ import {
   EmailComTemplate,
   ManagerHierarchy,
 } from '../../../../_Models';
-import { AgentDataService, EmailDataService, UserAcctInfoDataService } from '../../../../_services';
+import {
+  AgentDataService,
+  EmailDataService,
+  ErrorMessageService,
+  UserAcctInfoDataService,
+} from '../../../../_services';
 
 @Component({
   selector: 'app-tm-email',
@@ -47,6 +53,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   emailBody: string = '';
 
   constructor(
+    private errorMessageService: ErrorMessageService,
     private emailDataService: EmailDataService,
     public agentDataService: AgentDataService,
     public userInfoDataService: UserAcctInfoDataService,
@@ -98,7 +105,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
         .subscribe((rawHtmlContent: string) => {
           // this.htmlContent = template;
           this.htmlContent =
-                  this.sanitizer.bypassSecurityTrustHtml(rawHtmlContent);
+            this.sanitizer.bypassSecurityTrustHtml(rawHtmlContent);
         })
     );
   }
@@ -120,19 +127,43 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   onSubmit(form: NgForm) {
     let emailContent: any = {};
 
-    emailContent.emailTo = this.agentInfo.email;
-    emailContent.ccEmail = this.ccEmail;
-    emailContent.subject = this.emailSubject;
-    emailContent.emailTemplateID = this.selectedTemplate;
-    emailContent.emailBody = this.emailBody;
-    emailContent.userSOEID =
-      this.userInfoDataService.userAcctInfo.soeid;
+    emailContent.EmailTemplateID = this.selectedTemplate;
+    emailContent.EmailTo = this.agentInfo.email;
+    emailContent.CcEmail = this.ccEmail;
+    emailContent.Subject = this.emailSubject;
+    emailContent.EmailContent =
+      this.selectedTemplate == 33
+        ? this.buildHTMLContent().toString()
+        : this.htmlContent.toString();
+    emailContent.UserSOEID = this.userInfoDataService.userAcctInfo.soeid;
 
-    this.emailDataService.sendEmail(emailContent).subscribe((response) => {
-      if (response.success && response.statusCode === 200) {
-        this.isSubmitted = true;
-      }
-    });
+    this.subscriptions.add(
+      this.emailDataService.sendEmail(emailContent).subscribe({
+        next: (response) => {
+          this.isSubmitted = false;
+        },
+        error: (error) => {
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+          }
+        },
+      })
+    );
+  }
+
+  private buildHTMLContent(): string {
+    let headerContent =
+      this.sanitizer.sanitize(SecurityContext.HTML, this.htmlHeaderContent) ||
+      '';
+    let footerContent =
+      this.sanitizer.sanitize(SecurityContext.HTML, this.htmlFooterContent) ||
+      '';
+
+    let htmlContent = headerContent;
+    htmlContent += '<div>' + this.emailBody + '</div>';
+    htmlContent += footerContent;
+
+    return htmlContent;
   }
 
   ngOnDestroy(): void {
