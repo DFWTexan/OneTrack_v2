@@ -127,12 +127,7 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
       jobTitleItem.employmentJobTitleID = 0;
     }
 
-    console.log(
-      'EMFTEST (app-edit-jobtitle-hist: onSubmit) - jobTitleItem => \n',
-      jobTitleItem
-    );
-
-    this.subscriptions.add(
+       this.subscriptions.add(
       this.agentDataService
         .upsertEmploymentJobTitleHistItem(jobTitleItem)
         .subscribe({

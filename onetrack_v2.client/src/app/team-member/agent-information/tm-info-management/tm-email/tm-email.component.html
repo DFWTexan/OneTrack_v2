@@ -1,226 +1,245 @@
-<div class="container app-component-container" style="width: 90%">
-  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-    <div id="email" ngModelGroup="emailForm" #emailForm="ngModelGroup">
-      <div
-        class="row p-3 mb-1"
-        style="
-          background-color: black;
-          color: white;
-          opacity: 0.8;
-          border-radius: 1rem;
-          padding: 1rem;
-          border-style: solid;
-          border-color: gainsboro;
-          border-width: 1px;
-          box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-        "
-        id="email-content"
-        ngModelGroup="emailContent"
-        #emailContent="ngModelGroup"
-      >
-        <div class="col">
-          <label for="emailTemaplate">Email Template:</label>
-          <select
-            class="form-select form-select-lg select-size-large"
-            type="text"
-            id="emailTemaplate"
-            name="emailTemaplate"
-            [(ngModel)]="selectedTemplate"
-            [ngModelOptions]="{ standalone: true }"
-            (change)="onTemplateChange($event)"
+<form
+  [formGroup]="emailForm"
+  (ngSubmit)="onSubmit()"
+  class="container app-component-container"
+  style="width: 90%"
+>
+  <div id="email">
+    <div
+      class="row p-3 mb-1"
+      style="
+        background-color: black;
+        color: white;
+        opacity: 0.8;
+        border-radius: 1rem;
+        padding: 1rem;
+        border-style: solid;
+        border-color: gainsboro;
+        border-width: 1px;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+      "
+    >
+      <div class="col">
+        <label for="communicationID">Email Template:</label>
+        <select
+          class="form-select form-select-lg select-size-large"
+          type="text"
+          id="communicationID"
+          formControlName="communicationID"
+          (change)="onTemplateChange($event)"
+        >
+          <option
+            *ngFor="let comTemplate of emailComTemplates"
+            [value]="comTemplate.communicationID"
           >
-            <option
-              *ngFor="let comTemplate of emailComTemplates"
-              [value]="comTemplate.communicationID"
-            >
-              {{ comTemplate.docTypeDocSubType }}
-            </option>
-          </select>
-        </div>
-        <div class="col">
-          <label for="emailSubject">Comunication ID:</label>
-          <div style="font-size: larger; font-weight: 500">
-            {{ selectedTemplate }}
-          </div>
-        </div>
-        <div class="col d-flex align-items-end justify-content-end me-1">
-          <button class="btn btn-secondary" type="submit">
-            <span class="material-symbols-outlined"> send </span>
-            <div class="text-align-center">send</div>
-          </button>
+            {{ comTemplate.docTypeDocSubType }}
+          </option>
+        </select>
+      </div>
+      <div class="col">
+        <label for="emailSubject">Comunication ID:</label>
+        <div style="font-size: larger; font-weight: 500">
+          <!-- {{ selectedTemplate }} -->
+          {{ emailForm.controls['communicationID'].value }}
         </div>
       </div>
-      <div
-        class="row bg-body p-3 mb-5"
-        style="
-          border-radius: 1rem;
-          padding: 1rem;
-          border-style: solid;
-          border-color: gainsboro;
-          border-width: 1px;
-          box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
-        "
-      >
-        <div class="col">
-          <table style="width: 100%">
-            <tbody>
-              <tr>
-                <td
-                  class="pe-3 text-align-end"
-                  style="font-size: larger; font-weight: 600"
-                >
-                  To:
-                </td>
-                <td>{{ agentInfo.email }}</td>
-              </tr>
-              <tr>
-                <td
-                  class="pe-3 text-align-end"
-                  style="font-size: larger; font-weight: 600"
-                >
-                  Cc:
-                </td>
-                <td>
-                  <div>{{ ccEmail.join(", ") }}</div>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+      <div class="col d-flex align-items-end justify-content-end me-1">
+        <button
+          class="btn btn-secondary"
+          type="submit"
+          [disabled]="emailForm.pristine || emailForm.invalid"
+        >
+          <span class="material-symbols-outlined"> send </span>
+          <div class="text-align-center">send</div>
+        </button>
+      </div>
+    </div>
+    <div
+      class="row bg-body p-3 mb-5"
+      style="
+        border-radius: 1rem;
+        padding: 1rem;
+        border-style: solid;
+        border-color: gainsboro;
+        border-width: 1px;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+      "
+    >
+      <div class="col">
+        <table style="width: 100%">
+          <tbody>
+            <tr>
+              <td
+                class="pe-3 text-align-end"
+                style="font-size: larger; font-weight: 600"
+              >
+                To:
+              </td>
+              <td>{{ agentInfo.email }}</td>
+            </tr>
+            <tr>
+              <td
+                class="pe-3 text-align-end"
+                style="font-size: larger; font-weight: 600"
+              >
+                Cc:
+              </td>
+              <td>
+                <div>{{ ccEmail.join(", ") }}</div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col align-items-start">
+        <div class="checkbox">
+          <label
+            ><input
+              type="checkbox"
+              name="chkMgr"
+              [value]="
+                agentInfo &&
+                agentInfo.mgrHiearchy &&
+                agentInfo.mgrHiearchy.length > 0
+                  ? agentInfo.mgrHiearchy[0].mgrEmail
+                  : 'n/a'
+              "
+              (change)="onCcChange($event)"
+            />Cc: Mgr</label
+          >
         </div>
-        <div class="col align-items-start">
-          <div class="checkbox">
-            <label
-              ><input
-                type="checkbox"
-                name="chkMgr"
-                [value]="
-                  agentInfo &&
-                  agentInfo.mgrHiearchy &&
-                  agentInfo.mgrHiearchy.length > 0
-                    ? agentInfo.mgrHiearchy[0].mgrEmail
-                    : 'n/a'
-                "
-                [(ngModel)]="chkMgr"
-                [ngModelOptions]="{ standalone: true }"
-                (change)="onCcChange($event)"
-              />Cc: Mgr</label
-            >
-          </div>
-          <div class="checkbox">
-            <label
-              ><input
-                type="checkbox"
-                name="chkDM"
-                [value]="
-                  agentInfo &&
-                  agentInfo.mgrHiearchy &&
-                  agentInfo.mgrHiearchy.length > 0
-                    ? agentInfo.mgrHiearchy[1].mgrEmail
-                    : 'n/a'
-                "
-                [(ngModel)]="chkDM"
-                [ngModelOptions]="{ standalone: true }"
-                (change)="onCcChange($event)"
-              />Cc: DM</label
-            >
-          </div>
-          <div class="checkbox">
-            <label
-              ><input
-                type="checkbox"
-                name="chkRD"
-                [value]="
-                  agentInfo &&
-                  agentInfo.mgrHiearchy &&
-                  agentInfo.mgrHiearchy.length > 0
-                    ? agentInfo.mgrHiearchy[2].mgrEmail
-                    : 'n/a'
-                "
-                [(ngModel)]="chkRD"
-                [ngModelOptions]="{ standalone: true }"
-                (change)="onCcChange($event)"
-              />Cc: RD</label
-            >
-          </div>
+        <div class="checkbox">
+          <label
+            ><input
+              type="checkbox"
+              name="chkDM"
+              [value]="
+                agentInfo &&
+                agentInfo.mgrHiearchy &&
+                agentInfo.mgrHiearchy.length > 0
+                  ? agentInfo.mgrHiearchy[1].mgrEmail
+                  : 'n/a'
+              "
+              (change)="onCcChange($event)"
+            />Cc: DM</label
+          >
         </div>
-        <div class="col">
-          <div class="mb-3">
-            <span style="font-size: larger; font-weight: 400">Mgr</span> -
-            <span style="color: grey">{{
-              agentInfo &&
-              agentInfo.mgrHiearchy &&
-              agentInfo.mgrHiearchy.length > 0
-                ? agentInfo.mgrHiearchy[0].mgrName
-                : "n/a"
-            }}</span>
-          </div>
-          <div class="mb-3">
-            <span style="font-size: larger; font-weight: 400">DM</span> -
-            <span style="color: grey">{{
-              agentInfo &&
-              agentInfo.mgrHiearchy &&
-              agentInfo.mgrHiearchy.length > 0
-                ? agentInfo.mgrHiearchy[1].mgrName
-                : "n/a"
-            }}</span>
-          </div>
-          <div>
-            <span style="font-size: larger; font-weight: 400">RD</span> -
-            <span style="color: grey">{{
-              agentInfo &&
-              agentInfo.mgrHiearchy &&
-              agentInfo.mgrHiearchy.length > 0
-                ? agentInfo.mgrHiearchy[2].mgrName
-                : "n/a"
-            }}</span>
-          </div>
+        <div class="checkbox">
+          <label
+            ><input
+              type="checkbox"
+              name="chkRD"
+              [value]="
+                agentInfo &&
+                agentInfo.mgrHiearchy &&
+                agentInfo.mgrHiearchy.length > 0
+                  ? agentInfo.mgrHiearchy[2].mgrEmail
+                  : 'n/a'
+              "
+              (change)="onCcChange($event)"
+            />Cc: RD</label
+          >
         </div>
+      </div>
+      <div class="col">
+        <div class="mb-3">
+          <span style="font-size: larger; font-weight: 400">Mgr</span> -
+          <span style="color: grey">{{
+            agentInfo &&
+            agentInfo.mgrHiearchy &&
+            agentInfo.mgrHiearchy.length > 0
+              ? agentInfo.mgrHiearchy[0].mgrName
+              : "n/a"
+          }}</span>
+        </div>
+        <div class="mb-3">
+          <span style="font-size: larger; font-weight: 400">DM</span> -
+          <span style="color: grey">{{
+            agentInfo &&
+            agentInfo.mgrHiearchy &&
+            agentInfo.mgrHiearchy.length > 0
+              ? agentInfo.mgrHiearchy[1].mgrName
+              : "n/a"
+          }}</span>
+        </div>
+        <div>
+          <span style="font-size: larger; font-weight: 400">RD</span> -
+          <span style="color: grey">{{
+            agentInfo &&
+            agentInfo.mgrHiearchy &&
+            agentInfo.mgrHiearchy.length > 0
+              ? agentInfo.mgrHiearchy[2].mgrName
+              : "n/a"
+          }}</span>
+        </div>
+      </div>
 
-        <div class="row bg-body p-3">
-          <div class="col">
-            <label for="emailSubject">Subject:</label>
+      <div class="row bg-body p-3">
+        <div class="col">
+          <label for="emailSubject">Subject:</label>
+          <input
+            class="form-control input-size-large"
+            type="text"
+            id="emailSubject"
+            formControlName="emailSubject"
+          />
+          <div
+            *ngIf="
+              (emailForm.controls['emailSubject'].touched || isSubmitted) &&
+              emailForm.controls['emailSubject'].errors &&
+              emailForm.controls['emailSubject'].errors['invalid']
+            "
+            class="text-danger"
+          >
+            Please enter Subject
+          </div>
+        </div>
+        <div class="col">
+          <div class="mb-3">
+            <label for="formFile" class="form-label">Add Attachment: </label>
             <input
-              class="form-control input-size-large"
-              type="text"
-              ngModel
-              id="emailSubject"
-              name="emailSubject"
-              [(ngModel)]="emailSubject"
-              [ngModelOptions]="{ standalone: true }"
+              class="form-control"
+              type="file"
+              id="formFile"
+              name="emailFile"
             />
           </div>
-          <div class="col">
-            <div class="mb-3">
-              <label for="formFile" class="form-label">Add Attachment: </label>
-              <input
-                class="form-control"
-                type="file"
-                id="formFile"
-                name="emailFile"
-              />
-            </div>
-          </div>
         </div>
-        <!-- <mat-divider></mat-divider> -->
-        <div class="row bg-body mt-1 p-2">
-          <div class="col" *ngIf="emailTemplateID == 33">
-            <div [innerHTML]="htmlHeaderContent"></div>
-            <textarea
-              class="form-control"
-              rows="10"
-              ngModel
-              id="emailBody"
-              name="emailBody"
-              [(ngModel)]="emailBody"
-              [ngModelOptions]="{ standalone: true }"
-            ></textarea>
-            <div [innerHTML]="htmlFooterContent"></div>
+      </div>
+      <!-- <mat-divider></mat-divider> -->
+      <div class="row bg-body mt-1 p-2">
+        <div class="col" *ngIf="emailTemplateID == 33">
+          <div [innerHTML]="htmlHeaderContent"></div>
+          <div
+            *ngIf="
+              (emailForm.controls['emailBody'].touched || isSubmitted) &&
+              emailForm.controls['emailBody'].errors &&
+              emailForm.controls['emailBody'].errors['invalid']
+            "
+            class="text-danger"
+          >
+            Please enter Message
           </div>
-          <div class="col" *ngIf="emailTemplateID != 33">
-            <div [innerHTML]="htmlContent"></div>
-          </div>
+          <textarea
+            class="form-control"
+            rows="10"
+            style="
+              font-family: Arial;
+              color: #000000;
+              font-size: 12pt;
+              font-weight: 400;
+              font-style: normal;
+              text-decoration: none;
+            "
+            id="emailBody"
+            formControlName="emailBody"
+          ></textarea>
+          <div [innerHTML]="htmlFooterContent"></div>
+        </div>
+        <div class="col" *ngIf="emailTemplateID != 33">
+          <div [innerHTML]="htmlContent"></div>
         </div>
       </div>
     </div>
-  </form>
-</div>
+  </div>
+</form>

@@ -1461,7 +1461,7 @@ namespace OneTrack_v2.Services
                         cmd.Parameters.Add(new SqlParameter("@LicenseLevel", vInput.LicenseLevel));
                         cmd.Parameters.Add(new SqlParameter("@LicenseIncentive", vInput.LicenseIncentive));
                         cmd.Parameters.Add(new SqlParameter("@SecondChance", vInput.SecondChance)); // replace with your value
-                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", "EMFTEST-TBD..."));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
 
                         conn.Open();
                         cmd.ExecuteNonQuery();

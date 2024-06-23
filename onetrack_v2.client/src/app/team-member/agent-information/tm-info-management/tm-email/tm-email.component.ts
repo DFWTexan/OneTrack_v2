@@ -7,7 +7,7 @@ import {
   SecurityContext,
   ViewChild,
 } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
@@ -30,8 +30,9 @@ import {
 })
 @Injectable()
 export class TmEmailComponent implements OnInit, OnDestroy {
-  @ViewChild('container') container!: ElementRef;
+  // @ViewChild('container') container!: ElementRef;
   isSubmitted = false;
+  emailForm!: FormGroup;
   agentInfo: AgentInfo = {} as AgentInfo;
   // mgrHierarchy: ManagerHierarchy[] = [];
   emailTemplateID: number = 33;
@@ -57,10 +58,18 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     private emailDataService: EmailDataService,
     public agentDataService: AgentDataService,
     public userInfoDataService: UserAcctInfoDataService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
+    this.emailForm = this.fb.group({
+      communicationID: [33],
+      emailSubject: [''],
+      emailBody: [''],
+      emailFile: [''],
+    });
+
     this.subscriptions.add(
       this.agentDataService.agentInfoChanged.subscribe(
         (agentInfo: AgentInfo) => {
@@ -97,7 +106,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     const target = event.target as HTMLInputElement;
     const value = target.value;
 
-    this.emailTemplateID = +value;
+    this.emailTemplateID = +value; 
 
     this.subscriptions.add(
       this.emailDataService
@@ -108,6 +117,16 @@ export class TmEmailComponent implements OnInit, OnDestroy {
             this.sanitizer.bypassSecurityTrustHtml(rawHtmlContent);
         })
     );
+
+    const emailSubjectControl = this.emailForm.get('emailSubject');
+    if (emailSubjectControl) {
+      // Check if the control is not null
+      if (+value !== 33) {
+        emailSubjectControl.disable();
+      } else {
+        emailSubjectControl.enable();
+      }
+    }
   }
 
   onCcChange(event: Event): void {
@@ -124,21 +143,44 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit(form: NgForm) {
-    let emailContent: any = {};
+  onSubmit() {
+    let emailSendItem: any = this.emailForm.value;
 
-    emailContent.EmailTemplateID = this.selectedTemplate;
-    emailContent.EmailTo = this.agentInfo.email;
-    emailContent.CcEmail = this.ccEmail;
-    emailContent.Subject = this.emailSubject;
-    emailContent.EmailContent =
+    emailSendItem.employeeID = this.agentInfo.employeeID;
+    emailSendItem.EmploymentID = this.agentInfo.employmentID;
+    emailSendItem.CommunicationID = this.selectedTemplate;
+    emailSendItem.EmailTo = this.agentInfo.email;
+    emailSendItem.CcEmail = this.ccEmail;
+    emailSendItem.EmailContent =
       this.selectedTemplate == 33
-        ? this.buildHTMLContent().toString()
+        ? this.buildHTMLContent(this.emailForm.value.emailBody).toString()
         : this.htmlContent.toString();
-    emailContent.UserSOEID = this.userInfoDataService.userAcctInfo.soeid;
+    emailSendItem.UserSOEID = this.userInfoDataService.userAcctInfo.soeid;
+
+    // CommunicationID:33 -> Validate email subject and body
+    if (emailSendItem.CommunicationID == 33) {
+      if (
+        emailSendItem.emailSubject === '' ||
+        emailSendItem.emailSubject === null
+      ) {
+        this.emailForm.controls['emailSubject'].setErrors({
+          invalid: true,
+        });
+      }
+
+      if (emailSendItem.emailBody === '' || emailSendItem.emailBody === null) {
+        this.emailForm.controls['emailBody'].setErrors({
+          invalid: true,
+        });
+      }
+    }
+
+    if (this.emailForm.invalid) {
+      return;
+    }
 
     this.subscriptions.add(
-      this.emailDataService.sendEmail(emailContent).subscribe({
+      this.emailDataService.sendEmail(emailSendItem).subscribe({
         next: (response) => {
           this.isSubmitted = false;
         },
@@ -151,7 +193,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     );
   }
 
-  private buildHTMLContent(): string {
+  private buildHTMLContent(vBody: string): string {
     let headerContent =
       this.sanitizer.sanitize(SecurityContext.HTML, this.htmlHeaderContent) ||
       '';
@@ -160,7 +202,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
       '';
 
     let htmlContent = headerContent;
-    htmlContent += '<div>' + this.emailBody + '</div>';
+    htmlContent += '<div>' + vBody + '</div>';
     htmlContent += footerContent;
 
     return htmlContent;
