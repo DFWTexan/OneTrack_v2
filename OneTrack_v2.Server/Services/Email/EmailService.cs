@@ -88,6 +88,10 @@ namespace OneTrack_v2.Services
 
         public ReturnResult GetEmailTemplate(int vCommunicationID, int vEmploymentID)
         {
+            var comms = _db.Communications
+                            .Where(c => c.CommunicationId == vCommunicationID)
+                            .FirstOrDefault();
+
             var result = new ReturnResult();
             try
             {
@@ -95,7 +99,7 @@ namespace OneTrack_v2.Services
                 {
                     case 33: // "APP-{MESSAGE}"
                         var appHTML = _emailTemplateService.GetMessageHTML(vEmploymentID);
-                        result.ObjData = new { Header = appHTML.Item1.ToString(), Footer = appHTML.Item2.ToString() };
+                        result.ObjData = new { Header = appHTML.Item1.ToString(), Footer = appHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName };
                         break;
                     case 35: // "CE-{MESSAGE}"
                         var ceHTML = _emailTemplateService.GetMessageHTML(vEmploymentID);
@@ -110,13 +114,13 @@ namespace OneTrack_v2.Services
                         result.ObjData = proHTML.Item1.ToString();
                         break;
                     default:
-                        result.ObjData = @"<div class=""col d-flex justify-content-center mt-5"">
+                        result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
                                                 <span class=""material-symbols-outlined"">unknown_document</span>
-                                                <div>
+                                                <div class=""ms-3"">
                                                     <h3>Unknown Document Type</h3>
                                                     <p>Document type not found.</p>
                                                 </div>
-                                           </div>"; 
+                                           </div>", DocSubType = (string)null, Subject = (string)null  };
                         break;
                 }
 

@@ -34,6 +34,8 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   isSubmitted = false;
   emailForm!: FormGroup;
   agentInfo: AgentInfo = {} as AgentInfo;
+  docSubType: string = '{MESSAGE}';
+  subject: string = '';
   // mgrHierarchy: ManagerHierarchy[] = [];
   emailTemplateID: number = 33;
   emailTemplate: string = 'APP-{Message}';
@@ -106,25 +108,42 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     const target = event.target as HTMLInputElement;
     const value = target.value;
 
-    this.emailTemplateID = +value; 
+    this.emailTemplateID = +value;
 
     this.subscriptions.add(
       this.emailDataService
         .fetchEmailComTemplateByID(+value, this.agentInfo.employmentID)
-        .subscribe((rawHtmlContent: string) => {
-          // this.htmlContent = template;
-          this.htmlContent =
-            this.sanitizer.bypassSecurityTrustHtml(rawHtmlContent);
+        .subscribe((rawHtmlContent: any) => {
+          this.docSubType = rawHtmlContent.docSubType;
+          this.subject = rawHtmlContent.subject;
+
+          if (this.docSubType === '{MESSAGE}') {
+            this.htmlHeaderContent = this.sanitizer.bypassSecurityTrustHtml(
+              rawHtmlContent.header
+            );
+            this.htmlFooterContent = this.sanitizer.bypassSecurityTrustHtml(
+              rawHtmlContent.footer
+            );
+          } else {
+            this.htmlContent =
+              this.sanitizer.bypassSecurityTrustHtml(rawHtmlContent.htmlContent);
+              if(rawHtmlContent.docSubType === null) {
+                this.emailForm.setErrors({ invalidForm: true });
+              }
+          }
         })
     );
 
     const emailSubjectControl = this.emailForm.get('emailSubject');
     if (emailSubjectControl) {
       // Check if the control is not null
-      if (+value !== 33) {
+      if (this.docSubType === '{MESSAGE}') {
         emailSubjectControl.disable();
       } else {
         emailSubjectControl.enable();
+        this.emailForm.patchValue({
+          emailSubject: this.subject,
+        });
       }
     }
   }
