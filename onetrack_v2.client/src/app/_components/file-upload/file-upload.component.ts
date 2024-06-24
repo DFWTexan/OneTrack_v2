@@ -22,9 +22,9 @@ export class FileUploadComponent {
       if (file) {
         this.fileName = file.name;
         const formData = new FormData();
-        formData.append('thumbnail', file);
-        formData.append('fileName', this.fileName);
-        formData.append('fileType', file.type);
+        formData.append('input', file);
+        // formData.append('fileName', this.fileName);
+        // formData.append('fileType', file.type);
         const upload$ = this.http.post(this.url + 'FileUpload', formData);
         upload$.subscribe();
       }
