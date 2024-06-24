@@ -17,4 +17,12 @@
         public string? Value { get; set; } = null;
         public string? Label { get; set; } = null;
     }
+
+    public class IputFileUpload
+    {
+        public string? FileName { get; set; } = null;
+        public string? FileUrl { get; set; } = null;
+        public FormFile? File { get; set; } = null;
+    }
+    
 }
