@@ -69,7 +69,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
       communicationID: [33],
       emailSubject: [''],
       emailBody: [''],
-      // emailAttachment: [''],
+      emailAttachment: [''],
     });
 
     this.subscriptions.add(
@@ -162,6 +162,21 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     }
   }
 
+  onFileSelected(event: any) {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length) {
+      const file: File = target.files[0];
+
+      if (file) {
+        this.emailFile = file.name;
+        const formData = new FormData();
+        formData.append('thumbnail', file);
+        // const upload$ = this.emailDataService.uploadFile(formData);
+        // upload$.subscribe();
+      }
+    }
+  }
+
   onSubmit() {
     let emailSendItem: any = this.emailForm.value;
 
@@ -201,14 +216,24 @@ export class TmEmailComponent implements OnInit, OnDestroy {
       this.emailDataService.sendEmail(emailSendItem).subscribe({
         next: (response) => {
           this.isSubmitted = false;
+          this.resetForm();
+          alert('Email sent successfully');
         },
         error: (error) => {
           if (error.error && error.error.errMessage) {
             this.errorMessageService.setErrorMessage(error.error.errMessage);
+            this.resetForm();
           }
         },
       })
     );
+  }
+
+  resetForm() {
+    this.emailForm.reset();
+    this.emailForm.patchValue({
+      communicationID: 33,
+    });
   }
 
   private buildHTMLContent(vBody: string): string {

@@ -27,6 +27,7 @@ namespace OneTrack_v2.Services
         public ReturnResult GetPreExamStatuses();
         public ReturnResult GetRenewalMethods();
         public ReturnResult GetRollOutGroups();
+        public ReturnResult FileUpload(IFormFile vInput);
 
     }
 }

@@ -9,6 +9,7 @@
         public List<string>? CcEmail { get; set; }
         public string? EmailSubject { get; set; }
         public string? EmailContent { get; set; }
+        public string? EmailAttachment { get; set; }
         public string? UserSOEID { get; set; }
     }
 }

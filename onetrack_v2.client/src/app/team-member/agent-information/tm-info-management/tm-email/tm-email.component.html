@@ -205,12 +205,16 @@
         <div class="col">
           <div class="mb-3">
             <label for="emailAttachment" class="form-label">Add Attachment: </label>
-            <input
+            <!-- <input
               class="file-upload"
               type="file"
               id="emailAttachment"
               name="emailAttachment"
-            />
+            /> -->
+            <app-file-upload
+              (fileSelected)="onFileSelected($event)"
+              #fileUpload
+            ></app-file-upload>
           </div>
         </div>
       </div>

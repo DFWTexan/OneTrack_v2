@@ -27,6 +27,7 @@ import { ConstantsDataService } from './_services/';
 
 // Other
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+// import { FileUploadComponent } from './_components/file-upload/file-upload.component';
 
 @NgModule({
   declarations: [

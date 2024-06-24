@@ -706,5 +706,27 @@ namespace OneTrack_v2.Services
 
             return result;
         }
+        public ReturnResult FileUpload(IFormFile vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                // TBD: Placeholder method to handle file uploads
+
+                result.Success = true;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "MISC-FileUpload", new { }, null);
+            }
+
+            return result;
+        }
     }
 }

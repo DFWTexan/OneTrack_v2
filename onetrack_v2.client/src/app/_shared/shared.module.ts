@@ -30,6 +30,7 @@ import { SsnFormatPipe } from '../_shared/Pipe-SSN-Format';
 import { FirstThreePipe } from '../_shared/Pipe-FirstThree';
 import { PaginationComponent } from '../_components/pagination/pagination.component';
 import { EditLicenseComponent } from '../admin/license-edit/edit-license/edit-license.component';
+import { FileUploadComponent } from '../_components/file-upload/file-upload.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { EditLicenseComponent } from '../admin/license-edit/edit-license/edit-li
     FirstThreePipe,
     PaginationComponent,
     EditLicenseComponent,
+    FileUploadComponent,
   ],
   imports: [
     CommonModule,
@@ -74,6 +76,7 @@ import { EditLicenseComponent } from '../admin/license-edit/edit-license/edit-li
     FirstThreePipe,
     PaginationComponent,
     EditLicenseComponent,
+    FileUploadComponent,
     MatButtonModule,
     MatSidenavModule,
     MatMenuModule,
