@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment';
 })
 export class FileUploadComponent {
   @Input() filePathUri: string = '';
+  @Input() displayMode: string = 'ATTACHMENT';
   private url: string = environment.apiUrl + 'Misc/';
   fileName = '';
 

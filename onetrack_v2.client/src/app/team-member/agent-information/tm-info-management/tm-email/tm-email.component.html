@@ -213,6 +213,7 @@
             /> -->
             <app-file-upload
               [filePathUri]="fileUri"
+              [displayMode]="FileDisplayMode"
               (fileSelected)="onFileSelected($event)"
               #fileUpload
             ></app-file-upload>
