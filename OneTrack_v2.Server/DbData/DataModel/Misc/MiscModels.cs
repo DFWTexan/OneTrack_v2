@@ -20,9 +20,8 @@
 
     public class IputFileUpload
     {
-        public string? FileName { get; set; } = null;
-        public string? FileUrl { get; set; } = null;
-        public FormFile? File { get; set; } = null;
+        public string? FilePathUri { get; set; } = null;
+        public IFormFile? File { get; set; } = null;
     }
     
 }

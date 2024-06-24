@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using OneTrack_v2.DataModel;
 using OneTrack_v2.Services;
 
 namespace OneTrack_v2.Controllers
@@ -201,7 +202,7 @@ namespace OneTrack_v2.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> FileUpload(IFormFile input)
+        public async Task<ActionResult> FileUpload([FromForm] IputFileUpload input)
         {
             if (input != null)
             {
@@ -212,7 +213,7 @@ namespace OneTrack_v2.Controllers
                     // For example, to read the file as a byte array:
                     using (var memoryStream = new MemoryStream())
                     {
-                        await input.CopyToAsync(memoryStream);
+                        await input.File.CopyToAsync(memoryStream);
                         byte[] fileBytes = memoryStream.ToArray();
                         // Handle the byte array as needed
                     }

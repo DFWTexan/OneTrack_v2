@@ -212,6 +212,7 @@
               name="emailAttachment"
             /> -->
             <app-file-upload
+              [filePathUri]="fileUri"
               (fileSelected)="onFileSelected($event)"
               #fileUpload
             ></app-file-upload>

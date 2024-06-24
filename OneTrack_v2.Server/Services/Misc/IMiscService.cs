@@ -1,4 +1,6 @@
 ﻿using DataModel.Response;
+using Microsoft.AspNetCore.Mvc;
+using OneTrack_v2.DataModel;
 
 namespace OneTrack_v2.Services
 {
@@ -27,7 +29,7 @@ namespace OneTrack_v2.Services
         public ReturnResult GetPreExamStatuses();
         public ReturnResult GetRenewalMethods();
         public ReturnResult GetRollOutGroups();
-        public ReturnResult FileUpload(IFormFile vInput);
+        public ReturnResult FileUpload([FromForm] IputFileUpload vInput);
 
     }
 }

@@ -1,4 +1,5 @@
 ﻿using DataModel.Response;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OneTrack_v2.DataModel;
 using OneTrack_v2.DbData;
@@ -706,7 +707,7 @@ namespace OneTrack_v2.Services
 
             return result;
         }
-        public ReturnResult FileUpload(IFormFile vInput)
+        public ReturnResult FileUpload([FromForm] IputFileUpload vInput)
         {
             var result = new ReturnResult();
             try

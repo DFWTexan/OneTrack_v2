@@ -44,6 +44,8 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   htmlHeaderContent: SafeHtml = '' as SafeHtml;
   htmlFooterContent: SafeHtml = '' as SafeHtml;
   htmlContent: SafeHtml = '' as SafeHtml;
+  file: File | null = null;
+  fileUri: string = '//EMFTEST'; 
 
   private subscriptions = new Subscription();
 

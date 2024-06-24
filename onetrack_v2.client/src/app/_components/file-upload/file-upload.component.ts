@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
@@ -9,6 +9,7 @@ import { environment } from '../../environments/environment';
   styleUrl: './file-upload.component.css',
 })
 export class FileUploadComponent {
+  @Input() filePathUri: string = '';
   private url: string = environment.apiUrl + 'Misc/';
   fileName = '';
 
@@ -22,9 +23,8 @@ export class FileUploadComponent {
       if (file) {
         this.fileName = file.name;
         const formData = new FormData();
-        formData.append('input', file);
-        // formData.append('fileName', this.fileName);
-        // formData.append('fileType', file.type);
+        formData.append('File', file);
+        formData.append('FilePathUri', this.filePathUri);
         const upload$ = this.http.post(this.url + 'FileUpload', formData);
         upload$.subscribe();
       }
