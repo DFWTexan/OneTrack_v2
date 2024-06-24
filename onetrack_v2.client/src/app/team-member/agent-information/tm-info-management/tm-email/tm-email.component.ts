@@ -26,17 +26,15 @@ import {
 @Component({
   selector: 'app-tm-email',
   templateUrl: './tm-email.component.html',
-  styleUrl: './tm-email.component.css',
+  styleUrls: ['./tm-email.component.css'],
 })
 @Injectable()
 export class TmEmailComponent implements OnInit, OnDestroy {
-  // @ViewChild('container') container!: ElementRef;
-  isSubmitted = false;
+  isSubmitted: boolean = false;
   emailForm!: FormGroup;
   agentInfo: AgentInfo = {} as AgentInfo;
   docSubType: string = '{MESSAGE}';
   subject: string = '';
-  // mgrHierarchy: ManagerHierarchy[] = [];
   emailTemplateID: number = 33;
   emailTemplate: string = 'APP-{Message}';
   emailComTemplates: EmailComTemplate[] = [];
@@ -52,7 +50,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   chkDM: boolean = false;
   chkRD: boolean = false;
   emailSubject: string = '';
-  emailFile: string = '';
+  emailFile: File | null = null; // Changed type to File to handle file inputs
   emailBody: string = '';
 
   constructor(
@@ -69,7 +67,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
       communicationID: [33],
       emailSubject: [''],
       emailBody: [''],
-      emailFile: [''],
+      emailFile: [null], // Initialize with null
     });
 
     this.subscriptions.add(
@@ -81,8 +79,6 @@ export class TmEmailComponent implements OnInit, OnDestroy {
             this.emailDataService
               .fetchEmailComTemplateByID(33, this.agentInfo.employmentID)
               .subscribe((rawHtmlContent: any) => {
-                // this.htmlContent =
-                //   this.sanitizer.bypassSecurityTrustHtml(rawHtmlContent);
                 this.htmlHeaderContent = this.sanitizer.bypassSecurityTrustHtml(
                   rawHtmlContent.header
                 );
@@ -125,18 +121,18 @@ export class TmEmailComponent implements OnInit, OnDestroy {
               rawHtmlContent.footer
             );
           } else {
-            this.htmlContent =
-              this.sanitizer.bypassSecurityTrustHtml(rawHtmlContent.htmlContent);
-              if(rawHtmlContent.docSubType === null) {
-                this.emailForm.setErrors({ invalidForm: true });
-              }
+            this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(
+              rawHtmlContent.htmlContent
+            );
+            if (rawHtmlContent.docSubType === null) {
+              this.emailForm.setErrors({ invalidForm: true });
+            }
           }
         })
     );
 
     const emailSubjectControl = this.emailForm.get('emailSubject');
     if (emailSubjectControl) {
-      // Check if the control is not null
       if (this.docSubType === '{MESSAGE}') {
         emailSubjectControl.disable();
       } else {
@@ -162,54 +158,111 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit() {
-    let emailSendItem: any = this.emailForm.value;
-
-    emailSendItem.employeeID = this.agentInfo.employeeID;
-    emailSendItem.EmploymentID = this.agentInfo.employmentID;
-    emailSendItem.CommunicationID = this.selectedTemplate;
-    emailSendItem.EmailTo = this.agentInfo.email;
-    emailSendItem.CcEmail = this.ccEmail;
-    emailSendItem.EmailContent =
-      this.selectedTemplate == 33
-        ? this.buildHTMLContent(this.emailForm.value.emailBody).toString()
-        : this.htmlContent.toString();
-    emailSendItem.UserSOEID = this.userInfoDataService.userAcctInfo.soeid;
-
-    // CommunicationID:33 -> Validate email subject and body
-    if (emailSendItem.CommunicationID == 33) {
-      if (
-        emailSendItem.emailSubject === '' ||
-        emailSendItem.emailSubject === null
-      ) {
-        this.emailForm.controls['emailSubject'].setErrors({
-          invalid: true,
-        });
-      }
-
-      if (emailSendItem.emailBody === '' || emailSendItem.emailBody === null) {
-        this.emailForm.controls['emailBody'].setErrors({
-          invalid: true,
-        });
-      }
+  onFileChange(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length) {
+      this.emailFile = target.files[0];
+      this.emailForm.patchValue({
+        emailFile: this.emailFile,
+      });
     }
+  }
 
+  // onSubmit() {
+  //   let emailSendItem: any = this.emailForm.value;
+
+  //   emailSendItem.employeeID = this.agentInfo.employeeID;
+  //   emailSendItem.EmploymentID = this.agentInfo.employmentID;
+  //   emailSendItem.CommunicationID = this.selectedTemplate;
+  //   emailSendItem.EmailTo = this.agentInfo.email;
+  //   emailSendItem.CcEmail = this.ccEmail;
+  //   emailSendItem.EmailContent =
+  //     this.docSubType === '{MESSAGE}'
+  //       ? this.buildHTMLContent(this.emailForm.value.emailBody).toString()
+  //       : this.htmlContent.toString();
+  //   emailSendItem.UserSOEID = this.userInfoDataService.userAcctInfo.soeid;
+
+  //   if (this.emailForm.invalid) {
+  //     return;
+  //   }
+
+  //   this.subscriptions.add(
+  //     this.emailDataService.sendEmail(emailSendItem).subscribe({
+  //       next: (response) => {
+  //         this.isSubmitted = false;
+  //         this.resetForm();
+  //         alert('Email sent successfully');
+  //       },
+  //       error: (error) => {
+  //         if (error.error && error.error.errMessage) {
+  //           this.errorMessageService.setErrorMessage(error.error.errMessage);
+  //           this.resetForm();
+  //         }
+  //       },
+  //     })
+  //   );
+  // }
+
+  onSubmit() {
     if (this.emailForm.invalid) {
       return;
     }
 
+    const formData = new FormData();
+    formData.append('employeeID', this.agentInfo.employeeID.toString());
+    formData.append('EmploymentID', this.agentInfo.employmentID.toString());
+    // Use form control value for CommunicationID instead of selectedTemplate
+    formData.append(
+      'CommunicationID',
+      this.emailForm.value.communicationID.toString()
+    );
+    formData.append('EmailTo', this.agentInfo.email);
+    // Use form control value for CcEmail if it exists or default to JSON stringified this.ccEmail
+    formData.append(
+      'CcEmail',
+      this.emailForm.value.ccEmail
+        ? JSON.stringify(this.emailForm.value.ccEmail)
+        : JSON.stringify(this.ccEmail)
+    );
+    // Use form control value for EmailContent
+    formData.append(
+      'EmailContent',
+      this.docSubType === '{MESSAGE}'
+        ? this.buildHTMLContent(this.emailForm.value.emailBody).toString()
+        : this.htmlContent.toString()
+    );
+    formData.append('UserSOEID', this.userInfoDataService.userAcctInfo.soeid);
+
+    // For the file input element
+    const fileInput: HTMLInputElement | null =
+      document.querySelector('#formFile');
+    if (fileInput && fileInput.files && fileInput.files.length > 0) {
+      formData.append('Attachment', fileInput.files[0]);
+    }
+
     this.subscriptions.add(
-      this.emailDataService.sendEmail(emailSendItem).subscribe({
+      this.emailDataService.sendEmail(formData).subscribe({
         next: (response) => {
           this.isSubmitted = false;
+          this.resetForm();
+          alert('Email sent successfully');
         },
         error: (error) => {
           if (error.error && error.error.errMessage) {
             this.errorMessageService.setErrorMessage(error.error.errMessage);
+            this.resetForm();
           }
         },
       })
     );
+  }
+
+  resetForm() {
+    this.emailForm.reset();
+    this.emailForm.patchValue({
+      communicationID: 33,
+    });
+    this.emailFile = null; // Reset file
   }
 
   private buildHTMLContent(vBody: string): string {

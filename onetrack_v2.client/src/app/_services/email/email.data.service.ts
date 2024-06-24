@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable, Subject, throwError } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 import { AgentComService } from '../agent/agentInfo.com.service';
@@ -69,22 +69,47 @@ export class EmailDataService {
       );
   }
 
-  sendEmail(sendEmailData: any): Observable<any> {
-    return this.http
-      .post<{
-        success: boolean;
-        statusCode: number;
-        objData: boolean;
-        errMessage: string;
-      }>(this.apiUrl + 'Send', sendEmailData)
-      .pipe(
-        map((response) => {
-          if (response.success && response.statusCode === 200) {
-            return response.objData;
-          } else {
-            throw new Error(response.errMessage || 'Unknown error');
-          }
-        })
-      );
+  // sendEmail(sendEmailData: any): Observable<any> {
+  //   return this.http
+  //     .post<{
+  //       success: boolean;
+  //       statusCode: number;
+  //       objData: boolean;
+  //       errMessage: string;
+  //     }>(this.apiUrl + 'Send', sendEmailData)
+  //     .pipe(
+  //       map((response) => {
+  //         if (response.success && response.statusCode === 200) {
+  //           return response.objData;
+  //         } else {
+  //           throw new Error(response.errMessage || 'Unknown error');
+  //         }
+  //       })
+  //     );
+  // }
+ 
+  sendEmail(sendEmailData: FormData): Observable<any> {
+
+console.log('EMFTEST (EMAIL-DATA: sendEmail) - sendEmailData => \n', sendEmailData);
+
+    return this.http.post<{
+      success: boolean;
+      statusCode: number;
+      objData: boolean;
+      errMessage: string;
+    }>(this.apiUrl + 'Send', sendEmailData, {
+      headers: { 'Content-Type': 'multipart/form-data' }, 
+    }).pipe(
+      map((response) => {
+        if (response.success && response.statusCode === 200) {
+          return response.objData;
+        } else {
+          throw new Error(response.errMessage || 'Unknown error');
+        }
+      }),
+      catchError((error) => {
+        return throwError(() => new Error(error.message || 'An error occurred while sending the email'));
+      })
+    );
   }
 }

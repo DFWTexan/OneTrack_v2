@@ -782,8 +782,8 @@ namespace OneTrack_v2.Services
                 }
 
                 //strEmploymentCommunicationID = GetEmploymentCommunicationID(vInput.EmployeeID, vInput.EmploymentID, strEmailTo.ToString(), _mailFromAddress ?? "", strSubject.ToString() + @" - Ref#" + strEmploymentCommunicationID, strBody.ToString(), strCommunicationID, vInput.UserSOEID ?? "");
-                intEmploymentCommunicationID = InsertEmploymentCommunication(vInput.EmployeeID, vInput.EmploymentID, strEmailTo, _mailFromAddress ?? "", string.Format("{0} - Ref# {1}", strSubject, intEmploymentCommunicationID.ToString() == "0" ? "" : intEmploymentCommunicationID.ToString()), strBody, vInput.CommunicationID, vInput.UserSOEID ?? "");
-                strEmploymentCommunicationID = ("000000000000000" + intEmploymentCommunicationID.ToString()).Substring(("000000000000000" + intEmploymentCommunicationID.ToString()).Length - 15).ToString();
+                //intEmploymentCommunicationID = InsertEmploymentCommunication(vInput.EmployeeID, vInput.EmploymentID, strEmailTo, _mailFromAddress ?? "", string.Format("{0} - Ref# {1}", strSubject, intEmploymentCommunicationID.ToString() == "0" ? "" : intEmploymentCommunicationID.ToString()), strBody, vInput.CommunicationID, vInput.UserSOEID ?? "");
+                //strEmploymentCommunicationID = ("000000000000000" + intEmploymentCommunicationID.ToString()).Substring(("000000000000000" + intEmploymentCommunicationID.ToString()).Length - 15).ToString();
 
                 sendHtmlEmail(_mailFromAddress, strEmailTo.ToString(), strEmailCC.ToString(), strBody.ToString(), "Licensing Department", strSubject.ToString() + @" - Ref#" + strEmploymentCommunicationID, _strEMAILATTACHMENT, strEmploymentCommunicationID, vInput.UserSOEID);
 

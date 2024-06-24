@@ -35,8 +35,29 @@ namespace OneTrak_v2.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Send([FromBody] IputSendEmail input)
+        public async Task<ActionResult> Send([FromForm] IputSendEmail input)
         {
+            if (input.Attachment != null)
+            {
+                try
+                {
+                    // Here you would handle the file, such as saving it or attaching it to the email
+                    // This step depends on how your IEmailService is implemented
+                    // For example, to read the file as a byte array:
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        await input.Attachment.CopyToAsync(memoryStream);
+                        byte[] fileBytes = memoryStream.ToArray();
+                        // Handle the byte array as needed
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return BadRequest($"An error occurred while processing the file: {ex.Message}");
+                }
+            }
+
+            // Adjust the call to _emailService.Send as needed to handle the potentially changed input structure
             var result = await Task.Run(() => _emailService.Send(input));
 
             return StatusCode(result.StatusCode, result);
