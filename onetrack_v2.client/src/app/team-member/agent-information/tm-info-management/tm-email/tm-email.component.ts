@@ -69,7 +69,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
       communicationID: [33],
       emailSubject: [''],
       emailBody: [''],
-      emailFile: [''],
+      // emailAttachment: [''],
     });
 
     this.subscriptions.add(
@@ -171,13 +171,12 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     emailSendItem.EmailTo = this.agentInfo.email;
     emailSendItem.CcEmail = this.ccEmail;
     emailSendItem.EmailContent =
-      this.selectedTemplate == 33
+      this.docSubType === '{MESSAGE}'
         ? this.buildHTMLContent(this.emailForm.value.emailBody).toString()
         : this.htmlContent.toString();
     emailSendItem.UserSOEID = this.userInfoDataService.userAcctInfo.soeid;
 
-    // CommunicationID:33 -> Validate email subject and body
-    if (emailSendItem.CommunicationID == 33) {
+    if (this.docSubType === '{MESSAGE}') {
       if (
         emailSendItem.emailSubject === '' ||
         emailSendItem.emailSubject === null
