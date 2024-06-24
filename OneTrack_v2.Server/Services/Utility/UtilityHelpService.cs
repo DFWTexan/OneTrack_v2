@@ -2,16 +2,19 @@
 using System.Data;
 using Microsoft.Extensions.Configuration;
 using DataModel.Response;
+using OneTrack_v2.DbData;
 
 namespace OneTrack_v2.Services
 {
     public class UtilityHelpService : IUtilityHelpService
     {
         private readonly IConfiguration _config;
+        private readonly AppDataContext _db;
         private readonly string? _connectionString;
 
-        public UtilityHelpService(IConfiguration configuration)
+        public UtilityHelpService(AppDataContext db, IConfiguration configuration)
         {
+            _db = db;
             _config = configuration;
             _connectionString = _config.GetConnectionString(name: "DefaultConnection");
         }
@@ -19,30 +22,31 @@ namespace OneTrack_v2.Services
         public void LogAudit(string vBaseTableName, int vBaseTableKeyValue, string? vUserSOEID = null, string? vAuditAction = null, 
             string? vField1Name = null, string? vField1ValueBefore = null, string? vField1ValueAfter= null)
         {
-            using (var connection = new SqlConnection(_connectionString))
+            using (SqlConnection conn = new SqlConnection(_connectionString))
             {
-                using (var command = new SqlCommand("[uspAuditLog]", connection))
+                using (SqlCommand cmd = new SqlCommand("uspAuditLog", conn))
                 {
-                    command.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandType = CommandType.StoredProcedure;
 
-                    command.Parameters.Add("@BaseTableName", SqlDbType.VarChar, 50).Value = vBaseTableName;
-                    command.Parameters.Add("@BaseTableKeyValue", SqlDbType.VarChar, 50).Value = vBaseTableKeyValue;
-                    command.Parameters.Add("@ModifiedBy", SqlDbType.VarChar, 50).Value = vUserSOEID;
-                    command.Parameters.Add("@AuditAction", SqlDbType.VarChar, 50).Value = vAuditAction;
+                    cmd.Parameters.Add("@BaseTableName", SqlDbType.VarChar, 50).Value = vBaseTableName;
+                    cmd.Parameters.Add("@BaseTableKeyValue", SqlDbType.VarChar, 50).Value = vBaseTableKeyValue;
+                    cmd.Parameters.Add("@ModifiedBy", SqlDbType.VarChar, 50).Value = vUserSOEID;
+                    cmd.Parameters.Add("@AuditAction", SqlDbType.VarChar, 50).Value = vAuditAction;
 
-                    command.Parameters.Add("@Field1Name", SqlDbType.VarChar, 500).Value = vField1Name;
-                    command.Parameters.Add("@Field1ValueBefore", SqlDbType.VarChar, 500).Value = vField1ValueBefore;
-                    command.Parameters.Add("@Field1ValueAfter", SqlDbType.VarChar, 500).Value = vField1ValueAfter;
+                    cmd.Parameters.Add("@Field1Name", SqlDbType.VarChar, 500).Value = vField1Name;
+                    cmd.Parameters.Add("@Field1ValueBefore", SqlDbType.VarChar, 500).Value = vField1ValueBefore;
+                    cmd.Parameters.Add("@Field1ValueAfter", SqlDbType.VarChar, 500).Value = vField1ValueAfter;
 
-                    connection.Open();
-                    command.ExecuteNonQuery();
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
                 }
             }
+
         }
 
-        public void LogInfo(string vInfoText, string vInfoSource)
+        public void LogInfo(string vInfoText, string? vInfoSource = null)
         {
-            CreateLog("OneTrakV2-Error", vInfoText, null, "INFO");
+            CreateLog("OneTrakV2-Info", vInfoText, vInfoSource, "INFO");
         }
 
         public void LogError(string vErrorText, string vErrorSource, object errorObject, string? vUserSOEID = null)

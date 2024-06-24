@@ -25,11 +25,15 @@ namespace OneTrack_v2.Services
         private readonly string? _connectionString;
 
         private readonly string? _mailServer;
+        private readonly bool? _isSendtoTest;
         private readonly string? _mailFromAddress;
         private readonly string? _mailToAddress;
         private readonly string? _mailCCAddress;
         private readonly string? _mailBCCAddress;
-
+        private readonly string? _testmailToAddress;
+        private readonly string? _testmailCCAddress;
+        private readonly string? _testmailFromAddress;
+        private string? _strEMAILATTACHMENT = string.Empty;
 
         public EmailService(AppDataContext db, IConfiguration config, IUtilityHelpService utilityHelpService, IEmailTemplateService emailTemplateService)
         {
@@ -44,11 +48,18 @@ namespace OneTrack_v2.Services
             // Construct the keys for accessing environment-specific settings
             string mailServerKey = $"EnvironmentSettings:{environment}:mailServer";
             string mailFromAddressKey = $"EnvironmentSettings:{environment}:mailFromAddress";
+            string isSendtoTestKey = $"EnvironmentSettings:{environment}:isSendtoTest";
+            string testmailToAddressKey = $"EnvironmentSettings:{environment}:testmailToAddress";
+            string testmailCCAddressKey = $"EnvironmentSettings:{environment}:testmailCCAddress";
+            string testmailFromAddressKey = $"EnvironmentSettings:{environment}:testmailFromAddress";
 
             // Retrieve the values based on the constructed keys
             _mailServer = _config.GetValue<string>(mailServerKey);
             _mailFromAddress = _config.GetValue<string>(mailFromAddressKey);
-
+            _isSendtoTest = _config.GetValue<bool?>(isSendtoTestKey);
+            _testmailToAddress = _config.GetValue<string>(testmailToAddressKey);
+            _testmailCCAddress = _config.GetValue<string>(testmailCCAddressKey);
+            _testmailFromAddress = _config.GetValue<string>(testmailFromAddressKey);
         }
 
         public ReturnResult GetEmailComTemplates()
@@ -120,7 +131,7 @@ namespace OneTrack_v2.Services
                                                     <h3>Unknown Document Type</h3>
                                                     <p>Document type not found.</p>
                                                 </div>
-                                           </div>", DocSubType = (string)null, Subject = (string)null  };
+                                           </div>", DocSubType = (string)null, Subject = (string)null };
                         break;
                 }
 
@@ -168,7 +179,7 @@ namespace OneTrack_v2.Services
                 strEmailCC = vInput.CcEmail != null ? string.Join(", ", vInput.CcEmail) : "";
                 strSubject = vInput.EmailSubject ?? "";
                 strBody = vInput.EmailContent ?? "";
-                
+
                 switch (comType)
                 {
                     case "APP-{MESSAGE}":
@@ -771,10 +782,10 @@ namespace OneTrack_v2.Services
                 }
 
                 //strEmploymentCommunicationID = GetEmploymentCommunicationID(vInput.EmployeeID, vInput.EmploymentID, strEmailTo.ToString(), _mailFromAddress ?? "", strSubject.ToString() + @" - Ref#" + strEmploymentCommunicationID, strBody.ToString(), strCommunicationID, vInput.UserSOEID ?? "");
-                intEmploymentCommunicationID = InsertEmploymentCommunication(vInput.EmployeeID, vInput.EmploymentID, strEmailTo, _mailFromAddress ?? "", strSubject + @" - Ref#" + intEmploymentCommunicationID.ToString() == "0" ? "" : intEmploymentCommunicationID.ToString(), strBody, vInput.CommunicationID, vInput.UserSOEID ?? "");
+                intEmploymentCommunicationID = InsertEmploymentCommunication(vInput.EmployeeID, vInput.EmploymentID, strEmailTo, _mailFromAddress ?? "", string.Format("{0} - Ref# {1}", strSubject, intEmploymentCommunicationID.ToString() == "0" ? "" : intEmploymentCommunicationID.ToString()), strBody, vInput.CommunicationID, vInput.UserSOEID ?? "");
                 strEmploymentCommunicationID = ("000000000000000" + intEmploymentCommunicationID.ToString()).Substring(("000000000000000" + intEmploymentCommunicationID.ToString()).Length - 15).ToString();
 
-                //sendHtmlEmail(_mailFromAddress, strEmailTo.ToString(), strEmailCC.ToString(), strBody.ToString(), "Licensing Department", strSubject.ToString() + @" - Ref#" + strEmploymentCommunicationID, Session["strEmailAttachment"].ToString(), strEmploymentCommunicationID);
+                sendHtmlEmail(_mailFromAddress, strEmailTo.ToString(), strEmailCC.ToString(), strBody.ToString(), "Licensing Department", strSubject.ToString() + @" - Ref#" + strEmploymentCommunicationID, _strEMAILATTACHMENT, strEmploymentCommunicationID, vInput.UserSOEID);
 
                 //Session["strEmailAttachment"] = String.Empty;
                 //EmailCCLabel.Text = string.Empty;
@@ -870,9 +881,6 @@ namespace OneTrack_v2.Services
         //}
         private int InsertEmploymentCommunication(int vEmployeeID, int vEmploymentID, String strEmailTo, String strMailFromAddress, String strSubject, String strBody, int strCommunicationID, String strUserSOEID)
         {
-            // EMFTEST
-            return 0;
-
             using (var transaction = _db.Database.BeginTransaction())
             {
                 try
@@ -885,8 +893,8 @@ namespace OneTrack_v2.Services
                         EmailFrom = strMailFromAddress,
                         EmailSubject = strSubject,
                         EmailBodyHtml = strBody,
-                        //CompareXml = Session["strCompareXML"],
-                        //EmailAttachments = Session["strEmailAttachment"],
+                        CompareXml = "<Communication>Message</Communication>",
+                        EmailAttachments = _strEMAILATTACHMENT,
                         CommunicationId = strCommunicationID,
                         EmailCreator = strUserSOEID,
                         EmailCreateDate = DateTime.Now,
@@ -898,165 +906,196 @@ namespace OneTrack_v2.Services
 
                     int employmentCommunicationID = employmentCommunication.EmploymentCommunicationId; // Assuming 'Id' is the primary key property
 
-                    // Audit logging
-                    _utilityService.LogAudit("EmploymentCommunications", employmentCommunicationID, strUserSOEID, "Insert", "EmploymentCommunicationID", employmentCommunicationID.ToString());
+
+
+
+
+
+                    // Audit logging       TBD => COMMENTED DUE TO ERROR in UTILITY SERVICE
+                    //_utilityService.LogAudit("EmploymentCommunications", employmentCommunicationID, strUserSOEID, "Insert", "EmploymentCommunicationID", employmentCommunicationID.ToString());
+
+
+
+
+
+
 
                     transaction.Commit();
 
                     return employmentCommunicationID;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
                     transaction.Rollback();
                     // Handle or throw exception as needed
+                    _utilityService.LogError(ex.Message, "Server Error - Please Contact Support [REF# EMAIL-7511-59434].", new { }, null);
+
                     throw;
                 }
             }
         }
-        //private void sendHtmlEmail(string from_Email, string to_Email, string cc_Email, string body, string from_Name, string Subject, string strAttachment, string strEmploymentCommunicationID)
-        //{
-        //    try
-        //    {
+        private void sendHtmlEmail(string vFrom_Email, string vTo_Email, string vCc_Email, string vBody, string vFrom_Name, string vSubject, string vStrAttachment, string vStrEmploymentCommunicationID, string vUserSOEID)
+        {
+            try
+            {
 
-        //        Global.CreateLog("   Send email for CommunicationID: " + strEmploymentCommunicationID);
+                //Global.CreateLog("   Send email for CommunicationID: " + strEmploymentCommunicationID);
+                _utilityService.LogInfo("Send email for CommunicationID: " + vStrEmploymentCommunicationID, null);
 
-        //        if (strSendToTest == "Yes")
-        //        {
-        //            from_Email = strTestFromEmail;
-        //            to_Email = strTestToEmail;
-        //            cc_Email = strTestCCEmail;
-        //        }
+                //if ((bool)_isSendtoTest)
+                //{
+                //    from_Email = _testmailToAddress ?? "";
+                //    to_Email = _testmailFromAddress ?? "";
+                //    cc_Email = _testmailCCAddress ?? "";
+                //}
 
-        //        body = body.Replace(@"<img alt = """" src = ""../Pictures/OneMainSolutionsHorizontal.jpg""", @"<img src = cid:myImageID ");
+                vBody = vBody.Replace(@"<img alt = """" src = ""pictures/OneMainSolutionsHorizontal.jpg""", @"<img src = cid:myImageID ");
 
-        //        //@"<img alt = """" src = ""../Pictures/OneMain Solutions_Horizontal.jpg""" 
-        //        //@"<img src = cid:myImageID>"
-
-
-        //        //create an instance of new mail message
-        //        MailMessage mail = new MailMessage();
-
-        //        //set the HTML format to true
-        //        mail.IsBodyHtml = true;
-
-        //        ////create Alrternative HTML view
-        //        AlternateView htmlView = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
-
-        //        //Add Image
-        //        var outPutDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
-        //        var logoimage = Path.Combine(outPutDirectory, "Pictures\\OneMainSolutionsHorizontal.jpg");
-        //        string relLogo = new Uri(logoimage).LocalPath;
-        //        LinkedResource theEmailImage = new LinkedResource(relLogo);
-        //        theEmailImage.ContentId = "myImageID";
-
-        //        //Add the Image to the Alternate view
-        //        htmlView.LinkedResources.Add(theEmailImage);
-        //        //Add view to the Email Message
-        //        mail.AlternateViews.Add(htmlView);
-
-        //        //set the "from email" address and specify a friendly 'from' name
-        //        mail.From = new MailAddress(from_Email, from_Name);
-
-        //        //set the "to" email address
-        //        mail.To.Add(to_Email);
-
-        //        //CC
-        //        if (!(cc_Email == String.Empty))
-        //        {
-        //            mail.CC.Add(cc_Email);
-        //        }
-
-        //        //Bcc to group box for Teleform
-        //        mail.Bcc.Add(from_Email);
-
-        //        //set the Email subject
-        //        mail.Subject = Subject;
+                //@"<img alt = """" src = ""../Pictures/OneMain Solutions_Horizontal.jpg""" 
+                //@"<img src = cid:myImageID>"
 
 
-        //        string[] paths = strAttachment.Split('|');
-        //        System.Net.Mail.Attachment attachment;
-        //        foreach (var path in paths)
-        //        {
-        //            if (path.Length > 0)
-        //            {
-        //                attachment = new System.Net.Mail.Attachment(path);
-        //                //string test = attachment.Name.Substring(36, attachment.Name.Length - 36);
-        //                //attachment.Name = attachment.Name.Substring(36, attachment.Name.Length - 36);
-        //                String test = attachment.Name;
-        //                mail.Attachments.Add(attachment);
-        //            }
-        //        }
+                //create an instance of new mail message
+                MailMessage mail = new MailMessage();
 
-        //        //System.Net.Mail.Attachment attach6ment;
-        //        //attachment = new System.Net.Mail.Attachment(strAttachment);
-        //        //string test = attachment.Name;
+                //set the HTML format to true
+                mail.IsBodyHtml = true;
 
-        //        //mail.Attachments.Add(attachment);
+                ////create Alrternative HTML view
+                AlternateView htmlView = AlternateView.CreateAlternateViewFromString(vBody, null, "text/html");
 
-        //        //set the SMTP info
-        //        SmtpClient smtp = new SmtpClient(mailServer);
+                //Add Image
+                //var outPutDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
+                var outPutDirectory = AppContext.BaseDirectory;
+                var logoimage = Path.Combine(outPutDirectory, "Pictures\\OneMainSolutionsHorizontal.jpg");
+                string relLogo = new Uri(logoimage).LocalPath;
+                LinkedResource theEmailImage = new LinkedResource(relLogo);
+                theEmailImage.ContentId = "myImageID";
 
-        //        //send the email
-        //        smtp.Send(mail);
+                //Add the Image to the Alternate view
+                htmlView.LinkedResources.Add(theEmailImage);
+                //Add view to the Email Message
+                mail.AlternateViews.Add(htmlView);
 
-        //        DIV2.InnerHtml = body;
+                //set the "from email" address and specify a friendly 'from' name
+                mail.From = new MailAddress((bool)_isSendtoTest ? _testmailFromAddress != null ? _testmailFromAddress : string.Empty : vFrom_Email, (bool)_isSendtoTest ? "OneTrakV2-TEST" : vFrom_Name);
 
-        //        int intEmploymentCommunicationID = 0;
-        //        if (strEmploymentCommunicationID != string.Empty)
-        //        {
-        //            intEmploymentCommunicationID = Convert.ToInt32(strEmploymentCommunicationID);
-        //        }
-        //        else
-        //        {
-        //            intEmploymentCommunicationID = 0;
-        //        }
+                //set the "to" email address
+                mail.To.Add(vTo_Email);
 
-        //        EmailSentUpdate(intEmploymentCommunicationID);
+                //CC
+                string strCcEmail = (bool)_isSendtoTest ? _testmailCCAddress != null ? _testmailCCAddress : string.Empty : vCc_Email;
+                if (!(strCcEmail == String.Empty))
+                {
+                    mail.CC.Add(strCcEmail);
+                }
 
-        //    }
-        //    catch (System.Exception myex)
-        //    {
-        //        Response.Write(myex.Message);
-        //    }
-        //}
-        //private void EmailSentUpdate(int intEmploymentCommunicationID)
-        //{
-        //    SqlConnection conn = null;
-        //    SqlCommand cmd = null;
-        //    DataSet ds = new DataSet();
+                //Bcc to group box for Teleform
+                mail.Bcc.Add((bool)_isSendtoTest ? _testmailFromAddress != null ? _testmailFromAddress : string.Empty : vFrom_Email);
 
-        //    try
-        //    {
-        //        conn = new SqlConnection(_connectionString);
-        //        conn.Open();
-        //        cmd = new SqlCommand("uspEmploymentCommunicationUpdate", conn);
-        //        cmd.CommandType = CommandType.StoredProcedure;
-        //        cmd.Parameters.Add(new SqlParameter("@EmploymentCommunicationID", intEmploymentCommunicationID));
-        //        cmd.Parameters.Add(new SqlParameter("@UserSOEID", Session["UserSOEID"].ToString()));
+                //set the Email subject
+                mail.Subject = vSubject;
 
-        //        cmd.ExecuteNonQuery();
 
-        //    }
-        //    catch (SqlException mySQLEx)
-        //    {
-        //        //Response.Write(mySQLEx.Message);
-        //    }
-        //    catch (System.Exception myex)
-        //    {
-        //        //Response.Write(myex.Message);
-        //    }
-        //    finally
-        //    {
-        //        if (conn != null)
-        //        {
-        //            conn.Close();
-        //        }
-        //        if (cmd != null)
-        //        {
-        //            cmd = null;
-        //        }
-        //    }
+                string[] paths = vStrAttachment.Split('|');
+                System.Net.Mail.Attachment attachment;
+                foreach (var path in paths)
+                {
+                    if (path.Length > 0)
+                    {
+                        attachment = new System.Net.Mail.Attachment(path);
+                        //string test = attachment.Name.Substring(36, attachment.Name.Length - 36);
+                        //attachment.Name = attachment.Name.Substring(36, attachment.Name.Length - 36);
+                        String test = attachment.Name;
+                        mail.Attachments.Add(attachment);
+                    }
+                }
 
-        //}
+                //System.Net.Mail.Attachment attach6ment;
+                //attachment = new System.Net.Mail.Attachment(strAttachment);
+                //string test = attachment.Name;
+
+                //mail.Attachments.Add(attachment);
+
+                //set the SMTP info
+                SmtpClient smtp = new SmtpClient(_mailServer);
+
+                //send the email
+                smtp.Send(mail);
+
+                // NOT SURE IF NEEDED...
+                //DIV2.InnerHtml = vBody;
+
+                int intEmploymentCommunicationID = 0;
+                if (vStrEmploymentCommunicationID != string.Empty)
+                {
+                    intEmploymentCommunicationID = Convert.ToInt32(vStrEmploymentCommunicationID);
+                }
+                else
+                {
+                    intEmploymentCommunicationID = 0;
+                }
+
+                EmailSentUpdate(intEmploymentCommunicationID, vUserSOEID);
+
+            }
+            catch (System.Exception myex)
+            {
+                //Response.Write(myex.Message);
+            }
+        }
+        private void EmailSentUpdate(int vIntEmploymentCommunicationID, string vUserSOEID)
+        {
+            //SqlConnection conn = null;
+            //SqlCommand cmd = null;
+            //DataSet ds = new DataSet();
+
+            //try
+            //{
+            //    conn = new SqlConnection(_connectionString);
+            //    conn.Open();
+            //    cmd = new SqlCommand("uspEmploymentCommunicationUpdate", conn);
+            //    cmd.CommandType = CommandType.StoredProcedure;
+            //    cmd.Parameters.Add(new SqlParameter("@EmploymentCommunicationID", vIntEmploymentCommunicationID));
+            //    cmd.Parameters.Add(new SqlParameter("@UserSOEID", vUserSOEID));
+
+            //    cmd.ExecuteNonQuery();
+
+            //}
+            //catch (SqlException mySQLEx)
+            //{
+            //    //Response.Write(mySQLEx.Message);
+            //}
+            //catch (System.Exception myex)
+            //{
+            //    //Response.Write(myex.Message);
+            //}
+            //finally
+            //{
+            //    if (conn != null)
+            //    {
+            //        conn.Close();
+            //    }
+            //    if (cmd != null)
+            //    {
+            //        cmd = null;
+            //    }
+            //}
+
+            using (SqlConnection conn = new SqlConnection(_connectionString))
+            {
+                using (SqlCommand cmd = new SqlCommand("uspEmploymentCommunicationUpdate", conn))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new SqlParameter("@EmploymentCommunicationID", vIntEmploymentCommunicationID));
+                    cmd.Parameters.Add(new SqlParameter("@UserSOEID", vUserSOEID));
+
+                    conn.Open();
+                    cmd.ExecuteNonQuery();
+                }
+            }
+
+        }
     }
 }
