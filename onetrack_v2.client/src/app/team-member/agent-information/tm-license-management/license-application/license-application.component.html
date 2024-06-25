@@ -94,7 +94,9 @@
                 <th scope="col">Rec. From Agent</th>
                 <th scope="col">Sent to State</th>
                 <th scope="col">Rec. From State</th>
-                <th scope="col" class="text-center" style="width: 10rem">Action</th>
+                <th scope="col" class="text-center" style="width: 10rem">
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -137,14 +139,19 @@
                       <span class="material-symbols-outlined"> edit </span>
                     </button>
                     <button class="icon-edit-delete-button">
-                      <span class="material-symbols-outlined" (click)="
+                      <span
+                        class="material-symbols-outlined"
+                        (click)="
                       openConfirmDialog('deleteLicenseApplication', 'Application', {
                         employeeLicenseID: licenseMgmtData[currentIndex].employeeLicenseId,
                         licenseApplicationID: licApplication.licenseApplicationID,
                         employeeLicensePreEducationID: null,
                         employeeLicensePreExamID: null,
                       })
-                    "> delete </span>
+                    "
+                      >
+                        delete
+                      </span>
                     </button>
                   </div>
                 </td>
@@ -211,7 +218,9 @@
                 <th scope="col">Scheduled Date</th>
                 <th scope="col">Taken Date</th>
                 <th scope="col">PreEdu Notes</th>
-                <th scope="col" class="text-center" style="width: 10rem">Action</th>
+                <th scope="col" class="text-center" style="width: 10rem">
+                  Action
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -251,14 +260,19 @@
                       <span class="material-symbols-outlined"> edit </span>
                     </button>
                     <button class="icon-edit-delete-button">
-                      <span class="material-symbols-outlined" (click)="
+                      <span
+                        class="material-symbols-outlined"
+                        (click)="
                       openConfirmDialog('deleteLicensePreEducation', 'Pre Education', {
                         employeeLicenseID: licenseMgmtData[currentIndex].employeeLicenseId,
                         licenseApplicationID: null,
                         employeeLicensePreEducationID: licPreEdu.employeeLicensePreEducationID,
                         employeeLicensePreExamID: null,
                       })
-                    "> delete </span>
+                    "
+                      >
+                        delete
+                      </span>
                     </button>
                   </div>
                 </td>

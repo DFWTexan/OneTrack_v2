@@ -125,7 +125,7 @@
               let license of agentInfo.agentLicenseAppointments;
               let i = index
             "
-            [expanded]="true"
+            [expanded]="license.licenseStatus === 'Active'"
           >
             <mat-expansion-panel-header>
               <mat-panel-title>
