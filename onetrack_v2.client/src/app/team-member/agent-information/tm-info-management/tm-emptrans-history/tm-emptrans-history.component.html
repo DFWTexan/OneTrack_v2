@@ -1,5 +1,5 @@
 <div class="container app-component-container">
-  <mat-expansion-panel class="mat-elevation-z4 mt-3 mb-3">
+  <mat-expansion-panel class="mat-elevation-z4 mt-3 mb-3" [expanded]="true">
     <mat-expansion-panel-header>
       <mat-panel-title>
         <div class="app-panel-title mt-3">
@@ -78,9 +78,7 @@
                 <td class="align-middle">{{ emp.backGroundCheckNotes }}</td>
                 <td class="align-middle">{{ emp.isCurrent ? "Yes" : "No" }}</td>
                 <td style="width: 10rem">
-                  <div
-                    class="d-flex justify-content-between mb-3 me-4"
-                  >
+                  <div class="d-flex justify-content-between mb-3 me-4">
                     <button
                       class="icon-edit-delete-button"
                       (click)="
@@ -115,7 +113,7 @@
     </div>
   </mat-expansion-panel>
 
-  <mat-expansion-panel class="mat-elevation-z4 mb-3">
+  <mat-expansion-panel class="mat-elevation-z4 mb-3" [expanded]="true">
     <mat-expansion-panel-header>
       <mat-panel-title>
         <div class="app-panel-title mt-3">
@@ -183,9 +181,7 @@
                 {{ transfer.isCurrent ? "Yes" : "NO" }}
               </td>
               <td style="width: 10rem">
-                <div
-                  class="d-flex justify-content-between mb-3 me-4"
-                >
+                <div class="d-flex justify-content-between mb-3 me-4">
                   <button
                     class="icon-edit-delete-button"
                     (click)="
@@ -195,13 +191,16 @@
                   >
                     <span class="material-symbols-outlined"> edit </span>
                   </button>
-                  <button class="icon-edit-delete-button" (click)="
-                  onOpenConfirmDialog(
-                    'deleteTransferHistory',
-                    'Transfer History Item',
-                    transfer
-                  )
-                ">
+                  <button
+                    class="icon-edit-delete-button"
+                    (click)="
+                      onOpenConfirmDialog(
+                        'deleteTransferHistory',
+                        'Transfer History Item',
+                        transfer
+                      )
+                    "
+                  >
                     <span class="material-symbols-outlined"> delete </span>
                   </button>
                 </div>
@@ -213,7 +212,7 @@
     </div>
   </mat-expansion-panel>
 
-  <mat-expansion-panel class="mat-elevation-z4 mb-3">
+  <mat-expansion-panel class="mat-elevation-z4 mb-3" [expanded]="true">
     <mat-expansion-panel-header>
       <mat-panel-title>
         <div class="app-panel-title mt-3">
@@ -278,9 +277,7 @@
                 {{ coReq.learningProgramCompletionDate | date : "MM/dd/yyyy" }}
               </td>
               <td style="width: 10rem">
-                <div
-                  class="d-flex justify-content-between mb-3 me-4"
-                >
+                <div class="d-flex justify-content-between mb-3 me-4">
                   <button
                     class="icon-edit-delete-button"
                     (click)="
@@ -294,13 +291,18 @@
                     <span class="material-symbols-outlined"> edit </span>
                   </button>
                   <button class="icon-edit-delete-button">
-                    <span class="material-symbols-outlined" (click)="
-                    onOpenConfirmDialog(
-                      'deleteCoRequirementItem',
-                      'Co. RequirementItem',
-                      coReq
-                    )
-                    "> delete </span>
+                    <span
+                      class="material-symbols-outlined"
+                      (click)="
+                        onOpenConfirmDialog(
+                          'deleteCoRequirementItem',
+                          'Co. RequirementItem',
+                          coReq
+                        )
+                      "
+                    >
+                      delete
+                    </span>
                   </button>
                 </div>
               </td>
@@ -311,7 +313,7 @@
     </div>
   </mat-expansion-panel>
 
-  <mat-expansion-panel class="mat-elevation-z4 mb-3">
+  <mat-expansion-panel class="mat-elevation-z4 mb-3" [expanded]="true">
     <mat-expansion-panel-header>
       <mat-panel-title>
         <div class="app-panel-title mt-3">
@@ -374,9 +376,7 @@
               {{ jobTitle.isCurrent ? "Yes" : "No" }}
             </td>
             <td style="width: 10rem">
-              <div
-                class="d-flex justify-content-between mb-3 me-4"
-              >
+              <div class="d-flex justify-content-between mb-3 me-4">
                 <button
                   class="icon-edit-delete-button"
                   (click)="
@@ -389,13 +389,16 @@
                 >
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
-                <button class="icon-edit-delete-button" (click)="
-                onOpenConfirmDialog(
-                  'deleteJobTitleItem',
-                  'Job Title Item',
-                  jobTitle
-                )
-                ">
+                <button
+                  class="icon-edit-delete-button"
+                  (click)="
+                    onOpenConfirmDialog(
+                      'deleteJobTitleItem',
+                      'Job Title Item',
+                      jobTitle
+                    )
+                  "
+                >
                   <span class="material-symbols-outlined"> delete </span>
                 </button>
               </div>

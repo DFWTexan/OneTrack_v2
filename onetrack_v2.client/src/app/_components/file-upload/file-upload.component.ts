@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from '../../environments/environment';
+import { ErrorMessageService } from '../../_services';
 
 @Component({
   selector: 'app-file-upload',
@@ -9,12 +10,12 @@ import { environment } from '../../environments/environment';
   styleUrl: './file-upload.component.css',
 })
 export class FileUploadComponent {
-  @Input() filePathUri: string = '';
+  @Input() filePathUri: string | null = null;
   @Input() displayMode: string = 'ATTACHMENT';
-  private url: string = environment.apiUrl + 'Misc/';
+  private url: string = environment.apiUrl + 'Document/';
   fileName = '';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private errorMessageService: ErrorMessageService) {}
 
   onFileSelected(event: any) {
     const target = event.target as HTMLInputElement;
@@ -25,9 +26,22 @@ export class FileUploadComponent {
         this.fileName = file.name;
         const formData = new FormData();
         formData.append('File', file);
-        formData.append('FilePathUri', this.filePathUri);
-        const upload$ = this.http.post(this.url + 'FileUpload', formData);
-        upload$.subscribe();
+        formData.append('FilePathUri', this.filePathUri || '');
+        const upload$ = this.http.post(this.url + 'Upload', formData);
+        upload$.subscribe({
+          next: (response) => {
+            // Handle successful upload
+            // console.log('Upload successful', response);
+          },
+          error: (error) => {
+            if (error.error && error.error.errMessage) {
+
+console.log('EMFTEST (UPLOAD) - error', error.error.errMessage);
+
+              this.errorMessageService.setErrorMessage(error.error.errMessage);
+            }
+          }
+        });
       }
     }
   }

@@ -64,7 +64,6 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-
         [HttpGet("{stateAbv}")]
         public async Task<IActionResult> GetLicenseNumericNames(string stateAbv)
         {
@@ -197,34 +196,6 @@ namespace OneTrack_v2.Controllers
         public async Task<ActionResult> GetRollOutGroups()
         {
             var result = await Task.Run(() => _miscService.GetRollOutGroups());
-
-            return StatusCode(result.StatusCode, result);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> FileUpload([FromForm] IputFileUpload input)
-        {
-            if (input != null)
-            {
-                try
-                {
-                    // Here you would handle the file, such as saving it or attaching it to the email
-                    // This step depends on how your IEmailService is implemented
-                    // For example, to read the file as a byte array:
-                    using (var memoryStream = new MemoryStream())
-                    {
-                        await input.File.CopyToAsync(memoryStream);
-                        byte[] fileBytes = memoryStream.ToArray();
-                        // Handle the byte array as needed
-                    }
-                }
-                catch (Exception ex)
-                {
-                    return BadRequest($"An error occurred while processing the file: {ex.Message}");
-                }
-            }
-
-            var result = await Task.Run(() => _miscService.FileUpload(input));
 
             return StatusCode(result.StatusCode, result);
         }

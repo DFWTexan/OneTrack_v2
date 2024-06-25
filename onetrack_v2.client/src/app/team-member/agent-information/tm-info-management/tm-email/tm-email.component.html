@@ -222,7 +222,7 @@
       </div>
       <mat-divider></mat-divider>
       <div class="row bg-body mt-1 p-2">
-        <div class="col" *ngIf="emailTemplateID == 33">
+        <div class="col" *ngIf="docSubType === '{MESSAGE}'">
           <div [innerHTML]="htmlHeaderContent"></div>
           <div
             *ngIf="
@@ -250,7 +250,7 @@
           ></textarea>
           <div [innerHTML]="htmlFooterContent"></div>
         </div>
-        <div class="col" *ngIf="emailTemplateID != 33">
+        <div class="col" *ngIf="docSubType != '{MESSAGE}'">
           <div [innerHTML]="htmlContent"></div>
         </div>
       </div>

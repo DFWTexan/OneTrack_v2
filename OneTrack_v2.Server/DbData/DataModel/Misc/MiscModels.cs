@@ -17,11 +17,4 @@
         public string? Value { get; set; } = null;
         public string? Label { get; set; } = null;
     }
-
-    public class IputFileUpload
-    {
-        public string? FilePathUri { get; set; } = null;
-        public IFormFile? File { get; set; } = null;
-    }
-    
 }

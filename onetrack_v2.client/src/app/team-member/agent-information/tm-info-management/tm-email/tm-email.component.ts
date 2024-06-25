@@ -46,7 +46,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   htmlContent: SafeHtml = '' as SafeHtml;
   FileDisplayMode= 'ATTACHMENT'; // NONE / ATTACHMENT
   file: File | null = null;
-  fileUri: string = '//EMFTEST'; 
+  fileUri: string | null = null; 
 
   private subscriptions = new Subscription();
 
