@@ -42,10 +42,10 @@
     >
       <h1>No Record(s) Found</h1>
     </div>
-    <div class="col">
-      <div class="table" *ngIf="companies.length > 0">
+    <div class="col-md-12">
+      <table class="table" *ngIf="companies.length > 0" style="width: 100%;">
         <thead>
-          <tr class="sticky-top" style="background-color: gainsboro">
+          <tr class="sticky-top" style="background-color: gainsboro; width: 100%;">
             <th scope="col">Type</th>
             <th scope="col">ID</th>
             <th scope="col">Abv</th>
@@ -96,7 +96,7 @@
             </td>
           </tr>
         </tbody>
-      </div>
+      </table>
     </div>
   </div>
 </div>

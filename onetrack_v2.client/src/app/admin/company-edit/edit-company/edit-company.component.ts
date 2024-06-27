@@ -116,6 +116,8 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
       return;
     }
 
+console.log('EMFTEST (EDIT COMPANY) - company => \n ', company);    
+
     this.adminDataService.upSertCompany(company).subscribe({
       next: (response) => {
         this.callParentRefreshData.emit();
