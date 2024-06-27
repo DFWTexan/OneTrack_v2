@@ -36,7 +36,9 @@
     </div>
     <div
       class="col-md-12 d-flex justify-content-center align-items-center mt-5"
-      *ngIf="selectedCompanyType !== 'Select Company Type' && companies.length == 0"
+      *ngIf="
+        selectedCompanyType !== 'Select Company Type' && companies.length == 0
+      "
     >
       <h1>No Record(s) Found</h1>
     </div>
@@ -51,7 +53,7 @@
             <th scope="col">TIN</th>
             <th scope="col">NAIC #</th>
             <th scope="col">Street Address</th>
-            <th scope="col" class="text-center" style="width: 10rem;">Action</th>
+            <th scope="col" class="text-center" style="width: 10rem">Action</th>
           </tr>
         </thead>
         <tbody class="bg-body">
@@ -102,7 +104,9 @@
 <!-- Modal: EDIT-COMPANY -->
 <modal id="modal-edit-company">
   <div class="modal-header">
-    <h1 class="modal-title"><strong>{{ adminComService.modes.company.mode }}</strong> - Company</h1>
+    <h1 class="modal-title">
+      <strong>{{ adminComService.modes.company.mode }}</strong> - Company
+    </h1>
     <!-- <button
               type="button"
               class="btn-close"
@@ -112,7 +116,10 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-company [companyTypes]="companyTypes"></app-edit-company>
+        <app-edit-company
+          [companyTypes]="companyTypes"
+          (callParentRefreshData)="onChildCallRefreshData()"
+        ></app-edit-company>
       </div>
     </div>
   </div>

@@ -144,14 +144,14 @@ export class AdminDataService {
       );
   }
 
-  editCompany(company: Company) {
+  upSertCompany(company: Company) {
     return this.http
       .post<{
         success: boolean;
         statusCode: number;
         objData: Company;
         errMessage: string;
-      }>(this.apiUrl + 'EditCompany', company, { observe: 'response' })
+      }>(this.apiUrl + 'UpsertCompany', company, { observe: 'response' })
       .pipe(
         tap((response) => {
           console.log(response.status);

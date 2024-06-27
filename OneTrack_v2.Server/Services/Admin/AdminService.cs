@@ -6,6 +6,7 @@ using OneTrack_v2.DbData;
 using OneTrack_v2.DbData.Models;
 using OneTrack_v2.Services;
 using OneTrak_v2.DataModel;
+using System.Data;
 
 namespace OneTrak_v2.Services
 {
@@ -90,6 +91,7 @@ namespace OneTrak_v2.Services
             }
             return result;
         }
+        
         public ReturnResult GetLicenseTypes(string? vStateAbv = null)
         {
             ReturnResult result = new ReturnResult();
@@ -112,7 +114,6 @@ namespace OneTrak_v2.Services
             }
             return result;
         }
-
 
         public ReturnResult GetConEducationRules(string? vStateAbv = null, string? vLicenseType = null)
         {
@@ -788,59 +789,125 @@ namespace OneTrak_v2.Services
             return result;
         }
 
-        public ReturnResult EditCompany([FromBody] IputEditCompany company)
+        #region INSERT/UPDATE/DELETE
+        public ReturnResult UpsertCompany([FromBody] IputUpsertCompany vInput)
         {
-            ReturnResult result = new ReturnResult();
-            //try
-            //{
-            //    var company = _db.Companies
-            //                    .Where(x => x.CompanyId == IputEditCompany.CompanyId)
-            //                    .FirstOrDefaultAsync();
+            var result = new ReturnResult();
+            try
+            {
+                if (vInput.CompanyId == 0)
+                {
+                    // INSERT Company
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspCompanyInsert", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
 
-            //    if (company == null)
-            //    {
-            //        result.StatusCode = 404;
-            //        result.ErrMessage = "Company not found";
-            //        //return StatusCode(result.StatusCode, result);
-            //    }
+                            cmd.Parameters.Add(new SqlParameter("@CompanyID", vInput.CompanyId));
+                            cmd.Parameters.Add(new SqlParameter("@CompanyAbv", vInput.CompanyAbv));
+                            cmd.Parameters.Add(new SqlParameter("@CompanyType", vInput.CompanyType));
+                            cmd.Parameters.Add(new SqlParameter("@CompanyName", vInput.CompanyName));
+                            cmd.Parameters.Add(new SqlParameter("@TIN", vInput.Tin));
+                            cmd.Parameters.Add(new SqlParameter("@NAICNumber", vInput.Naicnumber));
+                            cmd.Parameters.Add(new SqlParameter("@AddressID", vInput.AddressId));
+                            cmd.Parameters.Add(new SqlParameter("@Address1", vInput.Address1));
+                            cmd.Parameters.Add(new SqlParameter("@Address2", vInput.Address2));
+                            cmd.Parameters.Add(new SqlParameter("@City", vInput.City));
+                            cmd.Parameters.Add(new SqlParameter("@State", vInput.State));
+                            cmd.Parameters.Add(new SqlParameter("@Phone", vInput.Phone));
+                            cmd.Parameters.Add(new SqlParameter("@Zip", vInput.Zip));
+                            cmd.Parameters.Add(new SqlParameter("@Fax", vInput.Fax));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+                           
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                else
+                {
+                    // UPDATE Company
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspCompanyUpdate", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
 
-            //    //company.CompanyAbv = IputEditCompany.CompanyAbv;
-            //    //company.CompanyType = IputEditCompany.CompanyType;
-            //    //company.CompanyName = IputEditCompany.CompanyName;
-            //    //company.Tin = IputEditCompany.Tin;
-            //    //company.Naicnumber = IputEditCompany.Naicnumber;
+                            cmd.Parameters.Add(new SqlParameter("@CompanyID", vInput.CompanyId));
+                            cmd.Parameters.Add(new SqlParameter("@CompanyAbv", vInput.CompanyAbv));
+                            cmd.Parameters.Add(new SqlParameter("@CompanyType", vInput.CompanyType));
+                            cmd.Parameters.Add(new SqlParameter("@CompanyName", vInput.CompanyName));
+                            cmd.Parameters.Add(new SqlParameter("@TIN", vInput.Tin));
+                            cmd.Parameters.Add(new SqlParameter("@NAICNumber", vInput.Naicnumber));
+                            cmd.Parameters.Add(new SqlParameter("@AddressID", vInput.AddressId));
+                            cmd.Parameters.Add(new SqlParameter("@Address1", vInput.Address1));
+                            cmd.Parameters.Add(new SqlParameter("@Address2", vInput.Address2));
+                            cmd.Parameters.Add(new SqlParameter("@City", vInput.City));
+                            cmd.Parameters.Add(new SqlParameter("@State", vInput.State));
+                            cmd.Parameters.Add(new SqlParameter("@Phone", vInput.Phone));
+                            cmd.Parameters.Add(new SqlParameter("@Zip", vInput.Zip));
+                            cmd.Parameters.Add(new SqlParameter("@Fax", vInput.Fax));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
 
-            //    var address = _db.Addresses
-            //                    .Where(x => x.AddressId == IputEditCompany.AddressId)
-            //                    .FirstOrDefaultAsync();
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
 
-            //    if (address == null)
-            //    {
-            //        result.StatusCode = 404;
-            //        result.ErrMessage = "Address not found";
-            //        //return StatusCode(result.StatusCode, result);
-            //    }
+                result.Success = true;
+                result.ObjData = new { Message = "Company Created/Updated Successfully." };
+                result.StatusCode = 200;
 
-            //    //address.Address1 = IputEditCompany.Address1;
-            //    //address.Address2 = IputEditCompany.Address2;
-            //    //address.City = IputEditCompany.City;
-            //    //address.State = IputEditCompany.State;
-            //    //address.Phone = IputEditCompany.Phone;
-            //    //address.Country = IputEditCompany.Country;
-            //    //address.Zip = IputEditCompany.Zip;
-            //    //address.Fax = IputEditCompany.Fax;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49597].";
 
-            //    _db.SaveChanges();
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
 
-            //    result.Success = true;
-            //    result.StatusCode = 200;
-            //}
-            //catch (Exception ex)
-            //{
-            //    result.StatusCode = 500;
-            //    result.ErrMessage = ex.Message;
-            //}
             return result;
         }
+        public ReturnResult DeleteCompany([FromBody] IputDeleteCompany vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspCompanyDelete", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@CompanyID", vInput.CompanyID));
+                        cmd.Parameters.Add(new SqlParameter("@AddressID", vInput.AddressID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "Company Deleted Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-59517].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;
+        }
+        #endregion
     }
 }

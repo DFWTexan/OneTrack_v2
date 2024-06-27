@@ -14,4 +14,5 @@ export interface Company {
     country: string;
     zip: string | null;
     fax: string | null;
+    UserSOEID: string;
   }

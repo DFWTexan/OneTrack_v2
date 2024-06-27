@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
+import { Component, Injectable, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Input } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -8,6 +8,8 @@ import {
   AdminDataService,
   AppComService,
   ConstantsDataService,
+  ErrorMessageService,
+  UserAcctInfoDataService,
 } from '../../../_services';
 import { Company } from '../../../_Models';
 import { state } from '@angular/animations';
@@ -19,6 +21,7 @@ import { state } from '@angular/animations';
 })
 @Injectable()
 export class EditCompanyComponent implements OnInit, OnDestroy {
+  @Output() callParentRefreshData = new EventEmitter<any>();
   formSubmitted = false;
   states: any[] = ['Select State', 'Loading...'];
   companyForm!: FormGroup;
@@ -29,10 +32,12 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
   @Input() companyTypes: any[] = ['Loading...'];
 
   constructor(
+    private errorMessageService: ErrorMessageService,
     private conService: ConstantsDataService,
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
-    public appComService: AppComService
+    public appComService: AppComService,
+    private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {
@@ -91,6 +96,7 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.formSubmitted = true;
     let company: Company = this.companyForm.value;
+    company.UserSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;;
 
     if (this.adminComService.modes.company.mode === 'INSERT') {
       company.companyId = 0;
@@ -110,23 +116,31 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.adminDataService.editCompany(company).subscribe({
+    this.adminDataService.upSertCompany(company).subscribe({
       next: (response) => {
-        console.log(response);
-        // handle the response here
+        this.callParentRefreshData.emit();
+        this.forceCloseModal();
       },
       error: (error) => {
-        console.error(error);
-        // handle the error here
+        if (error.error && error.error.errMessage) {
+
+console.log('EMFTEST (EDIT COMPANY) - error.error.errMessage: ', error.error.errMessage);
+
+          this.errorMessageService.setErrorMessage(error.error.errMessage);
+        }
       },
     });
   }
 
-  closeModal() {
+  forceCloseModal() {
     const modalDiv = document.getElementById('modal-edit-company');
     if (modalDiv != null) {
       modalDiv.style.display = 'none';
     }
+  }
+
+  closeModal() {
+    this.forceCloseModal();
   }
 
   ngOnDestroy(): void {

@@ -185,9 +185,17 @@ namespace OneTrack_v2.Controllers
 
         #region "Admin Edit"
         [HttpPost]
-        public async Task<IActionResult> EditCompany([FromBody] IputEditCompany company)
+        public async Task<IActionResult> UpsertCompany([FromBody] IputUpsertCompany company)
         {
-            var result = await Task.Run(() => _adminService.EditCompany(company));
+            var result = await Task.Run(() => _adminService.UpsertCompany(company));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> DeleteCompany([FromBody] IputDeleteCompany input)
+        {
+            var result = await Task.Run(() => _adminService.DeleteCompany(input));
 
             return StatusCode(result.StatusCode, result);
         }
