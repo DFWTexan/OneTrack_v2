@@ -32,6 +32,7 @@ export class AdminDataService {
   private apiUrl: string = environment.apiUrl + 'Admin/';
 
   // COMPANY
+  companyType: string = '';
   companyTypes: any[] = [];
   companyTypesChanged = new Subject<any[]>();
   companies: Company[] = [];
@@ -123,14 +124,19 @@ export class AdminDataService {
       );
   }
 
-  fetchCompanies(companyType: string) {
+  updateCompanyType(companyType: string) {
+    this.companyType = companyType;
+  }
+
+  fetchCompanies() {
+    // this.companyType = companyType;
     return this.http
       .get<{
         success: boolean;
         statusCode: number;
         objData: Company[];
         errMessage: string;
-      }>(this.apiUrl + 'GetCompaniesByType/' + companyType)
+      }>(this.apiUrl + 'GetCompaniesByType/' + this.companyType)
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -153,8 +159,67 @@ export class AdminDataService {
         errMessage: string;
       }>(this.apiUrl + 'UpsertCompany', company, { observe: 'response' })
       .pipe(
-        tap((response) => {
-          console.log(response.status);
+        tap({
+          next: (response) => {
+            console.log(response.status);
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        })
+      );
+  }
+
+  //   deleteCompany(company: any) {
+
+  // console.log('EMFTEST (deleteCompany) - company => \n', company);
+
+  //     return this.http
+  //       .put<{
+  //         success: boolean;
+  //         statusCode: number;
+  //         objData: Company;
+  //         errMessage: string;
+  //       }>(this.apiUrl + 'DeleteCompany' + {CompanyID: company.companyId, AddressID: company.addressId, UserSOEID: company.userSOEID}, { observe: 'response' })
+  //       .pipe(
+  //         tap({
+  //           next: (response) => {
+  //             console.log(response);
+  //           },
+  //           error: (error) => {
+  //             console.error(error);
+  //           }
+  //         })
+  //       );
+  //   }
+  deleteCompany(company: any): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'Admin/DeleteCompany';
+
+    console.log('EMFTEST (deleteCompany) - company => \n', company);
+
+    return this.http
+      .put<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, company)
+      .pipe(
+        // map((response) => {
+        //   return response;
+        // })
+        tap({
+          next: (response) => {
+            if (response.success && response.statusCode === 200) {
+              // return response;
+            } else {
+              throw new Error(response.errMessage || 'Unknown error');
+            }
+          },
+          error: (error) => {
+            // console.error(error);
+            // throw error;
+          },
         })
       );
   }

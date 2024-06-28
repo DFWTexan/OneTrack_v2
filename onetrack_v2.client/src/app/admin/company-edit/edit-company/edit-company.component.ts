@@ -96,7 +96,7 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.formSubmitted = true;
     let company: Company = this.companyForm.value;
-    company.UserSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;;
+    company.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
     if (this.adminComService.modes.company.mode === 'INSERT') {
       company.companyId = 0;
@@ -116,8 +116,6 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
       return;
     }
 
-console.log('EMFTEST (EDIT COMPANY) - company => \n ', company);    
-
     this.adminDataService.upSertCompany(company).subscribe({
       next: (response) => {
         this.callParentRefreshData.emit();
@@ -126,7 +124,7 @@ console.log('EMFTEST (EDIT COMPANY) - company => \n ', company);
       error: (error) => {
         if (error.error && error.error.errMessage) {
 
-console.log('EMFTEST (EDIT COMPANY) - error.error.errMessage: ', error.error.errMessage);
+console.error('EMFTEST (ERROR) - error: ', error);
 
           this.errorMessageService.setErrorMessage(error.error.errMessage);
         }

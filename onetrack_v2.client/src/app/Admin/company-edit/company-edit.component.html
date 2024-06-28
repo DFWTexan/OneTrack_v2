@@ -47,7 +47,7 @@
         <thead>
           <tr class="sticky-top" style="background-color: gainsboro; width: 100%;">
             <th scope="col">Type</th>
-            <th scope="col">ID</th>
+            <th scope="col" *ngIf="appComService.isShowEditID">ID</th>
             <th scope="col">Abv</th>
             <th scope="col">Name</th>
             <th scope="col">TIN</th>
@@ -61,14 +61,14 @@
             <td class="align-middle" style="font-size: larger">
               {{ company.companyType }}
             </td>
-            <td class="align-middle">{{ company.companyId }}</td>
+            <td class="align-middle" *ngIf="appComService.isShowEditID">{{ company.companyId }}</td>
             <td class="align-middle text-nowrap">
               {{ company.companyAbv }}
             </td>
             <td class="align-middle" style="width: max-content">
               {{ company.companyName }}
             </td>
-            <td class="align-middle" style="width: max-content">
+            <td class="align-middle">
               {{ company.tin }}
             </td>
             <td class="align-middle" style="width: max-content">
@@ -90,7 +90,9 @@
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
                 <button class="icon-edit-delete-button" type="button">
-                  <span class="material-symbols-outlined"> delete </span>
+                  <span class="material-symbols-outlined" (click)="
+                  openConfirmDialog('deleteCoEdit', 'Compay Edit', company)
+                "> delete </span>
                 </button>
               </div>
             </td>

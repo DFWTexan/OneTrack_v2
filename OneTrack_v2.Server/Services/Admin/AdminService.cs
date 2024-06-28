@@ -899,6 +899,7 @@ namespace OneTrak_v2.Services
             }
             catch (Exception ex)
             {
+                result.StatusCode = 500;
                 result.Success = false;
                 result.ObjData = null;
                 result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-59517].";
