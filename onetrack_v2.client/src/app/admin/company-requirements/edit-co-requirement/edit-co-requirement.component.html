@@ -6,27 +6,113 @@
   <div class="row">
     <div class="col">
       <div class="mb-3">
-        <label for="companyRequirementId" class="form-label">Company Requirement ID:</label>
-        <input
-          class="form-control input-size-small"
+        <label for="workState" class="form-label">Work State:</label>
+        <select
+          class="form-select select-size-small"
           type="text"
-          id="companyRequirementId"
-          formControlName="companyRequirementId"
-        />
+          id="workState"
+          formControlName="workState"
+        >
+          <!-- <option *ngFor="let state of states" [value]="state">
+              {{ state }}
+            </option> -->
+        </select>
       </div>
-
+    </div>
+    <div class="col">
       <div class="mb-3">
-        <label for="workStateAbv" class="form-label">Work State Abbreviation:</label>
+        <label for="residentState" class="form-label">Resident State:</label>
+        <select
+          class="form-select select-size-small"
+          type="text"
+          id="residentState"
+          formControlName="residentState"
+        >
+          <!-- <option *ngFor="let state of states" [value]="state">
+            {{ state }}
+          </option> -->
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        <label for="residentState" class="form-label">Requirement Type:</label>
+        <select
+          class="form-select select-size-small"
+          type="text"
+          id="residentState"
+          formControlName="residentState"
+        >
+          <!-- <option *ngFor="let state of states" [value]="state">
+            {{ state }}
+          </option> -->
+        </select>
+      </div>
+    </div>
+    <div class="col">
+      <div class="mb-3">
+        <label for="employmentHistoryID" class="form-label">Start After Date:</label
+        >
         <input
           class="form-control input-size-small"
           type="text"
-          id="workStateAbv"
-          formControlName="workStateAbv"
+          id="employmentHistoryID"
+          formControlName="employmentHistoryID"
         />
       </div>
+    </div>
+  </div>
 
-      <!-- Add more form controls for the rest of the properties in the CompanyRequirement interface -->
+  <div class="row">
+    <div class="col">
+      <div class="mb-3 mt-4">
+        <input
+          class="form-check-input me-2 align-middle"
+          type="checkbox"
+          id="secondChance"
+          formControlName="secondChance"
+        />
+        <label for="secondChance" class="form-label"> Lic Level 1: </label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="mb-3 mt-4">
+        <input
+          class="form-check-input me-2 align-middle"
+          type="checkbox"
+          id="secondChance"
+          formControlName="secondChance"
+        />
+        <label for="secondChance" class="form-label"> Lic Level 2: </label>
+      </div>
+    </div>
+  </div>
 
+  <div class="row">
+    <div class="col">
+      <div class="mb-3 mt-4">
+        <input
+          class="form-check-input me-2 align-middle"
+          type="checkbox"
+          id="secondChance"
+          formControlName="secondChance"
+        />
+        <label for="secondChance" class="form-label"> Lic Level 3: </label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="mb-3 mt-4">
+        <input
+          class="form-check-input me-2 align-middle"
+          type="checkbox"
+          id="secondChance"
+          formControlName="secondChance"
+        />
+        <label for="secondChance" class="form-label"> Lic Level 4: </label>
+      </div>
     </div>
   </div>
 
@@ -34,7 +120,11 @@
 
   <div class="row mt-4">
     <div class="col d-flex justify-content-end">
-      <button type="button" class="btn btn-secondary me-3 cancel-button">
+      <button
+        type="button"
+        class="btn btn-secondary me-3 cancel-button"
+        (click)="closeModal()"
+      >
         Cancel
       </button>
       <button type="submit" class="btn btn-primary save-button">Save</button>

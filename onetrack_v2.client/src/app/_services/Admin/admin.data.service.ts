@@ -170,33 +170,8 @@ export class AdminDataService {
       );
   }
 
-  //   deleteCompany(company: any) {
-
-  // console.log('EMFTEST (deleteCompany) - company => \n', company);
-
-  //     return this.http
-  //       .put<{
-  //         success: boolean;
-  //         statusCode: number;
-  //         objData: Company;
-  //         errMessage: string;
-  //       }>(this.apiUrl + 'DeleteCompany' + {CompanyID: company.companyId, AddressID: company.addressId, UserSOEID: company.userSOEID}, { observe: 'response' })
-  //       .pipe(
-  //         tap({
-  //           next: (response) => {
-  //             console.log(response);
-  //           },
-  //           error: (error) => {
-  //             console.error(error);
-  //           }
-  //         })
-  //       );
-  //   }
   deleteCompany(company: any): Observable<any> {
     this.apiUrl = environment.apiUrl + 'Admin/DeleteCompany';
-
-    console.log('EMFTEST (deleteCompany) - company => \n', company);
-
     return this.http
       .put<{
         success: boolean;

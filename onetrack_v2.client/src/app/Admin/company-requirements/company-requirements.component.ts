@@ -3,6 +3,7 @@ import { Component, Injectable, OnInit } from '@angular/core';
 import {
   AdminComService,
   AdminDataService,
+  AppComService,
   ConstantsDataService,
   ModalService,
 } from '../../_services';
@@ -25,6 +26,7 @@ export class CompanyRequirementsComponent implements OnInit {
     private conService: ConstantsDataService,
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
+    public appComService: AppComService,
     public modalService: ModalService
   ) {}
 

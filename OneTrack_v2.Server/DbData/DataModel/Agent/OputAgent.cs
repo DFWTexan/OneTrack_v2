@@ -50,6 +50,8 @@ namespace OneTrack_v2.DataModel
         public string? BranchDeptPhone { get; set; }
         public string? BranchDeptFax { get; set; }
         public string? BranchDeptEmail { get; set; }
+        public string? WorkStateAbv { get; set; }
+        public string? ResStateAbv { get; set; } 
 
         public List<OputAgentHiearchy> MgrHiearchy { get; set; }
         public List<OputAgentLicenseAppointments> AgentLicenseAppointments { get; set; }

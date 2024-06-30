@@ -63,6 +63,17 @@ export class EditCoRequirementComponent implements OnInit, OnDestroy {
     // }
   }
 
+  forceCloseModal() {
+    const modalDiv = document.getElementById('modal-edit-co-requirement');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+  }
+
+  closeModal() {
+    this.forceCloseModal();
+  }
+
   ngOnDestroy(): void {
     this.subscriptionData.unsubscribe();
   }

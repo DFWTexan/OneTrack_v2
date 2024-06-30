@@ -46,7 +46,7 @@
       <div class="table" *ngIf="companyRequirements.length > 0">
         <thead>
           <tr class="sticky-top" style="background-color: gainsboro">
-            <th scope="col">ID</th>
+            <th scope="col" *ngIf="appComService.isShowEditID">ID</th>
             <th scope="col">Work State</th>
             <th scope="col">Res State</th>
             <th scope="col">Type</th>
@@ -61,7 +61,7 @@
         </thead>
         <tbody class="bg-body">
           <tr *ngFor="let company of companyRequirements">
-            <td class="align-middle" style="font-size: larger">
+            <td class="align-middle" style="font-size: larger" *ngIf="appComService.isShowEditID">
               {{ company.companyRequirementId }}
             </td>
             <td class="align-middle">{{ company.workStateAbv }}</td>

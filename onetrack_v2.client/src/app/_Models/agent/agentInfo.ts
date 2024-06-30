@@ -48,6 +48,8 @@ export interface AgentInfo {
   branchDeptStreetZip: string | null;
   branchDeptPhone: string | null;
   branchDeptFax: string | null;
+  workStateAbv: string | null;
+  resStateAbv: string | null;
   mgrHiearchy: ManagerHierarchy[];
   agentLicenseAppointments: AgentLicenseAppointments[];
   employmentHistory: EmploymentHistory[];

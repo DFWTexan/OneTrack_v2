@@ -108,6 +108,8 @@ namespace OneTrack_v2.Services
                                 DiaryEntryDate = diary != null ? diary.DiaryDate : null,
                                 DiaryNotes = diary != null ? diary.Notes : null,
                                 BranchCode = transferHistory != null ? transferHistory.BranchCode : null,
+                                WorkStateAbv = transferHistory != null ? transferHistory.WorkStateAbv : null,
+                                ResStateAbv = transferHistory != null ? transferHistory.ResStateAbv : null
                             };
 
                 var agent = query.AsNoTracking().Single();
