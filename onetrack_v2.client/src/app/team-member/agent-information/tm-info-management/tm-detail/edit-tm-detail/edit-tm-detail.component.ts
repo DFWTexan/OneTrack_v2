@@ -136,13 +136,13 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
     agent.fax = this.agentInfo.branchDeptFax;
     agent.employmentID = this.agentInfo.employmentID;
     //--> agent.email = this.agentInfo.email;
-    agent.workPhone = this.agentInfo.phone;
+    //--> agent.workPhone = this.agentInfo.phone;
     agent.employeeStatus = this.agentInfo.employeeStatus;
     agent.companyID = this.agentInfo.companyID;
     agent.ceRequired = this.agentInfo.ceRequired;
-    agent.licenseLevel = this.agentInfo.licenseLevel;
-    agent.licenseIncentive = this.agentInfo.licenseIncentive;
-    agent.secondChance = this.agentInfo.isLicenseincentiveSecondChance;
+    //--> agent.licenseLevel = this.agentInfo.licenseLevel;
+    //--> agent.licenseIncentive = this.agentInfo.licenseIncentive;
+    //--> agent.secondChance = this.agentInfo.isLicenseincentiveSecondChance;
     agent.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
     // if (agent.employerAgency === 0 || agent.employerAgency === '') {

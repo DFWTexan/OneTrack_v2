@@ -44,7 +44,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   htmlHeaderContent: SafeHtml = '' as SafeHtml;
   htmlFooterContent: SafeHtml = '' as SafeHtml;
   htmlContent: SafeHtml = '' as SafeHtml;
-  FileDisplayMode= 'ATTACHMENT'; // NONE / ATTACHMENT
+  FileDisplayMode= 'ATTACHMENT'; //--> CHOSEFILE / ATTACHMENT
   file: File | null = null;
   fileUri: string | null = null; 
 

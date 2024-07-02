@@ -512,6 +512,7 @@ namespace OneTrak_v2.Services
                         cmd.Parameters.Add(new SqlParameter("@EmployeeLicenseID", vInput.EmployeeLicenseID));
                         cmd.Parameters.Add(new SqlParameter("@CompanyID", vInput.CompanyID));
                         cmd.Parameters.Add(new SqlParameter("@CarrierDate", vInput.CarrierDate));
+                        cmd.Parameters.Add(new SqlParameter("@AppointmentStatus", vInput.AppointmentStatus));
                         cmd.Parameters.Add(new SqlParameter("@AppointmentEffectiveDate", vInput.AppointmentEffectiveDate));
                         cmd.Parameters.Add(new SqlParameter("@AppointmentExpireDate", vInput.AppointmentExpireDate));
                         cmd.Parameters.Add(new SqlParameter("@AppointmentTerminationDate", vInput.AppointmentTerminationDate));

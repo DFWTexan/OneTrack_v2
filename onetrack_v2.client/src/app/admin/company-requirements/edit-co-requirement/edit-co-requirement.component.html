@@ -6,61 +6,62 @@
   <div class="row">
     <div class="col">
       <div class="mb-3">
-        <label for="workState" class="form-label">Work State:</label>
+        <label for="workStateAbv" class="form-label">Work State:</label>
         <select
           class="form-select select-size-small"
           type="text"
-          id="workState"
-          formControlName="workState"
+          id="workStateAbv"
+          formControlName="workStateAbv"
         >
-          <!-- <option *ngFor="let state of states" [value]="state">
+          <option *ngFor="let state of states" [value]="state">
               {{ state }}
-            </option> -->
+            </option>
         </select>
       </div>
     </div>
-    <div class="col">
-      <div class="mb-3">
-        <label for="residentState" class="form-label">Resident State:</label>
-        <select
-          class="form-select select-size-small"
-          type="text"
-          id="residentState"
-          formControlName="residentState"
-        >
-          <!-- <option *ngFor="let state of states" [value]="state">
-            {{ state }}
-          </option> -->
-        </select>
-      </div>
-    </div>
-  </div>
 
-  <div class="row">
     <div class="col">
       <div class="mb-3">
-        <label for="residentState" class="form-label">Requirement Type:</label>
+        <label for="resStateAbv" class="form-label">Resident State:</label>
         <select
           class="form-select select-size-small"
           type="text"
-          id="residentState"
-          formControlName="residentState"
+          id="resStateAbv"
+          formControlName="resStateAbv"
         >
-          <!-- <option *ngFor="let state of states" [value]="state">
+          <option *ngFor="let state of states" [value]="state">
             {{ state }}
-          </option> -->
+          </option>
         </select>
       </div>
     </div>
+
     <div class="col">
       <div class="mb-3">
-        <label for="employmentHistoryID" class="form-label">Start After Date:</label
+        <label for="requirementType" class="form-label">Requirement Type:</label>
+        <select
+          class="form-select select-size-small"
+          type="text"
+          id="requirementType"
+          formControlName="requirementType"
+        >
+          <option *ngFor="let type of requirementTypes" [value]="type">
+            {{ type }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="mb-3">
+        <label for="startAfterDate" class="form-label"
+          >Start After Date:</label
         >
         <input
           class="form-control input-size-small"
-          type="text"
-          id="employmentHistoryID"
-          formControlName="employmentHistoryID"
+          type="date"
+          id="startAfterDate"
+          formControlName="startAfterDate"
         />
       </div>
     </div>
@@ -72,10 +73,10 @@
         <input
           class="form-check-input me-2 align-middle"
           type="checkbox"
-          id="secondChance"
-          formControlName="secondChance"
+          id="licLevel1"
+          formControlName="licLevel1"
         />
-        <label for="secondChance" class="form-label"> Lic Level 1: </label>
+        <label for="licLevel1" class="form-label"> Lic Level 1: </label>
       </div>
     </div>
     <div class="col">
@@ -83,36 +84,44 @@
         <input
           class="form-check-input me-2 align-middle"
           type="checkbox"
-          id="secondChance"
-          formControlName="secondChance"
+          id="licLevel2"
+          formControlName="licLevel2"
         />
-        <label for="secondChance" class="form-label"> Lic Level 2: </label>
+        <label for="licLevel2" class="form-label"> Lic Level 2: </label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="mb-3 mt-4">
+        <input
+          class="form-check-input me-2 align-middle"
+          type="checkbox"
+          id="licLevel3"
+          formControlName="licLevel3"
+        />
+        <label for="licLevel3" class="form-label"> Lic Level 3: </label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="mb-3 mt-4">
+        <input
+          class="form-check-input me-2 align-middle"
+          type="checkbox"
+          id="licLevel4"
+          formControlName="licLevel4"
+        />
+        <label for="licLevel4" class="form-label"> Lic Level 4: </label>
       </div>
     </div>
   </div>
 
-  <div class="row">
-    <div class="col">
-      <div class="mb-3 mt-4">
-        <input
-          class="form-check-input me-2 align-middle"
-          type="checkbox"
-          id="secondChance"
-          formControlName="secondChance"
-        />
-        <label for="secondChance" class="form-label"> Lic Level 3: </label>
-      </div>
-    </div>
-    <div class="col">
-      <div class="mb-3 mt-4">
-        <input
-          class="form-check-input me-2 align-middle"
-          type="checkbox"
-          id="secondChance"
-          formControlName="secondChance"
-        />
-        <label for="secondChance" class="form-label"> Lic Level 4: </label>
-      </div>
+  <div class="row mt-5 mb-3">
+    <div class="col-md-12">
+      <app-file-upload
+        [filePathUri]="fileUri"
+        [displayMode]="FileDisplayMode"
+        (fileSelected)="onFileSelected($event)"
+        #fileUpload
+      ></app-file-upload>
     </div>
   </div>
 
