@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
+import { Component, Injectable, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -18,6 +18,8 @@ import { formatDate } from '@angular/common';
 })
 @Injectable()
 export class EditCoRequirementComponent implements OnInit, OnDestroy {
+  @Input() workState: string | null = null;
+  @Input() resState: string | null = null;
   companyReqForm!: FormGroup;
   states: string[] = [];
   requirementTypes: string[] = ['New Hire'];
@@ -79,6 +81,13 @@ export class EditCoRequirementComponent implements OnInit, OnDestroy {
                 });
               }
             );
+          } else {
+            this.companyReqForm.reset();
+            this.companyReqForm.patchValue({
+              workStateAbv: this.workState ? this.workState : 'Select' ,
+              resStateAbv: this.resState ? this.resState : 'Select',
+              requirementType: 'New Hire',
+            });
           }
         }
       );

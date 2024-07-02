@@ -30,8 +30,8 @@ namespace OneTrak_v2.Services
 
         public async Task<ReturnResult> Upload(string vFilePathUri, Stream vStream)
         {
-			try
-			{
+            try
+            {
                 if (vStream == null)
                 {
                     _utilityService.LogError("vStream is NULL.", "Server Error - Please Contact Support [REF# DOCS-3569-92418].", new { }, null);
@@ -64,11 +64,11 @@ namespace OneTrak_v2.Services
                 {
                     StatusCode = 200,
                     Success = true,
-                    ObjData = new { Message = "File Upload Successful"}
+                    ObjData = new { Message = "File Upload Successful" }
                 };
-			}
-			catch (Exception ex)
-			{
+            }
+            catch (Exception ex)
+            {
                 _utilityService.LogError(ex.Message, "Server Error - Please Contact Support [REF# DOCS-3509-93412].", new { }, null);
 
                 return new ReturnResult
@@ -80,5 +80,40 @@ namespace OneTrak_v2.Services
             }
         }
 
+        Task<ReturnResult> Delete(string? vFilePathUri = null, string? vFilename = null)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                string filePath = vFilePathUri != null ? vFilePathUri : _attachmentLocation;
+
+                string fullPath = Path.Combine(filePath, vFilename);
+
+                if (File.Exists(fullPath))
+                {
+                    File.Delete(fullPath);
+
+                    result.StatusCode = 200;
+                    result.Success = true;
+                    result.ObjData = new { Message = "File Deleted Successfully" };
+                }
+                else
+                {
+                    result.StatusCode = 404;
+                    result.Success = false;
+                    result.ErrMessage = "File Not Found";
+                }
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# DOCS-3509-93412].";
+
+                _utilityService.LogError(ex.Message, "Server Error - Please Contact Support [REF# DOCS-3509-93413].", new { }, null);
+            }
+
+            return Task.FromResult(result);
+        }
     }
 }

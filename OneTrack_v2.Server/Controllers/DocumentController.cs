@@ -20,7 +20,7 @@ namespace OneTrak_v2.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Upload([FromForm] OneTrak_v2.Document.Model.IputFileUpload input)
+        public async Task<ActionResult> Upload([FromForm] OneTrak_v2.Document.Model.IputFileUploadDelete input)
         {
 
             if (input.File == null || input.File.Length == 0)
@@ -33,6 +33,17 @@ namespace OneTrak_v2.Controllers
             var stream = input.File.OpenReadStream();
 
             var result = await Task.Run(() => _documentService.Upload(input.FilePathUri, stream));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Delete([FromBody] OneTrak_v2.Document.Model.IputFileUploadDelete input)
+        {
+            if (string.IsNullOrEmpty(input.FilePathUri) || string.IsNullOrEmpty(input.FileName))
+                return BadRequest("File path or file name is empty");
+
+            var result = await Task.Run(() => _documentService.Delete(input.FilePathUri, input.FileName));
 
             return StatusCode(result.StatusCode, result);
         }
