@@ -11,6 +11,7 @@
       color="primary"
       class="upload-btn"
       (click)="fileUpload.click()"
+      [disabled]="isDisabled"
     >
       <mat-icon>attach_file</mat-icon>
     </button>
@@ -26,7 +27,18 @@
       class="file-upload"
       type="file"
       (change)="onFileSelected($event)"
+      [disabled]="isDisabled"
       #fileUpload
     />
+    <!-- <input
+      class="file-upload"
+      type="file"
+      (change)="onFileSelected($event)"
+      [disabled]="isDisabled"
+      [attr.aria-label]="isDisabled ? 'File upload disabled' : 'Upload file'"
+      accept="image/png, image/jpeg"
+      multiple
+      #fileUpload
+    /> -->
   </div>
 </ng-template>

@@ -12,6 +12,7 @@ import { ErrorMessageService } from '../../_services';
 export class FileUploadComponent {
   @Input() filePathUri: string | null = null;
   @Input() displayMode: string | null = null;
+  @Input() isDisabled: boolean = false;
   private url: string = environment.apiUrl + 'Document/';
   fileName = '';
 

@@ -114,12 +114,22 @@
     </div>
   </div>
 
+  <div class="row" *ngIf="isDocumentUploaded">
+    <div class="col-md-12 d-flex align-items-center" style="background-color: aliceblue;"> <!-- Use Flexbox here -->
+      <button class="icon-edit-delete-button mb-3" type="button">
+        <span class="material-symbols-outlined me-3">delete_forever</span>
+      </button>
+      <span class="ms-5 mt-3 mb-3" style="font-size: medium; font-weight: 500;">{{ companyReqForm.get('document')?.value }}</span>
+    </div>
+  </div>
+
   <div class="row mt-5 mb-3">
     <div class="col-md-12">
       <app-file-upload
         [filePathUri]="fileUri"
         [displayMode]="FileDisplayMode"
         (fileSelected)="onFileSelected($event)"
+        [isDisabled]="isDocumentUploaded"
         #fileUpload
       ></app-file-upload>
     </div>

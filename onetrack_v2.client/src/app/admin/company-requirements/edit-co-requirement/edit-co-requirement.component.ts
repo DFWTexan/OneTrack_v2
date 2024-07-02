@@ -21,6 +21,7 @@ export class EditCoRequirementComponent implements OnInit, OnDestroy {
   companyReqForm!: FormGroup;
   states: string[] = [];
   requirementTypes: string[] = ['New Hire'];
+  isDocumentUploaded: boolean = false;
   FileDisplayMode = 'CHOOSEFILE'; //--> CHOSEFILE / ATTACHMENT
   file: File | null = null;
   fileUri: string | null = null;
@@ -57,11 +58,11 @@ export class EditCoRequirementComponent implements OnInit, OnDestroy {
           if (mode === 'EDIT') {
             this.adminDataService.coRequirementChanged.subscribe(
               (companyReq: CompanyRequirement) => {
+                this.isDocumentUploaded = companyReq.document ? true : false;
                 this.companyReqForm.patchValue({
                   companyRequirementId: companyReq.companyRequirementId,
                   workStateAbv: companyReq.workStateAbv,
                   resStateAbv: companyReq.resStateAbv,
-                  // requirementType: companyReq.requirementType,
                   licLevel1: companyReq.licLevel1,
                   licLevel2: companyReq.licLevel2,
                   licLevel3: companyReq.licLevel3,
@@ -73,7 +74,8 @@ export class EditCoRequirementComponent implements OnInit, OnDestroy {
                         'en-US'
                       )
                     : null,
-                  document: companyReq.document,
+                    
+                  document: companyReq.document ? companyReq.document : '',
                 });
               }
             );
