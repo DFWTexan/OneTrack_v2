@@ -227,13 +227,17 @@ export class AdminDataService {
 
   // CONTINUE EDUCATION
   fetchLicenseTypes(stateProv: string | null = null) {
+    const queryParams = `?vStateAbv=${stateProv ? stateProv : ''}`;
+
+console.log('EMFTEST (fetchLicenseTypes) - stateProv: ', stateProv);
+
     return this.http
       .get<{
         success: boolean;
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'GetLicenseTypes' + (stateProv ? '/' + stateProv : ''))
+      }>(`${this.apiUrl}GetLicenseTypes/${queryParams}`)
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
