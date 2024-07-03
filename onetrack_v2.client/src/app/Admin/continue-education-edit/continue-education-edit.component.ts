@@ -1,4 +1,6 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+
 import {
   AdminComService,
   AdminDataService,
@@ -13,13 +15,15 @@ import { EducationRule } from '../../_Models';
   styleUrl: './continue-education-edit.component.css',
 })
 @Injectable()
-export class ContinueEducationEditComponent implements OnInit {
+export class ContinueEducationEditComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   stateProvinces: any[] = [];
   licenseTypes: any[] = ['Loading...'];
   selectedStateProvince: string | null = '';
   selectedLicenseType: string | null = '';
   contEducationRules: EducationRule[] = [] as EducationRule[];
+
+  subscriptionData: Subscription = new Subscription();
 
   constructor(
     private conService: ConstantsDataService,
@@ -30,9 +34,14 @@ export class ContinueEducationEditComponent implements OnInit {
 
   ngOnInit(): void {
     this.stateProvinces = ['ALL', ...this.conService.getStateProvinces()];
-    this.adminDataService.fetchLicenseTypes().subscribe((response) => {
-      this.licenseTypes = ['ALL', ...response];
-    });
+
+    // this.subscriptionData.add(
+    //   this.adminDataService.fetchLicenseTypes().subscribe((response) => {
+    //     this.licenseTypes = ['ALL', ...response];
+    //   })
+    // );
+    this.fetchLicenseTypes();
+
     this.fetchEducationRules();
   }
 
@@ -46,6 +55,7 @@ export class ContinueEducationEditComponent implements OnInit {
       this.selectedStateProvince = null;
     }
 
+    this.fetchLicenseTypes();
     this.fetchEducationRules();
   }
 
@@ -63,16 +73,34 @@ export class ContinueEducationEditComponent implements OnInit {
     this.fetchEducationRules();
   }
 
+fetchLicenseTypes() {
+    this.subscriptionData.add(
+      this.adminDataService.fetchLicenseTypes(this.selectedStateProvince == 'ALL' ? null : this.selectedStateProvince).subscribe((response) => {
+        this.licenseTypes = ['ALL', ...response];
+      })
+    );
+  }
+
   fetchEducationRules() {
     this.loading = true;
-    this.adminDataService
-      .fetchEducationRules(this.selectedStateProvince, this.selectedLicenseType)
-      .subscribe((response) => {
+
+    this.subscriptionData.add(
+      this.adminDataService
+        .fetchEducationRules(
+          this.selectedStateProvince,
+          this.selectedLicenseType
+        )
+        .subscribe((response) => {
 
 console.log('EMFTEST (app-continue-education-edit) - response => \n', response);
 
-        this.contEducationRules = response;
-        this.loading = false;
-      });
+          this.contEducationRules = response;
+          this.loading = false;
+        })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptionData.unsubscribe();
   }
 }

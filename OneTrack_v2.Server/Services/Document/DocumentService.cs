@@ -80,7 +80,7 @@ namespace OneTrak_v2.Services
             }
         }
 
-        Task<ReturnResult> Delete(string? vFilePathUri = null, string? vFilename = null)
+        public async Task<ReturnResult> Delete(string? vFilePathUri = null, string? vFilename = null)
         {
             var result = new ReturnResult();
             try
@@ -113,7 +113,7 @@ namespace OneTrak_v2.Services
                 _utilityService.LogError(ex.Message, "Server Error - Please Contact Support [REF# DOCS-3509-93413].", new { }, null);
             }
 
-            return Task.FromResult(result);
+            return await Task.FromResult(result);
         }
     }
 }

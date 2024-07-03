@@ -385,7 +385,7 @@ namespace OneTrak_v2.Services
             return result;
         }
 
-        public ReturnResult GetLicenseByStateProv(string vStateProv)
+        public ReturnResult GetLicenseByStateProv(string? vStateProv = null)
         {
             ReturnResult result = new ReturnResult();
             try

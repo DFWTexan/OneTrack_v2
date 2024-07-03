@@ -6,6 +6,6 @@ namespace OneTrak_v2.Services
     {
         Task<ReturnResult> Upload(string vFilePathUri, Stream vStream);
 
-        Task<ReturnResult> Delete(string vFilePathUri, string vFilename);
+        Task<ReturnResult> Delete(string? vFilePathUri = null, string? vFilename = null);
     }
 }

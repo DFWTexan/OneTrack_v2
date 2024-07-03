@@ -226,14 +226,14 @@ export class AdminDataService {
   }
 
   // CONTINUE EDUCATION
-  fetchLicenseTypes() {
+  fetchLicenseTypes(stateProv: string | null = null) {
     return this.http
       .get<{
         success: boolean;
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'GetLicenseTypes')
+      }>(this.apiUrl + 'GetLicenseTypes' + (stateProv ? '/' + stateProv : ''))
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -248,7 +248,7 @@ export class AdminDataService {
   }
 
   fetchEducationRules(stateAbv: string | null, licenseType: string | null) {
-    const queryParams = `?stateAbv=${stateAbv}&licenseType=${licenseType}`;
+    const queryParams = `?stateAbv=${stateAbv ? stateAbv : ''}&licenseType=${licenseType ? licenseType : ''}`;
 
     return this.http
       .get<{

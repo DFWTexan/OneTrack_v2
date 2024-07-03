@@ -53,12 +53,14 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
       isCurrent: new FormControl(null),
     });
 
-    this.miscDataService
+    this.subscriptions.add(
+      this.miscDataService
       .fetchBackgroundStatuses()
       .subscribe((backgroundStatuses: Array<{ lkpValue: string }>) => {
         this.backgroundStatuses = [{ lkpValue: 'N/A' }, ...backgroundStatuses];
-      });
-
+      })
+    );
+    
     this.subscriptions.add(
       this.agentComService.modeEmploymentHistChanged.subscribe(
         (mode: string) => {
