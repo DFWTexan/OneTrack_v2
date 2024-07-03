@@ -229,8 +229,6 @@ export class AdminDataService {
   fetchLicenseTypes(stateProv: string | null = null) {
     const queryParams = `?vStateAbv=${stateProv ? stateProv : ''}`;
 
-console.log('EMFTEST (fetchLicenseTypes) - stateProv: ', stateProv);
-
     return this.http
       .get<{
         success: boolean;
@@ -252,7 +250,9 @@ console.log('EMFTEST (fetchLicenseTypes) - stateProv: ', stateProv);
   }
 
   fetchEducationRules(stateAbv: string | null, licenseType: string | null) {
-    const queryParams = `?stateAbv=${stateAbv ? stateAbv : ''}&licenseType=${licenseType ? licenseType : ''}`;
+    const queryParams = `?stateAbv=${stateAbv ? stateAbv : ''}&licenseType=${
+      licenseType ? licenseType : ''
+    }`;
 
     return this.http
       .get<{

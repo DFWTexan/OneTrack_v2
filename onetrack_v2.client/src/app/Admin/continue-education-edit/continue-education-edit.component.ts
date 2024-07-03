@@ -35,11 +35,6 @@ export class ContinueEducationEditComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.stateProvinces = ['ALL', ...this.conService.getStateProvinces()];
 
-    // this.subscriptionData.add(
-    //   this.adminDataService.fetchLicenseTypes().subscribe((response) => {
-    //     this.licenseTypes = ['ALL', ...response];
-    //   })
-    // );
     this.fetchLicenseTypes();
 
     this.fetchEducationRules();
@@ -73,11 +68,17 @@ export class ContinueEducationEditComponent implements OnInit, OnDestroy {
     this.fetchEducationRules();
   }
 
-fetchLicenseTypes() {
+  fetchLicenseTypes() {
     this.subscriptionData.add(
-      this.adminDataService.fetchLicenseTypes(this.selectedStateProvince == 'ALL' ? null : this.selectedStateProvince).subscribe((response) => {
-        this.licenseTypes = ['ALL', ...response];
-      })
+      this.adminDataService
+        .fetchLicenseTypes(
+          this.selectedStateProvince == 'ALL'
+            ? null
+            : this.selectedStateProvince
+        )
+        .subscribe((response) => {
+          this.licenseTypes = ['ALL', ...response];
+        })
     );
   }
 
@@ -91,9 +92,6 @@ fetchLicenseTypes() {
           this.selectedLicenseType
         )
         .subscribe((response) => {
-
-console.log('EMFTEST (app-continue-education-edit) - response => \n', response);
-
           this.contEducationRules = response;
           this.loading = false;
         })

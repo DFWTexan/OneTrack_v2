@@ -62,6 +62,38 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
   onSubmit() {
   }
 
+  forceCloseModal() {
+    const modalDiv = document.getElementById('modal-edit-edu-rule');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+  }
+
+  closeModal() {
+    this.forceCloseModal();
+    // if (this.employmentHistoryForm.dirty && !this.isFormSubmitted) {
+    //   if (
+    //     confirm('You have unsaved changes. Are you sure you want to close?')
+    //   ) {
+    //     const modalDiv = document.getElementById('modal-edit-emp-history');
+    //     if (modalDiv != null) {
+    //       modalDiv.style.display = 'none';
+    //     }
+    //     this.employmentHistoryForm.reset();
+    //     this.employmentHistoryForm.patchValue({
+    //       backgroundCheckStatus: 'Pending',
+    //       isCurrent: true,
+    //     });
+    //   }
+    // } else {
+    //   this.isFormSubmitted = false;
+    //   const modalDiv = document.getElementById('modal-edit-emp-history');
+    //   if (modalDiv != null) {
+    //     modalDiv.style.display = 'none';
+    //   }
+    // }
+  }
+
   ngOnDestroy(): void {
     this.subscriptionData.unsubscribe();
   }
