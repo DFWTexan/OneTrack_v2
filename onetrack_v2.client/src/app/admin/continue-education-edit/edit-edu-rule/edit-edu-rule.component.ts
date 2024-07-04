@@ -159,9 +159,9 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
     const value = target.value;
 
     if (value === 'Select') {
-      this.isStateProvinceSelected = false;
+      // this.isStateProvinceSelected = false;
     } else {
-      this.isLicenseTypeSelected = true;
+      // this.isLicenseTypeSelected = true;
     }
 
     this.selectedStateProvince = value;
@@ -169,7 +169,7 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
   }
 
   onLicenseSelected(event: any) {
-    this.isLicenseTypeSelected = true;
+    // this.isLicenseTypeSelected = true;
     const target = event.target as HTMLInputElement;
     const value = target.value;
     this.licenseTypeSelected = value;
