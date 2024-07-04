@@ -89,7 +89,6 @@
       >
     </div>
     <div class="col-md-9 d-flex justify-content-center">
-      <!-- <div class="row"> -->
       <select
         class="form-select select-size-medium"
         type="text"
@@ -109,7 +108,6 @@
           {{ item.label }}
         </option>
       </select>
-      <!-- </div> -->
     </div>
   </div>
 
@@ -142,6 +140,7 @@
         <input
           type="checkbox"
           [value]="checkbox.value"
+          [checked]="exceptionIDs.includes(checkbox.value)"
           (change)="onCheckboxChange($event, checkbox.value, 'EXCEPTION')"
           id="checkbox{{ checkbox.value }}"
         />
@@ -167,6 +166,7 @@
         <input
           type="checkbox"
           [value]="checkbox.value"
+          [checked]="exemptionIDs.includes(checkbox.value)"
           (change)="onCheckboxChange($event, checkbox.value, 'EXEMPTION')"
           id="checkbox{{ checkbox.value }}"
         />

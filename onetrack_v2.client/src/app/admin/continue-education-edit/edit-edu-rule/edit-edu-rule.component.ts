@@ -30,6 +30,8 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
   exemptions: any[] = [];
   selectedExceptionValues: number[] = [];
   selectedExemptionValues: number[] = [];
+  exceptionIDs: number[] = [];
+  exemptionIDs: number[] = [];
 
   subscriptionData: Subscription = new Subscription();
 
@@ -108,6 +110,8 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
             this.subscriptionData.add(
               this.adminDataService.educationRuleChanged.subscribe(
                 (eduRule: EducationRule) => {
+                  this.exceptionIDs = eduRule.exceptionID.split(',').map(id => Number(id));
+                  this.exemptionIDs = eduRule.exemptionID.split(',').map(id => Number(id));
                   this.eduRuleForm.patchValue({
                     ruleNumber: eduRule.ruleNumber,
                     stateProvince: eduRule.stateProvince,
@@ -163,6 +167,8 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
     } else {
       // this.isLicenseTypeSelected = true;
     }
+
+    this.licenseTypeItem = null;
 
     this.selectedStateProvince = value;
     this.fetchLicenseTypes();
