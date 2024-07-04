@@ -99,9 +99,10 @@
     </div>
     <div class="col-md-9">
       <input
-        class="form-control input-size-small"
-        type="text"
+        class="form-control input-size-mini"
+        type="number"
         id="requiredCreditHours"
+        min="1"
       />
     </div>
   </div>
@@ -119,7 +120,7 @@
         <input
           type="checkbox"
           [value]="checkbox.value"
-          (change)="onCheckboxChange($event, checkbox.value)"
+          (change)="onCheckboxChange($event, checkbox.value, 'EXCEPTION')"
           id="checkbox{{ checkbox.value }}"
         />
         <label
@@ -144,7 +145,7 @@
         <input
           type="checkbox"
           [value]="checkbox.value"
-          (change)="onCheckboxChange($event, checkbox.value)"
+          (change)="onCheckboxChange($event, checkbox.value, 'EXEMPTION')"
           id="checkbox{{ checkbox.value }}"
         />
         <label

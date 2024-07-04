@@ -2,7 +2,11 @@ import { Component, Injectable, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { AdminComService, AdminDataService, DropdownDataService } from '../../../_services';
+import {
+  AdminComService,
+  AdminDataService,
+  DropdownDataService,
+} from '../../../_services';
 import { EducationRule } from '../../../_Models';
 
 @Component({
@@ -19,8 +23,9 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
   conStartDates: any[] = [];
   conEndDates: any[] = [];
   exceptions: any[] = [];
-  exemptions: any[] = [];  
-  selectedValues: number[] = [];
+  exemptions: any[] = [];
+  selectedExceptionValues: number[] = [];
+  selectedExemptionValues: number[] = [];
 
   subscriptionData: Subscription = new Subscription();
 
@@ -35,11 +40,14 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
       if (province === 'ALL') {
         return 'Select';
       }
-      
+
       this.subscriptionData.add(
         this.dropdownDataService.conEduStartDateItemsChanged.subscribe(
           (items: any[]) => {
-            this.conStartDates = [{value: null, label: "Select CE Start"}, ...items];
+            this.conStartDates = [
+              { value: null, label: 'Select CE Start' },
+              ...items,
+            ];
           }
         )
       );
@@ -47,7 +55,10 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
       this.subscriptionData.add(
         this.dropdownDataService.conEduEndtDateItemsChanged.subscribe(
           (items: any[]) => {
-            this.conEndDates = [{value: null, label: "Select CE End"}, ...items];
+            this.conEndDates = [
+              { value: null, label: 'Select CE End' },
+              ...items,
+            ];
           }
         )
       );
@@ -137,13 +148,29 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
     );
   }
 
-  onCheckboxChange(event: any, value: number) {
+  onCheckboxChange(event: any, value: number, type: string) {
     if (event.target.checked) {
-      this.selectedValues.push(value);
+      // this.selectedValues.push(value);
+      if (type === 'EXCEPTION') {
+        this.selectedExceptionValues.push(value);
+      } else {
+        this.selectedExemptionValues.push(value);
+      }
     } else {
-      const index = this.selectedValues.indexOf(value);
-      if (index > -1) {
-        this.selectedValues.splice(index, 1);
+      // const index = this.selectedValues.indexOf(value);
+      // if (index > -1) {
+      //   this.selectedValues.splice(index, 1);
+      // }
+      if (type === 'EXCEPTION') {
+        const index = this.selectedExceptionValues.indexOf(value);
+        if (index > -1) {
+          this.selectedExceptionValues.splice(index, 1);
+        }
+      } else {
+        const index = this.selectedExemptionValues.indexOf(value);
+        if (index > -1) {
+          this.selectedExemptionValues.splice(index, 1);
+        }
       }
     }
   }
