@@ -43,9 +43,12 @@
       <h1>No Record(s) Found</h1>
     </div>
     <div class="col-md-12">
-      <table class="table" *ngIf="companies.length > 0" style="width: 100%;">
+      <table class="table" *ngIf="companies.length > 0" style="width: 100%">
         <thead>
-          <tr class="sticky-top" style="background-color: gainsboro; width: 100%;">
+          <tr
+            class="sticky-top"
+            style="background-color: gainsboro; width: 100%"
+          >
             <th scope="col">Type</th>
             <th scope="col" *ngIf="appComService.isShowEditID">ID</th>
             <th scope="col">Abv</th>
@@ -61,7 +64,9 @@
             <td class="align-middle" style="font-size: larger">
               {{ company.companyType }}
             </td>
-            <td class="align-middle" *ngIf="appComService.isShowEditID">{{ company.companyId }}</td>
+            <td class="align-middle" *ngIf="appComService.isShowEditID">
+              {{ company.companyId }}
+            </td>
             <td class="align-middle text-nowrap">
               {{ company.companyAbv }}
             </td>
@@ -90,9 +95,14 @@
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
                 <button class="icon-edit-delete-button" type="button">
-                  <span class="material-symbols-outlined" (click)="
-                  openConfirmDialog('deleteCoEdit', 'Compay Edit', company)
-                "> delete </span>
+                  <span
+                    class="material-symbols-outlined"
+                    (click)="
+                      openConfirmDialog('deleteCoEdit', 'Compay Edit', company)
+                    "
+                  >
+                    delete
+                  </span>
                 </button>
               </div>
             </td>

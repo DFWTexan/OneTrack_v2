@@ -32,7 +32,7 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
   licenseTypes: any[] = [];
   licenseTypeSelected: string | null = null;
   licenseTypeItem: string | null = null;
-
+  
   selectedExceptionValues: number[] = [];
   selectedExemptionValues: number[] = [];
 

@@ -101,7 +101,14 @@
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
                 <button class="icon-edit-delete-button" type="button">
-                  <span class="material-symbols-outlined"> delete </span>
+                  <span
+                    class="material-symbols-outlined"
+                    (click)="
+                      openConfirmDialog('disableEduRuleEdit', 'Edu Rule Disable', rule)
+                    "
+                  >
+                    delete
+                  </span>
                 </button>
               </div>
             </td>

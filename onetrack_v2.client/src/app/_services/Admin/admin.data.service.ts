@@ -294,7 +294,7 @@ export class AdminDataService {
       );
   }
 
-  disableEducationRule(educationRule: EducationRule) {
+  disableEducationRule(educationRule: any) {
     return this.http
       .put<{
         success: boolean;
