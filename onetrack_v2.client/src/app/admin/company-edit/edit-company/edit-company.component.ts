@@ -1,4 +1,11 @@
-import { Component, Injectable, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  Injectable,
+  OnInit,
+  OnDestroy,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Input } from '@angular/core';
 import { Subscription } from 'rxjs';
@@ -123,9 +130,6 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
       },
       error: (error) => {
         if (error.error && error.error.errMessage) {
-
-console.error('EMFTEST (ERROR) - error: ', error);
-
           this.errorMessageService.setErrorMessage(error.error.errMessage);
         }
       },

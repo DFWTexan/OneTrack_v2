@@ -129,8 +129,14 @@
     <div>
       <div>
         <app-edit-edu-rule
+          (callParentRefreshData)="onChildCallRefreshData()"
           [stateProvinces]="stateProvinces"
-          [selectedStateProvince]="selectedStateProvince">
+          [selectedStateProvince]="selectedStateProvince"
+          [conStartDates]="conStartDates"
+          [conEndDates]="conEndDates"
+          [exceptions]="exceptions"
+          [exemptions]="exemptions"
+        >
         </app-edit-edu-rule>
       </div>
     </div>

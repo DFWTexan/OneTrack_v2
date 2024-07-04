@@ -272,6 +272,53 @@ export class AdminDataService {
       );
   }
 
+  upSertEducationRule(educationRule: EducationRule) {
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: EducationRule;
+        errMessage: string;
+      }>(this.apiUrl + 'UpsertEducationRule', educationRule, {
+        observe: 'response',
+      })
+      .pipe(
+        tap({
+          next: (response) => {
+            console.log(response.status);
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        })
+      );
+  }
+
+  disableEducationRule(educationRule: EducationRule) {
+    return this.http
+      .put<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'DisableEducationRule', educationRule)
+      .pipe(
+        tap({
+          next: (response) => {
+            if (response.success && response.statusCode === 200) {
+              // return response;
+            } else {
+              throw new Error(response.errMessage || 'Unknown error');
+            }
+          },
+          error: (error) => {
+            // console.error(error);
+            // throw error;
+          },
+        })
+      );
+  }
+
   // DROPDOWN LIST
   fetchDropdownListTypes() {
     return this.http

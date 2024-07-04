@@ -199,6 +199,22 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> UpsertEducationRule([FromBody] IputUpsertEducationRule input)
+        {
+            var result = await Task.Run(() => _adminService.UpsertEducationRule(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> DisableEducationRule([FromBody] IputDisableEducationRule input)
+        {
+            var result = await Task.Run(() => _adminService.DisableEducationRule(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
         #endregion
     }
 }

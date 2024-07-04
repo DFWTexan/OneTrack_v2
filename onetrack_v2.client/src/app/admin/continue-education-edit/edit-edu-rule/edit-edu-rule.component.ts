@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, Injectable, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -6,6 +6,8 @@ import {
   AdminComService,
   AdminDataService,
   DropdownDataService,
+  ErrorMessageService,
+  UserAcctInfoDataService,
 } from '../../../_services';
 import { EducationRule } from '../../../_Models';
 
@@ -16,78 +18,45 @@ import { EducationRule } from '../../../_Models';
 })
 @Injectable()
 export class EditEduRuleComponent implements OnInit, OnDestroy {
+  @Output() callParentRefreshData = new EventEmitter<any>();
   @Input() stateProvinces: any[] = [];
   @Input() selectedStateProvince: string | null = 'Select';
+  @Input() conStartDates: any[] = [];
+  @Input() conEndDates: any[] = [];
+  @Input() exceptions: any[] = [];
+  @Input() exemptions: any[] = [];
   eduRuleForm!: FormGroup;
+  isFormSubmitted = false;
   isStateProvinceSelected: boolean = false;
   isLicenseTypeSelected: boolean = false;
   licenseTypes: any[] = [];
   licenseTypeSelected: string | null = null;
   licenseTypeItem: string | null = null;
-  conStartDates: any[] = [];
-  conEndDates: any[] = [];
-  exceptions: any[] = [];
-  exemptions: any[] = [];
+
   selectedExceptionValues: number[] = [];
   selectedExemptionValues: number[] = [];
-  exceptionIDs: number[] = [];
-  exemptionIDs: number[] = [];
 
   subscriptionData: Subscription = new Subscription();
 
   constructor(
+    private errorMessageService: ErrorMessageService,
     public adminDataService: AdminDataService,
-    private dropdownDataService: DropdownDataService,
-    public adminComService: AdminComService
+    // private dropdownDataService: DropdownDataService,
+    public adminComService: AdminComService,
+    private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {
-    this.stateProvinces = this.stateProvinces.map((province) => {
-      if (province === 'ALL') {
-        return 'Select';
-      }
+    this.initializeForm();
 
-      this.subscriptionData.add(
-        this.dropdownDataService.conEduStartDateItemsChanged.subscribe(
-          (items: any[]) => {
-            this.conStartDates = [
-              { value: null, label: 'Select CE Start' },
-              ...items,
-            ];
-          }
-        )
-      );
+    this.subscribeToDropdownDataChanges();
 
-      this.subscriptionData.add(
-        this.dropdownDataService.conEduEndtDateItemsChanged.subscribe(
-          (items: any[]) => {
-            this.conEndDates = [
-              { value: null, label: 'Select CE End' },
-              ...items,
-            ];
-          }
-        )
-      );
+    this.subscribeToModeChanges();
+    
+    this.fetchLicenseTypes();
+  }
 
-      this.subscriptionData.add(
-        this.dropdownDataService.conEduExceptionsChanged.subscribe(
-          (items: any[]) => {
-            this.exceptions = items;
-          }
-        )
-      );
-
-      this.subscriptionData.add(
-        this.dropdownDataService.conEduExemptionsChanged.subscribe(
-          (items: any[]) => {
-            this.exemptions = items;
-          }
-        )
-      );
-
-      return province;
-    });
-
+  private initializeForm(): void {
     this.eduRuleForm = new FormGroup({
       ruleNumber: new FormControl(''),
       stateProvince: new FormControl(''),
@@ -101,46 +70,71 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
       exemptionID: new FormControl(''),
       isActive: new FormControl(''),
     });
+  }
 
+  private subscribeToDropdownDataChanges(): void {
+    this.stateProvinces = this.stateProvinces.map((province) => {
+      if (province === 'ALL') {
+        return 'Select';
+      }
+      return province;
+    });
+  }
+
+  private subscribeToModeChanges(): void {
     this.subscriptionData.add(
       this.adminComService.modes.educationRule.changed.subscribe(
         (mode: string) => {
           if (mode === 'EDIT') {
-            this.isStateProvinceSelected = true;
-            this.subscriptionData.add(
-              this.adminDataService.educationRuleChanged.subscribe(
-                (eduRule: EducationRule) => {
-                  this.exceptionIDs = eduRule.exceptionID.split(',').map(id => Number(id));
-                  this.exemptionIDs = eduRule.exemptionID.split(',').map(id => Number(id));
-                  this.eduRuleForm.patchValue({
-                    ruleNumber: eduRule.ruleNumber,
-                    stateProvince: eduRule.stateProvince,
-                    licenseType: eduRule.licenseType,
-                    requiredCreditHours: eduRule.requiredCreditHours,
-                    educationStartDateID: eduRule.educationStartDateID,
-                    educationStartDate: eduRule.educationStartDate,
-                    educationEndDateID: eduRule.educationEndDateID,
-                    educationEndDate: eduRule.educationEndDate,
-                    exceptionID: eduRule.exceptionID,
-                    exemptionID: eduRule.exemptionID,
-                    isActive: eduRule.isActive,
-                  });
-                }
-              )
-            );
+            this.handleEditMode();
           } else {
-            this.eduRuleForm.reset();
-            this.eduRuleForm.patchValue({
-              stateProvince: this.selectedStateProvince
-                ? this.selectedStateProvince
-                : 'Select',
-            });
+            this.handleCreateMode();
           }
         }
       )
     );
+  }
 
-    this.fetchLicenseTypes();
+  private handleEditMode(): void {
+    this.isStateProvinceSelected = true;
+    this.subscriptionData.add(
+      this.adminDataService.educationRuleChanged.subscribe(
+        (eduRule: EducationRule) => {
+          this.populateFormForEdit(eduRule);
+        }
+      )
+    );
+  }
+
+  private handleCreateMode(): void {
+    this.eduRuleForm.reset();
+    this.eduRuleForm.patchValue({
+      stateProvince: this.selectedStateProvince ? this.selectedStateProvince : 'Select',
+      educationStartDateID: null,
+      educationEndDateID: null,
+    });
+  }
+  
+  private populateFormForEdit(eduRule: EducationRule): void {
+    this.selectedExceptionValues = eduRule.exceptionID
+      ? eduRule.exceptionID.split(',').map((id) => Number(id))
+      : [];
+    this.selectedExemptionValues = eduRule.exemptionID
+      ? eduRule.exemptionID.split(',').map((id) => Number(id))
+      : [];
+    this.eduRuleForm.patchValue({
+      ruleNumber: eduRule.ruleNumber,
+      stateProvince: eduRule.stateProvince,
+      licenseType: eduRule.licenseType,
+      requiredCreditHours: eduRule.requiredCreditHours,
+      educationStartDateID: eduRule.educationStartDateID,
+      educationStartDate: eduRule.educationStartDate,
+      educationEndDateID: eduRule.educationEndDateID,
+      educationEndDate: eduRule.educationEndDate,
+      exceptionID: eduRule.exceptionID,
+      exemptionID: eduRule.exemptionID,
+      isActive: eduRule.isActive,
+    });
   }
 
   fetchLicenseTypes() {
@@ -181,10 +175,7 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
     this.licenseTypeSelected = value;
   }
 
-  addLicenseType(addType: string) {
-    // if (this.licenseTypeItem) {
-    //   this.licenseTypes.push(this.licenseTypeItem);
-    // }
+  onAddLicenseType(addType: string) {
     if (addType === 'SELECTION') {
       if (this.licenseTypeItem == null || this.licenseTypeItem === '') {
         this.licenseTypeItem = this.licenseTypeSelected;
@@ -198,21 +189,19 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
         this.licenseTypeItem += ` + ${this.licenseTypeSelected}`;
       }
     }
+    this.eduRuleForm.patchValue({
+      licenseType: this.licenseTypeItem,
+    });
   }
 
   onCheckboxChange(event: any, value: number, type: string) {
     if (event.target.checked) {
-      // this.selectedValues.push(value);
       if (type === 'EXCEPTION') {
         this.selectedExceptionValues.push(value);
       } else {
         this.selectedExemptionValues.push(value);
       }
     } else {
-      // const index = this.selectedValues.indexOf(value);
-      // if (index > -1) {
-      //   this.selectedValues.splice(index, 1);
-      // }
       if (type === 'EXCEPTION') {
         const index = this.selectedExceptionValues.indexOf(value);
         if (index > -1) {
@@ -227,7 +216,34 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit() {}
+  onSubmit() {
+    this.isFormSubmitted = true;
+
+    let eduRuleItem: any = this.eduRuleForm.value;
+
+    eduRuleItem.exceptionID = this.selectedExceptionValues.join(',');
+    eduRuleItem.exemptionID = this.selectedExemptionValues.join(',');
+    eduRuleItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+
+    if (this.eduRuleForm.invalid) {
+      this.eduRuleForm.setErrors({ invalid: true });
+      return;
+    }
+
+    this.subscriptionData.add(
+      this.adminDataService.upSertEducationRule(eduRuleItem).subscribe({
+        next: (response) => {
+          this.callParentRefreshData.emit();
+          this.forceCloseModal();
+        },
+        error: (error) => {
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+          }
+        },
+      })
+    );
+  }
 
   forceCloseModal() {
     const modalDiv = document.getElementById('modal-edit-edu-rule');

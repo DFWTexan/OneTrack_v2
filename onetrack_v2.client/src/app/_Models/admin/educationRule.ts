@@ -10,4 +10,5 @@ export interface EducationRule {
     exceptionID: string;
     exemptionID: string;
     isActive: boolean;
+    userSOEID: string;
   }

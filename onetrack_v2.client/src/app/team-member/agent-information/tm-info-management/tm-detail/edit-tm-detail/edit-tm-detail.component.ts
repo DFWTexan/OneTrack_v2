@@ -108,8 +108,7 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.isFormSubmitted = true;
-    console.log('EMFTEST () - this.form.value => \n', this.form.value);
-
+    
     if (!this.form || !this.agentInfo) {
       // Handle the case where this.form or this.agentInfo is null or undefined
       return;

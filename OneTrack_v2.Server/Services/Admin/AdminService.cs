@@ -49,36 +49,36 @@ namespace OneTrak_v2.Services
             }
             return result;
         }
-        
+
         public ReturnResult GetCompaniesByType(string? vCompanyType = null)
         {
             ReturnResult result = new ReturnResult();
             try
             {
                 var resCompanies = (from c in _db.Companies
-                                  join a in _db.Addresses on c.AddressId equals a.AddressId into ca
-                                  from a in ca.DefaultIfEmpty()
-                                  where vCompanyType == null || c.CompanyType == vCompanyType
-                                  group new { c, a } by new
-                                  {
-                                      c.CompanyId,
-                                      c.CompanyAbv,
-                                      c.CompanyType,
-                                      c.CompanyName,
-                                      c.Tin,
-                                      c.Naicnumber,
-                                      a.AddressId,
-                                      a.Address1,
-                                      a.Address2,
-                                      a.City,
-                                      a.State,
-                                      a.Phone,
-                                      a.Country,
-                                      a.Zip,
-                                      a.Fax
-                                  } into g
-                                  orderby g.Key.CompanyName
-                                  select g.Key).AsNoTracking().ToList();
+                                    join a in _db.Addresses on c.AddressId equals a.AddressId into ca
+                                    from a in ca.DefaultIfEmpty()
+                                    where vCompanyType == null || c.CompanyType == vCompanyType
+                                    group new { c, a } by new
+                                    {
+                                        c.CompanyId,
+                                        c.CompanyAbv,
+                                        c.CompanyType,
+                                        c.CompanyName,
+                                        c.Tin,
+                                        c.Naicnumber,
+                                        a.AddressId,
+                                        a.Address1,
+                                        a.Address2,
+                                        a.City,
+                                        a.State,
+                                        a.Phone,
+                                        a.Country,
+                                        a.Zip,
+                                        a.Fax
+                                    } into g
+                                    orderby g.Key.CompanyName
+                                    select g.Key).AsNoTracking().ToList();
 
                 result.ObjData = resCompanies;
                 result.Success = true;
@@ -91,7 +91,7 @@ namespace OneTrak_v2.Services
             }
             return result;
         }
-        
+
         public ReturnResult GetLicenseTypes(string? vStateAbv = null)
         {
             ReturnResult result = new ReturnResult();
@@ -262,7 +262,7 @@ namespace OneTrak_v2.Services
                 result.ErrMessage = ex.Message;
             }
             return result;
-        }   
+        }
 
         public ReturnResult GetExamByState(string vState)
         {
@@ -270,19 +270,19 @@ namespace OneTrak_v2.Services
             try
             {
                 var resultExams = from e in _db.Exams
-                                 join c in _db.Companies on e.ExamProviderId equals c.CompanyId into ec
-                                 from subCompany in ec.DefaultIfEmpty()
-                                 where e.StateProvinceAbv == vState
+                                  join c in _db.Companies on e.ExamProviderId equals c.CompanyId into ec
+                                  from subCompany in ec.DefaultIfEmpty()
+                                  where e.StateProvinceAbv == vState
                                   select new
-                                 {
-                                     e.ExamId,
-                                     e.ExamName,
-                                     e.ExamFees,
-                                     e.StateProvinceAbv,
-                                     e.ExamProviderId,
-                                     CompanyName = subCompany != null ? subCompany.CompanyName : null,
-                                     e.DeliveryMethod
-                                 };
+                                  {
+                                      e.ExamId,
+                                      e.ExamName,
+                                      e.ExamFees,
+                                      e.StateProvinceAbv,
+                                      e.ExamProviderId,
+                                      CompanyName = subCompany != null ? subCompany.CompanyName : null,
+                                      e.DeliveryMethod
+                                  };
 
                 result.ObjData = resultExams;
                 result.Success = true;
@@ -359,19 +359,19 @@ namespace OneTrak_v2.Services
             try
             {
                 var resultJobTitles = from jt in _db.JobTitles
-                                     orderby jt.IsActive descending, jt.LicenseLevel, jt.JobTitle1
-                                     select new
-                                     {
-                                         jt.JobTitleId,
-                                         jt.JobTitle1,
-                                         jt.JobCode,
-                                         jt.CreatedDate,
-                                         jt.Reviewed,
-                                         jt.IsActive,
-                                         jt.LicenseLevel,
-                                         jt.LicenseIncentive,
-                                         isDirty = false
-                                     };
+                                      orderby jt.IsActive descending, jt.LicenseLevel, jt.JobTitle1
+                                      select new
+                                      {
+                                          jt.JobTitleId,
+                                          jt.JobTitle1,
+                                          jt.JobCode,
+                                          jt.CreatedDate,
+                                          jt.Reviewed,
+                                          jt.IsActive,
+                                          jt.LicenseLevel,
+                                          jt.LicenseIncentive,
+                                          isDirty = false
+                                      };
 
                 result.ObjData = resultJobTitles;
                 result.Success = true;
@@ -391,26 +391,26 @@ namespace OneTrak_v2.Services
             try
             {
                 var query = from l in _db.Licenses
-                                     join a in _db.LineOfAuthorities on l.LineOfAuthorityId equals a.LineOfAuthorityId
-                                     where string.IsNullOrEmpty(vStateProv) || l.StateProvinceAbv == vStateProv
-                                     orderby l.LicenseName
-                                     select new OputLicenseInfo
-                                     {
-                                         LicenseId = l.LicenseId,
-                                         LicenseName = l.LicenseName,
-                                         LicenseAbv = l.LicenseAbv,
-                                         StateProvinceAbv = l.StateProvinceAbv,
-                                         LineOfAuthorityAbv = a.LineOfAuthorityAbv,
-                                         LineOfAuthorityId = a.LineOfAuthorityId,
-                                         AgentStateTable = a.AgentStateTable,
-                                         PlsIncentive1Tmpay = l.PlsIncentive1Tmpay,
-                                         PlsIncentive1Mrpay = l.PlsIncentive1Mrpay,
-                                         Incentive2PlusTmpay = l.Incentive2PlusTmpay,
-                                         Incentive2PlusMrpay = l.Incentive2PlusMrpay,
-                                         LicIncentive3Tmpay = l.LicIncentive3Tmpay,
-                                         LicIncentive3Mrpay = l.LicIncentive3Mrpay,
-                                         IsActive = l.IsActive,
-                                     };
+                            join a in _db.LineOfAuthorities on l.LineOfAuthorityId equals a.LineOfAuthorityId
+                            where string.IsNullOrEmpty(vStateProv) || l.StateProvinceAbv == vStateProv
+                            orderby l.LicenseName
+                            select new OputLicenseInfo
+                            {
+                                LicenseId = l.LicenseId,
+                                LicenseName = l.LicenseName,
+                                LicenseAbv = l.LicenseAbv,
+                                StateProvinceAbv = l.StateProvinceAbv,
+                                LineOfAuthorityAbv = a.LineOfAuthorityAbv,
+                                LineOfAuthorityId = a.LineOfAuthorityId,
+                                AgentStateTable = a.AgentStateTable,
+                                PlsIncentive1Tmpay = l.PlsIncentive1Tmpay,
+                                PlsIncentive1Mrpay = l.PlsIncentive1Mrpay,
+                                Incentive2PlusTmpay = l.Incentive2PlusTmpay,
+                                Incentive2PlusMrpay = l.Incentive2PlusMrpay,
+                                LicIncentive3Tmpay = l.LicIncentive3Tmpay,
+                                LicIncentive3Mrpay = l.LicIncentive3Mrpay,
+                                IsActive = l.IsActive,
+                            };
 
                 var licenseInfo = query.AsNoTracking().ToList();
 
@@ -600,7 +600,7 @@ namespace OneTrak_v2.Services
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
             }
-            return result;  
+            return result;
         }
 
         public ReturnResult GetProductEdits()
@@ -631,7 +631,7 @@ namespace OneTrak_v2.Services
                 result.StatusCode = 500;
                 result.ErrMessage = ex.Message;
             }
-            return result;  
+            return result;
         }
 
         public ReturnResult GetStateLicRequirements(string? vWorkStateAbv = null, string? vResStateAbv = null, string? vBranchCode = null)
@@ -819,7 +819,7 @@ namespace OneTrak_v2.Services
                             cmd.Parameters.Add(new SqlParameter("@Zip", vInput.Zip));
                             cmd.Parameters.Add(new SqlParameter("@Fax", vInput.Fax));
                             cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
-                           
+
                             conn.Open();
                             cmd.ExecuteNonQuery();
                         }
@@ -905,6 +905,111 @@ namespace OneTrak_v2.Services
                 result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-59517].";
 
                 _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;
+        }
+        public ReturnResult UpsertEducationRule([FromBody] IputUpsertEducationRule vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                if (vInput.RuleNumber == 0)
+                {
+                    // INSERT Education Rule
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspEducationRuleInsert", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@StateProvince", vInput.StateProvince));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseType", vInput.LicenseType));
+                            cmd.Parameters.Add(new SqlParameter("@EducationStartDateID", vInput.EducationStartDateID));
+                            cmd.Parameters.Add(new SqlParameter("@EducationEndDateID", vInput.EducationEndDateID));
+                            cmd.Parameters.Add(new SqlParameter("@RequiredCreditHours", vInput.RequiredCreditHours));
+                            cmd.Parameters.Add(new SqlParameter("@ExceptionID", vInput.ExceptionID));
+                            cmd.Parameters.Add(new SqlParameter("@ExemptionID", vInput.ExemptionID));
+                            //cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                else
+                {
+                    // UPDATE Education Rule
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspEducationRuleUpdate", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@RuleNumber", vInput.RuleNumber));
+                            cmd.Parameters.Add(new SqlParameter("@StateProvince", vInput.StateProvince));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseType", vInput.LicenseType));
+                            cmd.Parameters.Add(new SqlParameter("@EducationStartDateID", vInput.EducationStartDateID));
+                            cmd.Parameters.Add(new SqlParameter("@EducationEndDateID", vInput.EducationEndDateID));
+                            cmd.Parameters.Add(new SqlParameter("@RequiredCreditHours", vInput.RequiredCreditHours));
+                            cmd.Parameters.Add(new SqlParameter("@ExceptionID", vInput.ExceptionID));
+                            cmd.Parameters.Add(new SqlParameter("@ExemptionID", vInput.ExemptionID));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "Education Rule Created/Updated Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49597].";
+
+            }
+
+            return result;
+        }
+        public ReturnResult DisableEducationRule([FromBody] IputDisableEducationRule vInput)
+        {
+
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspEducationRuleDisable", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@RuleNumber", vInput.RuleNumber));
+                        cmd.Parameters.Add(new SqlParameter("@StateProvince", vInput.StateProvince));
+                        cmd.Parameters.Add(new SqlParameter("@GEID", vInput.GEID));
+                        cmd.Parameters.Add(new SqlParameter("@UserName", vInput.UserName));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "Education Rule Disabled Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49597].";
+
             }
 
             return result;

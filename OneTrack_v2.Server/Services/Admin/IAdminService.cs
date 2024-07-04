@@ -29,5 +29,7 @@ namespace OneTrak_v2.Services
         public ReturnResult GetXBorLicRequirements(string vBranchCode);
         public ReturnResult UpsertCompany([FromBody] IputUpsertCompany company);
         public ReturnResult DeleteCompany([FromBody] IputDeleteCompany vInput);
+        public ReturnResult UpsertEducationRule([FromBody] IputUpsertEducationRule vInput);
+        public ReturnResult DisableEducationRule([FromBody] IputDisableEducationRule vInput);
     }
 }

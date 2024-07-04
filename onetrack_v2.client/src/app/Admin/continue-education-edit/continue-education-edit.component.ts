@@ -5,6 +5,7 @@ import {
   AdminComService,
   AdminDataService,
   ConstantsDataService,
+  DropdownDataService,
   ModalService,
 } from '../../_services';
 import { EducationRule } from '../../_Models';
@@ -22,6 +23,10 @@ export class ContinueEducationEditComponent implements OnInit, OnDestroy {
   selectedStateProvince: string | null = '';
   selectedLicenseType: string | null = '';
   contEducationRules: EducationRule[] = [] as EducationRule[];
+  conStartDates: any[] = [];
+  conEndDates: any[] = [];
+  exceptions: any[] = [];
+  exemptions: any[] = [];
 
   subscriptionData: Subscription = new Subscription();
 
@@ -29,14 +34,67 @@ export class ContinueEducationEditComponent implements OnInit, OnDestroy {
     private conService: ConstantsDataService,
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
+    private dropdownDataService: DropdownDataService,
     public modalService: ModalService
   ) {}
 
   ngOnInit(): void {
     this.stateProvinces = ['ALL', ...this.conService.getStateProvinces()];
 
+    this.conStartDates = [
+      { value: null, label: 'Select CE Start' },
+      ...this.dropdownDataService.conEduStartDateItems,
+    ];
+    this.subscriptionData.add(
+      this.dropdownDataService.conEduStartDateItemsChanged.subscribe(
+        (items: any[]) => {
+          this.conStartDates = [
+            { value: null, label: 'Select CE Start' },
+            ...items,
+          ];
+        }
+      )
+    );
+
+    this.conEndDates = [{ value: null, label: 'Select CE End' },
+      ...this.dropdownDataService.conEduEndDateItems];
+    this.subscriptionData.add(
+      this.dropdownDataService.conEduEndtDateItemsChanged.subscribe(
+        (items: any[]) => {
+          this.conEndDates = [
+            { value: null, label: 'Select CE End' },
+            ...items,
+          ];
+        }
+      )
+    );
+
+    this.exceptions = this.dropdownDataService.conEduExceptions;
+    this.subscriptionData.add(
+      this.dropdownDataService.conEduExceptionsChanged.subscribe(
+        (items: any[]) => {
+          this.exceptions = items;
+        }
+      )
+    );
+
+    this.exemptions = this.dropdownDataService.conEduExemptions;
+    this.subscriptionData.add(
+      this.dropdownDataService.conEduExemptionsChanged.subscribe(
+        (items: any[]) => {
+          console.log('EMFTEST (ngOnInit) - exemptions => \n', items);
+
+          this.exemptions = items;
+        }
+      )
+    );
+
     this.fetchLicenseTypes();
 
+    this.fetchEducationRules();
+  }
+
+  onChildCallRefreshData() {
     this.fetchEducationRules();
   }
 
