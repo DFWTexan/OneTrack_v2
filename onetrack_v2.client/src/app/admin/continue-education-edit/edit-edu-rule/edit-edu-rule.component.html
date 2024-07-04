@@ -2,7 +2,7 @@
   [formGroup]="eduRuleForm"
   (ngSubmit)="onSubmit()"
   class="container app-modal-container"
-  style="overflow-x: hidden;"
+  style="overflow-x: hidden"
 >
   <div class="row">
     <div class="col-md-3">
@@ -10,14 +10,14 @@
     </div>
     <div class="col-md-9">
       <select
-        class="form-select select-size-small"
+        class="form-select select-size-x-small"
         type="text"
         id="StateProvince"
-        formControlName="StateProvince"
+        formControlName="stateProvince"
       >
-        <!-- <option *ngFor="let type of requirementTypes" [value]="type">
-        {{ type }}
-      </option> -->
+        <option *ngFor="let state of stateProvinces" [value]="state">
+          {{ state }}
+        </option>
       </select>
     </div>
   </div>
@@ -72,7 +72,6 @@
         class="form-select select-size-medium"
         type="text"
         id="StateProvince"
-        formControlName="StateProvince"
       >
         <!-- <option *ngFor="let type of requirementTypes" [value]="type">
             {{ type }}
@@ -83,7 +82,6 @@
         class="form-select select-size-medium"
         type="text"
         id="StateProvince"
-        formControlName="StateProvince"
       >
         <!-- <option *ngFor="let type of requirementTypes" [value]="type">
             {{ type }}
@@ -104,7 +102,6 @@
         class="form-control input-size-small"
         type="text"
         id="requiredCreditHours"
-        formControlName="requiredCreditHours"
       />
     </div>
   </div>
@@ -126,9 +123,9 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">License issued or renewed after 7/1/07</label
+            <label for="licLevel1" style="font-size: smaller; font-weight: 400"
+              >License issued or renewed after 7/1/07</label
             >
           </div>
         </div>
@@ -138,7 +135,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed 25 years or more
@@ -151,7 +147,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed less than 20 years
@@ -169,7 +164,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400"
               >License issued or renewed before 7/1/07</label
@@ -182,7 +176,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed 3 years or less
@@ -195,7 +188,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed less than 25 years
@@ -213,7 +205,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed 1 year or more, but less than 2 years
@@ -226,7 +217,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed 4 years or less
@@ -239,7 +229,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed more than 3 years
@@ -257,7 +246,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed 19 months or more
@@ -270,7 +258,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed 6 months or more, but less than 2 years
@@ -283,7 +270,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed more than 4 year
@@ -301,7 +287,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed 2 years or more
@@ -314,7 +299,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed after 5/1/2010
@@ -327,7 +311,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed less than 19 months
@@ -345,7 +328,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed 20 years or more
@@ -358,7 +340,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed before 5/1/2010
@@ -371,7 +352,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed 6 years or more
@@ -399,7 +379,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               55 years of age and licensed 25 years or more
@@ -412,7 +391,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed 7 months or less
@@ -425,7 +403,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed less than 6 months
@@ -443,7 +420,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               60 years of age and licensed 15 years or more
@@ -456,10 +432,10 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed as a resident in AZ, and not holding licenses in any other states during the license period.
+              Licensed as a resident in AZ, and not holding licenses in any
+              other states during the license period.
             </label>
           </div>
         </div>
@@ -469,7 +445,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed prior to 1/1/1980
@@ -487,7 +462,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               70 years of age
@@ -500,7 +474,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed less than 1 year
@@ -513,7 +486,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed prior to 7/1/03 and 15 years or more
@@ -531,7 +503,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               70 years of age and licensed 20 years or more
@@ -544,7 +515,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed less than 2 years
@@ -557,7 +527,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed prior to 7/1/03 and 60 yrs of age or more
@@ -575,7 +544,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               70 years of age and licensed 30 years or more
@@ -588,7 +556,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed less than 23 months
@@ -601,7 +568,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed prior to 1/1/1994
@@ -619,7 +585,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed 15 years or more
@@ -632,7 +597,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed less than 3 years
@@ -645,7 +609,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed prior to 1/1/1995
@@ -663,7 +626,6 @@
               class="form-check-input me-2 align-middle"
               type="checkbox"
               id="licLevel1"
-              formControlName="licLevel1"
             />
             <label for="licLevel1" style="font-size: smaller; font-weight: 400">
               Licensed 20 years or more

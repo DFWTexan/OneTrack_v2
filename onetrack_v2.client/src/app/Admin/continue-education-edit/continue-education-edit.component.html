@@ -114,19 +114,26 @@
 
 <!-- Modal: EDIT-EDU-RULE -->
 <modal id="modal-edit-edu-rule">
-    <div class="modal-header">
-      <h1 class="modal-title"><strong>{{ adminComService.modes.educationRule.mode }}</strong> - Education Rule</h1>
-      <!-- <button
+  <div class="modal-header">
+    <h1 class="modal-title">
+      <strong>{{ adminComService.modes.educationRule.mode }}</strong> -
+      Education Rule
+    </h1>
+    <!-- <button
                 type="button"
                 class="btn-close"
                 (click)="modalService.close()"
               ></button> -->
-    </div>
-    <div class="modal-body">
+  </div>
+  <div class="modal-body">
+    <div>
       <div>
-        <div>
-          <app-edit-edu-rule></app-edit-edu-rule>
-        </div>
+        <app-edit-edu-rule
+          [stateProvinces]="stateProvinces"
+          [selectedStateProvince]="selectedStateProvince"
+          
+        ></app-edit-edu-rule>
       </div>
     </div>
-  </modal>
+  </div>
+</modal>

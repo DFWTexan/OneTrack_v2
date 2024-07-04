@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
+import { Component, Injectable, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -12,6 +12,8 @@ import { EducationRule } from '../../../_Models';
 })
 @Injectable()
 export class EditEduRuleComponent implements OnInit, OnDestroy {
+  @Input() stateProvinces: any[] = [];
+  @Input() selectedStateProvince: string | null = 'ALL';
   eduRuleForm!: FormGroup;
   subscriptionData: Subscription = new Subscription();
 
@@ -55,6 +57,9 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
           });
         } else {
           this.eduRuleForm.reset();
+          this.eduRuleForm.patchValue({
+            stateProvince: this.selectedStateProvince,
+          });
         }
       });
   }
