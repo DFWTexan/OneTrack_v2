@@ -13,6 +13,7 @@ import { DropdownItem } from '../../../_Models';
 @Injectable()
 export class EditDropdownItemComponent implements OnInit, OnDestroy {
   dropdownItemForm!: FormGroup;
+  
   subscriptionData: Subscription = new Subscription();
 
   constructor(
@@ -48,6 +49,17 @@ export class EditDropdownItemComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {}
+
+  forceCloseModal() {
+    const modalDiv = document.getElementById('modal-edit-dropdown-item');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+  }
+
+  closeModal() {
+    this.forceCloseModal();
+  }
 
   ngOnDestroy() {
     this.subscriptionData.unsubscribe();
