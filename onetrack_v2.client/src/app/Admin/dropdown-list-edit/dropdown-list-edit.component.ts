@@ -32,12 +32,12 @@ export class DropdownListEditComponent implements OnInit {
     this.fetchDropdownListItems();
   }
   
-  changeDropdownListType(event: any) {
+  onChangeDropdownListType(event: any) {
     this.loading = true;
     const target = event.target as HTMLInputElement;
     const value = target.value;
 
-    // this.selectedCompanyType = value;
+    this.selectedDropdownListType = value;
 
     // if (value === 'Select Company Type') {
     //   this.companies = [];
@@ -49,6 +49,7 @@ export class DropdownListEditComponent implements OnInit {
     //     this.loading = false;
     //   });
     // }
+    this.fetchDropdownListItems();
   }
 
   fetchDropdownListItems() {

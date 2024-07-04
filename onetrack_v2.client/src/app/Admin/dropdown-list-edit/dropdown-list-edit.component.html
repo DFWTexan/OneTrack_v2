@@ -6,7 +6,7 @@
         class="form-select select-size-med-small"
         type="text"
         id="dropdownType"
-        (change)="changeDropdownListType($event)"
+        (change)="onChangeDropdownListType($event)"
       >
         <option *ngFor="let item of dropdownListTypes" [value]="item">
           {{ item }}
