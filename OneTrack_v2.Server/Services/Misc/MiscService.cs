@@ -707,5 +707,35 @@ namespace OneTrack_v2.Services
 
             return result;
         }
+        public ReturnResult GetContEduInfo(string vUsageType)
+        {
+
+            var result = new ReturnResult();
+            try
+            {
+                var query = from erc in _db.EducationRuleCriteria
+                            where erc.UsageType == vUsageType
+                            orderby erc.EducationCriteriaId
+                            select new { value = erc.EducationCriteriaId, label = erc.Description };
+
+                var resultContEduInfo = query.AsNoTracking().ToList();
+
+                result.Success = true;
+                result.ObjData = resultContEduInfo;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "MISC-ContEduInfo", new { }, null);
+            }
+
+            return result;
+
+        }
     }
 }

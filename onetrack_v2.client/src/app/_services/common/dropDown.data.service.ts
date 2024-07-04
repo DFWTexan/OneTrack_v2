@@ -23,6 +23,14 @@ export class DropdownDataService {
   licenseNamesChanged = new Subject<{ value: number; label: string }[]>();
   public jobTitles: { value: number; label: string }[] = [];
   jobTitlesChanged = new Subject<{ value: number; label: string }[]>();
+  public conEduStartDateItems: { value: number; label: string }[] = [];
+  conEduStartDateItemsChanged = new Subject<{ value: number; label: string }[]>();
+  public conEduEndDateItems: { value: number; label: string }[] = [];
+  conEduEndtDateItemsChanged = new Subject<{ value: number; label: string }[]>();
+  public conEduExceptions: { value: number; label: string }[] = [];
+  conEduExceptionsChanged = new Subject<{ value: number; label: string }[]>();
+  public conEduExemptions: { value: number; label: string }[] = [];
+  conEduExemptionsChanged = new Subject<{ value: number; label: string }[]>();
 
   private url: string = environment.apiUrl + 'Misc/';
 
@@ -115,6 +123,26 @@ export class DropdownDataService {
   updateJobTitles(jobTitles: { value: number; label: string }[]) {
     this.jobTitles = jobTitles;
     this.jobTitlesChanged.next([...this.jobTitles]);
+  }
+
+  updateConEduStartDateItems(conEduStartDateItems: { value: number; label: string }[]) {
+    this.conEduStartDateItems = conEduStartDateItems;
+    this.conEduStartDateItemsChanged.next([...this.conEduStartDateItems]);
+  }
+
+  updateConEduEndDateItems(conEduEndDateItems: { value: number; label: string }[]) {
+    this.conEduEndDateItems = conEduEndDateItems;
+    this.conEduEndtDateItemsChanged.next([...this.conEduEndDateItems]);
+  }
+
+  updateConEduExceptions(conEduExceptions: { value: number; label: string }[]) {
+    this.conEduExceptions = conEduExceptions;
+    this.conEduExceptionsChanged.next([...this.conEduExceptions]);
+  }
+
+  updateConEduExemptions(conEduExemptions: { value: number; label: string }[]) {
+    this.conEduExemptions = conEduExemptions;
+    this.conEduExemptionsChanged.next([...this.conEduExemptions]);
   }
 
   fetchDropdownNumericData(vEndpoint: string, vValue: any | null = null) {

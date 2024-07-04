@@ -73,9 +73,9 @@
         type="text"
         id="StateProvince"
       >
-        <!-- <option *ngFor="let type of requirementTypes" [value]="type">
-            {{ type }}
-          </option> -->
+        <option *ngFor="let item of conStartDates" [value]=item.value>
+            {{ item.label }}
+          </option>
       </select>
       <span class="ms-3 mt-3 me-3">CE End</span>
       <select
@@ -83,9 +83,9 @@
         type="text"
         id="StateProvince"
       >
-        <!-- <option *ngFor="let type of requirementTypes" [value]="type">
-            {{ type }}
-          </option> -->
+        <option *ngFor="let item of conEndDates" [value]=item.value>
+            {{ item.label }}
+          </option>
       </select>
       <!-- </div> -->
     </div>

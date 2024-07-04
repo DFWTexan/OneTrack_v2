@@ -16,9 +16,11 @@ import {
   DropdownDataService,
   ErrorMessageService,
   LicIncentiveInfoDataService,
+  MiscDataService,
   UserAcctInfoDataService,
 } from './_services';
 import { environment } from './environments/environment';
+import { MinLengthValidator } from '@angular/forms';
 
 @Injectable()
 @Component({
@@ -41,6 +43,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private drpdwnDataService: DropdownDataService,
     private agentDataService: AgentDataService,
     public licIncentiveInfoDataService: LicIncentiveInfoDataService,
+    private miscDataService: MiscDataService,
     private userInfoService: UserAcctInfoDataService
   ) {}
 
@@ -155,6 +158,34 @@ export class AppComponent implements OnInit, OnDestroy {
         .fetchLicenseTeches()
         .subscribe((licTeches: any[]) => {
           this.licIncentiveInfoDataService.updateLicenseTeches(licTeches);
+        })
+    );
+    this.subscriptions.add(
+      this.miscDataService
+        .fetchConEduInfo('EducationStartDate')
+        .subscribe((items: any[]) => {
+          this.drpdwnDataService.updateConEduStartDateItems(items);
+        })
+    );
+    this.subscriptions.add(
+      this.miscDataService
+        .fetchConEduInfo('EducationEndDate')
+        .subscribe((items: any[]) => {
+          this.drpdwnDataService.updateConEduEndDateItems(items);
+        })
+    );
+    this.subscriptions.add(
+      this.miscDataService
+        .fetchConEduInfo('Exception')
+        .subscribe((items: any[]) => {
+          this.drpdwnDataService.updateConEduExceptions(items);
+        })
+    );
+    this.subscriptions.add(
+      this.miscDataService
+        .fetchConEduInfo('Exemption')
+        .subscribe((items: any[]) => {
+          this.drpdwnDataService.updateConEduExemptions(items);
         })
     );
   }

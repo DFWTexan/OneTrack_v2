@@ -199,5 +199,13 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpGet("{usageType}")]
+        public async Task<IActionResult> GetContEduInfo(string usageType)
+        {
+            var result = await Task.Run(() => _miscService.GetContEduInfo(usageType));
+
+            return StatusCode(result.StatusCode, result);
+        }
     }
 }

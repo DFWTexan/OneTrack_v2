@@ -2,34 +2,72 @@ import { Component, Injectable, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { AdminComService, AdminDataService } from '../../../_services';
+import { AdminComService, AdminDataService, DropdownDataService } from '../../../_services';
 import { EducationRule } from '../../../_Models';
 
 @Component({
   selector: 'app-edit-edu-rule',
   templateUrl: './edit-edu-rule.component.html',
-  styleUrl: './edit-edu-rule.component.css'
+  styleUrl: './edit-edu-rule.component.css',
 })
 @Injectable()
 export class EditEduRuleComponent implements OnInit, OnDestroy {
   @Input() stateProvinces: any[] = [];
   @Input() selectedStateProvince: string | null = 'Select';
-  licenseTypes: any[] = [];
   eduRuleForm!: FormGroup;
+  licenseTypes: any[] = [];
+  conStartDates: any[] = [];
+  conEndDates: any[] = [];
+  exceptions: any[] = [];
+  exemptions: any[] = [];  
 
   subscriptionData: Subscription = new Subscription();
 
   constructor(
     public adminDataService: AdminDataService,
+    private dropdownDataService: DropdownDataService,
     public adminComService: AdminComService
   ) {}
 
   ngOnInit(): void {
-    this.stateProvinces = this.stateProvinces.map(province => {
-      if (province === "ALL") {
-        return "Select"; // Change "ALL" to "Select"
+    this.stateProvinces = this.stateProvinces.map((province) => {
+      if (province === 'ALL') {
+        return 'Select';
       }
-      return province; // Return the original value if it's not "ALL"
+      
+      this.subscriptionData.add(
+        this.dropdownDataService.conEduStartDateItemsChanged.subscribe(
+          (items: any[]) => {
+            this.conStartDates = [{value: null, label: "Select CE Start"}, ...items];
+          }
+        )
+      );
+
+      this.subscriptionData.add(
+        this.dropdownDataService.conEduEndtDateItemsChanged.subscribe(
+          (items: any[]) => {
+            this.conEndDates = [{value: null, label: "Select CE End"}, ...items];
+          }
+        )
+      );
+
+      this.subscriptionData.add(
+        this.dropdownDataService.conEduExceptionsChanged.subscribe(
+          (items: any[]) => {
+            this.exceptions = items;
+          }
+        )
+      );
+
+      this.subscriptionData.add(
+        this.dropdownDataService.conEduExemptionsChanged.subscribe(
+          (items: any[]) => {
+            this.exemptions = items;
+          }
+        )
+      );
+
+      return province;
     });
 
     this.eduRuleForm = new FormGroup({
@@ -47,36 +85,41 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptionData.add(
-      this.adminComService.modes.educationRule.changed.subscribe((mode: string) => {
-        if (mode === 'EDIT') {
-          this.subscriptionData.add(
-            this.adminDataService.educationRuleChanged.subscribe((eduRule: EducationRule) => {
-              this.eduRuleForm.patchValue({
-                ruleNumber: eduRule.ruleNumber,
-                stateProvince: eduRule.stateProvince,
-                licenseType: eduRule.licenseType,
-                requiredCreditHours: eduRule.requiredCreditHours,
-                educationStartDateID: eduRule.educationStartDateID,
-                educationStartDate: eduRule.educationStartDate,
-                educationEndDateID: eduRule.educationEndDateID,
-                educationEndDate: eduRule.educationEndDate,
-                exceptionID: eduRule.exceptionID,
-                exemptionID: eduRule.exemptionID,
-                isActive: eduRule.isActive,
-              });
-            })
-          );
-          
-        } else {
-          this.eduRuleForm.reset();
-          this.eduRuleForm.patchValue({
-            stateProvince: this.selectedStateProvince ? this.selectedStateProvince : 'Select',
-          });
+      this.adminComService.modes.educationRule.changed.subscribe(
+        (mode: string) => {
+          if (mode === 'EDIT') {
+            this.subscriptionData.add(
+              this.adminDataService.educationRuleChanged.subscribe(
+                (eduRule: EducationRule) => {
+                  this.eduRuleForm.patchValue({
+                    ruleNumber: eduRule.ruleNumber,
+                    stateProvince: eduRule.stateProvince,
+                    licenseType: eduRule.licenseType,
+                    requiredCreditHours: eduRule.requiredCreditHours,
+                    educationStartDateID: eduRule.educationStartDateID,
+                    educationStartDate: eduRule.educationStartDate,
+                    educationEndDateID: eduRule.educationEndDateID,
+                    educationEndDate: eduRule.educationEndDate,
+                    exceptionID: eduRule.exceptionID,
+                    exemptionID: eduRule.exemptionID,
+                    isActive: eduRule.isActive,
+                  });
+                }
+              )
+            );
+          } else {
+            this.eduRuleForm.reset();
+            this.eduRuleForm.patchValue({
+              stateProvince: this.selectedStateProvince
+                ? this.selectedStateProvince
+                : 'Select',
+            });
+          }
         }
-      }
-    ));
+      )
+    );
 
-      this.fetchLicenseTypes();
+    this.fetchLicenseTypes();
   }
 
   fetchLicenseTypes() {
@@ -93,8 +136,7 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
     );
   }
 
-  onSubmit() {
-  }
+  onSubmit() {}
 
   forceCloseModal() {
     const modalDiv = document.getElementById('modal-edit-edu-rule');
