@@ -714,7 +714,7 @@ namespace OneTrack_v2.Services
             try
             {
                 var query = from erc in _db.EducationRuleCriteria
-                            where erc.UsageType == vUsageType
+                            where erc.UsageType == vUsageType && erc.IsActive == true
                             orderby erc.EducationCriteriaId
                             select new { value = erc.EducationCriteriaId, label = erc.Description };
 
