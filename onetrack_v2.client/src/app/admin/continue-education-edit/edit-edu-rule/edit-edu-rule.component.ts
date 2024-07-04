@@ -20,6 +20,7 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
   conEndDates: any[] = [];
   exceptions: any[] = [];
   exemptions: any[] = [];  
+  selectedValues: number[] = [];
 
   subscriptionData: Subscription = new Subscription();
 
@@ -134,6 +135,17 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
           this.licenseTypes = response;
         })
     );
+  }
+
+  onCheckboxChange(event: any, value: number) {
+    if (event.target.checked) {
+      this.selectedValues.push(value);
+    } else {
+      const index = this.selectedValues.indexOf(value);
+      if (index > -1) {
+        this.selectedValues.splice(index, 1);
+      }
+    }
   }
 
   onSubmit() {}

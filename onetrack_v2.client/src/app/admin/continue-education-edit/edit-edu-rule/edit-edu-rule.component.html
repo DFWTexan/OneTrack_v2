@@ -73,9 +73,9 @@
         type="text"
         id="StateProvince"
       >
-        <option *ngFor="let item of conStartDates" [value]=item.value>
-            {{ item.label }}
-          </option>
+        <option *ngFor="let item of conStartDates" [value]="item.value">
+          {{ item.label }}
+        </option>
       </select>
       <span class="ms-3 mt-3 me-3">CE End</span>
       <select
@@ -83,9 +83,9 @@
         type="text"
         id="StateProvince"
       >
-        <option *ngFor="let item of conEndDates" [value]=item.value>
-            {{ item.label }}
-          </option>
+        <option *ngFor="let item of conEndDates" [value]="item.value">
+          {{ item.label }}
+        </option>
       </select>
       <!-- </div> -->
     </div>
@@ -114,250 +114,19 @@
         >
       </div>
     </div>
-    <!-- Exceptions ROW 1 -->
-    <div class="row ms-3">
-      <div class="col-md-12 d-flex justify-content-center">
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400"
-              >License issued or renewed after 7/1/07</label
-            >
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed 25 years or more
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed less than 20 years
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Exceptions ROW 2 -->
-    <div class="row ms-3">
-      <div class="col-md-12 d-flex justify-content-center">
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400"
-              >License issued or renewed before 7/1/07</label
-            >
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed 3 years or less
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed less than 25 years
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Exceptions ROW 3 -->
-    <div class="row ms-3">
-      <div class="col-md-12 d-flex justify-content-center">
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed 1 year or more, but less than 2 years
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed 4 years or less
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed more than 3 years
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Exceptions ROW 4 -->
-    <div class="row ms-3">
-      <div class="col-md-12 d-flex justify-content-center">
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed 19 months or more
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed 6 months or more, but less than 2 years
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed more than 4 year
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Exceptions ROW 5 -->
-    <div class="row ms-3">
-      <div class="col-md-12 d-flex justify-content-center">
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed 2 years or more
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed after 5/1/2010
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed less than 19 months
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Exceptions ROW 6 -->
-    <div class="row ms-3">
-      <div class="col-md-12 d-flex justify-content-center">
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed 20 years or more
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed before 5/1/2010
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed 6 years or more
-            </label>
-          </div>
-        </div>
+    <div class="checkbox-container">
+      <div *ngFor="let checkbox of exceptions" class="checkbox-item">
+        <input
+          type="checkbox"
+          [value]="checkbox.value"
+          (change)="onCheckboxChange($event, checkbox.value)"
+          id="checkbox{{ checkbox.value }}"
+        />
+        <label
+          [for]="'checkbox' + checkbox.value"
+          style="font-size: smaller; font-weight: 400"
+          >{{ checkbox.label }}</label
+        >
       </div>
     </div>
   </div>
@@ -370,294 +139,19 @@
         >
       </div>
     </div>
-    <!-- Exemptions ROW 1 -->
-    <div class="row ms-3">
-      <div class="col-md-12 d-flex justify-content-center">
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              55 years of age and licensed 25 years or more
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed 7 months or less
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed less than 6 months
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Exemptions ROW 2 -->
-    <div class="row ms-3">
-      <div class="col-md-12 d-flex justify-content-center">
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              60 years of age and licensed 15 years or more
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed as a resident in AZ, and not holding licenses in any
-              other states during the license period.
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed prior to 1/1/1980
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Exemptions ROW 3 -->
-    <div class="row ms-3">
-      <div class="col-md-12 d-flex justify-content-center">
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              70 years of age
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed less than 1 year
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed prior to 7/1/03 and 15 years or more
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Exemptions ROW 4 -->
-    <div class="row ms-3">
-      <div class="col-md-12 d-flex justify-content-center">
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              70 years of age and licensed 20 years or more
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed less than 2 years
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed prior to 7/1/03 and 60 yrs of age or more
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Exemptions ROW 5 -->
-    <div class="row ms-3">
-      <div class="col-md-12 d-flex justify-content-center">
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              70 years of age and licensed 30 years or more
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed less than 23 months
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed prior to 1/1/1994
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Exemptions ROW 6 -->
-    <div class="row ms-3">
-      <div class="col-md-12 d-flex justify-content-center">
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed 15 years or more
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed less than 3 years
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed prior to 1/1/1995
-            </label>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Exemptions ROW 7 -->
-    <div class="row ms-3">
-      <div class="col-md-12 d-flex justify-content-center">
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed 20 years or more
-            </label>
-          </div>
-        </div>
-        <!-- <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-              formControlName="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed before 5/1/2010
-            </label>
-          </div>
-        </div>
-        <div class="col">
-          <div class="mb-3">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="licLevel1"
-              formControlName="licLevel1"
-            />
-            <label for="licLevel1" style="font-size: smaller; font-weight: 400">
-              Licensed 6 years or more
-            </label>
-          </div>
-        </div> -->
+    <div class="checkbox-container">
+      <div *ngFor="let checkbox of exemptions" class="checkbox-item">
+        <input
+          type="checkbox"
+          [value]="checkbox.value"
+          (change)="onCheckboxChange($event, checkbox.value)"
+          id="checkbox{{ checkbox.value }}"
+        />
+        <label
+          [for]="'checkbox' + checkbox.value"
+          style="font-size: smaller; font-weight: 400"
+          >{{ checkbox.label }}</label
+        >
       </div>
     </div>
   </div>
