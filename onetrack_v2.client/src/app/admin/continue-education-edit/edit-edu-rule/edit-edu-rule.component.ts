@@ -19,6 +19,7 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
   @Input() stateProvinces: any[] = [];
   @Input() selectedStateProvince: string | null = 'Select';
   eduRuleForm!: FormGroup;
+  isStateProvinceSelected: boolean = false;
   isLicenseTypeSelected: boolean = false;
   licenseTypes: any[] = [];
   licenseTypeSelected: string | null = null;
@@ -103,6 +104,7 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
       this.adminComService.modes.educationRule.changed.subscribe(
         (mode: string) => {
           if (mode === 'EDIT') {
+            this.isStateProvinceSelected = true;
             this.subscriptionData.add(
               this.adminDataService.educationRuleChanged.subscribe(
                 (eduRule: EducationRule) => {
@@ -151,7 +153,22 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
     );
   }
 
-  onItemSelected(event: any) {
+  onStateSelected(event: any) {
+    this.isStateProvinceSelected = true;
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+
+    if (value === 'Select') {
+      this.isStateProvinceSelected = false;
+    } else {
+      this.isLicenseTypeSelected = true;
+    }
+
+    this.selectedStateProvince = value;
+    this.fetchLicenseTypes();
+  }
+
+  onLicenseSelected(event: any) {
     this.isLicenseTypeSelected = true;
     const target = event.target as HTMLInputElement;
     const value = target.value;
