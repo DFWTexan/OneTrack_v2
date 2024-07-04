@@ -22,7 +22,7 @@ body {
 }
 
 /* Optionally, if you want the modal to take up 75% width on all screen sizes */
-@media (min-width: 600px) {
+@media (min-width: 300px) {
   .modal-dialog {
     max-width: 90%;
   }

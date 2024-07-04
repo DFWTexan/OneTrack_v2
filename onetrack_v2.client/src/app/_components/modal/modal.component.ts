@@ -10,6 +10,7 @@ import { ModalService } from '../../_services';
 })
 export class ModalComponent implements OnInit, OnDestroy {
     @Input() id?: string;
+    @Input() width?: string = '500px';
     isOpen = false;
     private element: any;
 
@@ -44,6 +45,9 @@ export class ModalComponent implements OnInit, OnDestroy {
         this.element.style.display = 'block';
         document.body.classList.add('modal-open');
         this.isOpen = true;
+        if (this.width) {
+            this.element.querySelector('.modal-dialog').style.width = this.width; // Set width dynamically
+        }
     }
 
     close() {
