@@ -19,7 +19,10 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
   @Input() stateProvinces: any[] = [];
   @Input() selectedStateProvince: string | null = 'Select';
   eduRuleForm!: FormGroup;
+  isLicenseTypeSelected: boolean = false;
   licenseTypes: any[] = [];
+  licenseTypeSelected: string | null = null;
+  licenseTypeItem: string | null = null;
   conStartDates: any[] = [];
   conEndDates: any[] = [];
   exceptions: any[] = [];
@@ -146,6 +149,32 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
           this.licenseTypes = response;
         })
     );
+  }
+
+  onItemSelected(event: any) {
+    this.isLicenseTypeSelected = true;
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    this.licenseTypeSelected = value;
+  }
+
+  addLicenseType(addType: string) {
+    // if (this.licenseTypeItem) {
+    //   this.licenseTypes.push(this.licenseTypeItem);
+    // }
+    if (addType === 'SELECTION') {
+      if (this.licenseTypeItem == null || this.licenseTypeItem === '') {
+        this.licenseTypeItem = this.licenseTypeSelected;
+      } else {
+        this.licenseTypeItem += `, ${this.licenseTypeSelected}`;
+      }
+    } else {
+      if (this.licenseTypeItem == null || this.licenseTypeItem === '') {
+        this.licenseTypeItem = this.licenseTypeSelected;
+      } else {
+        this.licenseTypeItem += ` + ${this.licenseTypeSelected}`;
+      }
+    }
   }
 
   onCheckboxChange(event: any, value: number, type: string) {

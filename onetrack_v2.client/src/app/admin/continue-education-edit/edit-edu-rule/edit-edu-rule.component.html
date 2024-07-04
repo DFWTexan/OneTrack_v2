@@ -33,6 +33,7 @@
         id="exampleListBox"
         name="exampleListBox"
         size="6"
+        (change)="onItemSelected($event)"
       >
         <option *ngFor="let type of licenseTypes" [value]="type">
           {{ type }}
@@ -40,12 +41,22 @@
       </select>
       <div class="row mt-1">
         <div class="col d-flex justify-content-center">
-          <button class="btn btn-secondary w-100 ms-3 me-3">
+          <button
+            class="btn btn-secondary w-100 ms-3 me-3"
+            [disabled]="!isLicenseTypeSelected"
+            (click)="addLicenseType('SELECTION')"
+          >
             Add Selection
           </button>
         </div>
         <div class="col d-flex justify-content-center">
-          <button class="btn btn-secondary w-100 ms-3 me-3">Group(&)</button>
+          <button
+            class="btn btn-secondary w-100 ms-3 me-3"
+            [disabled]="!isLicenseTypeSelected"
+            (click)="addLicenseType('GROUP')"
+          >
+            Group(&)
+          </button>
         </div>
       </div>
       <div class="row mt-1">
@@ -54,6 +65,7 @@
             class="form-control"
             id="exampleFormControlTextarea1"
             rows="5"
+            [value]="licenseTypeItem"
           ></textarea>
         </div>
       </div>
