@@ -32,11 +32,11 @@
         class="form-control"
         id="exampleListBox"
         name="exampleListBox"
+        size="6"
       >
-        <option value="option1">Option 1</option>
-        <option value="option2">Option 2</option>
-        <option value="option3">Option 3</option>
-        <!-- Add more options as needed -->
+        <option *ngFor="let type of licenseTypes" [value]="type">
+          {{ type }}
+        </option>
       </select>
       <div class="row mt-1">
         <div class="col d-flex justify-content-center">

@@ -13,8 +13,10 @@ import { EducationRule } from '../../../_Models';
 @Injectable()
 export class EditEduRuleComponent implements OnInit, OnDestroy {
   @Input() stateProvinces: any[] = [];
-  @Input() selectedStateProvince: string | null = 'ALL';
+  @Input() selectedStateProvince: string | null = 'Select';
+  licenseTypes: any[] = [];
   eduRuleForm!: FormGroup;
+
   subscriptionData: Subscription = new Subscription();
 
   constructor(
@@ -23,6 +25,13 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.stateProvinces = this.stateProvinces.map(province => {
+      if (province === "ALL") {
+        return "Select"; // Change "ALL" to "Select"
+      }
+      return province; // Return the original value if it's not "ALL"
+    });
+
     this.eduRuleForm = new FormGroup({
       ruleNumber: new FormControl(''),
       stateProvince: new FormControl(''),
@@ -37,31 +46,51 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
       isActive: new FormControl(''),
     });
 
-    this.subscriptionData =
+    this.subscriptionData.add(
       this.adminComService.modes.educationRule.changed.subscribe((mode: string) => {
         if (mode === 'EDIT') {
-          this.adminDataService.educationRuleChanged.subscribe((eduRule: EducationRule) => {
-            this.eduRuleForm.patchValue({
-              ruleNumber: eduRule.ruleNumber,
-              stateProvince: eduRule.stateProvince,
-              licenseType: eduRule.licenseType,
-              requiredCreditHours: eduRule.requiredCreditHours,
-              educationStartDateID: eduRule.educationStartDateID,
-              educationStartDate: eduRule.educationStartDate,
-              educationEndDateID: eduRule.educationEndDateID,
-              educationEndDate: eduRule.educationEndDate,
-              exceptionID: eduRule.exceptionID,
-              exemptionID: eduRule.exemptionID,
-              isActive: eduRule.isActive,
-            });
-          });
+          this.subscriptionData.add(
+            this.adminDataService.educationRuleChanged.subscribe((eduRule: EducationRule) => {
+              this.eduRuleForm.patchValue({
+                ruleNumber: eduRule.ruleNumber,
+                stateProvince: eduRule.stateProvince,
+                licenseType: eduRule.licenseType,
+                requiredCreditHours: eduRule.requiredCreditHours,
+                educationStartDateID: eduRule.educationStartDateID,
+                educationStartDate: eduRule.educationStartDate,
+                educationEndDateID: eduRule.educationEndDateID,
+                educationEndDate: eduRule.educationEndDate,
+                exceptionID: eduRule.exceptionID,
+                exemptionID: eduRule.exemptionID,
+                isActive: eduRule.isActive,
+              });
+            })
+          );
+          
         } else {
           this.eduRuleForm.reset();
           this.eduRuleForm.patchValue({
-            stateProvince: this.selectedStateProvince,
+            stateProvince: this.selectedStateProvince ? this.selectedStateProvince : 'Select',
           });
         }
-      });
+      }
+    ));
+
+      this.fetchLicenseTypes();
+  }
+
+  fetchLicenseTypes() {
+    this.subscriptionData.add(
+      this.adminDataService
+        .fetchLicenseTypes(
+          this.selectedStateProvince == 'ALL'
+            ? null
+            : this.selectedStateProvince
+        )
+        .subscribe((response) => {
+          this.licenseTypes = response;
+        })
+    );
   }
 
   onSubmit() {
