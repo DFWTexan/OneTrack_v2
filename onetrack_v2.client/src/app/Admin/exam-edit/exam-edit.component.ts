@@ -1,5 +1,6 @@
 import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
 import {
   AdminComService,
@@ -8,8 +9,10 @@ import {
   ConstantsDataService,
   MiscDataService,
   ModalService,
+  UserAcctInfoDataService,
 } from '../../_services';
 import { Exam } from '../../_Models';
+import { ConfirmDialogComponent } from '../../_components';
 
 @Component({
   selector: 'app-exam-edit',
@@ -24,6 +27,8 @@ export class ExamEditComponent implements OnInit, OnDestroy{
   examProviders: {value: number, label: string}[] = [];
   selectedStateProvince: string = 'Select';
   examItems: Exam[] = [];
+  eventAction: string = '';
+  vObject: any = {};
 
   subscriptionData: Subscription = new Subscription();
 
@@ -33,12 +38,18 @@ export class ExamEditComponent implements OnInit, OnDestroy{
     public miscDataService: MiscDataService,
     public adminComService: AdminComService,
     public appComService: AppComService,
-    public modalService: ModalService
+    public dialog: MatDialog,
+    public modalService: ModalService,
+    private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {
     this.stateProvinces = ['Select', ...this.conService.getStateProvinces()];
     this.fetchEditExamDropdowns();
+  }
+
+  onChildCallRefreshData() {
+    this.fetchExamItems();
   }
 
   private fetchEditExamDropdowns(): void {
@@ -54,6 +65,12 @@ export class ExamEditComponent implements OnInit, OnDestroy{
     );
   }
 
+  private fetchExamItems(): void {
+    this.adminDataService.fetchExamItems(this.selectedStateProvince).subscribe((response) => {
+      this.examItems = response;
+    });
+  }
+
   changeStateProvince(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;
@@ -66,10 +83,49 @@ export class ExamEditComponent implements OnInit, OnDestroy{
       //   this.adminDataService.citiesChanged.next(this.adminDataService.cities);
       // });
     } else {
-      this.adminDataService.fetchExamItems(value).subscribe((response) => {
-        this.examItems = response;
-      });
+      this.fetchExamItems();
     }
+  }
+
+  openConfirmDialog(eventAction: string, msg: string, vObject: any): void {
+    this.eventAction = eventAction;
+    this.vObject = vObject;
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+        title: 'Confirm Action',
+        message:
+          'You are about to DELETE Eam Item (' +
+          vObject.examName +
+          '). Click "Yes" to confirm?',
+      },
+    });
+
+    // dialogRef.afterClosed().subscribe((result) => {
+    //   if (result) {
+    //     this.subscriptionData.add(
+    //       this.adminDataService
+    //         .deleteLkpType({
+    //           lkpField: vObject.lkpField,
+    //           lkpValue: vObject.lkpValue,
+    //           userSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
+    //         })
+    //         .subscribe({
+    //           next: (response) => {
+    //             this.fetchDropdownListItems();
+    //           },
+    //           error: (error) => {
+    //             if (error.error && error.error.errMessage) {
+    //               this.errorMessageService.setErrorMessage(
+    //                 error.error.errMessage
+    //               );
+    //             }
+    //           },
+    //         })
+    //     );
+    //   }
+    // });
   }
 
   ngOnDestroy(): void {

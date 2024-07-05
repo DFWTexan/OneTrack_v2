@@ -214,8 +214,6 @@ namespace OneTrak_v2.Services
             return result;
         }
 
-        
-        
         public ReturnResult GetExamByState(string vState)
         {
             ReturnResult result = new ReturnResult();
@@ -1070,7 +1068,6 @@ namespace OneTrak_v2.Services
         }
         public ReturnResult UpsertExam([FromBody] IputUpsertExam vInput)
         {
-
             var result = new ReturnResult();
             try
             {

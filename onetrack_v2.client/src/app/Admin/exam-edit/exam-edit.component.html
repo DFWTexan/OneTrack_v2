@@ -86,7 +86,14 @@
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
                 <button class="icon-edit-delete-button" type="button">
-                  <span class="material-symbols-outlined"> delete </span>
+                  <span
+                    class="material-symbols-outlined"
+                    (click)="
+                      openConfirmDialog('deleteExamItem', 'Exam Delete', exam)
+                    "
+                  >
+                    delete
+                  </span>
                 </button>
               </div>
             </td>
@@ -116,6 +123,7 @@
           [stateProvinces]="stateProvinces"
           [examDeliveryMethods]="examDeliveryMethods"
           [examProviders]="examProviders"
+          (callParentRefreshData)="onChildCallRefreshData()"
         ></app-edit-exam>
       </div>
     </div>

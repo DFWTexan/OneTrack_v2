@@ -1,8 +1,8 @@
-import { Component, Injectable, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, Injectable, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { AdminComService, AdminDataService } from '../../../_services';
+import { AdminComService, AdminDataService, ErrorMessageService, UserAcctInfoDataService } from '../../../_services';
 import { state } from '@angular/animations';
 @Component({
   selector: 'app-edit-exam',
@@ -11,16 +11,20 @@ import { state } from '@angular/animations';
 })
 @Injectable()
 export class EditExamComponent implements OnInit, OnDestroy {
+  @Output() callParentRefreshData = new EventEmitter<any>();
   @Input() stateProvinces: any[] = [];
   @Input() examDeliveryMethods: { value: number; label: string }[] = [];
   @Input() examProviders: { value: number; label: string }[] = [];
+  isFormSubmitted = false;
   examForm!: FormGroup;
   
   subscriptionData: Subscription = new Subscription();
 
   constructor(
+    private errorMessageService: ErrorMessageService,
     public adminDataService: AdminDataService,
-    public adminComService: AdminComService
+    public adminComService: AdminComService,
+    private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {
@@ -59,7 +63,41 @@ export class EditExamComponent implements OnInit, OnDestroy {
       });
   }
 
-  onSubmit(): void {}
+  onSubmit(): void {
+    this.isFormSubmitted = true;
+    let examItem: any = this.examForm.value;
+    examItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+
+    // if (this.adminComService.modes.company.mode === 'INSERT') {
+    //   company.companyId = 0;
+    // }
+
+    // if (examItem.deliveryMethod === 'Select Method') {
+    //   examItem.deliveryMethod = '';
+    //   this.companyForm.controls['companyType'].setErrors({ incorrect: true });
+    // }
+
+    if (examItem.deliveryMethod === 'Select Method') {
+      examItem.deliveryMethod = '';
+    }
+
+    // if (!this.companyForm.valid) {
+    //   this.companyForm.setErrors({ invalid: true });
+    //   return;
+    // }
+
+    this.adminDataService.upSertExamItem(examItem).subscribe({
+      next: (response) => {
+        this.callParentRefreshData.emit();
+        this.forceCloseModal();
+      },
+      error: (error) => {
+        if (error.error && error.error.errMessage) {
+          this.errorMessageService.setErrorMessage(error.error.errMessage);
+        }
+      },
+    });
+  }
 
   forceCloseModal() {
     const modalDiv = document.getElementById('modal-edit-exam');
