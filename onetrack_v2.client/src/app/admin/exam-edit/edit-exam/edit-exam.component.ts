@@ -68,9 +68,9 @@ export class EditExamComponent implements OnInit, OnDestroy {
     let examItem: any = this.examForm.value;
     examItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
-    // if (this.adminComService.modes.company.mode === 'INSERT') {
-    //   company.companyId = 0;
-    // }
+    if (this.adminComService.modes.examItem.mode === 'INSERT') {
+      examItem.examID = 0;
+    }
 
     // if (examItem.deliveryMethod === 'Select Method') {
     //   examItem.deliveryMethod = '';
@@ -94,6 +94,7 @@ export class EditExamComponent implements OnInit, OnDestroy {
       error: (error) => {
         if (error.error && error.error.errMessage) {
           this.errorMessageService.setErrorMessage(error.error.errMessage);
+          this.forceCloseModal();
         }
       },
     });

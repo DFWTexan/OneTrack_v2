@@ -915,14 +915,16 @@ namespace OneTrak_v2.Services
                 result.Success = true;
                 result.ObjData = new { Message = "Education Rule Created/Updated Successfully." };
                 result.StatusCode = 200;
-
+            
             }
             catch (Exception ex)
             {
+                result.StatusCode = 500;
                 result.Success = false;
                 result.ObjData = null;
                 result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49597].";
 
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
             }
 
             return result;
@@ -955,10 +957,12 @@ namespace OneTrak_v2.Services
             }
             catch (Exception ex)
             {
+                result.StatusCode = 500;
                 result.Success = false;
                 result.ObjData = null;
                 result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49597].";
 
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
 
             return result;
@@ -1023,10 +1027,12 @@ namespace OneTrak_v2.Services
             }
             catch (Exception ex)
             {
+                result.StatusCode = 500;
                 result.Success = false;
                 result.ObjData = null;
                 result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49577].";
 
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
             }
 
             return result;
@@ -1058,10 +1064,12 @@ namespace OneTrak_v2.Services
             }
             catch (Exception ex)
             {
+                result.StatusCode = 500;
                 result.Success = false;
                 result.ObjData = null;
                 result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-9590].";
 
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
             }
 
             return result;
@@ -1080,7 +1088,6 @@ namespace OneTrak_v2.Services
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
 
-                            cmd.Parameters.Add(new SqlParameter("@ExamID", vInput.ExamID));
                             cmd.Parameters.Add(new SqlParameter("@ExamName", vInput.ExamName));
                             cmd.Parameters.Add(new SqlParameter("@ExamFees", vInput.ExamFees));
                             cmd.Parameters.Add(new SqlParameter("@StateProvinceAbv", vInput.StateProvinceAbv));
@@ -1123,10 +1130,12 @@ namespace OneTrak_v2.Services
             }
             catch (Exception ex)
             {
+                result.StatusCode = 500;
                 result.Success = false;
                 result.ObjData = null;
                 result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49397].";
 
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
             }
 
             return result;
@@ -1134,7 +1143,6 @@ namespace OneTrak_v2.Services
         }
         public ReturnResult DeleteExam([FromBody] IputDeleteExam vInput)
         {
-
             var result = new ReturnResult();
             try
             {
@@ -1159,10 +1167,12 @@ namespace OneTrak_v2.Services
             }
             catch (Exception ex)
             {
+                result.StatusCode = 500;
                 result.Success = false;
                 result.ObjData = null;
                 result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49198].";
 
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
             }
 
             return result;

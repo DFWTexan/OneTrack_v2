@@ -7,6 +7,7 @@ import {
   AdminDataService,
   AppComService,
   ConstantsDataService,
+  ErrorMessageService,
   MiscDataService,
   ModalService,
   UserAcctInfoDataService,
@@ -20,11 +21,11 @@ import { ConfirmDialogComponent } from '../../_components';
   styleUrl: './exam-edit.component.css',
 })
 @Injectable()
-export class ExamEditComponent implements OnInit, OnDestroy{
+export class ExamEditComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   stateProvinces: any[] = [];
-  examDeliveryMethods:  any[] = [];
-  examProviders: {value: number, label: string}[] = [];
+  examDeliveryMethods: any[] = [];
+  examProviders: { value: number; label: string }[] = [];
   selectedStateProvince: string = 'Select';
   examItems: Exam[] = [];
   eventAction: string = '';
@@ -33,6 +34,7 @@ export class ExamEditComponent implements OnInit, OnDestroy{
   subscriptionData: Subscription = new Subscription();
 
   constructor(
+    private errorMessageService: ErrorMessageService,
     private conService: ConstantsDataService,
     public adminDataService: AdminDataService,
     public miscDataService: MiscDataService,
@@ -54,21 +56,33 @@ export class ExamEditComponent implements OnInit, OnDestroy{
 
   private fetchEditExamDropdowns(): void {
     this.subscriptionData.add(
-      this.adminDataService.fetchDropdownListItems('ExamDelivery').subscribe((response) => {
-        this.examDeliveryMethods = ['Select Method', ...response.map((item: any) => item.lkpValue)];
-      })
+      this.adminDataService
+        .fetchDropdownListItems('ExamDelivery')
+        .subscribe((response) => {
+          this.examDeliveryMethods = [
+            'Select Method',
+            ...response.map((item: any) => item.lkpValue),
+          ];
+        })
     );
     this.subscriptionData.add(
       this.miscDataService.fetchExamProviders().subscribe((response) => {
-        this.examProviders = [ {value: 0, label: 'Select Provider'} , ...response];
-      }) 
+        this.examProviders = [
+          { value: 0, label: 'Select Provider' },
+          ...response,
+        ];
+      })
     );
   }
 
   private fetchExamItems(): void {
-    this.adminDataService.fetchExamItems(this.selectedStateProvince).subscribe((response) => {
-      this.examItems = response;
-    });
+    this.subscriptionData.add(
+      this.adminDataService
+        .fetchExamItems(this.selectedStateProvince)
+        .subscribe((response) => {
+          this.examItems = response;
+        })
+    );
   }
 
   changeStateProvince(event: any) {
@@ -78,10 +92,7 @@ export class ExamEditComponent implements OnInit, OnDestroy{
     this.selectedStateProvince = value;
 
     if (value === 'Select') {
-      // this.adminDataService.fetchCities(value).subscribe((response) => {
-      //   this.adminDataService.cities = response;
-      //   this.adminDataService.citiesChanged.next(this.adminDataService.cities);
-      // });
+      this.examItems = [];
     } else {
       this.fetchExamItems();
     }
@@ -102,30 +113,29 @@ export class ExamEditComponent implements OnInit, OnDestroy{
       },
     });
 
-    // dialogRef.afterClosed().subscribe((result) => {
-    //   if (result) {
-    //     this.subscriptionData.add(
-    //       this.adminDataService
-    //         .deleteLkpType({
-    //           lkpField: vObject.lkpField,
-    //           lkpValue: vObject.lkpValue,
-    //           userSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
-    //         })
-    //         .subscribe({
-    //           next: (response) => {
-    //             this.fetchDropdownListItems();
-    //           },
-    //           error: (error) => {
-    //             if (error.error && error.error.errMessage) {
-    //               this.errorMessageService.setErrorMessage(
-    //                 error.error.errMessage
-    //               );
-    //             }
-    //           },
-    //         })
-    //     );
-    //   }
-    // });
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.subscriptionData.add(
+          this.adminDataService
+            .deleteExamItem({
+              examID: vObject.examId,
+              userSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
+            })
+            .subscribe({
+              next: (response) => {
+                this.fetchExamItems();
+              },
+              error: (error) => {
+                if (error.error && error.error.errMessage) {
+                  this.errorMessageService.setErrorMessage(
+                    error.error.errMessage
+                  );
+                }
+              },
+            })
+        );
+      }
+    });
   }
 
   ngOnDestroy(): void {
