@@ -1,8 +1,8 @@
-import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
+import { Component, Injectable, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { AdminComService, AdminDataService } from '../../../_services';
+import { AdminComService, AdminDataService, ErrorMessageService, UserAcctInfoDataService } from '../../../_services';
 import { DropdownItem } from '../../../_Models';
 
 @Component({
@@ -12,13 +12,18 @@ import { DropdownItem } from '../../../_Models';
 })
 @Injectable()
 export class EditDropdownItemComponent implements OnInit, OnDestroy {
+  @Output() callParentRefreshData = new EventEmitter<any>();
+  isFormSubmitted = false;
   dropdownItemForm!: FormGroup;
-  
+  upSertType: string = 'INSERT';
+
   subscriptionData: Subscription = new Subscription();
 
   constructor(
+    private errorMessageService: ErrorMessageService,
     public adminDataService: AdminDataService,
-    public adminComService: AdminComService
+    public adminComService: AdminComService,
+    private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {
@@ -32,6 +37,7 @@ export class EditDropdownItemComponent implements OnInit, OnDestroy {
       this.adminComService.modes.dropdownItem.changed.subscribe(
         (mode: string) => {
           if (mode === 'EDIT') {
+            this.upSertType = 'UPDATE';
             this.adminDataService.dropdownListItemChanged.subscribe(
               (dropdownItem: DropdownItem) => {
                 this.dropdownItemForm.patchValue({
@@ -48,7 +54,42 @@ export class EditDropdownItemComponent implements OnInit, OnDestroy {
       );
   }
 
-  onSubmit() {}
+  onSubmit() {
+    this.isFormSubmitted = true;
+    let lkpTypeItem: any = this.dropdownItemForm.value;
+    lkpTypeItem.upSertType = this.upSertType;
+    lkpTypeItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+
+    // if (this.adminComService.modes.company.mode === 'INSERT') {
+    //   company.companyId = 0;
+    // }
+
+    // if (company.companyType === 'Select Company Type') {
+    //   company.companyType = '';
+    //   this.companyForm.controls['companyType'].setErrors({ incorrect: true });
+    // }
+
+    // if (company.state === 'Select State') {
+    //   company.state = '';
+    // }
+
+    // if (!this.companyForm.valid) {
+    //   this.companyForm.setErrors({ invalid: true });
+    //   return;
+    // }
+
+    this.adminDataService.upSertLkpType(lkpTypeItem).subscribe({
+      next: (response) => {
+        this.callParentRefreshData.emit();
+        this.forceCloseModal();
+      },
+      error: (error) => {
+        if (error.error && error.error.errMessage) {
+          this.errorMessageService.setErrorMessage(error.error.errMessage);
+        }
+      },
+    });
+  }
 
   forceCloseModal() {
     const modalDiv = document.getElementById('modal-edit-dropdown-item');

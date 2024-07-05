@@ -979,7 +979,6 @@ namespace OneTrak_v2.Services
         }
         public ReturnResult DisableEducationRule([FromBody] IputDisableEducationRule vInput)
         {
-
             var result = new ReturnResult();
             try
             {
@@ -1001,6 +1000,109 @@ namespace OneTrak_v2.Services
 
                 result.Success = true;
                 result.ObjData = new { Message = "Education Rule Disabled Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49597].";
+
+            }
+
+            return result;
+        }
+        public ReturnResult UpsertLkpType([FromBody] IputUpsertLkpType vInput)
+        {
+
+            var result = new ReturnResult();
+            try
+            {
+                if (vInput.LkpField == null || vInput.LkpValue == null)
+                {
+                    result.Success = false;
+                    result.ObjData = null;
+                    result.ErrMessage = "Invalid Input - Please provide LkpField and LkpValue.";
+
+                    return result;
+                }
+
+                if (vInput.UpsertType == "INSERT")
+                {
+                    // INSERT LkpType
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("usplkp_TypeStatusInsert", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@LkpField", vInput.LkpField));
+                            cmd.Parameters.Add(new SqlParameter("@LkpValue", vInput.LkpValue));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                else
+                {
+                    // UPDATE LkpType
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("usplkp_TypeStatusUpdate", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@LkpField", vInput.LkpField));
+                            cmd.Parameters.Add(new SqlParameter("@LkpValue", vInput.LkpValue));
+                            cmd.Parameters.Add(new SqlParameter("@SortOrder", vInput.SortOrder));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "LkpType Created/Updated Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49597].";
+
+            }
+
+            return result;
+        }
+        public ReturnResult DeleteLkpType([FromBody] IputDeleteLkpType vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("usplkp_TypeStatusDelete", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@LkpField", vInput.LkpField));
+                        cmd.Parameters.Add(new SqlParameter("@LkpValue", vInput.LkpValue));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "LkpType Deleted Successfully." };
                 result.StatusCode = 200;
 
             }

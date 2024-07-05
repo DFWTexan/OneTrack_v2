@@ -360,6 +360,51 @@ export class AdminDataService {
       );
   }
 
+  upSertLkpType(lkpType: any) {
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'UpsertLkpType', lkpType, { observe: 'response' })
+      .pipe(
+        tap({
+          next: (response) => {
+            console.log(response.status);
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        })
+      );
+  }
+
+  deleteLkpType(lkpType: any) {
+    return this.http
+      .put<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'DeleteLkpType', lkpType)
+      .pipe(
+        tap({
+          next: (response) => {
+            if (response.success && response.statusCode === 200) {
+              // return response;
+            } else {
+              throw new Error(response.errMessage || 'Unknown error');
+            }
+          },
+          error: (error) => {
+            // console.error(error);
+            // throw error;
+          },
+        })
+      );
+  }
+
   // EXAM EDIT
   fetchExamItems(stateProvince: string) {
     return this.http

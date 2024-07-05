@@ -29,7 +29,7 @@ import { state } from '@angular/animations';
 @Injectable()
 export class EditCompanyComponent implements OnInit, OnDestroy {
   @Output() callParentRefreshData = new EventEmitter<any>();
-  formSubmitted = false;
+  isFormSubmitted = false;
   states: any[] = ['Select State', 'Loading...'];
   companyForm!: FormGroup;
   subscriptionData: Subscription = new Subscription();
@@ -101,7 +101,7 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    this.formSubmitted = true;
+    this.isFormSubmitted = true;
     let company: Company = this.companyForm.value;
     company.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 

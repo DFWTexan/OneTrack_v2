@@ -31,5 +31,7 @@ namespace OneTrak_v2.Services
         public ReturnResult DeleteCompany([FromBody] IputDeleteCompany vInput);
         public ReturnResult UpsertEducationRule([FromBody] IputUpsertEducationRule vInput);
         public ReturnResult DisableEducationRule([FromBody] IputDisableEducationRule vInput);
+        public ReturnResult UpsertLkpType([FromBody] IputUpsertLkpType vInput);
+        public ReturnResult DeleteLkpType([FromBody] IputDeleteLkpType vInput);
     }
 }

@@ -215,6 +215,22 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> UpsertLkpType([FromBody] IputUpsertLkpType input)
+        {
+            var result = await Task.Run(() => _adminService.UpsertLkpType(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> DeleteLkpType([FromBody] IputDeleteLkpType input)
+        {
+            var result = await Task.Run(() => _adminService.DeleteLkpType(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
         #endregion
     }
 }

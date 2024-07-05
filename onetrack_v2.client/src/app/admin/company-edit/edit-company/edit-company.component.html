@@ -53,7 +53,7 @@
         />
         <div
           *ngIf="
-            (companyForm.controls['companyAbv'].touched || formSubmitted) &&
+            (companyForm.controls['companyAbv'].touched || isFormSubmitted) &&
             companyForm.controls['companyAbv'].errors &&
             companyForm.controls['companyAbv'].errors['required']
           "
@@ -75,7 +75,7 @@
         />
         <div
           *ngIf="
-            (companyForm.controls['companyName'].touched || formSubmitted) &&
+            (companyForm.controls['companyName'].touched || isFormSubmitted) &&
             companyForm.controls['companyName'].errors &&
             companyForm.controls['companyName'].errors['required']
           "
