@@ -327,7 +327,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'GetDropdownListTypes')
+      }>(environment.apiUrl + 'Misc/GetDropdownListTypes')
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -346,7 +346,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'GetDropdownByType/' + dropdownListType)
+      }>(environment.apiUrl + 'Misc/GetDropdownByType/' + dropdownListType)
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -421,6 +421,51 @@ export class AdminDataService {
           } else {
             throw new Error(response.errMessage || 'Unknown error');
           }
+        })
+      );
+  }
+
+  upSertExamItem(examItem: Exam) {
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: Exam;
+        errMessage: string;
+      }>(this.apiUrl + 'UpsertExam', examItem, { observe: 'response' })
+      .pipe(
+        tap({
+          next: (response) => {
+            console.log(response.status);
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        })
+      );
+  }
+
+  deleteExamItem(examItem: any) {
+    return this.http
+      .put<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'DeleteExam', examItem)
+      .pipe(
+        tap({
+          next: (response) => {
+            if (response.success && response.statusCode === 200) {
+              // return response;
+            } else {
+              throw new Error(response.errMessage || 'Unknown error');
+            }
+          },
+          error: (error) => {
+            // console.error(error);
+            // throw error;
+          },
         })
       );
   }

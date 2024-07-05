@@ -44,7 +44,13 @@
       <div class="table" *ngIf="examItems.length > 0">
         <thead>
           <tr class="sticky-top" style="background-color: gainsboro">
-            <th scope="col" style="width: 10rem;">ExamID</th>
+            <th
+              scope="col"
+              *ngIf="appComService.isShowEditID"
+              style="width: 10rem"
+            >
+              ExamID
+            </th>
             <th scope="col">Exam Name</th>
             <th scope="col">Delivery Method</th>
             <th scope="col">Exam Provider</th>
@@ -53,7 +59,11 @@
         </thead>
         <tbody class="bg-body">
           <tr *ngFor="let exam of examItems">
-            <td class="align-middle" style="width: 10rem;">
+            <td
+              class="align-middle"
+              *ngIf="appComService.isShowEditID"
+              style="width: 10rem"
+            >
               {{ exam.examId }}
             </td>
             <td class="align-middle">{{ exam.examName }}</td>
@@ -102,7 +112,11 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-exam></app-edit-exam>
+        <app-edit-exam
+          [stateProvinces]="stateProvinces"
+          [examDeliveryMethods]="examDeliveryMethods"
+          [examProviders]="examProviders"
+        ></app-edit-exam>
       </div>
     </div>
   </div>

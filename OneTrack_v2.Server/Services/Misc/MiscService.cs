@@ -513,7 +513,8 @@ namespace OneTrack_v2.Services
             return result;
         }
         public ReturnResult GetAgentStautes()
-        {             var result = new ReturnResult();
+        {
+            var result = new ReturnResult();
             try
             {
                 var query = from s in _db.LkpTypeStatuses
@@ -736,6 +737,82 @@ namespace OneTrack_v2.Services
 
             return result;
 
+        }
+        public ReturnResult GetDropdownListTypes()
+        {
+            ReturnResult result = new ReturnResult();
+            try
+            {
+                var query = _db.LkpTypeStatuses
+                            .Select(x => x.LkpField)
+                            .Distinct()
+                            .OrderBy(x => x)
+                            .AsNoTracking()
+                            .ToList();
+
+                result.ObjData = query;
+                result.Success = true;
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+            return result;
+        }
+        public ReturnResult GetDropdownByType(string vLkpField)
+        {
+            ReturnResult result = new ReturnResult();
+            try
+            {
+                var query = _db.LkpTypeStatuses
+                        .Where(x => vLkpField == null || x.LkpField == vLkpField)
+                        .OrderBy(x => x.LkpField)
+                        .ThenBy(x => x.SortOrder)
+                        .ThenBy(x => x.LkpValue)
+                        .Select(x => new { x.LkpField, x.LkpValue, x.SortOrder })
+                        .AsNoTracking()
+                        .ToList();
+
+                result.ObjData = query;
+                result.Success = true;
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+            }
+            return result;
+        }
+        public ReturnResult GetExamProviders()
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var query = from c in _db.Companies
+                            where c.CompanyType == "ExamProvider" && c.XxxIsActive == true
+                            orderby c.CompanyName
+                            select new { value = c.CompanyId, label = c.CompanyName };
+
+                var resultExamProviders = query.AsNoTracking().ToList();
+
+                result.Success = true;
+                result.ObjData = resultExamProviders;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "MISC-GetExamProviders", new { }, null);
+            }
+
+            return result;
         }
     }
 }

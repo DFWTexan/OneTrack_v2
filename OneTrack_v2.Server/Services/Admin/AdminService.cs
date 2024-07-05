@@ -214,56 +214,8 @@ namespace OneTrak_v2.Services
             return result;
         }
 
-        public ReturnResult GetDropdownListTypes()
-        {
-            ReturnResult result = new ReturnResult();
-            try
-            {
-                var query = _db.LkpTypeStatuses
-                            .Select(x => x.LkpField)
-                            .Distinct()
-                            .OrderBy(x => x)
-                            .AsNoTracking()
-                            .ToList();
-
-                result.ObjData = query;
-                result.Success = true;
-                result.StatusCode = 200;
-            }
-            catch (Exception ex)
-            {
-                result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
-            }
-            return result;
-        }
-
-        public ReturnResult GetDropdownByType(string vLkpField)
-        {
-            ReturnResult result = new ReturnResult();
-            try
-            {
-                var query = _db.LkpTypeStatuses
-                        .Where(x => vLkpField == null || x.LkpField == vLkpField)
-                        .OrderBy(x => x.LkpField)
-                        .ThenBy(x => x.SortOrder)
-                        .ThenBy(x => x.LkpValue)
-                        .Select(x => new { x.LkpField, x.LkpValue, x.SortOrder })
-                        .AsNoTracking()
-                        .ToList();
-
-                result.ObjData = query;
-                result.Success = true;
-                result.StatusCode = 200;
-            }
-            catch (Exception ex)
-            {
-                result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
-            }
-            return result;
-        }
-
+        
+        
         public ReturnResult GetExamByState(string vState)
         {
             ReturnResult result = new ReturnResult();
@@ -1075,7 +1027,7 @@ namespace OneTrak_v2.Services
             {
                 result.Success = false;
                 result.ObjData = null;
-                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49597].";
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49577].";
 
             }
 
@@ -1110,12 +1062,114 @@ namespace OneTrak_v2.Services
             {
                 result.Success = false;
                 result.ObjData = null;
-                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49597].";
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-9590].";
 
             }
 
             return result;
         }
-        #endregion
+        public ReturnResult UpsertExam([FromBody] IputUpsertExam vInput)
+        {
+
+            var result = new ReturnResult();
+            try
+            {
+                if (vInput.ExamID == 0)
+                {
+                    // INSERT Exam
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspExamInsert", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@ExamID", vInput.ExamID));
+                            cmd.Parameters.Add(new SqlParameter("@ExamName", vInput.ExamName));
+                            cmd.Parameters.Add(new SqlParameter("@ExamFees", vInput.ExamFees));
+                            cmd.Parameters.Add(new SqlParameter("@StateProvinceAbv", vInput.StateProvinceAbv));
+                            cmd.Parameters.Add(new SqlParameter("@ExamProviderID", vInput.ExamProviderID));
+                            cmd.Parameters.Add(new SqlParameter("@DeliveryMethod", vInput.DeliveryMethod));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                else
+                {
+                    // UPDATE Exam
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspExamUpdate", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@ExamID", vInput.ExamID));
+                            cmd.Parameters.Add(new SqlParameter("@ExamName", vInput.ExamName));
+                            cmd.Parameters.Add(new SqlParameter("@ExamFees", vInput.ExamFees));
+                            cmd.Parameters.Add(new SqlParameter("@StateProvinceAbv", vInput.StateProvinceAbv));
+                            cmd.Parameters.Add(new SqlParameter("@ExamProviderID", vInput.ExamProviderID));
+                            cmd.Parameters.Add(new SqlParameter("@DeliveryMethod", vInput.DeliveryMethod));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "Exam Created/Updated Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49397].";
+
+            }
+
+            return result;
+            #endregion
+        }
+        public ReturnResult DeleteExam([FromBody] IputDeleteExam vInput)
+        {
+
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspExamDelete", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@ExamID", vInput.ExamID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "Exam Deleted Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49198].";
+
+            }
+
+            return result;
+        }
+
     }
 }

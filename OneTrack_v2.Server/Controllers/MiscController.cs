@@ -207,5 +207,29 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetDropdownListTypes()
+        {
+            var result = await Task.Run(() => _miscService.GetDropdownListTypes());
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpGet("{lkpField}")]
+        public async Task<IActionResult> GetDropdownByType(string lkpField)
+        {
+            var result = await Task.Run(() => _miscService.GetDropdownByType(lkpField));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> GetExamProviders()
+        {
+            var result = await Task.Run(() => _miscService.GetExamProviders());
+
+            return StatusCode(result.StatusCode, result);
+        }
     }
 }

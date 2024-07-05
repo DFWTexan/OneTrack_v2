@@ -12,8 +12,8 @@ namespace OneTrak_v2.Services
         public ReturnResult GetLicenseTypes(string? vStateAbv = null);
         public ReturnResult GetConEducationRules(string? vState = null, string? LicenesType = null);
         public ReturnResult GetCompanyRequirements(string vWorkState, string? vResState = null);
-        public ReturnResult GetDropdownListTypes();
-        public ReturnResult GetDropdownByType(string vLkpField);
+        
+        
         public ReturnResult GetExamByState(string vState);
         public ReturnResult GetJobTitleLicLevel();
         public ReturnResult GetJobTitlelicIncentive();
@@ -33,5 +33,7 @@ namespace OneTrak_v2.Services
         public ReturnResult DisableEducationRule([FromBody] IputDisableEducationRule vInput);
         public ReturnResult UpsertLkpType([FromBody] IputUpsertLkpType vInput);
         public ReturnResult DeleteLkpType([FromBody] IputDeleteLkpType vInput);
+        public ReturnResult UpsertExam([FromBody] IputUpsertExam vInput);
+        public ReturnResult DeleteExam([FromBody] IputDeleteExam vInput);
     }
 }

@@ -61,21 +61,7 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> GetDropdownListTypes()
-        {
-            var result = await Task.Run(() => _adminService.GetDropdownListTypes());
-
-            return StatusCode(result.StatusCode, result);
-        }
-
-        [HttpGet("{lkpField}")]
-        public async Task<IActionResult> GetDropdownByType(string lkpField)
-        {
-            var result = await Task.Run(() => _adminService.GetDropdownByType(lkpField));
-
-            return StatusCode(result.StatusCode, result);
-        }
+        
 
         [HttpGet("{state}")]
         public async Task<IActionResult> GetExamByState(string state)
@@ -228,6 +214,22 @@ namespace OneTrack_v2.Controllers
         public async Task<ActionResult> DeleteLkpType([FromBody] IputDeleteLkpType input)
         {
             var result = await Task.Run(() => _adminService.DeleteLkpType(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpsertExam([FromBody] IputUpsertExam input)
+        {
+            var result = await Task.Run(() => _adminService.UpsertExam(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> DeleteExam([FromBody] IputDeleteExam input)
+        {
+            var result = await Task.Run(() => _adminService.DeleteExam(input));
 
             return StatusCode(result.StatusCode, result);
         }
