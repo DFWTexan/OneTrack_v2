@@ -43,13 +43,13 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
         this.licenseLevels = response;
       })
     );
-    
+
     this.subscriptionData.add(
       this.adminDataService.fetchLicenseIncentives().subscribe((response) => {
         this.licenseIncentives = response;
       })
     );
-    
+
     this.subscriptionData.add(
       this.adminDataService.fetchJobTitles().subscribe((response) => {
         this.jobTitles = response;
@@ -132,18 +132,24 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
   }
 
   private getFilterData() {
+    this.jobTitles = this.adminDataService.jobTitlesFilter;
     this.subscriptionData.add(
       this.adminDataService.jobTitlesFilterChanged.subscribe((response) => {
         this.jobTitles = response;
-        this.paginationComService.updateDisplayItems(this.jobTitles);
-        this.paginationComService.updatePaginatedResults();
       })
     );
+    this.paginationComService.updateDisplayItems(this.jobTitles);
+    this.paginationComService.updatePaginatedResults();
   }
 
-  clearFilterJobTitle(){
+  clearFilterJobTitle() {
     this.filterJobTitle = null;
-    this.adminDataService.filterJobTitleData(null, this.selectedFilterIsActive, this.selectedFilterLicLevel, this.selectedFilterLicIncentive);
+    this.adminDataService.filterJobTitleData(
+      null,
+      this.selectedFilterIsActive,
+      this.selectedFilterLicLevel,
+      this.selectedFilterLicIncentive
+    );
     this.getFilterData();
   }
 
