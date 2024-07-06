@@ -85,19 +85,20 @@ export class EditExamComponent implements OnInit, OnDestroy {
     //   this.companyForm.setErrors({ invalid: true });
     //   return;
     // }
-
-    this.adminDataService.upSertExamItem(examItem).subscribe({
-      next: (response) => {
-        this.callParentRefreshData.emit();
-        this.forceCloseModal();
-      },
-      error: (error) => {
-        if (error.error && error.error.errMessage) {
-          this.errorMessageService.setErrorMessage(error.error.errMessage);
+    this.subscriptionData.add(
+      this.adminDataService.upSertExamItem(examItem).subscribe({
+        next: (response) => {
+          this.callParentRefreshData.emit();
           this.forceCloseModal();
-        }
-      },
-    });
+        },
+        error: (error) => {
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+            this.forceCloseModal();
+          }
+        },
+      })
+    );
   }
 
   forceCloseModal() {

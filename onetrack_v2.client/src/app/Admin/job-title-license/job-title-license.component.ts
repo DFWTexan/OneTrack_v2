@@ -4,8 +4,10 @@ import {
   AdminComService,
   AdminDataService,
   AppComService,
+  ErrorMessageService,
   ModalService,
   PaginationComService,
+  UserAcctInfoDataService,
 } from '../../_services';
 import { JobTitle } from '../../_Models';
 import { Subscription } from 'rxjs';
@@ -31,11 +33,13 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
   subscriptionData: Subscription = new Subscription();
 
   constructor(
+    private errorMessageService: ErrorMessageService,
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
     public modalService: ModalService,
     public appComService: AppComService,
-    public paginationComService: PaginationComService
+    public paginationComService: PaginationComService,
+    private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {
@@ -149,17 +153,6 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
     this.paginationComService.updatePaginatedResults();
   }
 
-  // clearFilterJobTitle() {
-  //   this.filterJobTitle = null;
-  //   this.adminDataService.filterJobTitleData(
-  //     null,
-  //     this.selectedFilterIsActive,
-  //     this.selectedFilterLicLevel,
-  //     this.selectedFilterLicIncentive
-  //   );
-  //   this.getFilterData();
-  //   // this.initJobTitle();
-  // }
   onScrollTop() {
     const yourDiv = document.getElementById('job-title-table');
     if (yourDiv !== null) {
@@ -176,6 +169,61 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
     this.selectedFilterLicIncentive = null;
     this.adminDataService.filterJobTitleData(null, null, null, null);
     this.initJobTitle();
+  }
+
+  onChildCallRefreshData() {
+    this.initJobTitle();
+  }
+
+  onUpdate(job: JobTitle) {
+    job.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+    this.subscriptionData.add(
+      this.adminDataService.upsertJobTitle(job).subscribe({
+        next: (response) => {
+          // this.callParentRefreshData.emit();
+          alert('Job Title Updated Successfully');
+          this.forceCloseModal();
+        },
+        error: (error) => {
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+            this.forceCloseModal();
+          }
+        },
+      })
+    );
+  }
+
+  forceCloseModal() {
+    const modalDiv = document.getElementById('modal-edit-job-title');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+  }
+
+  closeModal() {
+    this.forceCloseModal();
+    // if (this.employmentHistoryForm.dirty && !this.isFormSubmitted) {
+    //   if (
+    //     confirm('You have unsaved changes. Are you sure you want to close?')
+    //   ) {
+    //     const modalDiv = document.getElementById('modal-edit-emp-history');
+    //     if (modalDiv != null) {
+    //       modalDiv.style.display = 'none';
+    //     }
+    //     this.employmentHistoryForm.reset();
+    //     this.employmentHistoryForm.patchValue({
+    //       backgroundCheckStatus: 'Pending',
+    //       isCurrent: true,
+    //     });
+    //   }
+    // } else {
+    //   this.isFormSubmitted = false;
+    //   const modalDiv = document.getElementById('modal-edit-emp-history');
+    //   if (modalDiv != null) {
+    //     modalDiv.style.display = 'none';
+    //   }
+    // }
   }
 
   ngOnDestroy(): void {

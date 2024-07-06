@@ -219,6 +219,7 @@
                   class="icon-edit-delete-button btn-grey"
                   type="button"
                   [disabled]="!job.isDirty"
+                  (click)="onUpdate(job); job.isDirty = false"
                 >
                   <span class="material-symbols-outlined"> save </span>
                 </button>
@@ -261,7 +262,9 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-job-title></app-edit-job-title>
+        <app-edit-job-title
+          (callParentRefreshData)="onChildCallRefreshData()"
+        ></app-edit-job-title>
       </div>
     </div>
   </div>

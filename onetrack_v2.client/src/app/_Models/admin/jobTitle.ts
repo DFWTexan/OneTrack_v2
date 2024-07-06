@@ -8,4 +8,5 @@ export interface JobTitle {
   licenseLevel: string;
   licenseIncentive: string;
   isDirty: boolean;
+  userSOEID: string;
 }
