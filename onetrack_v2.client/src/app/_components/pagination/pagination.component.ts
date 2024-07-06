@@ -13,6 +13,7 @@ export class PaginationComponent {
   @Input() totalItems: number = 0;
   @Input() itemsPerPage: number = 25;
   @Output() pageChange = new EventEmitter<number>();
+  @Output() callParentScrollTop = new EventEmitter();
 
   totalPages: number = 0;
   pageRange: any[] = [];
@@ -35,15 +36,18 @@ export class PaginationComponent {
     if (this.currentPage > 1) {
       this.pageChange.emit(this.currentPage - 1);
     }
+    this.callParentScrollTop.emit();
   }
 
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.pageChange.emit(this.currentPage + 1);
     }
+    this.callParentScrollTop.emit();
   }
 
   goToPage(page: number) {
+    this.callParentScrollTop.emit();
     this.pageChange.emit(page);
   }
 }

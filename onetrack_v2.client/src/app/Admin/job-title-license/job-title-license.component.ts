@@ -160,8 +160,15 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
   //   this.getFilterData();
   //   // this.initJobTitle();
   // }
+  onScrollTop() {
+    const yourDiv = document.getElementById('job-title-table');
+    if (yourDiv !== null) {
+      yourDiv.scrollTop = 0;
+    }
+  }
 
   clearfilter() {
+    this.onScrollTop();
     this.filterJobTitle = null;
     this.activeFilterVal = '0';
     this.selectedFilterIsActive = null;

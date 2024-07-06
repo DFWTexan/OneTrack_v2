@@ -131,6 +131,7 @@
         border-top-left-radius: 0.7rem;
         border-top-right-radius: 0.7rem;
       "
+      id="job-title-table"
     >
       <div
         class="table shadow-sm"
@@ -238,6 +239,7 @@
           paginationComService.currentPage = $event;
           paginationComService.updatePaginatedResults()
         "
+        (callParentScrollTop)="onScrollTop()"
       >
       </app-pagination>
     </div>
