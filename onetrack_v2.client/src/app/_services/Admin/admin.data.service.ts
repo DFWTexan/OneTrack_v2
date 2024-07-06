@@ -66,6 +66,8 @@ export class AdminDataService {
   licenseIncentivesChanged = new Subject<any[]>();
   jobTitles: JobTitle[] = [];
   jobTitlesChanged = new Subject<JobTitle[]>();
+  jobTitlesFilter: JobTitle[] = [];
+  jobTitlesFilterChanged = new Subject<JobTitle[]>();
   // LICENSE EDIT
   licenseItems: License[] = [];
   licenseItemsChanged = new Subject<License[]>();
@@ -534,54 +536,96 @@ export class AdminDataService {
       );
   }
 
-  filterJobTitleData(
-    filterJobTitle: string | null = null,
-    isActive: boolean | null = null,
-    licLevel: string | null = null,
-    licIncentive: string | null = null
-  ) {
-    if (
-      filterJobTitle === null &&
-      isActive === null &&
-      licLevel === null &&
-      licIncentive === null
-    ) {
-      this.jobTitlesChanged.next(this.jobTitles);
-      return;
-    }
+//   filterJobTitleData(
+//     filterJobTitle: string | null = null,
+//     isActive: boolean | null = null,
+//     licLevel: string | null = null,
+//     licIncentive: string | null = null
+//   ) {
 
-    let filteredJobTitles: any[] = this.jobTitles.slice();
+// console.log('EMFTEST (filterJobTitleData) - isActive: ', isActive);
+// console.log('EMFTEST (filterJobTitleData) - this.jobTitles => \n ', this.jobTitles);
 
-    if (filterJobTitle !== null) {
-      filteredJobTitles = filteredJobTitles.filter((jobTitle) =>
-        jobTitle.jobTitle1.toLowerCase().includes(filterJobTitle.toLowerCase())
-      );
-      this.jobTitlesChanged.next(filteredJobTitles);
-    }
+//     if (
+//       filterJobTitle === null &&
+//       isActive === null &&
+//       licLevel === null &&
+//       licIncentive === null
+//     ) {
+//       this.jobTitlesChanged.next(this.jobTitles);
+//       return;
+//     }
 
-    if (isActive !== null) {
-      filteredJobTitles = filteredJobTitles.filter(
-        (jobTitle) => jobTitle.isActive === isActive
-      );
-      this.jobTitlesChanged.next(filteredJobTitles);
-    }
+//     let filteredJobTitles: any[] = this.jobTitles.slice();
 
-    if (licLevel !== null) {
-      filteredJobTitles = filteredJobTitles.filter(
-        (jobTitle) => jobTitle.licLevel === licLevel
-      );
-      this.jobTitlesChanged.next(filteredJobTitles);
-    }
+//     if (filterJobTitle !== null) {
+//       filteredJobTitles = filteredJobTitles.filter((jobTitle) =>
+//         jobTitle.jobTitle1.toLowerCase().includes(filterJobTitle.toLowerCase())
+//       );
+//       // this.jobTitles = filteredJobTitles;
+//       // this.jobTitlesChanged.next(this.jobTitles);
+//     }
 
-    if (licIncentive !== null) {
-      filteredJobTitles = filteredJobTitles.filter(
-        (jobTitle) => jobTitle.licIncentive === licIncentive
-      );
-      this.jobTitlesChanged.next(filteredJobTitles);
-    }
+//     if (isActive !== null) {
+//       filteredJobTitles = filteredJobTitles.filter(
+//         (jobTitle) => jobTitle.isActive === isActive
+//       );
+//       // this.jobTitles = filteredJobTitles;
+//       // this.jobTitlesChanged.next(this.jobTitles);
+//     }
 
-    this.jobTitlesChanged.next(filteredJobTitles);
+//     if (licLevel !== null) {
+//       filteredJobTitles = filteredJobTitles.filter(
+//         (jobTitle) => jobTitle.licLevel === licLevel
+//       );
+//       // this.jobTitles = filteredJobTitles;
+//       // this.jobTitlesChanged.next(this.jobTitles);
+//     }
+
+//     if (licIncentive !== null) {
+//       filteredJobTitles = filteredJobTitles.filter(
+//         (jobTitle) => jobTitle.licIncentive === licIncentive
+//       );
+//       // this.jobTitles = filteredJobTitles;
+//       // this.jobTitlesChanged.next(this.jobTitles);
+//     }
+
+//     this.jobTitles = filteredJobTitles;
+//     this.jobTitlesChanged.next(filteredJobTitles);
+//   }
+filterJobTitleData(
+  filterJobTitle: string | null = null,
+  isActive: boolean | null = null,
+  licLevel: string | null = null,
+  licIncentive: string | null = null
+) {
+
+  console.log('EMFTEST (filterJobTitleData) - filterJobTitle: ', filterJobTitle);
+  console.log('EMFTEST (filterJobTitleData) - isActive: ', isActive);
+  console.log('EMFTEST (filterJobTitleData) - licLevel: ', licLevel);
+  console.log('EMFTEST (filterJobTitleData) - licIncentive: ', licIncentive);
+  // console.log('EMFTEST (filterJobTitleData) - this.jobTitles => \n ', this.jobTitles);
+
+  if (filterJobTitle === null && isActive === null && licLevel === null && licIncentive === null) {
+    const jobTitlesToEmit = isActive !== null ? this.jobTitles.filter(jobTitle => jobTitle.isActive === isActive) : this.jobTitles;
+    this.jobTitlesFilterChanged.next(jobTitlesToEmit);
+    return;
   }
+
+  const filteredJobTitles = this.jobTitles.filter(jobTitle => {
+    const filterJobTitleMatch = filterJobTitle === null ? true : jobTitle.jobTitle1.toLowerCase().includes(filterJobTitle.toLowerCase());
+    const isActiveMatch = isActive === null ? true : jobTitle.isActive === isActive;
+    const licLevelMatch = licLevel === null ? true : jobTitle.licenseLevel === licLevel;
+    const licIncentiveMatch = licIncentive === null ? true : jobTitle.licenseIncentive === licIncentive;
+
+    return filterJobTitleMatch && isActiveMatch && licLevelMatch && licIncentiveMatch;
+  });
+
+  // this.jobTitles = filteredJobTitles;
+  // this.jobTitlesChanged.next(filteredJobTitles);
+  this.jobTitlesFilter = filteredJobTitles;
+  this.jobTitlesFilterChanged.next(filteredJobTitles);
+}
 
   //  LICENSE EDIT
   fetchLicenseItems(stateProvince: string) {

@@ -26,7 +26,8 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
   licenseIncentives: any[] = [];
   jobTitles: any[] = [];
   selectChanged = false;
-  subscribeDataJobTitles: Subscription = new Subscription();
+  // subscribeDataJobTitles: Subscription = new Subscription();
+  subscriptionData: Subscription = new Subscription();
 
   constructor(
     public adminDataService: AdminDataService,
@@ -37,18 +38,26 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isLoading = true;
-    this.adminDataService.fetchLicenseLevels().subscribe((response) => {
-      this.licenseLevels = response;
-    });
-    this.adminDataService.fetchLicenseIncentives().subscribe((response) => {
-      this.licenseIncentives = response;
-    });
-    this.adminDataService.fetchJobTitles().subscribe((response) => {
-      this.jobTitles = response;
-      this.paginationComService.updateDisplayItems(this.jobTitles);
-      this.paginationComService.updatePaginatedResults();
-      this.isLoading = false;
-    });
+    this.subscriptionData.add(
+      this.adminDataService.fetchLicenseLevels().subscribe((response) => {
+        this.licenseLevels = response;
+      })
+    );
+    
+    this.subscriptionData.add(
+      this.adminDataService.fetchLicenseIncentives().subscribe((response) => {
+        this.licenseIncentives = response;
+      })
+    );
+    
+    this.subscriptionData.add(
+      this.adminDataService.fetchJobTitles().subscribe((response) => {
+        this.jobTitles = response;
+        this.paginationComService.updateDisplayItems(this.jobTitles);
+        this.paginationComService.updatePaginatedResults();
+        this.isLoading = false;
+      })
+    );
   }
 
   setDirty(job: JobTitle) {
@@ -122,13 +131,14 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
     this.getFilterData();
   }
 
-  getFilterData() {
-    this.subscribeDataJobTitles =
-      this.adminDataService.jobTitlesChanged.subscribe((response) => {
+  private getFilterData() {
+    this.subscriptionData.add(
+      this.adminDataService.jobTitlesFilterChanged.subscribe((response) => {
         this.jobTitles = response;
         this.paginationComService.updateDisplayItems(this.jobTitles);
         this.paginationComService.updatePaginatedResults();
-      });
+      })
+    );
   }
 
   clearFilterJobTitle(){
@@ -148,6 +158,6 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subscribeDataJobTitles.unsubscribe();
+    this.subscriptionData.unsubscribe();
   }
 }
