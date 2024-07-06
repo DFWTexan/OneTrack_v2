@@ -241,6 +241,22 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> UpsertLicense([FromBody] IputUpsertLicense input)
+        {
+            var result = await Task.Run(() => _adminService.UpsertLicense(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> DeleteLicense([FromBody] IputDeleteLicense input)
+        {
+            var result = await Task.Run(() => _adminService.DeleteLicense(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
         #endregion
     }
 }

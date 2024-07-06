@@ -135,15 +135,25 @@
             </div>
           </div>
           <mat-divider></mat-divider>
-          <div class="row mt-4">
+          <!-- COMPANY(S) -->
+          <div
+            class="row mt-2 mb-3"
+            style="
+              padding: 0.5rem;
+              border-style: solid;
+              border-width: 1px;
+              border-color: lightgray;
+              border-radius: 0.5rem;
+            "
+          >
             <div class="row">
               <div
                 class="col d-flex align-items-baseline"
-                style="font-size: larger; font-weight: 400"
+                style="font-size: large; font-weight: 500"
               >
                 Company(s)
               </div>
-              <div class="col align-middle">
+              <div class="col d-flex justify-content-end align-middle">
                 <button
                   class="btn btn-success"
                   (click)="
@@ -158,9 +168,14 @@
             <div class="row mt-2">
               <div class="col d-flex">
                 <div class="ms-5" *ngIf="license.companyItems.length == 0">
-                  <h2>No Record(s) Found</h2>
+                  <span style="font-size: medium; font-weight: 400"
+                    >No Record(s) Found</span
+                  >
                 </div>
-                <div class="table" *ngIf="license.companyItems.length > 0">
+                <table
+                  class="table w-100"
+                  *ngIf="license.companyItems.length > 0"
+                >
                   <thead>
                     <tr class="sticky-top" style="background-color: gainsboro">
                       <th scope="col">License Company Id</th>
@@ -171,11 +186,19 @@
                       <th scope="col">TIN</th>
                       <th scope="col">NAIC Number</th>
                       <th scope="col">isActive</th>
-                      <th scope="col" class="text-center">ACTION</th>
+                      <th scope="col" class="text-center" style="width: 10rem">
+                        ACTION
+                      </th>
                     </tr>
                   </thead>
                   <tbody class="bg-body">
-                    <tr *ngFor="let company of license.companyItems">
+                    <tr
+                      *ngFor="
+                        let company of license.companyItems;
+                        let i = index
+                      "
+                      [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+                    >
                       <td class="align-middle">
                         {{ company.licenseCompanyId }}
                       </td>
@@ -234,19 +257,30 @@
                       </td>
                     </tr>
                   </tbody>
-                </div>
+                </table>
               </div>
             </div>
           </div>
-          <div class="row">
+          <!-- PRE-EXAMS(S) -->
+          <div
+            class="row"
+            class="row mb-3"
+            style="
+              padding: 0.5rem;
+              border-style: solid;
+              border-width: 1px;
+              border-color: lightgray;
+              border-radius: 0.5rem;
+            "
+          >
             <div class="row">
               <div
                 class="col align-middle"
-                style="font-size: larger; font-weight: 400"
+                style="font-size: large; font-weight: 500"
               >
                 Pre-Exam(s)
               </div>
-              <div class="col align-middle">
+              <div class="col d-flex justify-content-end align-middle">
                 <button
                   class="btn btn-success"
                   (click)="
@@ -261,9 +295,14 @@
             <div class="row mt-2">
               <div class="col d-flex">
                 <div class="ms-5" *ngIf="license.preExamItems.length == 0">
-                  <h2>No Record(s) Found</h2>
+                  <span style="font-size: medium; font-weight: 400"
+                    >No Record(s) Found</span
+                  >
                 </div>
-                <div class="table" *ngIf="license.preExamItems.length > 0">
+                <table
+                  class="table w-100"
+                  *ngIf="license.preExamItems.length > 0"
+                >
                   <thead>
                     <tr class="sticky-top" style="background-color: gainsboro">
                       <th scope="col">Lic ExamID</th>
@@ -273,11 +312,20 @@
                       <th scope="col">Exam Provider</th>
                       <th scope="col">Delivery Method</th>
                       <th scope="col">isActive</th>
-                      <th scope="col" class="text-center">ACTION</th>
+                      <th scope="col" class="text-center" style="width: 10rem">
+                        ACTION
+                      </th>
                     </tr>
                   </thead>
                   <tbody class="bg-body">
-                    <tr *ngFor="let preExam of license.preExamItems">
+                    <!-- <tr *ngFor="let preExam of license.preExamItems"> -->
+                    <tr
+                      *ngFor="
+                        let preExam of license.preExamItems;
+                        let i = index
+                      "
+                      [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+                    >
                       <td class="align-middle">
                         {{ preExam.licenseExamID }}
                       </td>
@@ -333,19 +381,29 @@
                       </td>
                     </tr>
                   </tbody>
-                </div>
+                </table>
               </div>
             </div>
           </div>
-          <div class="row">
+          <!-- PRE-EDUCATION(S) -->
+          <div
+            class="row mb-3"
+            style="
+              padding: 0.5rem;
+              border-style: solid;
+              border-width: 1px;
+              border-color: lightgray;
+              border-radius: 0.5rem;
+            "
+          >
             <div class="row">
               <div
                 class="col align-middle"
-                style="font-size: larger; font-weight: 400"
+                style="font-size: large; font-weight: 500"
               >
                 Pre-Education(s)
               </div>
-              <div class="col align-middle">
+              <div class="col d-flex justify-content-end align-middle">
                 <button
                   class="btn btn-success"
                   (click)="
@@ -360,9 +418,14 @@
             <div class="row mt-2">
               <div class="col d-flex">
                 <div class="ms-5" *ngIf="license.preEducationItems.length == 0">
-                  <h2>No Record(s) Found</h2>
+                  <span style="font-size: medium; font-weight: 400"
+                    >No Record(s) Found</span
+                  >
                 </div>
-                <div class="table" *ngIf="license.preEducationItems.length > 0">
+                <table
+                  class="table w-100"
+                  *ngIf="license.preEducationItems.length > 0"
+                >
                   <thead>
                     <tr style="background-color: gainsboro">
                       <th scope="col">Lic PreEd ID</th>
@@ -371,11 +434,20 @@
                       <th scope="col">PreEd Provider</th>
                       <th scope="col">Delivery Method</th>
                       <th scope="col">isActive</th>
-                      <th scope="col" class="text-center">ACTION</th>
+                      <th scope="col" class="text-center" style="width: 10rem">
+                        ACTION
+                      </th>
                     </tr>
                   </thead>
                   <tbody class="bg-body">
-                    <tr *ngFor="let preEdu of license.preEducationItems">
+                    <!-- <tr *ngFor="let preEdu of license.preEducationItems"> -->
+                    <tr
+                      *ngFor="
+                        let preEdu of license.preEducationItems;
+                        let i = index
+                      "
+                      [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+                    >
                       <td class="align-middle">
                         {{ preEdu.licensePreEducationID }}
                       </td>
@@ -422,19 +494,29 @@
                       </td>
                     </tr>
                   </tbody>
-                </div>
+                </table>
               </div>
             </div>
           </div>
-          <div class="row">
+          <!-- PRODUCT(S) -->
+          <div
+            class="row"
+            style="
+              padding: 0.5rem;
+              border-style: solid;
+              border-width: 1px;
+              border-color: lightgray;
+              border-radius: 0.5rem;
+            "
+          >
             <div class="row">
               <div
                 class="col align-middle"
-                style="font-size: larger; font-weight: 400"
+                style="font-size: large; font-weight: 500"
               >
                 Product(s)
               </div>
-              <div class="col align-middle">
+              <div class="col d-flex justify-content-end align-middle">
                 <button
                   class="btn btn-success"
                   (click)="
@@ -449,9 +531,14 @@
             <div class="row mt-2">
               <div class="co d-flex">
                 <div class="ms-5" *ngIf="license.productItems.length == 0">
-                  <h2>No Record(s) Found</h2>
+                  <span style="font-size: medium; font-weight: 400"
+                    >No Record(s) Found</span
+                  >
                 </div>
-                <div class="table" *ngIf="license.productItems.length > 0">
+                <table
+                  class="table w-100"
+                  *ngIf="license.productItems.length > 0"
+                >
                   <thead>
                     <tr style="background-color: gainsboro">
                       <th scope="col">Lic Prod ID</th>
@@ -459,11 +546,20 @@
                       <th scope="col">Product Name</th>
                       <th scope="col">Product Abv</th>
                       <th scope="col">isActive</th>
-                      <th scope="col" class="text-center">ACTION</th>
+                      <th scope="col" class="text-center" style="width: 10rem">
+                        ACTION
+                      </th>
                     </tr>
                   </thead>
                   <tbody class="bg-body">
-                    <tr *ngFor="let product of license.productItems">
+                    <!-- <tr *ngFor="let product of license.productItems"> -->
+                    <tr
+                      *ngFor="
+                        let product of license.productItems;
+                        let i = index
+                      "
+                      [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+                    >
                       <td class="align-middle">
                         {{ product.licenseProductID }}
                       </td>
@@ -512,7 +608,7 @@
                       </td>
                     </tr>
                   </tbody>
-                </div>
+                </table>
               </div>
             </div>
           </div>
@@ -537,7 +633,9 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-license></app-edit-license>
+        <app-edit-license
+          (callParentRefreshData)="onChildCallRefreshData()"
+        ></app-edit-license>
       </div>
     </div>
   </div>
@@ -547,7 +645,8 @@
 <modal id="modal-edit-company-item">
   <div class="modal-header">
     <h1 class="modal-title">
-      <strong>{{ adminComService.modes.companyItem.mode }}</strong> - License Company
+      <strong>{{ adminComService.modes.companyItem.mode }}</strong> - License
+      Company
     </h1>
     <!-- <button
                   type="button"
@@ -568,7 +667,8 @@
 <modal id="modal-edit-preExam-item">
   <div class="modal-header">
     <h1 class="modal-title">
-      <strong>{{ adminComService.modes.preExamItem.mode }}</strong> - License Pre-Exam
+      <strong>{{ adminComService.modes.preExamItem.mode }}</strong> - License
+      Pre-Exam
     </h1>
     <!-- <button
                   type="button"
@@ -589,7 +689,8 @@
 <modal id="modal-edit-preEdu-Item">
   <div class="modal-header">
     <h1 class="modal-title">
-      <strong>{{ adminComService.modes.preEduItem.mode }}</strong> - License Pre-Education
+      <strong>{{ adminComService.modes.preEduItem.mode }}</strong> - License
+      Pre-Education
     </h1>
     <!-- <button
                   type="button"
@@ -610,7 +711,8 @@
 <modal id="modal-edit-product-Item">
   <div class="modal-header">
     <h1 class="modal-title">
-      <strong>{{ adminComService.modes.productItem.mode }}</strong> - License Product
+      <strong>{{ adminComService.modes.productItem.mode }}</strong> - License
+      Product
     </h1>
     <!-- <button
                   type="button"

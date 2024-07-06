@@ -1,8 +1,21 @@
-import { Component, Injectable, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  Injectable,
+  OnInit,
+  OnDestroy,
+  Input,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { AdminComService, AdminDataService, ErrorMessageService, UserAcctInfoDataService } from '../../../_services';
+import {
+  AdminComService,
+  AdminDataService,
+  ErrorMessageService,
+  UserAcctInfoDataService,
+} from '../../../_services';
 import { state } from '@angular/animations';
 @Component({
   selector: 'app-edit-exam',
@@ -17,7 +30,7 @@ export class EditExamComponent implements OnInit, OnDestroy {
   @Input() examProviders: { value: number; label: string }[] = [];
   isFormSubmitted = false;
   examForm!: FormGroup;
-  
+
   subscriptionData: Subscription = new Subscription();
 
   constructor(
@@ -38,20 +51,24 @@ export class EditExamComponent implements OnInit, OnDestroy {
       deliveryMethod: new FormControl('Select Method'),
     });
 
-    this.subscriptionData =
+    this.subscriptionData.add(
       this.adminComService.modes.examItem.changed.subscribe((mode: string) => {
         if (mode === 'EDIT') {
-          this.adminDataService.examItemsChanged.subscribe((exam: any) => {
-            this.examForm.patchValue({
-              examId: exam.examId,
-              examName: exam.examName,
-              examFees: exam.examFees,
-              stateProvinceAbv: exam.stateProvinceAbv,
-              examProviderId: exam.examProviderId,
-              companyName: exam.companyName,
-              deliveryMethod: exam.deliveryMethod ? exam.deliveryMethod : 'Select Method',
-            });
-          });
+          this.subscriptionData.add(
+            this.adminDataService.examItemsChanged.subscribe((exam: any) => {
+              this.examForm.patchValue({
+                examId: exam.examId,
+                examName: exam.examName,
+                examFees: exam.examFees,
+                stateProvinceAbv: exam.stateProvinceAbv,
+                examProviderId: exam.examProviderId,
+                companyName: exam.companyName,
+                deliveryMethod: exam.deliveryMethod
+                  ? exam.deliveryMethod
+                  : 'Select Method',
+              });
+            })
+          );
         } else {
           this.examForm.reset();
           this.examForm.patchValue({
@@ -60,7 +77,8 @@ export class EditExamComponent implements OnInit, OnDestroy {
             examProviderId: 0,
           });
         }
-      });
+      })
+    );
   }
 
   onSubmit(): void {

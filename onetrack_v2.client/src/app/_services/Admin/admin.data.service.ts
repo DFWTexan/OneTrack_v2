@@ -687,6 +687,51 @@ export class AdminDataService {
       );
   }
 
+  upsertLicenseItem(licenseItem: License) {
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: License;
+        errMessage: string;
+      }>(this.apiUrl + 'UpsertLicense', licenseItem, { observe: 'response' })
+      .pipe(
+        tap({
+          next: (response) => {
+            console.log(response.status);
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        })
+      );
+  }
+
+  deleteLicenseItem(licenseItem: any) {
+    return this.http
+      .put<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'DeleteLicense', licenseItem)
+      .pipe(
+        tap({
+          next: (response) => {
+            if (response.success && response.statusCode === 200) {
+              // return response;
+            } else {
+              throw new Error(response.errMessage || 'Unknown error');
+            }
+          },
+          error: (error) => {
+            // console.error(error);
+            // throw error;
+          },
+        })
+      );
+  }
+
   // LICENSE TECH
   fetchLicenseTechs() {
     return this.http

@@ -915,7 +915,7 @@ namespace OneTrak_v2.Services
                 result.Success = true;
                 result.ObjData = new { Message = "Education Rule Created/Updated Successfully." };
                 result.StatusCode = 200;
-            
+
             }
             catch (Exception ex)
             {
@@ -1233,6 +1233,121 @@ namespace OneTrak_v2.Services
                 result.Success = false;
                 result.ObjData = null;
                 result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-41197].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;
+        }
+        public ReturnResult UpsertLicense([FromBody] IputUpsertLicense vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                if (vInput.LicenseID == 0)
+                {
+                    // INSERT License
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspLicenseInsert", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@LicenseName", vInput.LicenseName));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseAbv", vInput.LicenseAbv));
+                            cmd.Parameters.Add(new SqlParameter("@StateProvinceAbv", vInput.StateProvinceAbv));
+                            cmd.Parameters.Add(new SqlParameter("@LineOfAuthorityID", vInput.LineOfAuthorityID));
+                            //cmd.Parameters.Add(new SqlParameter("@PlsIncentive1Tmpay", vInput.PlsIncentive1Tmpay));
+                            //cmd.Parameters.Add(new SqlParameter("@PlsIncentive1Mrpay", vInput.PlsIncentive1Mrpay));
+                            //cmd.Parameters.Add(new SqlParameter("@Incentive2PlusTmpay", vInput.Incentive2PlusTmpay));
+                            //cmd.Parameters.Add(new SqlParameter("@Incentive2PlusMrpay", vInput.Incentive2PlusMrpay));
+                            //cmd.Parameters.Add(new SqlParameter("@LicIncentive3Tmpay", vInput.LicIncentive3Tmpay));
+                            //cmd.Parameters.Add(new SqlParameter("@LicIncentive3Mrpay", vInput.LicIncentive3Mrpay));
+                            cmd.Parameters.Add(new SqlParameter("@IsActive", vInput.IsActive));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                else
+                {
+                    // UPDATE License
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspLicenseUpdate", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@LicenseID", vInput.LicenseID));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseName", vInput.LicenseName));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseAbv", vInput.LicenseAbv));
+                            cmd.Parameters.Add(new SqlParameter("@StateProvinceAbv", vInput.StateProvinceAbv));
+                            cmd.Parameters.Add(new SqlParameter("@LineOfAuthorityID", vInput.LineOfAuthorityID));
+                            //cmd.Parameters.Add(new SqlParameter("@PlsIncentive1Tmpay", vInput.PLsIncentive1Tmpay));
+                            //cmd.Parameters.Add(new SqlParameter("@PlsIncentive1Mrpay", vInput.PLsIncentive1Mrpay));
+                            //cmd.Parameters.Add(new SqlParameter("@Incentive2PlusTmpay", vInput.Incentive2PlusTmpay));
+                            //cmd.Parameters.Add(new SqlParameter("@Incentive2PlusMrpay", vInput.Incentive2PlusMrpay));
+                            //cmd.Parameters.Add(new SqlParameter("@LicIncentive3Tmpay", vInput.LicIncentive3Tmpay));
+                            //cmd.Parameters.Add(new SqlParameter("@LicIncentive3Mrpay", vInput.LicIncentive3Mrpay));
+                            cmd.Parameters.Add(new SqlParameter("@IsActive", vInput.IsActive));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+
+                        }
+                    }
+                }
+                result.Success = true;
+                result.ObjData = new { Message = "JobTitle Created/Updated Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-41148].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;
+        }
+        public ReturnResult DeleteLicense([FromBody] IputDeleteLicense vInput)
+        {
+
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspLicenseDelete", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@LicenseID", vInput.LicenseID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "License Deleted Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-44190].";
 
                 _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
             }

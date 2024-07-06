@@ -83,8 +83,6 @@ export class EditJobTitleComponent implements OnInit, OnDestroy {
     jobTitleItem.jobTitleID = 0;
     jobTitleItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
-console.log('EMFTEST (onSubmit) - jobTitleItem => \n', jobTitleItem); 
-
     this.subscriptionData.add(
       this.adminDataService.upsertJobTitle(jobTitleItem).subscribe({
         next: (response) => {

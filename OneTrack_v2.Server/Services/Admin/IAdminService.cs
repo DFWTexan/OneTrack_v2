@@ -36,5 +36,7 @@ namespace OneTrak_v2.Services
         public ReturnResult UpsertExam([FromBody] IputUpsertExam vInput);
         public ReturnResult DeleteExam([FromBody] IputDeleteExam vInput);
         public ReturnResult UpsertJobTitle([FromBody] IputUpsertJobTitle vInput);
+        public ReturnResult UpsertLicense([FromBody] IputUpsertLicense vInput);
+        public ReturnResult DeleteLicense([FromBody] IputDeleteLicense vInput);
     }
 }
