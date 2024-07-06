@@ -62,56 +62,56 @@
           </mat-expansion-panel-header>
           <div class="row">
             <div class="col">
-              <p>License Abv: {{ license.licenseAbv }}</p>
-              <p>
-                License State Abv:
-                <span style="font-size: larger; font-weight: 500">{{
-                  license.stateProvinceAbv
-                }}</span>
-              </p>
+              <label>License Abv: </label>
+              <span>{{ license.licenseAbv }}</span
+              ><br />
+              <label> License State Abv: </label>
+              <span
+                class="ms-3"
+                style="font-size: larger; font-weight: 400; color: gray"
+                >{{ license.stateProvinceAbv }}</span
+              >
             </div>
             <div class="col">
-              <p>
-                Sent to CICS:
-                <span style="font-size: larger; font-weight: 500">{{
-                  license.agentStateTable ? "Yes" : "No"
-                }}</span>
-              </p>
-              <p>
-                Line of Auth.:
-                <span style="font-size: larger; font-weight: 500">{{
-                  license.lineOfAuthorityAbv
-                }}</span>
-              </p>
+              <label> Sent to CICS: </label>
+              <span class="ms-3" style="font-size: larger; font-weight: 400; color: gray">{{
+                license.agentStateTable ? "Yes" : "No"
+              }}</span>
+              <br />
+              <label> Line of Auth.: </label>
+              <span class="ms-3" style="font-size: larger; font-weight: 400; color: gray">{{
+                license.lineOfAuthorityAbv
+              }}</span>
               <!-- <p>License ID: <span style="font-size: larger; font-weight: 500">{{ license.licenseId }}</span></p> -->
             </div>
             <div class="col">
-              <p>
-                Incentive2 Plus TMPay:
-                <span style="font-size: larger; font-weight: 500">{{
-                  license.incentive2PlusTmpay | currency
-                }}</span>
-              </p>
-              <p>
+              <label> Incentive2 Plus TMPay: </label>
+              <span class="ms-3" style="font-size: larger; font-weight: 400; color: gray">{{
+                license.incentive2PlusTmpay | currency
+              }}</span><br />
+              <label>
                 Incentive2 Plus MRPay:
-                <span style="font-size: larger; font-weight: 500">{{
-                  license.incentive2PlusMrpay | currency
-                }}</span>
-              </p>
+                
+              </label>
+              <span class="ms-3" style="font-size: larger; font-weight: 400; color: gray">{{
+                license.incentive2PlusMrpay | currency
+              }}</span>
             </div>
             <div class="col">
-              <p>
+              <label>
                 PLS Incentive 1 TMPay:
-                <span style="font-size: larger; font-weight: 500">{{
-                  license.plsIncentive1Tmpay | currency
-                }}</span>
-              </p>
-              <p>
+                
+              </label>
+              <span class="ms-3" style="font-size: larger; font-weight: 400; color: gray">{{
+                license.plsIncentive1Tmpay | currency
+              }}</span><br />
+              <label>
                 PLS Incentive 1 MRPay:
-                <span style="font-size: larger; font-weight: 500">{{
-                  license.plsIncentive1Mrpay | currency
-                }}</span>
-              </p>
+                
+              </label>
+              <span class="ms-3" style="font-size: larger; font-weight: 400; color: gray">{{
+                license.plsIncentive1Mrpay | currency
+              }}</span>
             </div>
             <div class="col">
               <div
