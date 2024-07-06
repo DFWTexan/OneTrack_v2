@@ -1,4 +1,11 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Subscription } from 'rxjs';
 import { FormControl, FormGroup } from '@angular/forms';
 
@@ -16,6 +23,8 @@ import {
 })
 export class EditJobTitleComponent implements OnInit, OnDestroy {
   @Output() callParentRefreshData = new EventEmitter<any>();
+  @Input() licenseLevels: any[] = [];
+  @Input() licenseIncentives: any[] = [];
   isFormSubmitted = false;
   jobTitleForm!: FormGroup;
 
@@ -30,9 +39,9 @@ export class EditJobTitleComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.jobTitleForm = new FormGroup({
-      JobTitle: new FormControl(''),
-      LicenseLevel: new FormControl(''),
-      LicenseIncentive: new FormControl(''),
+      jobTitle: new FormControl(''),
+      licenseLevel: new FormControl('{NeedsReview}'),
+      licenseIncentive: new FormControl('NoIncentive'),
     });
   }
 
@@ -68,11 +77,13 @@ export class EditJobTitleComponent implements OnInit, OnDestroy {
     // }
   }
 
-  onSubmit(): void  {
+  onSubmit(): void {
     this.isFormSubmitted = true;
     let jobTitleItem: any = this.jobTitleForm.value;
     jobTitleItem.jobTitleID = 0;
     jobTitleItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+
+console.log('EMFTEST (onSubmit) - jobTitleItem => \n', jobTitleItem); 
 
     this.subscriptionData.add(
       this.adminDataService.upsertJobTitle(jobTitleItem).subscribe({

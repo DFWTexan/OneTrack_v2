@@ -5,13 +5,13 @@
 >
   <div class="row">
     <div class="col">
-       <div class="mb-3">
-        <label for="JobTitle" class="form-label">Job Title:</label>
+      <div class="mb-3">
+        <label for="jobTitle" class="form-label">Job Title:</label>
         <input
           class="form-control input-size-medium"
           type="text"
-          id="JobTitle"
-          formControlName="JobTitle"
+          id="jobTitle"
+          formControlName="jobTitle"
           placeholder="Enter Job Title"
         />
       </div>
@@ -19,48 +19,55 @@
 
     <div class="col">
       <div class="mb-3">
-        <label for="LicenseLevel" class="form-label">License Level:</label>
+        <label for="licenseLevel" class="form-label">License Level:</label>
         <select
           class="form-select select-size-small"
           type="text"
-          id="LicenseLevel"
-          formControlName="LicenseLevel"
+          id="licenseLevel"
+          formControlName="licenseLevel"
         >
-          <!-- <option *ngFor="let method of examDeliveryMethods" [value]="method">
-            {{ method }}
-          </option> -->
+          <option
+            *ngFor="let level of licenseLevels"
+            [value]="level.licenseLevel"
+          >
+            {{ level.licenseLevel }}
+          </option>
         </select>
       </div>
-      
     </div>
 
     <div class="col">
-        <div class="mb-3">
-            <label for="LicenseIncentive" class="form-label">License Incentive:</label>
-            <select
-              class="form-select select-size-small"
-              type="text"
-              id="LicenseIncentive"
-              formControlName="LicenseIncentive"
-            >
-              <!-- <option *ngFor="let provider of examProviders" [value]="provider.value">
-                {{ provider.label }}
-              </option> -->
-            </select>
-          </div>
+      <div class="mb-3">
+        <label for="licenseIncentive" class="form-label"
+          >License Incentive:</label
+        >
+        <select
+          class="form-select select-size-small"
+          type="text"
+          id="licenseIncentive"
+          formControlName="licenseIncentive"
+        >
+          <option
+            *ngFor="let incentive of licenseIncentives"
+            [value]="incentive.licenseIncentive"
+          >
+            {{ incentive.licenseIncentive }}
+          </option>
+        </select>
+      </div>
     </div>
 
     <div class="col">
-        <div class="mb-3 mt-4">
-            <input
-              class="form-check-input me-2 align-middle"
-              type="checkbox"
-              id="isActive"
-              [checked]="true"
-              [disabled]="true"
-            />
-            <label for="isActive" class="form-label"> Is Active </label>
-          </div>
+      <div class="mb-3 mt-4">
+        <input
+          class="form-check-input me-2 align-middle"
+          type="checkbox"
+          id="isActive"
+          [checked]="true"
+          [disabled]="true"
+        />
+        <label for="isActive" class="form-label"> Is Active </label>
+      </div>
     </div>
   </div>
 
@@ -79,4 +86,3 @@
     </div>
   </div>
 </form>
-

@@ -262,7 +262,9 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-job-title
+        <app-edit-job-title 
+          [licenseLevels]="licenseLevels"
+          [licenseIncentives]="licenseIncentives"
           (callParentRefreshData)="onChildCallRefreshData()"
         ></app-edit-job-title>
       </div>
