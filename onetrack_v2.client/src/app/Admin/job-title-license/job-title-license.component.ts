@@ -3,6 +3,7 @@ import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import {
   AdminComService,
   AdminDataService,
+  AppComService,
   ModalService,
   PaginationComService,
 } from '../../_services';
@@ -33,6 +34,7 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
     public modalService: ModalService,
+    public appComService: AppComService,
     public paginationComService: PaginationComService
   ) {}
 
@@ -147,17 +149,17 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
     this.paginationComService.updatePaginatedResults();
   }
 
-  clearFilterJobTitle() {
-    this.filterJobTitle = null;
-    this.adminDataService.filterJobTitleData(
-      null,
-      this.selectedFilterIsActive,
-      this.selectedFilterLicLevel,
-      this.selectedFilterLicIncentive
-    );
-    // this.getFilterData();
-    this.initJobTitle();
-  }
+  // clearFilterJobTitle() {
+  //   this.filterJobTitle = null;
+  //   this.adminDataService.filterJobTitleData(
+  //     null,
+  //     this.selectedFilterIsActive,
+  //     this.selectedFilterLicLevel,
+  //     this.selectedFilterLicIncentive
+  //   );
+  //   this.getFilterData();
+  //   // this.initJobTitle();
+  // }
 
   clearfilter() {
     this.filterJobTitle = null;
@@ -166,7 +168,6 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
     this.selectedFilterLicLevel = null;
     this.selectedFilterLicIncentive = null;
     this.adminDataService.filterJobTitleData(null, null, null, null);
-    // this.getFilterData();
     this.initJobTitle();
   }
 

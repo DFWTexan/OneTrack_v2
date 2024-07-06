@@ -35,5 +35,6 @@ namespace OneTrak_v2.Services
         public ReturnResult DeleteLkpType([FromBody] IputDeleteLkpType vInput);
         public ReturnResult UpsertExam([FromBody] IputUpsertExam vInput);
         public ReturnResult DeleteExam([FromBody] IputDeleteExam vInput);
+        public ReturnResult UpsertJobTitle([FromBody] IputUpsertJobTitle vInput);
     }
 }

@@ -233,6 +233,14 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> UpsertJobTitle([FromBody] IputUpsertJobTitle input)
+        {
+            var result = await Task.Run(() => _adminService.UpsertJobTitle(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
         #endregion
     }
 }

@@ -600,10 +600,9 @@ filterJobTitleData(
   licIncentive: string | null = null
 ) {
 
-  console.log('EMFTEST (filterJobTitleData) - isActive: ', isActive);
-  console.log('EMFTEST (filterJobTitleData) - licLevel => \n ', licLevel);
-  console.log('EMFTEST (filterJobTitleData) - licIncentive => \n ', licIncentive);
-
+  // console.log('EMFTEST (filterJobTitleData) - isActive: ', isActive);
+  // console.log('EMFTEST (filterJobTitleData) - licLevel => \n ', licLevel);
+  // console.log('EMFTEST (filterJobTitleData) - licIncentive => \n ', licIncentive);
 
   if (filterJobTitle === null && isActive === null && licLevel === null && licIncentive === null) {
     const jobTitlesToEmit = isActive !== null ? this.jobTitles.filter(jobTitle => jobTitle.isActive === isActive) : this.jobTitles;

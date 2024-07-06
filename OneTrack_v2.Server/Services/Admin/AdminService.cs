@@ -1177,6 +1177,67 @@ namespace OneTrak_v2.Services
 
             return result;
         }
+        public ReturnResult UpsertJobTitle([FromBody] IputUpsertJobTitle vInput)
+        {
 
+            var result = new ReturnResult();
+            try
+            {
+                if (vInput.JobTitleID == 0)
+                {
+                    // INSERT JobTitle
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspJobTitleInsert", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@JobTitle", vInput.JobTitle));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseLevel", vInput.LicenseLevel));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseIncentive", vInput.LicenseIncentive));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                else
+                {
+                    // UPDATE JobTitle
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspJobTitleUpdate", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@JobTitleID", vInput.JobTitleID));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseLevel", vInput.LicenseLevel));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseIncentive", vInput.LicenseIncentive));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "JobTitle Created/Updated Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-41197].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;
+        }
     }
 }
