@@ -50,6 +50,10 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
       })
     );
 
+    this.initJobTitle();
+  }
+
+  private initJobTitle() {
     this.subscriptionData.add(
       this.adminDataService.fetchJobTitles().subscribe((response) => {
         this.jobTitles = response;
@@ -150,7 +154,8 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
       this.selectedFilterLicLevel,
       this.selectedFilterLicIncentive
     );
-    this.getFilterData();
+    // this.getFilterData();
+    this.initJobTitle();
   }
 
   clearfilter() {
@@ -160,7 +165,8 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
     this.selectedFilterLicLevel = null;
     this.selectedFilterLicIncentive = null;
     this.adminDataService.filterJobTitleData(null, null, null, null);
-    this.getFilterData();
+    // this.getFilterData();
+    this.initJobTitle();
   }
 
   ngOnDestroy(): void {
