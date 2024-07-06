@@ -140,8 +140,16 @@
               <mat-panel-description>
                 <div *ngIf="license.licenseAppointments.length > 0" class="row">
                   <div class="col d-flex justify-content-end">
-                    {{ license.licenseAppointments.length }} appointments - Issue Date: {{ license.originalIssueDate | date : "MM/dd/yyyy" }} - Status:
-                    <span class="ms-2" [ngStyle]="{ color: license.licenseStatus === 'Active' ? 'green' : '' }">
+                    {{ license.licenseAppointments.length }} appointments -
+                    Issue Date:
+                    {{ license.originalIssueDate | date : "MM/dd/yyyy" }} -
+                    Status:
+                    <span
+                      class="ms-2"
+                      [ngStyle]="{
+                        color: license.licenseStatus === 'Active' ? 'green' : ''
+                      }"
+                    >
                       {{ license.licenseStatus }}
                     </span>
                   </div>
@@ -227,7 +235,14 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let appointment of license.licenseAppointments">
+                    <!-- <tr *ngFor="let appointment of license.licenseAppointments"> -->
+                    <tr
+                      *ngFor="
+                        let appointment of license.licenseAppointments;
+                        let i = index
+                      "
+                      [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+                    >
                       <td *ngIf="appComService.isShowEditID">
                         {{ appointment.licenseID }}
                       </td>

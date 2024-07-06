@@ -54,7 +54,11 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let emp of employmentHistory">
+              <!-- <tr *ngFor="let emp of employmentHistory"> -->
+              <tr
+                *ngFor="let emp of employmentHistory; let i = index"
+                [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+              >
                 <td class="align-middle" *ngIf="appComService.isShowEditID">
                   {{ emp.employmentHistoryID }}
                 </td>
@@ -161,7 +165,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let transfer of transferHistory">
+            <!-- <tr *ngFor="let transfer of transferHistory"> -->
+            <tr
+              *ngFor="let transfer of transferHistory; let i = index"
+              [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+            >
               <td class="align-middle" *ngIf="appComService.isShowEditID">
                 {{ transfer.transferHistoryID }}
               </td>
@@ -260,7 +268,11 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let coReq of companyRequirementsHistory">
+            <!-- <tr *ngFor="let coReq of companyRequirementsHistory"> -->
+            <tr
+              *ngFor="let coReq of companyRequirementsHistory; let i = index"
+              [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+            >
               <td class="align-middle" *ngIf="appComService.isShowEditID">
                 {{ coReq.employmentCompanyRequirementID }}
               </td>
@@ -359,7 +371,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let jobTitle of employmentJobTitleHistory">
+          <!-- <tr *ngFor="let jobTitle of employmentJobTitleHistory"> -->
+          <tr
+            *ngFor="let jobTitle of employmentJobTitleHistory; let i = index"
+            [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+          >
             <td class="align-middle" *ngIf="appComService.isShowEditID">
               {{ jobTitle.employmentJobTitleID }}
             </td>
