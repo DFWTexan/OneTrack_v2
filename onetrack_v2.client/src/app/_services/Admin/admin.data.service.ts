@@ -600,12 +600,6 @@ filterJobTitleData(
   licIncentive: string | null = null
 ) {
 
-  console.log('EMFTEST (filterJobTitleData) - filterJobTitle: ', filterJobTitle);
-  console.log('EMFTEST (filterJobTitleData) - isActive: ', isActive);
-  console.log('EMFTEST (filterJobTitleData) - licLevel: ', licLevel);
-  console.log('EMFTEST (filterJobTitleData) - licIncentive: ', licIncentive);
-  // console.log('EMFTEST (filterJobTitleData) - this.jobTitles => \n ', this.jobTitles);
-
   if (filterJobTitle === null && isActive === null && licLevel === null && licIncentive === null) {
     const jobTitlesToEmit = isActive !== null ? this.jobTitles.filter(jobTitle => jobTitle.isActive === isActive) : this.jobTitles;
     this.jobTitlesFilterChanged.next(jobTitlesToEmit);
@@ -614,15 +608,13 @@ filterJobTitleData(
 
   const filteredJobTitles = this.jobTitles.filter(jobTitle => {
     const filterJobTitleMatch = filterJobTitle === null ? true : jobTitle.jobTitle1.toLowerCase().includes(filterJobTitle.toLowerCase());
-    const isActiveMatch = isActive === null ? true : jobTitle.isActive === isActive;
+    const isActiveMatch = isActive !== null ? true : jobTitle.isActive === isActive;
     const licLevelMatch = licLevel === null ? true : jobTitle.licenseLevel === licLevel;
     const licIncentiveMatch = licIncentive === null ? true : jobTitle.licenseIncentive === licIncentive;
 
     return filterJobTitleMatch && isActiveMatch && licLevelMatch && licIncentiveMatch;
   });
 
-  // this.jobTitles = filteredJobTitles;
-  // this.jobTitlesChanged.next(filteredJobTitles);
   this.jobTitlesFilter = filteredJobTitles;
   this.jobTitlesFilterChanged.next(filteredJobTitles);
 }

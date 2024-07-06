@@ -142,6 +142,7 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
         this.jobTitles = response;
       })
     );
+    this.paginationComService.changeCurrentPage(1);
     this.paginationComService.updateDisplayItems(this.jobTitles);
     this.paginationComService.updatePaginatedResults();
   }
