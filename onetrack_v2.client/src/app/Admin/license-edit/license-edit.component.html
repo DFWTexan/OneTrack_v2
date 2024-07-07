@@ -57,10 +57,15 @@
               {{ license.licenseName }}
             </mat-panel-title>
             <mat-panel-description>
-              <div style="display: flex; align-items: flex-end;">
-                Active: <span class="ms-3" style="font-size: larger;" [ngStyle]="{'color': license.isActive ? 'green' : 'inherit'}">{{ license.isActive ? "Yes" : "No" }}</span>
+              <div style="display: flex; align-items: flex-end">
+                Active:
+                <span
+                  class="ms-3"
+                  style="font-size: larger"
+                  [ngStyle]="{ color: license.isActive ? 'green' : 'inherit' }"
+                  >{{ license.isActive ? "Yes" : "No" }}</span
+                >
               </div>
-              
             </mat-panel-description>
           </mat-expansion-panel-header>
           <div class="row">
@@ -266,7 +271,16 @@
                             </span>
                           </button>
                           <button class="icon-edit-delete-button" type="button">
-                            <span class="material-symbols-outlined">
+                            <span
+                              class="material-symbols-outlined"
+                              (click)="
+                                onOpenConfirmDialog(
+                                  'COMPANYITEM',
+                                  'Company Item',
+                                  company
+                                )
+                              "
+                            >
                               delete
                             </span>
                           </button>
@@ -390,7 +404,16 @@
                             </span>
                           </button>
                           <button class="icon-edit-delete-button" type="button">
-                            <span class="material-symbols-outlined">
+                            <span
+                              class="material-symbols-outlined"
+                              (click)="
+                                onOpenConfirmDialog(
+                                  'PREEXAMITEM',
+                                  'Pre-Exam Item',
+                                  preExam
+                                )
+                              "
+                            >
                               delete
                             </span>
                           </button>
@@ -503,7 +526,16 @@
                             </span>
                           </button>
                           <button class="icon-edit-delete-button" type="button">
-                            <span class="material-symbols-outlined">
+                            <span
+                              class="material-symbols-outlined"
+                              (click)="
+                                onOpenConfirmDialog(
+                                  'PREEDUCATIONITEM',
+                                  'Pre-Education Item',
+                                  preEdu
+                                )
+                              "
+                            >
                               delete
                             </span>
                           </button>
@@ -617,7 +649,16 @@
                             </span>
                           </button>
                           <button class="icon-edit-delete-button" type="button">
-                            <span class="material-symbols-outlined">
+                            <span
+                              class="material-symbols-outlined"
+                              (click)="
+                                onOpenConfirmDialog(
+                                  'PRODUCTITEM',
+                                  'Product Item',
+                                  product
+                                )
+                              "
+                            >
                               delete
                             </span>
                           </button>
