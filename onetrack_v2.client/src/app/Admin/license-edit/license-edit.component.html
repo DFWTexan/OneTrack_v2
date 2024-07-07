@@ -57,7 +57,10 @@
               {{ license.licenseName }}
             </mat-panel-title>
             <mat-panel-description>
-              Active: {{ license.isActive ? "Yes" : "No" }}
+              <div style="display: flex; align-items: flex-end;">
+                Active: <span class="ms-3" style="font-size: larger;" [ngStyle]="{'color': license.isActive ? 'green' : 'inherit'}">{{ license.isActive ? "Yes" : "No" }}</span>
+              </div>
+              
             </mat-panel-description>
           </mat-expansion-panel-header>
           <div class="row">
