@@ -74,7 +74,7 @@ export class EditLicenseComponent implements OnInit, OnDestroy {
             this.licenseForm.reset();
             this.licenseForm.patchValue({
               stateProvinceAbv: 'Select',
-              lineOfAuthorityAbv: 0,
+              lineOfAuthorityId: 0,
               plS_Incentive1TMPay: 0,
               plS_Incentive1MRPay: 0,
               incentive2_PlusTMPay: 0,
