@@ -35,10 +35,10 @@ export class EditLicenseComponent implements OnInit, OnDestroy {
       lineOfAuthorityAbv: new FormControl(0),
       lineOfAuthorityId: new FormControl(''),
       agentStateTable: new FormControl(''),
-      plsIncentive1Tmpay: new FormControl(0),
-      plsIncentive1Mrpay: new FormControl(0),
-      incentive2PlusTmpay: new FormControl(0),
-      incentive2PlusMrpay: new FormControl(0),
+      plS_Incentive1TMPay: new FormControl(0),
+      plS_Incentive1MRPay: new FormControl(0),
+      incentive2_PlusTMPay: new FormControl(0),
+      incentive2_PlusMRPay: new FormControl(0),
       licIncentive3Tmpay: new FormControl(0),
       licIncentive3Mrpay: new FormControl(0),
       isActive: new FormControl(true),
@@ -59,9 +59,10 @@ export class EditLicenseComponent implements OnInit, OnDestroy {
                     lineOfAuthorityAbv: license.lineOfAuthorityAbv,
                     lineOfAuthorityId: license.lineOfAuthorityId,
                     agentStateTable: license.agentStateTable,
-                    plsIncentive1Tmpay: license.plsIncentive1Tmpay,
-                    plsIncentive1Mrpay: license.plsIncentive1Mrpay,
-                    incentive2PlusMrpay: license.incentive2PlusMrpay,
+                    plS_Incentive1TMPay: license.plsIncentive1Tmpay,
+                    plS_Incentive1MRPay: license.plsIncentive1Mrpay,
+                    incentive2_PlusTMPay: license.incentive2PlusTmpay,
+                    incentive2_PlusMRPay: license.incentive2PlusMrpay,
                     licIncentive3Tmpay: license.licIncentive3Tmpay,
                     licIncentive3Mrpay: license.licIncentive3Mrpay,
                     isActive: license.isActive,
@@ -74,10 +75,10 @@ export class EditLicenseComponent implements OnInit, OnDestroy {
             this.licenseForm.patchValue({
               stateProvinceAbv: 'Select',
               lineOfAuthorityAbv: 0,
-              plsIncentive1Tmpay: 0,
-              plsIncentive1Mrpay: 0,
-              incentive2PlusTmpay: 0,
-              incentive2PlusMrpay: 0,
+              plS_Incentive1TMPay: 0,
+              plS_Incentive1MRPay: 0,
+              incentive2_PlusTMPay: 0,
+              incentive2_PlusMRPay: 0,
               licIncentive3Tmpay: 0,
               licIncentive3Mrpay: 0,
               isActive: true,
@@ -93,7 +94,7 @@ export class EditLicenseComponent implements OnInit, OnDestroy {
     let licenseItem: any = this.licenseForm.value;
     licenseItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
-    if (this.adminComService.modes.examItem.mode === 'INSERT') {
+    if (this.adminComService.modes.licenseItem.mode === 'INSERT') {
       licenseItem.licenseID = 0;
     }
 
@@ -102,14 +103,17 @@ export class EditLicenseComponent implements OnInit, OnDestroy {
     //   this.companyForm.controls['companyType'].setErrors({ incorrect: true });
     // }
 
-    if (licenseItem.deliveryMethod === 'Select Method') {
-      licenseItem.deliveryMethod = '';
+    // if (licenseItem.deliveryMethod === 'Select Method') {
+    //   licenseItem.deliveryMethod = '';
+    // }
+
+    if (!this.licenseForm.valid) {
+      this.licenseForm.setErrors({ invalid: true });
+      return;
     }
 
-    // if (!this.companyForm.valid) {
-    //   this.companyForm.setErrors({ invalid: true });
-    //   return;
-    // }
+console.log('EMFTEST (onSubmit) - licenseItem => \n', licenseItem);
+
     this.subscriptionData.add(
       this.adminDataService.upsertLicenseItem(licenseItem).subscribe({
         next: (response) => {

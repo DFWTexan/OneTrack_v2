@@ -8,7 +8,7 @@
         public decimal? LicenseFees { get; set; }
         public string? StateProvinceAbv { get; set; }
         public decimal? AppointmentFees { get; set; }
-        public string? LineOfAuthorityID { get; set; }
+        public int? LineOfAuthorityID { get; set; }
         public decimal? PLS_Incentive1TMPay { get; set; }
         public decimal? PLS_Incentive1MRPay { get; set; }
         public decimal? Incentive2_PlusTMPay { get; set; }

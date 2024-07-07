@@ -1285,12 +1285,12 @@ namespace OneTrak_v2.Services
                             cmd.Parameters.Add(new SqlParameter("@LicenseAbv", vInput.LicenseAbv));
                             cmd.Parameters.Add(new SqlParameter("@StateProvinceAbv", vInput.StateProvinceAbv));
                             cmd.Parameters.Add(new SqlParameter("@LineOfAuthorityID", vInput.LineOfAuthorityID));
-                            //cmd.Parameters.Add(new SqlParameter("@PlsIncentive1Tmpay", vInput.PLsIncentive1Tmpay));
-                            //cmd.Parameters.Add(new SqlParameter("@PlsIncentive1Mrpay", vInput.PLsIncentive1Mrpay));
-                            //cmd.Parameters.Add(new SqlParameter("@Incentive2PlusTmpay", vInput.Incentive2PlusTmpay));
-                            //cmd.Parameters.Add(new SqlParameter("@Incentive2PlusMrpay", vInput.Incentive2PlusMrpay));
-                            //cmd.Parameters.Add(new SqlParameter("@LicIncentive3Tmpay", vInput.LicIncentive3Tmpay));
-                            //cmd.Parameters.Add(new SqlParameter("@LicIncentive3Mrpay", vInput.LicIncentive3Mrpay));
+                            cmd.Parameters.Add(new SqlParameter("@PLS_Incentive1TMPay", vInput.PLS_Incentive1TMPay));
+                            cmd.Parameters.Add(new SqlParameter("@PLS_Incentive1MRPay", vInput.PLS_Incentive1MRPay));
+                            cmd.Parameters.Add(new SqlParameter("@Incentive2_PlusTMPay", vInput.Incentive2_PlusTMPay));
+                            cmd.Parameters.Add(new SqlParameter("@Incentive2_PlusMRPay", vInput.Incentive2_PlusMRPay));
+                            cmd.Parameters.Add(new SqlParameter("@LicIncentive3Tmpay", vInput.LicIncentive3TMPay));
+                            cmd.Parameters.Add(new SqlParameter("@LicIncentive3Mrpay", vInput.LicIncentive3TMPay));
                             cmd.Parameters.Add(new SqlParameter("@IsActive", vInput.IsActive));
                             cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
 
