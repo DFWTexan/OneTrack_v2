@@ -160,4 +160,24 @@ export class MiscDataService {
         })
       );
   }
+
+  // fetchLineOfAuthorities() {
+  //   const url = this.url + 'GetLicenseLineOfAuthority';
+  //   return this.http
+  //     .get<{
+  //       success: boolean;
+  //       statusCode: number;
+  //       objData: Array<{ value: number, label: string }>;
+  //       errMessage: string;
+  //     }>(url)
+  //     .pipe(
+  //       map((response) => {
+  //         if (response.success && response.objData) {
+  //           return response.objData;
+  //         } else {
+  //           throw new Error(response.errMessage || 'Unknown error');
+  //         }
+  //       })
+  //     );
+  // }
 }

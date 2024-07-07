@@ -31,6 +31,8 @@ export class DropdownDataService {
   conEduExceptionsChanged = new Subject<{ value: number; label: string }[]>();
   public conEduExemptions: { value: number; label: string }[] = [];
   conEduExemptionsChanged = new Subject<{ value: number; label: string }[]>();
+  public lineOfAuthorities: { value: number; label: string }[] = [];  
+  lineOfAuthoritiesChanged = new Subject<{ value: number; label: string }[]>();
 
   private url: string = environment.apiUrl + 'Misc/';
 
@@ -144,6 +146,11 @@ export class DropdownDataService {
     this.conEduExemptions = conEduExemptions;
     this.conEduExemptionsChanged.next([...this.conEduExemptions]);
   }
+
+  updateLineOfAuthorities(lineOfAuthorities: { value: number; label: string }[]) {
+    this.lineOfAuthorities = lineOfAuthorities;
+    this.lineOfAuthoritiesChanged.next([...this.lineOfAuthorities]);
+  } 
 
   fetchDropdownNumericData(vEndpoint: string, vValue: any | null = null) {
     const url = this.url + vEndpoint + (vValue ? '/' + vValue : '');

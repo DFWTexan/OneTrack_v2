@@ -231,5 +231,13 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpGet]
+        public async Task<ActionResult> GetLicenseLineOfAuthority()
+        {
+            var result = await Task.Run(() => _miscService.GetLicenseLineOfAuthority());
+
+            return StatusCode(result.StatusCode, result);
+        }
     }
 }

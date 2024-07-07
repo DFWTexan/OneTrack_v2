@@ -188,6 +188,13 @@ export class AppComponent implements OnInit, OnDestroy {
           this.drpdwnDataService.updateConEduExemptions(items);
         })
     );
+    this.subscriptions.add(
+      this.drpdwnDataService
+        .fetchDropdownNumberValueData('GetLicenseLineOfAuthority')
+        .subscribe((items: { value: number; label: string }[]) => {
+          this.drpdwnDataService.updateLineOfAuthorities(items);
+        })
+    );
   }
 
   title = 'onetrack_v2';

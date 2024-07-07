@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
+import { Component, Injectable, OnInit, OnDestroy, EventEmitter, Output, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -12,6 +12,8 @@ import { AdminComService, AdminDataService, ErrorMessageService, UserAcctInfoDat
 @Injectable()
 export class EditLicenseComponent implements OnInit, OnDestroy {
   @Output() callParentRefreshData = new EventEmitter<any>();
+  @Input() stateProvinces: any[] = [];
+  @Input() lineOfAuthorities: { value: number; label: string }[] = [];
   isFormSubmitted = false;
   licenseForm!: FormGroup;
 
@@ -29,17 +31,17 @@ export class EditLicenseComponent implements OnInit, OnDestroy {
       licenseId: new FormControl(''),
       licenseName: new FormControl(''),
       licenseAbv: new FormControl(''),
-      stateProvinceAbv: new FormControl(''),
-      lineOfAuthorityAbv: new FormControl(''),
+      stateProvinceAbv: new FormControl('Select'),
+      lineOfAuthorityAbv: new FormControl(0),
       lineOfAuthorityId: new FormControl(''),
       agentStateTable: new FormControl(''),
-      plsIncentive1Tmpay: new FormControl(''),
-      plsIncentive1Mrpay: new FormControl(''),
-      incentive2PlusTmpay: new FormControl(''),
-      incentive2PlusMrpay: new FormControl(''),
-      licIncentive3Tmpay: new FormControl(''),
-      licIncentive3Mrpay: new FormControl(''),
-      isActive: new FormControl(''),
+      plsIncentive1Tmpay: new FormControl(0),
+      plsIncentive1Mrpay: new FormControl(0),
+      incentive2PlusTmpay: new FormControl(0),
+      incentive2PlusMrpay: new FormControl(0),
+      licIncentive3Tmpay: new FormControl(0),
+      licIncentive3Mrpay: new FormControl(0),
+      isActive: new FormControl(true),
     });
 
     this.subscriptionData.add(
@@ -69,6 +71,17 @@ export class EditLicenseComponent implements OnInit, OnDestroy {
             );
           } else {
             this.licenseForm.reset();
+            this.licenseForm.patchValue({
+              stateProvinceAbv: 'Select',
+              lineOfAuthorityAbv: 0,
+              plsIncentive1Tmpay: 0,
+              plsIncentive1Mrpay: 0,
+              incentive2PlusTmpay: 0,
+              incentive2PlusMrpay: 0,
+              licIncentive3Tmpay: 0,
+              licIncentive3Mrpay: 0,
+              isActive: true,
+            });
           }
         }
       )

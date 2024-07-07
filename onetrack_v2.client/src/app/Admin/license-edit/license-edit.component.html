@@ -74,44 +74,47 @@
             </div>
             <div class="col">
               <label> Sent to CICS: </label>
-              <span class="ms-3" style="font-size: larger; font-weight: 400; color: gray">{{
-                license.agentStateTable ? "Yes" : "No"
-              }}</span>
+              <span
+                class="ms-3"
+                style="font-size: larger; font-weight: 400; color: gray"
+                >{{ license.agentStateTable ? "Yes" : "No" }}</span
+              >
               <br />
               <label> Line of Auth.: </label>
-              <span class="ms-3" style="font-size: larger; font-weight: 400; color: gray">{{
-                license.lineOfAuthorityAbv
-              }}</span>
+              <span
+                class="ms-3"
+                style="font-size: larger; font-weight: 400; color: gray"
+                >{{ license.lineOfAuthorityAbv }}</span
+              >
               <!-- <p>License ID: <span style="font-size: larger; font-weight: 500">{{ license.licenseId }}</span></p> -->
             </div>
             <div class="col">
               <label> Incentive2 Plus TMPay: </label>
-              <span class="ms-3" style="font-size: larger; font-weight: 400; color: gray">{{
-                license.incentive2PlusTmpay | currency
-              }}</span><br />
-              <label>
-                Incentive2 Plus MRPay:
-                
-              </label>
-              <span class="ms-3" style="font-size: larger; font-weight: 400; color: gray">{{
-                license.incentive2PlusMrpay | currency
-              }}</span>
+              <span
+                class="ms-3"
+                style="font-size: larger; font-weight: 400; color: gray"
+                >{{ license.incentive2PlusTmpay | currency }}</span
+              ><br />
+              <label> Incentive2 Plus MRPay: </label>
+              <span
+                class="ms-3"
+                style="font-size: larger; font-weight: 400; color: gray"
+                >{{ license.incentive2PlusMrpay | currency }}</span
+              >
             </div>
             <div class="col">
-              <label>
-                PLS Incentive 1 TMPay:
-                
-              </label>
-              <span class="ms-3" style="font-size: larger; font-weight: 400; color: gray">{{
-                license.plsIncentive1Tmpay | currency
-              }}</span><br />
-              <label>
-                PLS Incentive 1 MRPay:
-                
-              </label>
-              <span class="ms-3" style="font-size: larger; font-weight: 400; color: gray">{{
-                license.plsIncentive1Mrpay | currency
-              }}</span>
+              <label> PLS Incentive 1 TMPay: </label>
+              <span
+                class="ms-3"
+                style="font-size: larger; font-weight: 400; color: gray"
+                >{{ license.plsIncentive1Tmpay | currency }}</span
+              ><br />
+              <label> PLS Incentive 1 MRPay: </label>
+              <span
+                class="ms-3"
+                style="font-size: larger; font-weight: 400; color: gray"
+                >{{ license.plsIncentive1Mrpay | currency }}</span
+              >
             </div>
             <div class="col">
               <div
@@ -635,6 +638,8 @@
       <div>
         <app-edit-license
           (callParentRefreshData)="onChildCallRefreshData()"
+          [stateProvinces]="stateProvinces"
+          [lineOfAuthorities]="lineOfAuthorities"
         ></app-edit-license>
       </div>
     </div>

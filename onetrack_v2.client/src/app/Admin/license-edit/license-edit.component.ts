@@ -1,9 +1,11 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import {
   AdminComService,
   AdminDataService,
   ConstantsDataService,
+  DropdownDataService,
   ModalService,
 } from '../../_services';
 import { License } from '../../_Models';
@@ -14,21 +16,40 @@ import { License } from '../../_Models';
   styleUrl: './license-edit.component.css',
 })
 @Injectable()
-export class LicenseEditComponent implements OnInit {
+export class LicenseEditComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   stateProvinces: any[] = [];
   selectedStateProvince: string = 'Select';
+  lineOfAuthorities: {value: number, label: string}[] = [];
   licenseItems: License[] = [];
+
+  subscriptionData: Subscription = new Subscription();
 
   constructor(
     private conService: ConstantsDataService,
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
+    private dropDownDataService: DropdownDataService,
     public modalService: ModalService
   ) {}
 
   ngOnInit(): void {
     this.stateProvinces = ['Select', ...this.conService.getStates()];
+    this.lineOfAuthorities = [{value: 0, label: 'Select'}, ...this.dropDownDataService.lineOfAuthorities];
+
+console.log('EMFTEST () - this.lineOfAuthorities => \n', this.lineOfAuthorities);
+
+    this.getDropdownData();
+  }
+
+  private getDropdownData(): void {
+    this.subscriptionData.add(
+      this.dropDownDataService.lineOfAuthoritiesChanged.subscribe(
+        (items: any[]) => {
+          this.lineOfAuthorities = [{value: 0, label: 'Select'}, ...items];
+        }
+      )
+    );
   }
 
   onChildCallRefreshData() {
@@ -60,5 +81,9 @@ export class LicenseEditComponent implements OnInit {
       this.loading = true;
       this.fetchLicenseItems();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptionData.unsubscribe();
   }
 }

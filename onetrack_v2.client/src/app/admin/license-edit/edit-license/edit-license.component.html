@@ -6,26 +6,98 @@
   <div class="row">
     <div class="col">
       <div class="mb-3">
-        <label for="licenseId" class="form-label">License ID:</label>
-        <input
-          class="form-control input-size-small"
+        <label for="stateProvinceAbv" class="form-label">License State:</label>
+        <select
+          class="form-select select-size-x-small"
           type="text"
-          id="licenseId"
-          formControlName="licenseId"
-        />
+          id="stateProvinceAbv"
+          formControlName="stateProvinceAbv"
+        >
+          <option *ngFor="let state of stateProvinces" [value]="state">
+            {{ state }}
+          </option>
+        </select>
       </div>
-
       <div class="mb-3">
         <label for="licenseName" class="form-label">License Name:</label>
         <input
-          class="form-control input-size-small"
+          class="form-control input-size-large"
           type="text"
           id="licenseName"
           formControlName="licenseName"
+          placeholder="Enter License Name"
         />
       </div>
+      <div class="mb-3">
+        <label for="licenseAbv" class="form-label">License Abv:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="licenseAbv"
+          formControlName="licenseAbv"
+          placeholder="Enter Abv"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="lineOfAuthorityId" class="form-label">Line of Authority:</label>
+        <select
+          class="form-select select-size-medium"
+          type="text"
+          id="lineOfAuthorityId"
+          formControlName="lineOfAuthorityId"
+        >
+          <option *ngFor="let authority of lineOfAuthorities" [value]="authority.value">
+            {{ authority.label }}
+          </option>
+        </select>
+      </div>
+    </div>
 
-      <!-- Add more form controls for the rest of the properties in the License interface -->
+    <div class="col">
+      <div class="mb-3">
+        <label for="plsIncentive1Tmpay" class="form-label">PLS Incentive1 TMPay:</label>
+        <input
+          class="form-control input-size-x-small"
+          type="number"
+          id="plsIncentive1Tmpay"
+          formControlName="plsIncentive1Tmpay"
+          min="0"
+          step="5.00"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="plsIncentive1Mrpay" class="form-label">PLS Incentive1 MRPay:</label>
+        <input
+          class="form-control input-size-x-small"
+          type="number"
+          id="plsIncentive1Mrpay"
+          formControlName="plsIncentive1Mrpay"
+          min="0"
+          step="5.00"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="incentive2PlusTmpay" class="form-label">Incentive2 Plus TMPay:</label>
+        <input
+          class="form-control input-size-x-small"
+          type="number"
+          id="incentive2PlusTmpay"
+          formControlName="incentive2PlusTmpay"
+          min="0"
+          step="5.00"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="incentive2PlusMrpay" class="form-label">Incentive2 Plus MRPay:</label>
+        <input
+          class="form-control input-size-x-small"
+          type="number"
+          id="incentive2PlusMrpay"
+          formControlName="incentive2PlusMrpay"
+          min="0"
+          step="5.00"
+        />
+      </div>
     </div>
   </div>
 

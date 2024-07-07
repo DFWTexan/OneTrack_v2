@@ -814,5 +814,32 @@ namespace OneTrack_v2.Services
 
             return result;
         }
+        public ReturnResult GetLicenseLineOfAuthority() 
+        { 
+            var result = new ReturnResult();
+            try
+            {
+                var query = from l in _db.LineOfAuthorities
+                            orderby l.LineOfAuthorityName
+                            select new { value = l.LineOfAuthorityId, label = l.LineOfAuthorityName };
+
+                var resultLineOfAuthorities = query.AsNoTracking().ToList();
+
+                result.Success = true;
+                result.ObjData = resultLineOfAuthorities;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "MISC-GetLicenseLineOfAuthority", new { }, null);
+            }
+
+            return result;
+        }
     }
 }
