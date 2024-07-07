@@ -1,8 +1,21 @@
-import { Component, Injectable, OnInit, OnDestroy, EventEmitter, Output, Input } from '@angular/core';
+import {
+  Component,
+  Injectable,
+  OnInit,
+  OnDestroy,
+  EventEmitter,
+  Output,
+  Input,
+} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { AdminComService, AdminDataService, ErrorMessageService, UserAcctInfoDataService } from '../../../_services';
+import {
+  AdminComService,
+  AdminDataService,
+  ErrorMessageService,
+  UserAcctInfoDataService,
+} from '../../../_services';
 
 @Component({
   selector: 'app-edit-license',
@@ -111,8 +124,6 @@ export class EditLicenseComponent implements OnInit, OnDestroy {
       this.licenseForm.setErrors({ invalid: true });
       return;
     }
-
-console.log('EMFTEST (onSubmit) - licenseItem => \n', licenseItem);
 
     this.subscriptionData.add(
       this.adminDataService.upsertLicenseItem(licenseItem).subscribe({

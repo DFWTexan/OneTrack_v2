@@ -30,7 +30,7 @@ export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
   agentInfo: AgentInfo = {} as AgentInfo;
   eventAction: string = '';
   vObject: any = {};
-  
+
   private subscriptions = new Subscription();
 
   employmentHistory: EmploymentHistory[] = [];
@@ -114,67 +114,73 @@ export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
     );
   }
 
-  deleteTransferHistory(transferItem: any): void {
-    this.agentDataService
-      .deleteTransferHistItem({
-        employmentID: this.agentDataService.agentInformation.employmentID,
-        transferHistoryID: transferItem.transferHistoryID,
-        userSOEID: this.userInfoDataService.userAcctInfo.soeid,
-      })
-      .subscribe({
-        next: (response) => {
-          // console.log(
-          //   'EMFTEST (app-tm-emptrans-history: deleteTransferHistory) - COMPLETED DELETE response => \n',
-          //   response
-          // );
-        },
-        error: (error) => {
-          console.error(error);
-          // handle the error here
-        },
-      });
+  private deleteTransferHistory(transferItem: any): void {
+    this.subscriptions.add(
+      this.agentDataService
+        .deleteTransferHistItem({
+          employmentID: this.agentDataService.agentInformation.employmentID,
+          transferHistoryID: transferItem.transferHistoryID,
+          userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+        })
+        .subscribe({
+          next: (response) => {
+            // console.log(
+            //   'EMFTEST (app-tm-emptrans-history: deleteTransferHistory) - COMPLETED DELETE response => \n',
+            //   response
+            // );
+          },
+          error: (error) => {
+            console.error(error);
+            // handle the error here
+          },
+        })
+    );
   }
 
-  deleteCompanyRequirement(coReqItem: any): void {
-    this.agentDataService
-      .deleteCompanyRequirementsHistItem({
-        employmentID: this.agentDataService.agentInformation.employmentID,
-        companyRequirementID: coReqItem.companyRequirementID,
-        userSOEID: this.userInfoDataService.userAcctInfo.soeid,
-      })
-      .subscribe({
-        next: (response) => {
-          // console.log(
-          //   'EMFTEST (app-tm-emptrans-history: deleteCompanyRequirement) - COMPLETED DELETE response => \n',
-          //   response
-          // );
-        },
-        error: (error) => {
-          console.error(error);
-          // handle the error here
-        },
-      });
+  private deleteCompanyRequirement(coReqItem: any): void {
+    this.subscriptions.add(
+      this.agentDataService
+        .deleteCompanyRequirementsHistItem({
+          employmentID: this.agentDataService.agentInformation.employmentID,
+          companyRequirementID: coReqItem.companyRequirementID,
+          userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+        })
+        .subscribe({
+          next: (response) => {
+            // console.log(
+            //   'EMFTEST (app-tm-emptrans-history: deleteCompanyRequirement) - COMPLETED DELETE response => \n',
+            //   response
+            // );
+          },
+          error: (error) => {
+            console.error(error);
+            // handle the error here
+          },
+        })
+    );
   }
 
-  deleteJobTitle(jobTitleItem: any): void {
-    this.agentDataService
-      .deleteEmploymentJobTitleHistItem({
-        employmentID: this.agentDataService.agentInformation.employmentID,
-        employmentJobTitleID: jobTitleItem.employmentJobTitleID,
-        userSOEID: this.userInfoDataService.userAcctInfo.soeid,
-      })
-      .subscribe({
-        next: (response) => {
-          // console.log(
-          //   'EMFTEST (app-tm-emptrans-history: deleteJobTitle) - COMPLETED DELETE response => \n',
-          //   response
-          // );
-        },
-        error: (error) => {
-          console.error(error);
-          // handle the error here
-        },
-      });
+  private deleteJobTitle(jobTitleItem: any): void {
+    this.subscriptions.add(
+      this.agentDataService
+        .deleteEmploymentJobTitleHistItem({
+          employmentID: this.agentDataService.agentInformation.employmentID,
+          employmentJobTitleID: jobTitleItem.employmentJobTitleID,
+          userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+        })
+        .subscribe({
+          next: (response) => {
+            // console.log(
+            //   'EMFTEST (app-tm-emptrans-history: deleteJobTitle) - COMPLETED DELETE response => \n',
+            //   response
+            // );
+          },
+          error: (error) => {
+            console.error(error);
+            // handle the error here
+          },
+        })
+    );
   }
 
   ngOnDestroy(): void {

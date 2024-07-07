@@ -89,7 +89,7 @@
               <!-- <p>License ID: <span style="font-size: larger; font-weight: 500">{{ license.licenseId }}</span></p> -->
             </div>
             <div class="col">
-              <label> Incentive2 Plus TMPay: </label><br /> 
+              <label> Incentive2 Plus TMPay: </label><br />
               <span
                 class="ms-3"
                 style="font-size: larger; font-weight: 400; color: gray"
@@ -132,7 +132,18 @@
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
                 <button class="icon-edit-delete-button" type="button">
-                  <span class="material-symbols-outlined"> delete </span>
+                  <span
+                    class="material-symbols-outlined"
+                    (click)="
+                      onOpenConfirmDialog(
+                        'LICENSEITEM',
+                        'License Item',
+                        license
+                      )
+                    "
+                  >
+                    delete
+                  </span>
                 </button>
               </div>
             </div>
