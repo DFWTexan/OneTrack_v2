@@ -200,8 +200,8 @@
                 >
                   <thead>
                     <tr class="sticky-top" style="background-color: gainsboro">
-                      <th scope="col">License Company Id</th>
-                      <th scope="col">Company Id</th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">License Company Id</th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">Company Id</th>
                       <th scope="col">Company Name</th>
                       <th scope="col">Company Abv</th>
                       <th scope="col">Company Type</th>
@@ -221,10 +221,10 @@
                       "
                       [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
                     >
-                      <td class="align-middle">
+                      <td class="align-middle" *ngIf="appComService.isShowEditID">
                         {{ company.licenseCompanyId }}
                       </td>
-                      <td class="align-middle">{{ company.companyId }}</td>
+                      <td class="align-middle" *ngIf="appComService.isShowEditID">{{ company.companyId }}</td>
                       <td class="align-middle text-nowrap">
                         {{ company.companyName }}
                       </td>
@@ -336,8 +336,8 @@
                 >
                   <thead>
                     <tr class="sticky-top" style="background-color: gainsboro">
-                      <th scope="col">Lic ExamID</th>
-                      <th scope="col">ExamID</th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">Lic ExamID</th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">ExamID</th>
                       <th scope="col">ExamName</th>
                       <th scope="col">Exam Provider ID</th>
                       <th scope="col">Exam Provider</th>
@@ -357,10 +357,10 @@
                       "
                       [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
                     >
-                      <td class="align-middle">
+                      <td class="align-middle" *ngIf="appComService.isShowEditID">
                         {{ preExam.licenseExamID }}
                       </td>
-                      <td class="align-middle">{{ preExam.examId }}</td>
+                      <td class="align-middle" *ngIf="appComService.isShowEditID">{{ preExam.examId }}</td>
                       <td class="align-middle text-nowrap">
                         {{ preExam.examName }}
                       </td>
@@ -468,8 +468,8 @@
                 >
                   <thead>
                     <tr style="background-color: gainsboro">
-                      <th scope="col">Lic PreEd ID</th>
-                      <th scope="col">PreEducation ID</th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">Lic PreEd ID</th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">PreEducation ID</th>
                       <th scope="col">Education Name</th>
                       <th scope="col">PreEd Provider</th>
                       <th scope="col">Delivery Method</th>
@@ -488,10 +488,10 @@
                       "
                       [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
                     >
-                      <td class="align-middle">
+                      <td class="align-middle" *ngIf="appComService.isShowEditID">
                         {{ preEdu.licensePreEducationID }}
                       </td>
-                      <td class="align-middle">{{ preEdu.preEducationID }}</td>
+                      <td class="align-middle" *ngIf="appComService.isShowEditID">{{ preEdu.preEducationID }}</td>
                       <td class="align-middle text-nowrap">
                         {{ preEdu.educationName }}
                       </td>
@@ -590,8 +590,8 @@
                 >
                   <thead>
                     <tr style="background-color: gainsboro">
-                      <th scope="col">Lic Prod ID</th>
-                      <th scope="col">Product ID</th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">Lic Prod ID</th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">Product ID</th>
                       <th scope="col">Product Name</th>
                       <th scope="col">Product Abv</th>
                       <th scope="col">isActive</th>
@@ -609,10 +609,10 @@
                       "
                       [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
                     >
-                      <td class="align-middle">
+                      <td class="align-middle" *ngIf="appComService.isShowEditID">
                         {{ product.licenseProductID }}
                       </td>
-                      <td class="align-middle text-nowrap">
+                      <td class="align-middle text-nowrap" *ngIf="appComService.isShowEditID">
                         {{ product.productID }}
                       </td>
                       <td class="align-middle" style="width: max-content">

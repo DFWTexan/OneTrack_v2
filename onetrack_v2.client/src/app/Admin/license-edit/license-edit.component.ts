@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import {
   AdminComService,
   AdminDataService,
+  AppComService,
   ConstantsDataService,
   DropdownDataService,
   ModalService,
@@ -33,6 +34,7 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
     private conService: ConstantsDataService,
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
+    public appComService: AppComService,
     private dropDownDataService: DropdownDataService,
     public modalService: ModalService,
     public dialog: MatDialog
