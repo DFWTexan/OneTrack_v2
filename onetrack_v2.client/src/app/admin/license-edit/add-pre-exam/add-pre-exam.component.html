@@ -1,10 +1,6 @@
 <div>
-  <p>add-pre-exam works!</p>
-
-  <mat-divider></mat-divider>
-
-  <div class="row mt-4">
-    <div class="col d-flex justify-content-end">
+  <div class="row mt-1 mb-3">
+    <div class="col d-flex justify-content-center">
       <button
         type="button"
         class="btn btn-secondary me-3 cancel-button"
@@ -15,4 +11,48 @@
       <button type="submit" class="btn btn-primary save-button">Save</button>
     </div>
   </div>
+  <table class="table w-100" *ngIf="preExams.length > 0">
+    <thead>
+      <tr class="sticky-top" style="background-color: gainsboro">
+        <th scope="col"></th>
+        <th scope="col" *ngIf="appComService.isShowEditID">ExamID</th>
+        <th scope="col">ExamName</th>
+        <th scope="col">Exam Provider ID</th>
+        <th scope="col">Exam Provider</th>
+        <th scope="col">Delivery Method</th>
+      </tr>
+    </thead>
+    <tbody class="bg-body">
+      <!-- <tr *ngFor="let preExam of license.preExamItems"> -->
+      <tr *ngFor="let preExam of preExams; let i = index">
+        <td>
+          <button class="icon-add-button" type="button">
+            <span class="material-symbols-outlined"> add_circle </span>
+          </button>
+        </td>
+        <td class="align-middle" *ngIf="appComService.isShowEditID">
+          {{ preExam.licenseExamID }}
+        </td>
+        <td class="align-middle" *ngIf="appComService.isShowEditID">
+          {{ preExam.examId }}
+        </td>
+        <td class="align-middle text-nowrap">
+          {{ preExam.examName }}
+        </td>
+        <td class="align-middle" style="width: max-content">
+          {{ preExam.examProviderID }}
+        </td>
+        <td class="align-middle" style="width: max-content">
+          {{ preExam.companyName }}
+        </td>
+        <td class="align-middle" style="width: max-content">
+          {{ preExam.deliveryMethod }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <mat-divider></mat-divider>
+
+  
 </div>
