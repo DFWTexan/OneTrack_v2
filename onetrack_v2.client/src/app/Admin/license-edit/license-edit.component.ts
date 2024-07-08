@@ -24,7 +24,12 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
   stateProvinces: any[] = [];
   selectedStateProvince: string = 'Select';
   lineOfAuthorities: { value: number; label: string }[] = [];
+  companies: any[] = [];
+  preExams: any[] = [];
+  preEducations: any[] = [];
+  products: any[] = [];
   licenseItems: License[] = [];
+
   eventAction: string = '';
   vObject: any = {};
 
@@ -46,10 +51,10 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
       { value: 0, label: 'Select' },
       ...this.dropDownDataService.lineOfAuthorities,
     ];
-    this.getDropdownData();
+    this.getEditInfo();
   }
 
-  private getDropdownData(): void {
+  private getEditInfo(): void {
     this.subscriptionData.add(
       this.dropDownDataService.lineOfAuthoritiesChanged.subscribe(
         (items: any[]) => {
@@ -78,6 +83,32 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
     const value = target.value;
 
     this.selectedStateProvince = value;
+    this.adminDataService.updateCompanyType(value);
+
+    this.subscriptionData.add(
+      this.adminDataService.fetchCompanies().subscribe((response) => {
+        this.companies = response;
+        this.adminDataService.companiesChanged.next(this.companies);
+      })
+    );
+
+    this.subscriptionData.add(
+      this.adminDataService.fetchExamItems(value).subscribe((response) => {
+        this.preExams = response;
+      })
+    );
+
+    this.subscriptionData.add(
+      this.adminDataService.fetchPreEducationItems(value).subscribe((response) => {
+        this.preEducations = response;
+      })
+    );
+
+    this.subscriptionData.add(
+      this.adminDataService.fetchProducts().subscribe((response) => {
+        this.products = response.filter(product => product.isActive === true);
+      })
+    );
 
     if (value === 'Select') {
       // this.adminDataService.fetchCities(value).subscribe((response) => {

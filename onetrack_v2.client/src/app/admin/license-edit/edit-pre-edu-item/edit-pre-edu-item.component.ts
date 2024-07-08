@@ -54,6 +54,13 @@ export class EditPreEduItemComponent implements OnInit, OnDestroy {
       });
   }
 
+  onCloseModal() {
+    const modalDiv = document.getElementById('modal-edit-preEdu-Item');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+  }
+
   onSubmit(): void {}
 
   ngOnDestroy(): void {

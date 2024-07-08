@@ -72,6 +72,13 @@ export class EditCompanyItemComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {}
 
+  onCloseModal() {
+    const modalDiv = document.getElementById('modal-edit-company-item');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+  }
+
   ngOnDestroy(): void {
     this.subscriptionData.unsubscribe();
   }

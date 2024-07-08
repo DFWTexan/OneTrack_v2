@@ -46,6 +46,13 @@ export class EditProductItemComponent implements OnInit, OnDestroy {
       });
   }
 
+  onCloseModal() {
+    const modalDiv = document.getElementById('modal-edit-product-Item');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+  }
+
   onSubmit(): void {}
 
   ngOnDestroy(): void {
