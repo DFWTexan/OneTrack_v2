@@ -207,7 +207,7 @@
                       <th scope="col">Company Type</th>
                       <th scope="col">TIN</th>
                       <th scope="col">NAIC Number</th>
-                      <th scope="col">isActive</th>
+                      <th scope="col" class="text-center">isActive</th>
                       <th scope="col" class="text-center" style="width: 10rem">
                         ACTION
                       </th>
@@ -342,7 +342,7 @@
                       <th scope="col">Exam Provider ID</th>
                       <th scope="col">Exam Provider</th>
                       <th scope="col">Delivery Method</th>
-                      <th scope="col">isActive</th>
+                      <th scope="col" class="text-center">isActive</th>
                       <th scope="col" class="text-center" style="width: 10rem">
                         ACTION
                       </th>
@@ -473,7 +473,7 @@
                       <th scope="col">Education Name</th>
                       <th scope="col">PreEd Provider</th>
                       <th scope="col">Delivery Method</th>
-                      <th scope="col">isActive</th>
+                      <th scope="col" class="text-center">isActive</th>
                       <th scope="col" class="text-center" style="width: 10rem">
                         ACTION
                       </th>
@@ -594,7 +594,7 @@
                       <th scope="col" *ngIf="appComService.isShowEditID">Product ID</th>
                       <th scope="col">Product Name</th>
                       <th scope="col">Product Abv</th>
-                      <th scope="col">isActive</th>
+                      <th scope="col" class="text-center">isActive</th>
                       <th scope="col" class="text-center" style="width: 10rem">
                         ACTION
                       </th>
@@ -615,13 +615,13 @@
                       <td class="align-middle text-nowrap" *ngIf="appComService.isShowEditID">
                         {{ product.productID }}
                       </td>
-                      <td class="align-middle" style="width: max-content">
+                      <td class="align-middle">
                         {{ product.productName }}
                       </td>
-                      <td class="align-middle" style="width: max-content">
+                      <td class="align-middle">
                         {{ product.productAbv }}
                       </td>
-                      <td class="align-middle" style="width: max-content">
+                      <td class="align-middle">
                         <div class="form-check d-flex justify-content-center">
                           <input
                             class="form-check-input"
