@@ -16,7 +16,7 @@ import { TmCommunicationsComponent } from '../team-member/agent-information/tm-i
 import { EditTmInformationComponent } from '../team-member/agent-information/tm-info-management/tm-information/edit-tm-information/edit-tm-information.component';
 import { EditLicenseAppointmentComponent } from '../team-member/agent-information/tm-info-management/tm-information/edit-license-appointment/edit-license-appointment.component';
 import { TmLicenseManagementComponent } from '../team-member/agent-information/tm-license-management/tm-license-management.component';
-import { LicenseEditComponent } from '../admin/license-edit/license-edit.component';
+
 import { LicenseInfoComponent } from '../team-member/agent-information/tm-license-management/license-info/license-info.component';
 import { LicenseApplicationComponent } from '../team-member/agent-information/tm-license-management/license-application/license-application.component';
 import { LicenseRenewalComponent } from '../team-member/agent-information/tm-license-management/license-renewal/license-renewal.component';
@@ -38,9 +38,7 @@ import { EditDiaryEntryComponent } from '../team-member/agent-information/tm-inf
 import { TicklerInfoComponent } from '../_components/tickler-mgmt/tickler-info/tickler-info.component';
 import { TicklerSearchComponent } from '../_components/tickler-mgmt/tickler-search/tickler-search.component';
 import { EditTicklerInfoComponent } from '../_components/tickler-mgmt/tickler-info/edit-tickler-info/edit-tickler-info.component';
-import { EditPreExamItemComponent } from '../admin/license-edit/edit-pre-exam-item/edit-pre-exam-item.component';
-import { EditPreEduItemComponent } from '../admin/license-edit/edit-pre-edu-item/edit-pre-edu-item.component';
-import { EditProductItemComponent } from '../admin/license-edit/edit-product-item/edit-product-item.component';
+
 import { AddTicklerComponent } from '../team-member/search-team-member/add-tickler/add-tickler.component';
 import { AddIndexerComponent } from '../team-member/search-team-member/add-indexer/add-indexer.component';
 import { InsertIncentiveLicenseComponent } from '../team-member/agent-information/tm-info-management/tm-information/insert-incentive-license/insert-incentive-license.component';
@@ -68,7 +66,7 @@ import { TmInfoManagementComponent } from '../team-member/agent-information/tm-i
     EditLicenseAppointmentComponent,
     TmLicenseManagementComponent,
     LicenseInfoComponent,
-    LicenseEditComponent,
+    
     LicenseApplicationComponent,
     LicenseRenewalComponent,
     LicenseIncentiveComponent,
@@ -87,9 +85,7 @@ import { TmInfoManagementComponent } from '../team-member/agent-information/tm-i
     TicklerInfoComponent,
     TicklerSearchComponent,
     EditTicklerInfoComponent,
-    EditPreExamItemComponent,
-    EditPreEduItemComponent,
-    EditProductItemComponent,
+    
     AddTicklerComponent,
     AddIndexerComponent,
     EditTmDetailComponent,
@@ -126,7 +122,7 @@ import { TmInfoManagementComponent } from '../team-member/agent-information/tm-i
     EditLicenseAppointmentComponent,
     TmLicenseManagementComponent,
     LicenseInfoComponent,
-    LicenseEditComponent,
+    
     LicenseApplicationComponent,
     LicenseRenewalComponent,
     LicenseIncentiveComponent,
@@ -145,9 +141,7 @@ import { TmInfoManagementComponent } from '../team-member/agent-information/tm-i
     TicklerInfoComponent,
     TicklerSearchComponent,
     EditTicklerInfoComponent,
-    EditPreExamItemComponent,
-    EditPreEduItemComponent,
-    EditProductItemComponent,
+    
     AddTicklerComponent,
     AddIndexerComponent,
     InsertIncentiveLicenseComponent,  
