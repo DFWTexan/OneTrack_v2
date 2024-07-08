@@ -4,4 +4,5 @@ export interface PreEducation {
   stateProvinceAbv: string;
   creditHours: string;
   deliveryMethod: string;
+  companyName: string;
 }

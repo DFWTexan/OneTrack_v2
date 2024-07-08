@@ -6,27 +6,37 @@
   <div class="row">
     <div class="col">
       <div class="mb-3">
-        <label for="examId" class="form-label">Exam ID:</label>
-        <input
-          class="form-control input-size-small"
-          type="text"
-          id="examId"
-          formControlName="examId"
-        />
+        <label for="examName" class="form-label">Exam Name:</label><br />
+        <span>{{ preExamItemForm.get("examName")?.value }}</span>
       </div>
-
       <div class="mb-3">
-        <label for="examName" class="form-label">Exam Name:</label>
-        <input
-          class="form-control input-size-small"
-          type="text"
-          id="examName"
-          formControlName="examName"
-        />
+        <label for="stateProvinceAbv" class="form-label">State:</label><br />
+        <span>{{ preExamItemForm.get("stateProvinceAbv")?.value }}</span>
       </div>
+    </div>
 
-      <!-- Add more form controls for the rest of the properties in the PreExamItem interface -->
+    <div class="col">
+      <div class="mb-3">
+        <label for="companyName" class="form-label">Provider Name:</label><br />
+        <span>{{ preExamItemForm.get("companyName")?.value }}</span>
+      </div>
+      <div class="mb-3">
+        <label for="deliveryMethod" class="form-label">Delivery Method:</label
+        ><br />
+        <span>{{ preExamItemForm.get("deliveryMethod")?.value }}</span>
+      </div>
+    </div>
 
+    <div class="col">
+      <div class="mb-3">
+        <input
+          class="form-check-input me-2 align-middle"
+          type="checkbox"
+          id="isActive"
+          formControlName="isActive"
+        />
+        <label for="isActive" class="form-label"> Active </label>
+      </div>
     </div>
   </div>
 
@@ -34,7 +44,11 @@
 
   <div class="row mt-4">
     <div class="col d-flex justify-content-end">
-      <button type="button" class="btn btn-secondary me-3 cancel-button" (click)="onCloseModal()">
+      <button
+        type="button"
+        class="btn btn-secondary me-3 cancel-button"
+        (click)="onCloseModal()"
+      >
         Cancel
       </button>
       <button type="submit" class="btn btn-primary save-button">Save</button>

@@ -3,32 +3,33 @@
   (ngSubmit)="onSubmit()"
   class="container app-modal-container"
 >
-  <div class="row">
-    <div class="col">
-      <div class="mb-3">
-        <label for="licenseProductID" class="form-label">License Product ID:</label>
-        <input
-          class="form-control input-size-small"
-          type="text"
-          id="licenseProductID"
-          formControlName="licenseProductID"
-        />
-      </div>
-
-      <div class="mb-3">
-        <label for="productID" class="form-label">Product ID:</label>
-        <input
-          class="form-control input-size-small"
-          type="text"
-          id="productID"
-          formControlName="productID"
-        />
-      </div>
-
-      <!-- Add more form controls for the rest of the properties in the ProductItem interface -->
-
+<div class="row">
+  <div class="col">
+    <div class="mb-3">
+      <label for="educationName" class="form-label">Education Name:</label><br />
+      <span>{{ productItemForm.get("productName")?.value }}</span>
     </div>
   </div>
+
+  <div class="col">
+    <div class="mb-3">
+      <label for="productAbv" class="form-label">Product Abbr:</label><br />
+      <span>{{ productItemForm.get("productAbv")?.value }}</span>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="mb-3">
+      <input
+        class="form-check-input me-2 align-middle"
+        type="checkbox"
+        id="isActive"
+        formControlName="isActive"
+      />
+      <label for="isActive" class="form-label"> Active </label>
+    </div>
+  </div>
+</div>
 
   <mat-divider></mat-divider>
 

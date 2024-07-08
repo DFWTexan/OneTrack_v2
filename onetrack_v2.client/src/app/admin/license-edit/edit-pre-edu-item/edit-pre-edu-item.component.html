@@ -3,32 +3,42 @@
   (ngSubmit)="onSubmit()"
   class="container app-modal-container"
 >
-  <div class="row">
-    <div class="col">
-      <div class="mb-3">
-        <label for="licensePreEducationID" class="form-label">License Pre-Education ID:</label>
-        <input
-          class="form-control input-size-small"
-          type="text"
-          id="licensePreEducationID"
-          formControlName="licensePreEducationID"
-        />
-      </div>
-
-      <div class="mb-3">
-        <label for="preEducationID" class="form-label">Pre-Education ID:</label>
-        <input
-          class="form-control input-size-small"
-          type="text"
-          id="preEducationID"
-          formControlName="preEducationID"
-        />
-      </div>
-
-      <!-- Add more form controls for the rest of the properties in the PreEduItem interface -->
-
+<div class="row">
+  <div class="col">
+    <div class="mb-3">
+      <label for="educationName" class="form-label">Education Name:</label><br />
+      <span>{{ preEduItemForm.get("educationName")?.value }}</span>
+    </div>
+    <div class="mb-3">
+      <label for="stateProvinceAbv" class="form-label">State:</label><br />
+      <span>{{ preEduItemForm.get("stateProvinceAbv")?.value }}</span>
     </div>
   </div>
+
+  <div class="col">
+    <div class="mb-3">
+      <label for="companyName" class="form-label">Provider Name:</label><br />
+      <span>{{ preEduItemForm.get("companyName")?.value }}</span>
+    </div>
+    <div class="mb-3">
+      <label for="deliveryMethod" class="form-label">Delivery Method:</label
+      ><br />
+      <span>{{ preEduItemForm.get("deliveryMethod")?.value }}</span>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="mb-3">
+      <input
+        class="form-check-input me-2 align-middle"
+        type="checkbox"
+        id="isActive"
+        formControlName="isActive"
+      />
+      <label for="isActive" class="form-label"> Active </label>
+    </div>
+  </div>
+</div>
 
   <mat-divider></mat-divider>
 

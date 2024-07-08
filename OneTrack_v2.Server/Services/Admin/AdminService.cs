@@ -531,12 +531,15 @@ namespace OneTrak_v2.Services
             try
             {
                 var query = from p in _db.PreEducations
+                            join c in _db.Companies on p.EducationProviderId equals c.CompanyId into pc
+                            from subCompany in pc.DefaultIfEmpty()
                             where p.StateProvinceAbv == vStateProvinceAbv
                             select new
                             {
                                 p.PreEducationId,
                                 p.EducationName,
                                 p.StateProvinceAbv,
+                                CompanyName = subCompany != null ? subCompany.CompanyName : null,
                                 p.CreditHours,
                                 p.DeliveryMethod
                             };
