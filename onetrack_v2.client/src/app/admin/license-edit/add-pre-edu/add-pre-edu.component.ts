@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrl: './add-pre-edu.component.css'
 })
 export class AddPreEduComponent {
-
+  onCloseModal() {
+    const modalDiv = document.getElementById('modal-add-preEdu-Item');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+  }
 }

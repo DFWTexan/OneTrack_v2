@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrl: './add-product.component.css'
 })
 export class AddProductComponent {
-
+  onCloseModal() {
+    const modalDiv = document.getElementById('modal-add-product-Item');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+  }
 }
