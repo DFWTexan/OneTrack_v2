@@ -180,7 +180,7 @@
                   class="btn btn-success"
                   (click)="
                     adminDataService.storeCompanyItem('INSERT', null);
-                    modalService.open('modal-edit-company-item')
+                    modalService.open('modal-add-company-item')
                   "
                 >
                   Add New Company
@@ -316,7 +316,7 @@
                   class="btn btn-success"
                   (click)="
                     adminDataService.storePreExamItem('INSERT', null);
-                    modalService.open('modal-edit-preExam-item')
+                    modalService.open('modal-add-preExam-item')
                   "
                 >
                   Add New Pre-Exam
@@ -448,7 +448,7 @@
                   class="btn btn-success"
                   (click)="
                     adminDataService.storePreEduItem('INSERT', null);
-                    modalService.open('modal-edit-preEdu-Item')
+                    modalService.open('modal-add-preEdu-Item')
                   "
                 >
                   Add New Pre-Education
@@ -570,7 +570,7 @@
                   class="btn btn-success"
                   (click)="
                     adminDataService.storeProductItem('INSERT', null);
-                    modalService.open('modal-edit-product-Item')
+                    modalService.open('modal-add-product-Item')
                   "
                 >
                   Add New Product
@@ -701,6 +701,27 @@
   </div>
 </modal>
 
+<!-- Modal: ADD-COMPANY-ITEM -->
+<modal id="modal-add-company-item">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      ADD - License
+      Company
+    </h1>
+    <!-- <button
+                  type="button"
+                  class="btn-close"
+                  (click)="modalService.close()"
+                ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <!-- <app-edit-company-item></app-edit-company-item> -->
+      </div>
+    </div>
+  </div>
+</modal>
 <!-- Modal: EDIT-COMPANY-ITEM -->
 <modal id="modal-edit-company-item">
   <div class="modal-header">
@@ -723,6 +744,27 @@
   </div>
 </modal>
 
+<!-- Modal: ADD-PRE-EXAM_ITEM -->
+<modal id="modal-add-preExam-item">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      ADD - License
+      Pre-Exam
+    </h1>
+    <!-- <button
+                  type="button"
+                  class="btn-close"
+                  (click)="modalService.close()"
+                ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <!-- <app-edit-pre-exam-item></app-edit-pre-exam-item> -->
+      </div>
+    </div>
+  </div>
+</modal>
 <!-- Modal: EDIT-PRE-EXAM_ITEM -->
 <modal id="modal-edit-preExam-item">
   <div class="modal-header">
@@ -745,6 +787,27 @@
   </div>
 </modal>
 
+<!-- Modal: ADD-PRE-EDU-ITEM -->
+<modal id="modal-add-preEdu-Item">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      ADD - License
+      Pre-Education
+    </h1>
+    <!-- <button
+                  type="button"
+                  class="btn-close"
+                  (click)="modalService.close()"
+                ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <!-- <app-edit-pre-edu-item></app-edit-pre-edu-item> -->
+      </div>
+    </div>
+  </div>
+</modal>
 <!-- Modal: EDIT-PRE-EDU-ITEM -->
 <modal id="modal-edit-preEdu-Item">
   <div class="modal-header">
@@ -767,6 +830,27 @@
   </div>
 </modal>
 
+<!-- Modal: ADD-PRODUCT-ITEM -->
+<modal id="modal-add-product-Item">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      ADD - License
+      Product
+    </h1>
+    <!-- <button
+                  type="button"
+                  class="btn-close"
+                  (click)="modalService.close()"
+                ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <!-- <app-edit-product-item></app-edit-product-item> -->
+      </div>
+    </div>
+  </div>
+</modal>
 <!-- Modal: EDIT-PRODUCT-ITEM -->
 <modal id="modal-edit-product-Item">
   <div class="modal-header">
