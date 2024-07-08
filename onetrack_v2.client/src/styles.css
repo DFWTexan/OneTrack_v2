@@ -171,6 +171,25 @@ body {
   color: #ffa500;
 }
 
+.icon-add-button {
+  border-style: none;
+  background-color: transparent;
+  height: 1rem;
+  width: 1rem;
+  margin: 1rem;
+  transition: color 0.3s ease;
+  color: green;
+}
+
+.icon-add-button:hover {
+  color: grey; 
+}
+
+.icon-add-button:active {
+  transform: scale(0.9);
+  color: #ffa500;
+}
+
 .sticky-header {
   position: sticky;
   top: 0;

@@ -1,10 +1,6 @@
 <div>
-  <p>add-company works!</p>
-
-  <mat-divider></mat-divider>
-
-  <div class="row mt-4">
-    <div class="col d-flex justify-content-end">
+  <div class="row mt-1 mb-3">
+    <div class="col d-flex justify-content-center">
       <button
         type="button"
         class="btn btn-secondary me-3 cancel-button"
@@ -15,4 +11,55 @@
       <button type="submit" class="btn btn-primary save-button">Save</button>
     </div>
   </div>
+
+  <table class="table w-100" *ngIf="companies.length > 0">
+    <thead>
+      <tr class="sticky-top" style="background-color: gainsboro">
+        <th scope="col"></th>
+        <th scope="col" *ngIf="appComService.isShowEditID">
+          License Company Id
+        </th>
+        <th scope="col" *ngIf="appComService.isShowEditID">Company Id</th>
+        <th scope="col">Company Name</th>
+        <th scope="col">Company Abv</th>
+        <th scope="col">Company Type</th>
+        <th scope="col">TIN</th>
+        <th scope="col">NAIC Number</th>
+      </tr>
+    </thead>
+    <tbody class="bg-body">
+      <tr *ngFor="let company of companies; let i = index">
+        <td>
+          <button class="icon-add-button" type="button">
+            <span class="material-symbols-outlined">
+              add_circle
+            </span>
+          </button>
+        </td>
+        <td class="align-middle" *ngIf="appComService.isShowEditID">
+          {{ company.licenseCompanyId }}
+        </td>
+        <td class="align-middle" *ngIf="appComService.isShowEditID">
+          {{ company.companyId }}
+        </td>
+        <td class="align-middle text-nowrap">
+          {{ company.companyName }}
+        </td>
+        <td class="align-middle" style="width: max-content">
+          {{ company.companyAbv }}
+        </td>
+        <td class="align-middle" style="width: max-content">
+          {{ company.companyType }}
+        </td>
+        <td class="align-middle" style="width: max-content">
+          {{ company.tin }}
+        </td>
+        <td class="align-middle" style="width: max-content">
+          {{ company.naicNumber }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <mat-divider></mat-divider>
 </div>

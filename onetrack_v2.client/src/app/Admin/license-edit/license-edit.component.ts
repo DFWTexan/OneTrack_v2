@@ -83,7 +83,7 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
     const value = target.value;
 
     this.selectedStateProvince = value;
-    this.adminDataService.updateCompanyType(value);
+    this.adminDataService.updateCompanyType('InsuranceCo');
 
     this.subscriptionData.add(
       this.adminDataService.fetchCompanies().subscribe((response) => {
@@ -99,14 +99,16 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptionData.add(
-      this.adminDataService.fetchPreEducationItems(value).subscribe((response) => {
-        this.preEducations = response;
-      })
+      this.adminDataService
+        .fetchPreEducationItems(value)
+        .subscribe((response) => {
+          this.preEducations = response;
+        })
     );
 
     this.subscriptionData.add(
       this.adminDataService.fetchProducts().subscribe((response) => {
-        this.products = response.filter(product => product.isActive === true);
+        this.products = response.filter((product) => product.isActive === true);
       })
     );
 

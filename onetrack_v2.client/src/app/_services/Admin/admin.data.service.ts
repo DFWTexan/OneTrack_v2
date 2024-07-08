@@ -131,7 +131,10 @@ export class AdminDataService {
   }
 
   fetchCompanies() {
+    
+    console.log('EMFTEST (fetchCompanies) - this.companyType: ', this.companyType);
     // this.companyType = companyType;
+
     return this.http
       .get<{
         success: boolean;

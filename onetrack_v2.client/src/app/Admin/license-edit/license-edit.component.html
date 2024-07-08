@@ -200,8 +200,12 @@
                 >
                   <thead>
                     <tr class="sticky-top" style="background-color: gainsboro">
-                      <th scope="col" *ngIf="appComService.isShowEditID">License Company Id</th>
-                      <th scope="col" *ngIf="appComService.isShowEditID">Company Id</th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">
+                        License Company Id
+                      </th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">
+                        Company Id
+                      </th>
                       <th scope="col">Company Name</th>
                       <th scope="col">Company Abv</th>
                       <th scope="col">Company Type</th>
@@ -221,10 +225,18 @@
                       "
                       [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
                     >
-                      <td class="align-middle" *ngIf="appComService.isShowEditID">
+                      <td
+                        class="align-middle"
+                        *ngIf="appComService.isShowEditID"
+                      >
                         {{ company.licenseCompanyId }}
                       </td>
-                      <td class="align-middle" *ngIf="appComService.isShowEditID">{{ company.companyId }}</td>
+                      <td
+                        class="align-middle"
+                        *ngIf="appComService.isShowEditID"
+                      >
+                        {{ company.companyId }}
+                      </td>
                       <td class="align-middle text-nowrap">
                         {{ company.companyName }}
                       </td>
@@ -336,8 +348,12 @@
                 >
                   <thead>
                     <tr class="sticky-top" style="background-color: gainsboro">
-                      <th scope="col" *ngIf="appComService.isShowEditID">Lic ExamID</th>
-                      <th scope="col" *ngIf="appComService.isShowEditID">ExamID</th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">
+                        Lic ExamID
+                      </th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">
+                        ExamID
+                      </th>
                       <th scope="col">ExamName</th>
                       <th scope="col">Exam Provider ID</th>
                       <th scope="col">Exam Provider</th>
@@ -357,10 +373,18 @@
                       "
                       [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
                     >
-                      <td class="align-middle" *ngIf="appComService.isShowEditID">
+                      <td
+                        class="align-middle"
+                        *ngIf="appComService.isShowEditID"
+                      >
                         {{ preExam.licenseExamID }}
                       </td>
-                      <td class="align-middle" *ngIf="appComService.isShowEditID">{{ preExam.examId }}</td>
+                      <td
+                        class="align-middle"
+                        *ngIf="appComService.isShowEditID"
+                      >
+                        {{ preExam.examId }}
+                      </td>
                       <td class="align-middle text-nowrap">
                         {{ preExam.examName }}
                       </td>
@@ -468,8 +492,12 @@
                 >
                   <thead>
                     <tr style="background-color: gainsboro">
-                      <th scope="col" *ngIf="appComService.isShowEditID">Lic PreEd ID</th>
-                      <th scope="col" *ngIf="appComService.isShowEditID">PreEducation ID</th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">
+                        Lic PreEd ID
+                      </th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">
+                        PreEducation ID
+                      </th>
                       <th scope="col">Education Name</th>
                       <th scope="col">PreEd Provider</th>
                       <th scope="col">Delivery Method</th>
@@ -488,10 +516,18 @@
                       "
                       [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
                     >
-                      <td class="align-middle" *ngIf="appComService.isShowEditID">
+                      <td
+                        class="align-middle"
+                        *ngIf="appComService.isShowEditID"
+                      >
                         {{ preEdu.licensePreEducationID }}
                       </td>
-                      <td class="align-middle" *ngIf="appComService.isShowEditID">{{ preEdu.preEducationID }}</td>
+                      <td
+                        class="align-middle"
+                        *ngIf="appComService.isShowEditID"
+                      >
+                        {{ preEdu.preEducationID }}
+                      </td>
                       <td class="align-middle text-nowrap">
                         {{ preEdu.educationName }}
                       </td>
@@ -590,8 +626,12 @@
                 >
                   <thead>
                     <tr style="background-color: gainsboro">
-                      <th scope="col" *ngIf="appComService.isShowEditID">Lic Prod ID</th>
-                      <th scope="col" *ngIf="appComService.isShowEditID">Product ID</th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">
+                        Lic Prod ID
+                      </th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">
+                        Product ID
+                      </th>
                       <th scope="col">Product Name</th>
                       <th scope="col">Product Abv</th>
                       <th scope="col" class="text-center">isActive</th>
@@ -609,10 +649,16 @@
                       "
                       [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
                     >
-                      <td class="align-middle" *ngIf="appComService.isShowEditID">
+                      <td
+                        class="align-middle"
+                        *ngIf="appComService.isShowEditID"
+                      >
                         {{ product.licenseProductID }}
                       </td>
-                      <td class="align-middle text-nowrap" *ngIf="appComService.isShowEditID">
+                      <td
+                        class="align-middle text-nowrap"
+                        *ngIf="appComService.isShowEditID"
+                      >
                         {{ product.productID }}
                       </td>
                       <td class="align-middle">
@@ -704,10 +750,7 @@
 <!-- Modal: ADD-COMPANY-ITEM -->
 <modal id="modal-add-company-item">
   <div class="modal-header">
-    <h1 class="modal-title">
-      ADD - License
-      Company
-    </h1>
+    <h1 class="modal-title">ADD - License Company</h1>
     <!-- <button
                   type="button"
                   class="btn-close"
@@ -717,7 +760,7 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-add-company></app-add-company>
+        <app-add-company [companies]="companies"></app-add-company>
       </div>
     </div>
   </div>
@@ -747,10 +790,7 @@
 <!-- Modal: ADD-PRE-EXAM_ITEM -->
 <modal id="modal-add-preExam-item">
   <div class="modal-header">
-    <h1 class="modal-title">
-      ADD - License
-      Pre-Exam
-    </h1>
+    <h1 class="modal-title">ADD - License Pre-Exam</h1>
     <!-- <button
                   type="button"
                   class="btn-close"
@@ -790,10 +830,7 @@
 <!-- Modal: ADD-PRE-EDU-ITEM -->
 <modal id="modal-add-preEdu-Item">
   <div class="modal-header">
-    <h1 class="modal-title">
-      ADD - License
-      Pre-Education
-    </h1>
+    <h1 class="modal-title">ADD - License Pre-Education</h1>
     <!-- <button
                   type="button"
                   class="btn-close"
@@ -833,10 +870,7 @@
 <!-- Modal: ADD-PRODUCT-ITEM -->
 <modal id="modal-add-product-Item">
   <div class="modal-header">
-    <h1 class="modal-title">
-      ADD - License
-      Product
-    </h1>
+    <h1 class="modal-title">ADD - License Product</h1>
     <!-- <button
                   type="button"
                   class="btn-close"
