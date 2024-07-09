@@ -79,6 +79,10 @@ export class EditStateRequirementComponent implements OnInit, OnDestroy {
               (stateRequirement: any) => {
                 this.isStartDocUploaded = stateRequirement.startDocument ? true : false;
                 this.isRenewalDocUploaded = stateRequirement.renewalDocument ? true : false;
+                if (stateRequirement.licenseId !== 0) {
+                  this.selectedLicenseState = stateRequirement.licState;
+                  this.fetchStateLicenseItems();
+                }
                 this.stateRequirementForm.patchValue({
                   requiredLicenseId: stateRequirement.requiredLicenseId,
                   workStateAbv: stateRequirement.workStateAbv,
@@ -104,6 +108,7 @@ export class EditStateRequirementComponent implements OnInit, OnDestroy {
             if (!this.stateProvinces.includes('Select')) {
               this.stateProvinces.unshift('Select');
             }
+            this.stateRequirementForm.get('licenseId')?.disable(); 
             this.stateRequirementForm.reset({
               workStateAbv: 'Select',
               resStateAbv: 'Select',
@@ -170,9 +175,7 @@ export class EditStateRequirementComponent implements OnInit, OnDestroy {
     this.dropDownDataService.fetchDropdownNumericData('GetLicenseNumericNames', this.selectedLicenseState).subscribe({
       next: (response) => {
         this.stateLicenseItems = [{value: 0, label: 'Select'}, ...response];
-        this.stateRequirementForm.patchValue({
-          licenseName: 0,
-        });
+        this.stateRequirementForm.get('licenseId')?.enable(); 
       },
       error: (error) => {
         if (error.error && error.error.errMessage) {
