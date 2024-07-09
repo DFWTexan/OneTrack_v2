@@ -22,7 +22,13 @@
       <div class="table" *ngIf="products.length > 0">
         <thead>
           <tr class="sticky-top" style="background-color: gainsboro">
-            <th scope="col" style="width: 15rem">ProductID</th>
+            <th
+              scope="col"
+              style="width: 15rem"
+              *ngIf="appComService.isShowEditID"
+            >
+              ProductID
+            </th>
             <th scope="col" style="width: 15rem">ProductAbv</th>
             <th scope="col">ProductName</th>
             <th scope="col">EffectiveDate</th>
@@ -32,10 +38,14 @@
         </thead>
         <tbody class="bg-body">
           <tr *ngFor="let product of products">
-            <td class="align-middle text-center" style="width: 15rem">
+            <td
+              class="align-middle text-center"
+              style="width: 15rem"
+              *ngIf="appComService.isShowEditID"
+            >
               {{ product.productId }}
             </td>
-            <td class="align-middle" style="width: 15rem">
+            <td class="align-middle text-center" style="width: 15rem">
               {{ product.productAbv }}
             </td>
             <td class="align-middle text-nowrap">
@@ -47,7 +57,7 @@
             <td class="align-middle text-nowrap">
               {{ product.expireDate | date : "MM/dd/yyyy" }}
             </td>
-            <td class="align-middle" style="width: 10rem">
+            <td class="align-middle" style="width: 15rem">
               <div class="d-flex justify-content-between mb-3 me-4">
                 <button
                   class="icon-edit-delete-button"
@@ -63,11 +73,7 @@
                   <span
                     class="material-symbols-outlined"
                     (click)="
-                      openConfirmDialog(
-                        'deleteProduct',
-                        'Product',
-                        product
-                      )
+                      openConfirmDialog('deleteProduct', 'Product', product)
                     "
                   >
                     delete
