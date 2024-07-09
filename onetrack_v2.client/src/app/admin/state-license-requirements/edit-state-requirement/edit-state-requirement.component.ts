@@ -27,7 +27,8 @@ export class EditStateRequirementComponent implements OnInit, OnDestroy {
   @Input() stateProvinces: any[] = [];
   isFormSubmitted = false;
   stateRequirementForm!: FormGroup;
-  isDocumentUploaded = false;
+  isStartDocUploaded = false;
+  isRenewalDocUploaded = false;
   FileDisplayMode = 'CHOOSEFILE'; //--> CHOSEFILE / ATTACHMENT
   file: File | null = null;
   fileUri: string | null = null;
@@ -70,6 +71,8 @@ export class EditStateRequirementComponent implements OnInit, OnDestroy {
             this.stateProvinces = this.stateProvinces.filter(item => item !== 'Select');
             this.adminDataService.stateRequirementChanged.subscribe(
               (stateRequirement: any) => {
+                this.isStartDocUploaded = stateRequirement.startDocument ? true : false;
+                this.isRenewalDocUploaded = stateRequirement.renewalDocument ? true : false;
                 this.stateRequirementForm.patchValue({
                   requiredLicenseId: stateRequirement.requiredLicenseId,
                   workStateAbv: stateRequirement.workStateAbv,

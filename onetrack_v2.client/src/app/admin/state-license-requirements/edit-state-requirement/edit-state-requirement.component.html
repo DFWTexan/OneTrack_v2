@@ -134,7 +134,7 @@
     </div>
   </div>
 
-  <div class="row mt-3" *ngIf="isDocumentUploaded">
+  <div class="row mt-3" *ngIf="isStartDocUploaded">
     <div
       class="col-md-12 d-flex align-items-center"
       style="
@@ -156,32 +156,59 @@
       <span
         class="ms-5 mt-3 mb-3"
         style="font-size: medium; font-weight: 500"
-        >{{ stateRequirementForm.get("document")?.value }}</span
+        >{{ stateRequirementForm.get("startDocument")?.value }}</span
       >
     </div>
   </div>
 
-  <div class="row mt-5 mb-3">
+  <div class="row mt-1 mb-3">
     <div class="col-md-12">
       <label for="startDoc" class="form-label"> Start Document: </label>
       <app-file-upload
         [filePathUri]="fileUri"
         [displayMode]="FileDisplayMode"
         (fileSelected)="onFileSelected($event)"
-        [isDisabled]="isDocumentUploaded"
+        [isDisabled]="isStartDocUploaded"
         #fileUpload
       ></app-file-upload>
     </div>
   </div>
 
-  <div class="row mt-5 mb-3">
+  <div class="row mt-5" *ngIf="isRenewalDocUploaded">
+    <div
+      class="col-md-12 d-flex align-items-center"
+      style="
+        background-color: aliceblue;
+        border-color: lightgray;
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 0.5rem;
+      "
+    >
+      <!-- Use Flexbox here -->
+      <button
+        class="icon-edit-delete-button"
+        type="button"
+        style="padding-bottom: 3rem"
+      >
+        <span class="material-symbols-outlined me-3">delete_forever</span>
+      </button>
+      <span
+        class="ms-5 mt-3 mb-3"
+        style="font-size: medium; font-weight: 500"
+        >{{ stateRequirementForm.get("renewalDocument")?.value }}</span
+      >
+    </div>
+  </div>
+
+  <div class="row mt-1 mb-3">
     <div class="col-md-12">
       <label for="renewalDoc" class="form-label"> Renewal Document: </label>
       <app-file-upload
         [filePathUri]="fileUri"
         [displayMode]="FileDisplayMode"
         (fileSelected)="onFileSelected($event)"
-        [isDisabled]="isDocumentUploaded"
+        [isDisabled]="isRenewalDocUploaded"
         #fileUpload
       ></app-file-upload>
     </div>
