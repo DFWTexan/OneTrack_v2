@@ -10,7 +10,7 @@
           >Pre-Education Name:</label
         >
         <input
-          class="form-control input-size-small"
+          class="form-control input-size-large"
           type="text"
           id="educationName"
           formControlName="educationName"
@@ -43,13 +43,13 @@
 
     <div class="col">
       <div class="mb-3">
-        <label for="preEducationId" class="form-label"
+        <label for="companyID" class="form-label"
           >Pre-Education Provider:</label
         >
         <select
           class="form-select select-size-medium"
-          id="preEducationId"
-          formControlName="preEducationId"
+          id="companyID"
+          formControlName="companyID"
         >
           <option *ngFor="let provider of providers" [value]="provider.value">
             {{ provider.label }}

@@ -539,6 +539,7 @@ namespace OneTrak_v2.Services
                                 p.PreEducationId,
                                 p.EducationName,
                                 p.StateProvinceAbv,
+                                CompanyID = subCompany != null ? subCompany.CompanyId : 0,
                                 CompanyName = subCompany != null ? subCompany.CompanyName : null,
                                 p.CreditHours,
                                 p.DeliveryMethod

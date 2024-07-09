@@ -26,11 +26,17 @@ export class EditPreEducationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.preEducationForm = new FormGroup({
       preEducationId: new FormControl(0),
+      companyID: new FormControl(0),
       educationName: new FormControl(''),
       stateProvinceAbv: new FormControl(''),
       creditHours: new FormControl(''),
       deliveryMethod: new FormControl(''),
     });
+
+    function capitalizeFirstLetter(string: any) {
+      // return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+      return string.split('-').map((part: any) => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase()).join('-');
+    }
 
     this.subscriptionData =
       this.adminComService.modes.preEducation.changed.subscribe((mode: string) => {
@@ -38,10 +44,11 @@ export class EditPreEducationComponent implements OnInit, OnDestroy {
           this.adminDataService.preEducationChanged.subscribe((preEducation: any) => {
             this.preEducationForm.patchValue({
               preEducationId: preEducation.preEducationId,
+              companyID: preEducation.companyID,
               educationName: preEducation.educationName,
               stateProvinceAbv: preEducation.stateProvinceAbv,
               creditHours: preEducation.creditHours,
-              deliveryMethod: preEducation.deliveryMethod,
+              deliveryMethod: capitalizeFirstLetter(preEducation.deliveryMethod),
             });
           });
         } else {
