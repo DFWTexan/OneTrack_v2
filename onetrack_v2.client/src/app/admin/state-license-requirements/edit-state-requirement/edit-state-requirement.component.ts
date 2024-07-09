@@ -13,7 +13,9 @@ import { Subscription } from 'rxjs';
 import {
   AdminComService,
   AdminDataService,
+  DropdownDataService,
   ErrorMessageService,
+  MiscDataService,
   UserAcctInfoDataService,
 } from '../../../_services';
 
@@ -27,6 +29,9 @@ export class EditStateRequirementComponent implements OnInit, OnDestroy {
   @Input() stateProvinces: any[] = [];
   isFormSubmitted = false;
   stateRequirementForm!: FormGroup;
+  selectedLicenseState: string = 'Select';
+  stateLicenseItems: {value: number, label: string}[] = [];
+  isLicenseNameDisabled = true;
   isStartDocUploaded = false;
   isRenewalDocUploaded = false;
   FileDisplayMode = 'CHOOSEFILE'; //--> CHOSEFILE / ATTACHMENT
@@ -40,6 +45,7 @@ export class EditStateRequirementComponent implements OnInit, OnDestroy {
     private errorMessageService: ErrorMessageService,
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
+    public dropDownDataService: DropdownDataService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
@@ -47,8 +53,8 @@ export class EditStateRequirementComponent implements OnInit, OnDestroy {
     this.stateRequirementForm = new FormGroup({
       requiredLicenseId: new FormControl(''),
       workStateAbv: new FormControl('Select'),
-      resStateAbv: new FormControl('Select'),
-      licenseId: new FormControl(''),
+      resStateAbv: new FormControl({value: 'Select', disabled: false}),
+      licenseId: new FormControl({value: 0, disabled: true}),
       branchCode: new FormControl(''),
       requirementType: new FormControl(''),
       licLevel1: new FormControl(''),
@@ -59,7 +65,7 @@ export class EditStateRequirementComponent implements OnInit, OnDestroy {
       incentive2_Plus: new FormControl(''),
       licIncentive3: new FormControl(''),
       licState: new FormControl('Select'),
-      licenseName: new FormControl(''),
+      licenseName: new FormControl({value: 'Select', disabled: true}),
       startDocument: new FormControl(''),
       renewalDocument: new FormControl(''),
     });
@@ -95,15 +101,14 @@ export class EditStateRequirementComponent implements OnInit, OnDestroy {
               }
             );
           } else {
-            this.stateRequirementForm.reset();
             if (!this.stateProvinces.includes('Select')) {
               this.stateProvinces.unshift('Select');
             }
-            
-            this.stateRequirementForm.patchValue({
+            this.stateRequirementForm.reset({
               workStateAbv: 'Select',
               resStateAbv: 'Select',
-              licState: 'Select',
+              licState: {value: 'Select', disabled: false},
+              licenseId: {value: 0, disabled: true},
             });
           }
         }
@@ -145,6 +150,37 @@ export class EditStateRequirementComponent implements OnInit, OnDestroy {
     //     },
     //   })
     // );
+  }
+
+  onChangeLicenseState(event: any) {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    this.selectedLicenseState = value;
+
+    if (value === 'Select') {
+      this.stateRequirementForm.get('licenseId')?.disable();
+      return;
+    } else {
+      this.stateRequirementForm.get('licenseId')?.enable(); 
+      this.fetchStateLicenseItems();
+    }
+  }
+
+  private fetchStateLicenseItems(): void {
+    this.dropDownDataService.fetchDropdownNumericData('GetLicenseNumericNames', this.selectedLicenseState).subscribe({
+      next: (response) => {
+        this.stateLicenseItems = [{value: 0, label: 'Select'}, ...response];
+        this.stateRequirementForm.patchValue({
+          licenseName: 0,
+        });
+      },
+      error: (error) => {
+        if (error.error && error.error.errMessage) {
+          this.errorMessageService.setErrorMessage(error.error.errMessage);
+          this.forceCloseModal();
+        }
+      },
+    });
   }
 
   private forceCloseModal() {

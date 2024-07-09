@@ -44,6 +44,7 @@
           type="text"
           id="licState"
           formControlName="licState"
+          (change)="onChangeLicenseState($event)"
         >
           <option *ngFor="let state of stateProvinces" [value]="state">
             {{ state }}
@@ -54,16 +55,16 @@
 
     <div class="col">
       <div class="mb-3">
-        <label for="requirementType" class="form-label">License Name:</label>
+        <label for="licenseId" class="form-label">License Name:</label>
         <select
           class="form-select select-size-medium"
           type="text"
-          id="requirementType"
-          formControlName="requirementType"
+          id="licenseId"
+          formControlName="licenseId"
         >
-          <!-- <option *ngFor="let type of requirementTypes" [value]="type">
-            {{ type }}
-          </option> -->
+          <option *ngFor="let license of stateLicenseItems" [value]="license.value">
+            {{ license.label }}
+          </option>
         </select>
       </div>
     </div>
