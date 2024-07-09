@@ -1,9 +1,9 @@
-import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
+import { Component, Injectable, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 
-import { AdminComService, AdminDataService } from '../../../_services';
+import { AdminComService, AdminDataService, ErrorMessageService, UserAcctInfoDataService } from '../../../_services';
 
 
 @Component({
@@ -13,12 +13,16 @@ import { AdminComService, AdminDataService } from '../../../_services';
 })
 @Injectable()
 export class EditProductComponent implements OnInit, OnDestroy {
+  @Output() callParentRefreshData = new EventEmitter<any>();
   productForm!: FormGroup;
+  isFormSubmitted = false;
   subscriptionData: Subscription = new Subscription();
 
   constructor(
+    private errorMessageService: ErrorMessageService,
     public adminDataService: AdminDataService,
-    public adminComService: AdminComService
+    public adminComService: AdminComService,
+    private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {
@@ -62,7 +66,27 @@ export class EditProductComponent implements OnInit, OnDestroy {
       });
   }
 
-  onSubmit(): void {}
+  onSubmit(): void {
+    this.isFormSubmitted = true;
+    let productItem: any = this.productForm.value;
+    // licenseTechItem.jobTitleID = 0;
+    productItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+
+    // this.subscriptionData.add(
+    //   this.adminDataService.upsertJobTitle(preEduItem).subscribe({
+    //     next: (response) => {
+    //       this.callParentRefreshData.emit();
+    //       this.forceCloseModal();
+    //     },
+    //     error: (error) => {
+    //       if (error.error && error.error.errMessage) {
+    //         this.errorMessageService.setErrorMessage(error.error.errMessage);
+    //         this.forceCloseModal();
+    //       }
+    //     },
+    //   })
+    // );
+  }
 
   forceCloseModal() {
     const modalDiv = document.getElementById('modal-edit-product');

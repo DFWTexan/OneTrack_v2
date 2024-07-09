@@ -1,8 +1,20 @@
-import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component,
+  Injectable,
+  OnInit,
+  OnDestroy,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { AdminComService, AdminDataService } from '../../../_services';
+import {
+  AdminComService,
+  AdminDataService,
+  ErrorMessageService,
+  UserAcctInfoDataService,
+} from '../../../_services';
 
 @Component({
   selector: 'app-edit-license-tech',
@@ -11,6 +23,7 @@ import { AdminComService, AdminDataService } from '../../../_services';
 })
 @Injectable()
 export class EditLicenseTechComponent implements OnInit, OnDestroy {
+  @Output() callParentRefreshData = new EventEmitter<any>();
   isLoading: boolean = false;
   isFormSubmitted: boolean = false;
   licenseTechForm!: FormGroup;
@@ -18,8 +31,10 @@ export class EditLicenseTechComponent implements OnInit, OnDestroy {
   subscriptionData: Subscription = new Subscription();
 
   constructor(
+    private errorMessageService: ErrorMessageService,
     public adminDataService: AdminDataService,
-    public adminComService: AdminComService
+    public adminComService: AdminComService,
+    private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {
@@ -64,13 +79,37 @@ export class EditLicenseTechComponent implements OnInit, OnDestroy {
     );
   }
 
-  onSubmit(): void {}
+  onSubmit(): void {
+    this.isFormSubmitted = true;
+    let licenseTechItem: any = this.licenseTechForm.value;
+    // licenseTechItem.jobTitleID = 0;
+    licenseTechItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
-  onCloseModal() {
+    // this.subscriptionData.add(
+    //   this.adminDataService.upsertJobTitle(licenseTechItem).subscribe({
+    //     next: (response) => {
+    //       this.callParentRefreshData.emit();
+    //       this.forceCloseModal();
+    //     },
+    //     error: (error) => {
+    //       if (error.error && error.error.errMessage) {
+    //         this.errorMessageService.setErrorMessage(error.error.errMessage);
+    //         this.forceCloseModal();
+    //       }
+    //     },
+    //   })
+    // );
+  }
+
+  private forceCloseModal() {
     const modalDiv = document.getElementById('modal-edit-license-tech');
     if (modalDiv != null) {
       modalDiv.style.display = 'none';
     }
+  }
+
+  onCloseModal() {
+    this.forceCloseModal();
   }
 
   ngOnDestroy(): void {

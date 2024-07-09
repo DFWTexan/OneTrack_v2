@@ -46,7 +46,7 @@
       <div class="table" *ngIf="stateRequirements.length > 0">
         <thead>
           <tr class="sticky-top" style="background-color: gainsboro">
-            <th scope="col">ID</th>
+            <th scope="col" *ngIf="appComService.isShowEditID">ID</th>
             <th scope="col">Work</th>
             <th scope="col">Res</th>
             <th scope="col">LicID</th>
@@ -62,10 +62,10 @@
         </thead>
         <tbody class="bg-body">
           <tr *ngFor="let stateReq of stateRequirements">
-            <td class="align-middle" style="font-size: larger">
+            <td class="align-middle" *ngIf="appComService.isShowEditID" style="font-size: larger">
               {{ stateReq.requiredLicenseId }}
             </td>
-            <td class="align-middle">{{ stateReq.workStateAbv }}</td>
+            <td class="align-middle text-center">{{ stateReq.workStateAbv }}</td>
             <td class="align-middle text-nowrap">
               {{ stateReq.resStateAbv }}
             </td>
