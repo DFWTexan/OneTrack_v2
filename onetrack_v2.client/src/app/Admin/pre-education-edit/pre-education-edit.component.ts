@@ -3,6 +3,7 @@ import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import {
   AdminComService,
   AdminDataService,
+  AppComService,
   ConstantsDataService,
   ErrorMessageService,
   ModalService,
@@ -36,6 +37,7 @@ export class PreEducationEditComponent implements OnInit, OnDestroy {
     private conService: ConstantsDataService,
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
+    public appComService: AppComService,
     public dialog: MatDialog,
     public modalService: ModalService,
     private userAcctInfoDataService: UserAcctInfoDataService
