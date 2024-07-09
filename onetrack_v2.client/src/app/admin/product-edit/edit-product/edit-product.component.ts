@@ -1,8 +1,10 @@
 import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
+import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 
 import { AdminComService, AdminDataService } from '../../../_services';
+
 
 @Component({
   selector: 'app-edit-product',
@@ -37,8 +39,20 @@ export class EditProductComponent implements OnInit, OnDestroy {
               productId: product.productId,
               productName: product.productName,
               productAbv: product.productAbv,
-              effectiveDate: product.effectiveDate,
-              expireDate: product.expireDate,
+              effectiveDate: product.effectiveDate
+              ? formatDate(
+                product.effectiveDate,
+                  'yyyy-MM-dd',
+                  'en-US'
+                )
+              : null,
+              expireDate: product.expireDate
+              ? formatDate(
+                product.expireDate,
+                  'yyyy-MM-dd',
+                  'en-US'
+                )
+              : null,
               isActive: product.isActive,
             });
           });

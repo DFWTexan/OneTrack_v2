@@ -6,12 +6,12 @@
   <div class="row">
     <div class="col">
       <div class="mb-3">
-        <label for="productId" class="form-label">Product ID:</label>
+        <label for="productAbv" class="form-label">Product Abbr:</label>
         <input
           class="form-control input-size-small"
           type="text"
-          id="productId"
-          formControlName="productId"
+          id="productAbv"
+          formControlName="productAbv"
         />
       </div>
 
@@ -24,9 +24,28 @@
           formControlName="productName"
         />
       </div>
+    </div>
 
-      <!-- Add more form controls for the rest of the properties in the Product interface -->
+    <div class="col">
+      <div class="mb-3">
+        <label for="effectiveDate" class="form-label">Effective Date:</label>
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="effectiveDate"
+          formControlName="effectiveDate"
+        />
+      </div>
 
+      <div class="mb-3">
+        <label for="expireDate" class="form-label">Expire Date:</label>
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="expireDate"
+          formControlName="expireDate"
+        />
+      </div>
     </div>
   </div>
 
