@@ -64,6 +64,17 @@ export class EditProductComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {}
 
+  forceCloseModal() {
+    const modalDiv = document.getElementById('modal-edit-product');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+  }
+
+  closeModal() {
+    this.forceCloseModal();
+  }
+
   ngOnDestroy(): void {
     this.subscriptionData.unsubscribe();
   }
