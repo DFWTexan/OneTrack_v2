@@ -22,7 +22,7 @@
       <div class="table" *ngIf="licenseTechs.length > 0">
         <thead>
           <tr class="sticky-top" style="background-color: gainsboro">
-            <th scope="col">LicenseTechID</th>
+            <th scope="col" *ngIf="appComService.isShowEditID">LicenseTechID</th>
             <th scope="col">TeamNum</th>
             <th scope="col">LastName</th>
             <th scope="col">FirstName</th>
@@ -36,7 +36,7 @@
         </thead>
         <tbody class="bg-body">
           <tr *ngFor="let tech of licenseTechs">
-            <td class="align-middle  text-center">
+            <td class="align-middle  text-center" *ngIf="appComService.isShowEditID">
               {{ tech.licenseTechId }}
             </td>
             <td class="align-middle">{{ tech.teamNum }}</td>

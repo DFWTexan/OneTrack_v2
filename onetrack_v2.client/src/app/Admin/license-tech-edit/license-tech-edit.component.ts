@@ -3,6 +3,7 @@ import { Component, Injectable, OnInit } from '@angular/core';
 import {
   AdminComService,
   AdminDataService,
+  AppComService,
   ModalService,
 } from '../../_services';
 import { LicenseTech } from '../../_Models';
@@ -20,6 +21,7 @@ export class LicenseTechEditComponent implements OnInit {
   constructor(
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
+    public appComService: AppComService,
     public modalService: ModalService
   ) {}
 

@@ -58,6 +58,13 @@ export class EditLicenseTechComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {}
 
+  onCloseModal() {
+    const modalDiv = document.getElementById('modal-edit-license-tech');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+  }
+
   ngOnDestroy(): void {
     this.subscriptionData.unsubscribe();
   }

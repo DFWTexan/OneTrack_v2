@@ -6,15 +6,53 @@
   <div class="row">
     <div class="col">
       <div class="mb-3">
-        <label for="licenseTechId" class="form-label">License Tech ID:</label>
+        <label for="teamNum" class="form-label">Team Number:</label>
         <input
           class="form-control input-size-small"
           type="text"
-          id="licenseTechId"
-          formControlName="licenseTechId"
+          id="teamNum"
+          formControlName="teamNum"
         />
       </div>
+      <div class="mb-3">
+        <label for="lastName" class="form-label">Last Name:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="lastName"
+          formControlName="lastName"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="firstName" class="form-label">First Name:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="firstName"
+          formControlName="firstName"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="licenseTechPhone" class="form-label">Phone Number:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="licenseTechPhone"
+          formControlName="licenseTechPhone"
+        />
+      </div>
+    </div>
 
+    <div class="col">
+      <div class="mb-3">
+        <input
+          class="form-check-input me-2 align-middle"
+          type="checkbox"
+          id="isActive"
+          formControlName="isActive"
+        />
+        <label for="isActive" class="form-label"> Active </label>
+      </div>
       <div class="mb-3">
         <label for="soeid" class="form-label">SOEID:</label>
         <input
@@ -24,9 +62,24 @@
           formControlName="soeid"
         />
       </div>
-
-      <!-- Add more form controls for the rest of the properties in the LicenseTech interface -->
-
+      <div class="mb-3">
+        <label for="licenseTechEmail" class="form-label">Tech Email:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="licenseTechEmail"
+          formControlName="licenseTechEmail"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="licenseTechFax" class="form-label">Fax Number:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="licenseTechFax"
+          formControlName="licenseTechFax"
+        />
+      </div>
     </div>
   </div>
 
@@ -34,7 +87,11 @@
 
   <div class="row mt-4">
     <div class="col d-flex justify-content-end">
-      <button type="button" class="btn btn-secondary me-3 cancel-button">
+      <button
+        type="button"
+        class="btn btn-secondary me-3 cancel-button"
+        (click)="onCloseModal()"
+      >
         Cancel
       </button>
       <button type="submit" class="btn btn-primary save-button">Save</button>
