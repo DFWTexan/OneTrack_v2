@@ -107,7 +107,7 @@ export class ExamEditComponent implements OnInit, OnDestroy {
       data: {
         title: 'Confirm Action',
         message:
-          'You are about to DELETE Eam Item (' +
+          'You are about to DELETE Exam Item (' +
           vObject.examName +
           '). Click "Yes" to confirm?',
       },

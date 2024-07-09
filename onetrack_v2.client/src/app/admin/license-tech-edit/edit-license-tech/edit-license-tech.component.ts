@@ -7,11 +7,14 @@ import { AdminComService, AdminDataService } from '../../../_services';
 @Component({
   selector: 'app-edit-license-tech',
   templateUrl: './edit-license-tech.component.html',
-  styleUrl: './edit-license-tech.component.css'
+  styleUrl: './edit-license-tech.component.css',
 })
 @Injectable()
 export class EditLicenseTechComponent implements OnInit, OnDestroy {
+  isLoading: boolean = false;
+  isFormSubmitted: boolean = false;
   licenseTechForm!: FormGroup;
+
   subscriptionData: Subscription = new Subscription();
 
   constructor(
@@ -33,27 +36,32 @@ export class EditLicenseTechComponent implements OnInit, OnDestroy {
       techName: new FormControl(''),
     });
 
-    this.subscriptionData =
-      this.adminComService.modes.licenseTech.changed.subscribe((mode: string) => {
-        if (mode === 'EDIT') {
-          this.adminDataService.licenseTechChanged.subscribe((licenseTech: any) => {
-            this.licenseTechForm.patchValue({
-              licenseTechId: licenseTech.licenseTechId,
-              soeid: licenseTech.soeid,
-              firstName: licenseTech.firstName,
-              lastName: licenseTech.lastName,
-              isActive: licenseTech.isActive,
-              teamNum: licenseTech.teamNum,
-              licenseTechPhone: licenseTech.licenseTechPhone,
-              licenseTechFax: licenseTech.licenseTechFax,
-              licenseTechEmail: licenseTech.licenseTechEmail,
-              techName: licenseTech.techName,
-            });
-          });
-        } else {
-          this.licenseTechForm.reset();
+    this.subscriptionData.add(
+      this.adminComService.modes.licenseTech.changed.subscribe(
+        (mode: string) => {
+          if (mode === 'EDIT') {
+            this.adminDataService.licenseTechChanged.subscribe(
+              (licenseTech: any) => {
+                this.licenseTechForm.patchValue({
+                  licenseTechId: licenseTech.licenseTechId,
+                  soeid: licenseTech.soeid,
+                  firstName: licenseTech.firstName,
+                  lastName: licenseTech.lastName,
+                  isActive: licenseTech.isActive,
+                  teamNum: licenseTech.teamNum,
+                  licenseTechPhone: licenseTech.licenseTechPhone,
+                  licenseTechFax: licenseTech.licenseTechFax,
+                  licenseTechEmail: licenseTech.licenseTechEmail,
+                  techName: licenseTech.techName,
+                });
+              }
+            );
+          } else {
+            this.licenseTechForm.reset();
+          }
         }
-      });
+      )
+    );
   }
 
   onSubmit(): void {}
@@ -68,5 +76,4 @@ export class EditLicenseTechComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.subscriptionData.unsubscribe();
   }
-
 }

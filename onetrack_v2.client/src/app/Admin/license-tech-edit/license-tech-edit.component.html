@@ -22,7 +22,9 @@
       <div class="table" *ngIf="licenseTechs.length > 0">
         <thead>
           <tr class="sticky-top" style="background-color: gainsboro">
-            <th scope="col" *ngIf="appComService.isShowEditID">LicenseTechID</th>
+            <th scope="col" *ngIf="appComService.isShowEditID">
+              LicenseTechID
+            </th>
             <th scope="col">TeamNum</th>
             <th scope="col">LastName</th>
             <th scope="col">FirstName</th>
@@ -36,7 +38,10 @@
         </thead>
         <tbody class="bg-body">
           <tr *ngFor="let tech of licenseTechs">
-            <td class="align-middle  text-center" *ngIf="appComService.isShowEditID">
+            <td
+              class="align-middle text-center"
+              *ngIf="appComService.isShowEditID"
+            >
               {{ tech.licenseTechId }}
             </td>
             <td class="align-middle">{{ tech.teamNum }}</td>
@@ -56,8 +61,8 @@
               {{ tech.licenseTechEmail }}
             </td>
             <td class="align-middle text-nowrap">
-                {{ tech.soeid }}
-              </td>
+              {{ tech.soeid }}
+            </td>
             <td class="align-middle" style="width: max-content">
               <div class="form-check d-flex justify-content-center">
                 <input
@@ -69,29 +74,29 @@
               </div>
             </td>
             <td class="align-middle" style="width: 10rem">
-                <div class="d-flex justify-content-between mb-3 me-4">
-                  <button
-                    class="icon-edit-delete-button"
-                    type="button"
+              <div class="d-flex justify-content-between mb-3 me-4">
+                <button
+                  class="icon-edit-delete-button"
+                  type="button"
+                  (click)="
+                    adminDataService.storeLicenseTech('EDIT', tech);
+                    modalService.open('modal-edit-license-tech')
+                  "
+                >
+                  <span class="material-symbols-outlined"> edit </span>
+                </button>
+                <button class="icon-edit-delete-button" type="button">
+                  <span
+                    class="material-symbols-outlined"
                     (click)="
-                      adminDataService.storeLicenseTech(
-                        'EDIT',
-                        tech
-                      );
-                      modalService.open('modal-edit-license-tech')
+                      openConfirmDialog('deleteLicenseTechItem', 'Exam Delete', tech)
                     "
                   >
-                    <span class="material-symbols-outlined">
-                      edit
-                    </span>
-                  </button>
-                  <button class="icon-edit-delete-button" type="button">
-                    <span class="material-symbols-outlined">
-                      delete
-                    </span>
-                  </button>
-                </div>
-              </td>
+                    delete
+                  </span>
+                </button>
+              </div>
+            </td>
           </tr>
         </tbody>
       </div>
@@ -103,7 +108,8 @@
 <modal id="modal-edit-license-tech">
   <div class="modal-header">
     <h1 class="modal-title">
-      <strong>{{ adminComService.modes.licenseTech.mode }}</strong> - License Tech
+      <strong>{{ adminComService.modes.licenseTech.mode }}</strong> - License
+      Tech
     </h1>
     <!-- <button
                     type="button"
