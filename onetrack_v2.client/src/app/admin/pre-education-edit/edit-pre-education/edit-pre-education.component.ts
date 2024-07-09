@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
+import { Component, Injectable, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -11,7 +11,11 @@ import { AdminComService, AdminDataService } from '../../../_services';
 })
 @Injectable()
 export class EditPreEducationComponent implements OnInit, OnDestroy {
+  @Input() deliveryMethods: any[] = [];
+  @Input() providers: { value: number; label: string }[] = [];
+  @Input() stateProvinces: any[] = [];
   preEducationForm!: FormGroup;
+
   subscriptionData: Subscription = new Subscription();
 
   constructor(
@@ -21,7 +25,7 @@ export class EditPreEducationComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.preEducationForm = new FormGroup({
-      preEducationId: new FormControl(''),
+      preEducationId: new FormControl(0),
       educationName: new FormControl(''),
       stateProvinceAbv: new FormControl(''),
       creditHours: new FormControl(''),
@@ -42,11 +46,29 @@ export class EditPreEducationComponent implements OnInit, OnDestroy {
           });
         } else {
           this.preEducationForm.reset();
+          this.deliveryMethods = ['Select', ...this.deliveryMethods];
+          this.providers = [{ value: 0, label: 'Select' }, ...this.providers];
+          this.preEducationForm.patchValue({
+            stateProvinceAbv: 'Select',
+            deliveryMethod: 'Select',
+            preEducationId: 0,
+          });
         }
       });
   }
 
   onSubmit(): void {}
+
+  forceCloseModal() {
+    const modalDiv = document.getElementById('modal-edit-pre-education');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+  }
+
+  closeModal() {
+    this.forceCloseModal();
+  }
 
   ngOnDestroy(): void {
     this.subscriptionData.unsubscribe();

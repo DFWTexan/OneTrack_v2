@@ -43,10 +43,15 @@
       <h1>No Record(s) Found</h1>
     </div>
     <div class="col">
-      <div class="table" *ngIf="preEducationItems.length > 0 && selectedStateProvince != 'Select'">
+      <div
+        class="table"
+        *ngIf="
+          preEducationItems.length > 0 && selectedStateProvince != 'Select'
+        "
+      >
         <thead>
           <tr class="sticky-top" style="background-color: gainsboro">
-            <th scope="col" style="width: 15rem;">PreEducationID</th>
+            <th scope="col" style="width: 15rem">PreEducationID</th>
             <th scope="col">EducationName</th>
             <th scope="col">StateProvinceAbv</th>
             <th scope="col">CreditHours</th>
@@ -56,7 +61,7 @@
         </thead>
         <tbody class="bg-body">
           <tr *ngFor="let preEdu of preEducationItems">
-            <td class="align-middle text-center" style="width: 15rem;">
+            <td class="align-middle text-center" style="width: 15rem">
               {{ preEdu.preEducationId }}
             </td>
             <td class="align-middle">{{ preEdu.educationName }}</td>
@@ -97,7 +102,8 @@
 <modal id="modal-edit-pre-education">
   <div class="modal-header">
     <h1 class="modal-title">
-      <strong>{{ adminComService.modes.preEducation.mode }}</strong> - Pre-Education
+      <strong>{{ adminComService.modes.preEducation.mode }}</strong> -
+      Pre-Education
     </h1>
     <!-- <button
                   type="button"
@@ -108,7 +114,11 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-pre-education></app-edit-pre-education>
+        <app-edit-pre-education
+          [deliveryMethods]="deliveryMethods"
+          [providers]="providers"
+          [stateProvinces]="stateProvinces"
+        ></app-edit-pre-education>
       </div>
     </div>
   </div>

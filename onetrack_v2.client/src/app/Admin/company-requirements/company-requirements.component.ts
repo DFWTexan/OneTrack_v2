@@ -1,4 +1,5 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import {
   AdminComService,
@@ -15,12 +16,14 @@ import { CompanyRequirement } from '../../_Models';
   styleUrl: './company-requirements.component.css',
 })
 @Injectable()
-export class CompanyRequirementsComponent implements OnInit {
+export class CompanyRequirementsComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   states: any[] = [];
   selectedWorkState: string = 'Select';
   selectedResState: string | null = null;
   companyRequirements: CompanyRequirement[] = [];
+
+  subscriptionData: Subscription = new Subscription();
 
   constructor(
     private conService: ConstantsDataService,
@@ -44,12 +47,14 @@ export class CompanyRequirementsComponent implements OnInit {
       return;
     } else {
       this.loading = false;
-      this.adminDataService
-        .fetchCompanyRequirements(value, this.selectedResState)
-        .subscribe((response) => {
-          this.companyRequirements = response;
-          this.loading = false;
-        });
+      this.subscriptionData.add(
+        this.adminDataService
+          .fetchCompanyRequirements(value, this.selectedResState)
+          .subscribe((response) => {
+            this.companyRequirements = response;
+            this.loading = false;
+          })
+      );
     }
   }
 
@@ -70,5 +75,9 @@ export class CompanyRequirementsComponent implements OnInit {
           this.loading = false;
         });
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptionData.unsubscribe();
   }
 }

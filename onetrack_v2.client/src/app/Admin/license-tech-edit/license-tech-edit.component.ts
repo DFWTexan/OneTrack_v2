@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import {
@@ -19,7 +19,7 @@ import { ConfirmDialogComponent } from '../../_components';
   styleUrl: './license-tech-edit.component.css',
 })
 @Injectable()
-export class LicenseTechEditComponent implements OnInit {
+export class LicenseTechEditComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   licenseTechs: LicenseTech[] = [];
   eventAction: string = '';
@@ -94,5 +94,9 @@ export class LicenseTechEditComponent implements OnInit {
         );
       }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptionData.unsubscribe();
   }
 }
