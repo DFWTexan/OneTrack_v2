@@ -5,6 +5,7 @@ import {
   OnDestroy,
   EventEmitter,
   Output,
+  Input,
 } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
@@ -23,8 +24,15 @@ import {
 })
 export class EditStateRequirementComponent implements OnInit, OnDestroy {
   @Output() callParentRefreshData = new EventEmitter<any>();
+  @Input() stateProvinces: any[] = [];
   isFormSubmitted = false;
   stateRequirementForm!: FormGroup;
+  isDocumentUploaded = false;
+  FileDisplayMode = 'CHOOSEFILE'; //--> CHOSEFILE / ATTACHMENT
+  file: File | null = null;
+  fileUri: string | null = null;
+  document: string = '';
+
   subscriptionData: Subscription = new Subscription();
 
   constructor(
@@ -37,8 +45,8 @@ export class EditStateRequirementComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.stateRequirementForm = new FormGroup({
       requiredLicenseId: new FormControl(''),
-      workStateAbv: new FormControl(''),
-      resStateAbv: new FormControl(''),
+      workStateAbv: new FormControl('Select'),
+      resStateAbv: new FormControl('Select'),
       licenseId: new FormControl(''),
       branchCode: new FormControl(''),
       requirementType: new FormControl(''),
@@ -49,7 +57,7 @@ export class EditStateRequirementComponent implements OnInit, OnDestroy {
       plS_Incentive1: new FormControl(''),
       incentive2_Plus: new FormControl(''),
       licIncentive3: new FormControl(''),
-      licState: new FormControl(''),
+      licState: new FormControl('Select'),
       licenseName: new FormControl(''),
       startDocument: new FormControl(''),
       renewalDocument: new FormControl(''),
@@ -59,6 +67,7 @@ export class EditStateRequirementComponent implements OnInit, OnDestroy {
       this.adminComService.modes.stateRequirement.changed.subscribe(
         (mode: string) => {
           if (mode === 'EDIT') {
+            this.stateProvinces = this.stateProvinces.filter(item => item !== 'Select');
             this.adminDataService.stateRequirementChanged.subscribe(
               (stateRequirement: any) => {
                 this.stateRequirementForm.patchValue({
@@ -84,9 +93,33 @@ export class EditStateRequirementComponent implements OnInit, OnDestroy {
             );
           } else {
             this.stateRequirementForm.reset();
+            if (!this.stateProvinces.includes('Select')) {
+              this.stateProvinces.unshift('Select');
+            }
+            
+            this.stateRequirementForm.patchValue({
+              workStateAbv: 'Select',
+              resStateAbv: 'Select',
+              licState: 'Select',
+            });
           }
         }
       );
+  }
+
+  onFileSelected(event: any) {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length) {
+      const file: File = target.files[0];
+
+      if (file) {
+        this.document = file.name;
+        const formData = new FormData();
+        formData.append('thumbnail', file);
+        // const upload$ = this.emailDataService.uploadFile(formData);
+        // upload$.subscribe();
+      }
+    }
   }
 
   onSubmit(): void {
@@ -111,7 +144,7 @@ export class EditStateRequirementComponent implements OnInit, OnDestroy {
     // );
   }
 
-  forceCloseModal() {
+  private forceCloseModal() {
     const modalDiv = document.getElementById('modal-edit-state-requirement');
     if (modalDiv != null) {
       modalDiv.style.display = 'none';

@@ -6,28 +6,184 @@
   <div class="row">
     <div class="col">
       <div class="mb-3">
-        <label for="requiredLicenseId" class="form-label"
-          >Required License ID:</label
-        >
-        <input
-          class="form-control input-size-small"
-          type="text"
-          id="requiredLicenseId"
-          formControlName="requiredLicenseId"
-        />
-      </div>
-
-      <div class="mb-3">
-        <label for="workStateAbv" class="form-label">Work State Abv:</label>
-        <input
-          class="form-control input-size-small"
+        <label for="workStateAbv" class="form-label">Work State:</label>
+        <select
+          class="form-select select-size-small"
           type="text"
           id="workStateAbv"
           formControlName="workStateAbv"
-        />
+        >
+          <option *ngFor="let state of stateProvinces" [value]="state">
+            {{ state }}
+          </option>
+        </select>
       </div>
+    </div>
 
-      <!-- Add more form controls for the rest of the properties in the StateRequirement interface -->
+    <div class="col">
+      <div class="mb-3">
+        <label for="resStateAbv" class="form-label">Resident State:</label>
+        <select
+          class="form-select select-size-small"
+          type="text"
+          id="resStateAbv"
+          formControlName="resStateAbv"
+        >
+          <option *ngFor="let state of stateProvinces" [value]="state">
+            {{ state }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="mb-3">
+        <label for="licState" class="form-label">License State:</label>
+        <select
+          class="form-select select-size-small"
+          type="text"
+          id="licState"
+          formControlName="licState"
+        >
+          <option *ngFor="let state of stateProvinces" [value]="state">
+            {{ state }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="mb-3">
+        <label for="requirementType" class="form-label">License Name:</label>
+        <select
+          class="form-select select-size-medium"
+          type="text"
+          id="requirementType"
+          formControlName="requirementType"
+        >
+          <!-- <option *ngFor="let type of requirementTypes" [value]="type">
+            {{ type }}
+          </option> -->
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="mb-3 mt-4">
+        <input
+          class="form-check-input me-2 align-middle"
+          type="checkbox"
+          id="licLevel1"
+          formControlName="licLevel1"
+        />
+        <label for="licLevel1" class="form-label"> Lic Level 1 </label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="mb-3 mt-4">
+        <input
+          class="form-check-input me-2 align-middle"
+          type="checkbox"
+          id="licLevel2"
+          formControlName="licLevel2"
+        />
+        <label for="licLevel2" class="form-label"> Lic Level 2 </label>
+      </div>
+      <div class="mb-3 mt-4">
+        <input
+          class="form-check-input me-2 align-middle"
+          type="checkbox"
+          id="plS_Incentive1"
+          formControlName="plS_Incentive1"
+        />
+        <label for="plS_Incentive1" class="form-label"> PLS Incentive 1 </label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="mb-3 mt-4">
+        <input
+          class="form-check-input me-2 align-middle"
+          type="checkbox"
+          id="licLevel3"
+          formControlName="licLevel3"
+        />
+        <label for="licLevel3" class="form-label"> Lic Level 3 </label>
+      </div>
+      <div class="mb-3 mt-4">
+        <input
+          class="form-check-input me-2 align-middle"
+          type="checkbox"
+          id="incentive2_Plus"
+          formControlName="incentive2_Plus"
+        />
+        <label for="incentive2_Plus" class="form-label"> Incentive 2 Plus </label>
+      </div>
+    </div>
+    <div class="col">
+      <div class="mb-3 mt-4">
+        <input
+          class="form-check-input me-2 align-middle"
+          type="checkbox"
+          id="licLevel4"
+          formControlName="licLevel4"
+        />
+        <label for="licLevel4" class="form-label"> Lic Level 4 </label>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3" *ngIf="isDocumentUploaded">
+    <div
+      class="col-md-12 d-flex align-items-center"
+      style="
+        background-color: aliceblue;
+        border-color: lightgray;
+        border-width: 1px;
+        border-style: solid;
+        border-radius: 0.5rem;
+      "
+    >
+      <!-- Use Flexbox here -->
+      <button
+        class="icon-edit-delete-button"
+        type="button"
+        style="padding-bottom: 3rem"
+      >
+        <span class="material-symbols-outlined me-3">delete_forever</span>
+      </button>
+      <span
+        class="ms-5 mt-3 mb-3"
+        style="font-size: medium; font-weight: 500"
+        >{{ stateRequirementForm.get("document")?.value }}</span
+      >
+    </div>
+  </div>
+
+  <div class="row mt-5 mb-3">
+    <div class="col-md-12">
+      <label for="startDoc" class="form-label"> Start Document: </label>
+      <app-file-upload
+        [filePathUri]="fileUri"
+        [displayMode]="FileDisplayMode"
+        (fileSelected)="onFileSelected($event)"
+        [isDisabled]="isDocumentUploaded"
+        #fileUpload
+      ></app-file-upload>
+    </div>
+  </div>
+
+  <div class="row mt-5 mb-3">
+    <div class="col-md-12">
+      <label for="renewalDoc" class="form-label"> Renewal Document: </label>
+      <app-file-upload
+        [filePathUri]="fileUri"
+        [displayMode]="FileDisplayMode"
+        (fileSelected)="onFileSelected($event)"
+        [isDisabled]="isDocumentUploaded"
+        #fileUpload
+      ></app-file-upload>
     </div>
   </div>
 
