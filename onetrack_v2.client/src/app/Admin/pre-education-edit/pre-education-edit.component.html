@@ -97,7 +97,9 @@
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
                 <button class="icon-edit-delete-button" type="button">
-                  <span class="material-symbols-outlined"> delete </span>
+                  <span class="material-symbols-outlined" (click)="
+                  openConfirmDialog('deletePreEducation', 'Pre-Edu', preEdu)
+                "> delete </span>
                 </button>
               </div>
             </td>

@@ -111,7 +111,7 @@ export class PreEducationEditComponent implements OnInit, OnDestroy {
           'You are about to DELETE Pre-Education Item (' +
           vObject.educationName +
           ' - ' +
-          vObject.stateProvince +
+          vObject.stateProvinceAbv +
           '). Click "Yes" to confirm?',
       },
     });
