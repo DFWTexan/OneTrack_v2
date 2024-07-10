@@ -46,6 +46,18 @@ export class StateLicenseRequirementsComponent implements OnInit, OnDestroy {
     this.states = ['Select', ...this.conService.getStates()];
   }
 
+  private fetchStateRequirements() {
+    this.loading = true;
+    this.subscriptionData.add(
+      this.adminDataService
+        .fetchStateRequirements(this.selectedWorkState, this.selectedResState)
+        .subscribe((response) => {
+          this.stateRequirements = response;
+          this.loading = false;
+        })
+    );
+  }
+
   changeWorkState(event: any) {
     this.loading = true;
     const target = event.target as HTMLInputElement;
@@ -56,14 +68,7 @@ export class StateLicenseRequirementsComponent implements OnInit, OnDestroy {
       return;
     } else {
       this.loading = false;
-      this.subscriptionData.add(
-        this.adminDataService
-          .fetchStateRequirements(value, this.selectedResState)
-          .subscribe((response) => {
-            this.stateRequirements = response;
-            this.loading = false;
-          })
-      );
+      this.fetchStateRequirements();
     }
   }
 
@@ -77,14 +82,7 @@ export class StateLicenseRequirementsComponent implements OnInit, OnDestroy {
       return;
     } else {
       this.loading = false;
-      this.subscriptionData.add(
-        this.adminDataService
-          .fetchStateRequirements(this.selectedWorkState, value)
-          .subscribe((response) => {
-            this.stateRequirements = response;
-            this.loading = false;
-          })
-      );
+      this.fetchStateRequirements();
     }
   }
 
@@ -113,7 +111,7 @@ export class StateLicenseRequirementsComponent implements OnInit, OnDestroy {
             })
             .subscribe({
               next: (response) => {
-                // this.fetchProductItems();
+                this.fetchStateRequirements();
               },
               error: (error) => {
                 if (error.error && error.error.errMessage) {
