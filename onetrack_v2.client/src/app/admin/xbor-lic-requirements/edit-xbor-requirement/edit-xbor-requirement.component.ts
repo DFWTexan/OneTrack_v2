@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
+import { Component, Injectable, OnInit, OnDestroy, EventEmitter, Output, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -11,6 +11,8 @@ import { AdminComService, AdminDataService } from '../../../_services';
 })
 @Injectable()
 export class EditXborRequirementComponent implements OnInit, OnDestroy {
+  @Output() callParentRefreshData = new EventEmitter<any>();
+  @Input() stateProvinces: any[] = [];
   xborLicenseRequirementForm!: FormGroup;
   subscriptionData: Subscription = new Subscription();
 

@@ -1,4 +1,4 @@
-<div style="margin-left: .5rem; margin-right: .5rem;">
+<div style="margin-left: 0.5rem; margin-right: 0.5rem">
   <div class="row ms-2 mt-5 mb-3">
     <div class="col">
       <label for="workState">Branch Code:</label><br />
@@ -32,7 +32,7 @@
       <div class="table" *ngIf="xborLicRequirements.length > 0">
         <thead>
           <tr class="sticky-top" style="background-color: gainsboro">
-            <th scope="col">ReqID</th>
+            <th scope="col" *ngIf="appComService.isShowEditID">ReqID</th>
             <th scope="col">XBor Branch</th>
             <th scope="col">Work</th>
             <th scope="col">Res</th>
@@ -50,22 +50,26 @@
         </thead>
         <tbody class="bg-body">
           <tr *ngFor="let xBor of xborLicRequirements">
-            <td class="align-middle" style="font-size: larger">
+            <td
+              *ngIf="appComService.isShowEditID"
+              class="align-middle"
+              style="font-size: larger"
+            >
               {{ xBor.requiredLicenseId }}
             </td>
             <td class="align-middle" style="font-size: larger">
-                {{ xBor.branchCode }}
-              </td>
-            <td class="align-middle">{{ xBor.workStateAbv }}</td>
-            <td class="align-middle text-nowrap">
+              {{ xBor.branchCode }}
+            </td>
+            <td class="align-middle text-center">{{ xBor.workStateAbv }}</td>
+            <td class="align-middle text-center">
               {{ xBor.resStateAbv }}
             </td>
+            <td class="align-middle text-center">
+              {{ xBor.licState }}
+            </td>
             <td class="align-middle text-nowrap">
-                {{ xBor.licState }}
-              </td>
-              <td class="align-middle text-nowrap">
-                {{ xBor.licenseName }}
-              </td>
+              {{ xBor.licenseName }}
+            </td>
             <td class="align-middle" style="width: max-content">
               <div class="form-check d-flex justify-content-center">
                 <input
@@ -145,7 +149,18 @@
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
                 <button class="icon-edit-delete-button" type="button">
-                  <span class="material-symbols-outlined"> delete </span>
+                  <span
+                    class="material-symbols-outlined"
+                    (click)="
+                      openConfirmDialog(
+                        'deleteXBorReq',
+                        'XBorRequirement',
+                        xBor
+                      )
+                    "
+                  >
+                    delete
+                  </span>
                 </button>
               </div>
             </td>
@@ -160,7 +175,8 @@
 <modal id="modal-edit-xBor-requirement">
   <div class="modal-header">
     <h1 class="modal-title">
-      <strong>{{ adminComService.modes.xborLicenseRequirement.mode }}</strong> - XBor State Requirement
+      <strong>{{ adminComService.modes.xborLicenseRequirement.mode }}</strong> -
+      XBor State Requirement
     </h1>
     <!-- <button
                     type="button"
@@ -171,7 +187,9 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-xbor-requirement></app-edit-xbor-requirement>
+        <app-edit-xbor-requirement
+          [stateProvinces]="states"
+        ></app-edit-xbor-requirement>
       </div>
     </div>
   </div>
