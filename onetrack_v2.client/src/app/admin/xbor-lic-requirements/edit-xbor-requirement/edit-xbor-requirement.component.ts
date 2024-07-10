@@ -74,6 +74,17 @@ export class EditXborRequirementComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {}
 
+  private forceCloseModal() {
+    const modalDiv = document.getElementById('modal-edit-xBor-requirement');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+  }
+
+  closeModal() {
+    this.forceCloseModal();
+  }
+
   ngOnDestroy(): void {
     this.subscriptionData.unsubscribe();
   }

@@ -6,7 +6,9 @@
   <div class="row">
     <div class="col">
       <div class="mb-3">
-        <label for="requiredLicenseId" class="form-label">Required License ID:</label>
+        <label for="requiredLicenseId" class="form-label"
+          >Required License ID:</label
+        >
         <input
           class="form-control input-size-small"
           type="text"
@@ -26,7 +28,6 @@
       </div>
 
       <!-- Add more form controls for the rest of the properties in the XborLicenseRequirement interface -->
-
     </div>
   </div>
 
@@ -34,7 +35,11 @@
 
   <div class="row mt-4">
     <div class="col d-flex justify-content-end">
-      <button type="button" class="btn btn-secondary me-3 cancel-button">
+      <button
+        type="button"
+        class="btn btn-secondary me-3 cancel-button"
+        (click)="closeModal()"
+      >
         Cancel
       </button>
       <button type="submit" class="btn btn-primary save-button">Save</button>
