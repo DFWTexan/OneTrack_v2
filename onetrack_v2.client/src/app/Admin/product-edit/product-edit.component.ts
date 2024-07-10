@@ -13,7 +13,6 @@ import { Product, ProductItem } from '../../_Models';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../_components';
 
-
 @Component({
   selector: 'app-product-edit',
   templateUrl: './product-edit.component.html',
@@ -40,8 +39,7 @@ export class ProductEditComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loading = true;
-this.fetchProductItems();
-    
+    this.fetchProductItems();
   }
 
   private fetchProductItems() {

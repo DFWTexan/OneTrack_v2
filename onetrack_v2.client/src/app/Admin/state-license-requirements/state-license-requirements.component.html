@@ -1,4 +1,4 @@
-<div style="margin-left: 3rem; margin-right: 3rem;" >
+<div style="margin-left: 3rem; margin-right: 3rem">
   <div class="row mt-5 mb-3">
     <div class="col">
       <label for="workState">Work State:</label><br />
@@ -63,10 +63,16 @@
         </thead>
         <tbody class="bg-body">
           <tr *ngFor="let stateReq of stateRequirements">
-            <td class="align-middle" *ngIf="appComService.isShowEditID" style="font-size: larger">
+            <td
+              class="align-middle"
+              *ngIf="appComService.isShowEditID"
+              style="font-size: larger"
+            >
               {{ stateReq.requiredLicenseId }}
             </td>
-            <td class="align-middle text-center">{{ stateReq.workStateAbv }}</td>
+            <td class="align-middle text-center">
+              {{ stateReq.workStateAbv }}
+            </td>
             <td class="align-middle text-center">
               {{ stateReq.resStateAbv }}
             </td>
@@ -155,7 +161,14 @@
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
                 <button class="icon-edit-delete-button" type="button">
-                  <span class="material-symbols-outlined"> delete </span>
+                  <span
+                    class="material-symbols-outlined"
+                    (click)="
+                      openConfirmDialog('deletelicenseReq', 'LicenseRequirement', stateReq)
+                    "
+                  >
+                    delete
+                  </span>
                 </button>
               </div>
             </td>
@@ -170,7 +183,8 @@
 <modal id="modal-edit-state-requirement">
   <div class="modal-header">
     <h1 class="modal-title">
-      <strong>{{ adminComService.modes.stateRequirement.mode }}</strong> - State Requirement
+      <strong>{{ adminComService.modes.stateRequirement.mode }}</strong> - State
+      Requirement
     </h1>
     <!-- <button
                   type="button"
@@ -181,7 +195,9 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-state-requirement [stateProvinces]="states"></app-edit-state-requirement>
+        <app-edit-state-requirement
+          [stateProvinces]="states"
+        ></app-edit-state-requirement>
       </div>
     </div>
   </div>
