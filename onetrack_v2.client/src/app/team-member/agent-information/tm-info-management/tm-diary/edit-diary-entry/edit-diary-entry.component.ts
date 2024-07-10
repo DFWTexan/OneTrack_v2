@@ -78,7 +78,8 @@ export class EditDiaryEntryComponent implements OnInit, OnDestroy {
     diaryItem.diaryID = this.diaryID;
     diaryItem.employmentID = this.employmentID;
     diaryItem.employeeID = this.employeeID;
-    diaryItem.diaryDate = new Date(diaryItem.diaryDate);
+    diaryItem.diaryDate = new Date();
+    diaryItem.soeid = this.userAcctInfoDataService.userAcctInfo.soeid;
     diaryItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
     
     if (this.diaryItemForm.invalid) {
