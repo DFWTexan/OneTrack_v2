@@ -62,7 +62,10 @@
           id="licenseId"
           formControlName="licenseId"
         >
-          <option *ngFor="let license of stateLicenseItems" [value]="license.value">
+          <option
+            *ngFor="let license of stateLicenseItems"
+            [value]="license.value"
+          >
             {{ license.label }}
           </option>
         </select>
@@ -81,6 +84,17 @@
         />
         <label for="licLevel1" class="form-label"> Lic Level 1 </label>
       </div>
+      <div class="mb-3 mt-4">
+        <input
+          class="form-check-input me-2 align-middle"
+          type="checkbox"
+          id="plS_Incentive1"
+          formControlName="plS_Incentive1"
+        />
+        <label for="plS_Incentive1" class="form-label">
+          Lic Incentive 1
+        </label>
+      </div>
     </div>
     <div class="col">
       <div class="mb-3 mt-4">
@@ -96,10 +110,10 @@
         <input
           class="form-check-input me-2 align-middle"
           type="checkbox"
-          id="plS_Incentive1"
-          formControlName="plS_Incentive1"
+          id="incentive2_Plus"
+          formControlName="incentive2_Plus"
         />
-        <label for="plS_Incentive1" class="form-label"> PLS Incentive 1 </label>
+        <label for="incentive2_Plus" class="form-label"> Lic Incentive 2 </label>
       </div>
     </div>
     <div class="col">
@@ -116,10 +130,12 @@
         <input
           class="form-check-input me-2 align-middle"
           type="checkbox"
-          id="incentive2_Plus"
-          formControlName="incentive2_Plus"
+          id="licIncentive3"
+          formControlName="licIncentive3"
         />
-        <label for="incentive2_Plus" class="form-label"> Incentive 2 Plus </label>
+        <label for="licIncentive3" class="form-label">
+          Lic Incentive 3
+        </label>
       </div>
     </div>
     <div class="col">
