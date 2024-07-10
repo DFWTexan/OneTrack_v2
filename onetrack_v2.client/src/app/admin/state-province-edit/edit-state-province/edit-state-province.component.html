@@ -6,7 +6,9 @@
   <div class="row">
     <div class="col">
       <div class="mb-3">
-        <label for="stateProvinceCode" class="form-label">State Province Code:</label>
+        <label for="stateProvinceCode" class="form-label"
+          >State Province Abbr:</label
+        >
         <input
           class="form-control input-size-small"
           type="text"
@@ -16,7 +18,9 @@
       </div>
 
       <div class="mb-3">
-        <label for="stateProvinceName" class="form-label">State Province Name:</label>
+        <label for="stateProvinceName" class="form-label"
+          >State Province Code:</label
+        >
         <input
           class="form-control input-size-small"
           type="text"
@@ -25,8 +29,149 @@
         />
       </div>
 
-      <!-- Add more form controls for the rest of the properties in the StateProvince interface -->
+      <div class="mb-3">
+        <label for="stateProvinceName" class="form-label"
+          >State Province Name:</label
+        >
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="stateProvinceName"
+          formControlName="stateProvinceName"
+        />
+      </div>
 
+      
+      <div class="mb-3">
+        <label for="stateProvinceName" class="form-label"
+          >Country Code:</label
+        >
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="stateProvinceName"
+          formControlName="stateProvinceName"
+        />
+      </div>
+
+      <div class="mb-3 mt-4">
+        <input
+          class="form-check-input me-2 align-middle"
+          type="checkbox"
+          id="licLevel2"
+          formControlName="licLevel2"
+        />
+        <label for="licLevel2" class="form-label"> State Province is Active </label>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="mb-3">
+        <label for="workStateAbv" class="form-label">License Tech:</label>
+        <select
+          class="form-select select-size-medium"
+          type="text"
+          id="workStateAbv"
+          formControlName="workStateAbv"
+        >
+          <!-- <option *ngFor="let state of stateProvinces" [value]="state">
+            {{ state }}
+          </option> -->
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="stateProvinceName" class="form-label"
+          >DOI Name:</label
+        >
+        <input
+          class="form-control input-size-medium"
+          type="text"
+          id="stateProvinceName"
+          formControlName="stateProvinceName"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="stateProvinceName" class="form-label"
+          >Phone:</label
+        >
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="stateProvinceName"
+          formControlName="stateProvinceName"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="stateProvinceName" class="form-label"
+          >Fax:</label
+        >
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="stateProvinceName"
+          formControlName="stateProvinceName"
+        />
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="mb-3">
+        <label for="stateProvinceName" class="form-label"
+          >Address 1:</label
+        >
+        <input
+          class="form-control input-size-medium"
+          type="text"
+          id="stateProvinceName"
+          formControlName="stateProvinceName"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="stateProvinceName" class="form-label"
+          >Address 2:</label
+        >
+        <input
+          class="form-control input-size-medium"
+          type="text"
+          id="stateProvinceName"
+          formControlName="stateProvinceName"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="stateProvinceName" class="form-label"
+          >City:</label
+        >
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="stateProvinceName"
+          formControlName="stateProvinceName"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="workStateAbv" class="form-label">State:</label>
+        <select
+          class="form-select select-size-x-small"
+          type="text"
+          id="workStateAbv"
+          formControlName="workStateAbv"
+        >
+          <!-- <option *ngFor="let state of stateProvinces" [value]="state">
+            {{ state }}
+          </option> -->
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="stateProvinceName" class="form-label"
+          >Zip:</label
+        >
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="stateProvinceName"
+          formControlName="stateProvinceName"
+        />
+      </div>
     </div>
   </div>
 
@@ -34,7 +179,11 @@
 
   <div class="row mt-4">
     <div class="col d-flex justify-content-end">
-      <button type="button" class="btn btn-secondary me-3 cancel-button">
+      <button
+        type="button"
+        class="btn btn-secondary me-3 cancel-button"
+        (click)="closeModal()"
+      >
         Cancel
       </button>
       <button type="submit" class="btn btn-primary save-button">Save</button>

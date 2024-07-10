@@ -73,6 +73,17 @@ export class EditStateProvinceComponent implements OnInit, OnDestroy {
 
   onSubmit(): void {}
 
+  private forceCloseModal() {
+    const modalDiv = document.getElementById('modal-state-province');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+  }
+
+  closeModal() {
+    this.forceCloseModal();
+  }
+
   ngOnDestroy(): void {
     this.subscriptionData.unsubscribe();
   }
