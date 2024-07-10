@@ -6,26 +6,26 @@
   <div class="row">
     <div class="col">
       <div class="mb-3">
-        <label for="stateProvinceCode" class="form-label"
+        <label for="stateProvinceAbv" class="form-label"
           >State Province Abbr:</label
         >
         <input
-          class="form-control input-size-small"
+          class="form-control input-size-x-small"
           type="text"
-          id="stateProvinceCode"
-          formControlName="stateProvinceCode"
+          id="stateProvinceAbv"
+          formControlName="stateProvinceAbv"
         />
       </div>
 
       <div class="mb-3">
-        <label for="stateProvinceName" class="form-label"
+        <label for="stateProvinceCode" class="form-label"
           >State Province Code:</label
         >
         <input
-          class="form-control input-size-small"
+          class="form-control input-size-x-small"
           type="text"
-          id="stateProvinceName"
-          formControlName="stateProvinceName"
+          id="stateProvinceCode"
+          formControlName="stateProvinceCode"
         />
       </div>
 
@@ -43,14 +43,14 @@
 
       
       <div class="mb-3">
-        <label for="stateProvinceName" class="form-label"
+        <label for="country" class="form-label"
           >Country Code:</label
         >
         <input
-          class="form-control input-size-small"
+          class="form-control input-size-x-small"
           type="text"
-          id="stateProvinceName"
-          formControlName="stateProvinceName"
+          id="country"
+          formControlName="country"
         />
       </div>
 
@@ -58,21 +58,21 @@
         <input
           class="form-check-input me-2 align-middle"
           type="checkbox"
-          id="licLevel2"
-          formControlName="licLevel2"
+          id="isActive"
+          formControlName="isActive"
         />
-        <label for="licLevel2" class="form-label"> State Province is Active </label>
+        <label for="isActive" class="form-label"> State Province is Active </label>
       </div>
     </div>
 
     <div class="col">
       <div class="mb-3">
-        <label for="workStateAbv" class="form-label">License Tech:</label>
+        <label for="licenseTechID" class="form-label">License Tech:</label>
         <select
           class="form-select select-size-medium"
           type="text"
-          id="workStateAbv"
-          formControlName="workStateAbv"
+          id="licenseTechID"
+          formControlName="licenseTechID"
         >
           <!-- <option *ngFor="let state of stateProvinces" [value]="state">
             {{ state }}
@@ -80,81 +80,81 @@
         </select>
       </div>
       <div class="mb-3">
-        <label for="stateProvinceName" class="form-label"
+        <label for="doiName" class="form-label"
           >DOI Name:</label
         >
         <input
           class="form-control input-size-medium"
           type="text"
-          id="stateProvinceName"
-          formControlName="stateProvinceName"
+          id="doiName"
+          formControlName="doiName"
         />
       </div>
       <div class="mb-3">
-        <label for="stateProvinceName" class="form-label"
+        <label for="phone" class="form-label"
           >Phone:</label
         >
         <input
           class="form-control input-size-small"
           type="text"
-          id="stateProvinceName"
-          formControlName="stateProvinceName"
+          id="phone"
+          formControlName="phone"
         />
       </div>
       <div class="mb-3">
-        <label for="stateProvinceName" class="form-label"
+        <label for="fax" class="form-label"
           >Fax:</label
         >
         <input
           class="form-control input-size-small"
           type="text"
-          id="stateProvinceName"
-          formControlName="stateProvinceName"
+          id="fax"
+          formControlName="fax"
         />
       </div>
     </div>
 
     <div class="col">
       <div class="mb-3">
-        <label for="stateProvinceName" class="form-label"
+        <label for="address1" class="form-label"
           >Address 1:</label
         >
         <input
           class="form-control input-size-medium"
           type="text"
-          id="stateProvinceName"
-          formControlName="stateProvinceName"
+          id="address1"
+          formControlName="address1"
         />
       </div>
       <div class="mb-3">
-        <label for="stateProvinceName" class="form-label"
+        <label for="address2" class="form-label"
           >Address 2:</label
         >
         <input
           class="form-control input-size-medium"
           type="text"
-          id="stateProvinceName"
-          formControlName="stateProvinceName"
+          id="address2"
+          formControlName="address2"
         />
       </div>
       <div class="mb-3">
-        <label for="stateProvinceName" class="form-label"
+        <label for="city" class="form-label"
           >City:</label
         >
         <input
           class="form-control input-size-small"
           type="text"
-          id="stateProvinceName"
-          formControlName="stateProvinceName"
+          id="city"
+          formControlName="city"
         />
       </div>
       <div class="mb-3">
-        <label for="workStateAbv" class="form-label">State:</label>
+        <label for="state" class="form-label">State:</label>
         <select
           class="form-select select-size-x-small"
           type="text"
-          id="workStateAbv"
-          formControlName="workStateAbv"
+          id="state"
+          formControlName="state"
         >
           <!-- <option *ngFor="let state of stateProvinces" [value]="state">
             {{ state }}
@@ -162,14 +162,14 @@
         </select>
       </div>
       <div class="mb-3">
-        <label for="stateProvinceName" class="form-label"
+        <label for="zip" class="form-label"
           >Zip:</label
         >
         <input
           class="form-control input-size-small"
           type="text"
-          id="stateProvinceName"
-          formControlName="stateProvinceName"
+          id="zip"
+          formControlName="zip"
         />
       </div>
     </div>
