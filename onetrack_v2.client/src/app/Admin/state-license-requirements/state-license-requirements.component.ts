@@ -1,4 +1,5 @@
-import { Component, Injectable, OnInit } from '@angular/core';
+import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import {
   AdminComService,
@@ -15,12 +16,14 @@ import { StateRequirement } from '../../_Models';
   styleUrl: './state-license-requirements.component.css',
 })
 @Injectable()
-export class StateLicenseRequirementsComponent implements OnInit {
+export class StateLicenseRequirementsComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   states: any[] = [];
   selectedWorkState: string = 'Select';
   selectedResState: string | null = null;
   stateRequirements: StateRequirement[] = [];
+
+  subscriptionData: Subscription = new Subscription();
 
   constructor(
     private conService: ConstantsDataService,
@@ -44,12 +47,14 @@ export class StateLicenseRequirementsComponent implements OnInit {
       return;
     } else {
       this.loading = false;
-      this.adminDataService
-        .fetchStateRequirements(value, this.selectedResState)
-        .subscribe((response) => {
-          this.stateRequirements = response;
-          this.loading = false;
-        });
+      this.subscriptionData.add(
+        this.adminDataService
+          .fetchStateRequirements(value, this.selectedResState)
+          .subscribe((response) => {
+            this.stateRequirements = response;
+            this.loading = false;
+          })
+      );
     }
   }
 
@@ -63,12 +68,18 @@ export class StateLicenseRequirementsComponent implements OnInit {
       return;
     } else {
       this.loading = false;
-      this.adminDataService
-        .fetchStateRequirements(this.selectedWorkState, value)
-        .subscribe((response) => {
-          this.stateRequirements = response;
-          this.loading = false;
-        });
+      this.subscriptionData.add(
+        this.adminDataService
+          .fetchStateRequirements(this.selectedWorkState, value)
+          .subscribe((response) => {
+            this.stateRequirements = response;
+            this.loading = false;
+          })
+      );
     }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptionData.unsubscribe();
   }
 }

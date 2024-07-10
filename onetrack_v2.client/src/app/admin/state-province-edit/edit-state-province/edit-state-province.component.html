@@ -41,11 +41,8 @@
         />
       </div>
 
-      
       <div class="mb-3">
-        <label for="country" class="form-label"
-          >Country Code:</label
-        >
+        <label for="country" class="form-label">Country Code:</label>
         <input
           class="form-control input-size-x-small"
           type="text"
@@ -61,7 +58,9 @@
           id="isActive"
           formControlName="isActive"
         />
-        <label for="isActive" class="form-label"> State Province is Active </label>
+        <label for="isActive" class="form-label">
+          State Province is Active
+        </label>
       </div>
     </div>
 
@@ -74,15 +73,13 @@
           id="licenseTechID"
           formControlName="licenseTechID"
         >
-          <!-- <option *ngFor="let state of stateProvinces" [value]="state">
-            {{ state }}
-          </option> -->
+          <option *ngFor="let tech of licenseTeches" [value]="tech.value">
+            {{ tech.label }}
+          </option>
         </select>
       </div>
       <div class="mb-3">
-        <label for="doiName" class="form-label"
-          >DOI Name:</label
-        >
+        <label for="doiName" class="form-label">DOI Name:</label>
         <input
           class="form-control input-size-medium"
           type="text"
@@ -91,9 +88,7 @@
         />
       </div>
       <div class="mb-3">
-        <label for="phone" class="form-label"
-          >Phone:</label
-        >
+        <label for="phone" class="form-label">Phone:</label>
         <input
           class="form-control input-size-small"
           type="text"
@@ -102,9 +97,7 @@
         />
       </div>
       <div class="mb-3">
-        <label for="fax" class="form-label"
-          >Fax:</label
-        >
+        <label for="fax" class="form-label">Fax:</label>
         <input
           class="form-control input-size-small"
           type="text"
@@ -116,9 +109,7 @@
 
     <div class="col">
       <div class="mb-3">
-        <label for="address1" class="form-label"
-          >Address 1:</label
-        >
+        <label for="address1" class="form-label">Address 1:</label>
         <input
           class="form-control input-size-medium"
           type="text"
@@ -127,9 +118,7 @@
         />
       </div>
       <div class="mb-3">
-        <label for="address2" class="form-label"
-          >Address 2:</label
-        >
+        <label for="address2" class="form-label">Address 2:</label>
         <input
           class="form-control input-size-medium"
           type="text"
@@ -138,9 +127,7 @@
         />
       </div>
       <div class="mb-3">
-        <label for="city" class="form-label"
-          >City:</label
-        >
+        <label for="city" class="form-label">City:</label>
         <input
           class="form-control input-size-small"
           type="text"
@@ -156,15 +143,13 @@
           id="state"
           formControlName="state"
         >
-          <!-- <option *ngFor="let state of stateProvinces" [value]="state">
+          <option *ngFor="let state of stateProvinces" [value]="state">
             {{ state }}
-          </option> -->
+          </option>
         </select>
       </div>
       <div class="mb-3">
-        <label for="zip" class="form-label"
-          >Zip:</label
-        >
+        <label for="zip" class="form-label">Zip:</label>
         <input
           class="form-control input-size-small"
           type="text"

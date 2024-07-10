@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
+import { Component, Injectable, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -10,6 +10,8 @@ import { AdminComService, AdminDataService } from '../../../_services';
   styleUrl: './edit-state-province.component.css'
 })
 export class EditStateProvinceComponent implements OnInit, OnDestroy {
+  @Input() licenseTeches: { value: number; label: string }[] = [];
+  @Input() stateProvinces: any[] = [];
   stateProvinceForm!: FormGroup;
   subscriptionData: Subscription = new Subscription();
 
