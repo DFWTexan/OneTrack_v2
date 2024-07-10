@@ -97,7 +97,7 @@ export class StateLicenseRequirementsComponent implements OnInit, OnDestroy {
       data: {
         title: 'Confirm Action',
         message:
-          'You are about to DELETE Product Item (' +
+          'You are about to DELETE License Requirement Item (' +
           vObject.licenseName + ' WorkStateAbv - '+ vObject.workStateAbv + ' ResStateAbv- '+ vObject.resStateAbv +
           '). Click "Yes" to confirm?',
       },
