@@ -143,7 +143,7 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
             this.deleteLicenseItem(vObject);
             break;
           case 'COMPANYITEM':
-            this.delteCompanyItem(vObject);
+            this.deleteCompanyItem(vObject);
             break;
           case 'PREEXAMITEM':
             this.deletePreExamItem(vObject);
@@ -161,7 +161,7 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  private deleteLicenseItem(tem: any): void {
+  private deleteLicenseItem(item: any): void {
     // this.subscriptions.add(
     // this.agentDataService
     //   .deleteEmploymentJobTitleHistItem({
@@ -184,7 +184,7 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
     // );
   }
 
-  private delteCompanyItem(tem: any): void {
+  private deleteCompanyItem(item: any): void {
     // this.subscriptions.add(
     // this.agentDataService
     //   .deleteEmploymentJobTitleHistItem({
@@ -207,7 +207,7 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
     // );
   }
 
-  private deletePreExamItem(tem: any): void {
+  private deletePreExamItem(item: any): void {
     // this.subscriptions.add(
     // this.agentDataService
     //   .deleteEmploymentJobTitleHistItem({
@@ -230,7 +230,7 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
     // );
   }
 
-  private deletePreEducationItem(tem: any): void {
+  private deletePreEducationItem(item: any): void {
     // this.subscriptions.add(
     // this.agentDataService
     //   .deleteEmploymentJobTitleHistItem({
@@ -253,7 +253,7 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
     // );
   }
 
-  private deleteProductItem(tem: any): void {
+  private deleteProductItem(item: any): void {
     // this.subscriptions.add(
     // this.agentDataService
     //   .deleteEmploymentJobTitleHistItem({
