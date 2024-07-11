@@ -257,6 +257,118 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpPost]
+        public async Task<IActionResult> AddLicenseCompany([FromBody] IputAddLicenseCompany input)
+        {
+            var result = await Task.Run(() => _adminService.AddLicenseCompany(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateLicenseCompany([FromBody] IputUpdateLicenseCompany input)
+        {
+            var result = await Task.Run(() => _adminService.UpdateLicenseCompany(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddLicenseExam([FromBody] IputAddLicenseExam input)
+        {
+            var result = await Task.Run(() => _adminService.AddLicenseExam(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateLicenseExam([FromBody] IputUpdateLicenseExam input)
+        {
+            var result = await Task.Run(() => _adminService.UpdateLicenseExam(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddLicensePreEducation([FromBody] IputAddLicensePreEducation input)
+        {
+            var result = await Task.Run(() => _adminService.AddLicensePreEducation(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateLicensePreEducation([FromBody] IputUpdateLicensePreEducation input)
+        {
+            var result = await Task.Run(() => _adminService.UpdateLicensePreEducation(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddLicenseProduct([FromBody] IputAddLicenseProduct input)
+        {
+            var result = await Task.Run(() => _adminService.AddLicenseProduct(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateLicenseProduct([FromBody] IputUpdateLicenseProduct input)
+        {
+            var result = await Task.Run(() => _adminService.UpdateLicenseProduct(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpsertLicenseTech([FromBody] IputUpsertLicenseTech input)
+        {
+            var result = await Task.Run(() => _adminService.UpsertLicenseTech(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> DeleteLicenseTech([FromBody] IputDeleteLicenseTech input)
+        {
+            var result = await Task.Run(() => _adminService.DeleteLicenseTech(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpsertPreEducation([FromBody] IputUpsertPreEducation input)
+        {
+            var result = await Task.Run(() => _adminService.UpsertPreEducation(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> DeletePreEducation([FromBody] IputDeletePreEducation input)
+        {
+            var result = await Task.Run(() => _adminService.DeletePreEducation(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpsertProduct([FromBody] IputUpsertProduct input)
+        {
+            var result = await Task.Run(() => _adminService.UpsertProduct(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> DeleteProduct([FromBody] IputDeleteProduct input)
+        {
+            var result = await Task.Run(() => _adminService.DeleteProduct(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
         #endregion
     }
 }

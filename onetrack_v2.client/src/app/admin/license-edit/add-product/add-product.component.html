@@ -1,12 +1,12 @@
 <div>
   <div class="row mt-1 mb-3">
-    <div class="col d-flex justify-content-center">
+    <div class="col d-flex justify-content-end">
       <button
         type="button"
         class="btn btn-secondary me-3 cancel-button"
         (click)="onCloseModal()"
       >
-        Cancel
+        <span class="material-symbols-outlined"> close </span>
       </button>
     </div>
   </div>
@@ -24,12 +24,17 @@
       <tr *ngFor="let product of products; let i = index">
         <td>
           <button class="icon-add-button" type="button">
-            <span class="material-symbols-outlined" (click)="
-            onAddItem({
-              licenseID: licenseId,
-              productID: product.productId
-            })
-          "> add_circle </span>
+            <span
+              class="material-symbols-outlined"
+              (click)="
+                onAddItem({
+                  licenseID: licenseId,
+                  productID: product.productId
+                })
+              "
+            >
+              add_circle
+            </span>
           </button>
         </td>
         <td class="align-middle text-nowrap" *ngIf="appComService.isShowEditID">
