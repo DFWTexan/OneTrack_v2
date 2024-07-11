@@ -6,6 +6,7 @@ using OneTrack_v2.DbData;
 using OneTrack_v2.DbData.Models;
 using OneTrack_v2.Services;
 using OneTrak_v2.DataModel;
+using OneTrak_v2.Server.DbData.DataModel.Admin;
 using System.Data;
 
 namespace OneTrak_v2.Services
@@ -1972,6 +1973,250 @@ namespace OneTrak_v2.Services
                 result.Success = false;
                 result.ObjData = null;
                 result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1579-23410].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;
+        }
+        public ReturnResult UpsertRequiredLicense([FromBody] IputUpsertRequiredLicense vInput)
+        {
+
+            var result = new ReturnResult();
+            try
+            {
+                if (vInput.RequiredLicenseID == 0)
+                {
+                    // INSERT RequiredLicense
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspRequiredLicenseInsert", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@WorkStateAbv", vInput.LicenseID));
+                            cmd.Parameters.Add(new SqlParameter("@ResStateAbv", vInput.ResStateAbv));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseID", vInput.LicenseID));
+                            cmd.Parameters.Add(new SqlParameter("@BranchCode", vInput.BranchCode));
+                            cmd.Parameters.Add(new SqlParameter("@RequirementType", vInput.RequirementType));
+                            cmd.Parameters.Add(new SqlParameter("@LicLevel1", vInput.LicLevel1));
+                            cmd.Parameters.Add(new SqlParameter("@LicLevel2", vInput.LicLevel2));
+                            cmd.Parameters.Add(new SqlParameter("@LicLevel3", vInput.LicLevel3));
+                            cmd.Parameters.Add(new SqlParameter("@LicLevel4", vInput.LicLevel4));
+                            cmd.Parameters.Add(new SqlParameter("@PLS_Incentive1", vInput.PLS_Incentive1));
+                            cmd.Parameters.Add(new SqlParameter("@Incentive2_Plus", vInput.Incentive2_Plus));
+                            cmd.Parameters.Add(new SqlParameter("@LicIncentive3", vInput.LicIncentive3));
+                            cmd.Parameters.Add(new SqlParameter("@StartDocument", vInput.StartDocument));
+                            cmd.Parameters.Add(new SqlParameter("@RenewalDocument", vInput.RenewalDocument));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                else
+                {
+                    // UPDATE RequiredLicense
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspRequiredLicenseUpdate", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@RequiredLicenseID", vInput.RequiredLicenseID));
+                            cmd.Parameters.Add(new SqlParameter("@WorkStateAbv", vInput.LicenseID));
+                            cmd.Parameters.Add(new SqlParameter("@ResStateAbv", vInput.ResStateAbv));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseID", vInput.LicenseID));
+                            cmd.Parameters.Add(new SqlParameter("@BranchCode", vInput.BranchCode));
+                            cmd.Parameters.Add(new SqlParameter("@RequirementType", vInput.RequirementType));
+                            cmd.Parameters.Add(new SqlParameter("@LicLevel1", vInput.LicLevel1));
+                            cmd.Parameters.Add(new SqlParameter("@LicLevel2", vInput.LicLevel2));
+                            cmd.Parameters.Add(new SqlParameter("@LicLevel3", vInput.LicLevel3));
+                            cmd.Parameters.Add(new SqlParameter("@LicLevel4", vInput.LicLevel4));
+                            cmd.Parameters.Add(new SqlParameter("@PLS_Incentive1", vInput.PLS_Incentive1));
+                            cmd.Parameters.Add(new SqlParameter("@Incentive2_Plus", vInput.Incentive2_Plus));
+                            cmd.Parameters.Add(new SqlParameter("@LicIncentive3", vInput.LicIncentive3));
+                            cmd.Parameters.Add(new SqlParameter("@StartDocument", vInput.StartDocument));
+                            cmd.Parameters.Add(new SqlParameter("@RenewalDocument", vInput.RenewalDocument));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "RequiredLicense Created/Updated Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1579-23420].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;
+        }
+        public ReturnResult DeleteRequiredLicense([FromBody] IputDeleteRequiredLicense vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspRequiredLicenseDelete", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@RequiredLicenseID", vInput.RequiredLicenseID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "RequiredLicense Deleted Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1579-23110].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;
+        }
+        public ReturnResult UpsertStateProvince([FromBody] IputUpsertStateProvince vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                if (vInput.UpsertType == "INSERT")
+                {
+                    // INSERT StateProvince
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspStateProvinceInsert", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@StateProvinceCode", vInput.StateProvinceCode));
+                            cmd.Parameters.Add(new SqlParameter("@StateProvinceName", vInput.StateProvinceName));
+                            cmd.Parameters.Add(new SqlParameter("@Country", vInput.Country));
+                            cmd.Parameters.Add(new SqlParameter("@StateProvinceAbv", vInput.StateProvinceAbv));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseTechID", vInput.LicenseTechID));
+                            cmd.Parameters.Add(new SqlParameter("@DOIName", vInput.DOIName));
+                            cmd.Parameters.Add(new SqlParameter("@IsActive", vInput.IsActive));
+                            cmd.Parameters.Add(new SqlParameter("@AddressType", vInput.AddressType));
+                            cmd.Parameters.Add(new SqlParameter("@Address1", vInput.Address1));
+                            cmd.Parameters.Add(new SqlParameter("@Address2", vInput.Address2));
+                            cmd.Parameters.Add(new SqlParameter("@City", vInput.City));
+                            cmd.Parameters.Add(new SqlParameter("@State", vInput.State));
+                            cmd.Parameters.Add(new SqlParameter("@Phone", vInput.Phone));
+                            cmd.Parameters.Add(new SqlParameter("@Zip", vInput.Zip));
+                            cmd.Parameters.Add(new SqlParameter("@Fax", vInput.Fax));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                else
+                {
+                    // UPDATE StateProvince
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspStateProvinceUpdate", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@StateProvinceCode", vInput.StateProvinceCode));
+                            cmd.Parameters.Add(new SqlParameter("@StateProvinceName", vInput.StateProvinceName));
+                            cmd.Parameters.Add(new SqlParameter("@Country", vInput.Country));
+                            cmd.Parameters.Add(new SqlParameter("@StateProvinceAbv", vInput.StateProvinceAbv));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseTechID", vInput.LicenseTechID));
+                            cmd.Parameters.Add(new SqlParameter("@DOIName", vInput.DOIName));
+                            cmd.Parameters.Add(new SqlParameter("@IsActive", vInput.IsActive));
+                            cmd.Parameters.Add(new SqlParameter("@AddressType", vInput.AddressType));
+                            cmd.Parameters.Add(new SqlParameter("@Address1", vInput.Address1));
+                            cmd.Parameters.Add(new SqlParameter("@Address2", vInput.Address2));
+                            cmd.Parameters.Add(new SqlParameter("@City", vInput.City));
+                            cmd.Parameters.Add(new SqlParameter("@State", vInput.State));
+                            cmd.Parameters.Add(new SqlParameter("@Phone", vInput.Phone));
+                            cmd.Parameters.Add(new SqlParameter("@Zip", vInput.Zip));
+                            cmd.Parameters.Add(new SqlParameter("@Fax", vInput.Fax));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "StateProvince Created/Updated Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1571-26710].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;
+        }
+        public ReturnResult DeleteStateProvince([FromBody] IputDeleteStateProvince vInput)
+        {
+
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspStateProvinceDelete", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@StateProvinceAbv", vInput.StateProvinceCode));
+                        cmd.Parameters.Add(new SqlParameter("@DOIAddressID", vInput.DOIAddressID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "StateProvince Deleted Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1571-26710].";
 
                 _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
             }

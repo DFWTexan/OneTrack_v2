@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OneTrack_v2.DbData.Models;
 using OneTrak_v2.DataModel;
+using OneTrak_v2.Server.DbData.DataModel.Admin;
 
 namespace OneTrak_v2.Services
 {
@@ -52,5 +53,9 @@ namespace OneTrak_v2.Services
         public ReturnResult DeletePreEducation([FromBody] IputDeletePreEducation vInput);
         public ReturnResult UpsertProduct([FromBody] IputUpsertProduct vInput);
         public ReturnResult DeleteProduct([FromBody] IputDeleteProduct vInput);
+        public ReturnResult UpsertRequiredLicense([FromBody] IputUpsertRequiredLicense vInput);
+        public ReturnResult DeleteRequiredLicense([FromBody] IputDeleteRequiredLicense vInput);
+        public ReturnResult UpsertStateProvince([FromBody] IputUpsertStateProvince vInput);
+        public ReturnResult DeleteStateProvince([FromBody] IputDeleteStateProvince vInput);
     }
 }

@@ -3,6 +3,7 @@ using NuGet.Packaging;
 using OneTrack_v2.DataModel;
 using OneTrack_v2.Services;
 using OneTrak_v2.DataModel;
+using OneTrak_v2.Server.DbData.DataModel.Admin;
 using OneTrak_v2.Services;
 
 namespace OneTrack_v2.Controllers
@@ -366,6 +367,38 @@ namespace OneTrack_v2.Controllers
         public async Task<ActionResult> DeleteProduct([FromBody] IputDeleteProduct input)
         {
             var result = await Task.Run(() => _adminService.DeleteProduct(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpsertRequiredLicense([FromBody] IputUpsertRequiredLicense input)
+        {
+            var result = await Task.Run(() => _adminService.UpsertRequiredLicense(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> DeleteRequiredLicense([FromBody] IputDeleteRequiredLicense input)
+        {
+            var result = await Task.Run(() => _adminService.DeleteRequiredLicense(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UpsertStateProvince([FromBody] IputUpsertStateProvince input)
+        {
+            var result = await Task.Run(() => _adminService.UpsertStateProvince(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> DeleteStateProvince([FromBody] IputDeleteStateProvince input)
+        {
+            var result = await Task.Run(() => _adminService.DeleteStateProvince(input));
 
             return StatusCode(result.StatusCode, result);
         }
