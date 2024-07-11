@@ -8,7 +8,9 @@ import {
   AppComService,
   ConstantsDataService,
   DropdownDataService,
+  ErrorMessageService,
   ModalService,
+  UserAcctInfoDataService,
 } from '../../_services';
 import { License } from '../../_Models';
 import { ConfirmDialogComponent } from '../../_components';
@@ -29,6 +31,7 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
   preEducations: any[] = [];
   products: any[] = [];
   licenseItems: License[] = [];
+  licenseIdItem: number = 0;
 
   eventAction: string = '';
   vObject: any = {};
@@ -36,13 +39,15 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
   subscriptionData: Subscription = new Subscription();
 
   constructor(
+    private errorMessageService: ErrorMessageService,
     private conService: ConstantsDataService,
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
     public appComService: AppComService,
     private dropDownDataService: DropdownDataService,
     public modalService: ModalService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {
@@ -126,6 +131,7 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
   }
 
   onOpenConfirmDialog(eventAction: string, msg: string, vObject: any): void {
+    this.licenseIdItem = vObject.licenseID;
     this.eventAction = eventAction;
     this.vObject = vObject;
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -185,26 +191,19 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
   }
 
   private deleteCompanyItem(item: any): void {
-    // this.subscriptions.add(
-    // this.agentDataService
-    //   .deleteEmploymentJobTitleHistItem({
-    //     employmentID: this.agentDataService.agentInformation.employmentID,
-    //     employmentJobTitleID: jobTitleItem.employmentJobTitleID,
-    //     userSOEID: this.userInfoDataService.userAcctInfo.soeid,
-    //   })
-    //   .subscribe({
-    //     next: (response) => {
-    //       // console.log(
-    //       //   'EMFTEST (app-tm-emptrans-history: deleteJobTitle) - COMPLETED DELETE response => \n',
-    //       //   response
-    //       // );
-    //     },
-    //     error: (error) => {
-    //       console.error(error);
-    //       // handle the error here
-    //     },
-    //   })
-    // );
+    item.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+    this.subscriptionData.add(
+      this.adminDataService.deleteLicenseCompany(item).subscribe({
+        next: (response) => {
+          this.fetchLicenseItems();
+        },
+        error: (error) => {
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+          }
+        },
+      })
+    );
   }
 
   private deletePreExamItem(item: any): void {

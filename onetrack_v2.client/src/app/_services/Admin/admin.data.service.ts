@@ -733,6 +733,51 @@ export class AdminDataService {
       );
   }
 
+  addLicenseCompany(item: any) {
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: License;
+        errMessage: string;
+      }>(this.apiUrl + 'AddLicenseCompany', item)
+      .pipe(
+        tap({
+          next: (response) => {
+            // console.log(response.status);
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        })
+      );
+  }
+
+  deleteLicenseCompany(item: any) { 
+    return this.http
+      .put<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'DeleteLicenseCompany', item)
+      .pipe(
+        tap({
+          next: (response) => {
+            if (response.success && response.statusCode === 200) {
+              // return response;
+            } else {
+              throw new Error(response.errMessage || 'Unknown error');
+            }
+          },
+          error: (error) => {
+            console.error(error);
+            // throw error;
+          },
+        })
+      );
+  }
+
   // LICENSE TECH
   fetchLicenseTechs() {
     return this.http

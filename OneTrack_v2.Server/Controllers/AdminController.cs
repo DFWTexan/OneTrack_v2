@@ -274,6 +274,14 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+        
+        [HttpPut]
+        public async Task<ActionResult> DeleteLicenseCompany([FromBody] IputDeleteLicenseCompany input)
+        {
+            var result = await Task.Run(() => _adminService.DeleteLicenseCompany(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
 
         [HttpPost]
         public async Task<IActionResult> AddLicenseExam([FromBody] IputAddLicenseExam input)
@@ -287,6 +295,14 @@ namespace OneTrack_v2.Controllers
         public async Task<IActionResult> UpdateLicenseExam([FromBody] IputUpdateLicenseExam input)
         {
             var result = await Task.Run(() => _adminService.UpdateLicenseExam(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> DeleteLicenseExam([FromBody] IputDeleteLicenseExam input)
+        {
+            var result = await Task.Run(() => _adminService.DeleteLicenseExam(input));
 
             return StatusCode(result.StatusCode, result);
         }
@@ -307,6 +323,14 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
+        [HttpPut]
+        public async Task<ActionResult> DeleteLicensePreEducation([FromBody] IputDeleteLicensePreEdu input)
+        {
+            var result = await Task.Run(() => _adminService.DeleteLicensePreEducation(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddLicenseProduct([FromBody] IputAddLicenseProduct input)
         {
@@ -319,6 +343,14 @@ namespace OneTrack_v2.Controllers
         public async Task<IActionResult> UpdateLicenseProduct([FromBody] IputUpdateLicenseProduct input)
         {
             var result = await Task.Run(() => _adminService.UpdateLicenseProduct(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> DeleteLicenseProduct([FromBody] IputDeleteLicenseProduct input)
+        {
+            var result = await Task.Run(() => _adminService.DeleteLicenseProduct(input));
 
             return StatusCode(result.StatusCode, result);
         }

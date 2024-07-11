@@ -1,4 +1,4 @@
-import { Component, Injectable, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Injectable, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import {
@@ -16,6 +16,7 @@ import {
 })
 @Injectable()
 export class AddCompanyComponent implements OnInit, OnDestroy {
+  @Output() callParentRefreshData = new EventEmitter<any>();
   @Input() companies: any[] = [];
   licenseId: number = 0;
 
@@ -39,9 +40,26 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
   }
 
   onAddItem(item: any): void {
+    item.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
-    console.log('EMFTEST (onAddCompany) - Add Company Item => \n', item);
-
+    this.subscriptionData.add(
+      this.adminDataService.addLicenseCompany(item).subscribe({
+        next: (response) => {
+          alert('Company added successfully');
+          this.callParentRefreshData.emit();
+          // console.log(
+          //   'EMFTEST (app-tm-emptrans-history: deleteJobTitle) - COMPLETED DELETE response => \n',
+          //   response
+          // );
+        },
+        error: (error) => {
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+            this.onCloseModal();
+          }
+        },
+      })
+    );
   }
 
   onCloseModal() {

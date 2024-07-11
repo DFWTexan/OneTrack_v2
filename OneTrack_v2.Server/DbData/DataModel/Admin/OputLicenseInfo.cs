@@ -32,6 +32,7 @@
 
     public class LicenseCompanyItem 
     { 
+        public int LicenseID { get; set; }
         public int LicenseCompanyId { get; set; }
         public int CompanyId { get; set; }
         public string? CompanyAbv { get; set; }
@@ -53,6 +54,7 @@
 
     public class LicensePreExamItem
     {
+        public int LicenseID { get; set; }
         public int ExamId { get; set; }
         public string? ExamName { get; set; }
         public string? StateProvinceAbv { get; set; }
@@ -64,7 +66,8 @@
     }
 
     public class LicensePreEducationItem
-    {         
+    {
+        public int LicenseID { get; set; }
         public int LicensePreEducationID { get; set; }
         public int PreEducationID { get; set; }
         public string? EducationName { get; set; }
@@ -78,6 +81,7 @@
 
     public class LicenseProductItem
     {
+        public int LicenseID { get; set; }
         public int LicenseProductID { get; set; }
         public int ProductID { get; set; }
         public string? ProductName { get; set; }

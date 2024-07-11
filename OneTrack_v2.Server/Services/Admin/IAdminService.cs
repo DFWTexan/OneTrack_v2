@@ -41,12 +41,16 @@ namespace OneTrak_v2.Services
         public ReturnResult DeleteLicense([FromBody] IputDeleteLicense vInput);
         public ReturnResult AddLicenseCompany([FromBody] IputAddLicenseCompany vInput);
         public ReturnResult UpdateLicenseCompany([FromBody] IputUpdateLicenseCompany vInput);
+        public ReturnResult DeleteLicenseCompany([FromBody] IputDeleteLicenseCompany vInput);
         public ReturnResult AddLicenseExam([FromBody] IputAddLicenseExam vInput);
         public ReturnResult UpdateLicenseExam([FromBody] IputUpdateLicenseExam vInput);
+        public ReturnResult DeleteLicenseExam([FromBody] IputDeleteLicenseExam vInput);
         public ReturnResult AddLicensePreEducation([FromBody] IputAddLicensePreEducation vInput);
         public ReturnResult UpdateLicensePreEducation([FromBody] IputUpdateLicensePreEducation vInput);
+        public ReturnResult DeleteLicensePreEducation([FromBody] IputDeleteLicensePreEdu vInput);
         public ReturnResult AddLicenseProduct([FromBody] IputAddLicenseProduct vInput);
         public ReturnResult UpdateLicenseProduct([FromBody] IputUpdateLicenseProduct vInput);
+        public ReturnResult DeleteLicenseProduct([FromBody] IputDeleteLicenseProduct vInput);
         public ReturnResult UpsertLicenseTech([FromBody] IputUpsertLicenseTech vInput);
         public ReturnResult DeleteLicenseTech([FromBody] IputDeleteLicenseTech vInput);
         public ReturnResult UpsertPreEducation([FromBody] IputUpsertPreEducation vInput);

@@ -393,6 +393,7 @@ namespace OneTrak_v2.Services
                         orderby c.CompanyName
                         select new LicenseCompanyItem
                         {
+                            LicenseID = vLicenseID,
                             LicenseCompanyId = cp.LicenseCompanyId,
                             CompanyId = c.CompanyId,
                             CompanyAbv = c.CompanyAbv,
@@ -424,6 +425,7 @@ namespace OneTrak_v2.Services
                         orderby e.ExamName
                         select new LicensePreExamItem
                         {
+                            LicenseID = vLicenseID,
                             ExamId = e.ExamId,
                             ExamName = e.ExamName,
                             StateProvinceAbv = e.StateProvinceAbv,
@@ -446,6 +448,7 @@ namespace OneTrak_v2.Services
                         orderby e.EducationName
                         select new LicensePreEducationItem
                         {
+                            LicenseID = vLicenseID,
                             LicensePreEducationID = le.LicensePreEducationId,
                             PreEducationID = e.PreEducationId,
                             EducationName = e.EducationName,
@@ -467,6 +470,7 @@ namespace OneTrak_v2.Services
                         orderby e.ProductName
                         select new LicenseProductItem
                         {
+                            LicenseID = vLicenseID,
                             LicenseProductID = le.LicenseProductId,
                             ProductID = e.ProductId,
                             ProductName = e.ProductName,
@@ -1435,6 +1439,43 @@ namespace OneTrak_v2.Services
 
             return result;
         }
+        public ReturnResult DeleteLicenseCompany([FromBody] IputDeleteLicenseCompany vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspLicenseCompanyDelete", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@LicenseCompanyID", vInput.LicenseCompanyID));
+                        cmd.Parameters.Add(new SqlParameter("@LicenseID", vInput.LicenseID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "Company Deleted from License Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-2539-72501].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;
+        }
         public ReturnResult AddLicenseExam([FromBody] IputAddLicenseExam vInput)
         {
 
@@ -1505,6 +1546,43 @@ namespace OneTrak_v2.Services
                 result.Success = false;
                 result.ObjData = null;
                 result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1539-72591].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;
+        }
+        public ReturnResult DeleteLicenseExam([FromBody] IputDeleteLicenseExam vInput)
+        { 
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspLicenseExamDelete", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@LicenseExamID", vInput.LicenseExamID));
+                        cmd.Parameters.Add(new SqlParameter("@LicenseID", vInput.LicenseID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "Exam Deleted from License Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-2539-72501].";
 
                 _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
             }
@@ -1587,6 +1665,43 @@ namespace OneTrak_v2.Services
 
             return result;
         }
+        public ReturnResult DeleteLicensePreEducation([FromBody] IputDeleteLicensePreEdu vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspLicensePreEducationDelete", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@LicensePreEducationID", vInput.LicensePreEducationID));
+                        cmd.Parameters.Add(new SqlParameter("@LicenseID", vInput.LicenseID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "PreEducation Deleted from License Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-2539-21501].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;
+        }
         public ReturnResult AddLicenseProduct([FromBody] IputAddLicenseProduct vInput)
         {
 
@@ -1657,6 +1772,43 @@ namespace OneTrak_v2.Services
                 result.Success = false;
                 result.ObjData = null;
                 result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1539-21574].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;
+        }
+        public ReturnResult DeleteLicenseProduct([FromBody] IputDeleteLicenseProduct vInput)
+        { 
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspLicenseProductDelete", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@LicenseProductID", vInput.LicenseProductID));
+                        cmd.Parameters.Add(new SqlParameter("@LicenseID", vInput.LicenseID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "Product Deleted from License Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-2539-21501].";
 
                 _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
             }
@@ -1943,8 +2095,8 @@ namespace OneTrak_v2.Services
             return result;
         }
         public ReturnResult DeleteProduct([FromBody] IputDeleteProduct vInput)
-        { 
-        
+        {
+
             var result = new ReturnResult();
             try
             {

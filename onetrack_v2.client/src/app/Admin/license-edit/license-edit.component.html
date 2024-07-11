@@ -51,9 +51,9 @@
       <mat-accordion
         *ngIf="selectedStateProvince !== 'Select' && licenseItems.length > 0"
       >
-        <mat-expansion-panel *ngFor="let license of licenseItems">
+        <mat-expansion-panel *ngFor="let license of licenseItems" [expanded]="license.licenseId === licenseIdItem">
           <mat-expansion-panel-header>
-            <mat-panel-title style="font-size: large; font-weight: 500">
+            <mat-panel-title style="font-size: large; font-weight: 600">
               {{ license.licenseName }}
             </mat-panel-title>
             <mat-panel-description>
@@ -171,7 +171,7 @@
             <div class="row">
               <div
                 class="col d-flex align-items-baseline"
-                style="font-size: large; font-weight: 500"
+                style="font-size: larger; font-weight: 500; color: grey"
               >
                 Company(s)
               </div>
@@ -179,7 +179,11 @@
                 <button
                   class="btn btn-success"
                   (click)="
-                    adminDataService.storeCompanyItem('INSERT', null, license.licenseId);
+                    adminDataService.storeCompanyItem(
+                      'INSERT',
+                      null,
+                      license.licenseId
+                    );
                     modalService.open('modal-add-company-item')
                   "
                 >
@@ -319,7 +323,7 @@
             <div class="row">
               <div
                 class="col align-middle"
-                style="font-size: large; font-weight: 500"
+                style="font-size: larger; font-weight: 500; color: grey"
               >
                 Pre-Exam(s)
               </div>
@@ -327,7 +331,11 @@
                 <button
                   class="btn btn-success"
                   (click)="
-                    adminDataService.storePreExamItem('INSERT', null, license.licenseId);
+                    adminDataService.storePreExamItem(
+                      'INSERT',
+                      null,
+                      license.licenseId
+                    );
                     modalService.open('modal-add-preExam-item')
                   "
                 >
@@ -463,7 +471,7 @@
             <div class="row">
               <div
                 class="col align-middle"
-                style="font-size: large; font-weight: 500"
+                style="font-size: larger; font-weight: 500; color: grey"
               >
                 Pre-Education(s)
               </div>
@@ -471,7 +479,11 @@
                 <button
                   class="btn btn-success"
                   (click)="
-                    adminDataService.storePreEduItem('INSERT', null, license.licenseId);
+                    adminDataService.storePreEduItem(
+                      'INSERT',
+                      null,
+                      license.licenseId
+                    );
                     modalService.open('modal-add-preEdu-Item')
                   "
                 >
@@ -597,7 +609,7 @@
             <div class="row">
               <div
                 class="col align-middle"
-                style="font-size: large; font-weight: 500"
+                style="font-size: larger; font-weight: 500; color: grey"
               >
                 Product(s)
               </div>
@@ -605,7 +617,11 @@
                 <button
                   class="btn btn-success"
                   (click)="
-                    adminDataService.storeProductItem('INSERT', null, license.licenseId);
+                    adminDataService.storeProductItem(
+                      'INSERT',
+                      null,
+                      license.licenseId
+                    );
                     modalService.open('modal-add-product-Item')
                   "
                 >
@@ -760,7 +776,10 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-add-company [companies]="companies"></app-add-company>
+        <app-add-company
+          (callParentRefreshData)="onChildCallRefreshData()"
+          [companies]="companies"
+        ></app-add-company>
       </div>
     </div>
   </div>
