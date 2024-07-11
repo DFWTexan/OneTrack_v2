@@ -56,6 +56,12 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
       { value: 0, label: 'Select' },
       ...this.dropDownDataService.lineOfAuthorities,
     ];
+    this.licenseIdItem = this.adminDataService.licenseID;
+    this.subscriptionData.add(
+      this.adminDataService.licenseIdChanged.subscribe((id: number) => {
+        this.licenseIdItem = id;
+      })
+    );
     this.getEditInfo();
   }
 
@@ -131,7 +137,8 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
   }
 
   onOpenConfirmDialog(eventAction: string, msg: string, vObject: any): void {
-    this.licenseIdItem = vObject.licenseID;
+    // this.licenseIdItem = vObject.licenseID;
+    this.adminDataService.updateLicenseID(vObject.licenseID);
     this.eventAction = eventAction;
     this.vObject = vObject;
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {

@@ -69,5 +69,7 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {}
+  ngOnDestroy(): void {
+    this.subscriptionData.unsubscribe();
+  }
 }

@@ -969,6 +969,11 @@ export class AdminDataService {
     this.licenseItemChanged.next(this.licenseItem);
   }
 
+  updateLicenseID(licenseID: number) {
+    this.licenseID = licenseID;
+    this.licenseIdChanged.next(this.licenseID);
+  }
+
   storeCompanyItem(mode: string | '', companyItem: any | null, licenseID: number | null = null) {
     this.adminComService.changeMode('companyItem', mode);
     this.companyItem = companyItem || {};
