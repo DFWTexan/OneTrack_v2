@@ -138,7 +138,7 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
 
   onOpenConfirmDialog(eventAction: string, msg: string, vObject: any): void {
     // this.licenseIdItem = vObject.licenseID;
-    this.adminDataService.updateLicenseID(vObject.licenseID);
+    // this.adminDataService.updateLicenseID(vObject.licenseID);
     this.eventAction = eventAction;
     this.vObject = vObject;
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {

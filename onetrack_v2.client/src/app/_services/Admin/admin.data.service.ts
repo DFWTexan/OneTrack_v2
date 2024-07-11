@@ -734,6 +734,8 @@ export class AdminDataService {
   }
 
   addLicenseCompany(item: any) {
+    this.licenseID = item.licenseId;
+    this.licenseIdChanged.next(this.licenseID);
     return this.http
       .post<{
         success: boolean;
@@ -753,7 +755,9 @@ export class AdminDataService {
       );
   }
 
-  deleteLicenseCompany(item: any) { 
+  deleteLicenseCompany(item: any) {
+    this.licenseID = item.licenseId;
+    this.licenseIdChanged.next(this.licenseID);
     return this.http
       .put<{
         success: boolean;
@@ -969,12 +973,16 @@ export class AdminDataService {
     this.licenseItemChanged.next(this.licenseItem);
   }
 
-  updateLicenseID(licenseID: number) {
-    this.licenseID = licenseID;
-    this.licenseIdChanged.next(this.licenseID);
-  }
+  // updateLicenseID(licenseID: number) {
+  //   this.licenseID = licenseID;
+  //   this.licenseIdChanged.next(this.licenseID);
+  // }
 
-  storeCompanyItem(mode: string | '', companyItem: any | null, licenseID: number | null = null) {
+  storeCompanyItem(
+    mode: string | '',
+    companyItem: any | null,
+    licenseID: number | null = null
+  ) {
     this.adminComService.changeMode('companyItem', mode);
     this.companyItem = companyItem || {};
     this.companyItemChanged.next(this.companyItem);
@@ -982,7 +990,11 @@ export class AdminDataService {
     this.licenseIdChanged.next(this.licenseID);
   }
 
-  storePreExamItem(mode: string | '', preExamItem: any | null, licenseID: number | null = null) {
+  storePreExamItem(
+    mode: string | '',
+    preExamItem: any | null,
+    licenseID: number | null = null
+  ) {
     this.adminComService.changeMode('preExamItem', mode);
     this.preExamItem = preExamItem || {};
     this.preExamItemChanged.next(this.preExamItem);
@@ -990,7 +1002,11 @@ export class AdminDataService {
     this.licenseIdChanged.next(this.licenseID);
   }
 
-  storePreEduItem(mode: string | '', preEduItem: any | null, licenseID: number | null = null) {
+  storePreEduItem(
+    mode: string | '',
+    preEduItem: any | null,
+    licenseID: number | null = null
+  ) {
     this.adminComService.changeMode('preEduItem', mode);
     this.preEduItem = preEduItem || {};
     this.preEduItemChanged.next(this.preEduItem);
@@ -998,7 +1014,11 @@ export class AdminDataService {
     this.licenseIdChanged.next(this.licenseID);
   }
 
-  storeProductItem(mode: string | '', productItem: any | null, licenseID: number | null = null) {
+  storeProductItem(
+    mode: string | '',
+    productItem: any | null,
+    licenseID: number | null = null
+  ) {
     this.adminComService.changeMode('productItem', mode);
     this.productItem = productItem || {};
     this.productItemChanged.next(this.productItem);
