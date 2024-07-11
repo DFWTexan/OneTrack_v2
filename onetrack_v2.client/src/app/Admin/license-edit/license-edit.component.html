@@ -179,7 +179,7 @@
                 <button
                   class="btn btn-success"
                   (click)="
-                    adminDataService.storeCompanyItem('INSERT', null);
+                    adminDataService.storeCompanyItem('INSERT', null, license.licenseId);
                     modalService.open('modal-add-company-item')
                   "
                 >
@@ -327,7 +327,7 @@
                 <button
                   class="btn btn-success"
                   (click)="
-                    adminDataService.storePreExamItem('INSERT', null);
+                    adminDataService.storePreExamItem('INSERT', null, license.licenseId);
                     modalService.open('modal-add-preExam-item')
                   "
                 >
@@ -471,7 +471,7 @@
                 <button
                   class="btn btn-success"
                   (click)="
-                    adminDataService.storePreEduItem('INSERT', null);
+                    adminDataService.storePreEduItem('INSERT', null, license.licenseId);
                     modalService.open('modal-add-preEdu-Item')
                   "
                 >
@@ -605,7 +605,7 @@
                 <button
                   class="btn btn-success"
                   (click)="
-                    adminDataService.storeProductItem('INSERT', null);
+                    adminDataService.storeProductItem('INSERT', null, license.licenseId);
                     modalService.open('modal-add-product-Item')
                   "
                 >

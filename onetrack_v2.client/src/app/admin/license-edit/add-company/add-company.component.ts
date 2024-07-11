@@ -1,4 +1,5 @@
 import { Component, Injectable, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 
 import {
   AdminComService,
@@ -16,6 +17,9 @@ import {
 @Injectable()
 export class AddCompanyComponent implements OnInit, OnDestroy {
   @Input() companies: any[] = [];
+  licenseId: number = 0;
+
+  subscriptionData: Subscription = new Subscription();
 
   constructor(
     private errorMessageService: ErrorMessageService,
@@ -25,7 +29,20 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.licenseId = this.adminDataService.licenseID;
+    this.subscriptionData.add(
+      this.adminDataService.licenseIdChanged.subscribe((id: number) => {
+        this.licenseId = id;
+      })
+    );
+  }
+
+  onAddItem(item: any): void {
+
+    console.log('EMFTEST (onAddCompany) - Add Company Item => \n', item);
+
+  }
 
   onCloseModal() {
     const modalDiv = document.getElementById('modal-add-company-item');

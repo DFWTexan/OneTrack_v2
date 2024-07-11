@@ -6,6 +6,7 @@ import {
   ErrorMessageService,
   UserAcctInfoDataService,
 } from '../../../_services';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-add-pre-edu',
@@ -14,6 +15,9 @@ import {
 })
 export class AddPreEduComponent implements OnInit, OnDestroy {
   @Input() preEducations: any[] = [];
+  licenseId: number = 0;
+
+  subscriptionData: Subscription = new Subscription();
 
   constructor(
     private errorMessageService: ErrorMessageService,
@@ -23,7 +27,20 @@ export class AddPreEduComponent implements OnInit, OnDestroy {
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.licenseId = this.adminDataService.licenseID;
+    this.subscriptionData.add(
+      this.adminDataService.licenseIdChanged.subscribe((id: number) => {
+        this.licenseId = id;
+      })
+    );
+  }
+
+  onAddItem(item: any): void {
+
+    console.log('EMFTEST (onAddCompany) - Add PreEdu Item => \n', item);
+
+  }
 
   onCloseModal() {
     const modalDiv = document.getElementById('modal-add-preEdu-Item');

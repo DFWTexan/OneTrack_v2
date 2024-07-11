@@ -69,6 +69,8 @@ export class AdminDataService {
   jobTitlesFilter: JobTitle[] = [];
   jobTitlesFilterChanged = new Subject<JobTitle[]>();
   // LICENSE EDIT
+  licenseID: number = 0;
+  licenseIdChanged = new Subject<number>();
   licenseItems: License[] = [];
   licenseItemsChanged = new Subject<License[]>();
   licenseItem: License = {} as License;
@@ -922,28 +924,36 @@ export class AdminDataService {
     this.licenseItemChanged.next(this.licenseItem);
   }
 
-  storeCompanyItem(mode: string | '', companyItem: any | null) {
+  storeCompanyItem(mode: string | '', companyItem: any | null, licenseID: number | null = null) {
     this.adminComService.changeMode('companyItem', mode);
     this.companyItem = companyItem || {};
     this.companyItemChanged.next(this.companyItem);
+    this.licenseID = licenseID || 0;
+    this.licenseIdChanged.next(this.licenseID);
   }
 
-  storePreExamItem(mode: string | '', preExamItem: any | null) {
+  storePreExamItem(mode: string | '', preExamItem: any | null, licenseID: number | null = null) {
     this.adminComService.changeMode('preExamItem', mode);
     this.preExamItem = preExamItem || {};
     this.preExamItemChanged.next(this.preExamItem);
+    this.licenseID = licenseID || 0;
+    this.licenseIdChanged.next(this.licenseID);
   }
 
-  storePreEduItem(mode: string | '', preEduItem: any | null) {
+  storePreEduItem(mode: string | '', preEduItem: any | null, licenseID: number | null = null) {
     this.adminComService.changeMode('preEduItem', mode);
     this.preEduItem = preEduItem || {};
     this.preEduItemChanged.next(this.preEduItem);
+    this.licenseID = licenseID || 0;
+    this.licenseIdChanged.next(this.licenseID);
   }
 
-  storeProductItem(mode: string | '', productItem: any | null) {
+  storeProductItem(mode: string | '', productItem: any | null, licenseID: number | null = null) {
     this.adminComService.changeMode('productItem', mode);
     this.productItem = productItem || {};
     this.productItemChanged.next(this.productItem);
+    this.licenseID = licenseID || 0;
+    this.licenseIdChanged.next(this.licenseID);
   }
 
   storeLicenseTech(mode: string | '', licenseTech: any | null) {

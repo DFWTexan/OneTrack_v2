@@ -70,12 +70,14 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
 
   private fetchLicenseItems(): void {
     this.loading = true;
-    this.adminDataService
-      .fetchLicenseItems(this.selectedStateProvince)
-      .subscribe((response) => {
-        this.licenseItems = response;
-        this.loading = false;
-      });
+    this.subscriptionData.add(
+      this.adminDataService
+        .fetchLicenseItems(this.selectedStateProvince)
+        .subscribe((response) => {
+          this.licenseItems = response;
+          this.loading = false;
+        })
+    );
   }
 
   changeStateProvince(event: any) {
@@ -141,16 +143,16 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
             this.deleteLicenseItem(vObject);
             break;
           case 'COMPANYITEM':
-            // this.companyItem(vObject);
+            this.delteCompanyItem(vObject);
             break;
           case 'PREEXAMITEM':
-            // this.preExamItem(vObject);
+            this.deletePreExamItem(vObject);
             break;
           case 'PREEDUCATIONITEM':
-            // this.preEducationItem(vObject);
+            this.deletePreEducationItem(vObject);
             break;
           case 'PRODUCTITEM':
-            // this.productItem(vObject);
+            this.deleteProductItem(vObject);
             break;
           default:
             break;
@@ -159,7 +161,99 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  private deleteLicenseItem(jobTitleItem: any): void {
+  private deleteLicenseItem(tem: any): void {
+    // this.subscriptions.add(
+    // this.agentDataService
+    //   .deleteEmploymentJobTitleHistItem({
+    //     employmentID: this.agentDataService.agentInformation.employmentID,
+    //     employmentJobTitleID: jobTitleItem.employmentJobTitleID,
+    //     userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+    //   })
+    //   .subscribe({
+    //     next: (response) => {
+    //       // console.log(
+    //       //   'EMFTEST (app-tm-emptrans-history: deleteJobTitle) - COMPLETED DELETE response => \n',
+    //       //   response
+    //       // );
+    //     },
+    //     error: (error) => {
+    //       console.error(error);
+    //       // handle the error here
+    //     },
+    //   })
+    // );
+  }
+
+  private delteCompanyItem(tem: any): void {
+    // this.subscriptions.add(
+    // this.agentDataService
+    //   .deleteEmploymentJobTitleHistItem({
+    //     employmentID: this.agentDataService.agentInformation.employmentID,
+    //     employmentJobTitleID: jobTitleItem.employmentJobTitleID,
+    //     userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+    //   })
+    //   .subscribe({
+    //     next: (response) => {
+    //       // console.log(
+    //       //   'EMFTEST (app-tm-emptrans-history: deleteJobTitle) - COMPLETED DELETE response => \n',
+    //       //   response
+    //       // );
+    //     },
+    //     error: (error) => {
+    //       console.error(error);
+    //       // handle the error here
+    //     },
+    //   })
+    // );
+  }
+
+  private deletePreExamItem(tem: any): void {
+    // this.subscriptions.add(
+    // this.agentDataService
+    //   .deleteEmploymentJobTitleHistItem({
+    //     employmentID: this.agentDataService.agentInformation.employmentID,
+    //     employmentJobTitleID: jobTitleItem.employmentJobTitleID,
+    //     userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+    //   })
+    //   .subscribe({
+    //     next: (response) => {
+    //       // console.log(
+    //       //   'EMFTEST (app-tm-emptrans-history: deleteJobTitle) - COMPLETED DELETE response => \n',
+    //       //   response
+    //       // );
+    //     },
+    //     error: (error) => {
+    //       console.error(error);
+    //       // handle the error here
+    //     },
+    //   })
+    // );
+  }
+
+  private deletePreEducationItem(tem: any): void {
+    // this.subscriptions.add(
+    // this.agentDataService
+    //   .deleteEmploymentJobTitleHistItem({
+    //     employmentID: this.agentDataService.agentInformation.employmentID,
+    //     employmentJobTitleID: jobTitleItem.employmentJobTitleID,
+    //     userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+    //   })
+    //   .subscribe({
+    //     next: (response) => {
+    //       // console.log(
+    //       //   'EMFTEST (app-tm-emptrans-history: deleteJobTitle) - COMPLETED DELETE response => \n',
+    //       //   response
+    //       // );
+    //     },
+    //     error: (error) => {
+    //       console.error(error);
+    //       // handle the error here
+    //     },
+    //   })
+    // );
+  }
+
+  private deleteProductItem(tem: any): void {
     // this.subscriptions.add(
     // this.agentDataService
     //   .deleteEmploymentJobTitleHistItem({
