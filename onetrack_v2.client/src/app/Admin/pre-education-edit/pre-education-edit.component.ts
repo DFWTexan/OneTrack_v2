@@ -118,25 +118,25 @@ export class PreEducationEditComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // this.subscriptionData.add(
-        //   this.adminDataService
-        //     .deleteExamItem({
-        //       examID: vObject.examId,
-        //       userSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
-        //     })
-        //     .subscribe({
-        //       next: (response) => {
-        //         this.fetchPreEducationItems();
-        //       },
-        //       error: (error) => {
-        //         if (error.error && error.error.errMessage) {
-        //           this.errorMessageService.setErrorMessage(
-        //             error.error.errMessage
-        //           );
-        //         }
-        //       },
-        //     })
-        // );
+        this.subscriptionData.add(
+          this.adminDataService
+            .deletePreEducationItem({
+              preEducationId: vObject.preEducationId,
+              userSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
+            })
+            .subscribe({
+              next: (response) => {
+                this.fetchPreEducationItems();
+              },
+              error: (error) => {
+                if (error.error && error.error.errMessage) {
+                  this.errorMessageService.setErrorMessage(
+                    error.error.errMessage
+                  );
+                }
+              },
+            })
+        );
       }
     });
   }
