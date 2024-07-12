@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 import {
   AdminComService,
   AdminDataService,
+  AppComService,
   ErrorMessageService,
   UserAcctInfoDataService,
 } from '../../../_services';
@@ -48,10 +49,11 @@ export class EditPreEducationComponent implements OnInit, OnDestroy {
       stateProvinceAbv: new FormControl(''),
       creditHours: new FormControl(''),
       deliveryMethod: new FormControl(''),
+      educationProviderID: new FormControl(0),
     });
 
     function capitalizeFirstLetter(string: any) {
-      // return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
+      if(typeof string !== 'string') return '';
       return string
         .split('-')
         .map(
@@ -61,21 +63,23 @@ export class EditPreEducationComponent implements OnInit, OnDestroy {
         .join('-');
     }
 
-    this.subscriptionData =
-      this.adminComService.modes.preEducation.changed.subscribe(
+    this.subscriptionData.add(
+      this.adminComService.modes.preEducation.changed
+      .subscribe(
         (mode: string) => {
           if (mode === 'EDIT') {
-            this.adminDataService.preEducationChanged.subscribe(
+            this.adminDataService.preEducationChanged
+            .subscribe(
               (preEducation: any) => {
                 this.preEducationForm.patchValue({
                   preEducationId: preEducation.preEducationId,
-                  companyID: preEducation.companyID,
                   educationName: preEducation.educationName,
                   stateProvinceAbv: preEducation.stateProvinceAbv,
                   creditHours: preEducation.creditHours,
                   deliveryMethod: capitalizeFirstLetter(
                     preEducation.deliveryMethod
                   ),
+                  educationProviderID: preEducation.companyID,
                 });
               }
             );
@@ -87,32 +91,37 @@ export class EditPreEducationComponent implements OnInit, OnDestroy {
               stateProvinceAbv: 'Select',
               deliveryMethod: 'Select',
               preEducationId: 0,
+              educationProviderID: 0,
             });
           }
         }
-      );
+      )
+    );
   }
 
   onSubmit(): void {
     this.isFormSubmitted = true;
     let preEduItem: any = this.preEducationForm.value;
-    // licenseTechItem.jobTitleID = 0;
     preEduItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
-    // this.subscriptionData.add(
-    //   this.adminDataService.upsertJobTitle(preEduItem).subscribe({
-    //     next: (response) => {
-    //       this.callParentRefreshData.emit();
-    //       this.forceCloseModal();
-    //     },
-    //     error: (error) => {
-    //       if (error.error && error.error.errMessage) {
-    //         this.errorMessageService.setErrorMessage(error.error.errMessage);
-    //         this.forceCloseModal();
-    //       }
-    //     },
-    //   })
-    // );
+    if (this.adminComService.modes.preEducation.mode === 'INSERT') {
+      preEduItem.PreEducationID = 0;
+    }
+
+    this.subscriptionData.add(
+      this.adminDataService.upsertPreEducationItem(preEduItem).subscribe({
+        next: (response) => {
+          this.callParentRefreshData.emit();
+          this.forceCloseModal();
+        },
+        error: (error) => {
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+            this.forceCloseModal();
+          }
+        },
+      })
+    );
   }
 
   forceCloseModal() {

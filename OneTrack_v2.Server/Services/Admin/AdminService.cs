@@ -1940,9 +1940,9 @@ namespace OneTrak_v2.Services
 
                             cmd.Parameters.Add(new SqlParameter("@EducationName", vInput.EducationName));
                             cmd.Parameters.Add(new SqlParameter("@CreditHours", vInput.CreditHours));
-                            cmd.Parameters.Add(new SqlParameter("@DeliveryMethod", vInput.StateProvinceAbv));
-                            cmd.Parameters.Add(new SqlParameter("@Fees", vInput.StateProvinceAbv));
-                            cmd.Parameters.Add(new SqlParameter("@EducationProviderID", vInput.StateProvinceAbv));
+                            cmd.Parameters.Add(new SqlParameter("@DeliveryMethod", vInput.DeliveryMethod));
+                            cmd.Parameters.Add(new SqlParameter("@Fees", vInput.Fees));
+                            cmd.Parameters.Add(new SqlParameter("@EducationProviderID", vInput.EducationProviderID));
                             cmd.Parameters.Add(new SqlParameter("@StateProvinceAbv", vInput.StateProvinceAbv));
                             cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
 
@@ -1963,9 +1963,9 @@ namespace OneTrak_v2.Services
                             cmd.Parameters.Add(new SqlParameter("@PreEducationID", vInput.PreEducationID));
                             cmd.Parameters.Add(new SqlParameter("@EducationName", vInput.EducationName));
                             cmd.Parameters.Add(new SqlParameter("@CreditHours", vInput.CreditHours));
-                            cmd.Parameters.Add(new SqlParameter("@DeliveryMethod", vInput.StateProvinceAbv));
-                            cmd.Parameters.Add(new SqlParameter("@Fees", vInput.StateProvinceAbv));
-                            cmd.Parameters.Add(new SqlParameter("@EducationProviderID", vInput.StateProvinceAbv));
+                            cmd.Parameters.Add(new SqlParameter("@DeliveryMethod", vInput.DeliveryMethod));
+                            cmd.Parameters.Add(new SqlParameter("@Fees", vInput.Fees));
+                            cmd.Parameters.Add(new SqlParameter("@EducationProviderID", vInput.EducationProviderID));
                             cmd.Parameters.Add(new SqlParameter("@StateProvinceAbv", vInput.StateProvinceAbv));
                             cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
 

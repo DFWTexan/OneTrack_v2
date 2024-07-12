@@ -52,10 +52,12 @@ export class EditLicenseTechComponent implements OnInit, OnDestroy {
     });
 
     this.subscriptionData.add(
-      this.adminComService.modes.licenseTech.changed.subscribe(
+      this.adminComService.modes.licenseTech.changed
+      .subscribe(
         (mode: string) => {
           if (mode === 'EDIT') {
-            this.adminDataService.licenseTechChanged.subscribe(
+            this.adminDataService.licenseTechChanged
+            .subscribe(
               (licenseTech: any) => {
                 this.licenseTechForm.patchValue({
                   licenseTechId: licenseTech.licenseTechId,

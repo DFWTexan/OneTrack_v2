@@ -43,13 +43,13 @@
 
     <div class="col">
       <div class="mb-3">
-        <label for="companyID" class="form-label"
+        <label for="educationProviderID" class="form-label"
           >Pre-Education Provider:</label
         >
         <select
           class="form-select select-size-medium"
-          id="companyID"
-          formControlName="companyID"
+          id="educationProviderID"
+          formControlName="educationProviderID"
         >
           <option *ngFor="let provider of providers" [value]="provider.value">
             {{ provider.label }}
