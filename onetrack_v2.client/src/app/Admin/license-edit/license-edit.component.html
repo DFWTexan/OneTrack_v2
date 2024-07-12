@@ -365,8 +365,8 @@
                       <th scope="col" *ngIf="appComService.isShowEditID">
                         ExamID
                       </th>
-                      <th scope="col">ExamName</th>
-                      <th scope="col">Exam Provider ID</th>
+                      <th scope="col">Exam Name</th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">Exam Provider ID</th>
                       <th scope="col">Exam Provider</th>
                       <th scope="col">Delivery Method</th>
                       <th scope="col" class="text-center">isActive</th>
@@ -399,7 +399,7 @@
                       <td class="align-middle text-nowrap">
                         {{ preExam.examName }}
                       </td>
-                      <td class="align-middle" style="width: max-content">
+                      <td *ngIf="appComService.isShowEditID" class="align-middle" style="width: max-content">
                         {{ preExam.examProviderID }}
                       </td>
                       <td class="align-middle" style="width: max-content">
@@ -514,7 +514,7 @@
                         PreEducation ID
                       </th>
                       <th scope="col">Education Name</th>
-                      <th scope="col">PreEd Provider</th>
+                      <th scope="col">Pre-Edu Provider</th>
                       <th scope="col">Delivery Method</th>
                       <th scope="col" class="text-center">isActive</th>
                       <th scope="col" class="text-center" style="width: 10rem">
@@ -824,7 +824,10 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-add-pre-exam [preExams]="preExams"></app-add-pre-exam>
+        <app-add-pre-exam
+          [preExams]="preExams"
+          (callParentRefreshData)="onChildCallRefreshData()"
+        ></app-add-pre-exam>
       </div>
     </div>
   </div>
@@ -845,7 +848,9 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-pre-exam-item></app-edit-pre-exam-item>
+        <app-edit-pre-exam-item
+          (callParentRefreshData)="onChildCallRefreshData()"
+        ></app-edit-pre-exam-item>
       </div>
     </div>
   </div>
@@ -909,7 +914,10 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-add-product [products]="products"></app-add-product>
+        <app-add-product
+          [products]="products"
+          (callParentRefreshData)="onChildCallRefreshData()"
+        ></app-add-product>
       </div>
     </div>
   </div>
@@ -930,7 +938,9 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-product-item></app-edit-product-item>
+        <app-edit-product-item
+          (callParentRefreshData)="onChildCallRefreshData()"
+        ></app-edit-product-item>
       </div>
     </div>
   </div>
