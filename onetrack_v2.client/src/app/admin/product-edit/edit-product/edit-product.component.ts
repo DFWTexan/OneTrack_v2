@@ -69,23 +69,26 @@ export class EditProductComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     this.isFormSubmitted = true;
     let productItem: any = this.productForm.value;
-    // licenseTechItem.jobTitleID = 0;
     productItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
-    // this.subscriptionData.add(
-    //   this.adminDataService.upsertJobTitle(preEduItem).subscribe({
-    //     next: (response) => {
-    //       this.callParentRefreshData.emit();
-    //       this.forceCloseModal();
-    //     },
-    //     error: (error) => {
-    //       if (error.error && error.error.errMessage) {
-    //         this.errorMessageService.setErrorMessage(error.error.errMessage);
-    //         this.forceCloseModal();
-    //       }
-    //     },
-    //   })
-    // );
+    if (this.adminComService.modes.product.mode === 'INSERT') {
+      productItem.PreEducationID = 0;
+    }
+
+    this.subscriptionData.add(
+      this.adminDataService.upsertProduct(productItem).subscribe({
+        next: (response) => {
+          this.callParentRefreshData.emit();
+          this.forceCloseModal();
+        },
+        error: (error) => {
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+            this.forceCloseModal();
+          }
+        },
+      })
+    );
   }
 
   forceCloseModal() {

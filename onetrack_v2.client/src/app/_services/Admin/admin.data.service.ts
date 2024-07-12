@@ -1167,6 +1167,51 @@ export class AdminDataService {
       );
   }
 
+  upsertProduct(product: Product) {
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: Product;
+        errMessage: string;
+      }>(this.apiUrl + 'UpsertProduct', product, { observe: 'response' })
+      .pipe(
+        tap({
+          next: (response) => {
+            console.log(response.status);
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        })
+      );
+  }
+
+  deleteProduct(product: any) {
+    return this.http
+      .put<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'DeleteProduct', product)
+      .pipe(
+        tap({
+          next: (response) => {
+            if (response.success && response.statusCode === 200) {
+              // return response;
+            } else {
+              throw new Error(response.errMessage || 'Unknown error');
+            }
+          },
+          error: (error) => {
+            // console.error(error);
+            // throw error;
+          },
+        })
+      );
+  }
+
   // STATE REQUIREMENT
   fetchStateRequirements(
     workState: string | null = null,
@@ -1197,6 +1242,53 @@ export class AdminDataService {
       );
   }
 
+  upSertStateRequirement(stateRequirement: StateRequirement) {
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: StateRequirement;
+        errMessage: string;
+      }>(this.apiUrl + 'UpsertRequiredLicense', stateRequirement, {
+        observe: 'response',
+      })
+      .pipe(
+        tap({
+          next: (response) => {
+            console.log(response.status);
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        })
+      );
+  }
+
+  deleteStateRequirement(stateRequirement: any) {
+    return this.http
+      .put<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'DeleteRequiredLicense', stateRequirement)
+      .pipe(
+        tap({
+          next: (response) => {
+            if (response.success && response.statusCode === 200) {
+              // return response;
+            } else {
+              throw new Error(response.errMessage || 'Unknown error');
+            }
+          },
+          error: (error) => {
+            // console.error(error);
+            // throw error;
+          },
+        })
+      );
+  }
+
   // STATE PROVINCE
   fetchStateProvinces() {
     return this.http
@@ -1213,6 +1305,53 @@ export class AdminDataService {
           } else {
             throw new Error(response.errMessage || 'Unknown error');
           }
+        })
+      );
+  }
+
+  upSertStateProvince(stateProvince: StateProvince) {
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: StateProvince;
+        errMessage: string;
+      }>(this.apiUrl + 'UpsertStateProvince', stateProvince, {
+        observe: 'response',
+      })
+      .pipe(
+        tap({
+          next: (response) => {
+            console.log(response.status);
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        })
+      );
+  }
+
+  deleteStateProvince(stateProvince: any) {
+    return this.http
+      .put<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'DeleteStateProvince', stateProvince)
+      .pipe(
+        tap({
+          next: (response) => {
+            if (response.success && response.statusCode === 200) {
+              // return response;
+            } else {
+              throw new Error(response.errMessage || 'Unknown error');
+            }
+          },
+          error: (error) => {
+            // console.error(error);
+            // throw error;
+          },
         })
       );
   }

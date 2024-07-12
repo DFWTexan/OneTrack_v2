@@ -103,7 +103,9 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-product></app-edit-product>
+        <app-edit-product
+          (callParentRefreshData)="onChildCallRefreshData()"
+        ></app-edit-product>
       </div>
     </div>
   </div>

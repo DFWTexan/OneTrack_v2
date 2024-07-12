@@ -2145,7 +2145,7 @@ namespace OneTrak_v2.Services
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
 
-                            cmd.Parameters.Add(new SqlParameter("@WorkStateAbv", vInput.LicenseID));
+                            cmd.Parameters.Add(new SqlParameter("@WorkStateAbv", vInput.WorkStateAbv));
                             cmd.Parameters.Add(new SqlParameter("@ResStateAbv", vInput.ResStateAbv));
                             cmd.Parameters.Add(new SqlParameter("@LicenseID", vInput.LicenseID));
                             cmd.Parameters.Add(new SqlParameter("@BranchCode", vInput.BranchCode));
@@ -2176,7 +2176,7 @@ namespace OneTrak_v2.Services
                             cmd.CommandType = CommandType.StoredProcedure;
 
                             cmd.Parameters.Add(new SqlParameter("@RequiredLicenseID", vInput.RequiredLicenseID));
-                            cmd.Parameters.Add(new SqlParameter("@WorkStateAbv", vInput.LicenseID));
+                            cmd.Parameters.Add(new SqlParameter("@WorkStateAbv", vInput.WorkStateAbv));
                             cmd.Parameters.Add(new SqlParameter("@ResStateAbv", vInput.ResStateAbv));
                             cmd.Parameters.Add(new SqlParameter("@LicenseID", vInput.LicenseID));
                             cmd.Parameters.Add(new SqlParameter("@BranchCode", vInput.BranchCode));

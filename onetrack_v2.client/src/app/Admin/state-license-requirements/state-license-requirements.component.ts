@@ -22,7 +22,8 @@ import { ConfirmDialogComponent } from '../../_components';
 @Injectable()
 export class StateLicenseRequirementsComponent implements OnInit, OnDestroy {
   loading: boolean = false;
-  states: any[] = [];
+  workStates: any[] = ['Select', ...this.conService.getStates()];
+  residentStates: any[] = ['ALL', ...this.conService.getStates()];
   selectedWorkState: string = 'Select';
   selectedResState: string | null = null;
   stateRequirements: StateRequirement[] = [];
@@ -42,20 +43,22 @@ export class StateLicenseRequirementsComponent implements OnInit, OnDestroy {
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
-  ngOnInit(): void {
-    this.states = ['Select', ...this.conService.getStates()];
-  }
+  ngOnInit(): void {}
 
   private fetchStateRequirements() {
     this.loading = true;
     this.subscriptionData.add(
       this.adminDataService
-        .fetchStateRequirements(this.selectedWorkState, this.selectedResState)
+        .fetchStateRequirements(this.selectedWorkState, this.selectedResState == 'ALL' ? null : this.selectedResState)
         .subscribe((response) => {
           this.stateRequirements = response;
           this.loading = false;
         })
     );
+  }
+
+  onChildCallRefreshData() {
+    this.fetchStateRequirements();
   }
 
   changeWorkState(event: any) {
@@ -78,12 +81,12 @@ export class StateLicenseRequirementsComponent implements OnInit, OnDestroy {
     const value = target.value;
     this.selectedResState = value;
 
-    if (value === 'Select') {
-      return;
-    } else {
-      this.loading = false;
+    // if (value === 'ALL') {
+    //   return;
+    // } else {
+    //   this.loading = false;
       this.fetchStateRequirements();
-    }
+    // }
   }
 
   openConfirmDialog(eventAction: string, msg: string, vObject: any): void {
@@ -103,25 +106,25 @@ export class StateLicenseRequirementsComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // this.subscriptionData.add(
-        //   this.adminDataService
-        //     .deleteExamItem({
-        //       examID: vObject.examId,
-        //       userSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
-        //     })
-        //     .subscribe({
-        //       next: (response) => {
-        //         this.fetchStateRequirements();
-        //       },
-        //       error: (error) => {
-        //         if (error.error && error.error.errMessage) {
-        //           this.errorMessageService.setErrorMessage(
-        //             error.error.errMessage
-        //           );
-        //         }
-        //       },
-        //     })
-        // );
+        this.subscriptionData.add(
+          this.adminDataService
+            .deleteStateRequirement({
+              requiredLicenseID: vObject.requiredLicenseId,
+              userSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
+            })
+            .subscribe({
+              next: (response) => {
+                this.fetchStateRequirements();
+              },
+              error: (error) => {
+                if (error.error && error.error.errMessage) {
+                  this.errorMessageService.setErrorMessage(
+                    error.error.errMessage
+                  );
+                }
+              },
+            })
+        );
       }
     });
   }

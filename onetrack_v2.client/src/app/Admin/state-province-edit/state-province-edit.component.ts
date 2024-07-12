@@ -85,8 +85,9 @@ export class StateProvinceEditComponent implements OnInit, OnDestroy {
       if (result) {
         this.subscriptionData.add(
           this.adminDataService
-            .deleteExamItem({
-              examID: vObject.examId,
+            .deleteStateProvince({
+              stateProvinceCode: vObject.stateProvinceCode,
+              doiAddressID: vObject.doiAddressID,
               userSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
             })
             .subscribe({

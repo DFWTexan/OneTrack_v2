@@ -8,7 +8,7 @@
         id="workState"
         (change)="changeWorkState($event)"
       >
-        <option *ngFor="let state of states" [value]="state">
+        <option *ngFor="let state of workStates" [value]="state">
           {{ state }}
         </option>
       </select>
@@ -22,7 +22,7 @@
         (change)="changeResidentState($event)"
         [disabled]="selectedWorkState == 'Select'"
       >
-        <option *ngFor="let state of states" [value]="state">
+        <option *ngFor="let state of residentStates" [value]="state">
           {{ state }}
         </option>
       </select>
@@ -196,7 +196,8 @@
     <div>
       <div>
         <app-edit-state-requirement
-          [stateProvinces]="states"
+          [stateProvinces]="workStates"
+          (callParentRefreshData)="onChildCallRefreshData()"
         ></app-edit-state-requirement>
       </div>
     </div>
