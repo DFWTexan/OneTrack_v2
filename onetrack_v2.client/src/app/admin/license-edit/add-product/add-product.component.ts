@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { AdminComService, AdminDataService, AppComService, ErrorMessageService, UserAcctInfoDataService } from '../../../_services';
@@ -9,6 +9,7 @@ import { AdminComService, AdminDataService, AppComService, ErrorMessageService, 
   styleUrl: './add-product.component.css'
 })
 export class AddProductComponent implements OnInit, OnDestroy  {
+  @Output() callParentRefreshData = new EventEmitter<any>();
   @Input() products: any[] = [];
   licenseId: number = 0;
 
@@ -32,7 +33,26 @@ export class AddProductComponent implements OnInit, OnDestroy  {
   }
 
   onAddItem(item: any): void {
-    console.log('EMFTEST (onAddCompany) - Add Product Item => \n', item);
+    item.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+
+    this.subscriptionData.add(
+      this.adminDataService.addLicenseProduct(item).subscribe({
+        next: (response) => {
+          alert('Company added successfully');
+          this.callParentRefreshData.emit();
+          // console.log(
+          //   'EMFTEST (app-tm-emptrans-history: deleteJobTitle) - COMPLETED DELETE response => \n',
+          //   response
+          // );
+        },
+        error: (error) => {
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+            this.onCloseModal();
+          }
+        },
+      })
+    );
   }
 
   onCloseModal() {

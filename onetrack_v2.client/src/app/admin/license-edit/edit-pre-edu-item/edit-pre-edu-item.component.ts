@@ -73,9 +73,9 @@ export class EditPreEduItemComponent implements OnInit, OnDestroy {
     let licEduItem: any = this.preEduItemForm.value;
     licEduItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
-    if (this.adminComService.modes.examItem.mode === 'INSERT') {
-      licEduItem.PreEducationID = 0;
-    }
+    // if (this.adminComService.modes.examItem.mode === 'INSERT') {
+    //   licEduItem.PreEducationID = 0;
+    // }
 
     // if (examItem.deliveryMethod === 'Select Method') {
     //   examItem.deliveryMethod = '';
