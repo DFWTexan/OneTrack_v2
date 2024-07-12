@@ -888,7 +888,9 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-pre-edu-item></app-edit-pre-edu-item>
+        <app-edit-pre-edu-item
+          (callParentRefreshData)="onChildCallRefreshData()"
+        ></app-edit-pre-edu-item>
       </div>
     </div>
   </div>

@@ -906,7 +906,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'UpdateLicenseEducation', item)
+      }>(this.apiUrl + 'UpdateLicensePreEducation', item)
       .pipe(
         tap({
           next: (response) => {
@@ -928,7 +928,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'DeleteLicenseEducation', item)
+      }>(this.apiUrl + 'DeleteLicensePreEducation', item)
       .pipe(
         tap({
           next: (response) => {

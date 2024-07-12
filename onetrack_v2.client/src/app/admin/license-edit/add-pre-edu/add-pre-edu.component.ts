@@ -40,8 +40,6 @@ export class AddPreEduComponent implements OnInit, OnDestroy {
   onAddItem(item: any): void {
     item.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
-console.log('EMFTEST (app-admin-license-edit: add-pre-edu) - item => \n', item);
-
     this.subscriptionData.add(
       this.adminDataService.addLicenseEducation(item).subscribe({
         next: (response) => {
