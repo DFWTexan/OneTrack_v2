@@ -762,6 +762,11 @@ export class AgentDataService {
     this.licenseMgmtDataIndexChanged.next(this.licenseMgmtDataIndex);
   }
 
+  updateLicenseMgmtDataIndex(index: number) {
+    this.licenseMgmtDataIndex = index;
+    this.licenseMgmtDataIndexChanged.next(this.licenseMgmtDataIndex);
+  }
+
   // TM EMPLOYMENT TRANSFER HISTORY
   storeEmploymentTransferHistory(
     mode: string | '',

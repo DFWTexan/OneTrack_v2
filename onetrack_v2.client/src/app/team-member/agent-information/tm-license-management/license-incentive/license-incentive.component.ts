@@ -92,6 +92,12 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.currentIndex = this.agentDataService.licenseMgmtDataIndex;
+    this.subscriptions.add(
+      this.agentDataService.licenseMgmtDataIndexChanged.subscribe(
+        (index) => (this.currentIndex = index)
+      )
+    );
+
     this.licenseMgmtData =
       this.agentDataService.agentInformation.agentLicenseAppointments;
     this.employeeLicenseID =

@@ -42,10 +42,14 @@ export class LicenseInfoComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.currentIndex = this.agentDataService.licenseMgmtDataIndex;
+    this.subscriptions.add(
+      this.agentDataService.licenseMgmtDataIndexChanged.subscribe(
+        (index) => (this.currentIndex = index)
+      )
+    );
 
     this.licenseMgmtData =
       this.agentDataService.agentInformation.agentLicenseAppointments;
-
     this.subscriptions.add(
       this.agentDataService.agentLicenseAppointmentsChanged.subscribe(
         (agentLicenseAppointments) => {
@@ -59,14 +63,14 @@ export class LicenseInfoComponent implements OnInit, OnDestroy {
   nextPage() {
     if (this.currentIndex < this.licenseMgmtData.length - 1) {
       this.currentIndex++;
-      this.agentDataService.licenseMgmtDataIndexChanged.next(this.currentIndex);
+      this.agentDataService.updateLicenseMgmtDataIndex(this.currentIndex);
     }
   }
 
   previousPage() {
     if (this.currentIndex > 0) {
       this.currentIndex--;
-      this.agentDataService.licenseMgmtDataIndexChanged.next(this.currentIndex);
+      this.agentDataService.updateLicenseMgmtDataIndex(this.currentIndex);
     }
   }
 

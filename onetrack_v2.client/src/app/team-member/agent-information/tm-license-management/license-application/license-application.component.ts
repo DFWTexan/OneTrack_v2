@@ -51,8 +51,23 @@ export class LicenseApplicationComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.currentIndex = this.agentDataService.licenseMgmtDataIndex;
+    this.subscriptions.add(
+      this.agentDataService.licenseMgmtDataIndexChanged.subscribe((index) => {
+        this.currentIndex = index;
+        this.getData();
+      })
+    );
+
     this.licenseMgmtData =
       this.agentDataService.agentInformation.agentLicenseAppointments;
+    this.subscriptions.add(
+      this.agentDataService.agentLicenseAppointmentsChanged.subscribe(
+        (agentLicenseAppointments) => {
+          this.licenseMgmtData = agentLicenseAppointments;
+          this.getData();
+        }
+      )
+    );
 
     this.getData();
   }
@@ -62,6 +77,9 @@ export class LicenseApplicationComponent implements OnInit, OnDestroy {
   }
 
   getData() {
+
+console.log('EMFTEST (getData) this.licenseMgmtData...');
+
     this.subscriptions.add(
       this.agentDataService
         .fetchAgentLicApplicationInfo(
@@ -108,7 +126,7 @@ export class LicenseApplicationComponent implements OnInit, OnDestroy {
       width: '250px',
       data: {
         title: 'Confirm Action',
-        message: `You are about to DELETE ${msg} - (${this.getId()}). Do you want to proceed?`
+        message: `You are about to DELETE ${msg} - (${this.getId()}). Do you want to proceed?`,
       },
     });
 
@@ -129,7 +147,9 @@ export class LicenseApplicationComponent implements OnInit, OnDestroy {
                   },
                   error: (error) => {
                     if (error.error && error.error.errMessage) {
-                      this.errorMessageService.setErrorMessage(error.error.errMessage);
+                      this.errorMessageService.setErrorMessage(
+                        error.error.errMessage
+                      );
                     }
                   },
                 })
@@ -140,7 +160,8 @@ export class LicenseApplicationComponent implements OnInit, OnDestroy {
             this.subscriptions.add(
               this.licenseDataService
                 .deleteLicensePreEducationItem({
-                  employeeLicensePreEducationID: this.vObject.employeeLicensePreEducationID,
+                  employeeLicensePreEducationID:
+                    this.vObject.employeeLicensePreEducationID,
                   employeeLicenseID: this.vObject.employeeLicenseID,
                   userSOEID: this.userInfoDataService.userAcctInfo.soeid,
                 })
@@ -150,7 +171,9 @@ export class LicenseApplicationComponent implements OnInit, OnDestroy {
                   },
                   error: (error) => {
                     if (error.error && error.error.errMessage) {
-                      this.errorMessageService.setErrorMessage(error.error.errMessage);
+                      this.errorMessageService.setErrorMessage(
+                        error.error.errMessage
+                      );
                     }
                   },
                 })
@@ -161,7 +184,8 @@ export class LicenseApplicationComponent implements OnInit, OnDestroy {
             this.subscriptions.add(
               this.licenseDataService
                 .deleteLicensePreExamItem({
-                  employeeLicensePreExamID: this.vObject.employeeLicensePreExamID,
+                  employeeLicensePreExamID:
+                    this.vObject.employeeLicensePreExamID,
                   employeeLicenseID: this.vObject.employeeLicenseID,
                   userSOEID: this.userInfoDataService.userAcctInfo.soeid,
                 })
@@ -171,7 +195,9 @@ export class LicenseApplicationComponent implements OnInit, OnDestroy {
                   },
                   error: (error) => {
                     if (error.error && error.error.errMessage) {
-                      this.errorMessageService.setErrorMessage(error.error.errMessage);
+                      this.errorMessageService.setErrorMessage(
+                        error.error.errMessage
+                      );
                     }
                   },
                 })

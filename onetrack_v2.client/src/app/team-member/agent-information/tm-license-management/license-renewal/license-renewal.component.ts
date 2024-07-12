@@ -50,6 +50,7 @@ export class LicenseRenewalComponent implements OnInit, OnDestroy {
       this.agentDataService.licenseMgmtDataIndexChanged.subscribe(
         (index: number) => {
           this.currentIndex = index;
+          this.getData();
         }
       )
     );
@@ -60,6 +61,7 @@ export class LicenseRenewalComponent implements OnInit, OnDestroy {
       this.agentDataService.licenseMgmtDataChanged.subscribe(
         (licenseMgmtData: AgentLicenseAppointments) => {
           this.licenseMgmtData = [licenseMgmtData];
+          this.getData();
         }
       )
     );
