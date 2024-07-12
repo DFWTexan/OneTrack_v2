@@ -20,6 +20,7 @@ export interface License {
 }
 
 export interface CompanyItem {
+  licenseID: number;
   licenseCompanyId: number;
   companyId: number;
   companyAbv: string;
@@ -40,6 +41,7 @@ export interface CompanyItem {
 }
 
 export interface PreExamItem {
+  licenseID: number;
   examId: number;
   examName: string | null;
   stateProvinceAbv: string | null;
@@ -51,6 +53,7 @@ export interface PreExamItem {
 }
 
 export interface PreEduItem {
+  licenseID: number;
   licensePreEducationID: number;
   preEducationID: number;
   educationName: string | null;
@@ -63,6 +66,7 @@ export interface PreEduItem {
 }
 
 export interface ProductItem {
+  licenseID: number;
   licenseProductID: number;
   productID: number;
   productName: string | null;

@@ -137,8 +137,6 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
   }
 
   onOpenConfirmDialog(eventAction: string, msg: string, vObject: any): void {
-    // this.licenseIdItem = vObject.licenseID;
-    // this.adminDataService.updateLicenseID(vObject.licenseID);
     this.eventAction = eventAction;
     this.vObject = vObject;
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -214,72 +212,51 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
   }
 
   private deletePreExamItem(item: any): void {
-    // this.subscriptions.add(
-    // this.agentDataService
-    //   .deleteEmploymentJobTitleHistItem({
-    //     employmentID: this.agentDataService.agentInformation.employmentID,
-    //     employmentJobTitleID: jobTitleItem.employmentJobTitleID,
-    //     userSOEID: this.userInfoDataService.userAcctInfo.soeid,
-    //   })
-    //   .subscribe({
-    //     next: (response) => {
-    //       // console.log(
-    //       //   'EMFTEST (app-tm-emptrans-history: deleteJobTitle) - COMPLETED DELETE response => \n',
-    //       //   response
-    //       // );
-    //     },
-    //     error: (error) => {
-    //       console.error(error);
-    //       // handle the error here
-    //     },
-    //   })
-    // );
+    item.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+    this.subscriptionData.add(
+      this.adminDataService.deleteLicenseExam(item).subscribe({
+        next: (response) => {
+          this.fetchLicenseItems();
+        },
+        error: (error) => {
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+          }
+        },
+      })
+    );
   }
 
   private deletePreEducationItem(item: any): void {
-    // this.subscriptions.add(
-    // this.agentDataService
-    //   .deleteEmploymentJobTitleHistItem({
-    //     employmentID: this.agentDataService.agentInformation.employmentID,
-    //     employmentJobTitleID: jobTitleItem.employmentJobTitleID,
-    //     userSOEID: this.userInfoDataService.userAcctInfo.soeid,
-    //   })
-    //   .subscribe({
-    //     next: (response) => {
-    //       // console.log(
-    //       //   'EMFTEST (app-tm-emptrans-history: deleteJobTitle) - COMPLETED DELETE response => \n',
-    //       //   response
-    //       // );
-    //     },
-    //     error: (error) => {
-    //       console.error(error);
-    //       // handle the error here
-    //     },
-    //   })
-    // );
+    item.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+    this.subscriptionData.add(
+      this.adminDataService.deleteLicenseEducation(item).subscribe({
+        next: (response) => {
+          this.fetchLicenseItems();
+        },
+        error: (error) => {
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+          }
+        },
+      })
+    );
   }
 
   private deleteProductItem(item: any): void {
-    // this.subscriptions.add(
-    // this.agentDataService
-    //   .deleteEmploymentJobTitleHistItem({
-    //     employmentID: this.agentDataService.agentInformation.employmentID,
-    //     employmentJobTitleID: jobTitleItem.employmentJobTitleID,
-    //     userSOEID: this.userInfoDataService.userAcctInfo.soeid,
-    //   })
-    //   .subscribe({
-    //     next: (response) => {
-    //       // console.log(
-    //       //   'EMFTEST (app-tm-emptrans-history: deleteJobTitle) - COMPLETED DELETE response => \n',
-    //       //   response
-    //       // );
-    //     },
-    //     error: (error) => {
-    //       console.error(error);
-    //       // handle the error here
-    //     },
-    //   })
-    // );
+    item.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+    this.subscriptionData.add(
+      this.adminDataService.deleteLicenseProduct(item).subscribe({
+        next: (response) => {
+          this.fetchLicenseItems();
+        },
+        error: (error) => {
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+          }
+        },
+      })
+    );
   }
 
   ngOnDestroy(): void {

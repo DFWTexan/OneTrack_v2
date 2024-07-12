@@ -51,7 +51,10 @@
       <mat-accordion
         *ngIf="selectedStateProvince !== 'Select' && licenseItems.length > 0"
       >
-        <mat-expansion-panel *ngFor="let license of licenseItems" [expanded]="license.licenseId === licenseIdItem">
+        <mat-expansion-panel
+          *ngFor="let license of licenseItems"
+          [expanded]="license.licenseId === licenseIdItem"
+        >
           <mat-expansion-panel-header>
             <mat-panel-title style="font-size: large; font-weight: 600">
               {{ license.licenseName }}
@@ -800,7 +803,9 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-company-item></app-edit-company-item>
+        <app-edit-company-item
+          (callParentRefreshData)="onChildCallRefreshData()"
+        ></app-edit-company-item>
       </div>
     </div>
   </div>
@@ -859,7 +864,10 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-add-pre-edu [preEducations]="preEducations"></app-add-pre-edu>
+        <app-add-pre-edu
+          [preEducations]="preEducations"
+          (callParentRefreshData)="onChildCallRefreshData()"
+        ></app-add-pre-edu>
       </div>
     </div>
   </div>

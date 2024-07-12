@@ -732,9 +732,9 @@ export class AdminDataService {
         })
       );
   }
-
+  // //-> LICENSE-COMPANY-ITEM
   addLicenseCompany(item: any) {
-    this.licenseID = item.licenseId;
+    this.licenseID = item.licenseID;
     this.licenseIdChanged.next(this.licenseID);
     return this.http
       .post<{
@@ -755,8 +755,30 @@ export class AdminDataService {
       );
   }
 
+  updateLicenseCompany(item: any) {
+    this.licenseID = item.licenseID;
+    this.licenseIdChanged.next(this.licenseID);
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'UpdateLicenseCompany', item)
+      .pipe(
+        tap({
+          next: (response) => {
+            // console.log(response.status);
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        })
+      );
+  }
+
   deleteLicenseCompany(item: any) {
-    this.licenseID = item.licenseId;
+    this.licenseID = item.licenseID;
     this.licenseIdChanged.next(this.licenseID);
     return this.http
       .put<{
@@ -765,6 +787,219 @@ export class AdminDataService {
         objData: any;
         errMessage: string;
       }>(this.apiUrl + 'DeleteLicenseCompany', item)
+      .pipe(
+        tap({
+          next: (response) => {
+            if (response.success && response.statusCode === 200) {
+              // return response;
+            } else {
+              throw new Error(response.errMessage || 'Unknown error');
+            }
+          },
+          error: (error) => {
+            console.error(error);
+            // throw error;
+          },
+        })
+      );
+  }
+  // //-> LICENSE-EXAM-ITEM
+  addLicenseExam(item: any) {
+    this.licenseID = item.licenseID;
+    this.licenseIdChanged.next(this.licenseID);
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: License;
+        errMessage: string;
+      }>(this.apiUrl + 'AddLicenseExam', item)
+      .pipe(
+        tap({
+          next: (response) => {
+            // console.log(response.status);
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        })
+      );
+  }
+
+  updateLicenseExam(item: any) {
+    this.licenseID = item.licenseID;
+    this.licenseIdChanged.next(this.licenseID);
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'UpdateLicenseExam', item)
+      .pipe(
+        tap({
+          next: (response) => {
+            // console.log(response.status);
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        })
+      );
+  }
+
+  deleteLicenseExam(item: any) {
+    this.licenseID = item.licenseID;
+    this.licenseIdChanged.next(this.licenseID);
+    return this.http
+      .put<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'DeleteLicenseExam', item)
+      .pipe(
+        tap({
+          next: (response) => {
+            if (response.success && response.statusCode === 200) {
+              // return response;
+            } else {
+              throw new Error(response.errMessage || 'Unknown error');
+            }
+          },
+          error: (error) => {
+            console.error(error);
+            // throw error;
+          },
+        })
+      );
+  }
+  // //-> LICENSE-EDUCATION-ITEM
+  addLicenseEducation(item: any) {
+    this.licenseID = item.licenseID;
+    this.licenseIdChanged.next(this.licenseID);
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: License;
+        errMessage: string;
+      }>(this.apiUrl + 'AddLicensePreEducation', item)
+      .pipe(
+        tap({
+          next: (response) => {
+            // console.log(response.status);
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        })
+      );
+  }
+
+  updateLicenseEducation(item: any) {
+    this.licenseID = item.licenseID;
+    this.licenseIdChanged.next(this.licenseID);
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'UpdateLicenseEducation', item)
+      .pipe(
+        tap({
+          next: (response) => {
+            // console.log(response.status);
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        })
+      );
+  }
+
+  deleteLicenseEducation(item: any) {
+    this.licenseID = item.licenseID;
+    this.licenseIdChanged.next(this.licenseID);
+    return this.http
+      .put<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'DeleteLicenseEducation', item)
+      .pipe(
+        tap({
+          next: (response) => {
+            if (response.success && response.statusCode === 200) {
+              // return response;
+            } else {
+              throw new Error(response.errMessage || 'Unknown error');
+            }
+          },
+          error: (error) => {
+            console.error(error);
+            // throw error;
+          },
+        })
+      );
+  }
+  // //-> LICENSE-PRODUCT-ITEM
+  addLicenseProduct(item: any) {
+    this.licenseID = item.licenseID;
+    this.licenseIdChanged.next(this.licenseID);
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: License;
+        errMessage: string;
+      }>(this.apiUrl + 'AddLicenseProduct', item)
+      .pipe(
+        tap({
+          next: (response) => {
+            // console.log(response.status);
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        })
+      );
+  }
+
+  updateLicenseProduct(item: any) {
+    this.licenseID = item.licenseID;
+    this.licenseIdChanged.next(this.licenseID);
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'UpdateLicenseProduct', item)
+      .pipe(
+        tap({
+          next: (response) => {
+            // console.log(response.status);
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        })
+      );
+  }
+
+  deleteLicenseProduct(item: any) {
+    this.licenseID = item.licenseID;
+    this.licenseIdChanged.next(this.licenseID);
+    return this.http
+      .put<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'DeleteLicenseProduct', item)
       .pipe(
         tap({
           next: (response) => {
@@ -972,11 +1207,6 @@ export class AdminDataService {
     this.licenseItem = licenseItem || {};
     this.licenseItemChanged.next(this.licenseItem);
   }
-
-  // updateLicenseID(licenseID: number) {
-  //   this.licenseID = licenseID;
-  //   this.licenseIdChanged.next(this.licenseID);
-  // }
 
   storeCompanyItem(
     mode: string | '',

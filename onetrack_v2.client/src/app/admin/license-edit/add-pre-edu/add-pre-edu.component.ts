@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import {
   AdminComService,
   AdminDataService,
@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs';
   styleUrl: './add-pre-edu.component.css',
 })
 export class AddPreEduComponent implements OnInit, OnDestroy {
+  @Output() callParentRefreshData = new EventEmitter<any>();
   @Input() preEducations: any[] = [];
   licenseId: number = 0;
 
@@ -37,9 +38,28 @@ export class AddPreEduComponent implements OnInit, OnDestroy {
   }
 
   onAddItem(item: any): void {
+    item.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
-    console.log('EMFTEST (onAddCompany) - Add PreEdu Item => \n', item);
+console.log('EMFTEST (app-admin-license-edit: add-pre-edu) - item => \n', item);
 
+    this.subscriptionData.add(
+      this.adminDataService.addLicenseEducation(item).subscribe({
+        next: (response) => {
+          alert('PreEducation added successfully');
+          this.callParentRefreshData.emit();
+          // console.log(
+          //   'EMFTEST (app-tm-emptrans-history: deleteJobTitle) - COMPLETED DELETE response => \n',
+          //   response
+          // );
+        },
+        error: (error) => {
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+            this.onCloseModal();
+          }
+        },
+      })
+    );
   }
 
   onCloseModal() {

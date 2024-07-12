@@ -1,8 +1,8 @@
-import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
+import { Component, Injectable, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { AdminComService, AdminDataService } from '../../../_services';
+import { AdminComService, AdminDataService, ErrorMessageService, UserAcctInfoDataService } from '../../../_services';
 
 @Component({
   selector: 'app-edit-company-item',
@@ -11,16 +11,22 @@ import { AdminComService, AdminDataService } from '../../../_services';
 })
 @Injectable()
 export class EditCompanyItemComponent implements OnInit, OnDestroy {
+  @Output() callParentRefreshData = new EventEmitter<any>();
   companyItemForm!: FormGroup;
+  isFormSubmitted: boolean = false;
+
   subscriptionData: Subscription = new Subscription();
 
   constructor(
+    private errorMessageService: ErrorMessageService,
     public adminDataService: AdminDataService,
-    public adminComService: AdminComService
+    public adminComService: AdminComService,
+    private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {
     this.companyItemForm = new FormGroup({
+      licenseID: new FormControl(0),
       licenseCompanyId: new FormControl(''),
       companyId: new FormControl(''),
       companyAbv: new FormControl(''),
@@ -45,6 +51,7 @@ export class EditCompanyItemComponent implements OnInit, OnDestroy {
         if (mode === 'EDIT') {
           this.adminDataService.companyItemChanged.subscribe((companyItem: any) => {
             this.companyItemForm.patchValue({
+              licenseID: companyItem.licenseID,
               licenseCompanyId: companyItem.licenseCompanyId,
               companyId: companyItem.companyId,
               companyAbv: companyItem.companyAbv,
@@ -70,7 +77,43 @@ export class EditCompanyItemComponent implements OnInit, OnDestroy {
       });
   }
 
-  onSubmit(): void {}
+  onSubmit(): void {
+    this.isFormSubmitted = true;
+    let licCompanyItem: any = this.companyItemForm.value;
+    licCompanyItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+
+    if (this.adminComService.modes.examItem.mode === 'INSERT') {
+      licCompanyItem.examID = 0;
+    }
+
+    // if (examItem.deliveryMethod === 'Select Method') {
+    //   examItem.deliveryMethod = '';
+    //   this.companyForm.controls['companyType'].setErrors({ incorrect: true });
+    // }
+
+    // if (examItem.deliveryMethod === 'Select Method') {
+    //   examItem.deliveryMethod = '';
+    // }
+
+    // if (!this.companyForm.valid) {
+    //   this.companyForm.setErrors({ invalid: true });
+    //   return;
+    // }
+    this.subscriptionData.add(
+      this.adminDataService.updateLicenseCompany(licCompanyItem).subscribe({
+        next: (response) => {
+          this.callParentRefreshData.emit();
+          this.onCloseModal();
+        },
+        error: (error) => {
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+            this.onCloseModal();
+          }
+        },
+      })
+    );
+  }
 
   onCloseModal() {
     const modalDiv = document.getElementById('modal-edit-company-item');
