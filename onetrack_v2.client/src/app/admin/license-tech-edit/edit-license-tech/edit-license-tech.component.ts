@@ -82,23 +82,26 @@ export class EditLicenseTechComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     this.isFormSubmitted = true;
     let licenseTechItem: any = this.licenseTechForm.value;
-    // licenseTechItem.jobTitleID = 0;
     licenseTechItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
-    // this.subscriptionData.add(
-    //   this.adminDataService.upsertJobTitle(licenseTechItem).subscribe({
-    //     next: (response) => {
-    //       this.callParentRefreshData.emit();
-    //       this.forceCloseModal();
-    //     },
-    //     error: (error) => {
-    //       if (error.error && error.error.errMessage) {
-    //         this.errorMessageService.setErrorMessage(error.error.errMessage);
-    //         this.forceCloseModal();
-    //       }
-    //     },
-    //   })
-    // );
+    if (this.adminComService.modes.licenseTech.mode === 'INSERT') {
+      licenseTechItem.licenseTechId = 0;
+    }
+
+    this.subscriptionData.add(
+      this.adminDataService.upSertLicenseTech(licenseTechItem).subscribe({
+        next: (response) => {
+          this.callParentRefreshData.emit();
+          this.forceCloseModal();
+        },
+        error: (error) => {
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+            this.forceCloseModal();
+          }
+        },
+      })
+    );
   }
 
   private forceCloseModal() {

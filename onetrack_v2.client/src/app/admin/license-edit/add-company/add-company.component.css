@@ -1,0 +1,7 @@
+.frozen-div {
+  position: fixed;
+  top: 0; /* Adjust as needed */
+  left: 0; /* Adjust based on your layout */
+  width: 100%; /* Ensure it spans the full width or adjust as needed */
+  z-index: 1000; /* Ensure it stays on top of other content */
+}

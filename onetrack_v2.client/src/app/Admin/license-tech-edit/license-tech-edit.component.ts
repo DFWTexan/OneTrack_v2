@@ -73,25 +73,25 @@ export class LicenseTechEditComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        // this.subscriptionData.add(
-        //   this.adminDataService
-        //     .deleteExamItem({
-        //       examID: vObject.examId,
-        //       userSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
-        //     })
-        //     .subscribe({
-        //       next: (response) => {
-        //         this.fetchLicenseTechItems();
-        //       },
-        //       error: (error) => {
-        //         if (error.error && error.error.errMessage) {
-        //           this.errorMessageService.setErrorMessage(
-        //             error.error.errMessage
-        //           );
-        //         }
-        //       },
-        //     })
-        // );
+        this.subscriptionData.add(
+          this.adminDataService
+            .deleteLicenseTech({
+              LicenseTechID: vObject.licenseTechId,
+              userSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
+            })
+            .subscribe({
+              next: (response) => {
+                this.fetchLicenseTechItems();
+              },
+              error: (error) => {
+                if (error.error && error.error.errMessage) {
+                  this.errorMessageService.setErrorMessage(
+                    error.error.errMessage
+                  );
+                }
+              },
+            })
+        );
       }
     });
   }

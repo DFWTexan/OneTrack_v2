@@ -1037,6 +1037,51 @@ export class AdminDataService {
       );
   }
 
+  upSertLicenseTech(licenseTech: LicenseTech) {
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: LicenseTech;
+        errMessage: string;
+      }>(this.apiUrl + 'UpsertLicenseTech', licenseTech, { observe: 'response' })
+      .pipe(
+        tap({
+          next: (response) => {
+            console.log(response.status);
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        })
+      );
+  }
+
+  deleteLicenseTech(licenseTech: any) {
+    return this.http
+      .put<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'DeleteLicenseTech', licenseTech)
+      .pipe(
+        tap({
+          next: (response) => {
+            if (response.success && response.statusCode === 200) {
+              // return response;
+            } else {
+              throw new Error(response.errMessage || 'Unknown error');
+            }
+          },
+          error: (error) => {
+            // console.error(error);
+            // throw error;
+          },
+        })
+      );
+  }
+
   // PRE-EDUCATION
   fetchPreEducationItems(stateProvince: string) {
     return this.http

@@ -1817,7 +1817,6 @@ namespace OneTrak_v2.Services
         }
         public ReturnResult UpsertLicenseTech([FromBody] IputUpsertLicenseTech vInput)
         {
-
             var result = new ReturnResult();
             try
             {
@@ -1834,10 +1833,10 @@ namespace OneTrak_v2.Services
                             cmd.Parameters.Add(new SqlParameter("@FirstName", vInput.FirstName));
                             cmd.Parameters.Add(new SqlParameter("@LastName", vInput.LastName));
                             cmd.Parameters.Add(new SqlParameter("@TeamNum", vInput.TeamNum));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseTechPhone", vInput.Phone));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseTechFax", vInput.Fax));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseTechEmail", vInput.Email));
-                            cmd.Parameters.Add(new SqlParameter("@IsActive", vInput.Fax));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseTechPhone", vInput.LicenseTechPhone));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseTechFax", vInput.LicenseTechFax));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseTechEmail", vInput.LicenseTechEmail));
+                            cmd.Parameters.Add(new SqlParameter("@IsActive", vInput.IsActive));
                             cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
 
                             conn.Open();
@@ -1859,10 +1858,10 @@ namespace OneTrak_v2.Services
                             cmd.Parameters.Add(new SqlParameter("@FirstName", vInput.FirstName));
                             cmd.Parameters.Add(new SqlParameter("@LastName", vInput.LastName));
                             cmd.Parameters.Add(new SqlParameter("@TeamNum", vInput.TeamNum));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseTechPhone", vInput.Phone));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseTechFax", vInput.Fax));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseTechEmail", vInput.Email));
-                            cmd.Parameters.Add(new SqlParameter("@IsActive", vInput.Fax));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseTechPhone", vInput.LicenseTechPhone));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseTechFax", vInput.LicenseTechFax));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseTechEmail", vInput.LicenseTechEmail));
+                            cmd.Parameters.Add(new SqlParameter("@IsActive", vInput.IsActive));
                             cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
 
                             conn.Open();
