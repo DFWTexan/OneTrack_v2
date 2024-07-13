@@ -62,7 +62,7 @@ export class EditTicklerInfoComponent implements OnInit, OnDestroy {
     // );
 
     this.licenseTechItems =
-      this.ticklerComService.modeTicklerMgmt == 'EDIT'
+      this.ticklerComService.modeTicklerMgmt == 'INSERT'
         ? this.licenseTechItems
         : ['Select', ...this.licenseTechItems];
 
@@ -77,7 +77,7 @@ export class EditTicklerInfoComponent implements OnInit, OnDestroy {
     //     })
     // );
 
-    this.ticklerComService.modeTicklerMgmt == 'EDIT'
+    this.ticklerComService.modeTicklerMgmt == 'INSERT'
       ? this.stockTicklerItems
       : ['Select', ...this.stockTicklerItems];
 
@@ -90,16 +90,16 @@ export class EditTicklerInfoComponent implements OnInit, OnDestroy {
                 (ticklerInfo) => {
                   this.ticklerForm.patchValue({
                     ticklerId: ticklerInfo.ticklerId,
-                    ticklerDate: formatDate(
+                    ticklerDate: ticklerInfo.ticklerDate ? formatDate(
                       ticklerInfo.ticklerDate,
                       'yyyy-MM-dd',
                       'en-US'
-                    ),
-                    ticklerDueDate: formatDate(
+                    ) : null,
+                    ticklerDueDate: ticklerInfo.ticklerDueDate ? formatDate(
                       ticklerInfo.ticklerDueDate,
                       'yyyy-MM-dd',
                       'en-US'
-                    ),
+                    ) : null,
                     licenseTechId: ticklerInfo.licenseTechId,
                     employmentId: ticklerInfo.employmentId,
                     employeeLicenseId: ticklerInfo.employeeLicenseId,
