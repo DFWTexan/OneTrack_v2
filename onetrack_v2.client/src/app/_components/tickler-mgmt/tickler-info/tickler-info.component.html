@@ -63,7 +63,7 @@
               modalService.open('modal-edit-tickler')
             "
           >
-            Insert New Tickler
+            Tickle License Tech
           </button>
         </div>
       </div>
@@ -156,7 +156,10 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-tickler-info></app-edit-tickler-info>
+        <app-edit-tickler-info
+          [licenseTechItems]="licenseTechItems"
+          [stockTicklerItems]="stockTicklerItems"
+        ></app-edit-tickler-info>
       </div>
     </div>
   </div>

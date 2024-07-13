@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
+import { Component, Injectable, OnInit, OnDestroy, Input } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -15,9 +15,11 @@ import { formatDate } from '@angular/common';
 })
 @Injectable()
 export class EditTicklerInfoComponent implements OnInit, OnDestroy {
+  @Input() licenseTechItems: any[] = [];
+  @Input() stockTicklerItems: any[] = [];
   ticklerForm!: FormGroup;
-  licenseTechItems: any[] = [];
-  stockTicklerItems: any[] = [];
+  isFormSubmitted: boolean = false;
+
   subscriptionData: Subscription = new Subscription();
 
   constructor(
@@ -48,58 +50,110 @@ export class EditTicklerInfoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.subscriptionData =
+    // this.subscriptionData.add(
+    //   this.ticklerDataService
+    //     .fetchLicenseTech(0, null)
+    //     .subscribe((licenseTechItems) => {
+    //       this.licenseTechItems =
+    //         this.ticklerComService.modeTicklerMgmt == 'EDIT'
+    //           ? licenseTechItems
+    //           : ['Select', ...licenseTechItems];
+    //     })
+    // );
+
+    this.licenseTechItems =
+      this.ticklerComService.modeTicklerMgmt == 'EDIT'
+        ? this.licenseTechItems
+        : ['Select', ...this.licenseTechItems];
+
+    // this.subscriptionData.add(
+    //   this.ticklerDataService
+    //     .fetchStockTickler()
+    //     .subscribe((stockTicklerItems) => {
+    //       this.stockTicklerItems =
+    //         this.ticklerComService.modeTicklerMgmt == 'EDIT'
+    //           ? stockTicklerItems
+    //           : ['Select', ...stockTicklerItems];
+    //     })
+    // );
+
+    this.ticklerComService.modeTicklerMgmt == 'EDIT'
+      ? this.stockTicklerItems
+      : ['Select', ...this.stockTicklerItems];
+
+    this.subscriptionData.add(
       this.ticklerComService.modeTicklerMgmtChanged.subscribe(
         (mode: string) => {
           if (mode === 'EDIT') {
-            this.ticklerDataService.ticklerInfoChanged.subscribe(
-              (ticklerInfo) => {
-                this.ticklerForm.patchValue({
-                  ticklerId: ticklerInfo.ticklerId,
-                  ticklerDate:  formatDate(ticklerInfo.ticklerDate,
-                    'yyyy-MM-dd',
-                    'en-US'
-                  ),
-                  ticklerDueDate: formatDate(
-                    ticklerInfo.ticklerDueDate,
-                    'yyyy-MM-dd',
-                    'en-US'
-                  ),
-                  licenseTechId: ticklerInfo.licenseTechId,
-                  employmentId: ticklerInfo.employmentId,
-                  employeeLicenseId: ticklerInfo.employeeLicenseId,
-                  employeeId: ticklerInfo.employeeId,
-                  ticklerCloseDate: ticklerInfo.ticklerCloseDate,
-                  ticklerCloseByLicenseTechId:
-                    ticklerInfo.ticklerCloseByLicenseTechId,
-                  lineOfAuthorityName: ticklerInfo.lineOfAuthorityName,
-                  teamMemberName: ticklerInfo.teamMemberName,
-                  geid: ticklerInfo.geid,
-                  message: ticklerInfo.message,
-                  lkpValue: ticklerInfo.lkpValue,
-                });
-              }
+            this.subscriptionData.add(
+              this.ticklerDataService.ticklerInfoChanged.subscribe(
+                (ticklerInfo) => {
+                  this.ticklerForm.patchValue({
+                    ticklerId: ticklerInfo.ticklerId,
+                    ticklerDate: formatDate(
+                      ticklerInfo.ticklerDate,
+                      'yyyy-MM-dd',
+                      'en-US'
+                    ),
+                    ticklerDueDate: formatDate(
+                      ticklerInfo.ticklerDueDate,
+                      'yyyy-MM-dd',
+                      'en-US'
+                    ),
+                    licenseTechId: ticklerInfo.licenseTechId,
+                    employmentId: ticklerInfo.employmentId,
+                    employeeLicenseId: ticklerInfo.employeeLicenseId,
+                    employeeId: ticklerInfo.employeeId,
+                    ticklerCloseDate: ticklerInfo.ticklerCloseDate,
+                    ticklerCloseByLicenseTechId:
+                      ticklerInfo.ticklerCloseByLicenseTechId,
+                    lineOfAuthorityName: ticklerInfo.lineOfAuthorityName,
+                    teamMemberName: ticklerInfo.teamMemberName,
+                    geid: ticklerInfo.geid,
+                    message: ticklerInfo.message,
+                    lkpValue: ticklerInfo.lkpValue,
+                  });
+                }
+              )
             );
           } else {
             this.ticklerForm.reset();
-          } 
+          }
         }
-      );
-      this.ticklerDataService.fetchLicenseTech(0, null).subscribe(
-        (licenseTechItems) => {
-          this.licenseTechItems = licenseTechItems;
-        }
-      );
-      this.ticklerDataService.fetchStockTickler().subscribe(
-        (stockTicklerItems) => {
-          this.stockTicklerItems = stockTicklerItems;
-        }
-      );
+      )
+    );
   }
-
-  ngOnDestroy(): void {}
 
   onSubmit() {
     console.log(this.ticklerForm.value);
+  }
+
+  forceCloseModal() {
+    const modalDiv = document.getElementById('modal-edit-tickler');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+  }
+
+  onCloseModal() {
+    if (this.ticklerForm.dirty && !this.isFormSubmitted) {
+      if (
+        confirm('You have unsaved changes. Are you sure you want to close?')
+      ) {
+        this.forceCloseModal();
+        this.ticklerForm.reset();
+        // this.licPreEduForm.patchValue({
+        //   applicationStatus: 'Select',
+        //   applicationType: 'Select',
+        // });
+      }
+    } else {
+      this.isFormSubmitted = false;
+      this.forceCloseModal();
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.subscriptionData.unsubscribe();
   }
 }
