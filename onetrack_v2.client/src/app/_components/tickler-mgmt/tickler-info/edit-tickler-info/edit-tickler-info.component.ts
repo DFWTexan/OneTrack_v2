@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import {
+  AppComService,
   TicklerMgmtComService,
   TicklerMgmtDataService,
 } from '../../../../_services';
@@ -19,13 +20,15 @@ export class EditTicklerInfoComponent implements OnInit, OnDestroy {
   @Input() stockTicklerItems: any[] = [];
   ticklerForm!: FormGroup;
   isFormSubmitted: boolean = false;
+  today: string = new Date().toISOString().split('T')[0];
 
   subscriptionData: Subscription = new Subscription();
 
   constructor(
     private fb: FormBuilder,
     public ticklerDataService: TicklerMgmtDataService,
-    public ticklerComService: TicklerMgmtComService
+    public ticklerComService: TicklerMgmtComService,
+    public appComService: AppComService
   ) {
     this.createForm();
   }
@@ -50,56 +53,37 @@ export class EditTicklerInfoComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // this.subscriptionData.add(
-    //   this.ticklerDataService
-    //     .fetchLicenseTech(0, null)
-    //     .subscribe((licenseTechItems) => {
-    //       this.licenseTechItems =
-    //         this.ticklerComService.modeTicklerMgmt == 'EDIT'
-    //           ? licenseTechItems
-    //           : ['Select', ...licenseTechItems];
-    //     })
-    // );
-
-    this.licenseTechItems =
-      this.ticklerComService.modeTicklerMgmt == 'INSERT'
-        ? this.licenseTechItems
-        : ['Select', ...this.licenseTechItems];
-
-    // this.subscriptionData.add(
-    //   this.ticklerDataService
-    //     .fetchStockTickler()
-    //     .subscribe((stockTicklerItems) => {
-    //       this.stockTicklerItems =
-    //         this.ticklerComService.modeTicklerMgmt == 'EDIT'
-    //           ? stockTicklerItems
-    //           : ['Select', ...stockTicklerItems];
-    //     })
-    // );
-
-    this.ticklerComService.modeTicklerMgmt == 'INSERT'
-      ? this.stockTicklerItems
-      : ['Select', ...this.stockTicklerItems];
-
     this.subscriptionData.add(
       this.ticklerComService.modeTicklerMgmtChanged.subscribe(
         (mode: string) => {
           if (mode === 'EDIT') {
+            this.licenseTechItems = this.licenseTechItems.filter(
+              (item) =>
+                !(item.licenseTechId === 0 && item.techName === 'Select')
+            );
+            this.stockTicklerItems = this.stockTicklerItems.filter(
+              (item) =>
+                !(item.lkpField === 'Tickler' && item.lkpValue === 'Select')
+            );
             this.subscriptionData.add(
               this.ticklerDataService.ticklerInfoChanged.subscribe(
                 (ticklerInfo) => {
                   this.ticklerForm.patchValue({
                     ticklerId: ticklerInfo.ticklerId,
-                    ticklerDate: ticklerInfo.ticklerDate ? formatDate(
-                      ticklerInfo.ticklerDate,
-                      'yyyy-MM-dd',
-                      'en-US'
-                    ) : null,
-                    ticklerDueDate: ticklerInfo.ticklerDueDate ? formatDate(
-                      ticklerInfo.ticklerDueDate,
-                      'yyyy-MM-dd',
-                      'en-US'
-                    ) : null,
+                    ticklerDate: ticklerInfo.ticklerDate
+                      ? formatDate(
+                          ticklerInfo.ticklerDate,
+                          'yyyy-MM-dd',
+                          'en-US'
+                        )
+                      : null,
+                    ticklerDueDate: ticklerInfo.ticklerDueDate
+                      ? formatDate(
+                          ticklerInfo.ticklerDueDate,
+                          'yyyy-MM-dd',
+                          'en-US'
+                        )
+                      : null,
                     licenseTechId: ticklerInfo.licenseTechId,
                     employmentId: ticklerInfo.employmentId,
                     employeeLicenseId: ticklerInfo.employeeLicenseId,
@@ -117,7 +101,16 @@ export class EditTicklerInfoComponent implements OnInit, OnDestroy {
               )
             );
           } else {
-            this.ticklerForm.reset();
+            this.licenseTechItems = [
+              { licenseTechId: 0, techName: 'Select' },
+              ...this.licenseTechItems,
+            ];
+
+            this.stockTicklerItems = [
+              { lkpField: 'Tickler', lkpValue: 'Select' },
+              ...this.stockTicklerItems,
+            ];
+            this.ticklerForm.reset({ lkpValue: 'Select', licenseTechId: 0 });
           }
         }
       )

@@ -16,7 +16,7 @@
     </select>
   </div>
 
-  <div class="form-group" *ngIf="ticklerComService.modeTicklerMgmt == 'EDIT'">
+  <div class="form-group" *ngIf="ticklerComService.modeTicklerMgmt == 'EDIT' && appComService.isShowEditID">
     <label for="ticklerId">Tickler ID:</label>
     <input
       class="form-control input-size-small"
@@ -57,14 +57,15 @@
   </div>
 
   <div class="form-group">
-    <label for="ticklerDate">Due Date:</label>
+    <label for="ticklerDueDate">Due Date:</label>
     <span class="required ms-2" style="color: red;">*</span>
     <input
-      id="ticklerDate"
+      id="ticklerDueDate"
       type="date"
-      formControlName="ticklerDate"
       class="form-control input-size-small"
+      formControlName="ticklerDueDate"
       [value]="ticklerForm.get('ticklerDueDate')?.value"
+      [min]="today"
     />
   </div>
 
@@ -75,6 +76,7 @@
       class="form-select select-size-med-small"
       type="text"
       id="stockTicker"
+      formControlName="lkpValue"
       [value]="ticklerForm.get('lkpValue')?.value"
     >
       <option *ngFor="let item of stockTicklerItems" [value]="item.lkpValue">
