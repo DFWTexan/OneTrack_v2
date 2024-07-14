@@ -12,6 +12,8 @@
         public string? BranchName { get; set; }
         public int? EmploymentID { get; set; }
         public string? State { get; set; }
+        public string? FirstName { get; set; }
+        public string? LastName { get; set; }
 
     }
 }

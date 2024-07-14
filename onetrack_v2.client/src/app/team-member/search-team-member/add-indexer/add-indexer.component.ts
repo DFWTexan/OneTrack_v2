@@ -6,10 +6,12 @@ import {
   AppComService,
   ConstantsDataService,
   DropdownDataService,
+  EmployeeDataService,
   ErrorMessageService,
   MiscDataService,
   UserAcctInfoDataService,
 } from '../../../_services';
+import { EmployeeSearchResult } from '../../../_Models';
 
 @Component({
   selector: 'app-add-indexer',
@@ -26,12 +28,18 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
   defaultDocumentType: string = 'Select';
   documentSubTypes: string[] = [];
   selectedDocumentType: any | null = null;
+  FileDisplayMode = 'CHOOSEFILE'; //--> CHOSEFILE / ATTACHMENT
+  file: File | null = null;
+  fileUri: string | null = null;
+  document: string = '';
+  employee: EmployeeSearchResult | null = null;
 
   private subscriptionData = new Subscription();
 
   constructor(
     public errorMessageService: ErrorMessageService,
     private conService: ConstantsDataService,
+    private employeeDataService: EmployeeDataService,
     public miscDataService: MiscDataService,
     public appComService: AppComService,
     private dropdownDataService: DropdownDataService,
@@ -42,6 +50,17 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.employee = this.employeeDataService.selectedEmployee;
+    this.subscriptionData.add(
+      this.employeeDataService.selectedEmployeeChanged.subscribe(
+        (employee: EmployeeSearchResult | null) => {
+          if (employee !== null) {
+            this.employee = employee;
+          }
+        }
+      )
+    );
+    
     this.branchNames = [{ value: null, label: 'Select' }, ...this.dropdownDataService.branchNames];
     
     this.scoreNumbers = [{ value: 0, label: 'Select' }, ...this.dropdownDataService.scoreNumbers];

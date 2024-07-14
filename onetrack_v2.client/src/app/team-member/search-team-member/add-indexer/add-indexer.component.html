@@ -2,20 +2,24 @@
   <div class="row ms-1">
     <div class="col">
       <div class="form-group" *ngIf="appComService.isShowEditID">
-        <label for="employeeId">EmployeeID:</label>
+        <label for="employeeId">EmployeeID:</label><br />
+        {{ employee?.employeeID }}
       </div>
       <div class="form-group">
-        <label for="employeeId">First Name:</label>
-      </div>
-    </div>
-    <div class="col">
-      <div class="form-group">
-        <label for="employeeId">Last Name:</label>
+        <label for="employeeId">First Name:</label><br />
+        {{  employee?.firstName }}
       </div>
     </div>
     <div class="col">
       <div class="form-group">
-        <label for="employeeId">Team #:</label>
+        <label for="employeeId">Last Name:</label><br />
+        {{ employee?.lastName }}
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <label for="employeeId">Team #:</label><br />
+        {{ employee?.geid }}
       </div>
     </div>
   </div>
@@ -235,12 +239,17 @@
       <option value="">Select Doc Sub Type</option>
     </select>
   </div> -->
-
-  <div class="form-group">
-    <label for="fileUpload">Select File:</label>
-    <!-- <input type="file" id="fileUpload" name="fileUpload" (change)="onFileSelect($event)"> -->
-    <input type="file" id="fileUpload" name="fileUpload" />
+<div class="row ms-1 mt-1 mb-3">
+  <div class="col-md-12">
+    <app-file-upload
+      [filePathUri]="fileUri"
+      [displayMode]="FileDisplayMode"
+      (fileSelected)="onFileSelected($event)"
+      #fileUpload
+    ></app-file-upload>
   </div>
+</div>
+  
 
   <mat-divider></mat-divider>
 

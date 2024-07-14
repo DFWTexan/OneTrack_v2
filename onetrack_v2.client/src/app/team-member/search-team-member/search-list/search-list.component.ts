@@ -17,22 +17,25 @@ import {
 export class SearchListComponent implements OnInit, OnDestroy {
   searchEmployeeResults: EmployeeSearchResult[] = [];
   subscription: Subscription = new Subscription();
-  
+
   constructor(
-    private emplyService: EmployeeDataService,
+    public emplyService: EmployeeDataService,
     public modalService: ModalService,
     public paginationComService: PaginationComService
   ) {}
 
   ngOnInit() {
-    this.subscription =
+    this.subscription.add(
       this.emplyService.employeeSearchResultsChanged.subscribe(
         (employeeSearchResults: EmployeeSearchResult[]) => {
           this.searchEmployeeResults = employeeSearchResults;
-          this.paginationComService.updateDisplayItems(this.searchEmployeeResults);
+          this.paginationComService.updateDisplayItems(
+            this.searchEmployeeResults
+          );
           this.paginationComService.updatePaginatedResults();
         }
-      );
+      )
+    );
   }
 
   ngOnDestroy() {

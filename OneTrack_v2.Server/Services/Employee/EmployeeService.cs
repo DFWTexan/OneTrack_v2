@@ -155,7 +155,9 @@ namespace OneTrack_v2.Services
 	                         ISNULL(bdh.ScoreNumber,'0000') AS ScoreNumber,
                              ISNULL(bdh.Name,'UNKNOWN') AS BranchName,
                              m.EmploymentID,
-	                         a.[State]
+	                         a.[State],
+                             e.FirstName,
+                             e.LastName
                         FROM dbo.EmployeeSSN ss
                         RIGHT OUTER JOIN dbo.Employee e ON ss.EmployeeSSNID = e.EmployeeSSNID
                         INNER JOIN dbo.Employment m ON e.EmployeeID = m.EmployeeID
@@ -195,7 +197,9 @@ namespace OneTrack_v2.Services
 	                         ISNULL(bdh.ScoreNumber,'0000') ,
                              ISNULL(bdh.Name,'UNKNOWN'),
                              m.EmploymentID,
-	                         a.[State]
+	                         a.[State],
+                             e.FirstName,
+                             e.LastName
                         ORDER BY  
                              CONCAT(e.LastName,', ',e.FirstName,' ', LEFT(e.MiddleName,1)) ";
 

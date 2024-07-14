@@ -8,4 +8,6 @@ export interface EmployeeSearchResult {
     branchName: string;
     employmentID: number;
     State: string;
+    firstName: string;
+    lastName: string;
   }
