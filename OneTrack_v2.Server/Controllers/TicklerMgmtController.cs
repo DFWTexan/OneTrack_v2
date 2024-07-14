@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OneTrack_v2.Services;
+using OneTrak_v2.DataModel;
 using OneTrak_v2.Services;
 
 namespace OneTrak_v2.Server.Controllers
@@ -37,6 +38,30 @@ namespace OneTrak_v2.Server.Controllers
         public async Task<ActionResult> GetLicenseTech(int licenseTechID, string? soeid)
         {
             var result = await Task.Run(() => _ticklerMgmt.GetLicenseTech(licenseTechID, soeid));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> UpsertTickler([FromBody] IputUpsertTicklerMgmt input)
+        {
+            var result = await Task.Run(() => _ticklerMgmt.UpsertTickler(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> ClosetTickler([FromBody] IputCloseTicklerMgmt input)
+        {
+            var result = await Task.Run(() => _ticklerMgmt.ClosetTickler(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> DeleteTickler([FromBody] IputDeleteTicklerMgmt input)
+        {
+            var result = await Task.Run(() => _ticklerMgmt.DeleteTickler(input));
 
             return StatusCode(result.StatusCode, result);
         }

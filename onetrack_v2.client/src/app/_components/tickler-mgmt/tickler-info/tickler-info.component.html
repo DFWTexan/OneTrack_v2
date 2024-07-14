@@ -25,7 +25,7 @@
       class="row p-3 sticky-top"
       style="
         top: 0;
-        background-color: #9370DB;
+        background-color: #9370db;
         /* opacity: 0.7; */
         z-index: 1020;
         color: white;
@@ -129,10 +129,20 @@
                 >
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
-                <button class="btn btn-secondary" type="button">Close</button>
-                <!-- <button class="icon-edit-delete-button" type="button">
-                  <span class="material-symbols-outlined"> find_in_page </span>
-                </button> -->
+                <button
+                  class="icon-edit-delete-button"
+                  type="button"
+                  (click)="onDeleteTicklerItem(item)"
+                >
+                  <span class="material-symbols-outlined"> delete </span>
+                </button>
+                <button
+                  class="btn btn-secondary"
+                  type="button"
+                  (click)="onCloseTicklerItem(item)"
+                >
+                  Close
+                </button>
               </div>
             </div>
           </div>
@@ -161,6 +171,7 @@
         <app-edit-tickler-info
           [licenseTechItems]="licenseTechItems"
           [stockTicklerItems]="stockTicklerItems"
+          (callParentRefreshData)="onChildCallRefreshData()"
         ></app-edit-tickler-info>
       </div>
     </div>

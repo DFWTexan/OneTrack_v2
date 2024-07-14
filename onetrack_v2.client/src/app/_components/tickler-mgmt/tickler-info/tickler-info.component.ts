@@ -1,5 +1,6 @@
 import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 
 import {
@@ -8,8 +9,10 @@ import {
   ModalService,
   TicklerMgmtComService,
   TicklerMgmtDataService,
+  UserAcctInfoDataService,
 } from '../../../_services';
 import { AgentInfo, StockTickler, TicklerInfo } from '../../../_Models';
+import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-tickler-info',
@@ -23,11 +26,9 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
   licenseTechItems: any = ['Loading...'];
   selectedLicenseTechID: number = 0;
   ticklerInfoItems: TicklerInfo[] = [];
+  eventAction: string = '';
+  vObject: any = {};
 
-  // subscriptions
-  // subscribeStockTicklerData: Subscription = new Subscription();
-  // subscribeLicenseTechData: Subscription = new Subscription();
-  // subscribeTicklerInfoData: Subscription = new Subscription();
   subscriptionData: Subscription = new Subscription();
 
   constructor(
@@ -36,7 +37,9 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
     private agentDataService: AgentDataService,
     public agentComService: AgentComService,
     public router: Router,
-    protected modalService: ModalService
+    public dialog: MatDialog,
+    protected modalService: ModalService,
+    private userInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {
@@ -98,6 +101,24 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
     }
   }
 
+  onChildCallRefreshData(): void {
+
+console.log('EMFTEST () - onChildCallRefreshData...');    
+
+    this.fetchTicklerInfo();
+  }
+
+  private fetchTicklerInfo(): void {
+    this.subscriptionData.add(
+      this.ticklerMgmtDataService
+        .fetchTicklerInfo(0, this.selectedLicenseTechID, 0)
+        .subscribe((ticklerInfoItems: any) => {
+          this.ticklerInfoItems = ticklerInfoItems;
+          this.loading = false;
+        })
+    );
+  }
+
   onChangeStockTicklerItems(event: Event): void {
     this.loading = true;
     const target = event.target as HTMLInputElement;
@@ -105,14 +126,101 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
 
     this.selectedLicenseTechID = +value;
 
-    this.subscriptionData.add(
-      this.ticklerMgmtDataService
-        .fetchTicklerInfo(0, +value, 0)
-        .subscribe((ticklerInfoItems: any) => {
-          this.ticklerInfoItems = ticklerInfoItems;
-          this.loading = false;
-        })
-    );
+    // this.subscriptionData.add(
+    //   this.ticklerMgmtDataService
+    //     .fetchTicklerInfo(0, +value, 0)
+    //     .subscribe((ticklerInfoItems: any) => {
+    //       this.ticklerInfoItems = ticklerInfoItems;
+    //       this.loading = false;
+    //     })
+    // );
+    this.fetchTicklerInfo();
+  }
+
+  onCloseTicklerItem(ticklerInfo: TicklerInfo): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+        title: 'Confirm Action',
+        message:
+          'You are about to CLOSE Tickler Item (' +
+          ticklerInfo.ticklerId +
+          ') - ' +
+          ticklerInfo.lkpValue +
+          '. Do you want to proceed?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.agentDataService
+          .deleteAgentLicense({
+            employmentID: this.vObject.employmentID,
+            employeeLicenseID: this.vObject.employeeLicenseID,
+            userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+          })
+          .subscribe({
+            next: (response) => {
+              this.router
+                .navigateByUrl('/', { skipLocationChange: true })
+                .then(() => {
+                  this.router.navigate([
+                    'team/agent-info',
+                    this.agentDataService.agentInformation.employeeID,
+                    'tm-license-mgmt',
+                  ]);
+                });
+            },
+            error: (error) => {
+              console.error(error);
+              // handle the error here
+            },
+          });
+      }
+    });
+  }
+
+  onDeleteTicklerItem(ticklerInfo: TicklerInfo): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+        title: 'Confirm Action',
+        message:
+          'You are about to DELETE Tickler Item (' +
+          ticklerInfo.ticklerId +
+          ') - ' +
+          ticklerInfo.lkpValue +
+          '. Do you want to proceed?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.agentDataService
+          .deleteAgentLicense({
+            employmentID: this.vObject.employmentID,
+            employeeLicenseID: this.vObject.employeeLicenseID,
+            userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+          })
+          .subscribe({
+            next: (response) => {
+              this.router
+                .navigateByUrl('/', { skipLocationChange: true })
+                .then(() => {
+                  this.router.navigate([
+                    'team/agent-info',
+                    this.agentDataService.agentInformation.employeeID,
+                    'tm-license-mgmt',
+                  ]);
+                });
+            },
+            error: (error) => {
+              console.error(error);
+              // handle the error here
+            },
+          });
+      }
+    });
   }
 
   ngOnDestroy(): void {

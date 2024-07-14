@@ -1,10 +1,12 @@
 ﻿using DataModel.Response;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
 using OneTrack_v2.DbData;
 using OneTrack_v2.DbData.Models;
 using OneTrack_v2.Services;
 using OneTrak_v2.DataModel;
+using System.Data;
 using System.Linq;
 
 namespace OneTrak_v2.Services
@@ -12,11 +14,15 @@ namespace OneTrak_v2.Services
     public class TicklerMgmtService : ITicklerMgmtService
     {
         private readonly AppDataContext _db;
+        private readonly IConfiguration _config;
         private readonly IUtilityHelpService _utilityService;
+        private readonly string? _connectionString;
 
-        public TicklerMgmtService(AppDataContext db, IUtilityHelpService utilityHelpService)
+        public TicklerMgmtService(AppDataContext db, IConfiguration config, IUtilityHelpService utilityHelpService)
         {
             _db = db;
+            _config = config;
+            _connectionString = _config.GetConnectionString(name: "DefaultConnection");
             _utilityService = utilityHelpService;
         }
 
@@ -153,6 +159,151 @@ namespace OneTrak_v2.Services
                 result.ErrMessage = ex.Message;
 
                 _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+            }
+
+            return result;
+        }
+        public ReturnResult UpsertTickler([FromBody] IputUpsertTicklerMgmt vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                if (vInput.TicklerID == 0)
+                {
+                    // INSERT Tickler
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspTicklerInsert", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@LkpValue", vInput.LkpValue));
+                            cmd.Parameters.Add(new SqlParameter("@Message", vInput.Message));
+                            cmd.Parameters.Add(new SqlParameter("@TicklerDate", vInput.TicklerDate));
+                            cmd.Parameters.Add(new SqlParameter("@TicklerDueDate", vInput.TicklerDueDate));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseTechID", vInput.LicenseTechID));
+                            cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeLicenseID", vInput.EmployeeLicenseID));
+                            cmd.Parameters.Add(new SqlParameter("@TicklerCloseDate", vInput.TicklerCloseDate));
+                            cmd.Parameters.Add(new SqlParameter("@TicklerCloseByLicenseTechID", vInput.TicklerCloseByLicenseTechID));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                else
+                {
+                    // UPDATE Tickler
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspTicklerUpdate", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@TicklerID", vInput.TicklerID));
+                            cmd.Parameters.Add(new SqlParameter("@LkpValue", vInput.LkpValue));
+                            cmd.Parameters.Add(new SqlParameter("@Message", vInput.Message));
+                            cmd.Parameters.Add(new SqlParameter("@TicklerDate", vInput.TicklerDate));
+                            cmd.Parameters.Add(new SqlParameter("@TicklerDueDate", vInput.TicklerDueDate));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseTechID", vInput.LicenseTechID));
+                            cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeLicenseID", vInput.EmployeeLicenseID));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "Tickler Created/Updated Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# TCKLR-1509-49597].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;
+        }
+        public ReturnResult ClosetTickler([FromBody] IputCloseTicklerMgmt vInput)
+        {
+
+            var result = new ReturnResult();
+            try
+            {
+                // CLOSE Tickler
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspTicklerClose", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@TicklerID", vInput.TicklerID));
+                        cmd.Parameters.Add(new SqlParameter("@TicklerCloseByLicenseTechID", vInput.TicklerCloseByLicenseTechID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "Tickler Closed Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# TCKLR-1509-29197].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;
+        }
+        public ReturnResult DeleteTickler([FromBody] IputDeleteTicklerMgmt vInput)
+        {
+             var result = new ReturnResult();
+            try
+            {
+                // DELETE Tickler
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspTicklerDelete", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add(new SqlParameter("@TicklerID", vInput.TicklerID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                result.Success = true;
+                result.ObjData = new { Message = "Tickler Deleted Successfully." };
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# TCKLR-1509-29133].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
             }
 
             return result;

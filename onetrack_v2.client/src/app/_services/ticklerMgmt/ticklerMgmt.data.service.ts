@@ -106,6 +106,65 @@ export class TicklerMgmtDataService {
       );
   }
 
+  upsertTickerItem(ticklerInfo: any): Observable<TicklerInfo> {
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'UpsertTickler', ticklerInfo)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            this.ticklerInfo = response.objData;
+            this.ticklerInfoChanged.next(this.ticklerInfo);
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  closeTicklerItem(ticklerInfo: any): Observable<boolean> {
+    return this.http
+      .put<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'CloseTickler/', ticklerInfo)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            return true;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  deleteTicklerItem(ticklerInfo: any): Observable<boolean> {
+    return this.http
+      .put<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'DeleteTickler/', ticklerInfo)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            return true;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
   storeTicklerInfo(mode: string | '', ticklerInfo: any | null) {
     this.ticklerMgmtComService.modeTicklerMgmtModal(mode);
     this.ticklerInfo = ticklerInfo || {};

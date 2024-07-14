@@ -1,11 +1,21 @@
-import { Component, Injectable, OnInit, OnDestroy, Input } from '@angular/core';
+import {
+  Component,
+  Injectable,
+  OnInit,
+  OnDestroy,
+  Input,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import {
   AppComService,
+  ErrorMessageService,
   TicklerMgmtComService,
   TicklerMgmtDataService,
+  UserAcctInfoDataService,
 } from '../../../../_services';
 import { formatDate } from '@angular/common';
 
@@ -16,6 +26,7 @@ import { formatDate } from '@angular/common';
 })
 @Injectable()
 export class EditTicklerInfoComponent implements OnInit, OnDestroy {
+  @Output() callParentRefreshData = new EventEmitter<any>();
   @Input() licenseTechItems: any[] = [];
   @Input() stockTicklerItems: any[] = [];
   ticklerForm!: FormGroup;
@@ -26,9 +37,11 @@ export class EditTicklerInfoComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
+    private errorMessageService: ErrorMessageService,
     public ticklerDataService: TicklerMgmtDataService,
     public ticklerComService: TicklerMgmtComService,
-    public appComService: AppComService
+    public appComService: AppComService,
+    private userAcctInfoDataService: UserAcctInfoDataService
   ) {
     this.createForm();
   }
@@ -118,7 +131,34 @@ export class EditTicklerInfoComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    console.log(this.ticklerForm.value);
+    this.isFormSubmitted = true;
+    let ticklerItem: any = this.ticklerForm.value;
+    ticklerItem.ticklerID = this.ticklerForm.get('ticklerId')?.value
+    ticklerItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+
+    if (this.ticklerComService.modeTicklerMgmt === 'INSERT') {
+      ticklerItem.PreEducationID = 0;
+    }
+
+    if (this.ticklerForm.invalid) {
+      this.ticklerForm.setErrors({ invalid: true });
+      return;
+    }
+
+    this.subscriptionData.add(
+      this.ticklerDataService.upsertTickerItem(ticklerItem).subscribe({
+        next: (response) => {
+          this.callParentRefreshData.emit();
+          this.forceCloseModal();
+        },
+        error: (error) => {
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+            this.forceCloseModal();
+          }
+        },
+      })
+    );
   }
 
   forceCloseModal() {
