@@ -161,6 +161,46 @@ export class MiscDataService {
       );
   }
 
+  fetchDocumetTypes() {
+    const url = this.url + 'GetDocumentTypes';
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: Array<string>;
+        errMessage: string;
+      }>(url)
+      .pipe(
+        map((response) => {
+          if (response.success && response.objData) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  fetchDocumetSubTypes(docType: string) {
+    const url = this.url + 'GetDocumentSubTypes/' + docType;
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: Array<string>;
+        errMessage: string;
+      }>(url)
+      .pipe(
+        map((response) => {
+          if (response.success && response.objData) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
   // fetchLineOfAuthorities() {
   //   const url = this.url + 'GetLicenseLineOfAuthority';
   //   return this.http

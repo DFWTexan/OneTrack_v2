@@ -841,5 +841,61 @@ namespace OneTrack_v2.Services
 
             return result;
         }
+        public ReturnResult GetDocumentTypes()
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var query = _db.Communications
+                               .AsNoTracking()
+                               .Where(c => c.IsActive == true)
+                               .Select(c => c.DocType)
+                               .Distinct()
+                               .ToList();
+
+                result.Success = true;
+                result.ObjData = query;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "MISC-GetDocumentTypes", new { }, null);
+            }
+
+            return result;
+        }
+        public ReturnResult GetDocumentSubTypes(string vType)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var query = _db.Communications
+                               .AsNoTracking()
+                               .Where(c => c.IsActive == true && c.DocType == vType)
+                               .Select(c => c.DocSubType)
+                               .Distinct()
+                               .ToList();
+
+                result.Success = true;
+                result.ObjData = query;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "MISC-GetDocumentSubTypes", new { }, null);
+            }
+
+            return result;
+        }
     }
 }

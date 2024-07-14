@@ -195,6 +195,13 @@ export class AppComponent implements OnInit, OnDestroy {
           this.drpdwnDataService.updateLineOfAuthorities(items);
         })
     );
+    this.subscriptions.add(
+      this.miscDataService
+        .fetchDocumetTypes()
+        .subscribe((items: string[]) => {
+          this.drpdwnDataService.updateDocumentTypes(items);
+        })
+    );
   }
 
   title = 'onetrack_v2';

@@ -239,5 +239,21 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpGet]
+        public async Task<ActionResult> GetDocumentTypes()
+        {
+            var result = await Task.Run(() => _miscService.GetDocumentTypes());
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpGet("{type}")]
+        public async Task<ActionResult> GetDocumentSubTypes(string type)
+        {
+            var result = await Task.Run(() => _miscService.GetDocumentSubTypes(type));
+
+            return StatusCode(result.StatusCode, result);
+        }
     }
 }

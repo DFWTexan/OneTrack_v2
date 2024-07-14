@@ -34,5 +34,7 @@ namespace OneTrack_v2.Services
         public ReturnResult GetDropdownByType(string vLkpField);
         public ReturnResult GetExamProviders();
         public ReturnResult GetLicenseLineOfAuthority();
+        public ReturnResult GetDocumentTypes();
+        public ReturnResult GetDocumentSubTypes(string vType);
     }
 }
