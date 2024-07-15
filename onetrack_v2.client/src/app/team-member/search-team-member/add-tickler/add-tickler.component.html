@@ -1,59 +1,61 @@
-<form #ticklerForm="ngForm" (ngSubmit)="onSubmit(ticklerForm)">
-  <div class="form-group">
-    <label for="assignment">Assignment</label>
-    <select
-      class="form-control"
-      id="assignment"
-      name="assignment"
-      ngModel
-      required
-    >
-      <option value="">UNASSIGNED UNASSIGNED</option>
-      <!-- Add more options here -->
-    </select>
-  </div>
+<form [formGroup]="ticklerForm" (ngSubmit)="onSubmit()">
+  <div class="row">
+    <div class="col">
+      <div class="form-group">
+        <label for="licenseTechId">Assignment:</label>
+        <select
+          class="form-select select-size-medium"
+          type="text"
+          id="licenseTechId"
+          formControlName="licenseTechId"
+        >
+          <option *ngFor="let tech of licenseTechs" [value]="tech.value">
+            {{ tech.label }}
+          </option>
+        </select>
+      </div>
 
-  <div class="form-group">
-    <label for="memberNumber">Team Member Number</label>
-    <input
-      type="text"
-      class="form-control"
-      id="memberNumber"
-      name="memberNumber"
-      ngModel
-      required
-    />
-  </div>
+      <div class="form-group">
+        <label for="memberNumber">Team Member Number:</label><br />
+        {{ employee?.geid }}
+      </div>
 
-  <div class="form-group">
-    <label for="memberName">Team Member Name</label>
-    <input
-      type="text"
-      class="form-control"
-      id="memberName"
-      name="memberName"
-      ngModel
-      required
-    />
-  </div>
+      <div class="form-group">
+        <label for="memberName">Team Member Name:</label><br />
+        {{ employee?.name }}
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <label for="ticklerDueDate">Due Date:</label>
+        <span class="required ms-2" style="color: red">*</span>
+        <input
+          id="ticklerDueDate"
+          type="date"
+          class="form-control input-size-small"
+          formControlName="ticklerDueDate"
+          [min]="today"
+        />
+      </div>
 
-  <div class="form-group">
-    <label for="dueDate">Due Date</label>
-    <input
-      type="date"
-      class="form-control"
-      id="dueDate"
-      name="dueDate"
-      ngModel
-    />
-  </div>
-
-  <div class="form-group">
-    <label for="stockTickler">Stock Tickler Messages</label>
-    <select class="form-control" id="stockTickler" name="stockTickler" ngModel>
-      <option value="">Please select</option>
-      <!-- Add more options here -->
-    </select>
+      <div class="form-group">
+        <label for="stockTicker">Stock Tickler Message:</label>
+        <span class="required ms-2" style="color: red">*</span>
+        <select
+          class="form-select select-size-med-small"
+          type="text"
+          id="stockTicker"
+          formControlName="lkpValue"
+        >
+          <option
+            *ngFor="let item of stockTicklerItems"
+            [value]="item.lkpValue"
+          >
+            {{ item.lkpValue }}
+          </option>
+        </select>
+      </div>
+    </div>
   </div>
 
   <mat-divider></mat-divider>
@@ -63,7 +65,13 @@
       <button type="button" class="btn btn-secondary me-4" (click)="onCancel()">
         Cancel
       </button>
-      <button type="submit" class="btn btn-primary">Insert</button>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="ticklerForm.pristine"
+      >
+        Insert
+      </button>
     </div>
   </div>
 </form>

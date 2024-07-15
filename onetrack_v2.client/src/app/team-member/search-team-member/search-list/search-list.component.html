@@ -61,7 +61,10 @@
                   class="icon-edit-delete-button"
                   type="button"
                   title="Tickle"
-                  (click)="modalService.open('modal-new-tickler')"
+                  (click)="
+                    modalService.open('modal-new-tickler');
+                    emplyService.updateSelectedEmployee(teamMember)
+                  "
                 >
                   <span class="material-symbols-outlined"> chat </span>
                 </button>
@@ -71,8 +74,9 @@
                   class="icon-edit-delete-button"
                   type="button"
                   title="Document(s) Index"
-                  (click)="modalService.open('modal-document-index');
-                  emplyService.updateSelectedEmployee(teamMember)
+                  (click)="
+                    modalService.open('modal-document-index');
+                    emplyService.updateSelectedEmployee(teamMember)
                   "
                 >
                   <span class="material-symbols-outlined"> list </span>

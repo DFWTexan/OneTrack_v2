@@ -21,6 +21,7 @@ import {
 } from './_services';
 import { environment } from './environments/environment';
 import { MinLengthValidator } from '@angular/forms';
+import { LicenseTech } from './_Models';
 
 @Injectable()
 @Component({
@@ -196,10 +197,20 @@ export class AppComponent implements OnInit, OnDestroy {
         })
     );
     this.subscriptions.add(
+      this.miscDataService.fetchDocumetTypes().subscribe((items: string[]) => {
+        this.drpdwnDataService.updateDocumentTypes(items);
+      })
+    );
+    this.subscriptions.add(
       this.miscDataService
-        .fetchDocumetTypes()
-        .subscribe((items: string[]) => {
-          this.drpdwnDataService.updateDocumentTypes(items);
+        .fetchLicenseTechs()
+        .subscribe((items: LicenseTech[]) => {
+          let mappedLicenseTechs: { value: any; label: string }[] = [];
+          mappedLicenseTechs = items.map((tech) => ({
+            value: tech.licenseTechId,
+            label: tech.techName,
+          }));
+          this.drpdwnDataService.updateLicenseTechs(mappedLicenseTechs);
         })
     );
   }

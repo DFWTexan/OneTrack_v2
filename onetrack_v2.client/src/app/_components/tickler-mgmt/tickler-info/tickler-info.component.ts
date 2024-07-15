@@ -102,9 +102,6 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
   }
 
   onChildCallRefreshData(): void {
-
-console.log('EMFTEST () - onChildCallRefreshData...');    
-
     this.fetchTicklerInfo();
   }
 

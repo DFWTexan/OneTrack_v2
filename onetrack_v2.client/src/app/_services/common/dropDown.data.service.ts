@@ -35,6 +35,8 @@ export class DropdownDataService {
   lineOfAuthoritiesChanged = new Subject<{ value: number; label: string }[]>();
   public documentTypes: string[] = [];
   documentTypesChanged = new Subject<string[]>();
+  public licenseTechs: {value: any, label: string}[] = [];
+  licenseTechsChanged = new Subject<{value: any, label: string}[]>();
 
   private url: string = environment.apiUrl + 'Misc/';
 
@@ -157,6 +159,11 @@ export class DropdownDataService {
   updateDocumentTypes(documentTypes: string[]) {
     this.documentTypes = documentTypes;
     this.documentTypesChanged.next([...this.documentTypes]);
+  }
+
+  updateLicenseTechs(licenseTechs: {value: any, label: string}[]) {
+    this.licenseTechs = licenseTechs;
+    this.licenseTechsChanged.next([...this.licenseTechs]);
   }
 
   fetchDropdownNumericData(vEndpoint: string, vValue: any | null = null) {
