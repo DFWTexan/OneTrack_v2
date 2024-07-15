@@ -126,17 +126,17 @@
               let i = index
             "
           >
-          <!-- [expanded]="license.licenseStatus === 'Active'" -->
+            <!-- [expanded]="license.licenseStatus === 'Active'" -->
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <div class="mat-title">
                   <div class="row">
                     <div class="col-md-12">
-                      <span>{{ license.licenseName }}</span>:
-                      <span  class="ms-2"
-                      [ngStyle]="{
-                        color: license.licenseStatus === 'Active' ? 'green' : ''
-                      }" style="font-size: smaller; font-weight: 400;">{{ license.licenseStatus }}</span> 
+                      <span class="me-1">{{ license.licenseName }}</span>
+                      <span class="ms-1" style="font-size: small">({{
+                        license.licenseState
+                      }})</span
+                      >
                     </div>
                   </div>
                 </div>
@@ -145,12 +145,46 @@
                 <div *ngIf="license.licenseAppointments.length > 0" class="row">
                   <div class="col d-flex justify-content-end">
                     <!-- appt(s): <span class="ms-1 me-3" style="font-size: larger; font-weight: 600;">{{ license.licenseAppointments.length }}</span>  -->
-                    Lic State: <span class="ms-1 me-3" style="font-size: larger; font-weight: 500; color: black;">{{ license.licenseState }}</span> -
-                    LOA: <span class="ms-1 me-3" style="font-size: larger; font-weight: 500; color: black;">{{ license.lineOfAuthority }}</span> -
-                    Res: <span class="ms-1 me-3" style="font-size: larger; font-weight: 500; color: black;">{{ license.resNoneRes ? "Res" : "NonRes" }}</span> -
-                    Org: <span class="ms-1 me-3" style="font-size: larger; font-weight: 500; color: black;">{{ license.originalIssueDate | date : "MM/dd/yyyy" }}</span> -
-                    Eff: <span class="ms-1 me-3" style="font-size: larger; font-weight: 500; color: black;">{{ license.licenseEffectiveDate | date : "MM/dd/yyyy" }}</span> -
-                    Exp: <span class="ms-1 me-3" style="font-size: larger; font-weight: 500; color: black;">{{ license.licenseExpirationDate | date : "MM/dd/yyyy" }}</span>
+                    <div class="me-5">
+                      <label>Status:</label><br /><span
+                        class="ms-2"
+                        [ngStyle]="{
+                          color: license.licenseStatus === 'Active' ? 'green' : ''
+                        }"
+                        style="font-size: smaller; font-weight: 400"
+                        >{{ license.licenseStatus }}</span
+                      >
+                    </div>
+                    <div class="me-5">
+                      <label>LOA:</label><br /><span>{{
+                        license.lineOfAuthority
+                      }}</span>
+                    </div>
+                    <div class="me-5">
+                      <label>Res:</label><br /><span>{{
+                        license.resNoneRes ? "Res" : "NonRes"
+                      }}</span>
+                    </div>
+                    <div class="me-5">
+                      <label>Original Date:</label><br /><span>{{
+                        license.originalIssueDate | date : "MM/dd/yyyy"
+                      }}</span>
+                    </div>
+                    <div class="me-5">
+                      <label>LOA. Date:</label><br /><span>{{
+                        license.lineOfAuthIssueDate | date : "MM/dd/yyyy"
+                      }}</span>
+                    </div>
+                    <div class="me-5">
+                      <label>Effective Date:</label><br /><span>{{
+                        license.licenseEffectiveDate | date : "MM/dd/yyyy"
+                      }}</span>
+                    </div>
+                    <div class="me-5">
+                      <label>Expire Date:</label><br /><span>{{
+                        license.licenseExpirationDate | date : "MM/dd/yyyy"
+                      }}</span>
+                    </div>
                   </div>
                 </div>
               </mat-panel-description>
