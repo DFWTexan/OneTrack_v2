@@ -77,9 +77,6 @@ export class LicenseApplicationComponent implements OnInit, OnDestroy {
   }
 
   getData() {
-
-console.log('EMFTEST (getData) this.licenseMgmtData...');
-
     this.subscriptions.add(
       this.agentDataService
         .fetchAgentLicApplicationInfo(

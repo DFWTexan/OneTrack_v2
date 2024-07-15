@@ -11,6 +11,7 @@ import {
   UserAcctInfoDataService,
 } from '../../../../../_services';
 import { LicenseAppointment } from '../../../../../_Models';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-edit-license-appointment',
@@ -78,12 +79,36 @@ export class EditLicenseAppointmentComponent implements OnInit, OnDestroy {
             employeeAppointmentID: licenseAppointment.employeeAppointmentID,
             appointmentStatus: licenseAppointment.appointmentStatus,
             companyID: licenseAppointment.companyID,
-            carrierDate: licenseAppointment.carrierDate,
+            carrierDate: licenseAppointment.carrierDate
+              ? formatDate(
+                  licenseAppointment.carrierDate,
+                  'yyyy-MM-dd',
+                  'en-US'
+                )
+              : null,
             appointmentEffectiveDate:
-              licenseAppointment.appointmentEffectiveDate,
-            appointmentExpireDate: licenseAppointment.appointmentExpireDate,
+              licenseAppointment.appointmentEffectiveDate
+                ? formatDate(
+                    licenseAppointment.appointmentEffectiveDate,
+                    'yyyy-MM-dd',
+                    'en-US'
+                  )
+                : null,
+            appointmentExpireDate: licenseAppointment.appointmentExpireDate
+              ? formatDate(
+                  licenseAppointment.appointmentExpireDate,
+                  'yyyy-MM-dd',
+                  'en-US'
+                )
+              : null,
             appointmentTerminationDate:
-              licenseAppointment.appointmentTerminationDate,
+              licenseAppointment.appointmentTerminationDate
+                ? formatDate(
+                    licenseAppointment.appointmentTerminationDate,
+                    'yyyy-MM-dd',
+                    'en-US'
+                  )
+                : null,
             // employeeLicenseID: licenseAppointment.employeeLicenseID,
             // retentionDate: licenseAppointment.retentionDate,
             // companyAbbr: 'TBD...',

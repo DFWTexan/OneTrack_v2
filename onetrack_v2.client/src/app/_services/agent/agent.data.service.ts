@@ -748,6 +748,9 @@ export class AgentDataService {
   // === | === | === | === | === | === | === | === | === | === | === | === | === | === | === | === | === | === | === | === | ===
   // LICENSE APPOINTMENT MANAGEMENT
   storeLicenseAppointment(appointment: LicenseAppointment) {
+
+console.log('EMFTEST (storeLicenseAppointment) - appointment => \n', appointment);
+
     this.licenseAppointment = appointment;
     this.licenseAppointmentChanged.next(this.licenseAppointment);
   }

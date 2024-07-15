@@ -5,7 +5,6 @@
         <div class="col d-flex justify-content-center">
           <button
             class="btn btn-danger w-100"
-            [disabled]="isLoading"
             (click)="
               openConfirmDialog('deleteAgent', 'Job Title Item', {
                 teamNbr: agentInfo.jobTitle,
@@ -13,6 +12,7 @@
                 teamMemberName: agentInfo.firstName + ' ' + agentInfo.lastName
               })
             "
+            [disabled]="true"
           >
             <span style="font-size: larger">Delete</span>
           </button>
@@ -175,8 +175,8 @@
                   {{ license.licenseNumber }}
                 </div>
                 <div class="col">
-                  <strong>Res:</strong> <br />
-                  {{ license.resNoneRes ? "Yes" : "No" }}
+                  <strong>Resident ?:</strong> <br />
+                  {{ license.resNoneRes ? "Res" : "NonRes" }}
                 </div>
                 <div class="col">
                   <strong>Org Issue Date:</strong> <br />
