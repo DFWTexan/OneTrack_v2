@@ -64,7 +64,7 @@
           *ngIf="
             (jobTitleForm.controls['jobTitleID'].touched || isFormSubmitted) &&
             jobTitleForm.controls['jobTitleID'].errors &&
-            jobTitleForm.controls['jobTitleID'].errors['invalid']
+            jobTitleForm.controls['jobTitleID'].errors['required']
           "
           class="text-danger"
         >
@@ -98,7 +98,7 @@
       <button
         type="submit"
         class="btn btn-primary save-button"
-        [disabled]="!jobTitleForm.valid"
+        [disabled]="jobTitleForm.pristine"
       >
         Save
       </button>

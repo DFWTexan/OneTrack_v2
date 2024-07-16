@@ -53,15 +53,13 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.miscDataService
         .fetchJobTitles()
-        .subscribe(
-          (jobTitles: Array<{ value: number; label: string }>) => {
-
-            this.jobTitles = [
-              { value: 0, label: 'Select Job Title' },
-              ...jobTitles,
-            ];
-          }
-        )
+        .subscribe((jobTitles: Array<{ value: number; label: string }>) => {
+          this.jobTitles = [
+            { value: 0, label: 'Select Job Title' },
+            ...jobTitles,
+          ];
+          this.jobTitles.filter(jobTitle => jobTitle.label !== '');
+        })
     );
 
     this.subscriptions.add(
@@ -73,11 +71,9 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
                 (jobTitle: any) => {
                   this.jobTitleForm.patchValue({
                     employmentJobTitleID: jobTitle.employmentJobTitleID,
-                    jobTitleDate: formatDate(
-                      jobTitle.jobTitleDate,
-                      'yyyy-MM-dd',
-                      'en-US'
-                    ),
+                    jobTitleDate: jobTitle.jobTitleDate
+                      ? formatDate(jobTitle.jobTitleDate, 'yyyy-MM-dd', 'en-US')
+                      : null,
                     jobTitleID: jobTitle.jobTitleID,
                     isCurrent: jobTitle.isCurrent,
                   });
@@ -85,10 +81,8 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
               )
             );
           } else {
-            this.jobTitleForm.reset();
-            this.jobTitleForm.patchValue({
+            this.jobTitleForm.reset({
               jobTitleID: 0,
-              // jobTitleDate: formatDate(new Date(), 'yyyy-MM-dd', 'en-US'),
               isCurrent: false,
             });
           }
@@ -104,6 +98,8 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
     jobTitleItem.employmentID = this.employmentID;
     jobTitleItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
+console.log('EMFTEST () - jobTitleItem => \n', jobTitleItem);
+
     if (
       jobTitleItem.jobTitleDate === '' ||
       jobTitleItem.jobTitleDate === null
@@ -113,9 +109,9 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
       });
     }
 
-    if (jobTitleItem.jobTitleID === 0) {
+    if (jobTitleItem.jobTitleID === 0 || jobTitleItem.jobTitleID === null || jobTitleItem.jobTitleID === '') {
       this.jobTitleForm.controls['jobTitleID'].setErrors({
-        invalid: true,
+        required: true,
       });
     }
 
@@ -127,7 +123,7 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
       jobTitleItem.employmentJobTitleID = 0;
     }
 
-       this.subscriptions.add(
+    this.subscriptions.add(
       this.agentDataService
         .upsertEmploymentJobTitleHistItem(jobTitleItem)
         .subscribe({
