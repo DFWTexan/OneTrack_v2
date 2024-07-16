@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { DropdownDataService, ErrorMessageService, TicklerMgmtDataService } from '../../../../../_services';
+import { AgentDataService, DropdownDataService, ErrorMessageService, TicklerMgmtDataService } from '../../../../../_services';
 
 @Component({
   selector: 'app-insert-member-loa-tickler',
@@ -10,10 +10,11 @@ import { DropdownDataService, ErrorMessageService, TicklerMgmtDataService } from
   styleUrl: './insert-member-loa-tickler.component.css'
 })
 export class InsertMemberLoaTicklerComponent implements OnInit, OnDestroy {
+  @Input() typeTickler: any = {};  
   ticklerForm: FormGroup;
   licenseTechs: { value: any; label: string }[] = [];
   stockTicklerItems: any[] = [];
-  employee: any | null = null;
+  agentInfo: any | null = null;
   today: string = new Date().toISOString().split('T')[0];
 
   private subscriptionData = new Subscription();
@@ -21,6 +22,7 @@ export class InsertMemberLoaTicklerComponent implements OnInit, OnDestroy {
   constructor(
     public errorMessageService: ErrorMessageService,
     public ticklerMgmtDataService: TicklerMgmtDataService,
+    public agentDataService: AgentDataService,
     // private employeeDataService: EmployeeDataService,
     private fb: FormBuilder,
     private drpdwnDataService: DropdownDataService
@@ -45,18 +47,32 @@ export class InsertMemberLoaTicklerComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.licenseTechs = [{ value: 0, label: 'Select' },
-    ...this.drpdwnDataService.licenseTechs];
-    // this.employee = this.employeeDataService.selectedEmployee;
-    // this.subscriptionData.add(
-    //   this.employeeDataService.selectedEmployeeChanged.subscribe(
-    //     (employee: EmployeeSearchResult | null) => {
-    //       if (employee !== null) {
-    //         this.employee = employee;
-    //       }
-    //     }
-    //   )
-    // );
-    // this.subscriptionData.add(
+      ...this.drpdwnDataService.licenseTechs];
+      this.subscriptionData.add(
+        this.drpdwnDataService.licenseTechsChanged.subscribe(
+          (licenseTechs: { value: any; label: string }[]) => {
+            this.licenseTechs = [{ value: 0, label: 'Select' }, ...licenseTechs];
+          }
+        )
+      );
+      this.agentInfo = this.agentDataService.agentInformation;
+      this.subscriptionData.add(
+        this.agentDataService.agentInfoChanged.subscribe(
+          (agent: any | null) => {
+            if (agent !== null) {
+              this.agentInfo = agent;
+            }
+          }
+        )
+      );
+      this.subscriptionData.add(
+        this.ticklerMgmtDataService
+          .fetchStockTickler()
+          .subscribe((stockTicklerItems) => {
+            this.stockTicklerItems = [{ lkpField: 'Tickler', lkpValue: 'Select' }, ...stockTicklerItems];
+          })
+      );
+      this.ticklerForm.reset({ lkpValue: 'Select', licenseTechId: 0 });
   }
 
   onSubmit() {

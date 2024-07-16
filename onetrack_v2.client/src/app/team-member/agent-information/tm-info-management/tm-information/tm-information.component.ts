@@ -29,6 +29,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   eventAction: string = '';
   vObject: any = {};
   agentInfo: AgentInfo = {} as AgentInfo;
+  typeTickler: any = {};
 
   private subscriptions = new Subscription();
 
@@ -108,7 +109,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
             message:
               'You are about to DELETE license appointment ' +
               vObject.employeeAppointmentID +
-              '. Do you want to proceed?'
+              '. Do you want to proceed?',
           },
         });
 
@@ -171,6 +172,10 @@ export class TmInformationComponent implements OnInit, OnDestroy {
         dialogRef.close(); // Close the dialog
       });
     }, 500); // Adjust the delay as needed
+  }
+
+  onSetTypeTickler(typeTickler: any) {
+    this.typeTickler = typeTickler;
   }
 
   ngOnDestroy() {

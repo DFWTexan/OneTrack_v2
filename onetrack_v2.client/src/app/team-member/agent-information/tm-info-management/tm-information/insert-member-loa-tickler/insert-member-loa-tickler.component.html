@@ -2,7 +2,7 @@
     <div class="row ms-1">
       <div class="col">
         <div class="form-group">
-          <label for="licenseTechId">Assignment:</label>
+          <!-- <label for="licenseTechId">Assignment:</label> -->
           <select
             class="form-select select-size-medium"
             type="text"
@@ -17,15 +17,20 @@
   
         <div class="form-group">
           <label for="memberNumber">Team Member Number:</label><br />
-          {{ employee?.geid }}
+          {{ agentInfo?.geid }}
         </div>
   
         <div class="form-group">
           <label for="memberName">Team Member Name:</label><br />
-          {{ employee?.name }}
+          {{ agentInfo?.lastName }}, {{ agentInfo?.firstName }}
         </div>
       </div>
       <div class="col">
+        <div class="form-group" *ngIf="typeTickler.type == 'LOA'">
+            <label for="memberName">Line of Authority:</label><br />
+            {{ typeTickler.loa }}
+          </div>
+
         <div class="form-group">
           <label for="ticklerDueDate">Due Date:</label>
           <span class="required ms-2" style="color: red">*</span>

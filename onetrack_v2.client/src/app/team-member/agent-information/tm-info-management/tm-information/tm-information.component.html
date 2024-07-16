@@ -230,7 +230,10 @@
                 <div class="col d-flex justify-content-end">
                   <button
                     class="page-button appointment-edit-button click-effect"
-                    (click)="modalService.open('modal-new-tickler')"
+                    (click)="
+                      modalService.open('modal-new-tickler');
+                      onSetTypeTickler({type: 'MEMBER', loa: null})
+                    "
                     title="Tickle Member"
                   >
                     <span class="material-symbols-outlined"> 3p </span>
@@ -239,10 +242,15 @@
                 <div class="col d-flex justify-content-end">
                   <button
                     class="page-button appointment-edit-button click-effect"
-                    (click)="modalService.open('modal-new-tickler')"
+                    (click)="
+                      modalService.open('modal-new-tickler');
+                      onSetTypeTickler({type: 'LOA', loa: license.lineOfAuthority})
+                    "
                     title="Tickle Line of Authority"
                   >
-                    <span class="material-symbols-outlined"> speaker_notes </span>
+                    <span class="material-symbols-outlined">
+                      speaker_notes
+                    </span>
                   </button>
                 </div>
                 <div class="col d-flex justify-content-end">
@@ -465,16 +473,15 @@
 <!-- Modal: INSERT-TICKLER -->
 <modal id="modal-new-tickler">
   <div class="modal-header">
-    <h1 class="modal-title">
-      <strong>TBD</strong> - Tickler
-    </h1>
+    <h1 class="modal-title"><strong>TBD</strong> - Tickler</h1>
   </div>
   <div class="modal-body">
     <div>
       <div>
-        <app-insert-member-loa-tickler></app-insert-member-loa-tickler>
+        <app-insert-member-loa-tickler
+          [typeTickler]="typeTickler"
+        ></app-insert-member-loa-tickler>
       </div>
     </div>
   </div>
 </modal>
-
