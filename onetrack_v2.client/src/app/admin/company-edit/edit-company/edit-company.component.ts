@@ -50,7 +50,7 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.companyForm = new FormGroup({
       companyId: new FormControl(''),
-      companyAbv: new FormControl('', Validators.required),
+      companyAbv: new FormControl(''),
       companyType: new FormControl('', Validators.required),
       companyName: new FormControl('', Validators.required),
       tin: new FormControl(''),
@@ -59,7 +59,7 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
       address1: new FormControl(''),
       address2: new FormControl(''),
       city: new FormControl(''),
-      state: new FormControl(''),
+      state: new FormControl('', Validators.required),
       phone: new FormControl(''),
       country: new FormControl(''),
       zip: new FormControl(''),
@@ -114,8 +114,8 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
       this.companyForm.controls['companyType'].setErrors({ incorrect: true });
     }
 
-    if (company.state === 'Select State') {
-      company.state = '';
+    if (company.state === 'Select State' || company.state === '') {
+      this.companyForm.controls['state'].setErrors({ required: true });
     }
 
     if (!this.companyForm.valid) {

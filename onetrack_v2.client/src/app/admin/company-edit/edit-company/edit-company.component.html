@@ -37,21 +37,19 @@
           "
           class="text-danger"
         >
-          Please select a company type
+          Please select a Company Type
         </div>
       </div>
 
       <div class="mb-3">
-        <label for="companyAbv" class="form-label"
-          >Company Abbreviation: <span class="text-danger">*</span></label
-        >
+        <label for="companyAbv" class="form-label">Company Abbreviation:</label>
         <input
           class="form-control input-size-small"
           type="text"
           id="companyAbv"
           formControlName="companyAbv"
         />
-        <div
+        <!-- <div
           *ngIf="
             (companyForm.controls['companyAbv'].touched || isFormSubmitted) &&
             companyForm.controls['companyAbv'].errors &&
@@ -60,7 +58,7 @@
           class="text-danger"
         >
           Please enter Company Abbreviation
-        </div>
+        </div> -->
       </div>
 
       <div class="mb-3">
@@ -145,7 +143,9 @@
       </div>
 
       <div class="mb-3">
-        <label for="state" class="form-label">State:</label>
+        <label for="state" class="form-label"
+          >State:<span class="text-danger ms-1">*</span></label
+        >
         <select
           class="form-select select-size-small"
           id="state"
@@ -155,6 +155,16 @@
             {{ state }}
           </option>
         </select>
+        <div
+          *ngIf="
+            (companyForm.controls['state'].touched || isFormSubmitted) &&
+            companyForm.controls['state'].errors &&
+            companyForm.controls['state'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please Select State
+        </div>
       </div>
 
       <div class="mb-3">
@@ -191,7 +201,13 @@
       >
         Cancel
       </button>
-      <button type="submit" class="btn btn-primary save-button" [disabled]="companyForm.parent">Save</button>
+      <button
+        type="submit"
+        class="btn btn-primary save-button"
+        [disabled]="companyForm.pristine || companyForm.invalid"
+      >
+        Save
+      </button>
     </div>
   </div>
 </form>
