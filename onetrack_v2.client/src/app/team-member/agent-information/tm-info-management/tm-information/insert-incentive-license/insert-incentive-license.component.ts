@@ -20,12 +20,14 @@ export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
   isFormSubmitted: boolean = false;
   @Input() employeeID: number = 0;
   @Input() employmentID: number = 0;
-  @Input() branchState: string | null = null;
+  @Input() branchState: any | null = null;
   incentiveLicenseForm!: FormGroup;
   defaultLicenseStatus = 'Incentive';
   licenseStates: string[] = [];
   licenseNames: { value: number; label: string }[] = [];
-  agentName: string = '';
+  agent: any = {};
+  selectedLicenseState: any | null = null;
+  workState: string | null = null;
 
   private subscriptions = new Subscription();
 
@@ -44,7 +46,10 @@ export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
   createForm() {
     this.incentiveLicenseForm = this.fb.group({
       licenseState: ['Select', Validators.required],
-      licenseID: [0, Validators.required],
+      licenseID: [
+        { value: 0, disabled: !this.selectedLicenseState },
+        Validators.required,
+      ],
       licenseStatus: [{ value: 'Incentive', disabled: true }],
       note: [''],
     });
@@ -52,27 +57,32 @@ export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.licenseStates = ['Select', ...this.conService.getStates()];
-    // this.subscriptions.add(
-    //   this.drpdwnDataService
-    //     .fetchDropdownNumericData(
-    //       'GetLicenseNumericNames',
-    //       this.agentDataService.agentInformation.branchDeptStreetState
-    //     )
-    //     .subscribe((licenseNames: { value: number; label: string }[]) => {
-    //       this.licenseNames = [{ value: 0, label: 'Select' }, ...licenseNames];
-    //     })
-    // );
+
+    this.agent = this.agentDataService.agentInformation;
     this.subscriptions.add(
       this.agentDataService.agentInfoChanged.subscribe((data) => {
-        this.agentName = data.lastName + ', ' + data.firstName;
+        this.agent = data;
+        this.selectedLicenseState = this.agent.workStateAbv ?? 'Select';
+        this.getStateLicenseNames(this.selectedLicenseState);
+        this.updateLicenseIDDisabledState();
+        this.incentiveLicenseForm.patchValue({
+          licenseState: this.agent.workStateAbv ?? 'Select',
+          licenseID: 0,
+        });
       })
     );
-    this.incentiveLicenseForm.patchValue({
-      licenseState: this.branchState,
-      licenseID: 0,
-      licenseStatus: 'Incentive',
-    });
-    this.getStateLicenseNames(this.agentDataService.agentInformation.branchDeptStreetState ?? 'Select');
+    this.workState = this.agentDataService.workState;
+    this.subscriptions.add(
+      this.agentDataService.workStateChanged.subscribe(
+        (workState: string | null) => {
+          this.workState = workState;
+        }
+      )
+    );
+
+    this.getStateLicenseNames(
+      this.agentDataService.agentInformation.branchDeptStreetState ?? 'Select'
+    );
   }
 
   getStateLicenseNames(state: string) {
@@ -81,10 +91,7 @@ export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
     }
     this.subscriptions.add(
       this.drpdwnDataService
-        .fetchDropdownNumericData(
-          'GetLicenseNumericNames',
-          state
-        )
+        .fetchDropdownNumericData('GetLicenseNumericNames', state)
         .subscribe((licenseNames: { value: number; label: string }[]) => {
           this.licenseNames = [{ value: 0, label: 'Select' }, ...licenseNames];
         })
@@ -98,6 +105,26 @@ export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
     incentiveLicenseItem.employmentID = this.employmentID;
     incentiveLicenseItem.userSOEID =
       this.userAcctInfoDataService.userAcctInfo.soeid;
+
+    if (
+      incentiveLicenseItem.licenseState === 'Select' ||
+      incentiveLicenseItem.licenseState === '' ||
+      incentiveLicenseItem.licenseState === null
+    ) {
+      this.incentiveLicenseForm.controls['licenseState'].setErrors({
+        required: true,
+      });
+    }
+
+    if (
+      incentiveLicenseItem.licenseID === 0 ||
+      incentiveLicenseItem.licenseID === null ||
+      incentiveLicenseItem.licenseID === '' 
+    ) {
+      this.incentiveLicenseForm.controls['licenseID'].setErrors({
+        required: true,
+      });
+    }
 
     if (this.incentiveLicenseForm.invalid) {
       this.incentiveLicenseForm.setErrors({ invalid: true });
@@ -133,21 +160,34 @@ export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
   }
 
   onChangeLicenseState(event: any) {
-    this.incentiveLicenseForm.patchValue({
-      licenseState: event.target.value,
-    });
+    // this.incentiveLicenseForm.patchValue({
+    //   licenseState: event.target.value,
+    // });
+    this.selectedLicenseState = event.target.value;
+    this.updateLicenseIDDisabledState();
 
     if (
-      event.target.value !==
-      this.agentDataService.agentInformation.branchDeptStreetState
+      event.target.value !== this.agentDataService.agentInformation.workStateAbv
     ) {
       alert(
         'Selection is different than Agent Work State: ' +
-          this.agentDataService.agentInformation.branchDeptStreetState
+          this.agentDataService.agentInformation.workStateAbv
       );
     }
 
     this.getStateLicenseNames(event.target.value);
+  }
+
+  updateLicenseIDDisabledState() {
+    if (
+      this.selectedLicenseState !== 'Select' &&
+      this.selectedLicenseState !== '' &&
+      this.selectedLicenseState !== null
+    ) {
+      this.incentiveLicenseForm.get('licenseID')?.enable();
+    } else {
+      this.incentiveLicenseForm.get('licenseID')?.disable();
+    }
   }
 
   onCloseModal() {

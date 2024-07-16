@@ -95,7 +95,10 @@
         <div class="col d-flex justify-content-start">
           <button
             class="btn btn-success"
-            (click)="modalService.open('modal-insert-incentive-license')"
+            (click)="
+              modalService.open('modal-insert-incentive-license');
+              onSetWorkState(agentInfo.workStateAbv)
+            "
           >
             <span style="font-size: larger"> Insert - Incentive License </span>
           </button>
@@ -232,7 +235,7 @@
                     class="page-button appointment-edit-button click-effect"
                     (click)="
                       modalService.open('modal-new-tickler');
-                      onSetTypeTickler({type: 'MEMBER', loa: null})
+                      onSetTypeTickler({ type: 'MEMBER', loa: null })
                     "
                     title="Tickle Member"
                   >
@@ -244,7 +247,10 @@
                     class="page-button appointment-edit-button click-effect"
                     (click)="
                       modalService.open('modal-new-tickler');
-                      onSetTypeTickler({type: 'LOA', loa: license.lineOfAuthority})
+                      onSetTypeTickler({
+                        type: 'LOA',
+                        loa: license.lineOfAuthority
+                      })
                     "
                     title="Tickle Line of Authority"
                   >
@@ -459,11 +465,9 @@
     <div>
       <div>
         <app-insert-incentive-license
-          [employeeID]="agentDataService.agentInformation.employeeID"
-          [employmentID]="agentDataService.agentInformation.employmentID"
-          [branchState]="
-            agentDataService.agentInformation.branchDeptStreetState ?? ''
-          "
+          [employeeID]="agentInfo.employeeID"
+          [employmentID]="agentInfo.employmentID"
+          [branchState]="workState"
         ></app-insert-incentive-license>
       </div>
     </div>

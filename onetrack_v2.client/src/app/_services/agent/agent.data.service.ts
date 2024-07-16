@@ -71,6 +71,9 @@ export class AgentDataService {
   // TM DIARY
   diaryEntry: any = {};
   diaryEntryChanged = new Subject<any>();
+  //INCENTIVE LICENSE
+  workState: string | null = null;  
+  workStateChanged = new Subject<string | null>();
 
   constructor(
     private http: HttpClient,
@@ -99,6 +102,7 @@ export class AgentDataService {
 
             this.diaryItems = this.agentInformation.diaryItems;
             this.diaryItemsChanged.next(this.diaryItems);
+            
             this.agentLicenseAppointments =
               this.agentInformation.agentLicenseAppointments;
             this.agentLicenseAppointmentsChanged.next(
@@ -748,9 +752,6 @@ export class AgentDataService {
   // === | === | === | === | === | === | === | === | === | === | === | === | === | === | === | === | === | === | === | === | ===
   // LICENSE APPOINTMENT MANAGEMENT
   storeLicenseAppointment(appointment: LicenseAppointment) {
-
-console.log('EMFTEST (storeLicenseAppointment) - appointment => \n', appointment);
-
     this.licenseAppointment = appointment;
     this.licenseAppointmentChanged.next(this.licenseAppointment);
   }
@@ -892,5 +893,11 @@ console.log('EMFTEST (storeLicenseAppointment) - appointment => \n', appointment
   updateBrachCodes(branchCodes: Array<{ branchCode: string }>) {
     this.branchCodes = branchCodes;
     this.branchCodesChanged.next(this.branchCodes);
+  }
+
+  // INCRENTIVE LICENSE
+  storeWorkState(workState: string | null) {
+    this.workState = workState;
+    this.workStateChanged.next(this.workState);
   }
 }

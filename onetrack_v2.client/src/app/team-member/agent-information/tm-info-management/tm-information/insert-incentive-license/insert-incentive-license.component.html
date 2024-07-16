@@ -3,7 +3,7 @@
     <div class="col ms-3">
       <div class="form-group">
         <label for="preferredName">Preferred Name:</label><br />
-        {{ agentName }}
+        {{ agent.lastName }}, {{ agent.firstName }}
         <!-- <input
           type="text"
           id="preferredName"
@@ -14,7 +14,9 @@
         /> -->
       </div>
       <div class="form-group">
-        <label for="licenseState">License State:</label>
+        <label for="licenseState"
+          >License State:<span class="text-danger ms-1">*</span></label
+        >
         <select
           class="form-select select-size-x-small"
           type="text"
@@ -26,23 +28,26 @@
             {{ state }}
           </option>
         </select>
+        <div
+          *ngIf="
+            incentiveLicenseForm.controls['licenseState'].errors &&
+            incentiveLicenseForm.controls['licenseState'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please select a License State
+        </div>
       </div>
     </div>
     <div class="col">
       <div class="form-group">
         <label for="licenseStatus">License Status:</label><br />
         INCENTIVE
-        <!-- <input
-          type="text"
-          id="licenseStatus"
-          name="licenseStatus"
-          class="form-control input-size-small"
-          formControlName="licenseStatus"
-          [value]="defaultLicenseStatus"
-        /> -->
       </div>
       <div class="form-group">
-        <label for="licenseID">License Name:</label>
+        <label for="licenseID"
+          >License Name:<span class="text-danger">*</span></label
+        >
         <select
           class="form-select select-size-medium"
           type="text"
@@ -53,6 +58,15 @@
             {{ name.label }}
           </option>
         </select>
+        <div
+          *ngIf="
+            incentiveLicenseForm.controls['licenseID'].errors &&
+            incentiveLicenseForm.controls['licenseID'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please select a License Name
+        </div>
       </div>
     </div>
   </div>

@@ -68,7 +68,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       appointmentEffectiveDate: [null],
       appointmentExpireDate: [null],
       appointmentTerminationDate: [null],
-});
+    });
   }
 
   ngOnInit(): void {
@@ -218,7 +218,10 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       this.licenseForm.controls['licenseStatus'].setErrors({ invalid: true });
     }
 
-    if (licenseInfo.licenseIssueDate === '01/01/0001 00:00:00' || licenseInfo.licenseIssueDate === null) {
+    if (
+      licenseInfo.licenseIssueDate === '01/01/0001 00:00:00' ||
+      licenseInfo.licenseIssueDate === null
+    ) {
       this.licenseForm.controls['licenseIssueDate'].setErrors({
         invalid: true,
       });
