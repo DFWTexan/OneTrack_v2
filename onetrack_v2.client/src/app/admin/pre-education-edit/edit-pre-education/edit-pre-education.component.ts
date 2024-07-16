@@ -53,7 +53,7 @@ export class EditPreEducationComponent implements OnInit, OnDestroy {
     });
 
     function capitalizeFirstLetter(string: any) {
-      if(typeof string !== 'string') return '';
+      if (typeof string !== 'string') return '';
       return string
         .split('-')
         .map(
@@ -64,12 +64,10 @@ export class EditPreEducationComponent implements OnInit, OnDestroy {
     }
 
     this.subscriptionData.add(
-      this.adminComService.modes.preEducation.changed
-      .subscribe(
+      this.adminComService.modes.preEducation.changed.subscribe(
         (mode: string) => {
           if (mode === 'EDIT') {
-            this.adminDataService.preEducationChanged
-            .subscribe(
+            this.adminDataService.preEducationChanged.subscribe(
               (preEducation: any) => {
                 this.preEducationForm.patchValue({
                   preEducationId: preEducation.preEducationId,
@@ -84,10 +82,17 @@ export class EditPreEducationComponent implements OnInit, OnDestroy {
               }
             );
           } else {
-            this.preEducationForm.reset();
-            this.deliveryMethods = ['Select', ...this.deliveryMethods];
-            this.providers = [{ value: 0, label: 'Select' }, ...this.providers];
-            this.preEducationForm.patchValue({
+            let hasSelect = this.deliveryMethods.includes('Select');
+            let hasProvSelect = this.providers.some(
+              (provider) => provider.value === 0 && provider.label === 'Select'
+            );
+            this.deliveryMethods = !hasSelect
+              ? ['Select', ...this.deliveryMethods]
+              : this.deliveryMethods;
+            this.providers = !hasProvSelect
+              ? [{ value: 0, label: 'Select' }, ...this.providers]
+              : this.providers;
+            this.preEducationForm.reset({
               stateProvinceAbv: 'Select',
               deliveryMethod: 'Select',
               preEducationId: 0,
@@ -106,6 +111,44 @@ export class EditPreEducationComponent implements OnInit, OnDestroy {
 
     if (this.adminComService.modes.preEducation.mode === 'INSERT') {
       preEduItem.PreEducationID = 0;
+    }
+
+    if (preEduItem.educationName === '' || preEduItem.educationName === null) {
+      this.preEducationForm.controls['educationName'].setErrors({
+        required: true,
+      });
+    }
+
+    if (
+      preEduItem.deliveryMethod === 'Select' ||
+      preEduItem.deliveryMethod === null
+    ) {
+      this.preEducationForm.controls['deliveryMethod'].setErrors({
+        required: true,
+      });
+    }
+
+    if (
+      preEduItem.educationProviderID === 0 ||
+      preEduItem.educationProviderID === null
+    ) {
+      this.preEducationForm.controls['educationProviderID'].setErrors({
+        required: true,
+      });
+    }
+
+    if (
+      preEduItem.stateProvinceAbv === 'Select' ||
+      preEduItem.stateProvinceAbv === null
+    ) {
+      this.preEducationForm.controls['stateProvinceAbv'].setErrors({
+        required: true,
+      });
+    }
+
+    if (!this.preEducationForm.valid) {
+      this.preEducationForm.setErrors({ invalid: true });
+      return;
     }
 
     this.subscriptionData.add(

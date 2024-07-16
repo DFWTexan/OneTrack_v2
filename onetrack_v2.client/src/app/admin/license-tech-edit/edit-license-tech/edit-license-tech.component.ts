@@ -90,6 +90,23 @@ export class EditLicenseTechComponent implements OnInit, OnDestroy {
       licenseTechItem.licenseTechId = 0;
     }
 
+    if (licenseTechItem.teamNum === '' || licenseTechItem.teamNum === null) {
+      this.licenseTechForm.controls['teamNum'].setErrors({ required: true });
+    }
+
+    if (licenseTechItem.lastName === '' || licenseTechItem.lastName === null) {
+      this.licenseTechForm.controls['lastName'].setErrors({ required: true });
+    }
+
+    if (licenseTechItem.firstName === '' || licenseTechItem.firstName === null) {
+      this.licenseTechForm.controls['firstName'].setErrors({ required: true });
+    }
+
+    if (!this.licenseTechForm.valid) {
+      this.licenseTechForm.setErrors({ invalid: true });
+      return;
+    }
+
     this.subscriptionData.add(
       this.adminDataService.upSertLicenseTech(licenseTechItem).subscribe({
         next: (response) => {

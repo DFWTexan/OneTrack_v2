@@ -7,7 +7,7 @@
     <div class="col">
       <div class="mb-3">
         <label for="educationName" class="form-label"
-          >Pre-Education Name:</label
+          >Pre-Education Name:<span class="text-danger ms-1">*</span></label
         >
         <input
           class="form-control input-size-large"
@@ -15,6 +15,16 @@
           id="educationName"
           formControlName="educationName"
         />
+        <div
+          *ngIf="
+            (preEducationForm.controls['educationName'].touched || isFormSubmitted) &&
+            preEducationForm.controls['educationName'].errors &&
+            preEducationForm.controls['educationName'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please enter Pre-Education Name
+        </div>
       </div>
 
       <div class="mb-3">
@@ -28,7 +38,7 @@
       </div>
 
       <div class="mb-3">
-        <label for="deliveryMethod" class="form-label">Delivery Method:</label>
+        <label for="deliveryMethod" class="form-label">Delivery Method:<span class="text-danger ms-1">*</span></label>
         <select
           class="form-select select-size-small"
           id="deliveryMethod"
@@ -38,13 +48,23 @@
             {{ method }}
           </option>
         </select>
+        <div
+          *ngIf="
+            (preEducationForm.controls['deliveryMethod'].touched || isFormSubmitted) &&
+            preEducationForm.controls['deliveryMethod'].errors &&
+            preEducationForm.controls['deliveryMethod'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please Select Delivery Method
+        </div>
       </div>
     </div>
 
     <div class="col">
       <div class="mb-3">
         <label for="educationProviderID" class="form-label"
-          >Pre-Education Provider:</label
+          >Pre-Education Provider:<span class="text-danger ms-1">*</span></label
         >
         <select
           class="form-select select-size-medium"
@@ -55,11 +75,21 @@
             {{ provider.label }}
           </option>
         </select>
+        <div
+          *ngIf="
+            (preEducationForm.controls['educationProviderID'].touched || isFormSubmitted) &&
+            preEducationForm.controls['educationProviderID'].errors &&
+            preEducationForm.controls['educationProviderID'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please Select Provider
+        </div>
       </div>
 
       <div class="mb-3">
         <label for="stateProvinceAbv" class="form-label"
-          >Pre-Education State:</label
+          >Pre-Education State:<span class="text-danger ms-1">*</span></label
         >
         <select
           class="form-select select-size-x-small"
@@ -70,6 +100,16 @@
             {{ state }}
           </option>
         </select>
+        <div
+          *ngIf="
+            (preEducationForm.controls['stateProvinceAbv'].touched || isFormSubmitted) &&
+            preEducationForm.controls['stateProvinceAbv'].errors &&
+            preEducationForm.controls['stateProvinceAbv'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please Select State
+        </div>
       </div>
     </div>
   </div>

@@ -90,19 +90,27 @@ export class EditExamComponent implements OnInit, OnDestroy {
       examItem.examID = 0;
     }
 
-    // if (examItem.deliveryMethod === 'Select Method') {
-    //   examItem.deliveryMethod = '';
-    //   this.companyForm.controls['companyType'].setErrors({ incorrect: true });
-    // }
-
-    if (examItem.deliveryMethod === 'Select Method') {
-      examItem.deliveryMethod = '';
+    if (examItem.stateProvinceAbv === 'Select') {
+      this.examForm.controls['stateProvinceAbv'].setErrors({ required: true });
     }
 
-    // if (!this.companyForm.valid) {
-    //   this.companyForm.setErrors({ invalid: true });
-    //   return;
-    // }
+    if (examItem.examName === '' || examItem.examName === null) {
+      this.examForm.controls['examName'].setErrors({ required: true });
+    }
+
+    if (examItem.deliveryMethod === 'Select Method') {
+      this.examForm.controls['deliveryMethod'].setErrors({ required: true });
+    }
+
+    if (examItem.examProviderId === 0 || examItem.examProviderId === null) {
+      this.examForm.controls['examProviderId'].setErrors({ required: true });
+    }
+
+    if (this.examForm.invalid) {
+      this.examForm.setErrors({ invalid: true });
+      return;
+    }
+
     this.subscriptionData.add(
       this.adminDataService.upSertExamItem(examItem).subscribe({
         next: (response) => {

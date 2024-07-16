@@ -6,7 +6,9 @@
   <div class="row">
     <div class="col">
       <div class="mb-3">
-        <label for="stateProvinceAbv" class="form-label">License State:</label>
+        <label for="stateProvinceAbv" class="form-label"
+          >License State:<span class="text-danger ms-1">*</span></label
+        >
         <select
           class="form-select select-size-x-small"
           type="text"
@@ -17,9 +19,22 @@
             {{ state }}
           </option>
         </select>
+        <div
+          *ngIf="
+            (licenseForm.controls['stateProvinceAbv'].touched ||
+              isFormSubmitted) &&
+            licenseForm.controls['stateProvinceAbv'].errors &&
+            licenseForm.controls['stateProvinceAbv'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please Select State
+        </div>
       </div>
       <div class="mb-3">
-        <label for="licenseName" class="form-label">License Name:</label>
+        <label for="licenseName" class="form-label"
+          >License Name:<span class="text-danger ms-1">*</span></label
+        >
         <input
           class="form-control input-size-large"
           type="text"
@@ -27,6 +42,16 @@
           formControlName="licenseName"
           placeholder="Enter License Name"
         />
+        <div
+          *ngIf="
+            (licenseForm.controls['licenseName'].touched || isFormSubmitted) &&
+            licenseForm.controls['licenseName'].errors &&
+            licenseForm.controls['licenseName'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please Enter License Name
+        </div>
       </div>
       <div class="mb-3">
         <label for="licenseAbv" class="form-label">License Abv:</label>
@@ -39,14 +64,19 @@
         />
       </div>
       <div class="mb-3">
-        <label for="lineOfAuthorityId" class="form-label">Line of Authority:</label>
+        <label for="lineOfAuthorityId" class="form-label"
+          >Line of Authority:</label
+        >
         <select
           class="form-select select-size-medium"
           type="text"
           id="lineOfAuthorityId"
           formControlName="lineOfAuthorityId"
         >
-          <option *ngFor="let authority of lineOfAuthorities" [value]="authority.value">
+          <option
+            *ngFor="let authority of lineOfAuthorities"
+            [value]="authority.value"
+          >
             {{ authority.label }}
           </option>
         </select>
@@ -55,7 +85,9 @@
 
     <div class="col">
       <div class="mb-3">
-        <label for="plS_Incentive1TMPay" class="form-label">PLS Incentive1 TMPay:</label>
+        <label for="plS_Incentive1TMPay" class="form-label"
+          >PLS Incentive1 TMPay:</label
+        >
         <input
           class="form-control input-size-x-small"
           type="number"
@@ -66,7 +98,9 @@
         />
       </div>
       <div class="mb-3">
-        <label for="plS_Incentive1MRPay" class="form-label">PLS Incentive1 MRPay:</label>
+        <label for="plS_Incentive1MRPay" class="form-label"
+          >PLS Incentive1 MRPay:</label
+        >
         <input
           class="form-control input-size-x-small"
           type="number"
@@ -77,7 +111,9 @@
         />
       </div>
       <div class="mb-3">
-        <label for="incentive2_PlusTMPay" class="form-label">Incentive2 Plus TMPay:</label>
+        <label for="incentive2_PlusTMPay" class="form-label"
+          >Incentive2 Plus TMPay:</label
+        >
         <input
           class="form-control input-size-x-small"
           type="number"
@@ -88,7 +124,9 @@
         />
       </div>
       <div class="mb-3">
-        <label for="incentive2_PlusMRPay" class="form-label">Incentive2 Plus MRPay:</label>
+        <label for="incentive2_PlusMRPay" class="form-label"
+          >Incentive2 Plus MRPay:</label
+        >
         <input
           class="form-control input-size-x-small"
           type="number"
@@ -112,7 +150,13 @@
       >
         Cancel
       </button>
-      <button type="submit" class="btn btn-primary save-button" [disabled]="licenseForm.pristine">Save</button>
+      <button
+        type="submit"
+        class="btn btn-primary save-button"
+        [disabled]="licenseForm.pristine"
+      >
+        Save
+      </button>
     </div>
   </div>
 </form>

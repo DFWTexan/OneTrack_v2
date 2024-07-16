@@ -111,14 +111,13 @@ export class EditLicenseComponent implements OnInit, OnDestroy {
       licenseItem.licenseID = 0;
     }
 
-    // if (examItem.deliveryMethod === 'Select Method') {
-    //   examItem.deliveryMethod = '';
-    //   this.companyForm.controls['companyType'].setErrors({ incorrect: true });
-    // }
+    if (licenseItem.stateProvinceAbv === 'Select' || licenseItem.stateProvinceAbv === '') {
+      this.licenseForm.controls['stateProvinceAbv'].setErrors({ required: true });
+    }
 
-    // if (licenseItem.deliveryMethod === 'Select Method') {
-    //   licenseItem.deliveryMethod = '';
-    // }
+    if (licenseItem.licenseName === '' || licenseItem.licenseName === null) {
+      this.licenseForm.controls['licenseName'].setErrors({ required: true });
+    }
 
     if (!this.licenseForm.valid) {
       this.licenseForm.setErrors({ invalid: true });

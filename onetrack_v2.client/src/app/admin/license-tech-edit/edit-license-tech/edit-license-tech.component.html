@@ -6,31 +6,68 @@
   <div class="row">
     <div class="col">
       <div class="mb-3">
-        <label for="teamNum" class="form-label">Team Number:</label>
+        <label for="teamNum" class="form-label"
+          >Team Number:<span class="text-danger ms-1">*</span></label
+        >
         <input
           class="form-control input-size-small"
           type="text"
           id="teamNum"
           formControlName="teamNum"
         />
+        <div
+          *ngIf="
+            (licenseTechForm.controls['teamNum'].touched || isFormSubmitted) &&
+            licenseTechForm.controls['teamNum'].errors &&
+            licenseTechForm.controls['teamNum'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please Enter Team #
+        </div>
       </div>
       <div class="mb-3">
-        <label for="lastName" class="form-label">Last Name:</label>
+        <label for="lastName" class="form-label"
+          >Last Name:<span class="text-danger ms-1">*</span></label
+        >
         <input
-          class="form-control input-size-small"
+          class="form-control input-size-medium"
           type="text"
           id="lastName"
           formControlName="lastName"
         />
+        <div
+          *ngIf="
+            (licenseTechForm.controls['lastName'].touched || isFormSubmitted) &&
+            licenseTechForm.controls['lastName'].errors &&
+            licenseTechForm.controls['lastName'].errors['required']
+          "
+          class="text-danger"
+        >
+          Enter Last Name
+        </div>
       </div>
       <div class="mb-3">
-        <label for="firstName" class="form-label">First Name:</label>
+        <label for="firstName" class="form-label"
+          >First Name:<span class="text-danger ms-1">*</span></label
+        >
         <input
-          class="form-control input-size-small"
+          class="form-control input-size-medium"
           type="text"
           id="firstName"
           formControlName="firstName"
         />
+        <div
+          *ngIf="
+            (licenseTechForm.controls['firstName'].touched ||
+              isFormSubmitted) &&
+            licenseTechForm.controls['firstName'].errors &&
+            licenseTechForm.controls['firstName'].errors['required']
+          "
+          class="text-danger"
+        >
+          Enter First Name
+        </div>
       </div>
       <div class="mb-3">
         <label for="licenseTechPhone" class="form-label">Phone Number:</label>
@@ -94,7 +131,13 @@
       >
         Cancel
       </button>
-      <button type="submit" class="btn btn-primary save-button" [disabled]="licenseTechForm.pristine">Save</button>
+      <button
+        type="submit"
+        class="btn btn-primary save-button"
+        [disabled]="licenseTechForm.pristine"
+      >
+        Save
+      </button>
     </div>
   </div>
 </form>
