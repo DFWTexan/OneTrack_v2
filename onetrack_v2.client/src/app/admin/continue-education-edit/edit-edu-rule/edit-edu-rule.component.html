@@ -5,8 +5,9 @@
   style="overflow-x: hidden"
 >
   <div class="row">
-    <div class="col-md-3">
-      <span style="font-size: large; font-weight: 600">State</span>
+    <div class="col-md-3 d-flex">
+      <span style="font-size: large; font-weight: 600">State</span
+      ><span class="text-danger ms-1">*</span>
     </div>
     <div class="col-md-9">
       <select
@@ -24,8 +25,9 @@
   </div>
 
   <div class="row mt-3">
-    <div class="col-md-3">
-      <span style="font-size: large; font-weight: 600">License</span>
+    <div class="col-md-3 d-flex">
+      <span style="font-size: large; font-weight: 600">License</span
+      ><span class="text-danger ms-1">*</span>
     </div>
     <div class="col-md-9">
       <select
@@ -52,7 +54,9 @@
             "
             (click)="onAddLicenseType('SELECTION')"
           >
-            <span style="font-size:medium; font-weight: 400;">Add Selection</span>
+            <span style="font-size: medium; font-weight: 400"
+              >Add Selection</span
+            >
           </button>
         </div>
         <div class="col d-flex justify-content-center">
@@ -65,7 +69,7 @@
             "
             (click)="onAddLicenseType('GROUP')"
           >
-          <span style="font-size:medium; font-weight: 400;">Group(&)</span>
+            <span style="font-size: medium; font-weight: 400">Group(&)</span>
           </button>
         </div>
       </div>
@@ -88,9 +92,9 @@
         CE Start
       </span>
     </div>
-    <div class="col-md-9 d-flex justify-content-center">
+    <div class="col-md-9 d-flex justify-content-between">
       <select
-        class="form-control form-select select-size-medium"
+        class="form-select select-size-medium"
         type="text"
         id="educationStartDateID"
         formControlName="educationStartDateID"
@@ -193,7 +197,13 @@
       >
         Cancel
       </button>
-      <button type="submit" class="btn btn-primary save-button" [disabled]="eduRuleForm.pristine">Save</button>
+      <button
+        type="submit"
+        class="btn btn-primary save-button"
+        [disabled]="eduRuleForm.pristine"
+      >
+        Save
+      </button>
     </div>
   </div>
 </form>
