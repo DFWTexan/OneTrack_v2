@@ -23,13 +23,22 @@
         />
       </div>
       <div class="mb-3">
-        <label for="hireDate" class="form-label">Hire Date:</label>
+        <label for="hireDate" class="form-label">Hire Date:<span class="ms-1 text-danger">*</span></label>
         <input
           class="form-control input-size-small"
           type="date"
           id="hireDate"
           formControlName="hireDate"
         />
+        <div
+          *ngIf="
+          employmentHistoryForm.controls['hireDate'].errors &&
+          employmentHistoryForm.controls['hireDate'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please select Background Check Status
+        </div>
       </div>
       <div class="mb-3">
         <label for="rehireDate" class="form-label">Rehire Date:</label>
@@ -43,7 +52,7 @@
 
       <div class="mb-3">
         <label for="backgroundCheckStatus" class="form-label"
-          >Background Check Status:</label
+          >Background Check Status:<span class="ms-1 text-danger">*</span></label
         >
         <select
           class="form-select select-size-small"
@@ -59,6 +68,15 @@
             {{ status.lkpValue }}
           </option>
         </select>
+        <div
+          *ngIf="
+          employmentHistoryForm.controls['backgroundCheckStatus'].errors &&
+          employmentHistoryForm.controls['backgroundCheckStatus'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please select Background Check Status
+        </div>
       </div>
       <div class="mb-3">
         <label for="backGroundCheckNotes" class="form-label"

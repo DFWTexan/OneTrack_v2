@@ -25,7 +25,7 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
   @Input() employeeID: number = 0;
   employmentHistoryID: number = 0;
   backgroundStatuses: Array<{ lkpValue: string }> = [];
-  
+
   private subscriptions = new Subscription();
 
   constructor(
@@ -55,12 +55,15 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
 
     this.subscriptions.add(
       this.miscDataService
-      .fetchBackgroundStatuses()
-      .subscribe((backgroundStatuses: Array<{ lkpValue: string }>) => {
-        this.backgroundStatuses = [{ lkpValue: 'N/A' }, ...backgroundStatuses];
-      })
+        .fetchBackgroundStatuses()
+        .subscribe((backgroundStatuses: Array<{ lkpValue: string }>) => {
+          this.backgroundStatuses = [
+            { lkpValue: 'N/A' },
+            ...backgroundStatuses,
+          ];
+        })
     );
-    
+
     this.subscriptions.add(
       this.agentComService.modeEmploymentHistChanged.subscribe(
         (mode: string) => {
@@ -144,6 +147,27 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
 
     if (this.agentComService.modeEmploymentHist === 'INSERT') {
       empHistItem.EmploymentHistoryID = 0;
+    }
+
+    if (empHistItem.hireDate === '' || empHistItem.hireDate === null) {
+      this.employmentHistoryForm.controls['hireDate'].setErrors({
+        required: true,
+      });
+    }
+
+    if (
+      empHistItem.backgroundCheckStatus === 'N/A' ||
+      empHistItem.backgroundCheckStatus === '' ||
+      empHistItem.backgroundCheckStatus === null
+    ) {
+      this.employmentHistoryForm.controls['backgroundCheckStatus'].setErrors({
+        required: true,
+      });
+    }
+
+    if (!this.employmentHistoryForm.valid) {
+      this.employmentHistoryForm.setErrors({ invalid: true });
+      return;
     }
 
     this.subscriptions.add(
