@@ -51,7 +51,7 @@
       >
         Cancel
       </button>
-      <button type="submit" class="btn btn-primary save-button">Save</button>
+      <button type="submit" class="btn btn-primary save-button" [disabled]="companyItemForm.pristine">Save</button>
     </div>
   </div>
 </form>

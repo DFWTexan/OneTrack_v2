@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { DropdownDataService, EmployeeDataService, ErrorMessageService, TicklerMgmtDataService } from '../../../_services';
+import { DropdownDataService, EmployeeDataService, ErrorMessageService, TicklerMgmtDataService, UserAcctInfoDataService } from '../../../_services';
 import { EmployeeSearchResult, StockTickler } from '../../../_Models';
 
 @Component({
@@ -12,6 +12,7 @@ import { EmployeeSearchResult, StockTickler } from '../../../_Models';
 })
 export class AddTicklerComponent implements OnInit, OnDestroy {
   ticklerForm: FormGroup;
+  isFormSubmitted: boolean = false;
   licenseTechs: { value: any; label: string }[] = [];
   stockTicklerItems: any[] = [];
   employee: EmployeeSearchResult | null = null;
@@ -24,7 +25,8 @@ export class AddTicklerComponent implements OnInit, OnDestroy {
     public ticklerMgmtDataService: TicklerMgmtDataService,
     private employeeDataService: EmployeeDataService,
     private fb: FormBuilder,
-    private drpdwnDataService: DropdownDataService
+    private drpdwnDataService: DropdownDataService,
+    private userAcctInfoDataService: UserAcctInfoDataService
   ) {
     this.ticklerForm = this.fb.group({
       ticklerId: [{ value: null, disabled: true }],
@@ -68,7 +70,31 @@ export class AddTicklerComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    // some code here
+    this.isFormSubmitted = true;
+    let ticklerItem: any = this.ticklerForm.value;
+    ticklerItem.PreEducationID = 0;
+    ticklerItem.ticklerID = this.ticklerForm.get('ticklerId')?.value
+    ticklerItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+
+    if (this.ticklerForm.invalid) {
+      this.ticklerForm.setErrors({ invalid: true });
+      return;
+    }
+
+    this.subscriptionData.add(
+      this.ticklerMgmtDataService.upsertTickerItem(ticklerItem).subscribe({
+        next: (response) => {
+          alert('Tickler has been successfully added');
+          this.onCancel();
+        },
+        error: (error) => {
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+            this.onCancel();
+          }
+        },
+      })
+    );
   }
 
   onCancel() {

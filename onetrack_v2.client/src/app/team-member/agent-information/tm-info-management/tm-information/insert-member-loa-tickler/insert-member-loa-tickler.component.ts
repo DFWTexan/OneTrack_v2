@@ -2,7 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { AgentDataService, DropdownDataService, ErrorMessageService, TicklerMgmtDataService } from '../../../../../_services';
+import { AgentDataService, DropdownDataService, ErrorMessageService, TicklerMgmtDataService, UserAcctInfoDataService } from '../../../../../_services';
 
 @Component({
   selector: 'app-insert-member-loa-tickler',
@@ -12,6 +12,7 @@ import { AgentDataService, DropdownDataService, ErrorMessageService, TicklerMgmt
 export class InsertMemberLoaTicklerComponent implements OnInit, OnDestroy {
   @Input() typeTickler: any = {};  
   ticklerForm: FormGroup;
+  isFormSubmitted: boolean = false;
   licenseTechs: { value: any; label: string }[] = [];
   stockTicklerItems: any[] = [];
   agentInfo: any | null = null;
@@ -23,9 +24,10 @@ export class InsertMemberLoaTicklerComponent implements OnInit, OnDestroy {
     public errorMessageService: ErrorMessageService,
     public ticklerMgmtDataService: TicklerMgmtDataService,
     public agentDataService: AgentDataService,
-    // private employeeDataService: EmployeeDataService,
+    public ticklerDataService: TicklerMgmtDataService,
     private fb: FormBuilder,
-    private drpdwnDataService: DropdownDataService
+    private drpdwnDataService: DropdownDataService,
+    private userAcctInfoDataService: UserAcctInfoDataService
   ) {
     this.ticklerForm = this.fb.group({
       ticklerId: [{ value: null, disabled: true }],
@@ -76,7 +78,35 @@ export class InsertMemberLoaTicklerComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    // some code here
+    this.isFormSubmitted = true;
+    let ticklerItem: any = this.ticklerForm.value;
+    ticklerItem.PreEducationID = 0;
+    ticklerItem.ticklerID = this.ticklerForm.get('ticklerId')?.value
+    ticklerItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+
+    if (this.typeTickler.type === 'LOA') {
+      ticklerItem.lineOfAuthorityName = this.typeTickler.loa;
+    };
+
+    if (this.ticklerForm.invalid) {
+      this.ticklerForm.setErrors({ invalid: true });
+      return;
+    }
+
+    this.subscriptionData.add(
+      this.ticklerDataService.upsertTickerItem(ticklerItem).subscribe({
+        next: (response) => {
+          alert('Tickler has been successfully added');
+          this.onCancel();
+        },
+        error: (error) => {
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+            this.onCancel();
+          }
+        },
+      })
+    );
   }
 
   onCancel() {

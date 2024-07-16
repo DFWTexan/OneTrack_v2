@@ -38,7 +38,7 @@
       <button type="button" class="btn btn-secondary me-3 cancel-button" (click)="onCloseModal()">
         Cancel
       </button>
-      <button type="submit" class="btn btn-primary save-button">Save</button>
+      <button type="submit" class="btn btn-primary save-button" [disabled]="productItemForm.pristine">Save</button>
     </div>
   </div>
 </form>
