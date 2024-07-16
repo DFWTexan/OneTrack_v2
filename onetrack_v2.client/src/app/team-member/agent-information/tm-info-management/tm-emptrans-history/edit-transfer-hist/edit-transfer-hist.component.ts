@@ -78,7 +78,11 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
             )
           );
         } else {
-          this.transferHistoryForm.reset();
+          this.transferHistoryForm.reset({
+            branchCode: 'Select',
+            workStateAbv: 'Select',
+            resStateAbv: 'Select',
+          });
         }
       })
     );
@@ -100,6 +104,50 @@ export class EditTransferHistComponent implements OnInit, OnDestroy {
 
     if (this.agentComService.modeTransferHist === 'INSERT') {
       transferHistItem.transferHistoryID = 0;
+    }
+
+    if (
+      transferHistItem.branchCode === 'Select' ||
+      transferHistItem.branchCode === '' ||
+      transferHistItem.branchCode === null
+    ) {
+      this.transferHistoryForm.controls['branchCode'].setErrors({
+        required: true,
+      });
+    }
+
+    if (
+      transferHistItem.workStateAbv === 'Select' ||
+      transferHistItem.workStateAbv === '' ||
+      transferHistItem.workStateAbv === null
+    ) {
+      this.transferHistoryForm.controls['workStateAbv'].setErrors({
+        required: true,
+      });
+    }
+
+    if (
+      transferHistItem.resStateAbv === 'Select' ||
+      transferHistItem.resStateAbv === '' ||
+      transferHistItem.resStateAbv === null
+    ) {
+      this.transferHistoryForm.controls['resStateAbv'].setErrors({
+        required: true,
+      });
+    }
+
+    if (
+      transferHistItem.transferDate === '' ||
+      transferHistItem.transferDate === null
+    ) {
+      this.transferHistoryForm.controls['transferDate'].setErrors({
+        required: true,
+      });
+    }
+
+    if (!this.transferHistoryForm.valid) {
+      this.transferHistoryForm.setErrors({ invalid: true });
+      return;
     }
 
     this.subscriptions.add(

@@ -23,7 +23,9 @@
         />
       </div>
       <div class="mb-3">
-        <label for="branchCode" class="form-label">Branch Code:</label>
+        <label for="branchCode" class="form-label"
+          >Branch Code:<span class="ms-1 text-danger">*</span></label
+        >
         <select
           class="form-select select-size-small"
           type="text"
@@ -35,11 +37,22 @@
             {{ code.branchCode }}
           </option>
         </select>
+        <div
+          *ngIf="
+            transferHistoryForm.controls['branchCode'].errors &&
+            transferHistoryForm.controls['branchCode'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please select a Branch Code
+        </div>
       </div>
     </div>
     <div class="col">
       <div class="mb-3">
-        <label for="workStateAbv" class="form-label">Work State:</label>
+        <label for="workStateAbv" class="form-label"
+          >Work State:<span class="ms-1 text-danger">*</span></label
+        >
         <select
           class="form-select select-size-x-small"
           type="text"
@@ -51,10 +64,21 @@
             {{ state }}
           </option>
         </select>
+        <div
+          *ngIf="
+            transferHistoryForm.controls['workStateAbv'].errors &&
+            transferHistoryForm.controls['workStateAbv'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please select a Work State
+        </div>
       </div>
 
       <div class="mb-3">
-        <label for="resStateAbv" class="form-label">Resident State:</label>
+        <label for="resStateAbv" class="form-label"
+          >Resident State:<span class="ms-1 text-danger">*</span></label
+        >
         <select
           class="form-select select-size-x-small"
           type="text"
@@ -66,17 +90,37 @@
             {{ state }}
           </option>
         </select>
+        <div
+          *ngIf="
+            transferHistoryForm.controls['resStateAbv'].errors &&
+            transferHistoryForm.controls['resStateAbv'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please select a Resident State
+        </div>
       </div>
     </div>
     <div class="col">
       <div class="mb-3">
-        <label for="transferDate" class="form-label">Transfer Date:</label>
+        <label for="transferDate" class="form-label"
+          >Transfer Date:<span class="ms-1 text-danger">*</span></label
+        >
         <input
           class="form-control input-size-small"
           type="date"
           id="transferDate"
           formControlName="transferDate"
         />
+        <div
+          *ngIf="
+            transferHistoryForm.controls['transferDate'].errors &&
+            transferHistoryForm.controls['transferDate'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please enter a Transfer Date
+        </div>
       </div>
 
       <div class="mb-3">
@@ -102,7 +146,13 @@
       >
         Cancel
       </button>
-      <button type="submit" class="btn btn-primary save-button" [disabled]="!transferHistoryForm.valid">Save</button>
+      <button
+        type="submit"
+        class="btn btn-primary save-button"
+        [disabled]="!transferHistoryForm.valid"
+      >
+        Save
+      </button>
     </div>
   </div>
 </form>
