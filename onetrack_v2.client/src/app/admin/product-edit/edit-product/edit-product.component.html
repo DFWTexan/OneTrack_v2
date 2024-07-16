@@ -6,23 +6,43 @@
   <div class="row">
     <div class="col">
       <div class="mb-3">
-        <label for="productAbv" class="form-label">Product Abbr:</label>
+        <label for="productAbv" class="form-label">Product Abbr:<span class="text-danger ms-1">*</span></label>
         <input
           class="form-control input-size-small"
           type="text"
           id="productAbv"
           formControlName="productAbv"
         />
+        <div
+          *ngIf="
+            (productForm.controls['productAbv'].touched || isFormSubmitted) &&
+            productForm.controls['productAbv'].errors &&
+            productForm.controls['productAbv'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please Enter Product Abbreviation
+        </div>
       </div>
 
       <div class="mb-3">
-        <label for="productName" class="form-label">Product Name:</label>
+        <label for="productName" class="form-label">Product Name:<span class="text-danger ms-1">*</span></label>
         <input
-          class="form-control input-size-small"
+          class="form-control input-size-medium"
           type="text"
           id="productName"
           formControlName="productName"
         />
+        <div
+          *ngIf="
+            (productForm.controls['productName'].touched || isFormSubmitted) &&
+            productForm.controls['productName'].errors &&
+            productForm.controls['productName'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please Enter Product Name
+        </div>
       </div>
     </div>
 

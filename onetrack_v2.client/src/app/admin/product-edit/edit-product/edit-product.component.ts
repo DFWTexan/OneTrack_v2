@@ -1,10 +1,21 @@
-import { Component, Injectable, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  Injectable,
+  OnInit,
+  OnDestroy,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 
-import { AdminComService, AdminDataService, ErrorMessageService, UserAcctInfoDataService } from '../../../_services';
-
+import {
+  AdminComService,
+  AdminDataService,
+  ErrorMessageService,
+  UserAcctInfoDataService,
+} from '../../../_services';
 
 @Component({
   selector: 'app-edit-product',
@@ -44,19 +55,11 @@ export class EditProductComponent implements OnInit, OnDestroy {
               productName: product.productName,
               productAbv: product.productAbv,
               effectiveDate: product.effectiveDate
-              ? formatDate(
-                product.effectiveDate,
-                  'yyyy-MM-dd',
-                  'en-US'
-                )
-              : null,
+                ? formatDate(product.effectiveDate, 'yyyy-MM-dd', 'en-US')
+                : null,
               expireDate: product.expireDate
-              ? formatDate(
-                product.expireDate,
-                  'yyyy-MM-dd',
-                  'en-US'
-                )
-              : null,
+                ? formatDate(product.expireDate, 'yyyy-MM-dd', 'en-US')
+                : null,
               isActive: product.isActive,
             });
           });
@@ -73,6 +76,19 @@ export class EditProductComponent implements OnInit, OnDestroy {
 
     if (this.adminComService.modes.product.mode === 'INSERT') {
       productItem.PreEducationID = 0;
+    }
+
+    if (productItem.productAbv === '' || productItem.productAbv === null) {
+      this.productForm.controls['productAbv'].setErrors({ required: true });
+    }
+
+    if (productItem.productName === '' || productItem.productName === null) {
+      this.productForm.controls['productName'].setErrors({ required: true });
+    }
+
+    if (!this.productForm.valid) {
+      this.productForm.setErrors({ invalid: true });
+      return;
     }
 
     this.subscriptionData.add(
