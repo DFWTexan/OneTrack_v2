@@ -7,7 +7,7 @@
     <div class="col">
       <div class="mb-3">
         <label for="stateProvinceAbv" class="form-label"
-          >State Province Abbr:</label
+          >State Province Abbr:<span class="text-danger ms-1">*</span></label
         >
         <input
           class="form-control input-size-x-small"
@@ -15,11 +15,21 @@
           id="stateProvinceAbv"
           formControlName="stateProvinceAbv"
         />
+        <div
+          *ngIf="
+            (stateProvinceForm.controls['stateProvinceAbv'].touched || isFormSubmitted) &&
+            stateProvinceForm.controls['stateProvinceAbv'].errors &&
+            stateProvinceForm.controls['stateProvinceAbv'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please enter State Province Abbr
+        </div>
       </div>
 
       <div class="mb-3">
         <label for="stateProvinceCode" class="form-label"
-          >State Province Code:</label
+          >State Province Code:<span class="text-danger ms-1">*</span></label
         >
         <input
           class="form-control input-size-x-small"
@@ -27,11 +37,21 @@
           id="stateProvinceCode"
           formControlName="stateProvinceCode"
         />
+        <div
+          *ngIf="
+            (stateProvinceForm.controls['stateProvinceCode'].touched || isFormSubmitted) &&
+            stateProvinceForm.controls['stateProvinceCode'].errors &&
+            stateProvinceForm.controls['stateProvinceCode'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please enter State Code
+        </div>
       </div>
 
       <div class="mb-3">
         <label for="stateProvinceName" class="form-label"
-          >State Province Name:</label
+          >State Province Name:<span class="text-danger ms-1">*</span></label
         >
         <input
           class="form-control input-size-small"
@@ -39,16 +59,36 @@
           id="stateProvinceName"
           formControlName="stateProvinceName"
         />
+        <div
+          *ngIf="
+            (stateProvinceForm.controls['stateProvinceName'].touched || isFormSubmitted) &&
+            stateProvinceForm.controls['stateProvinceName'].errors &&
+            stateProvinceForm.controls['stateProvinceName'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please enter State Name
+        </div>
       </div>
 
       <div class="mb-3">
-        <label for="country" class="form-label">Country Code:</label>
+        <label for="country" class="form-label">Country Code:<span class="text-danger ms-1">*</span></label>
         <input
           class="form-control input-size-x-small"
           type="text"
           id="country"
           formControlName="country"
         />
+        <div
+          *ngIf="
+            (stateProvinceForm.controls['country'].touched || isFormSubmitted) &&
+            stateProvinceForm.controls['country'].errors &&
+            stateProvinceForm.controls['country'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please Enter Country Code
+        </div>
       </div>
 
       <div class="mb-3 mt-4">

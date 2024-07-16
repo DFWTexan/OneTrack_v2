@@ -65,6 +65,12 @@ export class EditStateProvinceComponent implements OnInit, OnDestroy {
           if (mode === 'EDIT') {
             this.adminDataService.stateProvinceChanged.subscribe(
               (stateProvince: any) => {
+                this.stateProvinces = this.stateProvinces.filter(
+                  (sp) => sp.label !== 'Select'
+                );
+                this.licenseTeches = this.licenseTeches.filter(
+                  (item) => !(item.value === 0 && item.label === 'Select')
+                );
                 this.stateProvinceForm.patchValue({
                   stateProvinceCode: stateProvince.stateProvinceCode,
                   stateProvinceName: stateProvince.stateProvinceName,
@@ -88,7 +94,20 @@ export class EditStateProvinceComponent implements OnInit, OnDestroy {
               }
             );
           } else {
-            this.stateProvinceForm.reset();
+            let hasTechSelect = this.licenseTeches.some(
+              (tech) => tech.value === 0 && tech.label === 'Select'
+            );
+            this.licenseTeches = !hasTechSelect
+              ? [{ value: 0, label: 'Select' }, ...this.licenseTeches]
+              : this.licenseTeches;
+            let hasStateSelect = this.stateProvinces.includes('Select');
+            this.stateProvinces = !hasStateSelect
+              ? ['Select', ...this.stateProvinces]
+              : this.stateProvinces;
+            this.stateProvinceForm.reset({
+              licenseTechID: 0,
+              state: 'Select',
+            });
           }
         }
       );
@@ -101,6 +120,45 @@ export class EditStateProvinceComponent implements OnInit, OnDestroy {
       this.adminComService.modes.stateProvince.mode;
     stateProvinceItem.userSOEID =
       this.userAcctInfoDataService.userAcctInfo.soeid;
+
+    if (
+      stateProvinceItem.stateProvinceAbv === '' ||
+      stateProvinceItem.stateProvinceAbv === null
+    ) {
+      this.stateProvinceForm.controls['stateProvinceAbv'].setErrors({
+        required: true,
+      });
+    }
+
+    if (
+      stateProvinceItem.stateProvinceCode === '' ||
+      stateProvinceItem.stateProvinceCode === null
+    ) {
+      this.stateProvinceForm.controls['stateProvinceCode'].setErrors({
+        required: true,
+      });
+    }
+
+    if (
+      stateProvinceItem.stateProvinceName === '' ||
+      stateProvinceItem.stateProvinceName === null
+    ) {
+      this.stateProvinceForm.controls['stateProvinceName'].setErrors({
+        required: true,
+      });
+    }
+
+    if (
+      stateProvinceItem.country === '' ||
+      stateProvinceItem.country === null
+    ) {
+      this.stateProvinceForm.controls['country'].setErrors({ required: true });
+    }
+
+    if (!this.stateProvinceForm.valid) {
+      this.stateProvinceForm.setErrors({ invalid: true });
+      return;
+    }
 
     this.subscriptionData.add(
       this.adminDataService.upSertStateProvince(stateProvinceItem).subscribe({

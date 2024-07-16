@@ -83,12 +83,12 @@ export class EditPreEducationComponent implements OnInit, OnDestroy {
             );
           } else {
             let hasSelect = this.deliveryMethods.includes('Select');
-            let hasProvSelect = this.providers.some(
-              (provider) => provider.value === 0 && provider.label === 'Select'
-            );
             this.deliveryMethods = !hasSelect
               ? ['Select', ...this.deliveryMethods]
               : this.deliveryMethods;
+            let hasProvSelect = this.providers.some(
+              (provider) => provider.value === 0 && provider.label === 'Select'
+            );
             this.providers = !hasProvSelect
               ? [{ value: 0, label: 'Select' }, ...this.providers]
               : this.providers;
