@@ -133,9 +133,8 @@
                   <div class="row">
                     <div class="col-md-12">
                       <span class="me-1">{{ license.licenseName }}</span>
-                      <span class="ms-1" style="font-size: small">({{
-                        license.licenseState
-                      }})</span
+                      <span class="ms-1" style="font-size: small"
+                        >({{ license.licenseState }})</span
                       >
                     </div>
                   </div>
@@ -149,9 +148,10 @@
                       <label>Status:</label><br /><span
                         class="ms-2"
                         [ngStyle]="{
-                          color: license.licenseStatus === 'Active' ? 'green' : ''
+                          color:
+                            license.licenseStatus === 'Active' ? 'green' : ''
                         }"
-                        style="font-size: smaller; font-weight: 400"
+                        style="font-size: smaller; font-weight: 600"
                         >{{ license.licenseStatus }}</span
                       >
                     </div>
@@ -171,7 +171,7 @@
                       }}</span>
                     </div>
                     <div class="me-5">
-                      <label>LOA. Date:</label><br /><span>{{
+                      <label>LOA Date:</label><br /><span>{{
                         license.lineOfAuthIssueDate | date : "MM/dd/yyyy"
                       }}</span>
                     </div>
@@ -191,10 +191,10 @@
             </mat-expansion-panel-header>
             <div class="mat-description">
               <div class="row">
-                <div class="col">
+                <!-- <div class="col">
                   <strong>State:</strong> <br />
                   {{ license.licenseState }}
-                </div>
+                </div> -->
                 <div class="col">
                   <strong>ID:</strong> <br />
                   {{ license.employeeLicenseId }}
@@ -208,7 +208,7 @@
                   {{ license.licenseNumber }}
                 </div>
                 <div class="col">
-                  <strong>Resident ?:</strong> <br />
+                  <strong>Resident:</strong> <br />
                   {{ license.resNoneRes ? "Res" : "NonRes" }}
                 </div>
                 <div class="col">
@@ -226,6 +226,24 @@
                 <div class="col">
                   <strong>Expire Date:</strong> <br />
                   {{ license.licenseExpirationDate | date : "MM/dd/yyyy" }}
+                </div>
+                <div class="col d-flex justify-content-end">
+                  <button
+                    class="page-button appointment-edit-button click-effect"
+                    (click)="modalService.open('modal-new-tickler')"
+                    title="Tickle Member"
+                  >
+                    <span class="material-symbols-outlined"> 3p </span>
+                  </button>
+                </div>
+                <div class="col d-flex justify-content-end">
+                  <button
+                    class="page-button appointment-edit-button click-effect"
+                    (click)="modalService.open('modal-new-tickler')"
+                    title="Tickle Line of Authority"
+                  >
+                    <span class="material-symbols-outlined"> speaker_notes </span>
+                  </button>
                 </div>
                 <div class="col d-flex justify-content-end">
                   <button
@@ -443,3 +461,20 @@
     </div>
   </div>
 </modal>
+
+<!-- Modal: INSERT-TICKLER -->
+<modal id="modal-new-tickler">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      <strong>TBD</strong> - Tickler
+    </h1>
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-insert-member-loa-tickler></app-insert-member-loa-tickler>
+      </div>
+    </div>
+  </div>
+</modal>
+
