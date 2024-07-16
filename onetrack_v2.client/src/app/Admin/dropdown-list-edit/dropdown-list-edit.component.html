@@ -69,11 +69,7 @@
                   <span
                     class="material-symbols-outlined"
                     (click)="
-                      openConfirmDialog(
-                        'deleteLkpType',
-                        'LkpType Delete',
-                        item
-                      )
+                      openConfirmDialog('deleteLkpType', 'LkpType Delete', item)
                     "
                   >
                     delete
@@ -105,6 +101,7 @@
     <div>
       <div>
         <app-edit-dropdown-item
+          [selectedDropdownListType]="selectedDropdownListType"
           (callParentRefreshData)="onChildCallRefreshData()"
         ></app-edit-dropdown-item>
       </div>

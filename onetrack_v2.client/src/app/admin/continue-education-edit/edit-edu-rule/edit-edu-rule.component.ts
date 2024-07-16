@@ -1,5 +1,13 @@
-import { Component, Injectable, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import {
+  Component,
+  Injectable,
+  OnInit,
+  OnDestroy,
+  Input,
+  EventEmitter,
+  Output,
+} from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import {
@@ -32,7 +40,7 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
   licenseTypes: any[] = [];
   licenseTypeSelected: string | null = null;
   licenseTypeItem: string | null = null;
-  
+
   selectedExceptionValues: number[] = [];
   selectedExemptionValues: number[] = [];
 
@@ -52,7 +60,7 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
     this.subscribeToDropdownDataChanges();
 
     this.subscribeToModeChanges();
-    
+
     this.fetchLicenseTypes();
   }
 
@@ -109,12 +117,14 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
   private handleCreateMode(): void {
     this.eduRuleForm.reset();
     this.eduRuleForm.patchValue({
-      stateProvince: this.selectedStateProvince ? this.selectedStateProvince : 'Select',
+      stateProvince: this.selectedStateProvince
+        ? this.selectedStateProvince
+        : 'Select',
       educationStartDateID: null,
       educationEndDateID: null,
     });
   }
-  
+
   private populateFormForEdit(eduRule: EducationRule): void {
     this.selectedExceptionValues = eduRule.exceptionID
       ? eduRule.exceptionID.split(',').map((id) => Number(id))
@@ -224,6 +234,29 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
     eduRuleItem.exceptionID = this.selectedExceptionValues.join(',');
     eduRuleItem.exemptionID = this.selectedExemptionValues.join(',');
     eduRuleItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+
+    if (
+      eduRuleItem.stateProvince === 'Select' ||
+      eduRuleItem.stateProvince === ''
+    ) {
+      this.eduRuleForm.controls['stateProvince'].setErrors({ required: true });
+    }
+
+    if (eduRuleItem.licenseType === '' || eduRuleItem.licenseType === null) {
+      this.eduRuleForm.controls['licenseType'].setErrors({ required: true });
+    }
+
+    if (eduRuleItem.educationStartDateID === null || eduRuleItem.educationStartDateID === 0) {
+      this.eduRuleForm.controls['educationStartDateID'].setErrors({
+        required: true,
+      });
+    }
+
+    if (eduRuleItem.educationEndDateID === null || eduRuleItem.educationEndDateID === 0) {
+      this.eduRuleForm.controls['educationEndDateID'].setErrors({
+        required: true,
+      });
+    }
 
     if (this.eduRuleForm.invalid) {
       this.eduRuleForm.setErrors({ invalid: true });

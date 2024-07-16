@@ -1,8 +1,21 @@
-import { Component, Injectable, OnInit, OnDestroy, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  Injectable,
+  OnInit,
+  OnDestroy,
+  EventEmitter,
+  Output,
+  Input,
+} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { AdminComService, AdminDataService, ErrorMessageService, UserAcctInfoDataService } from '../../../_services';
+import {
+  AdminComService,
+  AdminDataService,
+  ErrorMessageService,
+  UserAcctInfoDataService,
+} from '../../../_services';
 import { DropdownItem } from '../../../_Models';
 
 @Component({
@@ -13,6 +26,7 @@ import { DropdownItem } from '../../../_Models';
 @Injectable()
 export class EditDropdownItemComponent implements OnInit, OnDestroy {
   @Output() callParentRefreshData = new EventEmitter<any>();
+  @Input() selectedDropdownListType: string = '';
   isFormSubmitted = false;
   dropdownItemForm!: FormGroup;
   upSertType: string = 'INSERT';
@@ -60,23 +74,23 @@ export class EditDropdownItemComponent implements OnInit, OnDestroy {
     lkpTypeItem.upSertType = this.upSertType;
     lkpTypeItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
-    // if (this.adminComService.modes.company.mode === 'INSERT') {
-    //   company.companyId = 0;
-    // }
+    console.log(
+      'EMFTEST () this.adminComService.modes.dropdownItem.mode: ',
+      this.adminComService.modes.dropdownItem.mode
+    );
 
-    // if (company.companyType === 'Select Company Type') {
-    //   company.companyType = '';
-    //   this.companyForm.controls['companyType'].setErrors({ incorrect: true });
-    // }
+    if (this.adminComService.modes.dropdownItem.mode == 'INSERT') {
+      if ((lkpTypeItem.lkpValue = '' || lkpTypeItem.lkpValue == null)) {
+        this.dropdownItemForm.controls['lkpValue'].setErrors({
+          required: true,
+        });
+      }
+    }
 
-    // if (company.state === 'Select State') {
-    //   company.state = '';
-    // }
-
-    // if (!this.companyForm.valid) {
-    //   this.companyForm.setErrors({ invalid: true });
-    //   return;
-    // }
+    if (this.dropdownItemForm.invalid) {
+      this.dropdownItemForm.setErrors({ invalid: true });
+      return;
+    }
 
     this.adminDataService.upSertLkpType(lkpTypeItem).subscribe({
       next: (response) => {
@@ -86,6 +100,7 @@ export class EditDropdownItemComponent implements OnInit, OnDestroy {
       error: (error) => {
         if (error.error && error.error.errMessage) {
           this.errorMessageService.setErrorMessage(error.error.errMessage);
+          this.forceCloseModal();
         }
       },
     });

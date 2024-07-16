@@ -21,6 +21,16 @@
           {{ state }}
         </option>
       </select>
+      <div
+        *ngIf="
+          (eduRuleForm.controls['stateProvince'].touched || isFormSubmitted) &&
+          eduRuleForm.controls['stateProvince'].errors &&
+          eduRuleForm.controls['stateProvince'].errors['required']
+        "
+        class="text-danger"
+      >
+        Please Select State
+      </div>
     </div>
   </div>
 
@@ -81,6 +91,17 @@
             formControlName="licenseType"
             rows="5"
           ></textarea>
+          <div
+            *ngIf="
+              (eduRuleForm.controls['licenseType'].touched ||
+                isFormSubmitted) &&
+              eduRuleForm.controls['licenseType'].errors &&
+              eduRuleForm.controls['licenseType'].errors['required']
+            "
+            class="text-danger"
+          >
+            Please Enter License Type
+          </div>
         </div>
       </div>
     </div>
@@ -89,8 +110,30 @@
   <div class="row mt-3">
     <div class="col-md-3">
       <span class="mt-3" style="font-size: large; font-weight: 600">
-        CE Start
-      </span>
+        CE Start </span
+      ><span class="text-danger ms-1">*</span>
+      <div
+        *ngIf="
+          (eduRuleForm.controls['educationStartDateID'].touched ||
+            isFormSubmitted) &&
+          eduRuleForm.controls['educationStartDateID'].errors &&
+          eduRuleForm.controls['educationStartDateID'].errors['required']
+        "
+        class="text-danger"
+      >
+        Please Select CE Start
+      </div>
+      <div
+        *ngIf="
+          (eduRuleForm.controls['educationEndDateID'].touched ||
+            isFormSubmitted) &&
+          eduRuleForm.controls['educationEndDateID'].errors &&
+          eduRuleForm.controls['educationEndDateID'].errors['required']
+        "
+        class="text-danger"
+      >
+        Please Select CE End
+      </div>
     </div>
     <div class="col-md-9 d-flex justify-content-between">
       <select
