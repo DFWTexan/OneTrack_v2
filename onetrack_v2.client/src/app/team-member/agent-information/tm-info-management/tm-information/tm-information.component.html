@@ -133,12 +133,17 @@
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <div class="mat-title">
-                  <div class="row">
-                    <div class="col-md-12">
+                  <div class="d-flex justify-content-between align-items-center w-100">
+                    <div style="width: 275px;">
                       <span class="me-1">{{ license.licenseName }}</span>
-                      <span class="ms-1" style="font-size: small"
-                        >({{ license.licenseState }})</span
-                      >
+                      <span class="ms-1" style="font-size: small">({{ license.licenseState }})</span>
+                    </div>
+                    <div>
+                      <button class="icon-edit-delete-button" title="Add Appointment">
+                        <span class="material-symbols-outlined">
+                          format_list_bulleted_add
+                        </span>
+                      </button>
                     </div>
                   </div>
                 </div>
