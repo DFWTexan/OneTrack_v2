@@ -158,6 +158,8 @@ export class LicIncentiveInfoDataService {
   updateLicenseAppointment(appointment: LicenseAppointment): Observable<any> {
     this.apiUrl = environment.apiUrl + 'LicenseInfo/UpdateLicenseAppointment';
 
+console.log('EMFTEST (INFO) - updateLicenseAppointment() - appointment => ', appointment);
+
     return this.http
       .post<{
         success: boolean;

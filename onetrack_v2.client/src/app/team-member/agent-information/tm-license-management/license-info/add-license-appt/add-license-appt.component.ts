@@ -93,6 +93,10 @@ export class AddLicenseApptComponent implements OnInit, OnDestroy {
       licenseApptItem.appointmentStatus = '';
     }
 
+    if (licenseApptItem.companyID === 0 || licenseApptItem.companyID === null) {
+      this.licenseApptForm.controls['companyID'].setErrors({ required: true });
+    }
+
     if (this.licenseApptForm.invalid) {
       this.licenseApptForm.setErrors({ invalid: true });
       return;

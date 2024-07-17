@@ -38,7 +38,7 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="companyID" class="form-label">Company Abv: </label>
+        <label for="companyID" class="form-label">Company Abv:  <span class="text-danger">*</span></label>
         <select
           class="form-select select-size-small"
           type="text"
@@ -57,7 +57,7 @@
             (licenseApptForm.controls['companyID'].touched ||
               isFormSubmitted) &&
             licenseApptForm.controls['companyID'].errors &&
-            licenseApptForm.controls['companyID'].errors['invalid']
+            licenseApptForm.controls['companyID'].errors['required']
           "
           class="text-danger"
         >

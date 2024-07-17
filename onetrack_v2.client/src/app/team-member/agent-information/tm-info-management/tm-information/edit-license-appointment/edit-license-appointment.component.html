@@ -49,7 +49,7 @@
         />
       </div> -->
       <div class="mb-3">
-        <label for="companyID" class="form-label">Company Abv:</label>
+        <label for="companyID" class="form-label">Company Abv: <span class="text-danger">*</span></label>
         <select
           class="form-select select-size-small"
           type="text"
@@ -63,17 +63,16 @@
             {{ abbr.label }}
           </option>
         </select>
-        <!-- <div
+        <div
           *ngIf="
-            (licenseApptForm.controls['companyID'].touched ||
-              isFormSubmitted) &&
-            licenseApptForm.controls['companyID'].errors &&
-            licenseApptForm.controls['companyID'].errors['invalid']
+            (form.controls['companyID'].touched || isFormSubmitted) &&
+            form.controls['companyID'].errors &&
+            form.controls['companyID'].errors['required']
           "
           class="text-danger"
         >
-          Please select Company Name
-        </div> -->
+          Please select Company Abv
+        </div>
       </div>
     </div>
 

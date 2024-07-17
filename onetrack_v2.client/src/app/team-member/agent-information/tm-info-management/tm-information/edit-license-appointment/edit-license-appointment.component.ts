@@ -131,6 +131,26 @@ export class EditLicenseAppointmentComponent implements OnInit, OnDestroy {
       licenseApptItem.appointmentStatus = '';
     }
 
+    if (licenseApptItem.carrierDate === '') {
+      licenseApptItem.carrierDate = null;
+    }
+
+    if (licenseApptItem.appointmentEffectiveDate === '') {
+      licenseApptItem.appointmentEffectiveDate = null;
+    }
+
+    if (licenseApptItem.appointmentExpireDate === '') {
+      licenseApptItem.appointmentExpireDate = null;
+    }
+
+    if (licenseApptItem.appointmentTerminationDate === '') {
+      licenseApptItem.appointmentTerminationDate = null;
+    }
+
+    if (licenseApptItem.companyID === 0 || licenseApptItem.companyID === null) {
+      this.form.controls['companyID'].setErrors({ required: true });
+    }
+
     if (this.form.invalid) {
       this.form.setErrors({ invalid: true });
       return;
@@ -141,34 +161,35 @@ export class EditLicenseAppointmentComponent implements OnInit, OnDestroy {
         .updateLicenseAppointment(licenseApptItem)
         .subscribe({
           next: (response) => {
-            const modalDiv = document.getElementById('modal-edit-license-appt');
-            if (modalDiv != null) {
-              modalDiv.style.display = 'none';
-            }
-            // handle the response here
-            // console.log(
-            //   'EMFTEST () - Agent License added successfully response => \n ',
-            //   response
-            // );
+            // const modalDiv = document.getElementById('modal-edit-license-appt');
+            // if (modalDiv != null) {
+            //   modalDiv.style.display = 'none';
+            // }
+            this.forceCloseModal();
           },
           error: (error) => {
             if (error.error && error.error.errMessage) {
               this.errorMessageService.setErrorMessage(error.error.errMessage);
             }
-            const modalDiv = document.getElementById('modal-edit-license-appt');
-            if (modalDiv != null) {
-              modalDiv.style.display = 'none';
-            }
+            this.forceCloseModal();
           },
         })
     );
   }
 
-  onCancel() {
+  forceCloseModal() {
     const modalDiv = document.getElementById('modal-edit-license-appt');
     if (modalDiv != null) {
       modalDiv.style.display = 'none';
     }
+  }
+
+  onCancel() {
+    // const modalDiv = document.getElementById('modal-edit-license-appt');
+    // if (modalDiv != null) {
+    //   modalDiv.style.display = 'none';
+    // }
+    this.forceCloseModal();
   }
 
   ngOnDestroy(): void {
