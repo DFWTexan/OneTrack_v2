@@ -31,6 +31,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   agentInfo: AgentInfo = {} as AgentInfo;
   typeTickler: any = {};
   workState: string | null = null;
+  displayOpenLicenseID: number = 0;
 
   private subscriptions = new Subscription();
 
@@ -51,10 +52,12 @@ export class TmInformationComponent implements OnInit, OnDestroy {
 
     this.agentInfo = this.agentDataService.agentInformation;
     this.subscriptions.add(
-      this.agentDataService.agentInfoChanged.subscribe((agentInfo: AgentInfo) => {
-        this.isLoading = false;
-        this.agentInfo = agentInfo;
-      })
+      this.agentDataService.agentInfoChanged.subscribe(
+        (agentInfo: AgentInfo) => {
+          this.isLoading = false;
+          this.agentInfo = agentInfo;
+        }
+      )
     );
   }
 
@@ -181,6 +184,10 @@ export class TmInformationComponent implements OnInit, OnDestroy {
 
   onSetWorkState(workState: string | null) {
     this.agentDataService.storeWorkState(workState);
+  }
+
+  onSetOpenLicenseID(displayOpenLicenseID: number) {
+    this.displayOpenLicenseID = displayOpenLicenseID;
   }
 
   ngOnDestroy() {

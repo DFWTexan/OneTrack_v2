@@ -128,8 +128,8 @@
               let license of agentInfo.agentLicenseAppointments;
               let i = index
             "
+            [expanded]="license.employeeLicenseId === displayOpenLicenseID"
           >
-            <!-- [expanded]="license.licenseStatus === 'Active'" -->
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <div class="mat-title">
@@ -343,6 +343,7 @@
                           <button
                             class="icon-edit-delete-button"
                             (click)="
+                              onSetOpenLicenseID(license.employeeLicenseId);
                               storeLicAppointment(appointment);
                               storeLicApptLicenseID(license.licenseID);
                               modalService.open('modal-edit-license-appt')
@@ -356,6 +357,7 @@
                             <span
                               class="material-symbols-outlined"
                               (click)="
+                              onSetOpenLicenseID(license.employeeLicenseId);
                             openConfirmDialog('deleteLicAppt', 'License Appointment', {
                               employeeAppointmentID: appointment.employeeAppointmentID,
                               employeeLicenseID: appointment.employeeLicenseID,
