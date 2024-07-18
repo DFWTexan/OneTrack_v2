@@ -26,6 +26,7 @@ import {
 @Injectable()
 export class TmInformationComponent implements OnInit, OnDestroy {
   isLoading = false;
+  isIndex = false;
   eventAction: string = '';
   vObject: any = {};
   agentInfo: AgentInfo = {} as AgentInfo;

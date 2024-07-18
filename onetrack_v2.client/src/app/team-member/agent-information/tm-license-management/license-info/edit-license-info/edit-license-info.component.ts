@@ -20,9 +20,12 @@ import { AgentLicenseAppointments } from '../../../../../_Models';
   styleUrl: './edit-license-info.component.css',
 })
 export class EditLicenseInfoComponent implements OnInit, OnDestroy {
+  @Input() currentIndex: number = 0;
+  @Input() isIndex: boolean = false;
+  @Input() mode: string = '';
   isFormSubmitted: boolean = false;
   licenseForm: FormGroup;
-  @Input() currentIndex: number = 0;
+  licenseInfo: AgentLicenseAppointments = {} as AgentLicenseAppointments;
   licenseMgmtData: AgentLicenseAppointments[] = [];
   licenseStates: string[] = [];
   licenseStatuses: { value: string; label: string }[] = [];
@@ -88,80 +91,177 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.add(
+      this.agentDataService.licenseInfoChanged.subscribe(
+        (licenseInfo: AgentLicenseAppointments) => {
+          this.licenseInfo = licenseInfo;
+          this.licenseForm.patchValue({
+            agentName:
+              this.agentDataService.agentInformation.lastName +
+              ', ' +
+              this.agentDataService.agentInformation.firstName,
+            employeeLicenseId: licenseInfo.employeeLicenseId,
+            licenseState: licenseInfo.licenseState,
+            licenseName: licenseInfo.licenseName,
+            licenseID: licenseInfo.licenseID,
+            licenseNumber: licenseInfo.licenseNumber,
+            licenseStatus: licenseInfo.licenseStatus,
+            affiliatedLicense: 'SELECT-TBD...',
+            licenseIssueDate: licenseInfo.originalIssueDate
+              ? formatDate(licenseInfo.originalIssueDate, 'yyyy-MM-dd', 'en-US')
+              : null,
+            lineOfAuthIssueDate: licenseInfo.lineOfAuthIssueDate
+              ? formatDate(
+                  licenseInfo.lineOfAuthIssueDate,
+                  'yyyy-MM-dd',
+                  'en-US'
+                )
+              : null,
+            licenseEffectiveDate: licenseInfo.licenseEffectiveDate
+              ? formatDate(
+                  licenseInfo.licenseEffectiveDate,
+                  'yyyy-MM-dd',
+                  'en-US'
+                )
+              : null,
+            licenseExpireDate: licenseInfo.licenseExpirationDate
+              ? formatDate(
+                  licenseInfo.licenseExpirationDate,
+                  'yyyy-MM-dd',
+                  'en-US'
+                )
+              : null,
+            licenseNote: licenseInfo.licenseNote,
+            required: licenseInfo.required,
+            // reinstatementDate: licenseInfo.reinstatementDate,
+            nonResident: licenseInfo.nonResident,
+            reinstatement: licenseInfo.reinstatement,
+            employmentID: licenseInfo.employmentID,
+          });
+        }
+      )
+    );
+
+    this.subscriptions.add(
       this.agentComService.modeLicenseMgmtChanged.subscribe((mode: string) => {
-        // this.drpdwnDataService
-        //   .fetchDropdownNumericData(
-        //     'GetLicenseNumericNames',
-        //     this.agentDataService.agentInformation.branchDeptStreetState
-        //   )
-        //   .subscribe((licenseNames: { value: number; label: string }[]) => {
-        //     this.licenseNames = [
-        //       { value: 0, label: 'Select' },
-        //       ...licenseNames,
-        //     ];
-        //   });
         this.getStateLicenseNames(
           this.agentDataService.agentInformation.branchDeptStreetState ??
             'Select'
         );
 
         if (mode === 'EDIT') {
-          this.subscriptions.add(
-            this.agentDataService.licenseMgmtDataIndexChanged.subscribe(
-              (licenseMgmtDataIndex: any) => {
-                this.currentIndex = licenseMgmtDataIndex;
-              }
-            )
-          );
+          if (this.isIndex) {
+            // GET Data by Index
+            this.subscriptions.add(
+              this.agentDataService.licenseMgmtDataIndexChanged.subscribe(
+                (licenseMgmtDataIndex: any) => {
+                  this.currentIndex = licenseMgmtDataIndex;
+                }
+              )
+            );
 
-          this.licenseMgmtData =
-            this.agentDataService.agentInformation.agentLicenseAppointments;
-          let originalIssueDate =
-            this.licenseMgmtData[this.currentIndex].originalIssueDate;
-          let lineOfAuthIssueDate =
-            this.licenseMgmtData[this.currentIndex].lineOfAuthIssueDate;
-          let licenseEffectiveDate =
-            this.licenseMgmtData[this.currentIndex].licenseEffectiveDate;
-          let licenseExpirationDate =
-            this.licenseMgmtData[this.currentIndex].licenseExpirationDate;
-          this.defaultLicenseState =
-            this.licenseMgmtData[this.currentIndex].licenseState;
+            this.licenseMgmtData =
+              this.agentDataService.agentInformation.agentLicenseAppointments;
+            let originalIssueDate =
+              this.licenseMgmtData[this.currentIndex].originalIssueDate;
+            let lineOfAuthIssueDate =
+              this.licenseMgmtData[this.currentIndex].lineOfAuthIssueDate;
+            let licenseEffectiveDate =
+              this.licenseMgmtData[this.currentIndex].licenseEffectiveDate;
+            let licenseExpirationDate =
+              this.licenseMgmtData[this.currentIndex].licenseExpirationDate;
+            this.defaultLicenseState =
+              this.licenseMgmtData[this.currentIndex].licenseState;
 
-          this.licenseForm.patchValue({
-            agentName:
-              this.agentDataService.agentInformation.lastName +
-              ', ' +
-              this.agentDataService.agentInformation.firstName,
-            employeeLicenseId:
-              this.licenseMgmtData[this.currentIndex].employeeLicenseId,
-            licenseState: this.licenseMgmtData[this.currentIndex].licenseState,
-            licenseName: this.licenseMgmtData[this.currentIndex].licenseName,
-            licenseID: this.licenseMgmtData[this.currentIndex].licenseID,
-            licenseNumber:
-              this.licenseMgmtData[this.currentIndex].licenseNumber,
-            licenseStatus:
-              this.licenseMgmtData[this.currentIndex].licenseStatus,
-            affiliatedLicense: 'SELECT-TBD...',
-            licenseIssueDate: originalIssueDate
-              ? formatDate(originalIssueDate, 'yyyy-MM-dd', 'en-US')
-              : null,
-            lineOfAuthIssueDate: lineOfAuthIssueDate
-              ? formatDate(lineOfAuthIssueDate, 'yyyy-MM-dd', 'en-US')
-              : '01/01/0001 00:00:00',
-            licenseEffectiveDate: licenseEffectiveDate
-              ? formatDate(licenseEffectiveDate, 'yyyy-MM-dd', 'en-US')
-              : null,
-            licenseExpireDate: licenseExpirationDate
-              ? formatDate(licenseExpirationDate, 'yyyy-MM-dd', 'en-US')
-              : null,
-            licenseNote: this.licenseMgmtData[this.currentIndex].licenseNote,
-            required: this.licenseMgmtData[this.currentIndex].required,
-            // reinstatementDate: this.licenseMgmtData[this.currentIndex].reinstatementDate,
-            nonResident: this.licenseMgmtData[this.currentIndex].resNoneRes,
-            reinstatement:
-              this.licenseMgmtData[this.currentIndex].reinstatement,
-            employmentID: this.licenseMgmtData[this.currentIndex].employmentID,
-          });
+            this.licenseForm.patchValue({
+              agentName:
+                this.agentDataService.agentInformation.lastName +
+                ', ' +
+                this.agentDataService.agentInformation.firstName,
+              employeeLicenseId:
+                this.licenseMgmtData[this.currentIndex].employeeLicenseId,
+              licenseState:
+                this.licenseMgmtData[this.currentIndex].licenseState,
+              licenseName: this.licenseMgmtData[this.currentIndex].licenseName,
+              licenseID: this.licenseMgmtData[this.currentIndex].licenseID,
+              licenseNumber:
+                this.licenseMgmtData[this.currentIndex].licenseNumber,
+              licenseStatus:
+                this.licenseMgmtData[this.currentIndex].licenseStatus,
+              affiliatedLicense: 'SELECT-TBD...',
+              licenseIssueDate: originalIssueDate
+                ? formatDate(originalIssueDate, 'yyyy-MM-dd', 'en-US')
+                : null,
+              lineOfAuthIssueDate: lineOfAuthIssueDate
+                ? formatDate(lineOfAuthIssueDate, 'yyyy-MM-dd', 'en-US')
+                : '01/01/0001 00:00:00',
+              licenseEffectiveDate: licenseEffectiveDate
+                ? formatDate(licenseEffectiveDate, 'yyyy-MM-dd', 'en-US')
+                : null,
+              licenseExpireDate: licenseExpirationDate
+                ? formatDate(licenseExpirationDate, 'yyyy-MM-dd', 'en-US')
+                : null,
+              licenseNote: this.licenseMgmtData[this.currentIndex].licenseNote,
+              required: this.licenseMgmtData[this.currentIndex].required,
+              // reinstatementDate: this.licenseMgmtData[this.currentIndex].reinstatementDate,
+              nonResident: this.licenseMgmtData[this.currentIndex].resNoneRes,
+              reinstatement:
+                this.licenseMgmtData[this.currentIndex].reinstatement,
+              employmentID:
+                this.licenseMgmtData[this.currentIndex].employmentID,
+            });
+          } else {
+            console.log('EMFTEST () - Got HERE... ');
+
+            //             this.subscriptions.add(
+            //               this.agentDataService.licenseInfoChanged.subscribe(
+            //                 (licenseInfo: AgentLicenseAppointments) => {
+
+            // console.log('EMFTEST () - licenseInfo => \n ', licenseInfo);
+
+            //                   this.licenseInfo = licenseInfo;
+            //                   this.licenseForm.patchValue({
+            //                     agentName:
+            //                       this.agentDataService.agentInformation.lastName +
+            //                       ', ' +
+            //                       this.agentDataService.agentInformation.firstName,
+            //                     employeeLicenseId: licenseInfo.employeeLicenseId,
+            //                     licenseState: licenseInfo.licenseState,
+            //                     licenseName: licenseInfo.licenseName,
+            //                     licenseID: licenseInfo.licenseID,
+            //                     licenseNumber: licenseInfo.licenseNumber,
+            //                     licenseStatus: licenseInfo.licenseStatus,
+            //                     affiliatedLicense: 'SELECT-TBD...',
+            //                     // licenseIssueDate: formatDate(
+            //                     //   licenseInfo.originalIssueDate,
+            //                     //   'yyyy-MM-dd',
+            //                     //   'en-US'
+            //                     // ),
+            //                     // lineOfAuthIssueDate: formatDate(
+            //                     //   licenseInfo.lineOfAuthIssueDate,
+            //                     //   'yyyy-MM-dd',
+            //                     //   'en-US'
+            //                     // ),
+            //                     // licenseEffectiveDate: formatDate(
+            //                     //   licenseInfo.licenseEffectiveDate,
+            //                     //   'yyyy-MM-dd',
+            //                     //   'en-US'
+            //                     // ),
+            //                     // licenseExpireDate: formatDate(
+            //                     //   licenseInfo.licenseExpirationDate,
+            //                     //   'yyyy-MM-dd',
+            //                     //   'en-US'
+            //                     // ),
+            //                     licenseNote: licenseInfo.licenseNote,
+            //                     required: licenseInfo.required,
+            //                     // reinstatementDate: licenseInfo.reinstatementDate,
+            //                     nonResident: licenseInfo.nonResident,
+            //                     reinstatement: licenseInfo.reinstatement,
+            //                     employmentID: licenseInfo.employmentID,
+            //                   });
+            //                 }
+            //               )
+            //             );
+          }
         } else {
           this.licenseForm.reset();
           this.licenseForm.patchValue({
@@ -262,9 +362,16 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
 
   forceCloseModal() {
     this.isFormSubmitted = false;
-    const modalDiv = document.getElementById('modal-edit-license-info');
-    if (modalDiv != null) {
-      modalDiv.style.display = 'none';
+    if (this.mode === 'EDIT') {
+      const modalDiv = document.getElementById('modal-edit-license-info');
+      if (modalDiv != null) {
+        modalDiv.style.display = 'none';
+      }
+    } else {
+      const modalDiv = document.getElementById('modal-new-license-info');
+      if (modalDiv != null) {
+        modalDiv.style.display = 'none';
+      }
     }
   }
 

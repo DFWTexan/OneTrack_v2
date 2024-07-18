@@ -19,6 +19,8 @@ export class AgentComService {
   modeEmploymentJobTitleHist: string = '';
   modeEmploymentJobTitleHistChanged = new Subject<string>();
   // License Application Information
+  modeLicenseInfo: string = '';
+  modeLicenseInfoChanged = new Subject<string>();
   modeLicAppInfo: string = '';
   modeLicAppInfoChanged = new Subject<string>();
   modeLicPreEdu: string = '';
@@ -71,6 +73,11 @@ export class AgentComService {
   }
 
   // Employment Application Information
+  modeLicenseInfoModal(mode: string) {
+    this.modeLicenseInfo = mode;
+    this.modeLicenseInfoChanged.next(this.modeLicenseInfo);
+  }
+  
   modeLicAppInfoModal(mode: string) {
     this.modeLicAppInfo = mode;
     this.modeLicAppInfoChanged.next(this.modeLicAppInfo);

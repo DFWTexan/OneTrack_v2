@@ -23,6 +23,7 @@ import { ConfirmDialogComponent } from '../../../../_components';
 export class LicenseInfoComponent implements OnInit, OnDestroy {
   licenseMgmtData: AgentLicenseAppointments[] =
     [] as AgentLicenseAppointments[];
+  isIndex = true;
   currentIndex: number = 0;
   eventAction: string = '';
   vObject: any = {};

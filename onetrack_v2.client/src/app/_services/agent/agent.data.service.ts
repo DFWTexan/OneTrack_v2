@@ -55,6 +55,8 @@ export class AgentDataService {
   agentLicApplicationInfo: AgentLicApplicationInfo =
     {} as AgentLicApplicationInfo;
   agentLicApplicationInfoChanged = new Subject<AgentLicApplicationInfo>();
+  licenseInfo: any = {};
+  licenseInfoChanged = new Subject<any>();
   licenseApplicationItem: any = {};
   licenseApplicationItemChanged = new Subject<any>();
   licensePreEducationItem: any = {};
@@ -72,7 +74,7 @@ export class AgentDataService {
   diaryEntry: any = {};
   diaryEntryChanged = new Subject<any>();
   //INCENTIVE LICENSE
-  workState: string | null = null;  
+  workState: string | null = null;
   workStateChanged = new Subject<string | null>();
   // TM LICENSE APPOINTMENT
   licenseAppt: any = {};
@@ -99,13 +101,12 @@ export class AgentDataService {
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
-
             this.agentInformation = response.objData;
             this.agentInfoChanged.next(this.agentInformation);
 
             this.diaryItems = this.agentInformation.diaryItems;
             this.diaryItemsChanged.next(this.diaryItems);
-            
+
             this.agentLicenseAppointments =
               this.agentInformation.agentLicenseAppointments;
             this.agentLicenseAppointmentsChanged.next(
@@ -320,10 +321,10 @@ export class AgentDataService {
         map((agentInfo) => {
           return this.agentInformation;
         }),
-            catchError((error) => {
-              console.error('Error:', error);
-              throw error;
-            })
+        catchError((error) => {
+          console.error('Error:', error);
+          throw error;
+        })
       );
   }
 
@@ -649,7 +650,7 @@ export class AgentDataService {
   }
 
   upsertContEduHoursTaken(contEduHoursTaken: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/UpsertConEduTaken';  
+    this.apiUrl = environment.apiUrl + 'Agent/UpsertConEduTaken';
 
     return this.http
       .post<{
@@ -818,6 +819,12 @@ export class AgentDataService {
   }
 
   // TM LICENSE APPLICATION INFORMATION
+  storeLicenseInfo(mode: string | '', licenseInfo: any | null) {
+    this.agentComService.modeLicenseInfoModal(mode);
+    this.licenseInfo = licenseInfo || {};
+    this.licenseInfoChanged.next(this.licenseInfo);
+  }
+
   storeLicAppInfo(
     mode: string | '',
     licenseApplicationItem: LicenseApplicationItem | null
@@ -856,10 +863,6 @@ export class AgentDataService {
 
   // TM LICENSE APPOINTMENT
   storeLicenseAppt(mode: string | '', licenseAppt: any | null) {
-
-console.log('EMFTESTG (storeLicenseAppt) - mode: ', mode);
-console.log('EMFTESTG (storeLicenseAppt) - licenseAppt: ', licenseAppt);
-
     this.agentComService.modeLicenseApptModal(mode);
     this.licenseAppt = licenseAppt || {};
     this.licenseApptChanged.next(this.licenseAppt);
