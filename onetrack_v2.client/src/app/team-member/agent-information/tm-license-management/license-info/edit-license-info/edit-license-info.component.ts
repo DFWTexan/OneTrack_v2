@@ -32,6 +32,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
   licenseNames: { value: number; label: string }[] = [];
   affiliatedLicenses: string[] = ['None'];
   defaultLicenseState: string = null || 'Select';
+  licenseState: string = '';
 
   private subscriptions = new Subscription();
 
@@ -76,7 +77,14 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.licenseStates = ['Select', ...this.conService.getStates()];
-
+    this.subscriptions.add(
+      this.agentDataService.agentInfoChanged.subscribe(
+        (agentInfo: any) => {
+          this.getStateLicenseNames(agentInfo.workStateAbv); 
+        }
+      )
+    );
+    
     this.subscriptions.add(
       this.drpdwnDataService
         .fetchDropdownData('GetLicenseStatuses')
@@ -93,10 +101,11 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.agentDataService.licenseInfoChanged.subscribe(
         (licenseInfo: AgentLicenseAppointments) => {
-          this.getStateLicenseNames(
-            this.agentDataService.agentInformation.workStateAbv ??
-              'Select'
-          )
+          // this.getStateLicenseNames(
+          //   this.agentDataService.agentInformation.workStateAbv ??
+          //     'Select'
+          // )
+          this.licenseNames = this.licenseNames.filter(item => item.value !== 0 || item.label !== 'Select');
           this.licenseInfo = licenseInfo;
           this.licenseForm.reset({
             agentName:
@@ -147,12 +156,13 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
 
     this.subscriptions.add(
       this.agentComService.modeLicenseMgmtChanged.subscribe((mode: string) => {
-        this.getStateLicenseNames(
-          this.agentDataService.agentInformation.workStateAbv ??
-            'Select'
-        );
+        // this.getStateLicenseNames(
+        //   this.agentDataService.agentInformation.workStateAbv ??
+        //     'Select'
+        // );
 
         if (mode === 'EDIT') {
+          this.licenseNames = this.licenseNames.filter(item => item.value !== 0 || item.label !== 'Select');
           if (this.isIndex) {
             // GET Data by Index
             this.subscriptions.add(
@@ -214,71 +224,19 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
                 this.licenseMgmtData[this.currentIndex].employmentID,
             });
           } else {
-            console.log('EMFTEST () - Got HERE... ');
-
-            //             this.subscriptions.add(
-            //               this.agentDataService.licenseInfoChanged.subscribe(
-            //                 (licenseInfo: AgentLicenseAppointments) => {
-
-            // console.log('EMFTEST () - licenseInfo => \n ', licenseInfo);
-
-            //                   this.licenseInfo = licenseInfo;
-            //                   this.licenseForm.patchValue({
-            //                     agentName:
-            //                       this.agentDataService.agentInformation.lastName +
-            //                       ', ' +
-            //                       this.agentDataService.agentInformation.firstName,
-            //                     employeeLicenseId: licenseInfo.employeeLicenseId,
-            //                     licenseState: licenseInfo.licenseState,
-            //                     licenseName: licenseInfo.licenseName,
-            //                     licenseID: licenseInfo.licenseID,
-            //                     licenseNumber: licenseInfo.licenseNumber,
-            //                     licenseStatus: licenseInfo.licenseStatus,
-            //                     affiliatedLicense: 'SELECT-TBD...',
-            //                     // licenseIssueDate: formatDate(
-            //                     //   licenseInfo.originalIssueDate,
-            //                     //   'yyyy-MM-dd',
-            //                     //   'en-US'
-            //                     // ),
-            //                     // lineOfAuthIssueDate: formatDate(
-            //                     //   licenseInfo.lineOfAuthIssueDate,
-            //                     //   'yyyy-MM-dd',
-            //                     //   'en-US'
-            //                     // ),
-            //                     // licenseEffectiveDate: formatDate(
-            //                     //   licenseInfo.licenseEffectiveDate,
-            //                     //   'yyyy-MM-dd',
-            //                     //   'en-US'
-            //                     // ),
-            //                     // licenseExpireDate: formatDate(
-            //                     //   licenseInfo.licenseExpirationDate,
-            //                     //   'yyyy-MM-dd',
-            //                     //   'en-US'
-            //                     // ),
-            //                     licenseNote: licenseInfo.licenseNote,
-            //                     required: licenseInfo.required,
-            //                     // reinstatementDate: licenseInfo.reinstatementDate,
-            //                     nonResident: licenseInfo.nonResident,
-            //                     reinstatement: licenseInfo.reinstatement,
-            //                     employmentID: licenseInfo.employmentID,
-            //                   });
-            //                 }
-            //               )
-            //             );
+            if (!this.licenseNames.some(item => item.value === 0 && item.label === 'Select')) {
+              this.licenseNames.unshift({value: 0, label: 'Select'});
+            }
           }
         } else {
-          this.licenseForm.reset();
-          this.licenseForm.patchValue({
-            // agentName:
-            //   this.agentDataService.agentInformation.lastName +
-            //   ', ' +
-            //   this.agentDataService.agentInformation.firstName,
+          if (!this.licenseNames.some(item => item.value === 0 && item.label === 'Select')) {
+            this.licenseNames.unshift({value: 0, label: 'Select'});
+          }
+          this.licenseForm.reset({
             licenseState:
               this.agentDataService.agentInformation.branchDeptStreetState,
-
             licenseID: 0,
             licenseStatus: 'Select',
-            sentToAgentDate: '01/01/0001 00:00:00',
           });
         }
       })
