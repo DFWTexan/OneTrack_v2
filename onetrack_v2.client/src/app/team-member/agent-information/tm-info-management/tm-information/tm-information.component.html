@@ -153,6 +153,7 @@
                         class="icon-add-button"
                         (click)="
                           agentDataService.storeLicenseAppt('INSERT', license);
+                          storeLicApptLicenseID(license.licenseID);
                           modalService.open('modal-edit-license-appt')
                         "
                         title="Add Appointment"

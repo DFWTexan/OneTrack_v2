@@ -33,7 +33,7 @@ export class EditLicenseAppointmentComponent implements OnInit, OnDestroy {
     licenseID: new FormControl({ value: '', disabled: true }),
     employeeAppointmentID: new FormControl({ value: '', disabled: true }),
     appointmentStatus: new FormControl(''),
-    companyID: new FormControl(''),
+    companyID: new FormControl(0),
     carrierDate: new FormControl(''),
     appointmentEffectiveDate: new FormControl(''),
     appointmentExpireDate: new FormControl(''),
@@ -168,7 +168,29 @@ export class EditLicenseAppointmentComponent implements OnInit, OnDestroy {
             )
           );
         } else {
-          this.form.reset();
+          this.subscriptions.add(
+            this.agentDataService.agentLicApptLicenseIDChanged.subscribe(
+              (agentLicApptLicenseID: any) => {
+                this.subscriptions.add(
+                  this.dropdownDataService
+                    .fetchDropdownNumericData(
+                      'GetCoAbvByLicenseID',
+                      agentLicApptLicenseID
+                    )
+                    .subscribe((response) => {
+                      this.companyAbbreviations = [
+                        { value: 0, label: 'Select' },
+                        ...response,
+                      ];
+                      this.form.reset({
+                        companyID: 0,
+                        appointmentStatus: 'Select',
+                      });
+                    })
+                );
+              }
+            )
+          );
         }
       })
     );
