@@ -22,7 +22,7 @@ import { AgentLicenseAppointments } from '../../../../../_Models';
 export class EditLicenseInfoComponent implements OnInit, OnDestroy {
   @Input() currentIndex: number = 0;
   @Input() isIndex: boolean = false;
-  @Input() mode: string = '';
+  @Input() modeCloseModal: string = '';
   isFormSubmitted: boolean = false;
   licenseForm: FormGroup;
   licenseInfo: AgentLicenseAppointments = {} as AgentLicenseAppointments;
@@ -362,7 +362,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
 
   forceCloseModal() {
     this.isFormSubmitted = false;
-    if (this.mode === 'EDIT') {
+    if (this.modeCloseModal === 'EDIT') {
       const modalDiv = document.getElementById('modal-edit-license-info');
       if (modalDiv != null) {
         modalDiv.style.display = 'none';
