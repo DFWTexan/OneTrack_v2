@@ -33,6 +33,9 @@ export class AgentComService {
   // TM Diary
   modeDiary: string = '';
   modeDiaryChanged = new Subject<string>();
+  // License Appointment
+  modeLicenseAppt: string = '';
+  modeLicenseApptChanged = new Subject<string>();
 
   constructor() {}
 
@@ -98,5 +101,11 @@ export class AgentComService {
   modeDiaryEntryModal(mode: string) {
     this.modeDiary = mode;
     this.modeDiaryChanged.next(this.modeDiary);
+  }
+
+  // LICENSE APPOINTMENT
+  modeLicenseApptModal(mode: string) {
+    this.modeLicenseAppt = mode;
+    this.modeLicenseApptChanged.next(this.modeLicenseAppt);
   }
 }

@@ -149,6 +149,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   }
 
   storeLicAppointment(appointment: any) {
+    this.agentComService.modeLicenseApptModal('EDIT');
     this.agentDataService.storeLicenseAppointment(appointment);
   }
 

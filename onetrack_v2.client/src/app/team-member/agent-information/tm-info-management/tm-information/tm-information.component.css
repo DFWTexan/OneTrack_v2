@@ -37,3 +37,23 @@
   background-color: aliceblue;
 }
 
+.icon-add-button {
+  border-style: none;
+  background-color: transparent;
+  height: 1rem;
+  width: 1rem;
+  margin: 1rem;
+  transition: color 0.3s ease;
+  color: black;
+  opacity: .7;
+}
+
+.icon-add-button:hover {
+  color: #90EE90; 
+}
+
+.icon-add-button:active {
+  transform: scale(0.9);
+  color: #ffa500;
+}
+

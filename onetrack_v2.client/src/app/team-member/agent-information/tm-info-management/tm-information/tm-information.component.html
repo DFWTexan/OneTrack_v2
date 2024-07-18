@@ -133,14 +133,34 @@
             <mat-expansion-panel-header>
               <mat-panel-title>
                 <div class="mat-title">
-                  <div class="d-flex justify-content-between align-items-center w-100">
-                    <div style="width: 275px;">
+                  <div
+                    class="d-flex justify-content-between align-items-center w-100"
+                  >
+                    <div style="width: 275px">
                       <span class="me-1">{{ license.licenseName }}</span>
-                      <span class="ms-1" style="font-size: small">({{ license.licenseState }})</span>
+                      <span class="ms-1" style="font-size: small"
+                        >({{ license.licenseState }})</span
+                      >
                     </div>
-                    <div>
-                      <button class="icon-edit-delete-button" title="Add Appointment">
-                        <span class="material-symbols-outlined">
+                    <div
+                      style="
+                        display: flex;
+                        padding-bottom: 2.5rem;
+                        height: 100%;
+                      "
+                    >
+                      <button
+                        class="icon-add-button"
+                        (click)="
+                          agentDataService.storeLicenseAppt('INSERT', license);
+                          modalService.open('modal-edit-license-appt')
+                        "
+                        title="Add Appointment"
+                      >
+                        <span
+                          class="material-symbols-outlined"
+                          style="font-size: 35px"
+                        >
                           format_list_bulleted_add
                         </span>
                       </button>
@@ -362,12 +382,12 @@
                             <span
                               class="material-symbols-outlined"
                               (click)="
-                              onSetOpenLicenseID(license.employeeLicenseId);
-                            openConfirmDialog('deleteLicAppt', 'License Appointment', {
-                              employeeAppointmentID: appointment.employeeAppointmentID,
-                              employeeLicenseID: appointment.employeeLicenseID,
-                            })
-                          "
+                                onSetOpenLicenseID(license.employeeLicenseId);
+                                openConfirmDialog('deleteLicAppt', 'License Appointment', {
+                                  employeeAppointmentID: appointment.employeeAppointmentID,
+                                  employeeLicenseID: appointment.employeeLicenseID,
+                                })
+                              "
                             >
                               delete
                             </span>
@@ -419,7 +439,10 @@
 <!-- Modal: EDIT-LICAPPT-INFO -->
 <modal id="modal-edit-license-appt">
   <div class="modal-header">
-    <h1 class="modal-title"><strong>Edit</strong> - License Appointment</h1>
+    <h1 class="modal-title">
+      <strong>{{ agentComService.modeLicenseAppt }}</strong> - License
+      Appointment
+    </h1>
     <!-- <button
         type="button"
         class="btn-close"

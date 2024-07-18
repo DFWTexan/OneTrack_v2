@@ -74,6 +74,9 @@ export class AgentDataService {
   //INCENTIVE LICENSE
   workState: string | null = null;  
   workStateChanged = new Subject<string | null>();
+  // TM LICENSE APPOINTMENT
+  licenseAppt: any = {};
+  licenseApptChanged = new Subject<string>();
 
   constructor(
     private http: HttpClient,
@@ -849,6 +852,17 @@ export class AgentDataService {
     this.agentComService.modeLicRenewalModal(mode);
     this.licenseRenewalItem = licenseRenewalItem || {};
     this.licenseRenewalItemChanged.next(this.licenseRenewalItem);
+  }
+
+  // TM LICENSE APPOINTMENT
+  storeLicenseAppt(mode: string | '', licenseAppt: any | null) {
+
+console.log('EMFTESTG (storeLicenseAppt) - mode: ', mode);
+console.log('EMFTESTG (storeLicenseAppt) - licenseAppt: ', licenseAppt);
+
+    this.agentComService.modeLicenseApptModal(mode);
+    this.licenseAppt = licenseAppt || {};
+    this.licenseApptChanged.next(this.licenseAppt);
   }
 
   // CONTINUING EDUCATION
