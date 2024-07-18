@@ -3,6 +3,7 @@ import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
 import {
+  AgentComService,
   AgentDataService,
   ConstantsDataService,
   DropdownDataService,
@@ -45,6 +46,7 @@ export class EditLicenseAppointmentComponent implements OnInit, OnDestroy {
     public errorMessageService: ErrorMessageService,
     private conService: ConstantsDataService,
     private agentDataService: AgentDataService,
+    private agentComService: AgentComService,
     private licIncentiveInfoDataService: LicIncentiveInfoDataService,
     private userInfoDataService: UserAcctInfoDataService,
     private dropdownDataService: DropdownDataService,
@@ -53,113 +55,122 @@ export class EditLicenseAppointmentComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.add(
-      this.agentDataService.licenseAppointmentChanged.subscribe(
-        (licenseAppointment: any) => {
+      this.agentComService.modeLicenseApptChanged.subscribe((mode: string) => {
+        if (mode === 'EDIT') {
           this.subscriptions.add(
-            this.agentDataService.agentLicApptLicenseIDChanged.subscribe(
-              (agentLicApptLicenseID: any) => {
+            this.agentDataService.licenseAppointmentChanged.subscribe(
+              (licenseAppointment: any) => {
                 this.subscriptions.add(
-                  this.dropdownDataService
-                    .fetchDropdownNumericData(
-                      'GetCoAbvByLicenseID',
-                      agentLicApptLicenseID
-                    )
-                    .subscribe((response) => {
-                      this.companyAbbreviations = response;
+                  this.agentDataService.agentLicApptLicenseIDChanged.subscribe(
+                    (agentLicApptLicenseID: any) => {
+                      this.subscriptions.add(
+                        this.dropdownDataService
+                          .fetchDropdownNumericData(
+                            'GetCoAbvByLicenseID',
+                            agentLicApptLicenseID
+                          )
+                          .subscribe((response) => {
+                            this.companyAbbreviations = response;
 
-                      this.licenseAppointment = licenseAppointment;
-                      this.employeeAppointmentID =
-                        licenseAppointment.employeeAppointmentID;
-                      this.form.reset({
-                        licenseID: licenseAppointment.licenseID,
-                        employeeAppointmentID:
-                          licenseAppointment.employeeAppointmentID,
-                        appointmentStatus: licenseAppointment.appointmentStatus,
-                        companyID: licenseAppointment.companyID,
-                        carrierDate: licenseAppointment.carrierDate
-                          ? formatDate(
-                              licenseAppointment.carrierDate,
-                              'yyyy-MM-dd',
-                              'en-US'
-                            )
-                          : null,
-                        appointmentEffectiveDate:
-                          licenseAppointment.appointmentEffectiveDate
-                            ? formatDate(
-                                licenseAppointment.appointmentEffectiveDate,
-                                'yyyy-MM-dd',
-                                'en-US'
-                              )
-                            : null,
-                        appointmentExpireDate:
-                          licenseAppointment.appointmentExpireDate
-                            ? formatDate(
-                                licenseAppointment.appointmentExpireDate,
-                                'yyyy-MM-dd',
-                                'en-US'
-                              )
-                            : null,
-                        appointmentTerminationDate:
-                          licenseAppointment.appointmentTerminationDate
-                            ? formatDate(
-                                licenseAppointment.appointmentTerminationDate,
-                                'yyyy-MM-dd',
-                                'en-US'
-                              )
-                            : null,
-                        // employeeLicenseID: licenseAppointment.employeeLicenseID,
-                        // retentionDate: licenseAppointment.retentionDate,
-                        // companyAbbr: 'TBD...',
-                      });
-                    })
+                            this.licenseAppointment = licenseAppointment;
+                            this.employeeAppointmentID =
+                              licenseAppointment.employeeAppointmentID;
+                            this.form.reset({
+                              licenseID: licenseAppointment.licenseID,
+                              employeeAppointmentID:
+                                licenseAppointment.employeeAppointmentID,
+                              appointmentStatus:
+                                licenseAppointment.appointmentStatus,
+                              companyID: licenseAppointment.companyID,
+                              carrierDate: licenseAppointment.carrierDate
+                                ? formatDate(
+                                    licenseAppointment.carrierDate,
+                                    'yyyy-MM-dd',
+                                    'en-US'
+                                  )
+                                : null,
+                              appointmentEffectiveDate:
+                                licenseAppointment.appointmentEffectiveDate
+                                  ? formatDate(
+                                      licenseAppointment.appointmentEffectiveDate,
+                                      'yyyy-MM-dd',
+                                      'en-US'
+                                    )
+                                  : null,
+                              appointmentExpireDate:
+                                licenseAppointment.appointmentExpireDate
+                                  ? formatDate(
+                                      licenseAppointment.appointmentExpireDate,
+                                      'yyyy-MM-dd',
+                                      'en-US'
+                                    )
+                                  : null,
+                              appointmentTerminationDate:
+                                licenseAppointment.appointmentTerminationDate
+                                  ? formatDate(
+                                      licenseAppointment.appointmentTerminationDate,
+                                      'yyyy-MM-dd',
+                                      'en-US'
+                                    )
+                                  : null,
+                              // employeeLicenseID: licenseAppointment.employeeLicenseID,
+                              // retentionDate: licenseAppointment.retentionDate,
+                              // companyAbbr: 'TBD...',
+                            });
+                          })
+                      );
+                    }
+                  )
                 );
+
+                // this.licenseAppointment = licenseAppointment;
+                // this.employeeAppointmentID = licenseAppointment.employeeAppointmentID;
+                // this.form.patchValue({
+                //   licenseID: licenseAppointment.licenseID,
+                //   employeeAppointmentID: licenseAppointment.employeeAppointmentID,
+                //   appointmentStatus: licenseAppointment.appointmentStatus,
+                //   companyID: licenseAppointment.companyID,
+                //   carrierDate: licenseAppointment.carrierDate
+                //     ? formatDate(
+                //         licenseAppointment.carrierDate,
+                //         'yyyy-MM-dd',
+                //         'en-US'
+                //       )
+                //     : null,
+                //   appointmentEffectiveDate:
+                //     licenseAppointment.appointmentEffectiveDate
+                //       ? formatDate(
+                //           licenseAppointment.appointmentEffectiveDate,
+                //           'yyyy-MM-dd',
+                //           'en-US'
+                //         )
+                //       : null,
+                //   appointmentExpireDate: licenseAppointment.appointmentExpireDate
+                //     ? formatDate(
+                //         licenseAppointment.appointmentExpireDate,
+                //         'yyyy-MM-dd',
+                //         'en-US'
+                //       )
+                //     : null,
+                //   appointmentTerminationDate:
+                //     licenseAppointment.appointmentTerminationDate
+                //       ? formatDate(
+                //           licenseAppointment.appointmentTerminationDate,
+                //           'yyyy-MM-dd',
+                //           'en-US'
+                //         )
+                //       : null,
+                //   // employeeLicenseID: licenseAppointment.employeeLicenseID,
+                //   // retentionDate: licenseAppointment.retentionDate,
+                //   // companyAbbr: 'TBD...',
+                // });
               }
             )
           );
-
-          // this.licenseAppointment = licenseAppointment;
-          // this.employeeAppointmentID = licenseAppointment.employeeAppointmentID;
-          // this.form.patchValue({
-          //   licenseID: licenseAppointment.licenseID,
-          //   employeeAppointmentID: licenseAppointment.employeeAppointmentID,
-          //   appointmentStatus: licenseAppointment.appointmentStatus,
-          //   companyID: licenseAppointment.companyID,
-          //   carrierDate: licenseAppointment.carrierDate
-          //     ? formatDate(
-          //         licenseAppointment.carrierDate,
-          //         'yyyy-MM-dd',
-          //         'en-US'
-          //       )
-          //     : null,
-          //   appointmentEffectiveDate:
-          //     licenseAppointment.appointmentEffectiveDate
-          //       ? formatDate(
-          //           licenseAppointment.appointmentEffectiveDate,
-          //           'yyyy-MM-dd',
-          //           'en-US'
-          //         )
-          //       : null,
-          //   appointmentExpireDate: licenseAppointment.appointmentExpireDate
-          //     ? formatDate(
-          //         licenseAppointment.appointmentExpireDate,
-          //         'yyyy-MM-dd',
-          //         'en-US'
-          //       )
-          //     : null,
-          //   appointmentTerminationDate:
-          //     licenseAppointment.appointmentTerminationDate
-          //       ? formatDate(
-          //           licenseAppointment.appointmentTerminationDate,
-          //           'yyyy-MM-dd',
-          //           'en-US'
-          //         )
-          //       : null,
-          //   // employeeLicenseID: licenseAppointment.employeeLicenseID,
-          //   // retentionDate: licenseAppointment.retentionDate,
-          //   // companyAbbr: 'TBD...',
-          // });
+        } else {
+          this.form.reset();
         }
-      )
+      })
     );
   }
 
