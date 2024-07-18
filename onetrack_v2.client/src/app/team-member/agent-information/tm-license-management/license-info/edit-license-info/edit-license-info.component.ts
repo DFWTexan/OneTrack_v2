@@ -93,8 +93,12 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.agentDataService.licenseInfoChanged.subscribe(
         (licenseInfo: AgentLicenseAppointments) => {
+          this.getStateLicenseNames(
+            this.agentDataService.agentInformation.workStateAbv ??
+              'Select'
+          )
           this.licenseInfo = licenseInfo;
-          this.licenseForm.patchValue({
+          this.licenseForm.reset({
             agentName:
               this.agentDataService.agentInformation.lastName +
               ', ' +
@@ -144,7 +148,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.agentComService.modeLicenseMgmtChanged.subscribe((mode: string) => {
         this.getStateLicenseNames(
-          this.agentDataService.agentInformation.branchDeptStreetState ??
+          this.agentDataService.agentInformation.workStateAbv ??
             'Select'
         );
 
@@ -172,7 +176,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
             this.defaultLicenseState =
               this.licenseMgmtData[this.currentIndex].licenseState;
 
-            this.licenseForm.patchValue({
+            this.licenseForm.reset({
               agentName:
                 this.agentDataService.agentInformation.lastName +
                 ', ' +
