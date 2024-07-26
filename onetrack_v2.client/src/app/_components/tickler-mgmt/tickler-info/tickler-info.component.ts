@@ -150,23 +150,15 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.agentDataService
-          .deleteAgentLicense({
-            employmentID: this.vObject.employmentID,
-            employeeLicenseID: this.vObject.employeeLicenseID,
-            userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+        this.ticklerMgmtDataService
+          .closeTicklerItem({
+            TicklerID: ticklerInfo.ticklerId,
+            TicklerCloseByLicenseTechID: ticklerInfo.licenseTechId,
+            UserSOEID: this.userInfoDataService.userAcctInfo.soeid,
           })
           .subscribe({
             next: (response) => {
-              this.router
-                .navigateByUrl('/', { skipLocationChange: true })
-                .then(() => {
-                  this.router.navigate([
-                    'team/agent-info',
-                    this.agentDataService.agentInformation.employeeID,
-                    'tm-license-mgmt',
-                  ]);
-                });
+              this.fetchTicklerInfo();
             },
             error: (error) => {
               console.error(error);
@@ -193,23 +185,14 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.agentDataService
-          .deleteAgentLicense({
-            employmentID: this.vObject.employmentID,
-            employeeLicenseID: this.vObject.employeeLicenseID,
-            userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+        this.ticklerMgmtDataService
+          .deleteTicklerItem({
+            TicklerID: ticklerInfo.ticklerId,
+            UserSOEID: this.userInfoDataService.userAcctInfo.soeid,
           })
           .subscribe({
             next: (response) => {
-              this.router
-                .navigateByUrl('/', { skipLocationChange: true })
-                .then(() => {
-                  this.router.navigate([
-                    'team/agent-info',
-                    this.agentDataService.agentInformation.employeeID,
-                    'tm-license-mgmt',
-                  ]);
-                });
+              this.fetchTicklerInfo();
             },
             error: (error) => {
               console.error(error);

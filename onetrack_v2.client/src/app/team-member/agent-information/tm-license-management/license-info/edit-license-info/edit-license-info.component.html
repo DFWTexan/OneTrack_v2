@@ -10,7 +10,13 @@
         }}</span>
       </div>
 
-      <div class="mb-3" *ngIf="agentComService.modeLicenseMgmt !== 'ADD' && appComService.isShowEditID">
+      <div
+        class="mb-3"
+        *ngIf="
+          agentComService.modeLicenseMgmt !== 'ADD' &&
+          appComService.isShowEditID
+        "
+      >
         <label for="employeeLicenseId" class="form-label">
           Employee License ID:
           <!-- <input
@@ -75,19 +81,6 @@
             formControlName="licenseNumber"
           />
         </label>
-      </div>
-
-      
-
-      <div class="form-group">
-        <label for="licenseNote">Notes:</label>
-        <textarea
-          rows="5"
-          id="licenseNote"
-          type="text"
-          formControlName="licenseNote"
-          class="form-control"
-        ></textarea>
       </div>
     </div>
 
@@ -176,12 +169,10 @@
     </div>
 
     <div class="col">
-      
-
       <div class="mb-3" *ngIf="agentComService.modeLicenseMgmt == 'ADD'">
         <label for="sentToAgentDate" class="form-label"
-          >Sent to Agent Date: </label
-        >
+          >Sent to Agent Date:
+        </label>
         <input
           class="form-control input-size-small"
           type="date"
@@ -269,10 +260,23 @@
           formControlName="licenseExpireDate"
         />
       </div>
-
-      
     </div>
-</div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="form-group">
+        <label for="licenseNote">Notes:</label>
+        <textarea
+          rows="5"
+          id="licenseNote"
+          type="text"
+          formControlName="licenseNote"
+          class="form-control"
+        ></textarea>
+      </div>
+    </div>
+  </div>
 
   <mat-divider></mat-divider>
 

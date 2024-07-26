@@ -51,9 +51,9 @@ namespace OneTrak_v2.Server.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> ClosetTickler([FromBody] IputCloseTicklerMgmt input)
+        public async Task<ActionResult> CloseTickler([FromBody] IputCloseTicklerMgmt input)
         {
-            var result = await Task.Run(() => _ticklerMgmt.ClosetTickler(input));
+            var result = await Task.Run(() => _ticklerMgmt.CloseTickler(input));
 
             return StatusCode(result.StatusCode, result);
         }

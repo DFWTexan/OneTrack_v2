@@ -11,7 +11,7 @@ namespace OneTrak_v2.Services
         public ReturnResult GetStockTickler();
         public ReturnResult GetLicenseTech(int vLicenseTechID, string vSOEID);
         public ReturnResult UpsertTickler([FromBody] IputUpsertTicklerMgmt vInput);
-        public ReturnResult ClosetTickler([FromBody] IputCloseTicklerMgmt vInput);
+        public ReturnResult CloseTickler([FromBody] IputCloseTicklerMgmt vInput);
         public ReturnResult DeleteTickler([FromBody] IputDeleteTicklerMgmt vInput);
     }
 }

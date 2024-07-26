@@ -234,7 +234,7 @@ namespace OneTrak_v2.Services
 
             return result;
         }
-        public ReturnResult ClosetTickler([FromBody] IputCloseTicklerMgmt vInput)
+        public ReturnResult CloseTickler([FromBody] IputCloseTicklerMgmt vInput)
         {
 
             var result = new ReturnResult();

@@ -129,12 +129,12 @@ export class TicklerMgmtDataService {
 
   closeTicklerItem(ticklerInfo: any): Observable<boolean> {
     return this.http
-      .put<{
+      .post<{
         success: boolean;
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'CloseTickler/', ticklerInfo)
+      }>(this.apiUrl + 'CloseTickler', ticklerInfo)
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -153,7 +153,7 @@ export class TicklerMgmtDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'DeleteTickler/', ticklerInfo)
+      }>(this.apiUrl + 'DeleteTickler', ticklerInfo)
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
