@@ -186,10 +186,19 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
   }
 
   onReset() {
-    // form.resetForm();
-    // this.fetchData();
-    // form.controls['LastName'].reset();
+    this.searchForm.get('EmployeeSSN')?.reset();
+    this.searchForm.get('TeamMemberGEID')?.reset();
+    this.searchForm.get('NationalProducerNumber')?.reset();
+
     this.searchForm.get('LastName')?.reset();
+    this.searchForm.get('FirstName')?.reset();
+
+    this.searchForm.get('ResState')?.reset();
+    this.searchForm.get('WrkState')?.reset();
+    this.searchForm.get('BranchCode')?.reset();
+
+    // this.searchForm.get('AgentStatus')?.reset();
+
 
     this.isSubmitted = false;
     this.searchEmployeeResult = [];
