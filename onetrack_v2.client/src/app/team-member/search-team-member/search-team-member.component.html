@@ -1,12 +1,8 @@
 <div class="container app-container" style="overflow-x: hidden">
   <div class="row mt-3">
     <div class="col-md-12">
-      <form (ngSubmit)="onSubmit(f)" #f="ngForm">
-        <div
-          id="search-filter"
-          ngModelGroup="searchFilter"
-          #searchFilter="ngModelGroup"
-        >
+      <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+        <div id="search-filter">
           <div class="row">
             <div class="col">
               <div class="form-group">
@@ -15,8 +11,7 @@
                   type="text"
                   class="form-control input-size-small"
                   id="EmployeeSSN"
-                  ngModel
-                  name="EmployeeSSN"
+                  formControlName="EmployeeSSN"
                   placeholder="####"
                 />
                 <br />
@@ -25,8 +20,7 @@
                   type="text"
                   class="form-control input-size-small"
                   id="TeamMemberGEID"
-                  ngModel
-                  name="TeamMemberGEID"
+                  formControlName="TeamMemberGEID"
                 />
                 <br />
                 <label for="search">National Producer #:</label>
@@ -34,8 +28,7 @@
                   type="text"
                   class="form-control input-size-small"
                   id="NationalProducerNumber"
-                  ngModel
-                  name="NationalProducerNumber"
+                  formControlName="NationalProducerNumber"
                 />
                 <br />
                 <label for="search">Last Name:</label>
@@ -43,8 +36,7 @@
                   type="text"
                   class="form-control input-size-medium"
                   id="LastName"
-                  ngModel
-                  name="LastName"
+                  formControlName="LastName"
                 />
                 <br />
                 <label for="search">First Name:</label>
@@ -52,15 +44,14 @@
                   type="text"
                   class="form-control input-size-medium"
                   id="FirstName"
-                  ngModel
-                  name="FirstName"
+                  formControlName="FirstName"
                 />
 
                 <mat-divider class="mt-4 mb-3"></mat-divider>
 
                 <mat-form-field>
                   <mat-label>Resident State</mat-label>
-                  <mat-select ngModel name="ResState">
+                  <mat-select formControlName="ResState">
                     <mat-option>None</mat-option>
                     <mat-option
                       *ngFor="let state of stateProvinces"
@@ -73,8 +64,7 @@
                 <mat-form-field>
                   <mat-label>Work State</mat-label>
                   <mat-select
-                    ngModel
-                    name="WrkState"
+                    formControlName="WrkState"
                     placeholder="Select Work State"
                   >
                     <mat-option>None</mat-option>
@@ -91,8 +81,7 @@
               <mat-form-field>
                 <mat-label>Employer/Agency</mat-label>
                 <mat-select
-                  ngModel
-                  name="EmployerAgency"
+                  formControlName="EmployerAgency"
                   placeholder="Select Emp-Agency"
                 >
                   <mat-option>None</mat-option>
@@ -108,8 +97,7 @@
                 <mat-label>Agent Status</mat-label>
                 <mat-select
                   [(value)]="defaultAgentStatus"
-                  [(ngModel)]="selectedAgentStatuses"
-                  name="AgentStatus"
+                  formControlName="AgentStatus"
                   multiple
                   (selectionChange)="onAgentStatusSelectionChange($event)"
                   placeholder="Select Agent Status"
@@ -130,8 +118,7 @@
               <mat-form-field>
                 <mat-label>Score Number</mat-label>
                 <mat-select
-                  ngModel
-                  name="ScoreNumber"
+                  formControlName="ScoreNumber"
                   placeholder="Select Score Num"
                 >
                   <mat-option>None</mat-option>
@@ -146,18 +133,16 @@
               <mat-form-field>
                 <mat-label>Branch Name</mat-label>
                 <mat-select
-                [(ngModel)]="selectedBranch"
-                  name="BranchCode"
+                  formControlName="BranchCode"
                   placeholder="Select Branch Name"
                 >
                   <mat-option>None</mat-option>
                   <mat-option
                     *ngFor="let branchName of branchNames"
                     [value]="branchName.value"
-                    >
-                    {{ branchName.label }}
-                    </mat-option
                   >
+                    {{ branchName.label }}
+                  </mat-option>
                 </mat-select>
               </mat-form-field>
 
@@ -167,8 +152,7 @@
                 <mat-label>License Status</mat-label>
                 <mat-select
                   [(value)]="defaultLicenseStatus"
-                  [(ngModel)]="selectedLicenseStatuses"
-                  name="LicStatus"
+                  formControlName="LicStatus"
                   multiple
                   (selectionChange)="onLicenseStatusSelectionChange($event)"
                   placeholder="Select License Status"
@@ -189,8 +173,7 @@
               <mat-form-field>
                 <mat-label>License State</mat-label>
                 <mat-select
-                  ngModel
-                  name="LicState"
+                  formControlName="LicState"
                   placeholder="Select License State"
                 >
                   <mat-option>None</mat-option>
@@ -203,8 +186,7 @@
               <mat-form-field>
                 <mat-label>License Name</mat-label>
                 <mat-select
-                  ngModel
-                  name="LicenseName"
+                  formControlName="LicenseName"
                   placeholder="Select License Name"
                 >
                   <mat-option>None</mat-option>
@@ -228,15 +210,11 @@
           <div class="col">
             <button type="submit" class="btn btn-primary">Search</button>
           </div>
-          <!-- <div class="col">
-            <button
-              type="button"
-              class="btn btn-secondary"
-              (click)="onReset(f)"
-            >
+          <div class="col">
+            <button type="button" class="btn btn-secondary" (click)="onReset()">
               Reset
             </button>
-          </div> -->
+          </div>
         </div>
       </form>
     </div>

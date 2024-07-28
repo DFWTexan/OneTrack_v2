@@ -1,6 +1,6 @@
 export interface SearchEmployeeFilter {
   EmployeeSSN: string | null;
-  TeamMemberGEID: number | 0;
+  TeamMemberGEID: string | null;
   NationalProducerNumber: number | 0;
   LastName: string | null;
   FirstName: string | null;

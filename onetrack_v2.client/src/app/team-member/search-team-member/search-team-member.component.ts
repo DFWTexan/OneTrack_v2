@@ -1,5 +1,5 @@
 import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { Subscription } from 'rxjs';
 
@@ -11,6 +11,7 @@ import {
   PaginationComService,
 } from '../../_services';
 import { EmployeeSearchResult, SearchEmployeeFilter } from '../../_Models';
+
 @Component({
   selector: 'app-search-team-member',
   templateUrl: './search-team-member.component.html',
@@ -18,6 +19,7 @@ import { EmployeeSearchResult, SearchEmployeeFilter } from '../../_Models';
 })
 @Injectable()
 export class SearchTeamMemberComponent implements OnInit, OnDestroy {
+  searchForm: FormGroup;
   loading = false;
   isSubmitted = false;
   agentStatuses: string[] = ['All', ...this.conService.getAgentStatuses()];
@@ -48,8 +50,26 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
     private drpdwnDataService: DropdownDataService,
     private emplyService: EmployeeDataService,
     private appComService: AppComService,
-    public paginationComService: PaginationComService
-  ) {}
+    public paginationComService: PaginationComService,
+    private fb: FormBuilder
+  ) {
+    this.searchForm = this.fb.group({
+      EmployeeSSN: [''],
+      TeamMemberGEID: [''],
+      NationalProducerNumber: [''],
+      LastName: [''],
+      FirstName: [''],
+      ResState: [''],
+      WrkState: [''],
+      EmployerAgency: [''],
+      AgentStatus: [''],
+      ScoreNumber: [''],
+      BranchCode: [''],
+      LicStatus: [''],
+      LicState: [''],
+      LicenseName: ['']
+    });
+  }
 
   ngOnInit() {
     this.fetchData();
@@ -123,26 +143,41 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit(form: NgForm) {
+  onSubmit() {
     this.loading = true;
     this.isSubmitted = true;
-    const searchFilter: SearchEmployeeFilter = {
-      EmployeeSSN: form.value.searchFilter.EmployeeSSN || null,
-      TeamMemberGEID: form.value.searchFilter.TeamMemberGEID || null,
-      NationalProducerNumber:
-        form.value.searchFilter.NationalProducerNumber || 0,
-      LastName: form.value.searchFilter.LastName || null,
-      FirstName: form.value.searchFilter.FirstName || null,
-      ResState: form.value.searchFilter.ResState || null,
-      WrkState: form.value.searchFilter.WrkState || null,
-      BranchCode: form.value.searchFilter.BranchCode || null,
-      AgentStatus: this.selectedAgentStatuses || null,
-      ScoreNumber: form.value.searchFilter.ScoreNumber || null,
-      CompanyID: form.value.searchFilter.EmployerAgency || 0,
-      LicStatus: this.selectedLicenseStatuses || null,
-      LicState: form.value.searchFilter.LicState || null,
-      LicenseName: form.value.searchFilter.LicenseName || null,
-    };
+
+    let searchFilter: SearchEmployeeFilter = this.searchForm.value;
+    // const searchFilter: SearchEmployeeFilter = {
+    //   EmployeeSSN: form.value.searchFilter.EmployeeSSN || null,
+    //   TeamMemberGEID: form.value.searchFilter.TeamMemberGEID || null,
+    //   NationalProducerNumber:
+    //     form.value.searchFilter.NationalProducerNumber || 0,
+    //   LastName: form.value.searchFilter.LastName || null,
+    //   FirstName: form.value.searchFilter.FirstName || null,
+    //   ResState: form.value.searchFilter.ResState || null,
+    //   WrkState: form.value.searchFilter.WrkState || null,
+    //   BranchCode: form.value.searchFilter.BranchCode || null,
+    //   AgentStatus: this.selectedAgentStatuses || null,
+    //   ScoreNumber: form.value.searchFilter.ScoreNumber || null,
+    //   CompanyID: form.value.searchFilter.EmployerAgency || 0,
+    //   LicStatus: this.selectedLicenseStatuses || null,
+    //   LicState: form.value.searchFilter.LicState || null,
+    //   LicenseName: form.value.searchFilter.LicenseName || null,
+    // };
+    searchFilter.EmployeeSSN = searchFilter.EmployeeSSN || null;
+    searchFilter.TeamMemberGEID = searchFilter.TeamMemberGEID || null;
+    searchFilter.NationalProducerNumber = searchFilter.NationalProducerNumber || 0;
+    searchFilter.LastName = searchFilter.LastName || null;
+    searchFilter.FirstName = searchFilter.FirstName || null;
+    searchFilter.ResState = searchFilter.ResState || null;
+    searchFilter.WrkState = searchFilter.WrkState || null;
+    searchFilter.BranchCode = searchFilter.BranchCode || null;
+    searchFilter.ScoreNumber = searchFilter.ScoreNumber || null;
+    searchFilter.LicState = searchFilter.LicState || null;
+    searchFilter.LicenseName = searchFilter.LicenseName || null;
+    searchFilter.AgentStatus = this.selectedAgentStatuses || ['All'];
+    searchFilter.LicStatus = this.selectedLicenseStatuses || ['All'];
 
     this.emplyService.fetchEmployeeSearch(searchFilter).subscribe((results) => {
       this.loading = false;
@@ -150,10 +185,11 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
     });
   }
 
-  onReset(form: NgForm) {
+  onReset() {
     // form.resetForm();
     // this.fetchData();
-    form.controls['LastName'].reset();
+    // form.controls['LastName'].reset();
+    this.searchForm.get('LastName')?.reset();
 
     this.isSubmitted = false;
     this.searchEmployeeResult = [];
