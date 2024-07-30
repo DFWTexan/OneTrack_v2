@@ -25,8 +25,8 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
   agentStatuses: string[] = ['All', ...this.conService.getAgentStatuses()];
   states: string[] = this.conService.getStates();
   stateProvinces: string[] = [];
-  defaultAgentStatus = 'ALL';
-  defaultLicenseStatus = 'ALL';
+  defaultAgentStatus: string[] = ['ALL'];
+  defaultLicenseStatus: string[] = ['ALL'];
   isShowTickle: boolean = true;
   subscribeTickleToggleChanged: Subscription = new Subscription();
 
@@ -62,7 +62,7 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
       ResState: [''],
       WrkState: [''],
       EmployerAgency: [''],
-      AgentStatus: [''],
+      AgentStatus: [this.defaultAgentStatus],
       ScoreNumber: [''],
       BranchCode: [''],
       LicStatus: [''],
@@ -128,6 +128,9 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
   }
 
   onAgentStatusSelectionChange(event: MatSelectChange) {
+
+console.log('EMFTEST (search-team-member.component: onAgentStatusSelectionChange) - event => \n', event);
+
     if (event.value.includes('ALL')) {
       this.selectedAgentStatuses = [];
     } else {
@@ -195,10 +198,17 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
 
     this.searchForm.get('ResState')?.reset();
     this.searchForm.get('WrkState')?.reset();
+    this.searchForm.get('EmployerAgency')?.reset();
+    this.searchForm.get('ScoreNumber')?.reset();
     this.searchForm.get('BranchCode')?.reset();
+    this.searchForm.get('LicState')?.reset();
+    this.searchForm.get('LicenseName')?.reset();
 
-    // this.searchForm.get('AgentStatus')?.reset();
+    this.defaultAgentStatus = [];
+    this.searchForm.get('AgentStatus')?.setValue(this.defaultAgentStatus);
 
+    this.defaultLicenseStatus = [];
+    this.searchForm.get('LicStatus')?.setValue(this.defaultLicenseStatus);
 
     this.isSubmitted = false;
     this.searchEmployeeResult = [];
