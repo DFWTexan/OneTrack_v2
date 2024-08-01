@@ -96,7 +96,7 @@
               <mat-form-field>
                 <mat-label>Agent Status</mat-label>
                 <mat-select
-                  [(value)]="defaultAgentStatus"
+                  [(value)]="selectedAgentStatuses"
                   formControlName="AgentStatus"
                   multiple
                   (selectionChange)="onAgentStatusSelectionChange($event)"
@@ -106,7 +106,7 @@
                     *ngFor="let value of agentStatuses"
                     [value]="value"
                     [disabled]="
-                      selectedAgentStatuses.includes('ALL') && value !== 'ALL'
+                      selectedAgentStatuses.includes('All') && value !== 'All'
                     "
                     >{{ value }}</mat-option
                   >
@@ -151,7 +151,7 @@
               <mat-form-field>
                 <mat-label>License Status</mat-label>
                 <mat-select
-                  [(value)]="defaultLicenseStatus"
+                  [(value)]="selectedLicenseStatuses"
                   formControlName="LicStatus"
                   multiple
                   (selectionChange)="onLicenseStatusSelectionChange($event)"

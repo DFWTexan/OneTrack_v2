@@ -25,8 +25,8 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
   agentStatuses: string[] = ['All', ...this.conService.getAgentStatuses()];
   states: string[] = this.conService.getStates();
   stateProvinces: string[] = [];
-  defaultAgentStatus: string[] = ['ALL'];
-  defaultLicenseStatus: string[] = ['ALL'];
+  // defaultAgentStatus: string[] = ['All'];
+  // defaultLicenseStatus: string[] = ['All'];
   isShowTickle: boolean = true;
   subscribeTickleToggleChanged: Subscription = new Subscription();
 
@@ -41,8 +41,8 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
   licenseStatuses: { value: number; label: string }[] = [];
   licenseNames: { value: number; label: string }[] = [];
 
-  selectedAgentStatuses: string[] = [];
-  selectedLicenseStatuses: string[] = [];
+  selectedAgentStatuses: string[] = ['All'];
+  selectedLicenseStatuses: string[] = ['All'];
   searchEmployeeResult: EmployeeSearchResult[] = [];
 
   constructor(
@@ -62,12 +62,12 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
       ResState: [''],
       WrkState: [''],
       EmployerAgency: [''],
-      AgentStatus: [this.defaultAgentStatus],
+      AgentStatus: [this.selectedAgentStatuses],
       ScoreNumber: [''],
       BranchCode: [''],
-      LicStatus: [''],
+      LicStatus: [this.selectedLicenseStatuses],
       LicState: [''],
-      LicenseName: ['']
+      LicenseName: [''],
     });
   }
 
@@ -128,11 +128,8 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
   }
 
   onAgentStatusSelectionChange(event: MatSelectChange) {
-
-console.log('EMFTEST (search-team-member.component: onAgentStatusSelectionChange) - event => \n', event);
-
-    if (event.value.includes('ALL')) {
-      this.selectedAgentStatuses = [];
+    if (event.value.includes('All')) {
+      this.selectedAgentStatuses = ['All'];
     } else {
       this.selectedAgentStatuses = event.value;
     }
@@ -140,7 +137,7 @@ console.log('EMFTEST (search-team-member.component: onAgentStatusSelectionChange
 
   onLicenseStatusSelectionChange(event: MatSelectChange) {
     if (event.value.includes('All')) {
-      this.selectedLicenseStatuses = [];
+      this.selectedLicenseStatuses = ['All'];
     } else {
       this.selectedLicenseStatuses = event.value;
     }
@@ -170,7 +167,8 @@ console.log('EMFTEST (search-team-member.component: onAgentStatusSelectionChange
     // };
     searchFilter.EmployeeSSN = searchFilter.EmployeeSSN || null;
     searchFilter.TeamMemberGEID = searchFilter.TeamMemberGEID || null;
-    searchFilter.NationalProducerNumber = searchFilter.NationalProducerNumber || 0;
+    searchFilter.NationalProducerNumber =
+      searchFilter.NationalProducerNumber || 0;
     searchFilter.LastName = searchFilter.LastName || null;
     searchFilter.FirstName = searchFilter.FirstName || null;
     searchFilter.ResState = searchFilter.ResState || null;
@@ -204,11 +202,11 @@ console.log('EMFTEST (search-team-member.component: onAgentStatusSelectionChange
     this.searchForm.get('LicState')?.reset();
     this.searchForm.get('LicenseName')?.reset();
 
-    this.defaultAgentStatus = [];
-    this.searchForm.get('AgentStatus')?.setValue(this.defaultAgentStatus);
+    this.selectedAgentStatuses = ['All'];
+    this.searchForm.get('AgentStatus')?.setValue(this.selectedAgentStatuses);
 
-    this.defaultLicenseStatus = [];
-    this.searchForm.get('LicStatus')?.setValue(this.defaultLicenseStatus);
+    this.selectedLicenseStatuses = ['All'];
+    this.searchForm.get('LicStatus')?.setValue(this.selectedLicenseStatuses);
 
     this.isSubmitted = false;
     this.searchEmployeeResult = [];

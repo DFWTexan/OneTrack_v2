@@ -75,6 +75,9 @@ export class EditLicenseAppointmentComponent implements OnInit, OnDestroy {
                             this.licenseAppointment = licenseAppointment;
                             this.employeeAppointmentID =
                               licenseAppointment.employeeAppointmentID;
+
+console.log('EMFTEST (licenseAppointmentChanged) - licenseAppointment => \n', licenseAppointment);
+
                             this.form.reset({
                               licenseID: licenseAppointment.licenseID,
                               employeeAppointmentID:
