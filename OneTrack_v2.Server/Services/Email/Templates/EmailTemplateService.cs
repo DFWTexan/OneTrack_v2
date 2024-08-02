@@ -49,7 +49,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                 emailHdrHTML = emailHdrHTML + @"<div><div>";
                 emailHdrHTML = emailHdrHTML + @"<table style = ""width: 800px;""> ";
                 emailHdrHTML = emailHdrHTML + @"<tr> ";
-                emailHdrHTML = emailHdrHTML + @"<td style = ""text-align: left; background-color: #F69200;""> <span style = ""font-family: Arial; color: #FFFFFF; font-size: 16pt; font-weight: bold; font-style: normal; text-decoration: none;"">OneMain Insurance Licensing Department</span></td> ";
+                emailHdrHTML = emailHdrHTML + @"<td style = ""text-align: left; background-color: #F69200; padding: 5px;""> <span style = ""font-family: Arial; color: #FFFFFF; font-size: 16pt; font-weight: bold; font-style: normal; text-decoration: none;"">OneMain Insurance Licensing Department</span></td> ";
                 emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
                 emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
                 emailHdrHTML = emailHdrHTML + @"</tr> ";
@@ -169,6 +169,260 @@ namespace OneTrak_v2.Server.Services.Email.Templates
             var footerHTML = emailFtrHTML;
             
             return new Tuple<string, string, string, string>(hearderHTML, footerHTML, strTMEmail, strMgrEmail);
+        }
+
+        public Tuple<string, string, string, string> GetCourtDocHTML(int vEmploymentID)
+        {
+            string strHTML = string.Empty;
+
+            try
+            {
+                var managerInfo = GetManagerInfo(vEmploymentID);
+
+                string strTMName = managerInfo.TMName ?? "";
+                string strTMNumber = managerInfo.TMNumber ?? "";
+                string strTMTitle = managerInfo.TMTitle ?? "";
+                string strLicenseTechName = managerInfo.LicTechName ?? "";
+                string strLicenseTechTitle = managerInfo.LicTechTitle ?? "";
+                string strLicenseTechPhone = managerInfo.LicTechPhone ?? "";
+
+                strHTML = strHTML + @"<table style = ""width: 800px;""> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td style = ""text-align: left; background-color: #F69200; padding: 5px;""> <span style = ""font-family: Arial; color: #FFFFFF; font-size: 16pt; font-weight: bold; font-style: normal; text-decoration: none;"">OneMain Insurance Licensing Department</span></td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" > ";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"">To: </span> ";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"">&nbsp;&nbsp;&nbsp;</span> ";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"">" + strTMName + " - " + strTMNumber + " - " + strTMTitle + " </span> ";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td>&nbsp;</td> ";
+                strHTML = strHTML + @"<td>&nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" ><span style = ""font-family: Arial; color: #FF0000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"" > ACTION REQUIRED</span></td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none; background-color: #FFFF00;"" >Please </span>";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: underline; background-color: #FFFF00;"" >REPLY </span>";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none; background-color: #FFFF00;"" >to this email attaching the described supporting documents to expedite processing of your license application.</span>";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >Your insurance license application has been received. Additional documents are required to complete the license application process. </span></td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"" >NOTE:  </span>";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >For Questions 1a, 1b and 1c, </span>";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: underline;"" >''Convicted'' </span>";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >includes, but is not limited to, having been found guilty by verdict of a judge or jury, having entered a plea of guilty or nolo contendere or no contest, or having been given probation, a suspended sentence, or a fine.</span>";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >If you answer </span>";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"" >YES </span>";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >to any of these questions, the DOI requires the following to be attached to the application: </span>";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >a) a written statement explaining the circumstances of each incident, </span>";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >b) a copy of the charging document, and  </span>";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >c) a copy of the official document, which demonstrates the resolution of the charges or any final </span>";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >judgment. </span>";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td><span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"" > Thank You,</span></td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td><img alt = """" src = ""pictures/OneMainSolutionsHorizontal.jpg"" width = ""100""/></td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td>&nbsp;</td> ";
+                strHTML = strHTML + @"<td>&nbsp;</td> ";
+                strHTML = strHTML + @"<td>&nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" > ";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"" >" + strLicenseTechName + " - " + strLicenseTechTitle + " - " + strLicenseTechPhone + " </span></td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"</table> ";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"</table> ";
+                strHTML = strHTML + @"</html> ";
+
+            }
+            catch (Exception)
+            {
+                return new Tuple<string, string, string, string>(string.Empty, string.Empty, string.Empty, string.Empty);
+            }
+
+            return new Tuple<string, string, string, string>(strHTML, string.Empty, string.Empty, string.Empty);
+        }
+
+        public Tuple<string, string, string, string> GetIncompleteHTML(int vEmploymentID)
+        {
+            string html = string.Empty;
+
+            try
+            {
+                var managerInfo = GetManagerInfo(vEmploymentID);
+
+            }
+            catch (Exception)
+            {
+                return new Tuple<string, string, string, string>(string.Empty, string.Empty, string.Empty, string.Empty);
+            }
+
+            return new Tuple<string, string, string, string>(html, string.Empty, string.Empty, string.Empty);
+        }
+
+        public Tuple<string, string, string, string> GetApplNotRecievedHTML(int vEmploymentID)
+        {
+            string html = string.Empty;
+
+            try
+            {
+                var managerInfo = GetManagerInfo(vEmploymentID);
+
+            }
+            catch (Exception)
+            {
+                return new Tuple<string, string, string, string>(string.Empty, string.Empty, string.Empty, string.Empty);
+            }
+
+            return new Tuple<string, string, string, string>(html, string.Empty, string.Empty, string.Empty);
+        }
+
+        public Tuple<string, string, string, string> GetLicCopyDisplayGaKyMtWaWyHTML(int vEmploymentID)
+        {
+            string html = string.Empty;
+
+            try
+            {
+                var managerInfo = GetManagerInfo(vEmploymentID);
+
+            }
+            catch (Exception)
+            {
+                return new Tuple<string, string, string, string>(string.Empty, string.Empty, string.Empty, string.Empty);
+            }
+
+            return new Tuple<string, string, string, string>(html, string.Empty, string.Empty, string.Empty);
+        }
+
+        public Tuple<string, string, string, string> GetLicenseCopyHTML(int vEmploymentID)
+        {             string html = string.Empty;
+
+            try
+            {
+                var managerInfo = GetManagerInfo(vEmploymentID);
+
+            }
+            catch (Exception)
+            {
+                return new Tuple<string, string, string, string>(string.Empty, string.Empty, string.Empty, string.Empty);
+            }
+
+            return new Tuple<string, string, string, string>(html, string.Empty, string.Empty, string.Empty);
         }
 
         #region "GetManagerInfo"

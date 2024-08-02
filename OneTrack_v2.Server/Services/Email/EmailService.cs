@@ -108,6 +108,10 @@ namespace OneTrack_v2.Services
             {
                 switch (vCommunicationID)
                 {
+                    case 1: // "APP-Court Documents"
+                        var appCourtDocHTML = _emailTemplateService.GetCourtDocHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appCourtDocHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName };
+                        break;
                     case 33: // "APP-{MESSAGE}"
                         var appHTML = _emailTemplateService.GetMessageHTML(vEmploymentID);
                         result.ObjData = new { Header = appHTML.Item1.ToString(), Footer = appHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName };
@@ -131,7 +135,7 @@ namespace OneTrack_v2.Services
                                                     <h3>Unknown Document Type</h3>
                                                     <p>Document type not found.</p>
                                                 </div>
-                                           </div>", DocSubType = (string)null, Subject = (string)null };
+                                           </div>", DocSubType = string.Empty, Subject = (string)null };
                         break;
                 }
 
