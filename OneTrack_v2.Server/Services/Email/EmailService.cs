@@ -114,15 +114,15 @@ namespace OneTrack_v2.Services
                         break;
                     case 35: // "CE-{MESSAGE}"
                         var ceHTML = _emailTemplateService.GetMessageHTML(vEmploymentID);
-                        result.ObjData = ceHTML.Item1.ToString();
+                        result.ObjData = new { Header = ceHTML.Item1.ToString(), Footer = ceHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName };
                         break;
                     case 36: // "REN-{MESSAGE}"
                         var renHTML = _emailTemplateService.GetMessageHTML(vEmploymentID);
-                        result.ObjData = renHTML.Item1.ToString();
+                        result.ObjData = new { Header = renHTML.Item1.ToString(), Footer = renHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName };
                         break;
                     case 37: // "PRO-{MESSAGE}"
                         var proHTML = _emailTemplateService.GetMessageHTML(vEmploymentID);
-                        result.ObjData = proHTML.Item1.ToString();
+                        result.ObjData = new { Header = proHTML.Item1.ToString(), Footer = proHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName };
                         break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
