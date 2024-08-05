@@ -190,6 +190,7 @@
             type="text"
             id="emailSubject"
             formControlName="emailSubject"
+            [readOnly]="isSubjectReadOnly"
           />
           <div
             *ngIf="

@@ -110,7 +110,7 @@ namespace OneTrack_v2.Services
                 {
                     case 1: // "APP-Court Documents"
                         var appCourtDocHTML = _emailTemplateService.GetCourtDocHTML(vEmploymentID);
-                        result.ObjData = new { HTMLContent = appCourtDocHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName };
+                        result.ObjData = new { HTMLContent = appCourtDocHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.DocTypeAbv + " - " + comms.CommunicationName };
                         break;
                     case 33: // "APP-{MESSAGE}"
                         var appHTML = _emailTemplateService.GetMessageHTML(vEmploymentID);

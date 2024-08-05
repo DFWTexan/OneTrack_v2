@@ -33,6 +33,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   // @ViewChild('container') container!: ElementRef;
   isSubmitted = false;
   emailForm!: FormGroup;
+  isSubjectReadOnly = false;
   agentInfo: AgentInfo = {} as AgentInfo;
   docSubType: string = '{MESSAGE}';
   subject: string = '';
@@ -44,9 +45,9 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   htmlHeaderContent: SafeHtml = '' as SafeHtml;
   htmlFooterContent: SafeHtml = '' as SafeHtml;
   htmlContent: SafeHtml = '' as SafeHtml;
-  FileDisplayMode= 'ATTACHMENT'; //--> CHOSEFILE / ATTACHMENT
+  FileDisplayMode = 'ATTACHMENT'; //--> CHOSEFILE / ATTACHMENT
   file: File | null = null;
-  fileUri: string | null = null; 
+  fileUri: string | null = null;
 
   private subscriptions = new Subscription();
 
@@ -120,7 +121,11 @@ export class TmEmailComponent implements OnInit, OnDestroy {
           this.docSubType = rawHtmlContent.docSubType;
           this.subject = rawHtmlContent.subject;
 
-          if (this.docSubType === '{MESSAGE}') {
+          if (rawHtmlContent.docSubType === '{MESSAGE}') {
+            this.isSubjectReadOnly = false;
+            this.emailForm.patchValue({
+              emailSubject: '',
+            });
             this.htmlHeaderContent = this.sanitizer.bypassSecurityTrustHtml(
               rawHtmlContent.header
             );
@@ -128,27 +133,19 @@ export class TmEmailComponent implements OnInit, OnDestroy {
               rawHtmlContent.footer
             );
           } else {
-            this.htmlContent =
-              this.sanitizer.bypassSecurityTrustHtml(rawHtmlContent.htmlContent);
-              if(rawHtmlContent.docSubType === null) {
-                this.emailForm.setErrors({ invalidForm: true });
-              }
+            this.isSubjectReadOnly = true;
+            this.emailForm.patchValue({
+              emailSubject: rawHtmlContent.subject,
+            });
+            this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(
+              rawHtmlContent.htmlContent
+            );
+            if (rawHtmlContent.docSubType === null) {
+              this.emailForm.setErrors({ invalidForm: true });
+            }
           }
         })
     );
-
-    const emailSubjectControl = this.emailForm.get('emailSubject');
-    if (emailSubjectControl) {
-      // Check if the control is not null
-      if (this.docSubType === '{MESSAGE}') {
-        emailSubjectControl.disable();
-      } else {
-        emailSubjectControl.enable();
-        this.emailForm.patchValue({
-          emailSubject: this.subject,
-        });
-      }
-    }
   }
 
   onCcChange(event: Event): void {
