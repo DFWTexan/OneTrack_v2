@@ -108,17 +108,21 @@ namespace OneTrack_v2.Services
             {
                 switch (vCommunicationID)
                 {
-                    case 1: // "APP-COURT DOCUMENTS"
+                    case 1: // "APP-Court Documents"
                         var appCourtDocHTML = _emailTemplateService.GetCourtDocHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appCourtDocHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.DocTypeAbv + " - " + comms.CommunicationName, isTemplateFound = true };
                         break;
-                    case 2: // "APP-INCOMPLETE"
+                    case 2: // "APP-Incomplete"
                         var incompleteHTML = _emailTemplateService.GetIncompleteHTML(vEmploymentID);
                         result.ObjData = new { Header = incompleteHTML.Item1.ToString(), Footer = incompleteHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName, isTemplateFound = true };
                         break;
-                    case 3: // "APP-APPLICATION NOT RECEIVED"
+                    case 3: // "APP-Application Not Received"
                         var appNotReceivedHTML = _emailTemplateService.GetApplNotRecievedHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appNotReceivedHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.DocTypeAbv + " - " + comms.CommunicationName, isTemplateFound = true };
+                        break;
+                    case 4: // "APP-License Copy Display (GA,KY,MT,WA,WY)"
+                        var appLicenseCopyDisplayGaKyMtWaWyHTML = _emailTemplateService.GetLicCopyDisplayGaKyMtWaWyHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appLicenseCopyDisplayGaKyMtWaWyHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.DocTypeAbv + " - " + comms.CommunicationName, isTemplateFound = true };
                         break;
                     case 33: // "APP-{MESSAGE}"
                         var appHTML = _emailTemplateService.GetMessageHTML(vEmploymentID);
