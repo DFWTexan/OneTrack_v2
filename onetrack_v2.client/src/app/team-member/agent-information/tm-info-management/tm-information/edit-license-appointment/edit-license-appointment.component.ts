@@ -206,12 +206,12 @@ ngOnInit(): void {
     this.agentComService.modeLicenseApptChanged.pipe(
       switchMap((mode: string) => {
         if (mode === 'EDIT') {
-          console.log('EMFTEST (modeLicenseApptChanged: EDIT)');
+console.log('EMFTEST (modeLicenseApptChanged: EDIT)');
           return this.agentDataService.licenseAppointmentChanged.pipe(
             switchMap((licenseAppointment: any) => {
               this.licenseAppointment = licenseAppointment;
               this.employeeAppointmentID = licenseAppointment.employeeAppointmentID;
-              console.log('EMFTEST (licenseAppointmentChanged: Appt...) - licenseAppointment => \n', licenseAppointment);
+console.log('EMFTEST (licenseAppointmentChanged: Appt...) - licenseAppointment => \n', licenseAppointment);
               return this.agentDataService.agentLicApptLicenseIDChanged.pipe(
                 switchMap((agentLicApptLicenseID: any) => {
                   return this.dropdownDataService.fetchDropdownNumericData('GetCoAbvByLicenseID', agentLicApptLicenseID);
