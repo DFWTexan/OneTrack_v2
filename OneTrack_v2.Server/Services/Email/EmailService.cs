@@ -116,6 +116,10 @@ namespace OneTrack_v2.Services
                         var incompleteHTML = _emailTemplateService.GetIncompleteHTML(vEmploymentID);
                         result.ObjData = new { Header = incompleteHTML.Item1.ToString(), Footer = incompleteHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName, isTemplateFound = true };
                         break;
+                    case 3: // "APP-APPLICATION NOT RECEIVED"
+                        var appNotReceivedHTML = _emailTemplateService.GetApplNotRecievedHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appNotReceivedHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.DocTypeAbv + " - " + comms.CommunicationName, isTemplateFound = true };
+                        break;
                     case 33: // "APP-{MESSAGE}"
                         var appHTML = _emailTemplateService.GetMessageHTML(vEmploymentID);
                         result.ObjData = new { Header = appHTML.Item1.ToString(), Footer = appHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName, isTemplateFound = true };
