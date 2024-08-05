@@ -34,6 +34,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   isSubmitted = false;
   emailForm!: FormGroup;
   isSubjectReadOnly = false;
+  isTemplateFound = true;
   agentInfo: AgentInfo = {} as AgentInfo;
   docSubType: string = '{MESSAGE}';
   subject: string = '';
@@ -114,20 +115,29 @@ export class TmEmailComponent implements OnInit, OnDestroy {
 
     this.emailTemplateID = +value;
 
+    this.htmlHeaderContent = '';
+    this.htmlContent = '';
+    this.htmlFooterContent = '';
+
     this.subscriptions.add(
       this.emailDataService
         .fetchEmailComTemplateByID(+value, this.agentInfo.employmentID)
         .subscribe((rawHtmlContent: any) => {
           this.docSubType = rawHtmlContent.docSubType;
           this.subject = rawHtmlContent.subject;
-          
+          this.isTemplateFound = rawHtmlContent.isTemplateFound;
+
           if (
             rawHtmlContent.docSubType === '{MESSAGE}' ||
             rawHtmlContent.docSubType === 'Incomplete'
           ) {
-            this.isSubjectReadOnly = rawHtmlContent.docSubType == '{MESSAGE}' ? false : true;
+            this.isSubjectReadOnly =
+              rawHtmlContent.docSubType == '{MESSAGE}' ? false : true;
             this.emailForm.patchValue({
-              emailSubject: rawHtmlContent.docSubType == '{MESSAGE}' ? '' : rawHtmlContent.subject,
+              emailSubject:
+                rawHtmlContent.docSubType == '{MESSAGE}'
+                  ? ''
+                  : rawHtmlContent.subject,
             });
             this.htmlHeaderContent = this.sanitizer.bypassSecurityTrustHtml(
               rawHtmlContent.header

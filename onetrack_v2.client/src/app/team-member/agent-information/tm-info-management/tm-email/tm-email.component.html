@@ -205,7 +205,9 @@
         </div>
         <div class="col">
           <div class="mb-3">
-            <label for="emailAttachment" class="form-label">Add Attachment: </label>
+            <label for="emailAttachment" class="form-label"
+              >Add Attachment:
+            </label>
             <!-- <input
               class="file-upload"
               type="file"
@@ -223,14 +225,10 @@
       </div>
       <mat-divider></mat-divider>
       <div class="row bg-body mt-1 p-3">
-        <div class="col" *ngIf="docSubType === '{MESSAGE}' || 'Incomplete'">
+        <div class="col" *ngIf="isTemplateFound && (docSubType === '{MESSAGE}' || docSubType === 'Incomplete')">
           <div [innerHTML]="htmlHeaderContent"></div>
           <div
-            *ngIf="
-              (emailForm.controls['emailBody'].touched || isSubmitted) &&
-              emailForm.controls['emailBody'].errors &&
-              emailForm.controls['emailBody'].errors['invalid']
-            "
+            *ngIf="(emailForm.controls['emailBody'].touched || isSubmitted) && emailForm.controls['emailBody'].errors?.['invalid']"
             class="text-danger"
           >
             Please enter Message
@@ -251,7 +249,7 @@
           ></textarea>
           <div [innerHTML]="htmlFooterContent"></div>
         </div>
-        <div class="col" *ngIf="docSubType != '{MESSAGE}'">
+        <div class="col" *ngIf="docSubType !== '{MESSAGE}'">
           <div [innerHTML]="htmlContent"></div>
         </div>
       </div>

@@ -110,27 +110,27 @@ namespace OneTrack_v2.Services
                 {
                     case 1: // "APP-COURT DOCUMENTS"
                         var appCourtDocHTML = _emailTemplateService.GetCourtDocHTML(vEmploymentID);
-                        result.ObjData = new { HTMLContent = appCourtDocHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.DocTypeAbv + " - " + comms.CommunicationName };
+                        result.ObjData = new { HTMLContent = appCourtDocHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.DocTypeAbv + " - " + comms.CommunicationName, isTemplateFound = true };
                         break;
                     case 2: // "APP-INCOMPLETE"
                         var incompleteHTML = _emailTemplateService.GetIncompleteHTML(vEmploymentID);
-                        result.ObjData = new { Header = incompleteHTML.Item1.ToString(), Footer = incompleteHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName };
+                        result.ObjData = new { Header = incompleteHTML.Item1.ToString(), Footer = incompleteHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName, isTemplateFound = true };
                         break;
                     case 33: // "APP-{MESSAGE}"
                         var appHTML = _emailTemplateService.GetMessageHTML(vEmploymentID);
-                        result.ObjData = new { Header = appHTML.Item1.ToString(), Footer = appHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName };
+                        result.ObjData = new { Header = appHTML.Item1.ToString(), Footer = appHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName, isTemplateFound = true };
                         break;
                     case 35: // "CE-{MESSAGE}"
                         var ceHTML = _emailTemplateService.GetMessageHTML(vEmploymentID);
-                        result.ObjData = new { Header = ceHTML.Item1.ToString(), Footer = ceHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName };
+                        result.ObjData = new { Header = ceHTML.Item1.ToString(), Footer = ceHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName, isTemplateFound = true };
                         break;
                     case 36: // "REN-{MESSAGE}"
                         var renHTML = _emailTemplateService.GetMessageHTML(vEmploymentID);
-                        result.ObjData = new { Header = renHTML.Item1.ToString(), Footer = renHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName };
+                        result.ObjData = new { Header = renHTML.Item1.ToString(), Footer = renHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName, isTemplateFound = true };
                         break;
                     case 37: // "PRO-{MESSAGE}"
                         var proHTML = _emailTemplateService.GetMessageHTML(vEmploymentID);
-                        result.ObjData = new { Header = proHTML.Item1.ToString(), Footer = proHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName };
+                        result.ObjData = new { Header = proHTML.Item1.ToString(), Footer = proHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName, isTemplateFound = true };
                         break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
@@ -139,7 +139,7 @@ namespace OneTrack_v2.Services
                                                     <h3>Unknown Document Type</h3>
                                                     <p>Document type not found.</p>
                                                 </div>
-                                           </div>", DocSubType = string.Empty, Subject = (string)null };
+                                           </div>", DocSubType = string.Empty, Subject = (string)null, isTemplateFound = false };
                         break;
                 }
 
