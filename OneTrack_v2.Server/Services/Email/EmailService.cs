@@ -124,6 +124,10 @@ namespace OneTrack_v2.Services
                         var appLicenseCopyDisplayGaKyMtWaWyHTML = _emailTemplateService.GetLicCopyDisplayGaKyMtWaWyHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appLicenseCopyDisplayGaKyMtWaWyHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.DocTypeAbv + " - " + comms.CommunicationName, isTemplateFound = true };
                         break;
+                    case 5: // "APP-License Copy"
+                        var appLicenseCopyHTML = _emailTemplateService.GetLicenseCopyHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appLicenseCopyHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.DocTypeAbv + " - " + comms.CommunicationName, isTemplateFound = true };
+                        break;
                     case 33: // "APP-{MESSAGE}"
                         var appHTML = _emailTemplateService.GetMessageHTML(vEmploymentID);
                         result.ObjData = new { Header = appHTML.Item1.ToString(), Footer = appHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName, isTemplateFound = true };
