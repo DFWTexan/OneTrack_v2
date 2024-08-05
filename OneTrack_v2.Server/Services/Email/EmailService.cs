@@ -108,9 +108,13 @@ namespace OneTrack_v2.Services
             {
                 switch (vCommunicationID)
                 {
-                    case 1: // "APP-Court Documents"
+                    case 1: // "APP-COURT DOCUMENTS"
                         var appCourtDocHTML = _emailTemplateService.GetCourtDocHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appCourtDocHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.DocTypeAbv + " - " + comms.CommunicationName };
+                        break;
+                    case 2: // "APP-INCOMPLETE"
+                        var incompleteHTML = _emailTemplateService.GetIncompleteHTML(vEmploymentID);
+                        result.ObjData = new { Header = incompleteHTML.Item1.ToString(), Footer = incompleteHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName };
                         break;
                     case 33: // "APP-{MESSAGE}"
                         var appHTML = _emailTemplateService.GetMessageHTML(vEmploymentID);

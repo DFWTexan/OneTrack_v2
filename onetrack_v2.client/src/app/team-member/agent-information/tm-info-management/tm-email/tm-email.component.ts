@@ -120,11 +120,14 @@ export class TmEmailComponent implements OnInit, OnDestroy {
         .subscribe((rawHtmlContent: any) => {
           this.docSubType = rawHtmlContent.docSubType;
           this.subject = rawHtmlContent.subject;
-
-          if (rawHtmlContent.docSubType === '{MESSAGE}') {
-            this.isSubjectReadOnly = false;
+          
+          if (
+            rawHtmlContent.docSubType === '{MESSAGE}' ||
+            rawHtmlContent.docSubType === 'Incomplete'
+          ) {
+            this.isSubjectReadOnly = rawHtmlContent.docSubType == '{MESSAGE}' ? false : true;
             this.emailForm.patchValue({
-              emailSubject: '',
+              emailSubject: rawHtmlContent.docSubType == '{MESSAGE}' ? '' : rawHtmlContent.subject,
             });
             this.htmlHeaderContent = this.sanitizer.bypassSecurityTrustHtml(
               rawHtmlContent.header

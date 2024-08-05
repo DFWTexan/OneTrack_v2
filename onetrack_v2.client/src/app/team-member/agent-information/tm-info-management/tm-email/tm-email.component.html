@@ -223,7 +223,7 @@
       </div>
       <mat-divider></mat-divider>
       <div class="row bg-body mt-1 p-3">
-        <div class="col" *ngIf="docSubType === '{MESSAGE}'">
+        <div class="col" *ngIf="docSubType === '{MESSAGE}' || 'Incomplete'">
           <div [innerHTML]="htmlHeaderContent"></div>
           <div
             *ngIf="
