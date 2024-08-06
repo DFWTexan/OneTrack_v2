@@ -140,6 +140,10 @@ namespace OneTrack_v2.Services
                         var appExamScheduledNoCertHTML = _emailTemplateService.GetExamScheduledNoCertHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appExamScheduledNoCertHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION EXAM SCHEDULED CONFIRMATION", isTemplateFound = true };
                         break;
+                    case 9: // "APP-License Copy-CA"
+                        var appLicenseCopyCAHTML = _emailTemplateService.GetRENLicenseCopyCAHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appLicenseCopyCAHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "RENEWAL LICENSE COPY_CA", isTemplateFound = true };
+                        break;
                     case 33: // "APP-{MESSAGE}"
                         var appHTML = _emailTemplateService.GetMessageHTML(vEmploymentID);
                         result.ObjData = new { Header = appHTML.Item1.ToString(), Footer = appHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName, isTemplateFound = true };
