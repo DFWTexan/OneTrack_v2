@@ -13,5 +13,14 @@
         public Tuple<string, string, string, string> GetExamScheduledNoCertHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetRENLicenseCopyCAHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetRENLicenseCopyHTML(int vEmploymentID);
+        public Tuple<string, string, string, string> GetRENLicenseCopyGaKyMtWaWyHTML(int vEmploymentID);
+        public Tuple<string, string, string, string> GetExamFxRegLifeHTML(int vEmploymentID);
+        public Tuple<string, string, string, string> GetUmonitoredHTML(int vEmploymentID);
+        //public Tuple<string, string, string, string> GetMonitoredHTML(int vEmploymentID);
+        //public Tuple<string, string, string, string> GetMonitoredInHTML(int vEmploymentID);
+        //public Tuple<string, string, string, string> GetWebinarIlHTML(int vEmploymentID);
+        //public Tuple<string, string, string, string> GetLifePLSHTML(int vEmploymentID);
+        //public Tuple<string, string, string, string> GetLifePlsPlusHTML(int vEmploymentID);
+        //public Tuple<string, string, string, string> GetOkToSELLHTML(int vEmploymentID);
     }
 }

@@ -144,6 +144,22 @@ namespace OneTrack_v2.Services
                         var appLicenseCopyCAHTML = _emailTemplateService.GetRENLicenseCopyCAHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appLicenseCopyCAHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "RENEWAL LICENSE COPY_CA", isTemplateFound = true };
                         break;
+                    case 10: // "REN-License Copy"
+                        var appRENLicenseCopyHTML = _emailTemplateService.GetRENLicenseCopyCAHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appRENLicenseCopyHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "RENEWAL LICENSE COPY", isTemplateFound = true };
+                        break;
+                    case 11: // "REN-License Copy Display (GA,KY,MT,WA,WY)"
+                        var appRENLicenseCopyGaKyMtWaWyHTML = _emailTemplateService.GetRENLicenseCopyGaKyMtWaWyHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appRENLicenseCopyGaKyMtWaWyHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "RENEWAL LICENSE COPY FOR DISPLAY", isTemplateFound = true };
+                        break;
+                    //case 12: // "APP-ExamFX Registration-Life" 
+                    //    var appExamFxHTML = _emailTemplateService.GetRENLicenseCopyCAHTML(vEmploymentID);
+                    //    result.ObjData = new { HTMLContent = appExamFxHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "RENEWAL LICENSE COPY FOR DISPLAY", isTemplateFound = true };
+                    //    break;
+                    case 13: // "CE-Unmonitored"
+                        var appCEUnmonitoredHTML = _emailTemplateService.GetUmonitoredHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appCEUnmonitoredHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "CE ORDERED_NOT MONITORED", isTemplateFound = true };
+                        break;
                     case 33: // "APP-{MESSAGE}"
                         var appHTML = _emailTemplateService.GetMessageHTML(vEmploymentID);
                         result.ObjData = new { Header = appHTML.Item1.ToString(), Footer = appHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName, isTemplateFound = true };
