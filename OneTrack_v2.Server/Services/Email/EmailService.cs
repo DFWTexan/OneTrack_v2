@@ -168,6 +168,14 @@ namespace OneTrack_v2.Services
                         var appCEMonitoredInHTML = _emailTemplateService.GetMonitoredInHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appCEMonitoredInHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "CE ORDERED_MONITORED_IN", isTemplateFound = true };
                         break;
+                    case 16: // "Webinar-IL"
+                        var appWebinarILHTML = _emailTemplateService.GetWebinarIlHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appWebinarILHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "CE WEBINAR_IL", isTemplateFound = true };
+                        break;
+                    case 17: // "Life PLS"
+                        var appLifePLSHTML = _emailTemplateService.GetLifePLSHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appLifePLSHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION LIFE LICENSE TRAINING PLS", isTemplateFound = true };
+                        break;
                     case 33: // "APP-{MESSAGE}"
                         var appHTML = _emailTemplateService.GetMessageHTML(vEmploymentID);
                         result.ObjData = new { Header = appHTML.Item1.ToString(), Footer = appHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName, isTemplateFound = true };
