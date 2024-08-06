@@ -134,7 +134,11 @@ namespace OneTrack_v2.Services
                         break;
                     case 7: // "APP-Exam Scheduled"
                         var appExamScheduledHTML = _emailTemplateService.GetExamScheduledHTML(vEmploymentID);
-                        result.ObjData = new { HTMLContent = appExamScheduledHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.DocTypeAbv + " - " + comms.CommunicationName, isTemplateFound = true };
+                        result.ObjData = new { HTMLContent = appExamScheduledHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION EXAM SCHEDULED CONFIRMATION", isTemplateFound = true };
+                        break;
+                    case 8: // "APP-Exam Scheduled No Cert"
+                        var appExamScheduledNoCertHTML = _emailTemplateService.GetExamScheduledNoCertHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appExamScheduledNoCertHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION EXAM SCHEDULED CONFIRMATION", isTemplateFound = true };
                         break;
                     case 33: // "APP-{MESSAGE}"
                         var appHTML = _emailTemplateService.GetMessageHTML(vEmploymentID);
