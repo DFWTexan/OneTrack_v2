@@ -132,6 +132,10 @@ namespace OneTrack_v2.Services
                         var employmentHistoryHTML = _emailTemplateService.GetEmploymentHistoryHTML(vEmploymentID);
                         result.ObjData = new { Header = employmentHistoryHTML.Item1.ToString(), Footer = employmentHistoryHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName, isTemplateFound = true };
                         break;
+                    case 7: // "APP-Exam Scheduled"
+                        var appExamScheduledHTML = _emailTemplateService.GetExamScheduledHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appExamScheduledHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.DocTypeAbv + " - " + comms.CommunicationName, isTemplateFound = true };
+                        break;
                     case 33: // "APP-{MESSAGE}"
                         var appHTML = _emailTemplateService.GetMessageHTML(vEmploymentID);
                         result.ObjData = new { Header = appHTML.Item1.ToString(), Footer = appHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName, isTemplateFound = true };
