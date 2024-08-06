@@ -176,6 +176,10 @@ namespace OneTrack_v2.Services
                         var appLifePLSHTML = _emailTemplateService.GetLifePLSHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appLifePLSHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION LIFE LICENSE TRAINING PLS", isTemplateFound = true };
                         break;
+                    case 18: // "Life PLS Plus"
+                        var appLifePLSPlusHTML = _emailTemplateService.GetLifePlsPlusHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appLifePLSPlusHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION LIFE LICENSE TRAINING", isTemplateFound = true };
+                        break;
                     case 33: // "APP-{MESSAGE}"
                         var appHTML = _emailTemplateService.GetMessageHTML(vEmploymentID);
                         result.ObjData = new { Header = appHTML.Item1.ToString(), Footer = appHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName, isTemplateFound = true };
