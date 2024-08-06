@@ -225,7 +225,15 @@
       </div>
       <mat-divider></mat-divider>
       <div class="row bg-body mt-1 p-3">
-        <div class="col" *ngIf="isTemplateFound && (docSubType === '{MESSAGE}' || docSubType === 'Incomplete')">
+        <div
+          class="col"
+          *ngIf="
+            isTemplateFound &&
+            (docSubType === '{MESSAGE}' ||
+              docSubType === 'Incomplete' ||
+              docSubType === 'Employment History')
+          "
+        >
           <div [innerHTML]="htmlHeaderContent"></div>
           <div
             *ngIf="(emailForm.controls['emailBody'].touched || isSubmitted) && emailForm.controls['emailBody'].errors?.['invalid']"

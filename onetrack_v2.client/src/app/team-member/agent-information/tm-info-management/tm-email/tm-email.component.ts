@@ -129,7 +129,8 @@ export class TmEmailComponent implements OnInit, OnDestroy {
 
           if (
             rawHtmlContent.docSubType === '{MESSAGE}' ||
-            rawHtmlContent.docSubType === 'Incomplete'
+            rawHtmlContent.docSubType === 'Incomplete' ||
+            rawHtmlContent.docSubType === 'Employment History'
           ) {
             this.isSubjectReadOnly =
               rawHtmlContent.docSubType == '{MESSAGE}' ? false : true;

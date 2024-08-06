@@ -142,7 +142,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                 emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
                 emailFtrHTML = emailFtrHTML + @"</tr> ";
                 emailFtrHTML = emailFtrHTML + @"</table> ";
-                emailHdrHTML = emailHdrHTML + @"</div></div>";
+                emailFtrHTML = emailFtrHTML + @"</div></div>";
             }
             catch (Exception)
             {
@@ -480,7 +480,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                 emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
                 emailFtrHTML = emailFtrHTML + @"</tr> ";
                 emailFtrHTML = emailFtrHTML + @"</table> ";
-                emailHdrHTML = emailHdrHTML + @"</div></div>";
+                emailFtrHTML = emailFtrHTML + @"</div></div>";
 
             }
             catch (Exception)
@@ -617,7 +617,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
             return new Tuple<string, string, string, string>(strHTML, string.Empty, string.Empty, string.Empty);
         }
 
-        public Tuple<string, string, string, string> GetLicCopyDisplayGaKyMtWaWyHTML(int vEmploymentID)
+        public Tuple<string, string, string, string> GetAPPLicCopyDisplayGaKyMtWaWyHTML(int vEmploymentID)
         {
             string strHTML = string.Empty;
 
@@ -770,7 +770,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
             return new Tuple<string, string, string, string>(strHTML, string.Empty, string.Empty, string.Empty);
         }
 
-        public Tuple<string, string, string, string> GetLicenseCopyHTML(int vEmploymentID)
+        public Tuple<string, string, string, string> GetAPPLicenseCopyHTML(int vEmploymentID)
         {             
             string strHTML = string.Empty;
 
@@ -787,7 +787,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
 
                 strHTML = strHTML + @"<table style = ""width: 800px;""> ";
                 strHTML = strHTML + @"<tr> ";
-                strHTML = strHTML + @"<td style = ""text-align: left; background-color: #F69200;""> <span style = ""font-family: Arial; color: #FFFFFF; font-size: 16pt; font-weight: bold; font-style: normal; text-decoration: none;"">OneMain Insurance Licensing Department</span></td> ";
+                strHTML = strHTML + @"<td style = ""text-align: left; background-color: #F69200; padding: 5px;""> <span style = ""font-family: Arial; color: #FFFFFF; font-size: 16pt; font-weight: bold; font-style: normal; text-decoration: none;"">OneMain Insurance Licensing Department</span></td> ";
                 strHTML = strHTML + @"<td> &nbsp;</td> ";
                 strHTML = strHTML + @"<td> &nbsp;</td> ";
                 strHTML = strHTML + @"</tr> ";
@@ -899,6 +899,297 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                 strHTML = strHTML + @"</tr> ";
                 strHTML = strHTML + @"</table> ";
                 //strHTML = strHTML + @"</html> ";
+
+            }
+            catch (Exception)
+            {
+                return new Tuple<string, string, string, string>(string.Empty, string.Empty, string.Empty, string.Empty);
+            }
+
+            return new Tuple<string, string, string, string>(strHTML, string.Empty, string.Empty, string.Empty);
+        }
+
+        public Tuple<string, string, string, string> GetEmploymentHistoryHTML(int vEmploymentID)
+        {
+            string emailHdrHTML = string.Empty;
+            string emailFtrHTML = string.Empty;
+            string strXML = string.Empty;
+            string strReturnStatus = string.Empty;
+            string strH2MgrEmail = string.Empty;
+            string strMgrEmail = string.Empty;
+            string strLicenseTechEmail = string.Empty;
+            string strTMEmail = string.Empty;
+
+            try
+            {
+                var managerInfo = GetManagerInfo(vEmploymentID);
+
+                string strH2MgrName = managerInfo.H2MgrName ?? "";
+                string strH2MgrTitle = managerInfo.H2MgrTitle ?? "";
+                strH2MgrEmail = managerInfo.H2MgrEmail ?? "";
+                string strMgrName = managerInfo.MgrName ?? "";
+                string strMgrTitle = managerInfo.MgrTitle ?? "";
+                strMgrEmail = managerInfo.MgrEmail ?? "";
+                string strTMName = managerInfo.TMName ?? "";
+                string strTMNumber = managerInfo.TMNumber ?? "";
+                string strTMTitle = managerInfo.TMTitle ?? "";
+                strTMEmail = managerInfo.TMEmail ?? "";
+                string strLicenseTechName = managerInfo.LicTechName ?? "";
+                string strLicenseTechTitle = managerInfo.LicTechTitle ?? "";
+                string strLicenseTechPhone = managerInfo.LicTechPhone ?? "";
+
+                // HEADER HTML
+                emailHdrHTML = emailHdrHTML + @"<div><div>";
+                emailHdrHTML = emailHdrHTML + @"<table style = ""width: 800px;""> ";
+                emailHdrHTML = emailHdrHTML + @"<tr> ";
+                emailHdrHTML = emailHdrHTML + @"<td style = ""text-align: left; background-color: #F69200; padding: 5px;""> <span style = ""font-family: Arial; color: #FFFFFF; font-size: 16pt; font-weight: bold; font-style: normal; text-decoration: none;"">OneMain Insurance Licensing Department</span></td> ";
+                emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"</tr> ";
+                emailHdrHTML = emailHdrHTML + @"<tr> ";
+                emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"</tr> ";
+                emailHdrHTML = emailHdrHTML + @"<tr> ";
+                emailHdrHTML = emailHdrHTML + @"<td colspan = ""3"" > ";
+                emailHdrHTML = emailHdrHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"">To: </span> ";
+                emailHdrHTML = emailHdrHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"">&nbsp;&nbsp;&nbsp;</span> ";
+                emailHdrHTML = emailHdrHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"">" + strTMName + " - " + strTMNumber + " - " + strTMTitle + " </span> ";
+                emailHdrHTML = emailHdrHTML + @"</td> ";
+                emailHdrHTML = emailHdrHTML + @"<td>&nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"<td>&nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"</tr> ";
+                emailHdrHTML = emailHdrHTML + @"<tr> ";
+                emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"</tr> ";
+                emailHdrHTML = emailHdrHTML + @"<tr> ";
+                emailHdrHTML = emailHdrHTML + @"<td colspan = ""3"" ><span style = ""font-family: Arial; color: #FF0000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"" > ACTION REQUIRED</span></td> ";
+                emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"</tr> ";
+                emailHdrHTML = emailHdrHTML + @"<tr> ";
+                emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"</tr> ";
+                emailHdrHTML = emailHdrHTML + @"<td colspan = ""3"" >";
+                emailHdrHTML = emailHdrHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none; background-color: #FFFF00;"" >Please </span>";
+                emailHdrHTML = emailHdrHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: underline; background-color: #FFFF00;"" >REPLY </span>";
+                emailHdrHTML = emailHdrHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none; background-color: #FFFF00;"" >to this email with the requested information to expedite your license process.</span>";
+                emailHdrHTML = emailHdrHTML + @"</td> ";
+                emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"</tr> ";
+                emailHdrHTML = emailHdrHTML + @"<tr> ";
+                emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"</tr> ";
+                emailHdrHTML = emailHdrHTML + @"<td colspan = ""3"" >";
+                emailHdrHTML = emailHdrHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >Employment History on your license application says </span>";
+                emailHdrHTML = emailHdrHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: underline; background-color: #FFFF00;"" >full 5 years with no gaps.  </span>";
+                emailHdrHTML = emailHdrHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >There are gaps in the work history and the DOI rejects incomplete applications.</span>";
+                emailHdrHTML = emailHdrHTML + @"</td> ";
+                emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"</tr> ";
+                emailHdrHTML = emailHdrHTML + @"<tr> ";
+                emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"<td> &nbsp;</td> ";
+                emailHdrHTML = emailHdrHTML + @"</tr> ";
+                emailHdrHTML = emailHdrHTML + @"</table> ";
+                emailHdrHTML = emailHdrHTML + @"</div>";
+                emailHdrHTML = emailHdrHTML + @"<div>";
+
+                // FOOTER HTML
+                emailFtrHTML = emailFtrHTML + @"<table style = ""width: 800px;""> ";
+                emailFtrHTML = emailFtrHTML + @"<tr> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"</tr> ";
+                emailFtrHTML = emailFtrHTML + @"<tr> ";
+                emailFtrHTML = emailFtrHTML + @"<td colspan = ""3"" >";
+                emailFtrHTML = emailFtrHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >Show </span>";
+                emailFtrHTML = emailFtrHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"" >UNEMPLOYED </span>";
+                emailFtrHTML = emailFtrHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >if you were not working </span>";
+                emailFtrHTML = emailFtrHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"" >and </span>";
+                emailFtrHTML = emailFtrHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >the City, State you lived with the </span>";
+                emailFtrHTML = emailFtrHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"" >FROM and TO dates.  </span>";
+                emailFtrHTML = emailFtrHTML + @"</td> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"</tr> ";
+                emailFtrHTML = emailFtrHTML + @"<tr> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"</tr> ";
+                emailFtrHTML = emailFtrHTML + @"<tr> ";
+                emailFtrHTML = emailFtrHTML + @"<td colspan = ""3"" >";
+                emailFtrHTML = emailFtrHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >Show </span>";
+                emailFtrHTML = emailFtrHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"" >STUDENT </span>";
+                emailFtrHTML = emailFtrHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >if in school </span>";
+                emailFtrHTML = emailFtrHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"" >and </span>";
+                emailFtrHTML = emailFtrHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >the name of the school with the City, State with  </span>";
+                emailFtrHTML = emailFtrHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"" >FROM and TO dates.  </span>";
+                emailFtrHTML = emailFtrHTML + @"</td> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"</tr> ";
+                emailFtrHTML = emailFtrHTML + @"<tr> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"</tr> ";
+                emailFtrHTML = emailFtrHTML + @"<tr> ";
+                emailFtrHTML = emailFtrHTML + @"<td><span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"" > Thank You,</span></td> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"</tr> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"</tr> ";
+                emailFtrHTML = emailFtrHTML + @"<tr> ";
+                emailFtrHTML = emailFtrHTML + @"<td><img alt = """" src = ""../Pictures/OneMainSolutionsHorizontal.jpg"" width = ""100""/></td> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"</tr> ";
+                emailFtrHTML = emailFtrHTML + @"<tr> ";
+                emailFtrHTML = emailFtrHTML + @"<td>&nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"<td>&nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"<td>&nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"</tr> ";
+                emailFtrHTML = emailFtrHTML + @"<td colspan = ""3"" > ";
+                emailFtrHTML = emailFtrHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"" >" + strLicenseTechName + " - " + strLicenseTechTitle + " - " + strLicenseTechPhone + " </span></td> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"</tr> ";
+                emailFtrHTML = emailFtrHTML + @"<tr> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"</tr> ";
+                emailFtrHTML = emailFtrHTML + @"</table> ";
+                emailFtrHTML = emailFtrHTML + @"</td> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"<td> &nbsp;</td> ";
+                emailFtrHTML = emailFtrHTML + @"</tr> ";
+                emailFtrHTML = emailFtrHTML + @"</table> ";
+                emailFtrHTML = emailFtrHTML + @"</div></div>";
+
+            }
+            catch (Exception)
+            {
+                return new Tuple<string, string, string, string>(string.Empty, string.Empty, string.Empty, string.Empty);
+            }
+
+            var hearderHTML = emailHdrHTML;
+            var footerHTML = emailFtrHTML;
+
+            return new Tuple<string, string, string, string>(hearderHTML, footerHTML, strTMEmail, strMgrEmail);
+
+        }
+
+        public Tuple<string, string, string, string> GetExamScheduledHTML(int vEmploymentID)
+        {
+            string strHTML = string.Empty;
+
+            try
+            {
+                var managerInfo = GetManagerInfo(vEmploymentID);
+
+                string strTMName = managerInfo.TMName ?? "";
+                string strTMNumber = managerInfo.TMNumber ?? "";
+                string strTMTitle = managerInfo.TMTitle ?? "";
+                string strLicenseTechName = managerInfo.LicTechName ?? "";
+                string strLicenseTechTitle = managerInfo.LicTechTitle ?? "";
+                string strLicenseTechPhone = managerInfo.LicTechPhone ?? "";
+
+                strHTML = strHTML + @"<table style = ""width: 800px;""> ";
+
+            }
+            catch (Exception)
+            {
+                return new Tuple<string, string, string, string>(string.Empty, string.Empty, string.Empty, string.Empty);
+            }
+
+            return new Tuple<string, string, string, string>(strHTML, string.Empty, string.Empty, string.Empty);
+        }
+
+        public Tuple<string, string, string, string> GetExamScheduledNoCertHTML(int vEmploymentID)
+        {
+            string strHTML = string.Empty;
+
+            try
+            {
+                var managerInfo = GetManagerInfo(vEmploymentID);
+
+                string strTMName = managerInfo.TMName ?? "";
+                string strTMNumber = managerInfo.TMNumber ?? "";
+                string strTMTitle = managerInfo.TMTitle ?? "";
+                string strLicenseTechName = managerInfo.LicTechName ?? "";
+                string strLicenseTechTitle = managerInfo.LicTechTitle ?? "";
+                string strLicenseTechPhone = managerInfo.LicTechPhone ?? "";
+
+                strHTML = strHTML + @"<table style = ""width: 800px;""> ";
+
+            }
+            catch (Exception)
+            {
+                return new Tuple<string, string, string, string>(string.Empty, string.Empty, string.Empty, string.Empty);
+            }
+
+            return new Tuple<string, string, string, string>(strHTML, string.Empty, string.Empty, string.Empty);
+        }
+
+        public Tuple<string, string, string, string> GetRENLicenseCopyCAHTML(int vEmploymentID)
+        {
+            string strHTML = string.Empty;
+
+            try
+            {
+                var managerInfo = GetManagerInfo(vEmploymentID);
+
+                string strTMName = managerInfo.TMName ?? "";
+                string strTMNumber = managerInfo.TMNumber ?? "";
+                string strTMTitle = managerInfo.TMTitle ?? "";
+                string strLicenseTechName = managerInfo.LicTechName ?? "";
+                string strLicenseTechTitle = managerInfo.LicTechTitle ?? "";
+                string strLicenseTechPhone = managerInfo.LicTechPhone ?? "";
+
+                strHTML = strHTML + @"<table style = ""width: 800px;""> ";
+
+            }
+            catch (Exception)
+            {
+                return new Tuple<string, string, string, string>(string.Empty, string.Empty, string.Empty, string.Empty);
+            }
+
+            return new Tuple<string, string, string, string>(strHTML, string.Empty, string.Empty, string.Empty);
+        }
+
+        public Tuple<string, string, string, string> GetRENLicenseCopyHTML(int vEmploymentID)
+        {
+            string strHTML = string.Empty;
+
+            try
+            {
+                var managerInfo = GetManagerInfo(vEmploymentID);
+
+                string strTMName = managerInfo.TMName ?? "";
+                string strTMNumber = managerInfo.TMNumber ?? "";
+                string strTMTitle = managerInfo.TMTitle ?? "";
+                string strLicenseTechName = managerInfo.LicTechName ?? "";
+                string strLicenseTechTitle = managerInfo.LicTechTitle ?? "";
+                string strLicenseTechPhone = managerInfo.LicTechPhone ?? "";
+
+                strHTML = strHTML + @"<table style = ""width: 800px;""> ";
 
             }
             catch (Exception)

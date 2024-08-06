@@ -121,12 +121,16 @@ namespace OneTrack_v2.Services
                         result.ObjData = new { HTMLContent = appNotReceivedHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.DocTypeAbv + " - " + comms.CommunicationName, isTemplateFound = true };
                         break;
                     case 4: // "APP-License Copy Display (GA,KY,MT,WA,WY)"
-                        var appLicenseCopyDisplayGaKyMtWaWyHTML = _emailTemplateService.GetLicCopyDisplayGaKyMtWaWyHTML(vEmploymentID);
+                        var appLicenseCopyDisplayGaKyMtWaWyHTML = _emailTemplateService.GetAPPLicCopyDisplayGaKyMtWaWyHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appLicenseCopyDisplayGaKyMtWaWyHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.DocTypeAbv + " - " + comms.CommunicationName, isTemplateFound = true };
                         break;
                     case 5: // "APP-License Copy"
-                        var appLicenseCopyHTML = _emailTemplateService.GetLicenseCopyHTML(vEmploymentID);
+                        var appLicenseCopyHTML = _emailTemplateService.GetAPPLicenseCopyHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appLicenseCopyHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.DocTypeAbv + " - " + comms.CommunicationName, isTemplateFound = true };
+                        break;
+                    case 6: // "APP-Employment History"
+                        var employmentHistoryHTML = _emailTemplateService.GetEmploymentHistoryHTML(vEmploymentID);
+                        result.ObjData = new { Header = employmentHistoryHTML.Item1.ToString(), Footer = employmentHistoryHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName, isTemplateFound = true };
                         break;
                     case 33: // "APP-{MESSAGE}"
                         var appHTML = _emailTemplateService.GetMessageHTML(vEmploymentID);
