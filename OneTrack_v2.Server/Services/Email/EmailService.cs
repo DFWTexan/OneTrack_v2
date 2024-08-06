@@ -161,8 +161,12 @@ namespace OneTrack_v2.Services
                         result.ObjData = new { HTMLContent = appCEUnmonitoredHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "CE ORDERED_NOT MONITORED", isTemplateFound = true };
                         break;
                     case 14: // "CE-Monitored"
-                        var appCEMonitoredHTML = _emailTemplateService.GetUmonitoredHTML(vEmploymentID);
+                        var appCEMonitoredHTML = _emailTemplateService.GetMonitoredHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appCEMonitoredHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "CE ORDERED_MONITORED", isTemplateFound = true };
+                        break;
+                    case 15: // "CE-Monitored IN"
+                        var appCEMonitoredInHTML = _emailTemplateService.GetMonitoredInHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appCEMonitoredInHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "CE ORDERED_MONITORED_IN", isTemplateFound = true };
                         break;
                     case 33: // "APP-{MESSAGE}"
                         var appHTML = _emailTemplateService.GetMessageHTML(vEmploymentID);
