@@ -1,4 +1,6 @@
-﻿using OneTrack_v2.DbData;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
+using OneTrack_v2.DbData;
 using OneTrak_v2.Services.Model;
 using System.Text;
 
@@ -151,7 +153,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
 
             var hearderHTML = emailHdrHTML;
             var footerHTML = emailFtrHTML;
-            
+
             return new Tuple<string, string, string, string>(hearderHTML, footerHTML, strTMEmail, strMgrEmail);
         }
 
@@ -771,7 +773,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
         }
 
         public Tuple<string, string, string, string> GetAPPLicenseCopyHTML(int vEmploymentID)
-        {             
+        {
             string strHTML = string.Empty;
 
             try
@@ -3674,6 +3676,306 @@ namespace OneTrak_v2.Server.Services.Email.Templates
             return new Tuple<string, string, string, string>(strHTML, string.Empty, string.Empty, string.Empty);
         }
 
+        public Tuple<string, string, string, string> GetOkToSELLHTML(int vEmploymentID)
+        {
+            string strHTML = string.Empty;
+            try
+            {
+                var okayToSellInfo = GetOkayToSellData(vEmploymentID);
+
+                bool isCalState = okayToSellInfo.SellStates.Any(state => state.StateProvinceName.Equals("CALIFORNIA", StringComparison.OrdinalIgnoreCase));
+
+                string strEffectiveDate = string.Empty;
+                string strTMName = okayToSellInfo.TMName ?? "";
+                string strTMNumber = okayToSellInfo.TMNumber ?? "";
+                string strTMTitle = okayToSellInfo.TMTitle ?? "";
+                string strLicenseTechName = okayToSellInfo.LicenseTechName ?? "";
+                string strLicenseTechTitle = okayToSellInfo.LicenseTechTitle ?? "";
+                string strLicenseTechPhone = okayToSellInfo.LicenseTechPhone ?? "";
+
+                strHTML = strHTML + @"<table style = ""width: 800px;""> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td style = ""text-align: left; background-color: #F69200; padding: 5px;""> <span style = ""font-family: Arial; color: #FFFFFF; font-size: 16pt; font-weight: bold; font-style: normal; text-decoration: none;"">OneMain Insurance Licensing Department</span></td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" > ";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"">To: </span> ";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"">&nbsp;&nbsp;&nbsp;</span> ";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"">" + strTMName + " - " + strTMNumber + " - " + strTMTitle + " </span> ";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td>&nbsp;</td> ";
+                strHTML = strHTML + @"<td>&nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+
+                foreach (var item in okayToSellInfo.SellStates)
+                {
+                    //strLicenseState = item.StateProvinceName;
+
+                    strHTML = strHTML + @"<tr> ";
+                    strHTML = strHTML + @"<td  colspan = ""3"" ><span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 700; font-style: normal; text-decoration: none;"" >" + item.StateProvinceName + "</span></td>";
+                    strHTML = strHTML + @"<td> &nbsp;</td> ";
+                    strHTML = strHTML + @"<td> &nbsp;</td> ";
+                    strHTML = strHTML + @"</tr> ";
+                    foreach (var license in okayToSellInfo.licenseStateItems)
+                    {
+                        if (license.StateAbbr == item.StateProvinceAbv)
+                        {
+                            strHTML = strHTML + @"<tr> ";
+                            strHTML = strHTML + @"<td  colspan = ""2"" ><span style = ""padding-top: 1rem; font-family: Arial; color: #000000; font-size: 12pt; font-weight: 500; font-style: normal; text-decoration: none;"" >&nbsp;&nbsp;&nbsp;&nbsp;" + license.LineOfAuthorityName + " - LICENSE NUMBER: " + license.LicenseNumber + "</span></td>";
+                            strHTML = strHTML + @"<td> &nbsp;</td> ";
+                            strHTML = strHTML + @"<td> &nbsp;</td> ";
+                            strHTML = strHTML + @"</tr> ";
+                            foreach (var effective in okayToSellInfo.licenseEffectiveDates)
+                            {
+                                if (effective.EmployeeLicenseID == license.EmployeeLicenseID)
+                                {
+                                    strEffectiveDate = effective.AppointmentEffectiveDate.ToString();
+                                    strHTML = strHTML + @"<tr> ";
+                                    DateTime effectiveDate;
+                                    if (DateTime.TryParse(strEffectiveDate, out effectiveDate))
+                                    {
+                                        strHTML = strHTML + @"<td><span style = ""margin-left: 30px; font-family: Arial; color: #000000; font-size: 10pt; font-weight: 300; font-style: normal; text-decoration: none;"" >" + effective.CompanyName + " - EFFECTIVE DATE: " + effectiveDate.ToString("MM-dd-yyyy") + "</span></td>";
+                                    }
+                                    else
+                                    {
+                                        strHTML = strHTML + @"<td><span style = ""margin-left: 30px; font-family: Arial; color: #000000; font-size: 10pt; font-weight: bold; font-style: normal; text-decoration: underline; background-color: #FFFF00;"" >" + effective.CompanyName + " - EFFECTIVE DATE: " + effectiveDate + ". </span></td>";
+                                    }
+                                    strHTML = strHTML + @"</tr> ";
+                                }
+                            }
+                        }
+                    }
+                }
+
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >You are now authorized to offer insurance products covered under your license(s) shown above. </span>";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >Remember that you are responsible for knowing the licensing requirements of your state and </span>";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >keeping your license (or registration for Auto Club in certain states) in good standing by </span>";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >completing mandatory continuing education if applicable, and/or submitting renewal </span>";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >documents within the time frame required by the Department of Insurance (DOI) in your state. </span>";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >You must also keep the DOI and us advised of your current resident address or change in </span>";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >criminal history.  </span>";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: underline;"" >Any felony or crime of moral turpitude, criminal convictions, or enforcement actions taken by </span>";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: underline;"" >any state regulatory authority must be reported to us and to the DOI within 10 - 30 days, </span>";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: underline;"" >depending on the laws of your state. </span>";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+
+                if (isCalState)
+                {
+                    strHTML = strHTML + @"<tr> <td colspan = ""3"">";
+                    strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; background-color: #FFFF00;"" >California law now requires individuals with Life and Health licenses to include their license number in their email signature. </span>";
+                    strHTML = strHTML + @"</td> </tr>";
+                    strHTML = strHTML + @"<tr> <td colspan = ""3""> &nbsp;</td> </tr>";
+
+                    strHTML = strHTML + @"<tr> <td colspan = ""3"">";
+                    strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal;"" >According to this law, there are certain requirements on size and placement of the license number in the email signature. These requirements include:</span>";
+                    strHTML = strHTML + @"</td> </tr>";
+                    strHTML = strHTML + @"<tr> <td colspan = ""3""> &nbsp;</td> </tr>";
+
+                    strHTML = strHTML + @"<tr> <td colspan = ""3"">";
+                    strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+                    strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"">The license number must be in a type size no smaller than the largest of any street address, email address, or telephone number of the licensee. For example, if an email included a 10-point street address, an 11-point email address, and a 12-point telephone number, then the license number must be at least 12-point.</span> ";
+                    strHTML = strHTML + @"</td> </tr>";
+                    strHTML = strHTML + @"<tr> <td colspan = ""3""> &nbsp;</td> </tr>";
+
+                    strHTML = strHTML + @"<tr> <td colspan = ""3"">";
+                    strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;•&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+                    strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"">The license number of an individual licensee must appear adjacent to or on the line below the individuals name or title. </span> ";
+                    strHTML = strHTML + @"</td> </tr>";
+                    strHTML = strHTML + @"<tr> <td colspan = ""3""> &nbsp;</td> </tr>";
+
+                    strHTML = strHTML + @"<tr> <td colspan = ""3"">";
+                    strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal;"" >Below is an example of how a signature should look: </span>";
+                    strHTML = strHTML + @"</td> </tr>";
+                    strHTML = strHTML + @"<tr> <td colspan = ""3""> &nbsp;</td> </tr>";
+
+                    strHTML = strHTML + @"<tr><td colspan = ""3""> ";
+                    strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >Jane Doe</span>";
+                    strHTML = strHTML + @"</td></tr> ";
+                    strHTML = strHTML + @"<tr><td colspan = ""3"">";
+                    strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >Personal Loan Specialist</span>";
+                    strHTML = strHTML + @"</td></tr> ";
+                    strHTML = strHTML + @"<tr><td colspan = ""3"">";
+                    strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >Life/Health Insurance License #0M44444</span>";
+                    strHTML = strHTML + @"</td></tr> ";
+                    strHTML = strHTML + @"<tr><td colspan = ""3"">";
+                    strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >1234 University Dr. Anytown, CA 98765</span>";
+                    strHTML = strHTML + @"</td></tr> ";
+                    strHTML = strHTML + @"<tr><td colspan = ""3"">";
+                    strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >P: 555-111-8888</span>";
+                    strHTML = strHTML + @"</td></tr> ";
+                    strHTML = strHTML + @"<tr><td colspan = ""3"">";
+                    strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >F: 333-999-1111</span>";
+                    strHTML = strHTML + @"</td></tr> ";
+                    strHTML = strHTML + @"<tr> <td colspan = ""3""> &nbsp;</td> </tr>";
+
+                    strHTML = strHTML + @"<tr><td colspan = ""3"" >";
+                    strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >If you have any questions regarding your license, please contact your Licensing Specialist shown below</span>";
+                    strHTML = strHTML + @"</td><td> &nbsp;</td><td> &nbsp;</td></tr> ";
+                }
+                else
+                {
+                    strHTML = strHTML + @"<td colspan = ""3"" >";
+                    strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: underline;"" >MD Licensees Only</span>";
+                    strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >: This document shall be retained while your appointment is in effect and for </span>";
+                    strHTML = strHTML + @"</td> ";
+                    strHTML = strHTML + @"<td> &nbsp;</td> ";
+                    strHTML = strHTML + @"<td> &nbsp;</td> ";
+                    strHTML = strHTML + @"</tr> ";
+                    strHTML = strHTML + @"<tr> ";
+                    strHTML = strHTML + @"<td colspan = ""3"" >";
+                    strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >at least 5 years after the termination of your appointment.</span>";
+                    strHTML = strHTML + @"</td> ";
+                    strHTML = strHTML + @"<td> &nbsp;</td> ";
+                    strHTML = strHTML + @"<td> &nbsp;</td> ";
+                    strHTML = strHTML + @"</tr> ";
+                    strHTML = strHTML + @"<tr> ";
+                    strHTML = strHTML + @"<td> &nbsp;</td> ";
+                    strHTML = strHTML + @"<td> &nbsp;</td> ";
+                    strHTML = strHTML + @"<td> &nbsp;</td> ";
+                    strHTML = strHTML + @"</tr> ";
+                    strHTML = strHTML + @"<tr> ";
+                    strHTML = strHTML + @"<td colspan = ""3"" >";
+                    strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: underline;"" >If you have any questions regarding your license, please contact your Licensing Specialist shown </span>";
+                    strHTML = strHTML + @"</td> ";
+                    strHTML = strHTML + @"<td> &nbsp;</td> ";
+                    strHTML = strHTML + @"<td> &nbsp;</td> ";
+                    strHTML = strHTML + @"</tr> ";
+                    strHTML = strHTML + @"<tr> ";
+                    strHTML = strHTML + @"<td colspan = ""3"" >";
+                    strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: underline;"" >below. </span>";
+                    strHTML = strHTML + @"</td> ";
+                    strHTML = strHTML + @"<td> &nbsp;</td> ";
+                    strHTML = strHTML + @"<td> &nbsp;</td> ";
+                    strHTML = strHTML + @"</tr> ";
+                }
+
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td><span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"" > Thank You,</span></td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td><img alt = """" src = ""pictures/OneMainSolutionsHorizontal.jpg"" width = ""100""/></td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" ><span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"" >" + strLicenseTechName + " - " + strLicenseTechTitle + " - " + strLicenseTechPhone + " </span></td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"</table> ";
+            }
+            catch (Exception)
+            {
+                return new Tuple<string, string, string, string>(string.Empty, string.Empty, string.Empty, string.Empty);
+            }
+
+            return new Tuple<string, string, string, string>(strHTML, string.Empty, string.Empty, string.Empty);
+        }
 
         #region "Get Local Data"
         protected ManagerInfo GetManagerInfo(int vEmploymentID)
@@ -3775,6 +4077,134 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                           }).FirstOrDefault();
 
             return result ?? new CEReminder();
+        }
+        protected OkToSellData GetOkayToSellData(int vEmploymentID)
+        {
+            var queryResult = (from e in _db.Employees
+                               join em in _db.Employments on e.EmployeeId equals em.EmployeeId
+                               join ej in _db.EmploymentJobTitles on em.EmploymentId equals ej.EmploymentId
+                               join j in _db.JobTitles on ej.JobTitleId equals j.JobTitleId
+                               join el in _db.EmployeeLicenses on em.EmploymentId equals el.EmploymentId
+                               join l in _db.Licenses on el.LicenseId equals l.LicenseId
+                               join ea in _db.EmployeeAppointments on el.EmployeeLicenseId equals ea.EmployeeLicenseId
+                               join th in _db.TransferHistories on em.EmploymentId equals th.EmploymentId
+                               join s in _db.StateProvinces on l.StateProvinceAbv equals s.StateProvinceAbv
+                               join lt in _db.LicenseTeches on s.LicenseTechId equals lt.LicenseTechId
+                               join lc in _db.LicenseCompanies on l.LicenseId equals lc.LicenseId
+                               join c in _db.Companies on lc.CompanyId equals c.CompanyId
+                               join la in _db.LineOfAuthorities on l.LineOfAuthorityId equals la.LineOfAuthorityId
+                               where em.EmployeeStatus == "Active"
+                                     && ej.IsCurrent == true
+                                     && el.LicenseStatus == "Active"
+                                     && ea.AppointmentStatus == "Active"
+                                     && th.IsCurrent == true
+                                     && lc.IsActive == true
+                                     && em.EmploymentId == vEmploymentID
+                               orderby e.EmployeeId, em.EmploymentId
+                               select new OkToSellData
+                               {
+                                   TMName = e.FirstName + " " + e.LastName,
+                                   TMNumber = e.Geid,
+                                   TMTitle = j.JobTitle1,
+                                   LicenseTechName = lt.FirstName + " " + lt.LastName,
+                                   LicenseTechPhone = lt.LicenseTechPhone,
+                                   LicenseTechTitle = "LICENSING SPEC"
+                               })
+                               .AsNoTracking()
+                               .FirstOrDefault();
+
+            var sellStates = (from e in _db.Employees
+                              join em in _db.Employments on e.EmployeeId equals em.EmployeeId
+                              join el in _db.EmployeeLicenses on em.EmploymentId equals el.EmploymentId
+                              join l in _db.Licenses on el.LicenseId equals l.LicenseId
+                              join ea in _db.EmployeeAppointments on el.EmployeeLicenseId equals ea.EmployeeLicenseId
+                              join th in _db.TransferHistories on em.EmploymentId equals th.EmploymentId
+                              join s in _db.StateProvinces on l.StateProvinceAbv equals s.StateProvinceAbv
+                              join lt in _db.LicenseTeches on s.LicenseTechId equals lt.LicenseTechId
+                              join lc in _db.LicenseCompanies on l.LicenseId equals lc.LicenseId
+                              join c in _db.Companies on lc.CompanyId equals c.CompanyId
+                              join la in _db.LineOfAuthorities on l.LineOfAuthorityId equals la.LineOfAuthorityId
+                              where em.EmployeeStatus == "Active"
+                                    && el.LicenseStatus == "Active"
+                                    && ea.AppointmentStatus == "Active"
+                                    && th.IsCurrent == true
+                                    && lc.IsActive == true
+                                    && em.EmploymentId == vEmploymentID
+                              orderby s.StateProvinceName
+                              select new SellStateItem
+                              {
+                                  StateProvinceAbv = l.StateProvinceAbv,
+                                  StateProvinceName = s.StateProvinceName
+                              })
+                              .AsNoTracking()
+                              .Distinct()
+                              .ToList();
+
+            queryResult.SellStates = sellStates;
+
+            var licenses = (from e in _db.Employees
+                          join em in _db.Employments on e.EmployeeId equals em.EmployeeId
+                          join el in _db.EmployeeLicenses on em.EmploymentId equals el.EmploymentId
+                          join l in _db.Licenses on el.LicenseId equals l.LicenseId
+                          join ea in _db.EmployeeAppointments on el.EmployeeLicenseId equals ea.EmployeeLicenseId
+                          join th in _db.TransferHistories on em.EmploymentId equals th.EmploymentId
+                          join s in _db.StateProvinces on l.StateProvinceAbv equals s.StateProvinceAbv
+                          join lt in _db.LicenseTeches on s.LicenseTechId equals lt.LicenseTechId
+                          join lc in _db.LicenseCompanies on l.LicenseId equals lc.LicenseId
+                          join c in _db.Companies on lc.CompanyId equals c.CompanyId
+                          join la in _db.LineOfAuthorities on l.LineOfAuthorityId equals la.LineOfAuthorityId
+                          where em.EmployeeStatus == "Active"
+                                && el.LicenseStatus == "Active"
+                                && ea.AppointmentStatus == "Active"
+                                && th.IsCurrent == true
+                                && lc.IsActive == true
+                                && em.EmploymentId == vEmploymentID
+                          orderby la.LineOfAuthorityName
+                          select new LicenseStateItem()
+                          {
+                              StateAbbr = l.StateProvinceAbv,
+                              EmployeeLicenseID = el.EmployeeLicenseId,
+                              LineOfAuthorityName = la.LineOfAuthorityName,
+                              LicenseNumber = el.LicenseNumber
+                          })
+                          .AsNoTracking()
+                          .Distinct()
+                          .ToList();
+
+            queryResult.licenseStateItems = licenses;
+
+            var effective = (from e in _db.Employees
+                             join em in _db.Employments on e.EmployeeId equals em.EmployeeId
+                             join el in _db.EmployeeLicenses on em.EmploymentId equals el.EmploymentId
+                             join l in _db.Licenses on el.LicenseId equals l.LicenseId
+                             join ea in _db.EmployeeAppointments on el.EmployeeLicenseId equals ea.EmployeeLicenseId
+                             join th in _db.TransferHistories on em.EmploymentId equals th.EmploymentId
+                             join s in _db.StateProvinces on l.StateProvinceAbv equals s.StateProvinceAbv
+                             join lt in _db.LicenseTeches on s.LicenseTechId equals lt.LicenseTechId
+                             join lc in _db.LicenseCompanies on l.LicenseId equals lc.LicenseId
+                             join c in _db.Companies on lc.CompanyId equals c.CompanyId
+                             join la in _db.LineOfAuthorities on l.LineOfAuthorityId equals la.LineOfAuthorityId
+                             where em.EmployeeStatus == "Active"
+                                   && el.LicenseStatus == "Active"
+                                   && ea.AppointmentStatus == "Active"
+                                   && th.IsCurrent == true
+                                   && lc.IsActive == true
+                                   && em.EmploymentId == vEmploymentID
+                             group new { el.EmployeeLicenseId, c.CompanyName, ea.AppointmentEffectiveDate } by new { el.EmployeeLicenseId, c.CompanyName } into g
+                             orderby g.Key.CompanyName, g.Min(x => x.AppointmentEffectiveDate)
+                             select new LicenseEffectiveDate()
+                             {
+                                 EmployeeLicenseID = g.Key.EmployeeLicenseId,
+                                 CompanyName = g.Key.CompanyName,
+                                 AppointmentEffectiveDate = g.Min(x => x.AppointmentEffectiveDate)
+                             })
+                 .AsNoTracking()
+                 .Distinct()
+                 .ToList();
+
+            queryResult.licenseEffectiveDates = effective;
+
+            return queryResult ?? null;
         }
         #endregion
 
