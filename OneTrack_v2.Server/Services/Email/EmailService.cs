@@ -104,6 +104,7 @@ namespace OneTrack_v2.Services
                             .FirstOrDefault();
 
             var docAttPath = _config.GetSection("EmailAttachmentDocs:OneTrakDocumentPath").Get<string>() ?? null;
+            List<string> _attachments;
 
             var result = new ReturnResult();
             try
@@ -203,9 +204,14 @@ namespace OneTrack_v2.Services
                         result.ObjData = new { Header = proHTML.Item1.ToString(), Footer = proHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName, isTemplateFound = true };
                         break;
                     case 41: // "Background Release"
-                        var attachments = GetAttachments("BackgroundReleaseDocs");
+                        _attachments = GetAttachments("BackgroundReleaseDocs");
                         var appBackgroundReleaseHTML = _emailTemplateService.GetBackgroundReleaseHTML(vEmploymentID);
-                        result.ObjData = new { HTMLContent = appBackgroundReleaseHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION BACKGROUND RELEASE IS NEEDED", isTemplateFound = true, DocAttachmentPath = docAttPath + "Templates/",  Attachments = attachments };
+                        result.ObjData = new { HTMLContent = appBackgroundReleaseHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION BACKGROUND RELEASE IS NEEDED", isTemplateFound = true, DocAttachmentPath = docAttPath + "Templates/",  Attachments = _attachments };
+                        break;
+                    case 42: // "Background Disclosure Link"
+                        _attachments = GetAttachments("BackgroundDisclosureLink");
+                        var appBackgroundDisclosureLinkHTML = _emailTemplateService.GetBackgroundDisclosureLinkHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appBackgroundDisclosureLinkHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION BACKGROUND DISCLOSURE LINK", isTemplateFound = true, DocAttachmentPath = docAttPath + "Templates/", Attachments = _attachments };
                         break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
@@ -1186,8 +1192,8 @@ namespace OneTrack_v2.Services
             {
                 case "BackgroundReleaseDocs":
                     return _config.GetSection("EmailAttachmentDocs:BackgroundReleaseDocs").Get<List<string>>() ?? new List<string>();
-                case "BackgroundReleaseDocs2":
-                    break;
+                case "BackgroundDisclosureLink":
+                    return _config.GetSection("EmailAttachmentDocs:BackgroundDisclosureLink").Get<List<string>>() ?? new List<string>();
                 default:
                     break;
             }
