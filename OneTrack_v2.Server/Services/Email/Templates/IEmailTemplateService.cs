@@ -34,7 +34,7 @@
         public Tuple<string, string, string, string> GetApplicationRequiredHIHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetApplicationRequiredTNHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetFingerprintRequiredAZHTML(int vEmploymentID);
-        //public Tuple<string, string, string, string> GetFingerprintRequiredLAHTML(int vEmploymentID);
+        public Tuple<string, string, string, string> GetFingerprintRequiredLAHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetFingerprintRequiredCreditHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetFingerprintScheduledALHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetFingerprintScheduledTNHTML(int vEmploymentID);
