@@ -223,6 +223,15 @@
           </div>
         </div>
       </div>
+      <div class="row" *ngIf="emailAttachments.length > 0">
+        <div class="col d-flex" *ngFor="let file of emailAttachments">
+          <div class="d-flex mb-3 me-5">
+            <span class="material-symbols-outlined">
+            attach_file
+            </span><a [href]= "documentPath + file" target="_blank">{{ file }}</a></div>
+        </div>
+      </div>
+
       <mat-divider></mat-divider>
       <div class="row bg-body mt-1 p-3">
         <div

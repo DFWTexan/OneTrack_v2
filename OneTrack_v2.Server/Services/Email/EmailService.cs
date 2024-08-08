@@ -103,6 +103,8 @@ namespace OneTrack_v2.Services
                             .Where(c => c.CommunicationId == vCommunicationID)
                             .FirstOrDefault();
 
+            var docAttPath = _config.GetSection("EmailAttachmentDocs:OneTrakDocumentPath").Get<string>() ?? null;
+
             var result = new ReturnResult();
             try
             {
@@ -203,7 +205,7 @@ namespace OneTrack_v2.Services
                     case 41: // "Background Release"
                         var attachments = GetAttachments("BackgroundReleaseDocs");
                         var appBackgroundReleaseHTML = _emailTemplateService.GetBackgroundReleaseHTML(vEmploymentID);
-                        result.ObjData = new { HTMLContent = appBackgroundReleaseHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "Ok To Sell", isTemplateFound = true, Attachments = attachments };
+                        result.ObjData = new { HTMLContent = appBackgroundReleaseHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "Ok To Sell", isTemplateFound = true, DocAttachmentPath = docAttPath + "Templates/",  Attachments = attachments };
                         break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">

@@ -59,6 +59,8 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   emailSubject: string = '';
   emailFile: string = '';
   emailBody: string = '';
+  emailAttachments: string[] = [];
+  documentPath: string = '';
 
   constructor(
     private errorMessageService: ErrorMessageService,
@@ -126,6 +128,8 @@ export class TmEmailComponent implements OnInit, OnDestroy {
           this.docSubType = rawHtmlContent.docSubType;
           this.subject = rawHtmlContent.subject;
           this.isTemplateFound = rawHtmlContent.isTemplateFound;
+          this.emailAttachments = rawHtmlContent.attachments || [];
+          this.documentPath = rawHtmlContent.docAttachmentPath || '';
 
           if (
             rawHtmlContent.docSubType === '{MESSAGE}' ||
