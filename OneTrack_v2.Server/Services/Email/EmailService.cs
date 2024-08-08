@@ -221,6 +221,10 @@ namespace OneTrack_v2.Services
                         var appClearanceLetterHTML = _emailTemplateService.GetClearenceLetterHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appClearanceLetterHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "PROFILE CLEARANCE LETTER", isTemplateFound = true };
                         break;
+                    case 47: // "Life PLS Plus-IL"
+                        var appLifePLsPlusILHTML = _emailTemplateService.GetLifePLsPlusILHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appLifePLsPlusILHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION LIFE LICENSE TRAINING IL", isTemplateFound = true };
+                        break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
                                                 <span class=""material-symbols-outlined"">unknown_document</span>
