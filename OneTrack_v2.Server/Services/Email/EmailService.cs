@@ -217,6 +217,10 @@ namespace OneTrack_v2.Services
                         var appExamScheduledCreditHTML = _emailTemplateService.GetExamScheduledCreditHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appExamScheduledCreditHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION EXAM SCHEDULED CONFIRMATION-CREDIT", isTemplateFound = true };
                         break;
+                    case 46: // "Clearance Letter"
+                        var appClearanceLetterHTML = _emailTemplateService.GetClearenceLetterHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appClearanceLetterHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "PROFILE CLEARANCE LETTER", isTemplateFound = true };
+                        break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
                                                 <span class=""material-symbols-outlined"">unknown_document</span>
