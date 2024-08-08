@@ -4,6 +4,7 @@ using DataModel.Response;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using OneTrack_v2.DbData;
 using OneTrack_v2.DbData.Models;
 using OneTrak_v2.DataModel;
@@ -236,6 +237,14 @@ namespace OneTrack_v2.Services
                     case 50: // "Notary Missing"
                         var appNotaryMissingHTML = _emailTemplateService.GetNotoryMissingHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appNotaryMissingHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION NOTARY MISSING", isTemplateFound = true };
+                        break;
+                    case 51: // "Notary Missing TN"
+                        var appNotaryMissingTNHTML = _emailTemplateService.GetNotoryMissingTnHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appNotaryMissingTNHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION NOTARY MISSING TN", isTemplateFound = true };
+                        break;
+                    case 52: // "Application Required-HI"
+                        var appApplicationRequiredHIHTML = _emailTemplateService.GetApplicationRequiredHIHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appApplicationRequiredHIHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION REQUIRED HI", isTemplateFound = true };
                         break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">

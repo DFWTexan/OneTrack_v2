@@ -30,8 +30,8 @@
         public Tuple<string, string, string, string> GetChildSupportHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetCitizenDocumentHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetNotoryMissingHTML(int vEmploymentID);
-        //public Tuple<string, string, string, string> GetNotoryMissingTnHTML(int vEmploymentID);
-        //public Tuple<string, string, string, string> GetApplicationRequiredHIHTML(int vEmploymentID);
+        public Tuple<string, string, string, string> GetNotoryMissingTnHTML(int vEmploymentID);
+        public Tuple<string, string, string, string> GetApplicationRequiredHIHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetApplicationRequiredTNHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetFingerprintRequiredAZHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetFingerprintRequiredLAHTML(int vEmploymentID);
