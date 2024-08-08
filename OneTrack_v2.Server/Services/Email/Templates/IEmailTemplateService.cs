@@ -24,7 +24,7 @@
         public Tuple<string, string, string, string> GetOkToSELLHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetBackgroundReleaseHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetBackgroundDisclosureLinkHTML(int vEmploymentID);
-        //public Tuple<string, string, string, string> GetExamScheduledCreditHTML(int vEmploymentID);
+        public Tuple<string, string, string, string> GetExamScheduledCreditHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetClearenceLetterHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetLifePLsPlusILHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetChildSupportHTML(int vEmploymentID);

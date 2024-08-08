@@ -213,6 +213,10 @@ namespace OneTrack_v2.Services
                         var appBackgroundDisclosureLinkHTML = _emailTemplateService.GetBackgroundDisclosureLinkHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appBackgroundDisclosureLinkHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION BACKGROUND DISCLOSURE LINK", isTemplateFound = true, DocAttachmentPath = docAttPath + "Templates/", Attachments = _attachments };
                         break;
+                    case 45: // "Exam Scheduled-CREDIT"
+                        var appExamScheduledCreditHTML = _emailTemplateService.GetExamScheduledCreditHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appExamScheduledCreditHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION EXAM SCHEDULED CONFIRMATION-CREDIT", isTemplateFound = true };
+                        break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
                                                 <span class=""material-symbols-outlined"">unknown_document</span>
