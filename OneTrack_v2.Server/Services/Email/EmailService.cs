@@ -258,6 +258,10 @@ namespace OneTrack_v2.Services
                         var appFingerprintRequiredLAHTML = _emailTemplateService.GetFingerprintRequiredLAHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appFingerprintRequiredLAHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION FINGERPRINT REQUIRED_LA", isTemplateFound = true };
                         break;
+                    case 56: // "Fingerprint Required-Credit"
+                        var appFingerprintRequiredCreditHTML = _emailTemplateService.GetFingerprintRequiredCreditHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appFingerprintRequiredCreditHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION FINGERPRINT REQUIRED", isTemplateFound = true };
+                        break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
                                                 <span class=""material-symbols-outlined"">unknown_document</span>
