@@ -28,7 +28,7 @@
         public Tuple<string, string, string, string> GetClearenceLetterHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetLifePLsPlusILHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetChildSupportHTML(int vEmploymentID);
-        //public Tuple<string, string, string, string> GetCitizenDocumentHTML(int vEmploymentID);
+        public Tuple<string, string, string, string> GetCitizenDocumentHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetNotoryMissingHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetNotoryMissingTnHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetApplicationRequiredHIHTML(int vEmploymentID);
