@@ -246,6 +246,14 @@ namespace OneTrack_v2.Services
                         var appApplicationRequiredHIHTML = _emailTemplateService.GetApplicationRequiredHIHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appApplicationRequiredHIHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION REQUIRED HI", isTemplateFound = true };
                         break;
+                    case 53: // "Application Required-TN"
+                        var appApplicationRequiredTnHTML = _emailTemplateService.GetApplicationRequiredTNHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appApplicationRequiredTnHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION REQUIRED TN", isTemplateFound = true };
+                        break;
+                    case 54: // "Fingerprint Required-AZ"
+                        var appFingerprintRequiredAZHTML = _emailTemplateService.GetFingerprintRequiredAZHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appFingerprintRequiredAZHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION FINGERPRINT REQUIRED_AZ", isTemplateFound = true };
+                        break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
                                                 <span class=""material-symbols-outlined"">unknown_document</span>
