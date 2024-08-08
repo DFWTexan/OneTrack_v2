@@ -201,8 +201,9 @@ namespace OneTrack_v2.Services
                         result.ObjData = new { Header = proHTML.Item1.ToString(), Footer = proHTML.Item2.ToString(), DocSubType = comms.DocSubType ?? null, Subject = comms.CommunicationName, isTemplateFound = true };
                         break;
                     case 41: // "Background Release"
+                        var attachments = GetAttachments("BackgroundReleaseDocs");
                         var appBackgroundReleaseHTML = _emailTemplateService.GetBackgroundReleaseHTML(vEmploymentID);
-                        result.ObjData = new { HTMLContent = appBackgroundReleaseHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "Ok To Sell", isTemplateFound = true };
+                        result.ObjData = new { HTMLContent = appBackgroundReleaseHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "Ok To Sell", isTemplateFound = true, Attachments = attachments };
                         break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
@@ -1176,6 +1177,19 @@ namespace OneTrack_v2.Services
                 }
             }
 
+        }
+        protected List<string> GetAttachments(string vEmailTemplate)
+        {
+            switch (vEmailTemplate)
+            {
+                case "BackgroundReleaseDocs":
+                    return _config.GetSection("EmailAttachmentDocs:BackgroundReleaseDocs").Get<List<string>>() ?? new List<string>();
+                case "BackgroundReleaseDocs2":
+                    break;
+                default:
+                    break;
+            }
+            return new List<string>();
         }
     }
 }
