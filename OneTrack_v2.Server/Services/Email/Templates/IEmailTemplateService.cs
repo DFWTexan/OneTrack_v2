@@ -42,7 +42,7 @@
         public Tuple<string, string, string, string> GetFingerprintScheduledPAHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetComplianceCertificateHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetComplianceCertificateEndHTML(int vEmploymentID);
-        //public Tuple<string, string, string, string> GetLifePlsILHTML(int vEmploymentID);
+        public Tuple<string, string, string, string> GetLifePlsILHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetFingerprintRequiredUTHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetADBankerRegistrationILHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetExamScheduledPAHTML(int vEmploymentID);
