@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualBasic;
 using OneTrack_v2.DbData;
 using OneTrak_v2.Services.Model;
@@ -8635,6 +8636,168 @@ namespace OneTrak_v2.Server.Services.Email.Templates
             return new Tuple<string, string, string, string>(strHTML, string.Empty, string.Empty, string.Empty);
         }
 
+        public Tuple<string, string, string, string> GetNameChangeILHTML(int vEmploymentID)
+        {
+            string strHTML = string.Empty;
+            try
+            {
+                var nameChangeInfoInfo = GetNameChangeInfo(vEmploymentID);
+
+                string strTMName = nameChangeInfoInfo.TMName ?? "";
+                string strTMNumber = nameChangeInfoInfo.TMNumber ?? "";
+                string strTMTitle = nameChangeInfoInfo.TMTitle ?? "";
+                string strLicenseTechName = nameChangeInfoInfo.LicTechName ?? "";
+                string strLicenseTechTitle = nameChangeInfoInfo.LicTechTitle ?? "";
+                string strLicenseTechPhone = nameChangeInfoInfo.LicTechPhone ?? "";
+                string strNameOld = nameChangeInfoInfo.NameOld ?? "";
+                string strNameNew = nameChangeInfoInfo.NameNew ?? "";
+
+                strHTML = strHTML + @"<html> ";
+                strHTML = strHTML + @"<table style = ""width: 800px;""> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td style = ""text-align: left; background-color: #F69200; padding: 5px;""> <span style = ""font-family: Arial; color: #FFFFFF; font-size: 16pt; font-weight: bold; font-style: normal; text-decoration: none;"">OneMain Insurance Licensing Department</span></td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" > ";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"">To: </span> ";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"">&nbsp;&nbsp;&nbsp;</span> ";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"">" + strTMName + " - " + strTMNumber + " - " + strTMTitle + " </span> ";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td>&nbsp;</td> ";
+                strHTML = strHTML + @"<td>&nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #FF0000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"" >ACTION REQUIRED</span>";
+                strHTML = strHTML + @" </ td > ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none; background-color: #FFFF00;"" >Please </span>";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: underline; background-color: #FFFF00;"" >REPLY</span>";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none; background-color: #FFFF00;"" > to this email to expedite handling.</span>";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" > ";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"">Our records show your name changed from </span> ";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: underline; background-color: #FFFF00;"" >" + strNameOld + "</span> ";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;""> to </span> ";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: underline; background-color: #FFFF00;"" >" + strNameNew + ". </span> ";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td>&nbsp;</td> ";
+                strHTML = strHTML + @"<td>&nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >Please do the following to change your name with the state for your license:</span>";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >1)  Print the attached letter, check it for accuracy and sign it.</span>";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >2)  Email the letter along with one of the choices of proof of name change to </span>";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span  ><a href=""DOI.Licensing@illinois.gov"" style = ""font-family: Arial; color: #0000FF; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: underline;"">DOI.Licensing@illinois.gov </a> </span>";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: underline; background-color: #FFFF00;"" >Please copy me on this email</span>";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" > so I know to follow up with the state </span>";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" >";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: 400; font-style: normal; text-decoration: none;"" >and print a license showing the new name.</span>";
+                strHTML = strHTML + @"</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td><span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"" >Thank You,</span></td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td><img alt = """" src = ""pictures/OneMainSolutionsHorizontal.jpg"" width = ""100""/></td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td>&nbsp;</td> ";
+                strHTML = strHTML + @"<td>&nbsp;</td> ";
+                strHTML = strHTML + @"<td>&nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" > ";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"" >" + strLicenseTechName + " - " + strLicenseTechTitle + " - " + strLicenseTechPhone + " </span></td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"</table> ";
+                strHTML = strHTML + @"</html> ";
+            }
+            catch (Exception ex)
+            {
+                return new Tuple<string, string, string, string>(string.Empty, string.Empty, string.Empty, ex.Message);
+            }
+
+            return new Tuple<string, string, string, string>(strHTML, string.Empty, string.Empty, string.Empty);
+        }
+
 
         #region "Get Local Data"
         protected ManagerInfo GetManagerInfo(int vEmploymentID)
@@ -8864,6 +9027,75 @@ namespace OneTrak_v2.Server.Services.Email.Templates
             queryResult.licenseEffectiveDates = effective;
 
             return queryResult ?? null;
+        }
+        protected NameChangeInfo GetNameChangeInfo(int vEmploymentID)
+        {
+                var sql = @"SELECT TOP 1 
+                                X.EmployeeID
+                                , m.EmploymentID
+                                , e.FirstName + ' ' + e.LastName AS TMName
+                                , e.GEID AS TMNumber
+                                , j.JobTitle AS TMTitle
+                                , m.Email AS TMEmail
+                                , lt.[FirstName] + ' ' + lt.[LastName] AS LicTechName
+                                , [LicenseTechPhone] AS LicTechPhone
+                                , 'LICENSING SPEC' AS LicTechTitle
+                                , ISNULL(FirstName_Old, e.FirstName) + ' ' + ISNULL(MiddleName_Old
+                                , e.MiddleName)  + ' ' + ISNULL(LastName_Old, e.LastName) AS NameOld
+                                , ISNULL(e.FirstName, '') + ' ' + ISNULL(e.MiddleName, '')  + ' ' + ISNULL(e.LastName, '') AS NameNew
+                                , ChangeDate
+                            FROM dbo.Employee e 
+                            INNER JOIN dbo.Employment m ON e.EmployeeID = m.EmployeeID 
+                                AND m.EmploymentID = @EmploymentID
+                            INNER JOIN [dbo].[EmploymentJobTitle] ej ON m.EmploymentID = ej.EmploymentID 
+                                AND ej.[IsCurrent] = 1
+                            INNER JOIN [dbo].[JobTitles] j ON ej.JobTitleID = j.JobTitleID
+                            INNER JOIN TransferHistory th ON m.EmploymentID = th.EmploymentID 
+                                AND th.IsCurrent = 1
+                            INNER JOIN StateProvince s ON th.WorkStateAbv = s.StateProvinceAbv 
+                            INNER JOIN [dbo].[LicenseTech] lt ON s.[LicenseTechID] = lt.LicenseTechID 
+                            INNER JOIN
+                            (SELECT Convert(Int,EmployeeID) as EmployeeID, 
+	                            FirstName as FirstName_Old,
+	                            MiddleName as MiddleName_Old,
+	                            LastName as LastName_Old,
+	                            Convert(varchar,ModifyDate,110) as ChangeDate
+                            FROM
+                                (SELECT 
+                                    A.BaseTableKeyValue AS EmployeeID
+                                    , A.AuditFieldName
+                                    , A.AuditValueBefore
+                                    , A.ModifyDate 
+		                         FROM dbo.AuditLog A
+		                         INNER JOIN dbo.Employment m ON a.BaseTableKeyValue = m.EmployeeID 
+                                    AND m.EmploymentID = @EmploymentID
+		                         INNER JOIN
+				                    (SELECT max(ModifyDate) as ModifyDate, AuditFieldName, BaseTableName, BaseTableKeyValue, AuditAction
+				                     FROM dbo.AuditLog WHERE BaseTableName ='Employee' AND AuditAction='Update'
+				                        AND AuditFieldName in('FirstName','MiddleName','LastName')
+				                     GROUP BY AuditFieldName, BaseTableName, BaseTableKeyValue, AuditFieldName, AuditAction) B
+			                            ON A.BaseTableName= B.BaseTableName AND A.AuditAction=B.AuditAction
+			                            AND A.BaseTableKeyValue=B.BaseTableKeyValue
+			                            AND A.ModifyDate = B.ModifyDate
+			                            AND A.AuditFieldName = B.AuditFieldName)P
+                            PIVOT
+                            (MAX(AuditValueBefore)
+                            FOR AuditFieldName IN ([FirstName],[MiddleName],[LastName])) as pvt) X
+                            ON m.EmployeeID = X.EmployeeID
+
+                            ORDER BY ChangeDate DESC  ";
+
+                var parameters = new[]
+                            {
+                                new SqlParameter("@EmploymentID", vEmploymentID)
+                            };
+
+                var queryResults = _db.NameChangeInfo
+                                .FromSqlRaw(sql, parameters)
+                                .AsNoTracking()
+                                .FirstOrDefault();
+
+            return queryResults;
         }
         #endregion
 

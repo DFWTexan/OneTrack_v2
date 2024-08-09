@@ -308,6 +308,10 @@ namespace OneTrack_v2.Services
                         var appAddressChangeHTML = _emailTemplateService.GetAddressChangeHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appAddressChangeHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "PROFILE ADDRESS CHANGE", isTemplateFound = true };
                         break;
+                    case 68: // "Name Change-IL"
+                        var appNameChangeILHTML = _emailTemplateService.GetNameChangeILHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appNameChangeILHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "PROFILE NAME CHANGE_IL", isTemplateFound = true };
+                        break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
                                                 <span class=""material-symbols-outlined"">unknown_document</span>

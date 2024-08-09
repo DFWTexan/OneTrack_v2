@@ -2,6 +2,7 @@
 using OneTrack_v2.DbData.Models;
 using OneTrack_v2.DataModel;
 using OneTrak_v2.DataModel;
+using OneTrak_v2.Services.Model;
 
 namespace OneTrack_v2.DbData
 {
@@ -155,6 +156,7 @@ namespace OneTrack_v2.DbData
         public virtual DbSet<OputEducationRule> OputEducationRules { get; set; }
         public virtual DbSet<OputStateProvince> OputStateProvince { get; set; }
         public virtual DbSet<OputWorkListDataItem> OputWorkListDataItems { get; set; }
+        public virtual DbSet<NameChangeInfo> NameChangeInfo { get; set; }
         #endregion
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -4036,6 +4038,7 @@ namespace OneTrack_v2.DbData
             modelBuilder.Entity<OputEducationRule>().ToSqlQuery("OputEducationRule").HasNoKey();
             modelBuilder.Entity<OputStateProvince>().ToSqlQuery("OputStateProvince").HasNoKey();
             modelBuilder.Entity<OputWorkListDataItem>().ToSqlQuery("OputWorkListDataItem").HasNoKey();
+            modelBuilder.Entity<NameChangeInfo>().ToSqlQuery("NameChangeInfo").HasNoKey();
             #endregion
 
             OnModelCreatingPartial(modelBuilder);
