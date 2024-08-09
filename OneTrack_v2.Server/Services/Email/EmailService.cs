@@ -274,6 +274,10 @@ namespace OneTrack_v2.Services
                         var appFingerprintScheduledNMHTML = _emailTemplateService.GetFingerprintScheduledNMHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appFingerprintScheduledNMHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION FINGERPRINT SCHEDULED_NM", isTemplateFound = true };
                         break;
+                    case 60: // "Fingerprint Scheduled-PA"
+                        var appFingerprintScheduledPAHTML = _emailTemplateService.GetFingerprintScheduledPAHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appFingerprintScheduledPAHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION FINGERPRINT SCHEDULED_PA", isTemplateFound = true };
+                        break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
                                                 <span class=""material-symbols-outlined"">unknown_document</span>
