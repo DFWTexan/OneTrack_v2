@@ -312,6 +312,10 @@ namespace OneTrack_v2.Services
                         var appNameChangeILHTML = _emailTemplateService.GetNameChangeILHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appNameChangeILHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "PROFILE NAME CHANGE_IL", isTemplateFound = true };
                         break;
+                    case 69: // "Fingerprint Scheduled-GA"
+                        var appFingerprintScheduledGAHTML = _emailTemplateService.GetFingerprintScheduledGAHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appFingerprintScheduledGAHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION FINGERPRINT SCHEDULED-GA", isTemplateFound = true };
+                        break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
                                                 <span class=""material-symbols-outlined"">unknown_document</span>

@@ -48,7 +48,7 @@
         public Tuple<string, string, string, string> GetExamScheduledPAHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetAddressChangeHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetNameChangeILHTML(int vEmploymentID);
-        //public Tuple<string, string, string, string> GetFingerprintScheduledGAHTML(int vEmploymentID);
+        public Tuple<string, string, string, string> GetFingerprintScheduledGAHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetNameChangeHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetNameChangeAzLaMiNmWvHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetNameChangeALHTML(int vEmploymentID);
