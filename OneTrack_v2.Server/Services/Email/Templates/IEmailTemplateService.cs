@@ -44,7 +44,7 @@
         public Tuple<string, string, string, string> GetComplianceCertificateEndHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetLifePlsILHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetFingerprintRequiredUTHTML(int vEmploymentID);
-        //public Tuple<string, string, string, string> GetADBankerRegistrationILHTML(int vEmploymentID);
+        public Tuple<string, string, string, string> GetADBankerRegistrationILHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetExamScheduledPAHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetAddressChangeHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetNameChangeILHTML(int vEmploymentID);
