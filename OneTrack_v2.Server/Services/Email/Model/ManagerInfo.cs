@@ -2,17 +2,17 @@
 {
     public class ManagerInfo
     {
-        public int H3MgrEmploymentID { get; set; }
+        public int? H3MgrEmploymentID { get; set; }
         public string? H3MgrName { get; set; }
         public string? H3MgrTitle { get; set; }
         public string? H3MgrEmail { get; set; }
 
-        public int H2MgrEmploymentID { get; set; }
+        public int? H2MgrEmploymentID { get; set; }
         public string? H2MgrName { get; set; }
         public string? H2MgrTitle { get; set; }
         public string? H2MgrEmail { get; set; }
 
-        public int MgrEmploymentID { get; set; }
+        public int? MgrEmploymentID { get; set; }
         public string? MgrName { get; set; }
         public string? MgrTitle { get; set; }
         public string? MgrEmail { get; set; }

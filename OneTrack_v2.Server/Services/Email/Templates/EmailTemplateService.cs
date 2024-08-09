@@ -146,9 +146,9 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                 emailFtrHTML = emailFtrHTML + @"</table> ";
                 emailFtrHTML = emailFtrHTML + @"</div></div>";
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return new Tuple<string, string, string, string>(string.Empty, string.Empty, string.Empty, string.Empty);
+                return new Tuple<string, string, string, string>(string.Empty, string.Empty, string.Empty, ex.ToString());
             }
 
             var hearderHTML = emailHdrHTML;
@@ -6943,25 +6943,25 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                           select new ManagerInfo
                           {
                               H3MgrEmploymentID = m3.EmploymentId,
-                              H3MgrName = e3.LastName + ", " + e3.FirstName,
-                              H3MgrTitle = j3.JobTitle1,
-                              H3MgrEmail = m3.Email,
+                              H3MgrName = (e3.LastName ?? "") + ", " + (e3.FirstName ?? ""),
+                              H3MgrTitle = j3.JobTitle1 ?? "",
+                              H3MgrEmail = m3.Email ?? "",
                               H2MgrEmploymentID = m2.EmploymentId,
-                              H2MgrName = e2.LastName + ", " + e2.FirstName,
-                              H2MgrTitle = j2.JobTitle1,
-                              H2MgrEmail = m2.Email,
+                              H2MgrName = (e2.LastName ?? "") + ", " + (e2.FirstName ?? ""),
+                              H2MgrTitle = j2.JobTitle1 ?? "",
+                              H2MgrEmail = m2.Email ?? "",
                               MgrEmploymentID = m1.EmploymentId,
-                              MgrName = e1.LastName + ", " + e1.FirstName,
-                              MgrTitle = j1.JobTitle1,
-                              MgrEmail = m1.Email,
-                              LicTechName = lt.LastName + ", " + lt.FirstName,
+                              MgrName = (e1.LastName ?? "") + ", " + (e1.FirstName ?? ""),
+                              MgrTitle = j1.JobTitle1 ?? "",
+                              MgrEmail = m1.Email ?? "",
+                              LicTechName = (lt.LastName ?? "") + ", " + (lt.FirstName ?? ""),
                               LicTechTitle = "LICENSING SPEC",
-                              LicTechEmail = lt.LicenseTechEmail,
-                              LicTechPhone = lt.LicenseTechPhone,
-                              TMName = e.LastName + ", " + e.FirstName,
+                              LicTechEmail = lt.LicenseTechEmail ?? "",
+                              LicTechPhone = lt.LicenseTechPhone ?? "",
+                              TMName = (e.LastName ?? "") + ", " + (e.FirstName ?? ""),
                               TMNumber = e.Geid,
-                              TMTitle = j.JobTitle1,
-                              TMEmail = m.Email
+                              TMTitle = j.JobTitle1 ?? "",
+                              TMEmail = m.Email ?? ""
                           }).FirstOrDefault();
 
             return result ?? new ManagerInfo();
