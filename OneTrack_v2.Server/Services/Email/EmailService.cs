@@ -283,6 +283,11 @@ namespace OneTrack_v2.Services
                         var appComplianceCertificateHTML = _emailTemplateService.GetComplianceCertificateHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appComplianceCertificateHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION CERTIFICATE OF COMPLIANCE", isTemplateFound = true, DocAttachmentPath = docAttPath + "Templates/", Attachments = _attachments };
                         break;
+                    case 62: // "Compliance Certificate-End"
+                        _attachments = GetAttachments("ComplianceCertificate-End");
+                        var appComplianceCertificateEndHTML = _emailTemplateService.GetComplianceCertificateEndHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appComplianceCertificateEndHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION CERTIFICATE OF COMPLIANCE FOR ENDORSEES", isTemplateFound = true, DocAttachmentPath = docAttPath + "Templates/", Attachments = _attachments };
+                        break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
                                                 <span class=""material-symbols-outlined"">unknown_document</span>
@@ -1266,6 +1271,8 @@ namespace OneTrack_v2.Services
                     return _config.GetSection("EmailAttachmentDocs:BackgroundDisclosureLink").Get<List<string>>() ?? new List<string>();
                 case "ComplianceCertificate":
                     return _config.GetSection("EmailAttachmentDocs:ComplianceCertificate").Get<List<string>>() ?? new List<string>();
+                case "ComplianceCertificate-End":
+                    return _config.GetSection("EmailAttachmentDocs:ComplianceCertificate-End").Get<List<string>>() ?? new List<string>();
                 default:
                     break;
             }
