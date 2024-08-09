@@ -292,6 +292,10 @@ namespace OneTrack_v2.Services
                         var appLifePLsILHTML = _emailTemplateService.GetLifePlsILHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appLifePLsILHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION LIFE LICENSE TRAINING IL", isTemplateFound = true };
                         break;
+                    case 64: // "Fingerprint Required-UT"
+                        var appFingerprintRequiredUTHTML = _emailTemplateService.GetFingerprintRequiredUTHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appFingerprintRequiredUTHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION FINGERPRINT REQUIRED_UT", isTemplateFound = true };
+                        break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
                                                 <span class=""material-symbols-outlined"">unknown_document</span>
