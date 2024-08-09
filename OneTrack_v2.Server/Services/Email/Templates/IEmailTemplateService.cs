@@ -40,7 +40,7 @@
         public Tuple<string, string, string, string> GetFingerprintScheduledTNHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetFingerprintScheduledNMHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetFingerprintScheduledPAHTML(int vEmploymentID);
-        //public Tuple<string, string, string, string> GetComplianceCertificateHTML(int vEmploymentID);
+        public Tuple<string, string, string, string> GetComplianceCertificateHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetComplianceCertificateEndHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetLifePlsILHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetFingerprintRequiredUTHTML(int vEmploymentID);
