@@ -304,6 +304,10 @@ namespace OneTrack_v2.Services
                         var appExamScheduledPAHTML = _emailTemplateService.GetExamScheduledPAHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appExamScheduledPAHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION EXAM SCHEDULED CONFIRMATION_PA", isTemplateFound = true };
                         break;
+                    case 67: // "Address Change"
+                        var appAddressChangeHTML = _emailTemplateService.GetAddressChangeHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appAddressChangeHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "PROFILE ADDRESS CHANGE", isTemplateFound = true };
+                        break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
                                                 <span class=""material-symbols-outlined"">unknown_document</span>
