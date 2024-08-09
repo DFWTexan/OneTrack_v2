@@ -324,6 +324,14 @@ namespace OneTrack_v2.Services
                         var appNameChangeAzLaMiNmWvHTML = _emailTemplateService.GetNameChangeAzLaMiNmWvHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appNameChangeAzLaMiNmWvHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "PROFILE NAME CHANGE(AZ, LA, MI, NM, WV)", isTemplateFound = true };
                         break;
+                    case 72: // "Name Change AL"
+                        var appNameChangeALHTML = _emailTemplateService.GetNameChangeALHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appNameChangeALHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "PROFILE NAME CHANGE AL", isTemplateFound = true };
+                        break;
+                    case 73: // "Expired Certificate-MD"
+                        var appExpiredCertificateMDHTML = _emailTemplateService.GetExpiredCertificateMDHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appExpiredCertificateMDHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION PRELICENSING CERTIFICATE EXPIRED_MD", isTemplateFound = true };
+                        break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
                                                 <span class=""material-symbols-outlined"">unknown_document</span>
