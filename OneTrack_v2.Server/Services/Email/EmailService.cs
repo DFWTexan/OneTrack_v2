@@ -348,6 +348,10 @@ namespace OneTrack_v2.Services
                         var appApplicationRequiredWIHTML = _emailTemplateService.GetApplicationRequiredWIHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appApplicationRequiredWIHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION PRELICENSING CERTIFICATE EXPIRED_TN", isTemplateFound = true };
                         break;
+                    case 79: // "Exam Scheduled-ND"
+                        var appExamScheduledNDHTML = _emailTemplateService.GetExamScheduledNDHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appExamScheduledNDHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION PRELICENSING CERTIFICATE EXPIRED_TN", isTemplateFound = true };
+                        break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
                                                 <span class=""material-symbols-outlined"">unknown_document</span>
