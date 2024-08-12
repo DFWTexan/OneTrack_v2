@@ -342,15 +342,19 @@ namespace OneTrack_v2.Services
                         break;
                     case 77: // "State Exam Exception"
                         var appStateExamExceptionHTML = _emailTemplateService.GetStateExamExceptionHTML(vEmploymentID);
-                        result.ObjData = new { HTMLContent = appStateExamExceptionHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION PRELICENSING CERTIFICATE EXPIRED_TN", isTemplateFound = true };
+                        result.ObjData = new { HTMLContent = appStateExamExceptionHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION STATE EXAM EXCEPTION", isTemplateFound = true };
                         break;
                     case 78: // "Application Required-WI"
                         var appApplicationRequiredWIHTML = _emailTemplateService.GetApplicationRequiredWIHTML(vEmploymentID);
-                        result.ObjData = new { HTMLContent = appApplicationRequiredWIHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION PRELICENSING CERTIFICATE EXPIRED_TN", isTemplateFound = true };
+                        result.ObjData = new { HTMLContent = appApplicationRequiredWIHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION REQUIRED_WI", isTemplateFound = true };
                         break;
                     case 79: // "Exam Scheduled-ND"
                         var appExamScheduledNDHTML = _emailTemplateService.GetExamScheduledNDHTML(vEmploymentID);
-                        result.ObjData = new { HTMLContent = appExamScheduledNDHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION PRELICENSING CERTIFICATE EXPIRED_TN", isTemplateFound = true };
+                        result.ObjData = new { HTMLContent = appExamScheduledNDHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION EXAM SCHEDULED CONFIRMATION_ND", isTemplateFound = true };
+                        break;
+                    case 80: // "Fingerprint Scheduled-WV"
+                        var appFingerprintScheduledWVHTML = _emailTemplateService.GetFingerprintScheduledWVHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appFingerprintScheduledWVHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION FINGERPRINT SCHEDULED_WV", isTemplateFound = true };
                         break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
