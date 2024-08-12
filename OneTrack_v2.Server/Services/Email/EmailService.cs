@@ -332,6 +332,18 @@ namespace OneTrack_v2.Services
                         var appExpiredCertificateMDHTML = _emailTemplateService.GetExpiredCertificateMDHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appExpiredCertificateMDHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION PRELICENSING CERTIFICATE EXPIRED_MD", isTemplateFound = true };
                         break;
+                    case 74: // "Expired Certificate-AL"
+                        var appExpiredCertificateALHTML = _emailTemplateService.GetExpiredCertificateALHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appExpiredCertificateALHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION PRELICENSING CERTIFICATE EXPIRED_AL", isTemplateFound = true };
+                        break;
+                    case 75: // "Expired Certificate-TN"
+                        var appExpiredCertificateTNHTML = _emailTemplateService.GetExpiredCertificateTNHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appExpiredCertificateTNHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION PRELICENSING CERTIFICATE EXPIRED_TN", isTemplateFound = true };
+                        break;
+                    case 77: // "State Exam Exception"
+                        var appStateExamExceptionHTML = _emailTemplateService.GetStateExamExceptionHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appStateExamExceptionHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION PRELICENSING CERTIFICATE EXPIRED_TN", isTemplateFound = true };
+                        break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
                                                 <span class=""material-symbols-outlined"">unknown_document</span>

@@ -53,10 +53,10 @@
         public Tuple<string, string, string, string> GetNameChangeAzLaMiNmWvHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetNameChangeALHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetExpiredCertificateMDHTML(int vEmploymentID);
-        //public Tuple<string, string, string, string> GetExpiredCertificateALHTML(int vEmploymentID);
-        //public Tuple<string, string, string, string> GetExpiredCertificateTNHTML(int vEmploymentID);
-        //public Tuple<string, string, string, string> GetExamFXCourseRenewalHTML(int vEmploymentID);
-        //public Tuple<string, string, string, string> GetStateExamExceptionHTML(int vEmploymentID);
+        public Tuple<string, string, string, string> GetExpiredCertificateALHTML(int vEmploymentID);
+        public Tuple<string, string, string, string> GetExpiredCertificateTNHTML(int vEmploymentID);
+        public Tuple<string, string, string, string> GetExamFXCourseRenewalHTML(int vEmploymentID);
+        public Tuple<string, string, string, string> GetStateExamExceptionHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetApplicationRequiredWIHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetExamScheduledNDHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetFingerprintScheduledWVHTML(int vEmploymentID);
