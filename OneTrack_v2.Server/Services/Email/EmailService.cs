@@ -394,6 +394,11 @@ namespace OneTrack_v2.Services
                         var appADBankerRegistrationHealthHTML = _emailTemplateService.GetADBankerRegistrationHealthHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appADBankerRegistrationHealthHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION AD BANKER REGISTRATION CONFIRMATION_HEALTH", isTemplateFound = true, DocAttachmentPath = docAttPath + "Templates/", Attachments = _attachments };
                         break;
+                    case 125: // "AD BANKER REGISTRATION-LIFE"
+                        _attachments = GetAttachments("ADBankerRegistration-Life");
+                        var appADBankerRegistrationLifeHTML = _emailTemplateService.GetADBankerRegistrationHealthHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appADBankerRegistrationLifeHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION AD BANKER REGISTRATION CONFIRMATION_LIFE", isTemplateFound = true, DocAttachmentPath = docAttPath + "Templates/", Attachments = _attachments };
+                        break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
                                                 <span class=""material-symbols-outlined"">unknown_document</span>
@@ -1383,6 +1388,8 @@ namespace OneTrack_v2.Services
                     return _config.GetSection("EmailAttachmentDocs:ADBankerRegistration-FL").Get<List<string>>() ?? new List<string>();
                 case "ADBankerRegistration-Health":
                     return _config.GetSection("EmailAttachmentDocs:ADBankerRegistration-Health").Get<List<string>>() ?? new List<string>();
+                case "ADBankerRegistration-Life":
+                    return _config.GetSection("EmailAttachmentDocs:ADBankerRegistration-Life").Get<List<string>>() ?? new List<string>();
                 default:
                     break;
             }
