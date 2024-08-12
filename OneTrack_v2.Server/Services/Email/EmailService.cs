@@ -360,6 +360,10 @@ namespace OneTrack_v2.Services
                         var appCreditMembershipSalesTrainingHTML = _emailTemplateService.GetCreditMembershipSalesTrainingHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appCreditMembershipSalesTrainingHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION COMPANY TRAINING", isTemplateFound = true };
                         break;
+                    case 114: // "Non-Credit Training"
+                        var appNonCreditTrainingHTML = _emailTemplateService.GetNonCreditTrainingHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appNonCreditTrainingHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION COMPANY TRAINING", isTemplateFound = true };
+                        break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
                                                 <span class=""material-symbols-outlined"">unknown_document</span>
