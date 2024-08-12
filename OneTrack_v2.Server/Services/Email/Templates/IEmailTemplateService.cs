@@ -67,7 +67,7 @@
         //public Tuple<string, string, string, string> GetExamFXRegistrationLifeAndHealthHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetPLSLicensingIncentiveExpiredHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetLifeHealthPLSHTML(int vEmploymentID);
-        //public Tuple<string, string, string, string> GetLifeHealthPLSPlusHTML(int vEmploymentID);
+        public Tuple<string, string, string, string> GetLifeHealthPLSPlusHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetBackgroundDisclosureLinkCAHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetPLSSrAmDLSIncentiveExpiredHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetADBankerRegistrationHealthHTML(int vEmploymentID);

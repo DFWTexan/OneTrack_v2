@@ -377,6 +377,10 @@ namespace OneTrack_v2.Services
                         var appLifeandHealthPLSHTML = _emailTemplateService.GetLifeHealthPLSHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appLifeandHealthPLSHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION PLS LICENSING INCENTIVE EXPIRED", isTemplateFound = true };
                         break;
+                    case 120: // "Life and Health PLS Plus"
+                        var appLifeandHealthPLsPlusHTML = _emailTemplateService.GetLifeHealthPLSPlusHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appLifeandHealthPLsPlusHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION LIFE AND HEALTH LICENSE TRAINING", isTemplateFound = true };
+                        break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
                                                 <span class=""material-symbols-outlined"">unknown_document</span>
