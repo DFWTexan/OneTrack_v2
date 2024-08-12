@@ -382,8 +382,12 @@ namespace OneTrack_v2.Services
                         result.ObjData = new { HTMLContent = appLifeandHealthPLsPlusHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION LIFE AND HEALTH LICENSE TRAINING", isTemplateFound = true };
                         break;
                     case 122: // "Background Disclosure Link-CA"
-                        var appBackgroundDisclosureLinkCAHTML = _emailTemplateService.GetBackgroundDisclosureLinkCAHTML(vEmploymentID);
-                        result.ObjData = new { HTMLContent = appBackgroundDisclosureLinkCAHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION BACKGROUND DISCLOSURE LINK - CA ", isTemplateFound = true };
+                        var appBackgroundDisclosureLinkCAHTML = _emailTemplateService.GetLifeHealthPLSPlusHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appBackgroundDisclosureLinkCAHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION BACKGROUND DISCLOSURE LINK - CA", isTemplateFound = true };
+                        break;
+                    case 123: // "PLS SR_AM_DLS INCENTIVE EXPIRED"
+                        var appPLSSR_AM_DLSIncentiveExpiredHTML = _emailTemplateService.GetPLSSrAmDLSIncentiveExpiredHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appPLSSR_AM_DLSIncentiveExpiredHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION INCENTIVE EXPIRED", isTemplateFound = true };
                         break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
