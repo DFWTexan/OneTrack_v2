@@ -60,7 +60,7 @@
         public Tuple<string, string, string, string> GetApplicationRequiredWIHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetExamScheduledNDHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetFingerprintScheduledWVHTML(int vEmploymentID);
-        //public Tuple<string, string, string, string> GetCreditMembershipSalesTrainingHTML(int vEmploymentID);
+        public Tuple<string, string, string, string> GetCreditMembershipSalesTrainingHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetNonCreditTrainingHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetADBankerRegistrationFLHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GetExamFXRegistrationHealthHTML(int vEmploymentID);

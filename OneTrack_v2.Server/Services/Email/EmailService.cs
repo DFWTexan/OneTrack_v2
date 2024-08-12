@@ -356,6 +356,10 @@ namespace OneTrack_v2.Services
                         var appFingerprintScheduledWVHTML = _emailTemplateService.GetFingerprintScheduledWVHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appFingerprintScheduledWVHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION FINGERPRINT SCHEDULED_WV", isTemplateFound = true };
                         break;
+                    case 113: // "Credit Membership Sales Training"
+                        var appCreditMembershipSalesTrainingHTML = _emailTemplateService.GetCreditMembershipSalesTrainingHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appCreditMembershipSalesTrainingHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION COMPANY TRAINING", isTemplateFound = true };
+                        break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
                                                 <span class=""material-symbols-outlined"">unknown_document</span>
