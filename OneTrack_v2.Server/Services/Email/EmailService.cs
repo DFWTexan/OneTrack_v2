@@ -364,6 +364,11 @@ namespace OneTrack_v2.Services
                         var appNonCreditTrainingHTML = _emailTemplateService.GetNonCreditTrainingHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appNonCreditTrainingHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION COMPANY TRAINING", isTemplateFound = true };
                         break;
+                    case 115: // "AD Banker Registration-FL"
+                        _attachments = GetAttachments("ADBankerRegistration-FL");
+                        var appADBankerRegistrationFLHTML = _emailTemplateService.GetADBankerRegistrationFLHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appADBankerRegistrationFLHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION AD BANKER REGISTRATION CONFIRMATION_LIFE_FL", isTemplateFound = true, DocAttachmentPath = docAttPath + "Templates/", Attachments = _attachments };
+                        break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
                                                 <span class=""material-symbols-outlined"">unknown_document</span>
@@ -1349,6 +1354,8 @@ namespace OneTrack_v2.Services
                     return _config.GetSection("EmailAttachmentDocs:ComplianceCertificate").Get<List<string>>() ?? new List<string>();
                 case "ComplianceCertificate-End":
                     return _config.GetSection("EmailAttachmentDocs:ComplianceCertificate-End").Get<List<string>>() ?? new List<string>();
+                case "ADBankerRegistration-FL":
+                    return _config.GetSection("EmailAttachmentDocs:ADBankerRegistration-FL").Get<List<string>>() ?? new List<string>();
                 default:
                     break;
             }
