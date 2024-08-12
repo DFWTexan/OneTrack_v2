@@ -396,8 +396,13 @@ namespace OneTrack_v2.Services
                         break;
                     case 125: // "AD BANKER REGISTRATION-LIFE"
                         _attachments = GetAttachments("ADBankerRegistration-Life");
-                        var appADBankerRegistrationLifeHTML = _emailTemplateService.GetADBankerRegistrationHealthHTML(vEmploymentID);
+                        var appADBankerRegistrationLifeHTML = _emailTemplateService.GetADBankerRegistrationLifeHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appADBankerRegistrationLifeHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION AD BANKER REGISTRATION CONFIRMATION_LIFE", isTemplateFound = true, DocAttachmentPath = docAttPath + "Templates/", Attachments = _attachments };
+                        break;
+                    case 126: // "AD BANKER REGISTRATION-LIFE AND HEALTH"
+                        _attachments = GetAttachments("ADBankerRegistration-LifeHealth");
+                        var appADBankerRegistrationLifeHealthHTML = _emailTemplateService.GetADBankerRegistrationLifeHealthHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appADBankerRegistrationLifeHealthHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "AD BANKER REGISTRATION CONFIRMATION_LIFE AND HEALTH", isTemplateFound = true, DocAttachmentPath = docAttPath + "Templates/", Attachments = _attachments };
                         break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
@@ -1390,6 +1395,8 @@ namespace OneTrack_v2.Services
                     return _config.GetSection("EmailAttachmentDocs:ADBankerRegistration-Health").Get<List<string>>() ?? new List<string>();
                 case "ADBankerRegistration-Life":
                     return _config.GetSection("EmailAttachmentDocs:ADBankerRegistration-Life").Get<List<string>>() ?? new List<string>();
+                case "ADBankerRegistration-LifeHealth":
+                    return _config.GetSection("EmailAttachmentDocs:ADBankerRegistration-LifeHealth").Get<List<string>>() ?? new List<string>();
                 default:
                     break;
             }
