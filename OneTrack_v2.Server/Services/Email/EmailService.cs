@@ -381,6 +381,10 @@ namespace OneTrack_v2.Services
                         var appLifeandHealthPLsPlusHTML = _emailTemplateService.GetLifeHealthPLSPlusHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appLifeandHealthPLsPlusHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION LIFE AND HEALTH LICENSE TRAINING", isTemplateFound = true };
                         break;
+                    case 122: // "Background Disclosure Link-CA"
+                        var appBackgroundDisclosureLinkCAHTML = _emailTemplateService.GetBackgroundDisclosureLinkCAHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appBackgroundDisclosureLinkCAHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION BACKGROUND DISCLOSURE LINK - CA ", isTemplateFound = true };
+                        break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
                                                 <span class=""material-symbols-outlined"">unknown_document</span>
