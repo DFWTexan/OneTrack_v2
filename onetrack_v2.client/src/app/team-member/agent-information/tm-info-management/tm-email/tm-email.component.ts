@@ -129,7 +129,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
           this.subject = rawHtmlContent.subject;
           this.isTemplateFound = rawHtmlContent.isTemplateFound;
           this.emailAttachments = rawHtmlContent.attachments || [];
-          this.documentPath = rawHtmlContent.docAttachmentPath || '';
+          this.documentPath = rawHtmlContent.docAttachmentPath + 'Templates/' || '';
 
           if (
             rawHtmlContent.docSubType === '{MESSAGE}' ||
