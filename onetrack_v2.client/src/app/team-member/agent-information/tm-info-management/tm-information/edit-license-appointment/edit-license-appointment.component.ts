@@ -88,6 +88,7 @@ export class EditLicenseAppointmentComponent
                         )
                         .pipe(
                           tap((response) => {
+                            this.companyAbbreviations = response;
                             this.companyIDSubject.next();
                           })
                         );
