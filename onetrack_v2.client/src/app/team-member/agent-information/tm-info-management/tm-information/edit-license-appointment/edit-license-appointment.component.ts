@@ -72,15 +72,13 @@ export class EditLicenseAppointmentComponent
         .pipe(
           switchMap((mode: string) => {
             if (mode === 'EDIT') {
-console.log('<   === === === === === === === === === ===   >');
-console.log('EMFTEST (modeLicenseApptChanged: EDIT)');
               // MODE: EDIT
               return this.agentDataService.licenseAppointmentChanged.pipe(
                 switchMap((licenseAppointment: any) => {
                   this.licenseAppointment = licenseAppointment;
                   this.employeeAppointmentID =
                     licenseAppointment.employeeAppointmentID;
-console.log('EMFTEST (licenseAppointmentChanged: Appt...) - licenseAppointment => \n', licenseAppointment);
+
                   return this.agentDataService.agentLicApptLicenseIDChanged.pipe(
                     switchMap((agentLicApptLicenseID: any) => {
                       return this.dropdownDataService
@@ -90,8 +88,6 @@ console.log('EMFTEST (licenseAppointmentChanged: Appt...) - licenseAppointment =
                         )
                         .pipe(
                           tap((response) => {
-console.log('EMFTEST (fetchDropdownNumericData: GetCoAbvByLicenseID) - response =>\n', response);
-                            this.companyAbbreviations = response;
                             this.companyIDSubject.next();
                           })
                         );
@@ -157,13 +153,26 @@ console.log('EMFTEST (fetchDropdownNumericData: GetCoAbvByLicenseID) - response 
         ? formatDate(this.licenseAppointment.carrierDate, 'yyyy-MM-dd', 'en-US')
         : null,
       appointmentEffectiveDate: this.licenseAppointment.appointmentEffectiveDate
-        ? formatDate(this.licenseAppointment.appointmentEffectiveDate, 'yyyy-MM-dd', 'en-US')
+        ? formatDate(
+            this.licenseAppointment.appointmentEffectiveDate,
+            'yyyy-MM-dd',
+            'en-US'
+          )
         : null,
       appointmentExpireDate: this.licenseAppointment.appointmentExpireDate
-        ? formatDate(this.licenseAppointment.appointmentExpireDate, 'yyyy-MM-dd', 'en-US')
+        ? formatDate(
+            this.licenseAppointment.appointmentExpireDate,
+            'yyyy-MM-dd',
+            'en-US'
+          )
         : null,
-      appointmentTerminationDate: this.licenseAppointment.appointmentTerminationDate
-        ? formatDate(this.licenseAppointment.appointmentTerminationDate, 'yyyy-MM-dd', 'en-US')
+      appointmentTerminationDate: this.licenseAppointment
+        .appointmentTerminationDate
+        ? formatDate(
+            this.licenseAppointment.appointmentTerminationDate,
+            'yyyy-MM-dd',
+            'en-US'
+          )
         : null,
     });
     // Force update the form control to trigger change detection
