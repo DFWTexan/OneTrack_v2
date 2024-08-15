@@ -54,14 +54,17 @@ export class CompanyRequirementsComponent implements OnInit, OnDestroy {
           .fetchCompanyRequirements(value, this.selectedResState)
           .subscribe({
             next: (response) => {
-            this.companyRequirements = response;
-            this.loading = false;
-          },
-          error: (error) => {
-            if (error.error && error.error.errMessage) {
-              this.errorMessageService.setErrorMessage(error.error.errMessage);
-            }
-          }})
+              this.companyRequirements = response;
+              this.loading = false;
+            },
+            error: (error) => {
+              if (error.error && error.error.errMessage) {
+                this.errorMessageService.setErrorMessage(
+                  error.error.errMessage
+                );
+              }
+            },
+          })
       );
     }
   }
@@ -78,9 +81,16 @@ export class CompanyRequirementsComponent implements OnInit, OnDestroy {
       this.loading = false;
       this.adminDataService
         .fetchCompanyRequirements(this.selectedWorkState, value)
-        .subscribe((response) => {
-          this.companyRequirements = response;
-          this.loading = false;
+        .subscribe({
+          next: (response) => {
+            this.companyRequirements = response;
+            this.loading = false;
+          },
+          error: (error) => {
+            if (error.error && error.error.errMessage) {
+              this.errorMessageService.setErrorMessage(error.error.errMessage);
+            }
+          },
         });
     }
   }

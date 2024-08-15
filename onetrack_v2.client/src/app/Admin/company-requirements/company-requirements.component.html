@@ -29,7 +29,7 @@
     </div>
     <div class="col d-flex justify-content-center align-items-end">
       <button
-        class="btn btn-success"
+        class="btn btn-success button-font-size"
         type="button"
         (click)="
           adminDataService.storeCoRequirement('INSERT', null);
@@ -120,7 +120,7 @@
               {{ company.startAfterDate | date : "MM/dd/yyyy" }}
             </td>
             <td class="align-middle">
-              {{ company.document }}
+              <a [href]= "company.document" target="_blank" style="font-size: larger;" >{{ company.document }}</a>
             </td>
             <td class="align-middle" style="width: 10rem">
               <div class="d-flex justify-content-between mb-3 me-4">
