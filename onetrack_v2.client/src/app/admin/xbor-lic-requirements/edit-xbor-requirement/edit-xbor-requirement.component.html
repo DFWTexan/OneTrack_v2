@@ -170,11 +170,7 @@
       >
         <span class="material-symbols-outlined me-3">delete_forever</span>
       </button>
-      <span
-        class="ms-5 mt-3 mb-3"
-        style="font-size: medium; font-weight: 500"
-        >{{ xborLicenseRequirementForm.get("startDocument")?.value }}</span
-      >
+      <a [href]="xborLicenseRequirementForm.get('startDocument')?.value" target="_blank" class="ms-5 mt-3 mb-3" style="font-size: medium;">{{ xborLicenseRequirementForm.get('startDocument')?.value }}</a>
     </div>
   </div>
 
@@ -210,12 +206,7 @@
       >
         <span class="material-symbols-outlined me-3">delete_forever</span>
       </button>
-      <!-- <span
-        class="ms-5 mt-3 mb-3"
-        style="font-size: medium; font-weight: 500"
-        >{{ xborLicenseRequirementForm.get("renewalDocument")?.value }}</span
-      > -->
-      <a [href]="xborLicenseRequirementForm.get('renewalDocument')?.value" target="_blank" style="font-size: medium;">{{ xborLicenseRequirementForm.get('renewalDocument')?.value }}</a>
+      <a [href]="xborLicenseRequirementForm.get('renewalDocument')?.value" target="_blank" class="ms-5 mt-3 mb-3" style="font-size: medium;">{{ xborLicenseRequirementForm.get('renewalDocument')?.value }}</a>
     </div>
   </div>
 
@@ -238,12 +229,12 @@
     <div class="col d-flex justify-content-end">
       <button
         type="button"
-        class="btn btn-secondary me-3 cancel-button"
+        class="btn btn-secondary me-3 cancel-button button-font-size"
         (click)="closeModal()"
       >
         Cancel
       </button>
-      <button type="submit" class="btn btn-primary save-button" [disabled]="xborLicenseRequirementForm.pristine">Save</button>
+      <button type="submit" class="btn btn-primary save-button button-font-size" [disabled]="xborLicenseRequirementForm.pristine">Save</button>
     </div>
   </div>
 </form>
