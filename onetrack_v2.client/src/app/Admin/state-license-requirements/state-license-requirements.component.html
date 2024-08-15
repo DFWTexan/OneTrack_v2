@@ -144,8 +144,8 @@
             </td>
             <td class="align-middle" colspan="2">
               <div class="d-flex flex-column">
-                <div>{{ stateReq.startDocument }}</div>
-                <div>{{ stateReq.renewalDocument }}</div>
+                <a [href]= "stateReq.startDocument" target="_blank" style="font-size: medium;" >{{ stateReq.startDocument }}</a>
+                <a [href]= "stateReq.renewalDocument" target="_blank" style="font-size: medium;" >{{ stateReq.renewalDocument }}</a>
               </div>
             </td>
             <td class="align-middle" style="width: 10rem">

@@ -210,11 +210,12 @@
       >
         <span class="material-symbols-outlined me-3">delete_forever</span>
       </button>
-      <span
+      <!-- <span
         class="ms-5 mt-3 mb-3"
         style="font-size: medium; font-weight: 500"
         >{{ xborLicenseRequirementForm.get("renewalDocument")?.value }}</span
-      >
+      > -->
+      <a [href]="xborLicenseRequirementForm.get('renewalDocument')?.value" target="_blank" style="font-size: medium;">{{ xborLicenseRequirementForm.get('renewalDocument')?.value }}</a>
     </div>
   </div>
 
