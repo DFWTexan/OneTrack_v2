@@ -3,7 +3,7 @@
 
     public class OputEmployeeSearchResult
     {
-        public int EmployeeID { get; set; }
+        public int? EmployeeID { get; set; }
         public string? GEID { get; set; }
         public string? Name { get; set; }
         public string? ResStateAbv { get; set; }

@@ -4,6 +4,6 @@
     {
         public string? LkpField { get; set; }
         public string? LkpValue { get; set; }
-        public short SortOrder { get; set; }
+        public short? SortOrder { get; set; }
     }
 }

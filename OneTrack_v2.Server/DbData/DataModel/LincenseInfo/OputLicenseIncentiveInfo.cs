@@ -17,9 +17,9 @@
         public string? LineOfAuthorityIssueDate { get; set; }
         public string? LicenseEffectiveDate { get; set; }
         public string? LicenseExpireDate { get; set; }
-        public bool Reinstatement { get; set; }
-        public bool Required { get; set; }
-        public bool NonResident { get; set; } = false;
+        public bool? Reinstatement { get; set; }
+        public bool? Required { get; set; }
+        public bool? NonResident { get; set; } = false;
         public string? BranchCode { get; set; }
         public string? AscLicense { get; set; } = null;
         public int? AscEmployeeLicenseID { get; set; }
