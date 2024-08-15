@@ -6,6 +6,7 @@ import {
   AdminDataService,
   AppComService,
   ConstantsDataService,
+  ErrorMessageService,
   ModalService,
 } from '../../_services';
 import { CompanyRequirement } from '../../_Models';
@@ -26,6 +27,7 @@ export class CompanyRequirementsComponent implements OnInit, OnDestroy {
   subscriptionData: Subscription = new Subscription();
 
   constructor(
+    public errorMessageService: ErrorMessageService,
     private conService: ConstantsDataService,
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
@@ -50,10 +52,16 @@ export class CompanyRequirementsComponent implements OnInit, OnDestroy {
       this.subscriptionData.add(
         this.adminDataService
           .fetchCompanyRequirements(value, this.selectedResState)
-          .subscribe((response) => {
+          .subscribe({
+            next: (response) => {
             this.companyRequirements = response;
             this.loading = false;
-          })
+          },
+          error: (error) => {
+            if (error.error && error.error.errMessage) {
+              this.errorMessageService.setErrorMessage(error.error.errMessage);
+            }
+          }})
       );
     }
   }

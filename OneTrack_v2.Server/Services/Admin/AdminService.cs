@@ -46,7 +46,11 @@ namespace OneTrak_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1207-12017].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
             return result;
         }
@@ -88,7 +92,11 @@ namespace OneTrak_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1237-12517].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
             return result;
         }
@@ -111,7 +119,11 @@ namespace OneTrak_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1237-90517].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
             return result;
         }
@@ -162,46 +174,50 @@ namespace OneTrak_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1237-91511].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
             return result;
         }
 
-        public ReturnResult GetCompanyRequirements(string vWorkState, string? vResState = null)
+        public async Task<ReturnResult> GetCompanyRequirementsAsync(string vWorkState, string? vResState = null)
         {
-            ReturnResult result = new ReturnResult();
+            var result = new ReturnResult();
             try
             {
                 var sql = @"
-                       SELECT  
-                            R.CompanyRequirementID,
-                            R.WorkStateAbv, 
-                            R.ResStateAbv, 
-                            R.RequirementType, 
-                            R.[LicLevel1],
-                            R.[LicLevel2],
-                            R.[LicLevel3],
-                            R.[LicLevel4],
-                            R.StartAfterDate,
-                            R.[Document]
-                        FROM 
-                            dbo.CompanyRequirements R
-                        WHERE
-                            (@vWorkState IS NULL OR R.WorkStateAbv = @vWorkState) AND 
-                            (@vResState IS NULL OR R.ResStateAbv = @vResState) ";
+                    SELECT  
+                        R.CompanyRequirementID,
+                        R.WorkStateAbv, 
+                        R.ResStateAbv, 
+                        R.RequirementType, 
+                        R.[LicLevel1],
+                        R.[LicLevel2],
+                        R.[LicLevel3],
+                        R.[LicLevel4],
+                        R.StartAfterDate,
+                        R.[Document]
+                    FROM 
+                        dbo.CompanyRequirements R
+                    WHERE
+                        (@vWorkState IS NULL OR R.WorkStateAbv = @vWorkState) AND 
+                        (@vResState IS NULL OR R.ResStateAbv = @vResState)";
 
                 var parameters = new[]
-                            {
-                                new SqlParameter("@vWorkState", vWorkState),
-                                new SqlParameter("@vResState", vResState ?? (object)DBNull.Value)
-                            };
+                {
+            new SqlParameter("@vWorkState", string.IsNullOrEmpty(vWorkState) ? (object)DBNull.Value : vWorkState),
+            new SqlParameter("@vResState", string.IsNullOrEmpty(vResState) ? (object)DBNull.Value : vResState)
+        };
 
-                var queryCoRequirementsResults = _db.OputCompanyRequirements
-                                            .FromSqlRaw(sql, parameters)
-                                            .AsNoTracking()
-                                            .OrderBy(r => r.WorkStateAbv)
-                                            .ThenBy(r => r.ResStateAbv)
-                                            .ToList();
+                var queryCoRequirementsResults = await _db.OputCompanyRequirements
+                    .FromSqlRaw(sql, parameters)
+                    .AsNoTracking()
+                    .OrderBy(r => r.WorkStateAbv)
+                    .ThenBy(r => r.ResStateAbv)
+                    .ToListAsync();
 
                 result.ObjData = queryCoRequirementsResults;
                 result.Success = true;
@@ -210,10 +226,15 @@ namespace OneTrak_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1807-12007].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
             return result;
         }
+
 
         public ReturnResult GetExamByState(string vState)
         {
@@ -242,7 +263,11 @@ namespace OneTrak_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1237-23511].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
             return result;
         }
@@ -271,7 +296,11 @@ namespace OneTrak_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1237-11911].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
             return result;
         }
@@ -299,7 +328,11 @@ namespace OneTrak_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1237-11582].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
             return result;
         }
@@ -331,7 +364,11 @@ namespace OneTrak_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1237-94521].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
             return result;
         }
@@ -380,7 +417,11 @@ namespace OneTrak_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1237-93501].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
             return result;
         }
@@ -492,7 +533,11 @@ namespace OneTrak_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1237-91511].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
             return result;
         }
@@ -525,7 +570,11 @@ namespace OneTrak_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1237-91526].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
             return result;
         }
@@ -557,7 +606,11 @@ namespace OneTrak_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1237-91322].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
             return result;
         }
@@ -588,7 +641,11 @@ namespace OneTrak_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1237-91510].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
             return result;
         }
@@ -633,7 +690,11 @@ namespace OneTrak_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1237-92513].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
             return result;
         }
@@ -679,7 +740,11 @@ namespace OneTrak_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1237-91544].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
             return result;
         }
@@ -700,7 +765,11 @@ namespace OneTrak_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1237-21571].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
             return result;
         }
@@ -743,7 +812,11 @@ namespace OneTrak_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1237-91529].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
             return result;
         }
@@ -1553,7 +1626,7 @@ namespace OneTrak_v2.Services
             return result;
         }
         public ReturnResult DeleteLicenseExam([FromBody] IputDeleteLicenseExam vInput)
-        { 
+        {
             var result = new ReturnResult();
             try
             {
@@ -1779,7 +1852,7 @@ namespace OneTrak_v2.Services
             return result;
         }
         public ReturnResult DeleteLicenseProduct([FromBody] IputDeleteLicenseProduct vInput)
-        { 
+        {
             var result = new ReturnResult();
             try
             {
