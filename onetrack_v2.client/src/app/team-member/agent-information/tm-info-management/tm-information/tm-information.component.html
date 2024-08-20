@@ -104,9 +104,22 @@
           </button>
         </div>
       </div>
-      <p style="font-size: larger; font-weight: 600" *ngIf="!isLoading">
-        Agent License & Appointments:
-      </p>
+      <div class="d-flex align-items-center">
+        <div style="font-size: larger; font-weight: 600" *ngIf="!isLoading">
+          Agent License & Appointments:
+        </div>
+        <button
+          *ngIf="!isLoading"
+          class="icon-edit-delete-button me-4"
+          style="padding-bottom: 3rem; opacity: 0.75"
+          title="List all Appointments"
+        >
+          <span class="material-symbols-outlined" style="font-size: 35px">
+            list_alt
+          </span>
+        </button>
+      </div>
+
       <div class="mt-5 mb-5 d-flex justify-content-center" *ngIf="isLoading">
         <div class="spinner-border text-primary"></div>
       </div>
@@ -393,6 +406,7 @@
                               storeLicApptLicenseID(license.licenseID);
                               modalService.open('modal-edit-license-appt')
                             "
+                            title="Edit Appointment"
                           >
                             <span class="material-symbols-outlined">
                               edit
@@ -408,6 +422,7 @@
                                   employeeLicenseID: appointment.employeeLicenseID,
                                 })
                               "
+                              title="Delete Appointment"
                             >
                               delete
                             </span>

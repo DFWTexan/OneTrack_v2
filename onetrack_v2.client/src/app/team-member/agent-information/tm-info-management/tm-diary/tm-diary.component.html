@@ -23,7 +23,7 @@
       </div>
     </div>
 
-    <div class="col d-flex align-items-end justify-content-end">
+    <div class="col d-flex align-items-end justify-content-end me-5">
       <button
         class="btn btn-success button-font-size"
         type="button"
@@ -79,18 +79,25 @@
                     agentDataService.storeDiaryEntry('EDIT', diary);
                     modalService.open('modal-edit-diary-entry')
                   "
+                  title="Edit Diary Item"
                 >
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
                 <button class="icon-edit-delete-button" type="button">
-                  <span class="material-symbols-outlined" (click)="
-                  onOpenConfirmDialog(
-                    'Diary Item ' +
-                    diary.diaryID +
-                      '. Do you want to proceed?',
-                      diary
-                  )
-                "> delete </span>
+                  <span
+                    class="material-symbols-outlined"
+                    (click)="
+                      onOpenConfirmDialog(
+                        'Diary Item ' +
+                          diary.diaryID +
+                          '. Do you want to proceed?',
+                        diary
+                      )
+                    "
+                    title="Delete Diary Item"
+                  >
+                    delete
+                  </span>
                 </button>
               </div>
             </td>
