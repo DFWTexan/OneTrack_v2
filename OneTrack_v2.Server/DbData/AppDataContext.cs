@@ -1971,7 +1971,7 @@ namespace OneTrack_v2.DbData
                     .HasForeignKey(d => d.PackageId)
                     .HasConstraintName("FK__RequiredL__Packa__68FD7645");
             });
-            modelBuilder.Entity<StgADBankerImport>().ToTable("stgADBankerImport", "dbo").HasNoKey();
+            modelBuilder.Entity<StgADBankerImport>().ToTable("stg_ADBankerImport", "dbo").HasNoKey();
             modelBuilder.Entity<StateProvince>(entity =>
             {
                 entity.HasKey(e => e.StateProvinceAbv).HasName("PK__StateProvince__45943E77");
