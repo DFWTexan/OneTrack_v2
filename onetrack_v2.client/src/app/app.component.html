@@ -51,19 +51,20 @@
   >
     <mat-nav-list>
       <mat-list-item
-        routerLink="/dashboard"
         routerLinkActive="active"
         [routerLinkActiveOptions]="{ exact: true }"
         [disabled]="!appComService.isLoggedIn"
+        (click)="onDashboardClick($event)"
       >
         <mat-icon>dashboard</mat-icon><span>Dashboard</span>
       </mat-list-item>
 
       <mat-expansion-panel
+        (opened)="onPanelOpened('ADMINISTRATION')"
         [class.mat-elevation-z0]="true"
         [disabled]="!appComService.isLoggedIn"
       >
-        <mat-expansion-panel-header>
+        <mat-expansion-panel-header >
           <mat-icon>business</mat-icon><span>Administration</span>
         </mat-expansion-panel-header>
         <mat-nav-list>
@@ -149,6 +150,7 @@
       </mat-expansion-panel>
 
       <mat-expansion-panel
+        (opened)="onPanelOpened('TEAM')"
         [class.mat-elevation-z0]="true"
         [disabled]="!appComService.isLoggedIn"
       >
@@ -158,15 +160,15 @@
         <mat-nav-list>
           <a
             mat-list-item
-            routerLink="/team/add-member"
             routerLinkActive="active"
+            (click)="onAddMemberClick($event)"
           >
             <mat-icon>person_add</mat-icon><span>Add Member</span>
           </a>
           <a
             mat-list-item
-            routerLink="/team/search-members"
             routerLinkActive="active"
+            (click)="onSearchMemberClick($event)"
           >
             <mat-icon>search</mat-icon><span>Search Members</span>
           </a>
@@ -181,8 +183,8 @@
       </mat-list-item>
 
       <mat-list-item
-        routerLink="/work-lists"
         [disabled]="!appComService.isLoggedIn"
+        (click)="onWorklistClick($event)"
       >
         <mat-icon>list_alt</mat-icon>
         <span style="font-size: 1.5rem; font-weight: 500" class="text-center">

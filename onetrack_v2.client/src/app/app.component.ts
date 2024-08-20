@@ -9,6 +9,7 @@ import {
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Subscription } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
 
 import {
   AgentDataService,
@@ -22,6 +23,8 @@ import {
 import { environment } from './environments/environment';
 import { MinLengthValidator } from '@angular/forms';
 import { LicenseTech } from './_Models';
+import { InfoDialogComponent } from './_components';
+import { Router } from '@angular/router';
 
 @Injectable()
 @Component({
@@ -45,6 +48,8 @@ export class AppComponent implements OnInit, OnDestroy {
     private agentDataService: AgentDataService,
     public licIncentiveInfoDataService: LicIncentiveInfoDataService,
     private miscDataService: MiscDataService,
+    public dialog: MatDialog,
+    private router: Router,
     private userInfoService: UserAcctInfoDataService
   ) {}
 
@@ -213,6 +218,81 @@ export class AppComponent implements OnInit, OnDestroy {
           this.drpdwnDataService.updateLicenseTechs(mappedLicenseTechs);
         })
     );
+  }
+
+  onDashboardClick(event: Event) {
+    event.preventDefault();
+
+    const dialogRef = this.dialog.open(InfoDialogComponent, {
+      data: { message: 'Loading Dashboard...' },
+    });
+
+    // Delay the execution of the blocking operation
+    setTimeout(() => {
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/dashboard']);
+      });
+      dialogRef.close();
+    }, 100);
+  }
+
+  onPanelOpened(vTitle: string) {
+    const dialogRef = this.dialog.open(InfoDialogComponent, {
+      data: { message: 'Loading...' },
+    });
+
+    // Delay the execution of the blocking operation
+    setTimeout(() => {
+      dialogRef.close();
+    }, 200);
+  }
+
+  onAddMemberClick(event: Event) {
+    event.preventDefault();
+
+    const dialogRef = this.dialog.open(InfoDialogComponent, {
+      data: { message: 'Loading Add Team Member...' },
+    });
+
+    // Delay the execution of the blocking operation
+    setTimeout(() => {
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/team/add-member']);
+      });
+      dialogRef.close();
+    }, 100);
+  }
+
+  onSearchMemberClick(event: Event) {
+    event.preventDefault();
+
+    const dialogRef = this.dialog.open(InfoDialogComponent, {
+      data: { message: 'Loading Search Team Member...' },
+    });
+
+    // Delay the execution of the blocking operation
+    setTimeout(() => {
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/team/search-members']);
+      });
+      dialogRef.close();
+    }, 100);
+  }
+
+  onWorklistClick(event: Event) {
+    event.preventDefault();
+
+    const dialogRef = this.dialog.open(InfoDialogComponent, {
+      data: { message: 'Loading Worklist...' },
+    });
+
+    // Delay the execution of the blocking operation
+    setTimeout(() => {
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/work-lists']);
+      });
+      dialogRef.close();
+    }, 100);
   }
 
   title = 'onetrack_v2';
