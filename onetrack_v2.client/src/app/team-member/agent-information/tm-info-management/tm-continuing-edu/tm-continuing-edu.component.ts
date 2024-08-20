@@ -45,16 +45,44 @@ export class TmContinuingEduComponent implements OnInit, OnDestroy {
           (total, item) => total + (item.requiredCreditHours || 0),
           0
         );
-        this.sumHoursTaken = this.agentInfo.contEduCompletedItems.reduce(
-          (total, item) => total + (item.creditHoursTaken || 0),
-          0
-        );
-        this.totalHoursRemaining = this.sumHoursRequired - this.sumHoursTaken;
+        // this.sumHoursTaken = this.agentInfo.contEduCompletedItems.reduce(
+        //   (total, item) => total + (item.creditHoursTaken || 0),
+        //   0
+        // );
+
+        // Ensure the dates are not null before creating Date objects
+        const startDate = agentInfo.contEduRequiredItems[0].educationStartDate
+          ? new Date(agentInfo.contEduRequiredItems[0].educationStartDate)
+          : null;
+        const endDate = agentInfo.contEduRequiredItems[0].educationEndDate
+          ? new Date(agentInfo.contEduRequiredItems[0].educationEndDate)
+          : null;
+
+        if (startDate && endDate) {
+          this.sumHoursTaken = this.agentInfo.contEduCompletedItems.reduce(
+            (total, item) => {
+              if (item.contEducationTakenDate) {
+                const takenDate = new Date(item.contEducationTakenDate);
+                if (takenDate >= startDate && takenDate <= endDate) {
+                  return total + (item.creditHoursTaken || 0);
+                }
+              }
+              return total;
+            },
+            0
+          );
+
+          this.totalHoursRemaining = this.sumHoursRequired - this.sumHoursTaken;
+        } else {
+          // Handle the case where startDate or endDate is null
+          this.sumHoursTaken = 0;
+          this.totalHoursRemaining = this.sumHoursRequired;
+        }
       })
     );
   }
 
-  onOpenConfirmDialog( msg: string, vObject: any): void {
+  onOpenConfirmDialog(msg: string, vObject: any): void {
     this.vObject = vObject;
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '250px',
