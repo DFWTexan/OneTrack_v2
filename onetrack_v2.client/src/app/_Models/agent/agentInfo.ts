@@ -143,25 +143,25 @@ export interface EmploymentCommunicationItem {
 }
 
 export interface AgentLicenseItem {
-  EmployeeLicenseId?: number;
-  LicenseState?: string;
-  LineOfAuthority?: string;
-  LicenseStatus?: string;
-  EmploymentID?: number;
-  LicenseID?: number;
-  LicenseName?: string;
-  LicenseNumber?: string;
-  ResNoneRes?: string;
-  OriginalIssueDate?: Date;
-  LineOfAuthIssueDate?: Date;
-  LicenseEffectiveDate?: Date;
-  LicenseExpirationDate?: Date;
-  LicenseNote?: string;
-  Reinstatement?: boolean;
-  Required?: boolean;
-  NonResident?: boolean;
-  AscEmployeeLicenseID?: number;
-  AscLicenseName?: string;
+  employeeLicenseId?: number;
+  licenseState?: string;
+  lineOfAuthority?: string;
+  licenseStatus?: string;
+  employmentID?: number;
+  licenseID?: number;
+  licenseName?: string;
+  licenseNumber?: string;
+  resNoneRes?: string;
+  originalIssueDate?: Date;
+  lineOfAuthIssueDate?: Date;
+  licenseEffectiveDate?: Date;
+  licenseExpirationDate?: Date;
+  licenseNote?: string;
+  reinstatement?: boolean;
+  required?: boolean;
+  nonResident?: boolean;
+  ascEmployeeLicenseID?: number;
+  ascLicenseName?: string;
 }
 
 export interface AgentAppointmentItem {

@@ -279,9 +279,15 @@ namespace OneTrack_v2.Services
 
                 //Agent Licenses
                 var agentLicenses = GetLicenses(agent.EmploymentID);
+                List<OputAgentLicenses>? oputAgentLicenses = agentLicenses.ObjData == null ? null : agentLicenses.ObjData as List<OputAgentLicenses>;
+                if(oputAgentLicenses != null)
+                    agent.LicenseItems = oputAgentLicenses;
 
                 //Agent Appointments
-                var agentAppointments = GetAppointments(agent.EmploymentID);                
+                var agentAppointments = GetAppointments(agent.EmploymentID);
+                List<OputAgentAppointments>? oputAgentAppointments = agentAppointments.ObjData == null ? null : agentAppointments.ObjData as List<OputAgentAppointments>;
+                if (oputAgentAppointments != null)
+                    agent.AppointmentItems = oputAgentAppointments;
 
                 result.Success = true;
                 result.ObjData = agent;
