@@ -61,6 +61,8 @@ export interface AgentInfo {
   diaryCreatedByItems: DiaryCreatedByItem[];
   diaryItems: DiaryItem[];
   employmentCommunicationItems: EmploymentCommunicationItem[];
+  licenseItems: AgentLicenseItem[];
+  appointmentItems: AgentAppointmentItem[];
 }
 
 export interface EmploymentHistory {
@@ -138,4 +140,40 @@ export interface EmploymentCommunicationItem {
   letterName: string | null;
   emailCreateDate: string | null;
   emailSentDate: string | null;
+}
+
+export interface AgentLicenseItem {
+  EmployeeLicenseId?: number;
+  LicenseState?: string;
+  LineOfAuthority?: string;
+  LicenseStatus?: string;
+  EmploymentID?: number;
+  LicenseID?: number;
+  LicenseName?: string;
+  LicenseNumber?: string;
+  ResNoneRes?: string;
+  OriginalIssueDate?: Date;
+  LineOfAuthIssueDate?: Date;
+  LicenseEffectiveDate?: Date;
+  LicenseExpirationDate?: Date;
+  LicenseNote?: string;
+  Reinstatement?: boolean;
+  Required?: boolean;
+  NonResident?: boolean;
+  AscEmployeeLicenseID?: number;
+  AscLicenseName?: string;
+}
+
+export interface AgentAppointmentItem {
+  LicenseID: number;
+  EmployeeAppointmentID: number;
+  AppointmentEffectiveDate?: Date;
+  AppointmentStatus?: string;
+  EmployeeLicenseID: number;
+  CarrierDate?: Date;
+  AppointmentExpireDate?: Date;
+  AppointmentTerminationDate?: Date;
+  CompanyID?: number;
+  CompanyAbv?: string;
+  RetentionDate?: Date;
 }

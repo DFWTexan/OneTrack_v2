@@ -33,6 +33,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   typeTickler: any = {};
   workState: string | null = null;
   displayOpenLicenseID: number = 0;
+  isLegacyView = false;
 
   private subscriptions = new Subscription();
 
@@ -50,6 +51,13 @@ export class TmInformationComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isLoading = true;
+
+    this.isLegacyView = this.appComService.isLegacyView;
+    this.subscriptions.add(
+      this.appComService.isLegacyViewChanged.subscribe((isLegacyView) => {
+        this.isLegacyView = isLegacyView;
+      })
+    );
 
     this.agentInfo = this.agentDataService.agentInformation;
     this.subscriptions.add(

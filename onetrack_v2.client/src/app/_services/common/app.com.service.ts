@@ -14,6 +14,8 @@ export class AppComService {
     isShowEditID = environment.isShowEditID;
     tickleToggle = false;
     tickleToggleChanged = new Subject<boolean>();
+    isLegacyView = false;
+    isLegacyViewChanged = new Subject<boolean>();
     
     constructor() {}
 
@@ -30,5 +32,10 @@ export class AppComService {
     updateLoginErrorMsg(loginErrorMsg: string) {
         this.loginErrorMsg = loginErrorMsg;
         this.loginErrorMsgChanged.next(this.loginErrorMsg);
+    }
+
+    updateIsLegacyView(isLegacyView: boolean) {
+        this.isLegacyView = isLegacyView;
+        this.isLegacyViewChanged.next(this.isLegacyView);
     }
 }

@@ -64,6 +64,8 @@ namespace OneTrack_v2.DataModel
         public List<DiaryCreatedByItem> DiaryCreatedByItems { get; set; }
         public List<DiaryItem> DiaryItems { get; set; }
         public List<EmploymentCommunicationItem> EmploymentCommunicationItems { get; set; }
+        public List<OputAgentLicenses> LicenseItems { get; set; }
+        public List<OputAgentAppointments> AppointmentItems { get; set; }
 
         public OputAgent()
         {
@@ -78,6 +80,8 @@ namespace OneTrack_v2.DataModel
             DiaryCreatedByItems = new List<DiaryCreatedByItem>();
             DiaryItems = new List<DiaryItem>();
             EmploymentCommunicationItems = new List<EmploymentCommunicationItem>();
+            LicenseItems = new List<OputAgentLicenses>();
+            AppointmentItems = new List<OputAgentAppointments>();
         }
     }
 

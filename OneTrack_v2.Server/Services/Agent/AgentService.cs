@@ -277,6 +277,12 @@ namespace OneTrack_v2.Services
 
                 agent.EmploymentCommunicationItems = queryEmploymentCommunications.AsNoTracking().ToList();
 
+                //Agent Licenses
+                var agentLicenses = GetLicenses(agent.EmploymentID);
+
+                //Agent Appointments
+                var agentAppointments = GetAppointments(agent.EmploymentID);                
+
                 result.Success = true;
                 result.ObjData = agent;
                 result.StatusCode = 200;
