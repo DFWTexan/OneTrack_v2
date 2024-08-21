@@ -108,16 +108,17 @@
         <div style="font-size: larger; font-weight: 600" *ngIf="!isLoading">
           Agent License & Appointments:
         </div>
-        <!-- <button
+        <button
           *ngIf="!isLoading"
           class="icon-edit-delete-button me-4"
           style="padding-bottom: 3rem; opacity: 0.85; padding-right: 2.5rem"
-          title="Toggle List View"
+          (click)="onToggleView()"
+          [title]="!isLegacyView ? 'Toggle to Legacy View' : 'Toggle View'"
         >
           <span class="material-symbols-outlined" style="font-size: 35px">
             list_alt
           </span>
-        </button> -->
+        </button>
       </div>
 
       <div class="mt-5 mb-5 d-flex justify-content-center" *ngIf="isLoading">
@@ -131,9 +132,14 @@
         No License records found
       </div>
 
+      <!-- New License Appt List -->
       <div
         class="row"
-        *ngIf="!isLoading && agentInfo.agentLicenseAppointments.length !== 0"
+        *ngIf="
+          !isLoading &&
+          !isLegacyView &&
+          agentInfo.agentLicenseAppointments.length !== 0
+        "
       >
         <div class="col-md-12">
           <mat-expansion-panel
@@ -431,6 +437,124 @@
             </div>
           </mat-expansion-panel>
         </div>
+      </div>
+      <!-- Legacy License Appt List -->
+      <div
+        class="row"
+        *ngIf="
+          !isLoading &&
+          isLegacyView 
+        "
+      >
+      <div class="row">
+        <div>
+          <!-- <button
+            class="btn button-font-size"
+            style="width: 30rem;"
+            (click)="
+              setModeLicenseMgmt('ADD');
+              modalService.open('modal-new-license-info')
+            "
+          >
+            License(s)
+          </button>
+          <button
+            class="btn button-font-size"
+            style="width: 30rem;"
+            (click)="
+              setModeLicenseMgmt('ADD');
+              modalService.open('modal-new-license-info')
+            "
+          >
+            Appointment(s)
+          </button> -->
+          <ul class="nav nav-tabs">
+            <li [ngClass]="{'active': activeTab === 'license'}">
+              <a (click)="activeTab = 'license'" style="font-size: larger;">License(s)</a>
+            </li>
+            <li [ngClass]="{'active': activeTab === 'appoiontment'}">
+              <a (click)="activeTab = 'appoiontment'" style="font-size: larger;">Appointments(s)</a>
+            </li>
+          </ul>
+          
+          <div class="tab-content">
+            <div id="license" class="tab-pane fade" [ngClass]="{'in active': activeTab === 'license'}">
+              <table class="table w-100">
+                <thead>
+                  <tr style="background-color: whitesmoke">
+                    <th scope="col">
+                      *
+                    </th>
+                    <th scope="col">State</th>
+                    <th scope="col">L.O.A</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">EmploymentID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Res/NonRes</th>
+                    <th scope="col">Org. Date</th>
+                    <th scope="col">LOA Date</th>
+                    <th scope="col">Eff. Date</th>
+                    <th scope="col">Exp. Date</th>
+                    <th scope="col" class="text-center" style="width: 10rem">
+                      ACTION
+                    </th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+            <div id="appoiontment" class="tab-pane fade" [ngClass]="{'in active': activeTab === 'appoiontment'}">
+              <table class="table w-100">
+                <thead>
+                  <tr style="background-color: whitesmoke">
+                    <th scope="col">
+                      *
+                    </th>
+                    <th scope="col">State</th>
+                    <th scope="col">L.O.A</th>
+                    <th scope="col">Lic ID</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Co. ID</th>
+                    <th scope="col">Co. Abv.</th>
+                    <th scope="col">Car. Date</th>
+                    <th scope="col">Eff Date</th>
+                    <th scope="col">Exp. Date</th>
+                    <th scope="col">Term. Date</th>
+                    <th scope="col" class="text-center" style="width: 10rem">
+                      ACTION
+                    </th>
+                  </tr>
+                </thead>
+              </table>
+            </div>
+          </div>
+        
+        </div>
+      </div>
+      <!-- <div class="row">
+        <table>
+          <thead>
+            <tr style="background-color: whitesmoke">
+              <th scope="col">
+                *
+              </th>
+              <th scope="col">State</th>
+              <th scope="col">L.O.A</th>
+              <th scope="col">Status</th>
+              <th scope="col">EmploymentID</th>
+              <th scope="col">Name</th>
+              <th scope="col">Res/NonRes</th>
+              <th scope="col">Org. Date</th>
+              <th scope="col">LOA Date</th>
+              <th scope="col">Eff. Date</th>
+              <th scope="col">Exp. Date</th>
+              <th scope="col" class="text-center" style="width: 10rem">
+                ACTION
+              </th>
+            </tr>
+          </thead>
+        </table>
+      </div> -->
+        
       </div>
       <!-- <div
         class="row"

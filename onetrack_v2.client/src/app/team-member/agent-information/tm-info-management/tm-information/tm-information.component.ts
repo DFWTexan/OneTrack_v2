@@ -34,6 +34,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   workState: string | null = null;
   displayOpenLicenseID: number = 0;
   isLegacyView = false;
+  activeTab: string = 'license';
 
   private subscriptions = new Subscription();
 
@@ -68,6 +69,12 @@ export class TmInformationComponent implements OnInit, OnDestroy {
         }
       )
     );
+  }
+
+  onToggleView() {
+    this.isLegacyView = !this.isLegacyView;
+
+    console.log('EMFTEST () - isLegacyView: ', this.isLegacyView);
   }
 
   onChildCallRefreshData(data: any) {
