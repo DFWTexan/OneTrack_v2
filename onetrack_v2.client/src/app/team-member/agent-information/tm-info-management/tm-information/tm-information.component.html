@@ -518,18 +518,18 @@
                       "
                       [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
                     >
-                      <td class="align-middle"><button
-                        class="btn-link"
-                        (click)="
-                          toggleLicenseMgmt(i);
-                          storeLicApptLicenseID(license.licenseID)
-                        "
-                        title="View License Information"
-                      >
-                        <span>
-                          Select
-                        </span>
-                      </button></td>
+                      <td class="align-middle">
+                        <button
+                          class="btn-link no-underline" style="font-size: larger;"
+                          (click)="
+                            toggleLicenseMgmt(i);
+                            storeLicApptLicenseID(license.licenseID)
+                          "
+                          title="View License Information"
+                        >
+                          <span> Select </span>
+                        </button>
+                      </td>
                       <td class="align-middle">{{ license.licenseState }}</td>
                       <td class="align-middle">
                         {{ license.lineOfAuthority }}
@@ -637,7 +637,16 @@
                       "
                       [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
                     >
-                      <td class="align-middle"><a>Select</a></td>
+                      <td class="align-middle"><button
+                        class="btn-link no-underline" style="font-size: larger;"
+                        (click)="
+                          toggleLicenseMgmt(i);
+                          storeLicApptLicenseID(appointment.licenseID)
+                        "
+                        title="View License Information"
+                      >
+                        <span> Select </span>
+                      </button></td>
                       <td class="align-middle">
                         {{ appointment.licenseState }}
                       </td>

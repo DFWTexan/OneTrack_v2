@@ -226,3 +226,11 @@ body {
   font-size: large;
 }
 
+.no-underline {
+  text-decoration: none;
+}
+
+.no-underline:hover {
+  text-decoration: underline;
+}
+
