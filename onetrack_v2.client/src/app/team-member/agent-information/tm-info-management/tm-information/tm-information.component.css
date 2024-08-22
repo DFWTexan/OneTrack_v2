@@ -57,6 +57,10 @@
   color: #ffa500;
 }
 
+.table tbody tr:hover {
+  background-color: #FFF0F5;
+}
+
 /* .nav-tabs .nav-item .nav-link.active {
   background-color: DodgerBlue;
   color: white;
