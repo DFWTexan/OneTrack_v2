@@ -148,7 +148,7 @@ export interface AgentLicenseItem {
   lineOfAuthority?: string;
   licenseStatus?: string;
   employmentID?: number;
-  licenseID?: number;
+  licenseID: number;
   licenseName?: string;
   licenseNumber?: string;
   resNoneRes?: string;
