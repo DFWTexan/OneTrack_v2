@@ -185,11 +185,7 @@
                         "
                         title="Edit License"
                       >
-                        <span
-                          class="material-symbols-outlined"
-                        >
-                          edit
-                        </span>
+                        <span class="material-symbols-outlined"> edit </span>
                       </button>
                       <button class="icon-edit-delete-button">
                         <span
@@ -216,9 +212,7 @@
                         "
                         title="Add Appointment"
                       >
-                        <span
-                          class="material-symbols-outlined"
-                        >
+                        <span class="material-symbols-outlined">
                           format_list_bulleted_add
                         </span>
                       </button>
@@ -241,34 +235,47 @@
                       >
                     </div>
                     <div class="me-5">
-                      <label>LOA:</label><br /><span style="color: black;">{{
+                      <label>LOA:</label><br /><span style="color: black">{{
                         license.lineOfAuthority
                       }}</span>
                     </div>
                     <div class="me-5">
-                      <label>Res/NonRes:</label><br /><span style="color: black;">{{
-                        license.resNoneRes ? "NonRes" : "Res"
-                      }}</span>
+                      <label>Res/NonRes:</label><br /><span
+                        style="color: black"
+                        >{{ license.resNoneRes ? "NonRes" : "Res" }}</span
+                      >
                     </div>
                     <div class="me-5">
-                      <label>Org Date:</label><br /><span style="color: black;">{{
-                        license.originalIssueDate | date : "MM/dd/yyyy"
-                      }}</span>
+                      <label>Org Date:</label><br /><span
+                        style="color: black"
+                        >{{
+                          license.originalIssueDate | date : "MM/dd/yyyy"
+                        }}</span
+                      >
                     </div>
                     <div class="me-5">
-                      <label>LOA Date:</label><br /><span style="color: black;">{{
-                        license.lineOfAuthIssueDate | date : "MM/dd/yyyy"
-                      }}</span>
+                      <label>LOA Date:</label><br /><span
+                        style="color: black"
+                        >{{
+                          license.lineOfAuthIssueDate | date : "MM/dd/yyyy"
+                        }}</span
+                      >
                     </div>
                     <div class="me-5">
-                      <label>Eff Date:</label><br /><span style="color: black;">{{
-                        license.licenseEffectiveDate | date : "MM/dd/yyyy"
-                      }}</span>
+                      <label>Eff Date:</label><br /><span
+                        style="color: black"
+                        >{{
+                          license.licenseEffectiveDate | date : "MM/dd/yyyy"
+                        }}</span
+                      >
                     </div>
                     <div class="me-5">
-                      <label>Exp Date:</label><br /><span style="color: black;">{{
-                        license.licenseExpirationDate | date : "MM/dd/yyyy"
-                      }}</span>
+                      <label>Exp Date:</label><br /><span
+                        style="color: black"
+                        >{{
+                          license.licenseExpirationDate | date : "MM/dd/yyyy"
+                        }}</span
+                      >
                     </div>
                   </div>
                 </div>
@@ -550,7 +557,9 @@
                         {{ license.lineOfAuthority }}
                       </td>
                       <td class="align-middle">{{ license.licenseStatus }}</td>
-                      <td class="align-middle">{{ license.employeeLicenseId }}</td>
+                      <td class="align-middle">
+                        {{ license.employeeLicenseId }}
+                      </td>
                       <td class="align-middle">{{ license.licenseName }}</td>
                       <td class="align-middle">
                         {{ license.resNoneRes ? "Res" : "NonRes" }}
@@ -596,6 +605,23 @@
                           >
                             <span class="material-symbols-outlined">
                               speaker_notes
+                            </span>
+                          </button>
+                          <button
+                            class="icon-add-button me-5"
+                            (click)="
+                              onSetOpenLicenseID(license.employeeLicenseId);
+                              agentDataService.storeLicenseAppt(
+                                'INSERT',
+                                license
+                              );
+                              storeLicApptLicenseID(license.licenseID);
+                              modalService.open('modal-edit-license-appt')
+                            "
+                            title="Add Appointment"
+                          >
+                            <span class="material-symbols-outlined">
+                              format_list_bulleted_add
                             </span>
                           </button>
                           <button
