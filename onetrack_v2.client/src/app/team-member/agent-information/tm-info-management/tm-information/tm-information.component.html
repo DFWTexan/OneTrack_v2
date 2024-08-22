@@ -110,8 +110,8 @@
         </div>
         <button
           *ngIf="!isLoading"
-          class="icon-edit-delete-button me-4"
-          style="padding-bottom: 3rem; opacity: 0.85; padding-right: 2.5rem"
+          class="icon-toggle-button"
+          style="padding-bottom: 3rem; padding-right: 2.5rem"
           (click)="onToggleView()"
           [title]="!isLegacyView ? 'Toggle to Legacy View' : 'Toggle View'"
         >
@@ -367,31 +367,31 @@
                       "
                       [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
                     >
-                      <td *ngIf="appComService.isShowEditID">
+                      <td *ngIf="appComService.isShowEditID" class="align-middle">
                         {{ appointment.licenseID }}
                       </td>
-                      <td>{{ appointment.employeeAppointmentID }}</td>
-                      <td>{{ appointment.appointmentStatus }}</td>
-                      <td *ngIf="appComService.isShowEditID">
+                      <td class="align-middle">{{ appointment.employeeAppointmentID }}</td>
+                      <td class="align-middle">{{ appointment.appointmentStatus }}</td>
+                      <td *ngIf="appComService.isShowEditID" class="align-middle">
                         {{ appointment.companyID }}
                       </td>
-                      <td>{{ appointment.companyAbv }}</td>
-                      <td>
+                      <td class="align-middle">{{ appointment.companyAbv }}</td>
+                      <td class="align-middle">
                         {{ appointment.carrierDate | date : "MM/dd/yyyy" }}
                       </td>
-                      <td>
+                      <td class="align-middle">
                         {{
                           appointment.appointmentEffectiveDate
                             | date : "MM/dd/yyyy"
                         }}
                       </td>
-                      <td>
+                      <td class="align-middle">
                         {{
                           appointment.appointmentExpireDate
                             | date : "MM/dd/yyyy"
                         }}
                       </td>
-                      <td>
+                      <td class="align-middle">
                         {{
                           appointment.appointmentTerminationDate
                             | date : "MM/dd/yyyy"
