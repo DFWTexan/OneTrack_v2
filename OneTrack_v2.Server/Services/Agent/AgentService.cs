@@ -386,15 +386,22 @@ namespace OneTrack_v2.Services
             var result = new ReturnResult();
             try
             {
-                var employeeLicenses = _db.EmployeeLicenses
-                       .Where(x => x.EmploymentId == vEmploymentID)
-                       .Select(x => x.EmployeeLicenseId)
-                       .ToList();
+                var employeeLicenses = (from employeeLicense in _db.EmployeeLicenses
+                                        join license in _db.Licenses on employeeLicense.LicenseId equals license.LicenseId
+                                        where employeeLicense.EmploymentId == vEmploymentID
+                                        select employeeLicense.EmployeeLicenseId)
+                                        .ToList();
 
                 var query = from appointment in _db.EmployeeAppointments
+                            join employeeLicense in _db.EmployeeLicenses on appointment.EmployeeLicenseId equals employeeLicense.EmployeeLicenseId
+                            join license in _db.Licenses on employeeLicense.LicenseId equals license.LicenseId
+                            join lineOfAuthority in _db.LineOfAuthorities on license.LineOfAuthorityId equals lineOfAuthority.LineOfAuthorityId
                             where employeeLicenses.Contains((int)appointment.EmployeeLicenseId)
                             select new OputAgentAppointments
                             {
+                                LicenseID = (int)employeeLicense.LicenseId,
+                                LicenseState = employeeLicense.License.StateProvinceAbv ?? "",
+                                LineOfAuthority = lineOfAuthority.LineOfAuthorityAbv ?? "",
                                 EmployeeAppointmentID = appointment.EmployeeAppointmentId,
                                 EmployeeLicenseID = (int)appointment.EmployeeLicenseId,
                                 AppointmentEffectiveDate = appointment.AppointmentEffectiveDate,

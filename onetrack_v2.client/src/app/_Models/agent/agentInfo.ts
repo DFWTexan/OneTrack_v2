@@ -165,15 +165,17 @@ export interface AgentLicenseItem {
 }
 
 export interface AgentAppointmentItem {
-  LicenseID: number;
-  EmployeeAppointmentID: number;
-  AppointmentEffectiveDate?: Date;
-  AppointmentStatus?: string;
-  EmployeeLicenseID: number;
-  CarrierDate?: Date;
-  AppointmentExpireDate?: Date;
-  AppointmentTerminationDate?: Date;
-  CompanyID?: number;
-  CompanyAbv?: string;
-  RetentionDate?: Date;
+  licenseID: number;
+  licenseState: string;
+  lineOfAuthority: string;
+  employeeAppointmentID: number;
+  appointmentEffectiveDate?: Date;
+  appointmentStatus?: string;
+  employeeLicenseID: number;
+  carrierDate?: Date;
+  appointmentExpireDate?: Date;
+  appointmentTerminationDate?: Date;
+  companyID?: number;
+  companyAbv?: string;
+  retentionDate?: Date;
 }

@@ -4,6 +4,8 @@
     {
         public int LicenseID { get; set; }
         public int EmployeeAppointmentID { get; set; }
+        public string? LicenseState { get; set; }
+        public string? LineOfAuthority { get; set; }
         public DateTime? AppointmentEffectiveDate { get; set; }
         public string? AppointmentStatus { get; set; }
         public int EmployeeLicenseID { get; set; }

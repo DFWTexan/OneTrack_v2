@@ -443,138 +443,208 @@
         <div
           class="row"
           class="panel panel-default me-3"
-          style="border-radius: 1rem; background-color: white;"
+          style="border-radius: 1rem; background-color: white"
         >
-        <div>
-          <ul class="nav nav-tabs">
-            <li
-              class="nav-item"
-              [ngClass]="{ active: activeTab === 'license' }"
-            >
-              <a
-                class="nav-link"
-                (click)="activeTab = 'license'"
-                style="font-size: larger"
-                >License(s)</a
+          <div>
+            <ul class="nav nav-tabs">
+              <li
+                class="nav-item"
+                [ngClass]="{ active: activeTab === 'license' }"
               >
-            </li>
-            <li
-              class="nav-item"
-              [ngClass]="{ active: activeTab === 'appoiontment' }"
-            >
-              <a
-                class="nav-link"
-                (click)="activeTab = 'appoiontment'"
-                style="font-size: larger"
-                >Appointments(s)</a
+                <a
+                  class="nav-link"
+                  (click)="activeTab = 'license'"
+                  style="font-size: larger"
+                  >License(s)</a
+                >
+              </li>
+              <li
+                class="nav-item"
+                [ngClass]="{ active: activeTab === 'appoiontment' }"
               >
-            </li>
-          </ul>
-        
-          <div class="tab-content">
-            <div
-              id="license"
-              class="tab-pane fade"
-              [ngClass]="{ 'in active': activeTab === 'license' }"
-            >
-              <table class="table w-100">
-                <thead>
-                  <tr style="background-color: whitesmoke">
-                    <th scope="col">&nbsp;</th>
-                    <th scope="col">State</th>
-                    <th scope="col">L.O.A</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">EmploymentID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Res/NonRes</th>
-                    <th scope="col">Org. Date</th>
-                    <th scope="col">LOA Date</th>
-                    <th scope="col">Eff. Date</th>
-                    <th scope="col">Exp. Date</th>
-                    <th scope="col" class="text-center" style="width: 10rem">
-                      ACTION
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    *ngFor="
-                      let license of agentInfo.licenseItems;
-                      let i = index
-                    "
-                    [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
-                  >
-                    <td class="align-middle"><a>Select</a></td>
-                    <td class="align-middle">{{ license.licenseState }}</td>
-                    <td class="align-middle">{{ license.lineOfAuthority }}</td>
-                    <td class="align-middle">{{ license.licenseStatus }}</td>
-                    <td class="align-middle">{{ license.employmentID }}</td>
-                    <td class="align-middle">{{ license.licenseName }}</td>
-                    <td class="align-middle">{{ license.resNoneRes ? 'Res' : 'NonRes' }}</td>
-                    <td class="align-middle">
-                      {{ license.originalIssueDate | date : 'MM/dd/yyyy' }}
-                    </td>
-                    <td class="align-middle">
-                      {{ license.lineOfAuthIssueDate | date : 'MM/dd/yyyy' }}
-                    </td>
-                    <td class="align-middle">
-                      {{ license.licenseEffectiveDate | date : 'MM/dd/yyyy' }}
-                    </td>
-                    <td class="align-middle">
-                      {{ license.licenseExpirationDate | date : 'MM/dd/yyyy' }}
-                    </td>
-                    <td>
-                      <div class="d-flex justify-content-between mb-3 me-4">
-                        <button
-                          class="icon-edit-delete-button"
-                          title="Edit Appointment"
-                        >
-                          <span class="material-symbols-outlined">
-                            edit
-                          </span>
-                        </button>
-                        <button class="icon-edit-delete-button">
-                          <span
-                            class="material-symbols-outlined"
-                            title="Delete Appointment"
+                <a
+                  class="nav-link"
+                  (click)="activeTab = 'appoiontment'"
+                  style="font-size: larger"
+                  >Appointments(s)</a
+                >
+              </li>
+            </ul>
+
+            <div class="tab-content">
+              <div
+                id="license"
+                class="tab-pane fade"
+                [ngClass]="{ 'in active': activeTab === 'license' }"
+              >
+                <table class="table w-100">
+                  <thead>
+                    <tr style="background-color: whitesmoke">
+                      <th scope="col">&nbsp;</th>
+                      <th scope="col">State</th>
+                      <th scope="col">L.O.A</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">EmploymentID</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">Res/NonRes</th>
+                      <th scope="col">Org. Date</th>
+                      <th scope="col">LOA Date</th>
+                      <th scope="col">Eff. Date</th>
+                      <th scope="col">Exp. Date</th>
+                      <th scope="col" class="text-center" style="width: 10rem">
+                        ACTION
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let license of agentInfo.licenseItems;
+                        let i = index
+                      "
+                      [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+                    >
+                      <td class="align-middle"><a>Select</a></td>
+                      <td class="align-middle">{{ license.licenseState }}</td>
+                      <td class="align-middle">
+                        {{ license.lineOfAuthority }}
+                      </td>
+                      <td class="align-middle">{{ license.licenseStatus }}</td>
+                      <td class="align-middle">{{ license.employmentID }}</td>
+                      <td class="align-middle">{{ license.licenseName }}</td>
+                      <td class="align-middle">
+                        {{ license.resNoneRes ? "Res" : "NonRes" }}
+                      </td>
+                      <td class="align-middle">
+                        {{ license.originalIssueDate | date : "MM/dd/yyyy" }}
+                      </td>
+                      <td class="align-middle">
+                        {{ license.lineOfAuthIssueDate | date : "MM/dd/yyyy" }}
+                      </td>
+                      <td class="align-middle">
+                        {{ license.licenseEffectiveDate | date : "MM/dd/yyyy" }}
+                      </td>
+                      <td class="align-middle">
+                        {{
+                          license.licenseExpirationDate | date : "MM/dd/yyyy"
+                        }}
+                      </td>
+                      <td>
+                        <div class="d-flex justify-content-between mb-3 me-4">
+                          <button
+                            class="icon-edit-delete-button"
+                            title="Edit License"
                           >
-                            delete
-                          </span>
-                        </button>
-                      </div>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <div
-              id="appoiontment"
-              class="tab-pane fade"
-              [ngClass]="{ 'in active': activeTab === 'appoiontment' }"
-            >
-              <table class="table w-100">
-                <thead>
-                  <tr style="background-color: whitesmoke">
-                    <th scope="col">*</th>
-                    <th scope="col">State</th>
-                    <th scope="col">L.O.A</th>
-                    <th scope="col">Lic ID</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Co. ID</th>
-                    <th scope="col">Co. Abv.</th>
-                    <th scope="col">Car. Date</th>
-                    <th scope="col">Eff Date</th>
-                    <th scope="col">Exp. Date</th>
-                    <th scope="col">Term. Date</th>
-                    <th scope="col" class="text-center" style="width: 10rem">
-                      ACTION
-                    </th>
-                  </tr>
-                </thead>
-              </table>
+                            <span class="material-symbols-outlined">
+                              edit
+                            </span>
+                          </button>
+                          <button class="icon-edit-delete-button">
+                            <span
+                              class="material-symbols-outlined"
+                              title="Delete License"
+                            >
+                              delete
+                            </span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div
+                id="appoiontment"
+                class="tab-pane fade"
+                [ngClass]="{ 'in active': activeTab === 'appoiontment' }"
+              >
+                <table class="table w-100">
+                  <thead>
+                    <tr style="background-color: whitesmoke">
+                      <th scope="col">&nbsp;</th>
+                      <th scope="col">State</th>
+                      <th scope="col">L.O.A</th>
+                      <th scope="col">Lic ID</th>
+                      <th scope="col">Status</th>
+                      <!-- <th scope="col">Co. ID</th> -->
+                      <th scope="col">Co. Abv.</th>
+                      <th scope="col">Car. Date</th>
+                      <th scope="col">Eff Date</th>
+                      <th scope="col">Exp. Date</th>
+                      <th scope="col">Term. Date</th>
+                      <th scope="col" class="text-center" style="width: 10rem">
+                        ACTION
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="
+                        let appointment of agentInfo.appointmentItems;
+                        let i = index
+                      "
+                      [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+                    >
+                      <td class="align-middle"><a>Select</a></td>
+                      <td class="align-middle">
+                        {{ appointment.licenseState }}
+                      </td>
+                      <td class="align-middle">
+                        {{ appointment.lineOfAuthority }}
+                      </td>
+                      <td class="align-middle">{{ appointment.licenseID }}</td>
+                      <td class="align-middle">
+                        {{ appointment.appointmentStatus }}
+                      </td>
+                      <!-- <td class="align-middle">{{ appointment.companyID }}</td> -->
+                      <td class="align-middle">{{ appointment.companyAbv }}</td>
+                      <td class="align-middle">
+                        {{ appointment.carrierDate | date : "MM/dd/yyyy" }}
+                      </td>
+                      <td class="align-middle">
+                        {{
+                          appointment.appointmentEffectiveDate
+                            | date : "MM/dd/yyyy"
+                        }}
+                      </td>
+                      <td class="align-middle">
+                        {{
+                          appointment.appointmentExpireDate
+                            | date : "MM/dd/yyyy"
+                        }}
+                      </td>
+                      <td class="align-middle">
+                        {{
+                          appointment.appointmentTerminationDate
+                            | date : "MM/dd/yyyy"
+                        }}
+                      </td>
+                      <td>
+                        <div class="d-flex justify-content-between mb-3 me-4">
+                          <button
+                            class="icon-edit-delete-button"
+                            title="Edit Appointment"
+                          >
+                            <span class="material-symbols-outlined">
+                              edit
+                            </span>
+                          </button>
+                          <button class="icon-edit-delete-button">
+                            <span
+                              class="material-symbols-outlined"
+                              title="Delete Appointment"
+                            >
+                              delete
+                            </span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-        </div>
         </div>
         <!-- <div class="row">
         <table>
