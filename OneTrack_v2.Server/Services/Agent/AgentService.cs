@@ -396,11 +396,13 @@ namespace OneTrack_v2.Services
                             join employeeLicense in _db.EmployeeLicenses on appointment.EmployeeLicenseId equals employeeLicense.EmployeeLicenseId
                             join license in _db.Licenses on employeeLicense.LicenseId equals license.LicenseId
                             join lineOfAuthority in _db.LineOfAuthorities on license.LineOfAuthorityId equals lineOfAuthority.LineOfAuthorityId
+                            join company in _db.Companies on appointment.CompanyId equals company.CompanyId
                             where employeeLicenses.Contains((int)appointment.EmployeeLicenseId)
+                            orderby appointment.AppointmentStatus
                             select new OputAgentAppointments
                             {
-                                LicenseID = (int)employeeLicense.LicenseId,
-                                LicenseState = employeeLicense.License.StateProvinceAbv ?? "",
+                                LicenseID = (int)license.LicenseId,
+                                LicenseState = license.StateProvinceAbv ?? "",
                                 LineOfAuthority = lineOfAuthority.LineOfAuthorityAbv ?? "",
                                 EmployeeAppointmentID = appointment.EmployeeAppointmentId,
                                 EmployeeLicenseID = (int)appointment.EmployeeLicenseId,
@@ -410,6 +412,7 @@ namespace OneTrack_v2.Services
                                 AppointmentExpireDate = appointment.AppointmentExpireDate,
                                 AppointmentTerminationDate = appointment.AppointmentTerminationDate,
                                 CompanyID = appointment.CompanyId,
+                                CompanyAbv = company.CompanyAbv,
                                 RetentionDate = appointment.RetentionDate
                             };
 

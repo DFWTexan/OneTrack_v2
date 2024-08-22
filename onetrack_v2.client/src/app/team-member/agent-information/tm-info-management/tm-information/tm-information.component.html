@@ -116,7 +116,7 @@
           class="icon-toggle-button"
           style="padding-bottom: 3rem; padding-right: 2.5rem"
           (click)="onToggleView()"
-          [title]="!isLegacyView ? 'Toggle to Legacy View' : 'Toggle View'"
+          [title]="!isLegacyView ? 'Toggle Legacy View' : 'Toggle Panel View'"
         >
           <span class="material-symbols-outlined" style="font-size: 35px">
             list_alt
@@ -616,7 +616,7 @@
                       <th scope="col">&nbsp;</th>
                       <th scope="col">State</th>
                       <th scope="col">L.O.A</th>
-                      <th scope="col">Lic ID</th>
+                      <th scope="col">License ID</th>
                       <th scope="col">Status</th>
                       <!-- <th scope="col">Co. ID</th> -->
                       <th scope="col">Co. Abv.</th>
@@ -653,7 +653,7 @@
                       <td class="align-middle">
                         {{ appointment.lineOfAuthority }}
                       </td>
-                      <td class="align-middle">{{ appointment.licenseID }}</td>
+                      <td class="align-middle">{{ appointment.employeeLicenseID }}</td>
                       <td class="align-middle">
                         {{ appointment.appointmentStatus }}
                       </td>
