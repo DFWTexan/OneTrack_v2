@@ -73,8 +73,6 @@ export class TmInformationComponent implements OnInit, OnDestroy {
 
   onToggleView() {
     this.isLegacyView = !this.isLegacyView;
-
-    console.log('EMFTEST () - isLegacyView: ', this.isLegacyView);
   }
 
   onChildCallRefreshData(data: any) {
@@ -154,6 +152,41 @@ export class TmInformationComponent implements OnInit, OnDestroy {
             );
           }
         });
+        break;
+      case 'deleteLicense':
+        const dialogRef_License = this.dialog.open(ConfirmDialogComponent, {
+          width: '250px',
+          data: {
+            title: 'Confirm Action',
+            message:
+              'You are about to DELETE license (' +
+              vObject.employeeLicenseID + ') ' +
+              vObject.licenseName +
+              '. Do you want to proceed?',
+          },
+        });
+
+        // dialogRef_License.afterClosed().subscribe((result) => {
+        //   if (result) {
+        //     this.subscriptions.add(
+        //       this.licenseIncentiveInfoDataService
+        //         .deleteLicenseAppointment({
+        //           employeeAppointmentID: vObject.employeeAppointmentID,
+        //           employeeLicenseID: vObject.employeeLicenseID,
+        //           userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+        //         })
+        //         .subscribe({
+        //           next: (response) => {
+        //             alert('License Appointment Deleted');
+        //           },
+        //           error: (error) => {
+        //             console.error(error);
+        //             // handle the error here
+        //           },
+        //         })
+        //     );
+        //   }
+        // });
         break;
       default:
         break;

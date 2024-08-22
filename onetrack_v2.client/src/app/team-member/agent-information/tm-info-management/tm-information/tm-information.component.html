@@ -227,32 +227,32 @@
                       >
                     </div>
                     <div class="me-5">
-                      <label>LOA:</label><br /><span>{{
+                      <label>LOA:</label><br /><span style="color: black;">{{
                         license.lineOfAuthority
                       }}</span>
                     </div>
                     <div class="me-5">
-                      <label>Res:</label><br /><span>{{
-                        license.resNoneRes ? "Res" : "NonRes"
+                      <label>Res/NonRes:</label><br /><span style="color: black;">{{
+                        license.resNoneRes ? "NonRes" : "Res"
                       }}</span>
                     </div>
                     <div class="me-5">
-                      <label>Original Date:</label><br /><span>{{
+                      <label>Original Date:</label><br /><span style="color: black;">{{
                         license.originalIssueDate | date : "MM/dd/yyyy"
                       }}</span>
                     </div>
                     <div class="me-5">
-                      <label>LOA Date:</label><br /><span>{{
+                      <label>LOA Date:</label><br /><span style="color: black;">{{
                         license.lineOfAuthIssueDate | date : "MM/dd/yyyy"
                       }}</span>
                     </div>
                     <div class="me-5">
-                      <label>Effective Date:</label><br /><span>{{
+                      <label>Effective Date:</label><br /><span style="color: black;">{{
                         license.licenseEffectiveDate | date : "MM/dd/yyyy"
                       }}</span>
                     </div>
                     <div class="me-5">
-                      <label>Expire Date:</label><br /><span>{{
+                      <label>Expire Date:</label><br /><span style="color: black;">{{
                         license.licenseExpirationDate | date : "MM/dd/yyyy"
                       }}</span>
                     </div>
@@ -498,7 +498,7 @@
                       <th scope="col">State</th>
                       <th scope="col">L.O.A</th>
                       <th scope="col">Status</th>
-                      <!-- <th scope="col">EmploymentID</th> -->
+                      <th scope="col">License ID</th>
                       <th scope="col">Name</th>
                       <th scope="col">Res/NonRes</th>
                       <th scope="col">Org. Date</th>
@@ -520,7 +520,8 @@
                     >
                       <td class="align-middle">
                         <button
-                          class="btn-link no-underline" style="font-size: larger;"
+                          class="btn-link no-underline"
+                          style="font-size: larger"
                           (click)="
                             toggleLicenseMgmt(i);
                             storeLicApptLicenseID(license.licenseID)
@@ -535,7 +536,7 @@
                         {{ license.lineOfAuthority }}
                       </td>
                       <td class="align-middle">{{ license.licenseStatus }}</td>
-                      <!-- <td class="align-middle">{{ license.employmentID }}</td> -->
+                      <td class="align-middle">{{ license.employeeLicenseId }}</td>
                       <td class="align-middle">{{ license.licenseName }}</td>
                       <td class="align-middle">
                         {{ license.resNoneRes ? "Res" : "NonRes" }}
@@ -585,6 +586,15 @@
                           </button>
                           <button
                             class="icon-edit-delete-button"
+                            (click)="
+                              onSetOpenLicenseID(license.employeeLicenseId);
+                              agentDataService.storeLicenseInfo(
+                                'EDIT',
+                                license
+                              );
+                              storeLicApptLicenseID(license.licenseID);
+                              modalService.open('modal-edit-license-info')
+                            "
                             title="Edit License"
                           >
                             <span class="material-symbols-outlined">
@@ -594,6 +604,13 @@
                           <button class="icon-edit-delete-button">
                             <span
                               class="material-symbols-outlined"
+                              (click)="
+                                onSetOpenLicenseID(license.employeeLicenseId);
+                                openConfirmDialog('deleteLicense', 'License ', {
+                                  employeeLicenseID: license.employeeLicenseId,
+                                  licenseName: license.licenseName
+                                })
+                              "
                               title="Delete License"
                             >
                               delete
@@ -637,23 +654,28 @@
                       "
                       [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
                     >
-                      <td class="align-middle"><button
-                        class="btn-link no-underline" style="font-size: larger;"
-                        (click)="
-                          toggleLicenseMgmt(i);
-                          storeLicApptLicenseID(appointment.licenseID)
-                        "
-                        title="View License Information"
-                      >
-                        <span> Select </span>
-                      </button></td>
+                      <td class="align-middle">
+                        <button
+                          class="btn-link no-underline"
+                          style="font-size: larger"
+                          (click)="
+                            toggleLicenseMgmt(i);
+                            storeLicApptLicenseID(appointment.licenseID)
+                          "
+                          title="View License Information"
+                        >
+                          <span> Select </span>
+                        </button>
+                      </td>
                       <td class="align-middle">
                         {{ appointment.licenseState }}
                       </td>
                       <td class="align-middle">
                         {{ appointment.lineOfAuthority }}
                       </td>
-                      <td class="align-middle">{{ appointment.employeeLicenseID }}</td>
+                      <td class="align-middle">
+                        {{ appointment.employeeLicenseID }}
+                      </td>
                       <td class="align-middle">
                         {{ appointment.appointmentStatus }}
                       </td>

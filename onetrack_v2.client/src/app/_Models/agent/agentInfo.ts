@@ -143,7 +143,7 @@ export interface EmploymentCommunicationItem {
 }
 
 export interface AgentLicenseItem {
-  employeeLicenseId?: number;
+  employeeLicenseId: number;
   licenseState?: string;
   lineOfAuthority?: string;
   licenseStatus?: string;

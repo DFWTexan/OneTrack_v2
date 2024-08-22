@@ -332,16 +332,18 @@ namespace OneTrack_v2.Services
                             join license in _db.Licenses on employeeLicense.LicenseId equals license.LicenseId
                             join lineOfAuthority in _db.LineOfAuthorities on license.LineOfAuthorityId equals lineOfAuthority.LineOfAuthorityId
                             where employeeLicense.EmploymentId == vEmploymentID
+                            orderby employeeLicense.LicenseStatus
                             select new OputAgentLicenses
                             {
-                                //LicenseID = (int)employeeLicense.LicenseId == 0 ? 0 : employeeLicense.LicenseId,
+                                LicenseID = (int)employeeLicense.LicenseId == 0 ? 0 : employeeLicense.LicenseId,
+                                EmployeeLicenseId = employeeLicense.EmployeeLicenseId,
                                 LicenseState = license.StateProvinceAbv,
                                 LineOfAuthority = lineOfAuthority.LineOfAuthorityAbv,
                                 LicenseStatus = employeeLicense.LicenseStatus,
                                 EmploymentID = employeeLicense.EmploymentId,
                                 LicenseName = license.LicenseName,
                                 LicenseNumber = employeeLicense.LicenseNumber,
-                                //ResNoneRes = (bool)employeeLicense.NonResident ? "Res" : "None",
+                                ResNoneRes = (bool)employeeLicense.NonResident ? "NonRes" : "Res",
                                 OriginalIssueDate = employeeLicense.LicenseIssueDate,
                                 LineOfAuthIssueDate = employeeLicense.LineOfAuthorityIssueDate,
                                 LicenseEffectiveDate = employeeLicense.LicenseEffectiveDate,
