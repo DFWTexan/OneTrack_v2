@@ -246,7 +246,7 @@
                       >
                     </div>
                     <div class="me-5">
-                      <label>Org Date:</label><br /><span
+                      <label>Org. Date:</label><br /><span
                         style="color: black"
                         >{{
                           license.originalIssueDate | date : "MM/dd/yyyy"
@@ -262,7 +262,7 @@
                       >
                     </div>
                     <div class="me-5">
-                      <label>Eff Date:</label><br /><span
+                      <label>Eff. Date:</label><br /><span
                         style="color: black"
                         >{{
                           license.licenseEffectiveDate | date : "MM/dd/yyyy"
@@ -270,7 +270,7 @@
                       >
                     </div>
                     <div class="me-5">
-                      <label>Exp Date:</label><br /><span
+                      <label>Exp. Date:</label><br /><span
                         style="color: black"
                         >{{
                           license.licenseExpirationDate | date : "MM/dd/yyyy"
@@ -456,6 +456,10 @@
                                 openConfirmDialog('deleteLicAppt', 'License Appointment', {
                                   employeeAppointmentID: appointment.employeeAppointmentID,
                                   employeeLicenseID: appointment.employeeLicenseID,
+                                  state: license.licenseState,
+                                  status: appointment.appointmentStatus,
+                                  loa: license.lineOfAuthority,
+                                  coAbv: appointment.companyAbv
                                 })
                               "
                               title="Delete Appointment"
@@ -501,17 +505,18 @@
                   class="nav-link"
                   (click)="activeTab = 'appoiontment'"
                   style="font-size: larger"
-                  >Appointments(s)</a
+                  >Appointment(s)</a
                 >
               </li>
             </ul>
-
+            
             <div class="tab-content">
               <div
                 id="license"
                 class="tab-pane fade"
                 [ngClass]="{ 'in active': activeTab === 'license' }"
               >
+                <!-- LICENSE LIST -->
                 <table class="table w-100">
                   <thead>
                     <tr style="background-color: whitesmoke">
@@ -667,6 +672,7 @@
                 class="tab-pane fade"
                 [ngClass]="{ 'in active': activeTab === 'appoiontment' }"
               >
+                <!-- APPOINTMENT LIST -->
                 <table class="table w-100">
                   <thead>
                     <tr style="background-color: whitesmoke">
@@ -702,7 +708,7 @@
                             toggleLicenseMgmt(i);
                             storeLicApptLicenseID(appointment.licenseID)
                           "
-                          title="View License Information"
+                          title="View Appointment Info"
                         >
                           <span> Select </span>
                         </button>
@@ -746,6 +752,12 @@
                         <div class="d-flex justify-content-between mb-3 me-4">
                           <button
                             class="icon-edit-delete-button"
+                            (click)="
+                              onSetOpenLicenseID(appointment.employeeLicenseID);
+                              storeLicAppointment(appointment);
+                              storeLicApptLicenseID(appointment.licenseID);
+                              modalService.open('modal-edit-license-appt')
+                            "
                             title="Edit Appointment"
                           >
                             <span class="material-symbols-outlined">
@@ -755,6 +767,17 @@
                           <button class="icon-edit-delete-button">
                             <span
                               class="material-symbols-outlined"
+                              (click)="
+                                onSetOpenLicenseID(appointment.employeeLicenseID);
+                                openConfirmDialog('deleteLicAppt', 'License Appointment', {
+                                  employeeAppointmentID: appointment.employeeAppointmentID,
+                                  employeeLicenseID: appointment.employeeLicenseID,
+                                  state: appointment.licenseState,
+                                  status: appointment.appointmentStatus,
+                                  loa: appointment.lineOfAuthority,
+                                  coAbv: appointment.companyAbv
+                                })
+                              "
                               title="Delete Appointment"
                             >
                               delete

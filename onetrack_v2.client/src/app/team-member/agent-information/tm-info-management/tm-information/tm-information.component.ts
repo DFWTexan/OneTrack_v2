@@ -126,7 +126,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
             title: 'Confirm Action',
             message:
               'You are about to DELETE license appointment ' +
-              vObject.employeeAppointmentID +
+              vObject.state + '-' + vObject.status + '-' + vObject.loa + '-' + vObject.coAbv +
               '. Do you want to proceed?',
           },
         });
