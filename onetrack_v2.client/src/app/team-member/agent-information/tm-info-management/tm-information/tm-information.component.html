@@ -1,6 +1,7 @@
 <div class="container app-component-container" style="overflow-x: hidden">
   <div class="row">
     <div class="col-md-12">
+      <!-- DELETE/EDIT Buttons -->
       <div class="row d-flex justify-content-start">
         <div class="col d-flex justify-content-center">
           <button
@@ -41,6 +42,7 @@
             box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
           "
         >
+          <!-- Agent Information -->
           <div class="col">
             <p>
               <strong>Job Title:</strong><br />
@@ -80,6 +82,7 @@
   </div>
   <div class="row mt-4">
     <div class="col-md-12">
+      <!-- INSERT Buttons -->
       <div class="row" *ngIf="!isLoading">
         <div class="col d-flex justify-content-end">
           <button
@@ -169,6 +172,7 @@
                         height: 100%;
                       "
                     >
+                      <!-- EDIT/ADD Appointment Buttons -->
                       <button
                         class="icon-edit-delete-button me-4"
                         style="opacity: 0.75"
@@ -292,7 +296,7 @@
                 </div>
                 <div class="col d-flex justify-content-end">
                   <button
-                    class="page-button appointment-edit-button click-effect"
+                    class="icon-edit-delete-button"
                     (click)="
                       modalService.open('modal-new-tickler');
                       onSetTypeTickler({ type: 'MEMBER', loa: null })
@@ -304,7 +308,7 @@
                 </div>
                 <div class="col d-flex justify-content-end">
                   <button
-                    class="page-button appointment-edit-button click-effect"
+                    class="icon-edit-delete-button"
                     (click)="
                       modalService.open('modal-new-tickler');
                       onSetTypeTickler({
@@ -367,12 +371,22 @@
                       "
                       [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
                     >
-                      <td *ngIf="appComService.isShowEditID" class="align-middle">
+                      <td
+                        *ngIf="appComService.isShowEditID"
+                        class="align-middle"
+                      >
                         {{ appointment.licenseID }}
                       </td>
-                      <td class="align-middle">{{ appointment.employeeAppointmentID }}</td>
-                      <td class="align-middle">{{ appointment.appointmentStatus }}</td>
-                      <td *ngIf="appComService.isShowEditID" class="align-middle">
+                      <td class="align-middle">
+                        {{ appointment.employeeAppointmentID }}
+                      </td>
+                      <td class="align-middle">
+                        {{ appointment.appointmentStatus }}
+                      </td>
+                      <td
+                        *ngIf="appComService.isShowEditID"
+                        class="align-middle"
+                      >
                         {{ appointment.companyID }}
                       </td>
                       <td class="align-middle">{{ appointment.companyAbv }}</td>
@@ -445,7 +459,7 @@
           class="panel panel-default me-3"
           style="border-radius: 1rem; background-color: white"
         >
-          <div style="padding-top: .5rem;">
+          <div style="padding-top: 0.5rem">
             <ul class="nav nav-tabs">
               <li
                 class="nav-item"
@@ -484,7 +498,7 @@
                       <th scope="col">State</th>
                       <th scope="col">L.O.A</th>
                       <th scope="col">Status</th>
-                      <th scope="col">EmploymentID</th>
+                      <!-- <th scope="col">EmploymentID</th> -->
                       <th scope="col">Name</th>
                       <th scope="col">Res/NonRes</th>
                       <th scope="col">Org. Date</th>
@@ -510,7 +524,7 @@
                         {{ license.lineOfAuthority }}
                       </td>
                       <td class="align-middle">{{ license.licenseStatus }}</td>
-                      <td class="align-middle">{{ license.employmentID }}</td>
+                      <!-- <td class="align-middle">{{ license.employmentID }}</td> -->
                       <td class="align-middle">{{ license.licenseName }}</td>
                       <td class="align-middle">
                         {{ license.resNoneRes ? "Res" : "NonRes" }}
@@ -529,8 +543,35 @@
                           license.licenseExpirationDate | date : "MM/dd/yyyy"
                         }}
                       </td>
-                      <td>
-                        <div class="d-flex justify-content-between mb-3 me-4">
+                      <td class="align-middle">
+                        <div
+                          class="d-flex align-middle justify-content-between mb-3 me-4"
+                        >
+                          <button
+                            class="icon-edit-delete-button"
+                            (click)="
+                              modalService.open('modal-new-tickler');
+                              onSetTypeTickler({ type: 'MEMBER', loa: null })
+                            "
+                            title="Tickle Member"
+                          >
+                            <span class="material-symbols-outlined"> 3p </span>
+                          </button>
+                          <button
+                            class="icon-edit-delete-button"
+                            (click)="
+                              modalService.open('modal-new-tickler');
+                              onSetTypeTickler({
+                                type: 'LOA',
+                                loa: license.lineOfAuthority
+                              })
+                            "
+                            title="Tickle Line of Authority"
+                          >
+                            <span class="material-symbols-outlined">
+                              speaker_notes
+                            </span>
+                          </button>
                           <button
                             class="icon-edit-delete-button"
                             title="Edit License"
