@@ -453,14 +453,20 @@
                               class="material-symbols-outlined"
                               (click)="
                                 onSetOpenLicenseID(license.employeeLicenseId);
-                                openConfirmDialog('deleteLicAppt', 'License Appointment', {
-                                  employeeAppointmentID: appointment.employeeAppointmentID,
-                                  employeeLicenseID: appointment.employeeLicenseID,
-                                  state: license.licenseState,
-                                  status: appointment.appointmentStatus,
-                                  loa: license.lineOfAuthority,
-                                  coAbv: appointment.companyAbv
-                                })
+                                openConfirmDialog(
+                                  'deleteLicAppt',
+                                  'License Appointment',
+                                  {
+                                    employeeAppointmentID:
+                                      appointment.employeeAppointmentID,
+                                    employeeLicenseID:
+                                      appointment.employeeLicenseID,
+                                    state: license.licenseState,
+                                    status: appointment.appointmentStatus,
+                                    loa: license.lineOfAuthority,
+                                    coAbv: appointment.companyAbv
+                                  }
+                                )
                               "
                               title="Delete Appointment"
                             >
@@ -509,7 +515,7 @@
                 >
               </li>
             </ul>
-            
+
             <div class="tab-content">
               <div
                 id="license"
@@ -768,15 +774,23 @@
                             <span
                               class="material-symbols-outlined"
                               (click)="
-                                onSetOpenLicenseID(appointment.employeeLicenseID);
-                                openConfirmDialog('deleteLicAppt', 'License Appointment', {
-                                  employeeAppointmentID: appointment.employeeAppointmentID,
-                                  employeeLicenseID: appointment.employeeLicenseID,
-                                  state: appointment.licenseState,
-                                  status: appointment.appointmentStatus,
-                                  loa: appointment.lineOfAuthority,
-                                  coAbv: appointment.companyAbv
-                                })
+                                onSetOpenLicenseID(
+                                  appointment.employeeLicenseID
+                                );
+                                openConfirmDialog(
+                                  'deleteLicAppt',
+                                  'License Appointment',
+                                  {
+                                    employeeAppointmentID:
+                                      appointment.employeeAppointmentID,
+                                    employeeLicenseID:
+                                      appointment.employeeLicenseID,
+                                    state: appointment.licenseState,
+                                    status: appointment.appointmentStatus,
+                                    loa: appointment.lineOfAuthority,
+                                    coAbv: appointment.companyAbv
+                                  }
+                                )
                               "
                               title="Delete Appointment"
                             >
@@ -792,30 +806,6 @@
             </div>
           </div>
         </div>
-        <!-- <div class="row">
-        <table>
-          <thead>
-            <tr style="background-color: whitesmoke">
-              <th scope="col">
-                *
-              </th>
-              <th scope="col">State</th>
-              <th scope="col">L.O.A</th>
-              <th scope="col">Status</th>
-              <th scope="col">EmploymentID</th>
-              <th scope="col">Name</th>
-              <th scope="col">Res/NonRes</th>
-              <th scope="col">Org. Date</th>
-              <th scope="col">LOA Date</th>
-              <th scope="col">Eff. Date</th>
-              <th scope="col">Exp. Date</th>
-              <th scope="col" class="text-center" style="width: 10rem">
-                ACTION
-              </th>
-            </tr>
-          </thead>
-        </table>
-      </div> -->
       </div>
       <!-- <div
         class="row"

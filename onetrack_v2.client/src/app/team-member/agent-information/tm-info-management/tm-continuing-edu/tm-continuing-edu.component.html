@@ -27,7 +27,7 @@
           </tr>
         </thead>
         <tbody class="bg-body">
-          <tr *ngFor="let ce of agentInfo.contEduRequiredItems">
+          <tr *ngFor="let ce of agentInfo.contEduRequiredItems" class="no-hover-bg">
             <td>{{ ce.contEducationRequirementID }}</td>
             <td>{{ ce.educationStartDate | date }}</td>
             <td>{{ ce.educationEndDate | date }}</td>
@@ -94,7 +94,7 @@
   </div>
   <div class="row mt-3" *ngIf="agentInfo?.contEduCompletedItems?.length != 0">
     <div class="col d-flex">
-      <table class="w-100">
+      <table class="table w-100">
         <thead>
           <tr style="background-color: gainsboro">
             <!-- <th scope="col">Taken ID</th> -->

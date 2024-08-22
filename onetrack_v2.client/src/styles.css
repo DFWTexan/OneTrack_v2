@@ -234,3 +234,15 @@ body {
   text-decoration: underline;
 }
 
+.table tbody tr:hover {
+  background-color: #FFF0F5;
+}
+
+.no-hover-bg {
+  background-color: inherit !important;
+}
+
+.no-hover-bg:hover {
+  background-color: inherit !important;
+}
+
