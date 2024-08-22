@@ -166,15 +166,16 @@
                       >
                     </div>
                     <div
+                      class="align-middle"
                       style="
                         display: flex;
                         padding-bottom: 2.5rem;
                         height: 100%;
                       "
                     >
-                      <!-- EDIT/ADD Appointment Buttons -->
+                      <!-- EDIT/DELETE & ADD Appointment Buttons -->
                       <button
-                        class="icon-edit-delete-button me-4"
+                        class="icon-edit-delete-button"
                         style="opacity: 0.75"
                         (click)="
                           onSetOpenLicenseID(license.employeeLicenseId);
@@ -182,17 +183,31 @@
                           storeLicApptLicenseID(license.licenseID);
                           modalService.open('modal-edit-license-info')
                         "
-                        title="Edit License Info"
+                        title="Edit License"
                       >
                         <span
                           class="material-symbols-outlined"
-                          style="font-size: 35px"
                         >
                           edit
                         </span>
                       </button>
+                      <button class="icon-edit-delete-button">
+                        <span
+                          class="material-symbols-outlined"
+                          (click)="
+                            onSetOpenLicenseID(license.employeeLicenseId);
+                            openConfirmDialog('deleteLicense', 'License ', {
+                              employeeLicenseID: license.employeeLicenseId,
+                              licenseName: license.licenseName
+                            })
+                          "
+                          title="Delete License"
+                        >
+                          delete
+                        </span>
+                      </button>
                       <button
-                        class="icon-add-button"
+                        class="icon-add-button me-5"
                         (click)="
                           onSetOpenLicenseID(license.employeeLicenseId);
                           agentDataService.storeLicenseAppt('INSERT', license);
@@ -203,7 +218,6 @@
                       >
                         <span
                           class="material-symbols-outlined"
-                          style="font-size: 35px"
                         >
                           format_list_bulleted_add
                         </span>
@@ -237,7 +251,7 @@
                       }}</span>
                     </div>
                     <div class="me-5">
-                      <label>Original Date:</label><br /><span style="color: black;">{{
+                      <label>Org Date:</label><br /><span style="color: black;">{{
                         license.originalIssueDate | date : "MM/dd/yyyy"
                       }}</span>
                     </div>
@@ -247,12 +261,12 @@
                       }}</span>
                     </div>
                     <div class="me-5">
-                      <label>Effective Date:</label><br /><span style="color: black;">{{
+                      <label>Eff Date:</label><br /><span style="color: black;">{{
                         license.licenseEffectiveDate | date : "MM/dd/yyyy"
                       }}</span>
                     </div>
                     <div class="me-5">
-                      <label>Expire Date:</label><br /><span style="color: black;">{{
+                      <label>Exp Date:</label><br /><span style="color: black;">{{
                         license.licenseExpirationDate | date : "MM/dd/yyyy"
                       }}</span>
                     </div>
