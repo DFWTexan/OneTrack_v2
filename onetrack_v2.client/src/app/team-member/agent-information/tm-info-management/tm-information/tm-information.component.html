@@ -194,6 +194,7 @@
                             onSetOpenLicenseID(license.employeeLicenseId);
                             openConfirmDialog('deleteLicense', 'License ', {
                               employeeLicenseID: license.employeeLicenseId,
+                              employmentID: agentInfo.employmentID,
                               licenseName: license.licenseName
                             })
                           "
@@ -659,6 +660,7 @@
                                 onSetOpenLicenseID(license.employeeLicenseId);
                                 openConfirmDialog('deleteLicense', 'License ', {
                                   employeeLicenseID: license.employeeLicenseId,
+                                  employmentID: agentInfo.employmentID,
                                   licenseName: license.licenseName
                                 })
                               "

@@ -112,7 +112,8 @@ export class LicenseInfoComponent implements OnInit, OnDestroy {
 
         dialogRef.afterClosed().subscribe((result) => {
           if (result) {
-            this.agentDataService
+            this.subscriptions.add(
+              this.agentDataService
               .deleteAgentLicense({
                 employmentID: this.vObject.employmentID,
                 employeeLicenseID: this.vObject.employeeLicenseID,
@@ -134,7 +135,9 @@ export class LicenseInfoComponent implements OnInit, OnDestroy {
                   console.error(error);
                   // handle the error here
                 },
-              });
+              })
+            );
+            
           }
         });
         break;

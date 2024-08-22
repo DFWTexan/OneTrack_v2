@@ -166,27 +166,35 @@ export class TmInformationComponent implements OnInit, OnDestroy {
           },
         });
 
-        // dialogRef_License.afterClosed().subscribe((result) => {
-        //   if (result) {
-        //     this.subscriptions.add(
-        //       this.licenseIncentiveInfoDataService
-        //         .deleteLicenseAppointment({
-        //           employeeAppointmentID: vObject.employeeAppointmentID,
-        //           employeeLicenseID: vObject.employeeLicenseID,
-        //           userSOEID: this.userInfoDataService.userAcctInfo.soeid,
-        //         })
-        //         .subscribe({
-        //           next: (response) => {
-        //             alert('License Appointment Deleted');
-        //           },
-        //           error: (error) => {
-        //             console.error(error);
-        //             // handle the error here
-        //           },
-        //         })
-        //     );
-        //   }
-        // });
+        dialogRef_License.afterClosed().subscribe((result) => {
+          if (result) {
+            this.subscriptions.add(
+              this.agentDataService
+              .deleteAgentLicense({
+                employmentID: this.vObject.employmentID,
+                employeeLicenseID: this.vObject.employeeLicenseID,
+                userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+              })
+              .subscribe({
+                next: (response) => {
+                  this.router
+                    .navigateByUrl('/', { skipLocationChange: true })
+                    .then(() => {
+                      this.router.navigate([
+                        'team/agent-info',
+                        this.agentDataService.agentInformation.employeeID,
+                        'tm-license-mgmt',
+                      ]);
+                    });
+                },
+                error: (error) => {
+                  console.error(error);
+                  // handle the error here
+                },
+              })
+            );
+          }
+        });
         break;
       default:
         break;
