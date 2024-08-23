@@ -231,8 +231,8 @@
                           color:
                             license.licenseStatus === 'Active' ? 'green' : ''
                         }"
-                        style="font-size: smaller; font-weight: 600"
-                        >{{ license.licenseStatus }}</span
+                        style="font-weight: 600"
+                        >{{ license.licenseStatus.toUpperCase() }}</span
                       >
                     </div>
                     <div class="me-5">
@@ -403,7 +403,7 @@
                         {{ appointment.employeeAppointmentID }}
                       </td>
                       <td class="align-middle">
-                        {{ appointment.appointmentStatus }}
+                        {{ appointment.appointmentStatus.toUpperCase() }}
                       </td>
                       <td
                         *ngIf="appComService.isShowEditID"
@@ -568,7 +568,7 @@
                       <td class="align-middle">
                         {{ license.lineOfAuthority }}
                       </td>
-                      <td class="align-middle">{{ license.licenseStatus }}</td>
+                      <td class="align-middle">{{ license.licenseStatus?.toUpperCase() }}</td>
                       <td class="align-middle">
                         {{ license.employeeLicenseId }}
                       </td>
@@ -731,7 +731,7 @@
                         {{ appointment.employeeLicenseID }}
                       </td>
                       <td class="align-middle">
-                        {{ appointment.appointmentStatus }}
+                        {{ appointment.appointmentStatus?.toUpperCase() }}
                       </td>
                       <!-- <td class="align-middle">{{ appointment.companyID }}</td> -->
                       <td class="align-middle">{{ appointment.companyAbv }}</td>
