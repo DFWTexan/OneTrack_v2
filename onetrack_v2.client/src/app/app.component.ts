@@ -247,6 +247,24 @@ export class AppComponent implements OnInit, OnDestroy {
     }, 200);
   }
 
+  // Administration
+  onCompanyEditClick(event: Event) {
+    event.preventDefault();
+
+    const dialogRef = this.dialog.open(InfoDialogComponent, {
+      data: { message: 'Loading Company Edit...' },
+    });
+
+    // Delay the execution of the blocking operation
+    setTimeout(() => {
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/admin/company-edit']);
+      });
+      dialogRef.close();
+    }, 100);
+  }
+
+  // Team Members
   onAddMemberClick(event: Event) {
     event.preventDefault();
 
@@ -278,7 +296,8 @@ export class AppComponent implements OnInit, OnDestroy {
       dialogRef.close();
     }, 100);
   }
-
+  
+  // Worklists
   onWorklistClick(event: Event) {
     event.preventDefault();
 
