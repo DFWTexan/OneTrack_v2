@@ -11,9 +11,6 @@
             userAcctInfoDataService.userAcctInfo.soeid
           }}) - Work List
         </mat-panel-title>
-        <!-- <mat-panel-description>
-              This is a summary of the content
-            </mat-panel-description> -->
       </mat-expansion-panel-header>
       <div
         class="row align-middle mb-2"
@@ -43,20 +40,6 @@
             </option>
           </select>
         </div>
-        <!-- <div class="col-md-3">
-            <label for="licenseTech">License Tech:</label><br />
-            <select
-              class="form-select select-size-med-small"
-              name="modifiedBy"
-              id="modifiedBy"
-              (change)="changeModifiedBy($event)"
-              [(ngModel)]="modifiedBySelected"
-            >
-              <option *ngFor="let tech of modifiedBy" [value]="tech">
-                {{ tech }}
-              </option>
-            </select>
-          </div> -->
         <div class="col-md-3">
           <label for="worklistdate">Date:</label><br />
           <input
@@ -66,11 +49,6 @@
             [(ngModel)]="worklistdate"
           />
         </div>
-        <!-- <div
-            class="col-md-3 d-flex align-items-center justify-content-center"
-          >
-            <button class="btn btn-primary" type="submit">Search</button>
-          </div> -->
       </div>
       <mat-divider></mat-divider>
       <div class="row" *ngIf="worklistData.length == 0">
@@ -191,8 +169,8 @@
         <div class="col mt-3">
           <table class="table">
             <thead>
-              <tr style="background-color: whitesmoke; font-size: smaller;">
-                <th scope="col">EmployeeID</th>
+              <tr style="background-color: whitesmoke; font-size: smaller">
+                <th scope="col">Member #</th>
                 <th scope="col">State</th>
                 <th scope="col">Student Name</th>
                 <th scope="col">Title</th>
@@ -203,7 +181,7 @@
                 <th scope="col">Completed</th>
               </tr>
             </thead>
-            <tbody style="font-size: smaller;">
+            <tbody style="font-size: smaller">
               <tr *ngFor="let data of adBankerData">
                 <td class="align-middle">
                   {{ data.employeeId }}
@@ -223,40 +201,19 @@
                 <td class="align-middle">
                   {{ data.reportedDate | date : "MM/dd/yyyy" }}
                 </td>
-                <td class="align-middle text-center">{{ data.totalCredits | number:'1.2-2' }}</td>
+                <td class="align-middle text-center">
+                  {{ data.totalCredits | number : "1.2-2" }}
+                </td>
                 <td class="align-middle">
                   {{ data.createDate | date : "MM/dd/yyyy, h:mm a" }}
                 </td>
-                <!-- <td class="align-middle">{{ data.isImportComplete }}</td> -->
                 <td class="align-middle checkbox-container">
-                  <input type="checkbox" [checked]="data.isImportComplete" [disabled]="data.isImportComplete">
+                  <input
+                    type="checkbox"
+                    [checked]="data.isImportComplete"
+                    [disabled]="data.isImportComplete"
+                  />
                 </td>
-
-                <!-- <td style="width: 10rem">
-                  <div
-                    class="d-flex justify-content-between mb-3 me-4"
-                    style="min-width: 10rem; max-width: 10rem"
-                  >
-                    <button
-                      class="icon-edit-delete-button"
-                      (click)="
-                        agentDataService.storeEmploymentTransferHistory(
-                          'EDIT',
-                          emp
-                        );
-                        modalService.open('modal-edit-emp-history')
-                      "
-                    >
-                      <span class="material-symbols-outlined"> edit </span>
-                    </button>
-                    <button
-                      class="icon-edit-delete-button"
-                      (click)="openConfirmDialog('deleteEmploymentHistory', 'Employment History Item', emp)"
-                    >
-                      <span class="material-symbols-outlined"> delete </span>
-                    </button>
-                  </div>
-                </td> -->
               </tr>
             </tbody>
           </table>
@@ -368,32 +325,6 @@
                   {{ log.auditValueBefore }}
                 </td>
                 <td class="align-middle">{{ log.auditValueAfter }}</td>
-
-                <!-- <td style="width: 10rem">
-                  <div
-                    class="d-flex justify-content-between mb-3 me-4"
-                    style="min-width: 10rem; max-width: 10rem"
-                  >
-                    <button
-                      class="icon-edit-delete-button"
-                      (click)="
-                        agentDataService.storeEmploymentTransferHistory(
-                          'EDIT',
-                          emp
-                        );
-                        modalService.open('modal-edit-emp-history')
-                      "
-                    >
-                      <span class="material-symbols-outlined"> edit </span>
-                    </button>
-                    <button
-                      class="icon-edit-delete-button"
-                      (click)="openConfirmDialog('deleteEmploymentHistory', 'Employment History Item', emp)"
-                    >
-                      <span class="material-symbols-outlined"> delete </span>
-                    </button>
-                  </div>
-                </td> -->
               </tr>
             </tbody>
           </table>
