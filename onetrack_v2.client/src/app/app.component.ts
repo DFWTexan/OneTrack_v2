@@ -247,6 +247,22 @@ export class AppComponent implements OnInit, OnDestroy {
     }, 200);
   }
 
+  onLinkClick(event: Event, vObject: any) {
+    event.preventDefault();
+
+    const dialogRef = this.dialog.open(InfoDialogComponent, {
+      data: { message: vObject.message },
+    });
+
+    // Delay the execution of the blocking operation
+    setTimeout(() => {
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate([vObject.route]);
+      });
+      dialogRef.close();
+    }, 100);
+  }
+
   // Administration
   onCompanyEditClick(event: Event) {
     event.preventDefault();
