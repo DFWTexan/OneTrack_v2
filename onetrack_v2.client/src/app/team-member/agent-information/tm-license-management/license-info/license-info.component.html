@@ -57,7 +57,7 @@
       </p>
       <p>
         <strong>Status:</strong> <br />
-        {{ licenseMgmtData[currentIndex].licenseStatus }}
+        {{ licenseMgmtData[currentIndex].licenseStatus.toUpperCase() }}
       </p>
       <p>
         <strong>Number:</strong> <br />
@@ -178,23 +178,23 @@
             let appointment of licenseMgmtData[currentIndex].licenseAppointments
           "
         >
-          <td>{{ appointment.appointmentStatus }}</td>
-          <td *ngIf="appComService.isShowEditID">
+          <td class="align-middle">{{ appointment.appointmentStatus.toUpperCase() }}</td>
+          <td class="align-middle" *ngIf="appComService.isShowEditID">
             {{ appointment.licenseID }}
           </td>
-          <td *ngIf="appComService.isShowEditID">
+          <td class="align-middle" *ngIf="appComService.isShowEditID">
             {{ appointment.companyID }}
           </td>
-          <td>{{ appointment.companyAbv }}</td>
-          <td>{{ appointment.carrierDate | date : "MM/dd/yyyy" }}</td>
-          <td>
+          <td class="align-middle">{{ appointment.companyAbv }}</td>
+          <td class="align-middle">{{ appointment.carrierDate | date : "MM/dd/yyyy" }}</td>
+          <td class="align-middle">
             {{ appointment.appointmentEffectiveDate | date : "MM/dd/yyyy" }}
           </td>
-          <td>{{ appointment.appointmentExpireDate | date : "MM/dd/yyyy" }}</td>
-          <td>
+          <td class="align-middle">{{ appointment.appointmentExpireDate | date : "MM/dd/yyyy" }}</td>
+          <td class="align-middle">
             {{ appointment.appointmentTerminationDate | date : "MM/dd/yyyy" }}
           </td>
-          <td style="min-width: 10rem">
+          <td class="align-middle" style="min-width: 10rem">
             <div class="d-flex justify-content-between me-4">
               <button
                 class="icon-edit-delete-button"

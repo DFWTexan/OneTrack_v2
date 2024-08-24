@@ -63,7 +63,7 @@
         >
           <option
             *ngFor="let status of backgroundStatuses"
-            [value]="status.lkpValue"
+            [value]="status.lkpValue.toUpperCase()"
           >
             {{ status.lkpValue }}
           </option>

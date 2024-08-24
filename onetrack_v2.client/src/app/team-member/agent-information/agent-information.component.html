@@ -2,8 +2,8 @@
   <div class="row mt-3">
     <ng-container *ngIf="agentComService.isShowLicenseMgmt">
       <div class="col d-flex align-items-center">
-        <div class="h1-title ms-3">Agent Information</div>
-        <div class="h2-title ms-3">License Management</div>
+        <div class="h1-title ms-3"><span style="color: lightgrey;">Agent Information:</span></div>
+        <div class="h2-title ms-3"><span style="color: lightgrey;">License Management</span></div>
       </div>
       <!-- BEGIN - LicenseMgmt Exit -->
       <div class="col d-flex justify-content-end mt-1 me-3">
@@ -21,7 +21,7 @@
 
     <ng-container *ngIf="!agentComService.isShowLicenseMgmt">
       <div class="col d-flex align-items-center">
-        <div class="h1-title ms-3">Agent Information</div>
+        <div class="h1-title ms-3"><span style="color: lightgrey;">Agent Information</span></div>
       </div>
     </ng-container>
   </div>
