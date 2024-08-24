@@ -64,87 +64,152 @@
         [class.mat-elevation-z0]="true"
         [disabled]="!appComService.isLoggedIn"
       >
-        <mat-expansion-panel-header >
+        <mat-expansion-panel-header>
           <mat-icon>business</mat-icon><span>Administration</span>
         </mat-expansion-panel-header>
         <mat-nav-list>
           <a
             mat-list-item
             routerLinkActive="active"
-            (click)="onCompanyEditClick($event)"
+            (click)="
+              onLinkClick($event, {
+                message: 'Loading Company Edit...',
+                route: '/admin/company-edit'
+              })
+            "
             >Company Edit</a
           >
           <a
             mat-list-item
             routerLinkActive="active"
-            (click)="onCompanyRequirementsClick($event)"
+            (click)="
+              onLinkClick($event, {
+                message: 'Loading Company Requirements...',
+                route: '/admin/company-requirements'
+              })
+            "
             >Company Requirements</a
           >
           <a
             mat-list-item
             routerLinkActive="active"
-            (click)="onConEduEditClick($event)"
+            (click)="
+              onLinkClick($event, {
+                message: 'Loading Contiuing Edu Edit...',
+                route: '/admin/con-education-edit'
+              })
+            "
             >Con-Education Edit</a
           >
           <a
             mat-list-item
             routerLinkActive="active"
-            (click)="onDropdownListEditClick($event)"
+            (click)="
+              onLinkClick($event, {
+                message: 'Loading Dropdown List Edit...',
+                route: '/admin/dropdown-list-edit'
+              })
+            "
             >DropDown List Edit</a
           >
           <a
             mat-list-item
             routerLink="/admin/examp-edit"
             routerLinkActive="active"
-            (click)="onExamEditClick($event)"
+            (click)="
+              onLinkClick($event, {
+                message: 'Loading Exam Edit...',
+                route: '/admin/examp-edit'
+              })
+            "
             >Exam Edit</a
           >
           <a
             mat-list-item
             routerLinkActive="active"
-            (click)="onJobTitleLicensedClick($event)"
+            (click)="
+              onLinkClick($event, {
+                message: 'Loading Job Title Licensed...',
+                route: '/admin/job-title-license'
+              })
+            "
             >Job Title Licensed</a
           >
           <a
             mat-list-item
             routerLinkActive="active"
-            (click)="onLicenseEditClick($event)"
+            (click)="
+              onLinkClick($event, {
+                message: 'Loading License Edit...',
+                route: '/admin/license-edit'
+              })
+            "
             >License Edit</a
           >
           <a
             mat-list-item
             routerLinkActive="active"
-            (click)="onLicenseTechEditClick($event)"
+            (click)="
+              onLinkClick($event, {
+                message: 'Loading License Tech Edit...',
+                route: '/admin/license-tech-edit'
+              })
+            "
             >License Tech Edit</a
           >
           <a
             mat-list-item
             routerLinkActive="active"
-            (click)="onPreEduEditClick($event)"
+            (click)="
+              onLinkClick($event, {
+                message: 'Loading Pre Edu Edit...',
+                route: '/admin/pre-education-edit'
+              })
+            "
             >Pre Education Edit</a
           >
           <a
             mat-list-item
             routerLinkActive="active"
-            (click)="onProductEditClick($event)"
+            (click)="
+              onLinkClick($event, {
+                message: 'Loading Product Edit...',
+                route: '/admin/product-edit'
+              })
+            "
             >Product Edit</a
           >
           <a
             mat-list-item
             routerLinkActive="active"
-            (click)="onStateLicenseRequirementsClick($event)"
+            (click)="
+              onLinkClick($event, {
+                message: 'Loading State License Requirements...',
+                route: '/admin/state-lic-reuirements'
+              })
+            "
             >State License Requirements</a
           >
           <a
             mat-list-item
             routerLinkActive="active"
-            (click)="onStateProvinceEditClick($event)"
+            (click)="
+              onLinkClick($event, {
+                message: 'Loading State Province Edit...',
+                route: '/admin/state-province-edit'
+              })
+            "
             >State Province Edit</a
           >
           <a
             mat-list-item
             routerLinkActive="active"
-            (click)="onXBorLicenseRequirementsClick($event)"
+            (click)="
+              onLinkClick($event, {
+                message: 'Loading XBor License Requirements...',
+                route: '/admin/xbor-lic-requirements'
+              })
+            "
             >XBor License Requirements</a
           >
         </mat-nav-list>
@@ -162,14 +227,24 @@
           <a
             mat-list-item
             routerLinkActive="active"
-            (click)="onAddMemberClick($event)"
+            (click)="
+              onLinkClick($event, {
+                message: 'Loading Add Team Member...',
+                route: '/team/add-member'
+              })
+            "
           >
             <mat-icon>person_add</mat-icon><span>Add Member</span>
           </a>
           <a
             mat-list-item
             routerLinkActive="active"
-            (click)="onSearchMemberClick($event)"
+            (click)="
+              onLinkClick($event, {
+                message: 'Loading Search Team Member...',
+                route: '/team/search-members'
+              })
+            "
           >
             <mat-icon>search</mat-icon><span>Search Members</span>
           </a>
@@ -185,7 +260,12 @@
 
       <mat-list-item
         [disabled]="!appComService.isLoggedIn"
-        (click)="onWorklistClick($event)"
+        (click)="
+              onLinkClick($event, {
+                message: 'Loading Worklist...',
+                route: '/work-lists'
+              })
+            "
       >
         <mat-icon>list_alt</mat-icon>
         <span style="font-size: 1.5rem; font-weight: 500" class="text-center">
