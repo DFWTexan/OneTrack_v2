@@ -16,6 +16,10 @@ body {
   margin: 1.75rem auto;
 }
 
+.active {
+  background-color: #E6E6FA;
+}
+
 /* Ensure form content fits within the modal */
 .modal-content {
   overflow: hidden; /* This will keep the content within the modal */

@@ -27,7 +27,7 @@ const routes: Routes = [
     component: ContinueEducationEditComponent,
   },
   { path: 'admin/dropdown-list-edit', component: DropdownListEditComponent },
-  { path: 'admin/examp-edit', component: ExamEditComponent },
+  { path: 'admin/exam-edit', component: ExamEditComponent },
   { path: 'admin/job-title-license', component: JobTitleLicenseComponent },
   { path: 'admin/license-edit', component: LicenseEditComponent },
   { path: 'admin/license-tech-edit', component: LicenseTechEditComponent },

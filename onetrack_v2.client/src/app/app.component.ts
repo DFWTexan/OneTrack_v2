@@ -220,21 +220,21 @@ export class AppComponent implements OnInit, OnDestroy {
     );
   }
 
-  onDashboardClick(event: Event) {
-    event.preventDefault();
+  // onDashboardClick(event: Event) {
+  //   event.preventDefault();
 
-    const dialogRef = this.dialog.open(InfoDialogComponent, {
-      data: { message: 'Loading Dashboard...' },
-    });
+  //   const dialogRef = this.dialog.open(InfoDialogComponent, {
+  //     data: { message: 'Loading Dashboard...' },
+  //   });
 
-    // Delay the execution of the blocking operation
-    setTimeout(() => {
-      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-        this.router.navigate(['/dashboard']);
-      });
-      dialogRef.close();
-    }, 100);
-  }
+  //   // Delay the execution of the blocking operation
+  //   setTimeout(() => {
+  //     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+  //       this.router.navigate(['/dashboard']);
+  //     });
+  //     dialogRef.close();
+  //   }, 100);
+  // }
 
   onPanelOpened(vTitle: string) {
     const dialogRef = this.dialog.open(InfoDialogComponent, {
