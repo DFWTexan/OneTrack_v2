@@ -247,3 +247,7 @@ body {
   background-color: inherit !important;
 }
 
+.hover-pointer {
+  cursor: pointer;
+}
+

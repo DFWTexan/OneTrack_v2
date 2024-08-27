@@ -1,41 +1,66 @@
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import {
+  catchError,
+  Observable,
+  Subject,
+  Subscription,
+  throwError,
+} from 'rxjs';
 
 import { environment } from '../../environments/environment';
+import { HttpClient } from '@angular/common/http';
+import { ErrorMessageService } from '../error/error.message.service';
 
 @Injectable({
-    providedIn: 'root',
-  })
+  providedIn: 'root',
+})
 export class AppComService {
-    isLoggedIn = false;
-    isLoggedInChanged = new Subject<boolean>();
-    loginErrorMsg = '';
-    loginErrorMsgChanged = new Subject<string>();
-    isShowEditID = environment.isShowEditID;
-    tickleToggle = false;
-    tickleToggleChanged = new Subject<boolean>();
-    isLegacyView = false;
-    isLegacyViewChanged = new Subject<boolean>();
-    
-    constructor() {}
+  isLoggedIn = false;
+  isLoggedInChanged = new Subject<boolean>();
+  loginErrorMsg = '';
+  loginErrorMsgChanged = new Subject<string>();
+  isShowEditID = environment.isShowEditID;
+  tickleToggle = false;
+  tickleToggleChanged = new Subject<boolean>();
+  isLegacyView = false;
+  isLegacyViewChanged = new Subject<boolean>();
 
-    toggleTickler() {
-        this.tickleToggle = !this.tickleToggle;
-        this.tickleToggleChanged.next(this.tickleToggle);
-    }
+  subscriptions: Subscription = new Subscription();
 
-    updateIsLoggedIn(isLoggedIn: boolean) {
-        this.isLoggedIn = isLoggedIn;
-        this.isLoggedInChanged.next(this.isLoggedIn);
-    }
+  constructor(
+    public errorMessageService: ErrorMessageService,
+    private http: HttpClient
+  ) {}
 
-    updateLoginErrorMsg(loginErrorMsg: string) {
-        this.loginErrorMsg = loginErrorMsg;
-        this.loginErrorMsgChanged.next(this.loginErrorMsg);
-    }
+  toggleTickler() {
+    this.tickleToggle = !this.tickleToggle;
+    this.tickleToggleChanged.next(this.tickleToggle);
+  }
 
-    updateIsLegacyView(isLegacyView: boolean) {
-        this.isLegacyView = isLegacyView;
-        this.isLegacyViewChanged.next(this.isLegacyView);
-    }
+  updateIsLoggedIn(isLoggedIn: boolean) {
+    this.isLoggedIn = isLoggedIn;
+    this.isLoggedInChanged.next(this.isLoggedIn);
+  }
+
+  updateLoginErrorMsg(loginErrorMsg: string) {
+    this.loginErrorMsg = loginErrorMsg;
+    this.loginErrorMsgChanged.next(this.loginErrorMsg);
+  }
+
+  updateIsLegacyView(isLegacyView: boolean) {
+    this.isLegacyView = isLegacyView;
+    this.isLegacyViewChanged.next(this.isLegacyView);
+  }
+
+  openDocument(url: string): Observable<Blob> {
+    return this.http
+      .get(url, { responseType: 'blob' })
+      .pipe(catchError(this.handleError));
+  }
+
+  private handleError(error: any) {
+    return throwError(
+      () => new Error('Failed to load document - please try again later.')
+    );
+  }
 }

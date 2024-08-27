@@ -1,7 +1,10 @@
-<div style="margin-left: 3rem; margin-right: 3rem">
+<div class="container" style="margin-left: 3rem; margin-right: 3rem">
   <div class="row">
     <div class="col">
-      <h1 class="text-end" style="font-style: italic; color: lightgrey; margin-right: 10rem;">
+      <h1
+        class="text-end"
+        style="font-style: italic; color: lightgrey; margin-right: 10rem"
+      >
         State License Requirements
       </h1>
     </div>
@@ -149,10 +152,24 @@
                 />
               </div>
             </td>
-            <td class="align-middle" colspan="2">
+            <td class="justify-content-start align-middle text-left" colspan="2">
               <div class="d-flex flex-column">
-                <a [href]= "stateReq.startDocument" target="_blank" style="font-size: medium;" >{{ stateReq.startDocument }}</a>
-                <a [href]= "stateReq.renewalDocument" target="_blank" style="font-size: medium;" >{{ stateReq.renewalDocument }}</a>
+                <!-- <a [href]= "stateReq.startDocument" target="_blank" style="font-size: medium;" >{{ stateReq.startDocument }}</a> -->
+                <button
+                  class="btn btn-link hover-pointer"
+                  (click)="onOpenDocument(stateReq.startDocument)"
+                  style="font-size: medium"
+                >
+                  {{ stateReq.startDocument }}
+                </button>
+                <!-- <a [href]= "stateReq.renewalDocument" target="_blank" style="font-size: medium;" >{{ stateReq.renewalDocument }}</a> -->
+                <button
+                  class="btn btn-link hover-pointer"
+                  (click)="onOpenDocument(stateReq.renewalDocument)"
+                  style="font-size: medium"
+                >
+                  {{ stateReq.renewalDocument }}
+                </button>
               </div>
             </td>
             <td class="align-middle" style="width: 10rem">
@@ -171,7 +188,11 @@
                   <span
                     class="material-symbols-outlined"
                     (click)="
-                      openConfirmDialog('deletelicenseReq', 'LicenseRequirement', stateReq)
+                      openConfirmDialog(
+                        'deletelicenseReq',
+                        'LicenseRequirement',
+                        stateReq
+                      )
                     "
                   >
                     delete

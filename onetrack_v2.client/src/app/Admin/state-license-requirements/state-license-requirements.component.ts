@@ -129,6 +129,20 @@ export class StateLicenseRequirementsComponent implements OnInit, OnDestroy {
     });
   }
 
+  onOpenDocument(url: string) {
+    this.subscriptionData.add(
+      this.appComService.openDocument(url).subscribe({
+        next: (response: Blob) => {
+          const blobUrl = URL.createObjectURL(response);
+          window.open(blobUrl, '_blank');
+        },
+        error: (error) => {
+          this.errorMessageService.setErrorMessage(error.message);
+        },
+      })
+    );
+  }
+
   ngOnDestroy(): void {
     this.subscriptionData.unsubscribe();
   }

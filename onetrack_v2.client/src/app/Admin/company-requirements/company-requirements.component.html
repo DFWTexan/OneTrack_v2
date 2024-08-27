@@ -127,7 +127,13 @@
               {{ company.startAfterDate | date : "MM/dd/yyyy" }}
             </td>
             <td class="align-middle">
-              <a [href]= "company.document" target="_blank" style="font-size: medium;" >{{ company.document }}</a>
+              <button
+                class="btn btn-link hover-pointer"
+                (click)="onOpenDocument(company.document)"
+                style="font-size: medium"
+              >
+                {{ company.document }}
+              </button>
             </td>
             <td class="align-middle" style="width: 10rem">
               <div class="d-flex justify-content-between mb-3 me-4">
