@@ -203,7 +203,7 @@ export class AdminDataService {
   }
 
   // COMPANY REQUIREMENTS
-  fetchCompanyRequirements(workState: string, resState: string | null = null) {
+  fetchCompanyRequirements(workState: string | null = null, resState: string | null = null) {
     const queryParams = `?workState=${workState}&resState=${
       resState ? resState : ''
     }`;

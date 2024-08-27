@@ -20,7 +20,8 @@ import { CompanyRequirement } from '../../_Models';
 export class CompanyRequirementsComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   states: any[] = [];
-  selectedWorkState: string = 'Select';
+  stateRes: any[] = [];
+  selectedWorkState: string | null = null;
   selectedResState: string | null = null;
   companyRequirements: CompanyRequirement[] = [];
 
@@ -37,6 +38,7 @@ export class CompanyRequirementsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.states = ['Select', ...this.conService.getStates()];
+    this.stateRes = ['All', ...this.conService.getStates()];
   }
 
   changeWorkState(event: any) {
@@ -46,26 +48,31 @@ export class CompanyRequirementsComponent implements OnInit, OnDestroy {
     this.selectedWorkState = value;
 
     if (value === 'Select') {
+      this.selectedWorkState = null;
+      this.selectedResState = null;
+      this.loading = false;
+      this.companyRequirements = [];
       return;
     } else {
-      this.loading = false;
-      this.subscriptionData.add(
-        this.adminDataService
-          .fetchCompanyRequirements(value, this.selectedResState)
-          .subscribe({
-            next: (response) => {
-              this.companyRequirements = response;
-              this.loading = false;
-            },
-            error: (error) => {
-              if (error.error && error.error.errMessage) {
-                this.errorMessageService.setErrorMessage(
-                  error.error.errMessage
-                );
-              }
-            },
-          })
-      );
+      this.loading = true;
+      // this.subscriptionData.add(
+      //   this.adminDataService
+      //     .fetchCompanyRequirements(value, this.selectedResState)
+      //     .subscribe({
+      //       next: (response) => {
+      //         this.companyRequirements = response;
+      //         this.loading = false;
+      //       },
+      //       error: (error) => {
+      //         if (error.error && error.error.errMessage) {
+      //           this.errorMessageService.setErrorMessage(
+      //             error.error.errMessage
+      //           );
+      //         }
+      //       },
+      //     })
+      // );
+      this.fetchCompanyRequirements();
     }
   }
 
@@ -75,12 +82,17 @@ export class CompanyRequirementsComponent implements OnInit, OnDestroy {
     const value = target.value;
     this.selectedResState = value;
 
-    if (value === 'Select') {
-      return;
-    } else {
-      this.loading = false;
+    if (value === 'All') {
+      this.selectedResState = null;
+    } 
+    this.fetchCompanyRequirements();
+  }
+
+  fetchCompanyRequirements() {
+    this.loading = true;
+    this.subscriptionData.add(
       this.adminDataService
-        .fetchCompanyRequirements(this.selectedWorkState, value)
+        .fetchCompanyRequirements(this.selectedWorkState, this.selectedResState)
         .subscribe({
           next: (response) => {
             this.companyRequirements = response;
@@ -91,8 +103,8 @@ export class CompanyRequirementsComponent implements OnInit, OnDestroy {
               this.errorMessageService.setErrorMessage(error.error.errMessage);
             }
           },
-        });
-    }
+        })
+    );
   }
 
   onOpenDocument(url: string) {
