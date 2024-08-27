@@ -129,11 +129,18 @@
       <button class="icon-edit-delete-button" type="button" style="padding-bottom: 3rem;">
         <span class="material-symbols-outlined me-3">delete_forever</span>
       </button>
-      <span
+      <!-- <span
         class="ms-5 mt-3 mb-3"
         style="font-size: medium; font-weight: 500"
-        >{{ companyReqForm.get("document")?.value }}</span
-      >
+        >{{ companyReqForm.get("document")?.value }}
+      </span> -->
+      <button
+                class="btn btn-link hover-pointer"
+                (click)="onOpenDocument(companyReqForm.get('document')?.value)"
+                style="font-size: medium"
+              >
+                {{ companyReqForm.get("document")?.value }}
+              </button>
     </div>
   </div>
 

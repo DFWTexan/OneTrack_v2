@@ -227,12 +227,32 @@
       <mat-divider></mat-divider>
 
       <div class="row mt-3" *ngIf="emailAttachments.length > 0">
-        <div class="col d-flex" *ngFor="let file of emailAttachments; let i = index">
+        <div
+          class="col d-flex"
+          *ngFor="let file of emailAttachments; let i = index"
+        >
           <div class="d-flex mb-3 me-5 justify-content-start">
-            <span class="ms-3 me-3" *ngIf="i > 0" style="font-size: 4rem; color: gainsboro;">|</span>
-            <span class="material-symbols-outlined">
-            attach_file
-            </span><a [href]= "documentPath + file" target="_blank" style="font-size: larger;" >{{ file }}</a></div>
+            <span
+              class="ms-3 me-3"
+              *ngIf="i > 0"
+              style="font-size: 4rem; color: gainsboro"
+              >|</span
+            >
+            <span class="material-symbols-outlined"> attach_file </span>
+            <!-- <a
+              [href]="documentPath + file"
+              target="_blank"
+              style="font-size: larger"
+              >{{ file }}</a
+            > -->
+            <button
+              class="btn btn-link hover-pointer"
+              (click)="onOpenDocument(documentPath + file)"
+              style="font-size: medium"
+            >
+              {{ file }}
+            </button>
+          </div>
         </div>
       </div>
 

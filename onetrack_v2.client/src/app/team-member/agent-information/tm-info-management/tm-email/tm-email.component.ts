@@ -18,6 +18,7 @@ import {
 } from '../../../../_Models';
 import {
   AgentDataService,
+  AppComService,
   EmailDataService,
   ErrorMessageService,
   UserAcctInfoDataService,
@@ -66,6 +67,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     private errorMessageService: ErrorMessageService,
     private emailDataService: EmailDataService,
     public agentDataService: AgentDataService,
+    public appComService: AppComService,
     public userInfoDataService: UserAcctInfoDataService,
     private sanitizer: DomSanitizer,
     private fb: FormBuilder
@@ -267,6 +269,20 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     htmlContent += footerContent;
 
     return htmlContent;
+  }
+
+  onOpenDocument(url: string) {
+    this.subscriptions.add(
+      this.appComService.openDocument(url).subscribe({
+        next: (response: Blob) => {
+          const blobUrl = URL.createObjectURL(response);
+          window.open(blobUrl, '_blank');
+        },
+        error: (error) => {
+          this.errorMessageService.setErrorMessage(error.message);
+        },
+      })
+    );
   }
 
   ngOnDestroy(): void {

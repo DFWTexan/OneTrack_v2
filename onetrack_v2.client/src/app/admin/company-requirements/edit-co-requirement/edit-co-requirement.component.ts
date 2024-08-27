@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import {
   AdminComService,
   AdminDataService,
+  AppComService,
   ConstantsDataService,
   ErrorMessageService,
 } from '../../../_services';
@@ -34,6 +35,7 @@ export class EditCoRequirementComponent implements OnInit, OnDestroy {
   constructor(
     private errorMessageService: ErrorMessageService,
     private conService: ConstantsDataService,
+    public appComService: AppComService,
     public adminDataService: AdminDataService,
     public adminComService: AdminComService
   ) {}
@@ -125,6 +127,20 @@ export class EditCoRequirementComponent implements OnInit, OnDestroy {
 
   closeModal() {
     this.forceCloseModal();
+  }
+
+  onOpenDocument(url: string) {
+    this.subscriptionData.add(
+      this.appComService.openDocument(url).subscribe({
+        next: (response: Blob) => {
+          const blobUrl = URL.createObjectURL(response);
+          window.open(blobUrl, '_blank');
+        },
+        error: (error) => {
+          this.errorMessageService.setErrorMessage(error.message);
+        },
+      })
+    );
   }
 
   ngOnDestroy(): void {
