@@ -16,6 +16,7 @@ export class InsertMemberLoaTicklerComponent implements OnInit, OnDestroy {
   licenseTechs: { value: any; label: string }[] = [];
   stockTicklerItems: any[] = [];
   agentInfo: any | null = null;
+  isDisplayOtherMsg: boolean = false;
   today: string = new Date().toISOString().split('T')[0];
 
   private subscriptionData = new Subscription();
@@ -75,6 +76,17 @@ export class InsertMemberLoaTicklerComponent implements OnInit, OnDestroy {
           })
       );
       this.ticklerForm.reset({ lkpValue: 'Select', licenseTechId: 0 });
+  }
+
+  onTicklerMsgChange(event: any) {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+
+    if (value === 'Other') {
+      this.isDisplayOtherMsg = true;
+    } else {
+      this.isDisplayOtherMsg = false;
+    }
   }
 
   onSubmit() {
