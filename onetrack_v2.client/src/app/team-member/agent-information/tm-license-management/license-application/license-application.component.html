@@ -1,11 +1,23 @@
 <div class="container app-component-container">
   <div class="row mb-3">
-    <div
-      class="col d-flex justify-content-start mt-4"
-      style="font-size: larger"
-    >
-      <strong style="margin-right: 1rem">License Name:</strong
-      >{{ licenseMgmtData[currentIndex].licenseName }}
+    <div class="d-flex align-items-center justify-content-between">
+      <div
+        class="col d-flex justify-content-start mt-4"
+        style="font-size: larger"
+      >
+        <strong style="margin-right: 1rem">License Name:</strong
+        >{{ licenseMgmtData[currentIndex].licenseName }}
+      </div>
+      <button
+        class="icon-toggle-button"
+        style="padding-bottom: 3rem; padding-right: 2.5rem"
+        (click)="onToggleView()"
+        [title]="!isLegacyView ? 'Toggle Legacy View' : 'Toggle Panel View'"
+      >
+        <span class="material-symbols-outlined" style="font-size: 35px">
+          list_alt
+        </span>
+      </button>
     </div>
 
     <div class="col d-flex justify-content-center mb-3 mt-1">
@@ -39,7 +51,8 @@
           </button> -->
     </div>
   </div>
-  <div class="row">
+  <!-- New Panel Display -->
+  <div class="row" *ngIf="!isLegacyView">
     <div class="col">
       <!-- LICENSE APPLICATIONS -->
       <mat-expansion-panel class="mat-elevation-z4 mb-3" [expanded]="true">
@@ -289,9 +302,7 @@
         [expanded]="true"
       >
         <mat-expansion-panel-header>
-          <mat-panel-title class="panel-title">
-            License Exams
-          </mat-panel-title>
+          <mat-panel-title class="panel-title"> License Exams </mat-panel-title>
           <mat-panel-description>
             {{
               agentDataService.agentLicApplicationInfo.licensePreExamItems
@@ -403,6 +414,112 @@
         </div>
       </mat-expansion-panel>
       <!-- </mat-accordion> -->
+    </div>
+  </div>
+  <!-- Legacy Display -->
+  <div class="row" *ngIf="isLegacyView">
+    <!-- LEGACY VIEW - LICENSE APPLICATIONS -->
+    <div class="row">
+      <div class="col">
+        <button
+          class="btn btn-success"
+          (click)="
+            agentDataService.storeLicAppInfo('INSERT', null);
+            modalService.open('modal-edit-lic-appl-info')
+          "
+        >
+          <span style="font-size: larger"> Insert - Applications </span>
+        </button>
+        <table class="table w-100" *ngIf="agentDataService.agentLicApplicationInfo.licenseApplicationItems.length !== 0">
+          <thead>
+            <tr style="background-color: whitesmoke">
+              <th scope="col">Application Status</th>
+              <th scope="col">Application ID</th>
+              <th scope="col">Sent to Agent</th>
+              <th scope="col">Rec. From Agent</th>
+              <th scope="col">Sent to State</th>
+              <th scope="col">Rec. From State</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody class="tbody" style="background-color: white;">
+            <tr
+              *ngFor="
+                let licApplication of agentDataService.agentLicApplicationInfo
+                  .licenseApplicationItems
+                  let i = index
+              "
+              [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+            >
+              <td class="align-middle">{{ licApplication.applicationStatus }}</td>
+              <td class="align-middle">{{ licApplication.licenseApplicationID }}</td>
+              <td class="align-middle">{{ licApplication.sentToAgentDate | date: 'MM/dd/yyyy' }}</td>
+              <td class="align-middle">{{ licApplication.recFromAgentDate | date: 'MM/dd/yyyy' }}</td>
+              <td class="align-middle">{{ licApplication.sentToStateDate | date: 'MM/dd/yyyy' }}</td>
+              <td class="align-middle">{{ licApplication.recFromStateDate | date: 'MM/dd/yyyy' }}</td>
+              <td class="align-middle" style="width: 10rem">
+                <div class="d-flex justify-content-between mb-3 me-4">
+                  <button
+                    class="icon-edit-delete-button"
+                    (click)="
+                      agentDataService.storeLicAppInfo(
+                        'EDIT',
+                        licApplication
+                      );
+                      modalService.open('modal-edit-lic-appl-info')
+                    "
+                  >
+                    <span class="material-symbols-outlined"> edit </span>
+                  </button>
+                  <button class="icon-edit-delete-button">
+                    <span
+                      class="material-symbols-outlined"
+                      (click)="
+                    openConfirmDialog('deleteLicenseApplication', 'Application', {
+                      employeeLicenseID: licenseMgmtData[currentIndex].employeeLicenseId,
+                      licenseApplicationID: licApplication.licenseApplicationID,
+                      employeeLicensePreEducationID: null,
+                      employeeLicensePreExamID: null,
+                    })
+                  "
+                    >
+                      delete
+                    </span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <!-- LEGACY VIEW - LICENSE PRE EDUCATION -->
+    <div class="row">
+      <div class="col">
+        <button
+          class="btn btn-success"
+          (click)="
+            agentDataService.storeLicPreEdu('INSERT', null);
+            modalService.open('modal-edit-lic-pre-edu')
+          "
+        >
+          <span style="font-size: larger"> Insert - PreEducation </span>
+        </button>
+      </div>
+    </div>
+    <!-- LEGACY VIEW - LICENSE PRE EXAM -->
+    <div class="row">
+      <div class="col">
+        <button
+          class="btn btn-success"
+          (click)="
+            agentDataService.storeLicPreExam('INSERT', null);
+            modalService.open('modal-edit-lic-pre-exam')
+          "
+        >
+          <span style="font-size: larger"> Insert - Exam </span>
+        </button>
+      </div>
     </div>
   </div>
 </div>

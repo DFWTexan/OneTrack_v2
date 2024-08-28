@@ -72,7 +72,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   }
 
   onToggleView() {
-    this.isLegacyView = !this.isLegacyView;
+    this.appComService.updateIsLegacyView(!this.isLegacyView);
   }
 
   onChildCallRefreshData(data: any) {

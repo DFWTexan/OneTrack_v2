@@ -31,6 +31,7 @@ export class LicenseApplicationComponent implements OnInit, OnDestroy {
     {} as AgentLicApplicationInfo;
   eventAction: string = '';
   vObject: any = {};
+  isLegacyView = false;
 
   private subscriptions = new Subscription();
 
@@ -58,6 +59,13 @@ export class LicenseApplicationComponent implements OnInit, OnDestroy {
       })
     );
 
+    this.isLegacyView = this.appComService.isLegacyView;
+    this.subscriptions.add(
+      this.appComService.isLegacyViewChanged.subscribe((isLegacyView) => {
+        this.isLegacyView = isLegacyView;
+      })
+    );
+
     this.licenseMgmtData =
       this.agentDataService.agentInformation.agentLicenseAppointments;
     this.subscriptions.add(
@@ -70,6 +78,10 @@ export class LicenseApplicationComponent implements OnInit, OnDestroy {
     );
 
     this.getData();
+  }
+
+  onToggleView() {
+    this.appComService.updateIsLegacyView(!this.isLegacyView);
   }
 
   onChildCallGetData(): void {
