@@ -179,7 +179,7 @@ namespace OneTrak_v2.Services
 
                             cmd.Parameters.Add(new SqlParameter("@LkpValue", vInput.LkpValue));
                             cmd.Parameters.Add(new SqlParameter("@Message", vInput.Message));
-                            cmd.Parameters.Add(new SqlParameter("@TicklerDate", DateTime.Nowhank you));
+                            cmd.Parameters.Add(new SqlParameter("@TicklerDate", DateTime.Now));
                             cmd.Parameters.Add(new SqlParameter("@TicklerDueDate", vInput.TicklerDueDate));
                             cmd.Parameters.Add(new SqlParameter("@LicenseTechID", vInput.LicenseTechID));
                             cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
