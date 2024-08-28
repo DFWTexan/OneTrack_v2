@@ -26,13 +26,22 @@
       </div>
 
       <div class="form-group" *ngIf="isDisplayOtherMsg">
-        <label for="message">Other Tickler:</label><br />
+        <label for="message">Other Tickler:</label><span class="required ms-2" style="color: red">*</span><br />
         <textarea
           class="form-control ms-3"
           id="message"
           
           formControlName="message"
         ></textarea>
+        <div
+          *ngIf="
+            ticklerForm.controls['message'].errors &&
+            ticklerForm.controls['message'].errors['incorrect']
+          "
+          class="text-danger"
+        >
+          Please enter Message
+        </div>
       </div>
 
     </div>
@@ -52,6 +61,15 @@
           formControlName="ticklerDueDate"
           [min]="today"
         />
+        <div
+          *ngIf="
+            ticklerForm.controls['ticklerDueDate'].errors &&
+            ticklerForm.controls['ticklerDueDate'].errors['incorrect']
+          "
+          class="text-danger"
+        >
+          Please enter a Due Date
+        </div>
       </div>
 
       <div class="form-group">
@@ -71,6 +89,15 @@
             {{ item.lkpValue }}
           </option>
         </select>
+        <div
+          *ngIf="
+            ticklerForm.controls['lkpValue'].errors &&
+            ticklerForm.controls['lkpValue'].errors['incorrect']
+          "
+          class="text-danger"
+        >
+          Please select a Stock Tickler Message
+        </div>
       </div>
     </div>
   </div>

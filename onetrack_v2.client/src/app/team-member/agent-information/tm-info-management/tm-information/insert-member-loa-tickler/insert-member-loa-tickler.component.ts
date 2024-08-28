@@ -86,19 +86,32 @@ export class InsertMemberLoaTicklerComponent implements OnInit, OnDestroy {
       this.isDisplayOtherMsg = true;
     } else {
       this.isDisplayOtherMsg = false;
+      this.ticklerForm.get('message')?.setValue(null);
     }
   }
 
   onSubmit() {
     this.isFormSubmitted = true;
     let ticklerItem: any = this.ticklerForm.value;
-    ticklerItem.PreEducationID = 0;
-    ticklerItem.ticklerID = this.ticklerForm.get('ticklerId')?.value
+    ticklerItem.ticklerId = 0;
+    // ticklerItem.ticklerID = this.ticklerForm.get('ticklerId')?.value
     ticklerItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
     if (this.typeTickler.type === 'LOA') {
       ticklerItem.lineOfAuthorityName = this.typeTickler.loa;
     };
+
+    if (ticklerItem.ticklerDueDate === null || ticklerItem.ticklerDueDate === '') {
+      this.ticklerForm.controls['ticklerDueDate'].setErrors({ incorrect: true });
+    };
+
+    if(ticklerItem.lkpValue === 'Select') {
+      this.ticklerForm.controls['lkpValue'].setErrors({ incorrect: true });
+    }
+
+    if(this.isDisplayOtherMsg && (ticklerItem.message === null || ticklerItem.message === '')) {
+      this.ticklerForm.controls['message'].setErrors({ incorrect: true });
+    }
 
     if (this.ticklerForm.invalid) {
       this.ticklerForm.setErrors({ invalid: true });

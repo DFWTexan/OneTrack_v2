@@ -179,7 +179,7 @@ namespace OneTrak_v2.Services
 
                             cmd.Parameters.Add(new SqlParameter("@LkpValue", vInput.LkpValue));
                             cmd.Parameters.Add(new SqlParameter("@Message", vInput.Message));
-                            cmd.Parameters.Add(new SqlParameter("@TicklerDate", vInput.TicklerDate));
+                            cmd.Parameters.Add(new SqlParameter("@TicklerDate", DateTime.Now));
                             cmd.Parameters.Add(new SqlParameter("@TicklerDueDate", vInput.TicklerDueDate));
                             cmd.Parameters.Add(new SqlParameter("@LicenseTechID", vInput.LicenseTechID));
                             cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
@@ -225,6 +225,7 @@ namespace OneTrak_v2.Services
             }
             catch (Exception ex)
             {
+                result.StatusCode = 500;
                 result.Success = false;
                 result.ObjData = null;
                 result.ErrMessage = "Server Error - Please Contact Support [REF# TCKLR-1509-49597].";
