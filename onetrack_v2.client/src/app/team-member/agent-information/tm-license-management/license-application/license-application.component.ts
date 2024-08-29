@@ -32,7 +32,7 @@ export class LicenseApplicationComponent implements OnInit, OnDestroy {
   eventAction: string = '';
   vObject: any = {};
   isLegacyView = false;
-
+  
   private subscriptions = new Subscription();
 
   constructor(

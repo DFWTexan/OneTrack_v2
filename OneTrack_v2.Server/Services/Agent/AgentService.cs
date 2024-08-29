@@ -2479,10 +2479,12 @@ namespace OneTrack_v2.Services
 
             var queryAppointments = from appointment in _db.EmployeeAppointments
                                     join companies in _db.Companies on appointment.CompanyId equals companies.CompanyId
+                                    join employeeLicense in _db.EmployeeLicenses on appointment.EmployeeLicenseId equals employeeLicense.EmployeeLicenseId
+                                    join license in _db.Licenses on employeeLicense.LicenseId equals license.LicenseId
                                     where employeeLicenses.Contains((int)appointment.EmployeeLicenseId)
                                     select new OputAgentAppointments
                                     {
-                                        LicenseID = (int)appointment.EmployeeLicenseId,
+                                        LicenseID = (int)license.LicenseId, // Get LicenseID from Licenses table
                                         EmployeeAppointmentID = appointment.EmployeeAppointmentId,
                                         EmployeeLicenseID = (int)appointment.EmployeeLicenseId,
                                         AppointmentEffectiveDate = appointment.AppointmentEffectiveDate,

@@ -178,7 +178,9 @@
             let appointment of licenseMgmtData[currentIndex].licenseAppointments
           "
         >
-          <td class="align-middle">{{ appointment.appointmentStatus.toUpperCase() }}</td>
+          <td class="align-middle">
+            {{ appointment.appointmentStatus.toUpperCase() }}
+          </td>
           <td class="align-middle" *ngIf="appComService.isShowEditID">
             {{ appointment.licenseID }}
           </td>
@@ -186,17 +188,21 @@
             {{ appointment.companyID }}
           </td>
           <td class="align-middle">{{ appointment.companyAbv }}</td>
-          <td class="align-middle">{{ appointment.carrierDate | date : "MM/dd/yyyy" }}</td>
+          <td class="align-middle">
+            {{ appointment.carrierDate | date : "MM/dd/yyyy" }}
+          </td>
           <td class="align-middle">
             {{ appointment.appointmentEffectiveDate | date : "MM/dd/yyyy" }}
           </td>
-          <td class="align-middle">{{ appointment.appointmentExpireDate | date : "MM/dd/yyyy" }}</td>
+          <td class="align-middle">
+            {{ appointment.appointmentExpireDate | date : "MM/dd/yyyy" }}
+          </td>
           <td class="align-middle">
             {{ appointment.appointmentTerminationDate | date : "MM/dd/yyyy" }}
           </td>
           <td class="align-middle" style="min-width: 10rem">
             <div class="d-flex justify-content-between me-4">
-              <button
+              <!-- <button
                 class="icon-edit-delete-button"
                 (click)="
                   agentDataService.storeLicenseAppointment(appointment);
@@ -205,6 +211,17 @@
                   );
                   modalService.open('modal-edit-license-appt')
                 "
+              >
+                <span class="material-symbols-outlined"> edit </span>
+              </button> -->
+              <button
+                class="icon-edit-delete-button"
+                (click)="
+                  storeLicAppointment(appointment);
+                  storeLicApptLicenseID(appointment.licenseID);
+                  modalService.open('modal-edit-license-appt')
+                "
+                title="Edit Appointment"
               >
                 <span class="material-symbols-outlined"> edit </span>
               </button>

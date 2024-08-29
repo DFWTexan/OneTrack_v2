@@ -27,6 +27,7 @@ export class LicenseInfoComponent implements OnInit, OnDestroy {
   currentIndex: number = 0;
   eventAction: string = '';
   vObject: any = {};
+  // displayOpenLicenseID: number = 0;
 
   private subscriptions = new Subscription();
 
@@ -188,6 +189,15 @@ export class LicenseInfoComponent implements OnInit, OnDestroy {
 
   storeLicApptLicenseID(licenseID: number) {
     this.agentDataService.storeLicApptLicenseID(licenseID);
+  }
+
+  // onSetOpenLicenseID(displayOpenLicenseID: number) {
+  //   this.displayOpenLicenseID = displayOpenLicenseID;
+  // }
+
+  storeLicAppointment(appointment: any) {
+    this.agentComService.modeLicenseApptModal('EDIT');
+    this.agentDataService.storeLicenseAppointment(appointment);
   }
 
   ngOnDestroy() {
