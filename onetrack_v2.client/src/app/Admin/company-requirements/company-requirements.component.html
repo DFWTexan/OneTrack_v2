@@ -1,4 +1,4 @@
-<div class="container app-component-container">
+<div class="container app-component-container" style="overflow-x: hidden">
   <div class="row">
     <div class="col">
       <h1 class="text-end" style="font-style: italic; color: lightgrey">
@@ -52,141 +52,144 @@
   <div class="row mt-4">
     <div class="col">
       <div *ngIf="!selectedWorkState">
-        <h3 class="text-center">Select a Work State and/or Resident State to view the Company</h3>
+        <h3 class="text-center">
+          Select a Work State and/or Resident State to view the Company
+        </h3>
       </div>
       <div class="d-flex justify-content-center">
         <div *ngIf="companyRequirements.length == 0 && selectedWorkState">
           <h3 class="text-center">No Company Requirements Found</h3>
         </div>
-      <div class="table" *ngIf="companyRequirements.length > 0">
-        <thead>
-          <tr class="sticky-top" style="background-color: gainsboro">
-            <th scope="col" *ngIf="appComService.isShowEditID">ID</th>
-            <th scope="col">Work State</th>
-            <th scope="col">Res State</th>
-            <th scope="col">Type</th>
-            <th scope="col">Lic1</th>
-            <th scope="col">Lic2</th>
-            <th scope="col">Lic3</th>
-            <th scope="col">Lic4</th>
-            <th scope="col">Start After Date</th>
-            <th scope="col">Document</th>
-            <th scope="col" class="text-center">ACTION</th>
-          </tr>
-        </thead>
-        <tbody class="bg-body">
-          <tr *ngFor="let company of companyRequirements">
-            <td
-              class="align-middle"
-              style="font-size: larger"
-              *ngIf="appComService.isShowEditID"
-            >
-              {{ company.companyRequirementId }}
-            </td>
-            <td class="align-middle">{{ company.workStateAbv }}</td>
-            <td class="align-middle text-nowrap">
-              {{ company.resStateAbv }}
-            </td>
-            <td class="align-middle" style="width: max-content">
-              {{ company.requirementType }}
-            </td>
-            <td class="align-middle" style="width: max-content">
-              <div class="form-check d-flex justify-content-center">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  [checked]="company.licLevel1"
-                  disabled
-                />
-              </div>
-            </td>
-            <td class="align-middle" style="width: max-content">
-              <div class="form-check d-flex justify-content-center">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  [checked]="company.licLevel2"
-                  disabled
-                />
-              </div>
-            </td>
-            <td class="align-middle" style="width: max-content">
-              <div class="form-check d-flex justify-content-center">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  [checked]="company.licLevel3"
-                  disabled
-                />
-              </div>
-            </td>
-            <td class="align-middle" style="width: max-content">
-              <div class="form-check d-flex justify-content-center">
-                <input
-                  class="form-check-input"
-                  type="checkbox"
-                  [checked]="company.licLevel4"
-                  disabled
-                />
-              </div>
-            </td>
-            <td class="align-middle" style="width: max-content">
-              {{ company.startAfterDate | date : "MM/dd/yyyy" }}
-            </td>
-            <td class="align-middle">
-              <button
-                class="btn btn-link hover-pointer"
-                (click)="onOpenDocument(company.document)"
-                style="font-size: medium"
+        <table class="table w-100" *ngIf="companyRequirements.length > 0">
+          <thead>
+            <tr class="sticky-top" style="background-color: gainsboro">
+              <th scope="col" *ngIf="appComService.isShowEditID">ID</th>
+              <th scope="col">Work State</th>
+              <th scope="col">Res State</th>
+              <th scope="col">Type</th>
+              <th scope="col">Lic1</th>
+              <th scope="col">Lic2</th>
+              <th scope="col">Lic3</th>
+              <th scope="col">Lic4</th>
+              <th scope="col">Start After Date</th>
+              <th scope="col">Document</th>
+              <th scope="col" class="text-center">ACTION</th>
+            </tr>
+          </thead>
+          <tbody class="bg-body">
+            <tr *ngFor="let company of companyRequirements">
+              <td
+                class="align-middle"
+                style="font-size: larger"
+                *ngIf="appComService.isShowEditID"
               >
-                {{ company.document }}
-              </button>
-            </td>
-            <td class="align-middle" style="width: 10rem">
-              <div class="d-flex justify-content-between mb-3 me-4">
+                {{ company.companyRequirementId }}
+              </td>
+              <td class="align-middle text-center">{{ company.workStateAbv }}</td>
+              <td class="align-middle text-center">
+                {{ company.resStateAbv }}
+              </td>
+              <td class="align-middle" style="width: max-content">
+                {{ company.requirementType }}
+              </td>
+              <td class="align-middle" style="width: max-content">
+                <div class="form-check d-flex justify-content-center">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [checked]="company.licLevel1"
+                    disabled
+                  />
+                </div>
+              </td>
+              <td class="align-middle" style="width: max-content">
+                <div class="form-check d-flex justify-content-center">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [checked]="company.licLevel2"
+                    disabled
+                  />
+                </div>
+              </td>
+              <td class="align-middle" style="width: max-content">
+                <div class="form-check d-flex justify-content-center">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [checked]="company.licLevel3"
+                    disabled
+                  />
+                </div>
+              </td>
+              <td class="align-middle" style="width: max-content">
+                <div class="form-check d-flex justify-content-center">
+                  <input
+                    class="form-check-input"
+                    type="checkbox"
+                    [checked]="company.licLevel4"
+                    disabled
+                  />
+                </div>
+              </td>
+              <td class="align-middle" style="width: max-content">
+                {{ company.startAfterDate | date : "MM/dd/yyyy" }}
+              </td>
+              <td class="align-middle">
                 <button
-                  class="icon-edit-delete-button"
-                  type="button"
-                  (click)="
-                    adminDataService.storeCoRequirement('EDIT', company);
-                    modalService.open('modal-edit-co-requirement')
-                  "
+                  class="btn btn-link hover-pointer"
+                  (click)="onOpenDocument(company.document)"
+                  style="font-size: medium"
                 >
-                  <span class="material-symbols-outlined"> edit </span>
+                  {{ company.document }}
                 </button>
-                <button class="icon-edit-delete-button" type="button">
-                  <span class="material-symbols-outlined"> delete </span>
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
+              </td>
+              <td class="align-middle" style="width: 15rem">
+                <div class="d-flex justify-content-between mb-3 me-4">
+                  <button
+                    class="icon-edit-delete-button"
+                    type="button"
+                    (click)="
+                      adminDataService.storeCoRequirement('EDIT', company);
+                      modalService.open('modal-edit-co-requirement')
+                    "
+                  >
+                    <span class="material-symbols-outlined"> edit </span>
+                  </button>
+                  <button class="icon-edit-delete-button" type="button">
+                    <span class="material-symbols-outlined"> delete </span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>
-</div>
 
-<!-- Modal: EDIT-CO-REQUIREMENT -->
-<modal id="modal-edit-co-requirement">
-  <div class="modal-header">
-    <h1 class="modal-title">
-      <strong>{{ adminComService.modes.coRequirement.mode }}</strong> - Company
-      Requirement
-    </h1>
-    <!-- <button
+  <!-- Modal: EDIT-CO-REQUIREMENT -->
+  <modal id="modal-edit-co-requirement">
+    <div class="modal-header">
+      <h1 class="modal-title">
+        <strong>{{ adminComService.modes.coRequirement.mode }}</strong> -
+        Company Requirement
+      </h1>
+      <!-- <button
                 type="button"
                 class="btn-close"
                 (click)="modalService.close()"
               ></button> -->
-  </div>
-  <div class="modal-body">
-    <div>
+    </div>
+    <div class="modal-body">
       <div>
-        <app-edit-co-requirement
-          [workState]="selectedWorkState"
-          [resState]="selectedResState"
-        ></app-edit-co-requirement>
+        <div>
+          <app-edit-co-requirement
+            [workState]="selectedWorkState"
+            [resState]="selectedResState"
+          ></app-edit-co-requirement>
+        </div>
       </div>
     </div>
-  </div>
-</modal>
+  </modal>
+</div>
