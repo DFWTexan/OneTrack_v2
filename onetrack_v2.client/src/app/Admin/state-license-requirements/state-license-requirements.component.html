@@ -1,9 +1,9 @@
-<div class="container" style="margin-left: 3rem; margin-right: 3rem">
-  <div class="row">
+<div class="container" style="margin-left: 1rem; margin-right: 1rem;">
+  <div class="row w-100">
     <div class="col">
       <h1
         class="text-end"
-        style="font-style: italic; color: lightgrey; margin-right: 10rem"
+        style="font-style: italic; color: lightgrey; margin-right: 1rem"
       >
         State License Requirements
       </h1>
@@ -37,7 +37,7 @@
         </option>
       </select>
     </div>
-    <div class="col d-flex justify-content-center align-items-end">
+    <div class="col d-flex justify-content-end align-items-end">
       <button
         class="btn btn-success button-font-size"
         type="button"
@@ -53,7 +53,7 @@
   <mat-divider></mat-divider>
   <div class="row mt-4">
     <div class="col">
-      <div class="table" *ngIf="stateRequirements.length > 0">
+      <div class="table w-100" *ngIf="stateRequirements.length > 0">
         <thead>
           <tr class="sticky-top" style="background-color: gainsboro">
             <th scope="col" *ngIf="appComService.isShowEditID">ID</th>
