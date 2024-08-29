@@ -430,7 +430,23 @@
         >
           <span style="font-size: larger"> Insert - Applications </span>
         </button>
-        <table class="table w-100" *ngIf="agentDataService.agentLicApplicationInfo.licenseApplicationItems.length !== 0">
+        <div
+          class="div d-flex justify-content-center mb-3"
+          style="font-size: larger; color: gray"
+          *ngIf="
+            agentDataService.agentLicApplicationInfo.licenseApplicationItems
+              .length === 0
+          "
+        >
+          No records found
+        </div>
+        <table
+          class="table w-100"
+          *ngIf="
+            agentDataService.agentLicApplicationInfo.licenseApplicationItems
+              .length !== 0
+          "
+        >
           <thead>
             <tr style="background-color: whitesmoke">
               <th scope="col">Application Status</th>
@@ -442,30 +458,39 @@
               <th scope="col">Action</th>
             </tr>
           </thead>
-          <tbody class="tbody" style="background-color: white;">
+          <tbody class="tbody" style="background-color: white">
             <tr
               *ngFor="
                 let licApplication of agentDataService.agentLicApplicationInfo
-                  .licenseApplicationItems
-                  let i = index
+                  .licenseApplicationItems;
+                let i = index
               "
               [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
             >
-              <td class="align-middle">{{ licApplication.applicationStatus }}</td>
-              <td class="align-middle">{{ licApplication.licenseApplicationID }}</td>
-              <td class="align-middle">{{ licApplication.sentToAgentDate | date: 'MM/dd/yyyy' }}</td>
-              <td class="align-middle">{{ licApplication.recFromAgentDate | date: 'MM/dd/yyyy' }}</td>
-              <td class="align-middle">{{ licApplication.sentToStateDate | date: 'MM/dd/yyyy' }}</td>
-              <td class="align-middle">{{ licApplication.recFromStateDate | date: 'MM/dd/yyyy' }}</td>
+              <td class="align-middle">
+                {{ licApplication.applicationStatus }}
+              </td>
+              <td class="align-middle">
+                {{ licApplication.licenseApplicationID }}
+              </td>
+              <td class="align-middle">
+                {{ licApplication.sentToAgentDate | date : "MM/dd/yyyy" }}
+              </td>
+              <td class="align-middle">
+                {{ licApplication.recFromAgentDate | date : "MM/dd/yyyy" }}
+              </td>
+              <td class="align-middle">
+                {{ licApplication.sentToStateDate | date : "MM/dd/yyyy" }}
+              </td>
+              <td class="align-middle">
+                {{ licApplication.recFromStateDate | date : "MM/dd/yyyy" }}
+              </td>
               <td class="align-middle" style="width: 10rem">
                 <div class="d-flex justify-content-between mb-3 me-4">
                   <button
                     class="icon-edit-delete-button"
                     (click)="
-                      agentDataService.storeLicAppInfo(
-                        'EDIT',
-                        licApplication
-                      );
+                      agentDataService.storeLicAppInfo('EDIT', licApplication);
                       modalService.open('modal-edit-lic-appl-info')
                     "
                   >
@@ -493,8 +518,14 @@
         </table>
       </div>
     </div>
+    <mat-divider
+      *ngIf="
+        agentDataService.agentLicApplicationInfo.licenseApplicationItems
+          .length === 0
+      "
+    ></mat-divider>
     <!-- LEGACY VIEW - LICENSE PRE EDUCATION -->
-    <div class="row">
+    <div class="row mt-3">
       <div class="col">
         <button
           class="btn btn-success"
@@ -505,10 +536,97 @@
         >
           <span style="font-size: larger"> Insert - PreEducation </span>
         </button>
+        <div
+          class="div d-flex justify-content-center mb-3"
+          style="font-size: larger; color: gray"
+          *ngIf="
+            agentDataService.agentLicApplicationInfo.licensePreEducationItems
+              .length === 0
+          "
+        >
+          No records found
+        </div>
+        <table
+          class="table w-100"
+          *ngIf="
+            agentDataService.agentLicApplicationInfo.licensePreEducationItems
+              .length !== 0
+          "
+        >
+          <thead>
+            <tr style="background-color: whitesmoke">
+              <th scope="col">PreEdu Status</th>
+              <th scope="col">PreEdu ID</th>
+              <th scope="col">Class Name</th>
+              <th scope="col">Scheduled Date</th>
+              <th scope="col">Taken Date</th>
+              <th scope="col">PreEdu Notes</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody class="tbody" style="background-color: white">
+            <tr
+              *ngFor="
+                let licPreEdu of agentDataService.agentLicApplicationInfo
+                  .licensePreEducationItems;
+                let i = index
+              "
+              [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+            >
+              <td class="align-middle">{{ licPreEdu.status }}</td>
+              <td class="align-middle">
+                {{ licPreEdu.employeeLicensePreEducationID }}
+              </td>
+              <td class="align-middle">{{ licPreEdu.educationName }}</td>
+              <td class="align-middle">
+                {{ licPreEdu.educationStartDate | date : "MM/dd/yyyy" }}
+              </td>
+              <td class="align-middle">
+                {{ licPreEdu.educationEndDate | date : "MM/dd/yyyy" }}
+              </td>
+              <td class="align-middle">{{ licPreEdu.additionalNotes }}</td>
+              <td class="align-middle" style="width: 10rem">
+                <div class="d-flex justify-content-between mb-3 me-4">
+                  <button
+                    class="icon-edit-delete-button"
+                    (click)="
+                      agentDataService.storeLicPreEdu('EDIT', licPreEdu);
+                      modalService.open('modal-edit-lic-pre-edu')
+                    "
+                  >
+                    <span class="material-symbols-outlined"> edit </span>
+                  </button>
+                  <button class="icon-edit-delete-button">
+                    <span
+                      class="material-symbols-outlined"
+                      (click)="
+                    openConfirmDialog('deleteLicensePreEducation', 'Pre Education', {
+                      employeeLicenseID: licenseMgmtData[currentIndex].employeeLicenseId,
+                      licenseApplicationID:
+                        null,
+                      employeeLicensePreEducationID: licPreEdu.employeeLicensePreEducationID,
+                      employeeLicensePreExamID: null,
+                    })
+                  "
+                    >
+                      delete
+                    </span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
+    <mat-divider
+      *ngIf="
+        agentDataService.agentLicApplicationInfo.licensePreEducationItems
+          .length === 0
+      "
+    ></mat-divider>
     <!-- LEGACY VIEW - LICENSE PRE EXAM -->
-    <div class="row">
+    <div class="row mt-3">
       <div class="col">
         <button
           class="btn btn-success"
@@ -519,6 +637,87 @@
         >
           <span style="font-size: larger"> Insert - Exam </span>
         </button>
+        <div
+          class="div d-flex justify-content-center mb-3"
+          style="font-size: larger; color: gray"
+          *ngIf="
+            agentDataService.agentLicApplicationInfo.licensePreExamItems
+              .length === 0
+          "
+        >
+          No records found
+        </div>
+        <table
+          class="table w-100"
+          *ngIf="
+            agentDataService.agentLicApplicationInfo.licensePreExamItems
+              .length !== 0
+          "
+        >
+          <thead>
+            <tr style="background-color: whitesmoke">
+              <th scope="col">Status</th>
+              <th scope="col">PreExam ID</th>
+              <th scope="col">Exam Name</th>
+              <th scope="col">Scheduled Date</th>
+              <th scope="col">Taken Date</th>
+              <th scope="col">Exam Notes</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody class="tbody" style="background-color: white">
+            <tr
+              *ngFor="
+                let preExam of agentDataService.agentLicApplicationInfo
+                  .licensePreExamItems;
+                let i = index
+              "
+              [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+            >
+              <td class="align-middle">{{ preExam.status }}</td>
+              <td class="align-middle">
+                {{ preExam.employeeLicensePreExamID }}
+              </td>
+              <td class="align-middle">{{ preExam.examName }}</td>
+              <td class="align-middle">
+                {{ preExam.examScheduleDate | date : "MM/dd/yyyy" }}
+              </td>
+              <td class="align-middle">
+                {{ preExam.examTakenDate | date : "MM/dd/yyyy" }}
+              </td>
+              <td class="align-middle">{{ preExam.additionalNotes }}</td>
+              <td class="align-middle" style="width: 10rem">
+                <div class="d-flex justify-content-between mb-3 me-4">
+                  <button
+                    class="icon-edit-delete-button"
+                    (click)="
+                      agentDataService.storeLicPreExam('EDIT', preExam);
+                      modalService.open('modal-edit-lic-pre-exam')
+                    "
+                  >
+                    <span class="material-symbols-outlined"> edit </span>
+                  </button>
+                  <button class="icon-edit-delete-button">
+                    <span
+                      class="material-symbols-outlined"
+                      (click)="
+                    openConfirmDialog('deleteLicensePreExam', 'Pre Exam', {
+                      employeeLicenseID: licenseMgmtData[currentIndex].employeeLicenseId,
+                      licenseApplicationID:
+                        null,
+                      employeeLicensePreEducationID: null,
+                      employeeLicensePreExamID: preExam.employeeLicensePreExamID,
+                    })
+                  "
+                    >
+                      delete
+                    </span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

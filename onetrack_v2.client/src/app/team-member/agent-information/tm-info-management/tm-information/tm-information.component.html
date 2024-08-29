@@ -706,7 +706,7 @@
                         let appointment of agentInfo.appointmentItems;
                         let i = index
                       "
-                      [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+                      [ngClass]="{ 'alternate-row': i % 2 !== 0, 'custom-row-padding': true }"
                     >
                       <td class="align-middle">
                         <button
