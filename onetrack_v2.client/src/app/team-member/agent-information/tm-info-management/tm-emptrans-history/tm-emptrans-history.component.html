@@ -1,53 +1,188 @@
 <div class="container app-component-container">
-  <!-- EMPLOYMENT HISTORY --> 
-  <mat-expansion-panel class="mat-elevation-z4 mt-3 mb-3" [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <div class="app-panel-title mt-3">
-          <h2>Employment History</h2>
+  <div class="d-flex justify-content-end">
+    <button
+      class="icon-toggle-button"
+      style="padding-bottom: 3rem; padding-right: 2.5rem"
+      (click)="onToggleView()"
+      [title]="!isLegacyView ? 'Toggle Legacy View' : 'Toggle Panel View'"
+    >
+      <span class="material-symbols-outlined" style="font-size: 35px">
+        list_alt
+      </span>
+    </button>
+  </div>
+  <!-- LEGACY View -->
+  <div class="row" *ngIf="isLegacyView">EMFTEST - Legacy View</div>
+  <!-- PANEL View -->
+  <div class="row" *ngIf="!isLegacyView">
+    <!-- EMPLOYMENT HISTORY -->
+    <mat-expansion-panel class="mat-elevation-z4 mt-3 mb-3" [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="app-panel-title mt-3">
+            <h2>Employment History</h2>
+          </div>
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ employmentHistory.length }} - record(s) found
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="mat-description">
+        <div class="row mb-3">
+          <div class="col">
+            <button
+              class="btn btn-success button-font-size"
+              (click)="
+                agentDataService.storeEmploymentTransferHistory('INSERT', null);
+                modalService.open('modal-edit-emp-history')
+              "
+            >
+              Insert - Employment History
+            </button>
+          </div>
         </div>
-      </mat-panel-title>
-      <mat-panel-description>
-        {{ employmentHistory.length }} - record(s) found
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <div class="mat-description">
-      <div class="row mb-3">
-        <div class="col">
-          <button
-            class="btn btn-success button-font-size"
-            (click)="
-              agentDataService.storeEmploymentTransferHistory('INSERT', null);
-              modalService.open('modal-edit-emp-history')
-            "
-          >
-             Insert - Employment History
-          </button>
+        <div
+          class="div d-flex justify-content-center mt-5"
+          style="font-size: larger; color: gray"
+          *ngIf="employmentHistory.length === 0"
+        >
+          No records found
+        </div>
+        <div class="row" *ngIf="employmentHistory.length !== 0">
+          <div class="col">
+            <table class="table">
+              <thead>
+                <tr style="background-color: whitesmoke">
+                  <th scope="col" *ngIf="appComService.isShowEditID">
+                    History ID
+                  </th>
+                  <th scope="col">Hire Date</th>
+                  <th scope="col">Rehire Date</th>
+                  <th scope="col">Notified Term Date</th>
+                  <th scope="col">HR Term Date</th>
+                  <th scope="col">HR Term Code</th>
+                  <th scope="col">For Cause</th>
+                  <th scope="col">Background Check Status</th>
+                  <th scope="col">Background Check Notes</th>
+                  <th scope="col">Is Current</th>
+                  <th scope="col" class="text-center" style="width: 10rem">
+                    ACTION
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- <tr *ngFor="let emp of employmentHistory"> -->
+                <tr
+                  *ngFor="let emp of employmentHistory; let i = index"
+                  [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+                >
+                  <td class="align-middle" *ngIf="appComService.isShowEditID">
+                    {{ emp.employmentHistoryID }}
+                  </td>
+                  <td class="align-middle">
+                    {{ emp.hireDate | date : "MM/dd/yyyy" }}
+                  </td>
+                  <td class="align-middle">
+                    {{ emp.rehireDate | date : "MM/dd/yyyy" }}
+                  </td>
+                  <td class="align-middle">
+                    {{ emp.notifiedTermDate | date : "MM/dd/yyyy" }}
+                  </td>
+                  <td class="align-middle">
+                    {{ emp.hrTermDate | date : "MM/dd/yyyy" }}
+                  </td>
+                  <td class="align-middle">{{ emp.hrTermCode }}</td>
+                  <td class="align-middle">
+                    {{ emp.isForCause ? "Yes" : "No" }}
+                  </td>
+                  <td class="align-middle">
+                    {{ emp.backgroundCheckStatus.toUpperCase() }}
+                  </td>
+                  <td class="align-middle">{{ emp.backGroundCheckNotes }}</td>
+                  <td class="align-middle">
+                    {{ emp.isCurrent ? "Yes" : "No" }}
+                  </td>
+                  <td style="width: 10rem">
+                    <div class="d-flex justify-content-between mb-3 me-4">
+                      <button
+                        class="icon-edit-delete-button"
+                        (click)="
+                          agentDataService.storeEmploymentTransferHistory(
+                            'EDIT',
+                            emp
+                          );
+                          modalService.open('modal-edit-emp-history')
+                        "
+                        title="Edit Employment History"
+                      >
+                        <span class="material-symbols-outlined"> edit </span>
+                      </button>
+                      <button
+                        class="icon-edit-delete-button"
+                        (click)="
+                          onOpenConfirmDialog(
+                            'deleteEmploymentHistory',
+                            'Employment History Item',
+                            emp
+                          )
+                        "
+                        title="Delete Employment History"
+                      >
+                        <span class="material-symbols-outlined"> delete </span>
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-      <div
-        class="div d-flex justify-content-center mt-5"
-        style="font-size: larger; color: gray"
-        *ngIf="employmentHistory.length === 0"
-      >
-        No records found
-      </div>
-      <div class="row" *ngIf="employmentHistory.length !== 0">
-        <div class="col">
+    </mat-expansion-panel>
+    <!-- TRANSFER HISTORY -->
+    <mat-expansion-panel class="mat-elevation-z4 mb-3" [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="app-panel-title mt-3">
+            <h2>Transfer History</h2>
+          </div>
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ transferHistory.length }} - record(s) found
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="mat-description">
+        <div class="row mb-3">
+          <div class="col">
+            <button
+              class="btn btn-success button-font-size"
+              (click)="
+                agentDataService.storeTransferHistory('INSERT', null);
+                modalService.open('modal-edit-tran-history')
+              "
+            >
+              Insert - Transfer History
+            </button>
+          </div>
+        </div>
+        <div
+          class="div d-flex justify-content-center mt-5"
+          style="font-size: larger; color: gray"
+          *ngIf="transferHistory.length === 0"
+        >
+          No records found
+        </div>
+        <div class="row" *ngIf="transferHistory.length !== 0">
           <table class="table">
             <thead>
               <tr style="background-color: whitesmoke">
                 <th scope="col" *ngIf="appComService.isShowEditID">
-                  History ID
+                  Trans. ID
                 </th>
-                <th scope="col">Hire Date</th>
-                <th scope="col">Rehire Date</th>
-                <th scope="col">Notified Term Date</th>
-                <th scope="col">HR Term Date</th>
-                <th scope="col">HR Term Code</th>
-                <th scope="col">For Cause</th>
-                <th scope="col">Background Check Status</th>
-                <th scope="col">Background Check Notes</th>
+                <th scope="col">Branch Code</th>
+                <th scope="col">Res. St. Code</th>
+                <th scope="col">Work St. Code</th>
+                <th scope="col">Trans. Date</th>
                 <th scope="col">Is Current</th>
                 <th scope="col" class="text-center" style="width: 10rem">
                   ACTION
@@ -55,45 +190,38 @@
               </tr>
             </thead>
             <tbody>
-              <!-- <tr *ngFor="let emp of employmentHistory"> -->
+              <!-- <tr *ngFor="let transfer of transferHistory"> -->
               <tr
-                *ngFor="let emp of employmentHistory; let i = index"
+                *ngFor="let transfer of transferHistory; let i = index"
                 [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
               >
                 <td class="align-middle" *ngIf="appComService.isShowEditID">
-                  {{ emp.employmentHistoryID }}
+                  {{ transfer.transferHistoryID }}
                 </td>
                 <td class="align-middle">
-                  {{ emp.hireDate | date : "MM/dd/yyyy" }}
+                  {{ transfer.branchCode }}
                 </td>
                 <td class="align-middle">
-                  {{ emp.rehireDate | date : "MM/dd/yyyy" }}
+                  {{ transfer.resStateAbv }}
                 </td>
                 <td class="align-middle">
-                  {{ emp.notifiedTermDate | date : "MM/dd/yyyy" }}
+                  {{ transfer.workStateAbv }}
                 </td>
                 <td class="align-middle">
-                  {{ emp.hrTermDate | date : "MM/dd/yyyy" }}
+                  {{ transfer.transferDate | date : "MM/dd/yyyy" }}
                 </td>
-                <td class="align-middle">{{ emp.hrTermCode }}</td>
                 <td class="align-middle">
-                  {{ emp.isForCause ? "Yes" : "No" }}
+                  {{ transfer.isCurrent ? "Yes" : "NO" }}
                 </td>
-                <td class="align-middle">{{ emp.backgroundCheckStatus.toUpperCase() }}</td>
-                <td class="align-middle">{{ emp.backGroundCheckNotes }}</td>
-                <td class="align-middle">{{ emp.isCurrent ? "Yes" : "No" }}</td>
                 <td style="width: 10rem">
                   <div class="d-flex justify-content-between mb-3 me-4">
                     <button
                       class="icon-edit-delete-button"
                       (click)="
-                        agentDataService.storeEmploymentTransferHistory(
-                          'EDIT',
-                          emp
-                        );
-                        modalService.open('modal-edit-emp-history')
+                        agentDataService.storeTransferHistory('EDIT', transfer);
+                        modalService.open('modal-edit-tran-history')
                       "
-                      title="Edit Employment History"
+                      title="Edit Transfer History"
                     >
                       <span class="material-symbols-outlined"> edit </span>
                     </button>
@@ -101,12 +229,12 @@
                       class="icon-edit-delete-button"
                       (click)="
                         onOpenConfirmDialog(
-                          'deleteEmploymentHistory',
-                          'Employment History Item',
-                          emp
+                          'deleteTransferHistory',
+                          'Transfer History Item',
+                          transfer
                         )
                       "
-                      title="Delete Employment History"
+                      title="Delete Transfer History"
                     >
                       <span class="material-symbols-outlined"> delete </span>
                     </button>
@@ -117,50 +245,161 @@
           </table>
         </div>
       </div>
-    </div>
-  </mat-expansion-panel>
-  <!-- TRANSFER HISTORY --> 
-  <mat-expansion-panel class="mat-elevation-z4 mb-3" [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <div class="app-panel-title mt-3">
-          <h2>Transfer History</h2>
+    </mat-expansion-panel>
+    <!-- COMPANY REQUIREMENTS HISTORY -->
+    <mat-expansion-panel class="mat-elevation-z4 mb-3" [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="app-panel-title mt-3">
+            <h2>Company Requirements History</h2>
+          </div>
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ companyRequirementsHistory.length }} - record(s) found
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <div class="mat-description">
+        <div class="row mb-3">
+          <div class="col">
+            <button
+              class="btn btn-success button-font-size"
+              (click)="
+                agentDataService.storeCompanyRequirementsHistory(
+                  'INSERT',
+                  null
+                );
+                modalService.open('modal-edit-co-req-history')
+              "
+            >
+              Insert - Co. Requirement
+            </button>
+          </div>
         </div>
-      </mat-panel-title>
-      <mat-panel-description>
-        {{ transferHistory.length }} - record(s) found
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <div class="mat-description">
+        <div
+          class="div d-flex justify-content-center mt-5"
+          style="font-size: larger; color: gray"
+          *ngIf="companyRequirementsHistory.length === 0"
+        >
+          No records found
+        </div>
+        <div class="row" *ngIf="companyRequirementsHistory.length !== 0">
+          <table class="table">
+            <thead>
+              <tr style="background-color: whitesmoke">
+                <th scope="col" *ngIf="appComService.isShowEditID">
+                  Emp. Co. Req. ID
+                </th>
+                <th scope="col">Asset ID</th>
+                <th scope="col">Status</th>
+                <th scope="col">Comp. Date</th>
+                <th scope="col" class="text-center" style="width: 10rem">
+                  ACTION
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- <tr *ngFor="let coReq of companyRequirementsHistory"> -->
+              <tr
+                *ngFor="let coReq of companyRequirementsHistory; let i = index"
+                [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+              >
+                <td class="align-middle" *ngIf="appComService.isShowEditID">
+                  {{ coReq.employmentCompanyRequirementID }}
+                </td>
+                <td class="align-middle">
+                  {{ coReq.assetIdString }} -
+                  <span style="font-weight: 700; color: red"
+                    >TBD: DATA PROBLEM</span
+                  >
+                </td>
+                <td class="align-middle">
+                  {{ coReq.learningProgramStatus.toUpperCase() }}
+                </td>
+                <td class="align-middle">
+                  {{
+                    coReq.learningProgramCompletionDate | date : "MM/dd/yyyy"
+                  }}
+                </td>
+                <td style="width: 10rem">
+                  <div class="d-flex justify-content-between mb-3 me-4">
+                    <button
+                      class="icon-edit-delete-button"
+                      (click)="
+                        agentDataService.storeCompanyRequirementsHistory(
+                          'EDIT',
+                          coReq
+                        );
+                        modalService.open('modal-edit-co-req-history')
+                      "
+                      title="Edit Co. Requirement"
+                    >
+                      <span class="material-symbols-outlined"> edit </span>
+                    </button>
+                    <button class="icon-edit-delete-button">
+                      <span
+                        class="material-symbols-outlined"
+                        (click)="
+                          onOpenConfirmDialog(
+                            'deleteCoRequirementItem',
+                            'Co. RequirementItem',
+                            coReq
+                          )
+                        "
+                        title="Delete Co. Requirement"
+                      >
+                        delete
+                      </span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </mat-expansion-panel>
+    <!-- JOB TITLE HISTORY -->
+    <mat-expansion-panel class="mat-elevation-z4 mb-3" [expanded]="true">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <div class="app-panel-title mt-3">
+            <h2>Job Title History</h2>
+          </div>
+        </mat-panel-title>
+        <mat-panel-description>
+          {{ employmentJobTitleHistory.length }} - record(s) found
+        </mat-panel-description>
+      </mat-expansion-panel-header>
       <div class="row mb-3">
         <div class="col">
           <button
             class="btn btn-success button-font-size"
             (click)="
-              agentDataService.storeTransferHistory('INSERT', null);
-              modalService.open('modal-edit-tran-history')
+              agentDataService.storeEmploymentJobTitleHistory('INSERT', null);
+              modalService.open('modal-edit-jobTitle-history')
             "
           >
-            Insert - Transfer History 
+            Insert - Job Title
           </button>
         </div>
       </div>
       <div
         class="div d-flex justify-content-center mt-5"
         style="font-size: larger; color: gray"
-        *ngIf="transferHistory.length === 0"
+        *ngIf="employmentJobTitleHistory.length === 0"
       >
         No records found
       </div>
-      <div class="row" *ngIf="transferHistory.length !== 0">
+      <div class="row" *ngIf="employmentJobTitleHistory.length !== 0">
         <table class="table">
           <thead>
             <tr style="background-color: whitesmoke">
-              <th scope="col" *ngIf="appComService.isShowEditID">Trans. ID</th>
-              <th scope="col">Branch Code</th>
-              <th scope="col">Res. St. Code</th>
-              <th scope="col">Work St. Code</th>
-              <th scope="col">Trans. Date</th>
+              <th scope="col" *ngIf="appComService.isShowEditID">
+                Emp. JobTitle ID
+              </th>
+              <th scope="col">JobTitle Date</th>
+              <th scope="col">Job Title</th>
+              <th scope="col">Job Code</th>
               <th scope="col">Is Current</th>
               <th scope="col" class="text-center" style="width: 10rem">
                 ACTION
@@ -168,38 +407,38 @@
             </tr>
           </thead>
           <tbody>
-            <!-- <tr *ngFor="let transfer of transferHistory"> -->
+            <!-- <tr *ngFor="let jobTitle of employmentJobTitleHistory"> -->
             <tr
-              *ngFor="let transfer of transferHistory; let i = index"
+              *ngFor="let jobTitle of employmentJobTitleHistory; let i = index"
               [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
             >
               <td class="align-middle" *ngIf="appComService.isShowEditID">
-                {{ transfer.transferHistoryID }}
+                {{ jobTitle.employmentJobTitleID }}
               </td>
               <td class="align-middle">
-                {{ transfer.branchCode }}
+                {{ jobTitle.jobTitleDate | date : "MM/dd/yyyy" }}
               </td>
               <td class="align-middle">
-                {{ transfer.resStateAbv }}
+                {{ jobTitle.jobTitle }}
               </td>
               <td class="align-middle">
-                {{ transfer.workStateAbv }}
+                {{ jobTitle.jobCode }}
               </td>
               <td class="align-middle">
-                {{ transfer.transferDate | date : "MM/dd/yyyy" }}
-              </td>
-              <td class="align-middle">
-                {{ transfer.isCurrent ? "Yes" : "NO" }}
+                {{ jobTitle.isCurrent ? "Yes" : "No" }}
               </td>
               <td style="width: 10rem">
                 <div class="d-flex justify-content-between mb-3 me-4">
                   <button
                     class="icon-edit-delete-button"
                     (click)="
-                      agentDataService.storeTransferHistory('EDIT', transfer);
-                      modalService.open('modal-edit-tran-history')
+                      agentDataService.storeEmploymentJobTitleHistory(
+                        'EDIT',
+                        jobTitle
+                      );
+                      modalService.open('modal-edit-jobTitle-history')
                     "
-                    title="Edit Transfer History"
+                    title="Edit Job Title"
                   >
                     <span class="material-symbols-outlined"> edit </span>
                   </button>
@@ -207,12 +446,12 @@
                     class="icon-edit-delete-button"
                     (click)="
                       onOpenConfirmDialog(
-                        'deleteTransferHistory',
-                        'Transfer History Item',
-                        transfer
+                        'deleteJobTitleItem',
+                        'Job Title Item',
+                        jobTitle
                       )
                     "
-                    title="Delete Transfer History"
+                    title="Delete Job Title"
                   >
                     <span class="material-symbols-outlined"> delete </span>
                   </button>
@@ -222,217 +461,8 @@
           </tbody>
         </table>
       </div>
-    </div>
-  </mat-expansion-panel>
-  <!-- COMPANY REQUIREMENTS HISTORY --> 
-  <mat-expansion-panel class="mat-elevation-z4 mb-3" [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <div class="app-panel-title mt-3">
-          <h2>Company Requirements History</h2>
-        </div>
-      </mat-panel-title>
-      <mat-panel-description>
-        {{ companyRequirementsHistory.length }} - record(s) found
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <div class="mat-description">
-      <div class="row mb-3">
-        <div class="col">
-          <button
-            class="btn btn-success button-font-size"
-            (click)="
-              agentDataService.storeCompanyRequirementsHistory('INSERT', null);
-              modalService.open('modal-edit-co-req-history')
-            "
-          >
-            Insert - Co. Requirement
-          </button>
-        </div>
-      </div>
-      <div
-        class="div d-flex justify-content-center mt-5"
-        style="font-size: larger; color: gray"
-        *ngIf="companyRequirementsHistory.length === 0"
-      >
-        No records found
-      </div>
-      <div class="row" *ngIf="companyRequirementsHistory.length !== 0">
-        <table class="table">
-          <thead>
-            <tr style="background-color: whitesmoke">
-              <th scope="col" *ngIf="appComService.isShowEditID">
-                Emp. Co. Req. ID
-              </th>
-              <th scope="col">Asset ID</th>
-              <th scope="col">Status</th>
-              <th scope="col">Comp. Date</th>
-              <th scope="col" class="text-center" style="width: 10rem">
-                ACTION
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- <tr *ngFor="let coReq of companyRequirementsHistory"> -->
-            <tr
-              *ngFor="let coReq of companyRequirementsHistory; let i = index"
-              [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
-            >
-              <td class="align-middle" *ngIf="appComService.isShowEditID">
-                {{ coReq.employmentCompanyRequirementID }}
-              </td>
-              <td class="align-middle">
-                {{ coReq.assetIdString }} -
-                <span style="font-weight: 700; color: red"
-                  >TBD: DATA PROBLEM</span
-                >
-              </td>
-              <td class="align-middle">
-                {{ coReq.learningProgramStatus.toUpperCase() }}
-              </td>
-              <td class="align-middle">
-                {{ coReq.learningProgramCompletionDate | date : "MM/dd/yyyy" }}
-              </td>
-              <td style="width: 10rem">
-                <div class="d-flex justify-content-between mb-3 me-4">
-                  <button
-                    class="icon-edit-delete-button"
-                    (click)="
-                      agentDataService.storeCompanyRequirementsHistory(
-                        'EDIT',
-                        coReq
-                      );
-                      modalService.open('modal-edit-co-req-history')
-                    "
-                    title="Edit Co. Requirement"
-                  >
-                    <span class="material-symbols-outlined"> edit </span>
-                  </button>
-                  <button class="icon-edit-delete-button">
-                    <span
-                      class="material-symbols-outlined"
-                      (click)="
-                        onOpenConfirmDialog(
-                          'deleteCoRequirementItem',
-                          'Co. RequirementItem',
-                          coReq
-                        )
-                      "
-                      title="Delete Co. Requirement"
-                    >
-                      delete
-                    </span>
-                  </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </mat-expansion-panel>
-  <!-- JOB TITLE HISTORY --> 
-  <mat-expansion-panel class="mat-elevation-z4 mb-3" [expanded]="true">
-    <mat-expansion-panel-header>
-      <mat-panel-title>
-        <div class="app-panel-title mt-3">
-          <h2>Job Title History</h2>
-        </div>
-      </mat-panel-title>
-      <mat-panel-description>
-        {{ employmentJobTitleHistory.length }} - record(s) found
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <div class="row mb-3">
-      <div class="col">
-        <button
-          class="btn btn-success button-font-size"
-          (click)="
-            agentDataService.storeEmploymentJobTitleHistory('INSERT', null);
-            modalService.open('modal-edit-jobTitle-history')
-          "
-        >
-          Insert - Job Title
-        </button>
-      </div>
-    </div>
-    <div
-      class="div d-flex justify-content-center mt-5"
-      style="font-size: larger; color: gray"
-      *ngIf="employmentJobTitleHistory.length === 0"
-    >
-      No records found
-    </div>
-    <div class="row" *ngIf="employmentJobTitleHistory.length !== 0">
-      <table class="table">
-        <thead>
-          <tr style="background-color: whitesmoke">
-            <th scope="col" *ngIf="appComService.isShowEditID">
-              Emp. JobTitle ID
-            </th>
-            <th scope="col">JobTitle Date</th>
-            <th scope="col">Job Title</th>
-            <th scope="col">Job Code</th>
-            <th scope="col">Is Current</th>
-            <th scope="col" class="text-center" style="width: 10rem">ACTION</th>
-          </tr>
-        </thead>
-        <tbody>
-          <!-- <tr *ngFor="let jobTitle of employmentJobTitleHistory"> -->
-          <tr
-            *ngFor="let jobTitle of employmentJobTitleHistory; let i = index"
-            [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
-          >
-            <td class="align-middle" *ngIf="appComService.isShowEditID">
-              {{ jobTitle.employmentJobTitleID }}
-            </td>
-            <td class="align-middle">
-              {{ jobTitle.jobTitleDate | date : "MM/dd/yyyy" }}
-            </td>
-            <td class="align-middle">
-              {{ jobTitle.jobTitle }}
-            </td>
-            <td class="align-middle">
-              {{ jobTitle.jobCode }}
-            </td>
-            <td class="align-middle">
-              {{ jobTitle.isCurrent ? "Yes" : "No" }}
-            </td>
-            <td style="width: 10rem">
-              <div class="d-flex justify-content-between mb-3 me-4">
-                <button
-                  class="icon-edit-delete-button"
-                  (click)="
-                    agentDataService.storeEmploymentJobTitleHistory(
-                      'EDIT',
-                      jobTitle
-                    );
-                    modalService.open('modal-edit-jobTitle-history')
-                  "
-                  title="Edit Job Title"
-                >
-                  <span class="material-symbols-outlined"> edit </span>
-                </button>
-                <button
-                  class="icon-edit-delete-button"
-                  (click)="
-                    onOpenConfirmDialog(
-                      'deleteJobTitleItem',
-                      'Job Title Item',
-                      jobTitle
-                    )
-                  "
-                  title="Delete Job Title"
-                >
-                  <span class="material-symbols-outlined"> delete </span>
-                </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </mat-expansion-panel>
+    </mat-expansion-panel>
+  </div>
 </div>
 
 <!-- Modal: EDIT-EMP-TRAN-HISTORY -->

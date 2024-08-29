@@ -30,6 +30,7 @@ export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
   agentInfo: AgentInfo = {} as AgentInfo;
   eventAction: string = '';
   vObject: any = {};
+  isLegacyView = false;
 
   private subscriptions = new Subscription();
 
@@ -48,6 +49,13 @@ export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
+    this.isLegacyView = this.appComService.isLegacyView;
+    this.subscriptions.add(
+      this.appComService.isLegacyViewChanged.subscribe((isLegacyView) => {
+        this.isLegacyView = isLegacyView;
+      })
+    );
+
     this.subscriptions.add(
       this.agentDataService.agentInfoChanged.subscribe((agentInfo: any) => {
         this.employmentHistory = agentInfo.employmentHistory;
@@ -56,6 +64,10 @@ export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
         this.employmentJobTitleHistory = agentInfo.employmentJobTitleHistory;
       })
     );
+  }
+
+  onToggleView() {
+    this.appComService.updateIsLegacyView(!this.isLegacyView);
   }
 
   onOpenConfirmDialog(eventAction: string, msg: string, vObject: any): void {
