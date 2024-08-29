@@ -332,7 +332,7 @@ namespace OneTrack_v2.Services
                             join license in _db.Licenses on employeeLicense.LicenseId equals license.LicenseId
                             join lineOfAuthority in _db.LineOfAuthorities on license.LineOfAuthorityId equals lineOfAuthority.LineOfAuthorityId
                             where employeeLicense.EmploymentId == vEmploymentID
-                            orderby employeeLicense.LicenseStatus
+                            orderby employeeLicense.LicenseStatus, license.StateProvinceAbv, license.LicenseName
                             select new OputAgentLicenses
                             {
                                 LicenseID = (int)employeeLicense.LicenseId == 0 ? 0 : employeeLicense.LicenseId,
@@ -343,7 +343,7 @@ namespace OneTrack_v2.Services
                                 EmploymentID = employeeLicense.EmploymentId,
                                 LicenseName = license.LicenseName,
                                 LicenseNumber = employeeLicense.LicenseNumber,
-                                ResNoneRes = (bool)employeeLicense.NonResident ? "NonRes" : "Res",
+                                NonResident = (bool)employeeLicense.NonResident,
                                 OriginalIssueDate = employeeLicense.LicenseIssueDate,
                                 LineOfAuthIssueDate = employeeLicense.LineOfAuthorityIssueDate,
                                 LicenseEffectiveDate = employeeLicense.LicenseEffectiveDate,
@@ -391,6 +391,7 @@ namespace OneTrack_v2.Services
                 var employeeLicenses = (from employeeLicense in _db.EmployeeLicenses
                                         join license in _db.Licenses on employeeLicense.LicenseId equals license.LicenseId
                                         where employeeLicense.EmploymentId == vEmploymentID
+                                        orderby employeeLicense.LicenseStatus, license.StateProvinceAbv, license.LicenseName
                                         select employeeLicense.EmployeeLicenseId)
                                         .ToList();
 
@@ -400,7 +401,7 @@ namespace OneTrack_v2.Services
                             join lineOfAuthority in _db.LineOfAuthorities on license.LineOfAuthorityId equals lineOfAuthority.LineOfAuthorityId
                             join company in _db.Companies on appointment.CompanyId equals company.CompanyId
                             where employeeLicenses.Contains((int)appointment.EmployeeLicenseId)
-                            orderby appointment.AppointmentStatus
+                            orderby appointment.AppointmentStatus, license.StateProvinceAbv, lineOfAuthority.LineOfAuthorityAbv
                             select new OputAgentAppointments
                             {
                                 LicenseID = (int)license.LicenseId,
@@ -2447,7 +2448,7 @@ namespace OneTrack_v2.Services
                                         join ascLicense in _db.EmployeeLicenses on employeeLicense.AscEmployeeLicenseId equals ascLicense.EmployeeLicenseId into ascLicense
                                         join lineOfAuthority in _db.LineOfAuthorities on license.LineOfAuthorityId equals lineOfAuthority.LineOfAuthorityId
                                         where employeeLicense.EmploymentId == vEmploymentID
-                                        orderby employeeLicense.LicenseStatus ascending, license.LicenseId ascending
+                                        orderby employeeLicense.LicenseStatus ascending, license.StateProvinceAbv ascending
                                         select new OputAgentLicenseAppointments
                                         {
                                             EmployeeLicenseId = (int)employeeLicense.EmployeeLicenseId == 0 ? 0 : employeeLicense.EmployeeLicenseId,
@@ -2482,6 +2483,7 @@ namespace OneTrack_v2.Services
                                     join employeeLicense in _db.EmployeeLicenses on appointment.EmployeeLicenseId equals employeeLicense.EmployeeLicenseId
                                     join license in _db.Licenses on employeeLicense.LicenseId equals license.LicenseId
                                     where employeeLicenses.Contains((int)appointment.EmployeeLicenseId)
+                                    orderby appointment.AppointmentStatus ascending, appointment.AppointmentEffectiveDate descending
                                     select new OputAgentAppointments
                                     {
                                         LicenseID = (int)license.LicenseId, // Get LicenseID from Licenses table
