@@ -20,7 +20,7 @@
           </tr>
         </thead>
         <tbody class="bg-body">
-          <tr *ngFor="let comItem of agentInfo.employmentCommunicationItems">
+          <tr class="no-hover-bg:hover" *ngFor="let comItem of agentInfo.employmentCommunicationItems">
             <td>{{ comItem.employmentCommunicationID }}</td>
             <td>{{ comItem.letterName }}</td>
             <td>{{ comItem.emailCreateDate | date }}</td>

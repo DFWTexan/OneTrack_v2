@@ -61,8 +61,8 @@ export interface AgentInfo {
   diaryCreatedByItems: DiaryCreatedByItem[];
   diaryItems: DiaryItem[];
   employmentCommunicationItems: EmploymentCommunicationItem[];
-  licenseItems: AgentLicenseItem[];
-  appointmentItems: AgentAppointmentItem[];
+  licenseItems: LicenseItem[];
+  appointmentItems: AppointmentItem[];
 }
 
 export interface EmploymentHistory {
@@ -142,7 +142,7 @@ export interface EmploymentCommunicationItem {
   emailSentDate: string | null;
 }
 
-export interface AgentLicenseItem {
+export interface LicenseItem {
   employeeLicenseId: number;
   licenseState?: string;
   lineOfAuthority?: string;
@@ -164,7 +164,7 @@ export interface AgentLicenseItem {
   ascLicenseName?: string;
 }
 
-export interface AgentAppointmentItem {
+export interface AppointmentItem {
   licenseID: number;
   licenseState: string;
   lineOfAuthority: string;

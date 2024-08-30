@@ -240,6 +240,11 @@ body {
   background-color: #D8BFD8;
 }
 
+.table tbody tr:hover {
+  /* background-color: #E6E6FA; */
+  background-color: #D8BFD8;
+}
+
 .no-hover-bg {
   background-color: inherit !important;
 }

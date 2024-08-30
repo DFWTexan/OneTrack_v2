@@ -59,7 +59,7 @@
           </tr>
         </thead>
         <tbody class="bg-body">
-          <tr *ngFor="let diary of paginationComService.paginatedResults">
+          <tr *ngFor="let diary of paginationComService.paginatedResults; let i = index" [ngClass]="{ 'alternate-row': i % 2 !== 0 }">
             <td class="align-middle" style="font-size: larger">
               {{ diary.soeid }}
             </td>
