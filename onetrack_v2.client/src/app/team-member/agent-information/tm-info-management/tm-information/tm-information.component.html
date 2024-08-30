@@ -108,7 +108,10 @@
         </div>
       </div>
       <div class="d-flex align-items-center justify-content-between">
-        <div style="color: grey; font-size: larger; font-weight: 600" *ngIf="!isLoading">
+        <div
+          style="color: grey; font-size: larger; font-weight: 600"
+          *ngIf="!isLoading"
+        >
           Agent License & Appointments:
         </div>
         <button
@@ -364,7 +367,7 @@
                 </div>
               </div>
               <div class="row">
-                <table class="table">
+                <table class="table-sm">
                   <thead>
                     <tr style="background-color: whitesmoke">
                       <th scope="col" *ngIf="appComService.isShowEditID">
@@ -521,10 +524,13 @@
               <div
                 id="license"
                 class="tab-pane fade"
-                [ngClass]="{ 'in active': activeTab === 'license', 'custom-row-padding': true }"
+                [ngClass]="{
+                  'in active': activeTab === 'license',
+                  'custom-row-padding': true
+                }"
               >
                 <!-- LICENSE LIST -->
-                <table class="table w-100">
+                <table class="table-sm w-100">
                   <thead>
                     <tr style="background-color: whitesmoke">
                       <th scope="col">&nbsp;</th>
@@ -568,7 +574,9 @@
                       <td class="align-middle">
                         {{ license.lineOfAuthority }}
                       </td>
-                      <td class="align-middle">{{ license.licenseStatus?.toUpperCase() }}</td>
+                      <td class="align-middle">
+                        {{ license.licenseStatus?.toUpperCase() }}
+                      </td>
                       <td class="align-middle">
                         {{ license.employeeLicenseId }}
                       </td>
@@ -681,7 +689,7 @@
                 [ngClass]="{ 'in active': activeTab === 'appoiontment' }"
               >
                 <!-- APPOINTMENT LIST -->
-                <table class="table w-100">
+                <table class="table-sm w-100">
                   <thead>
                     <tr style="background-color: whitesmoke">
                       <th scope="col">&nbsp;</th>
@@ -706,7 +714,10 @@
                         let appointment of agentInfo.appointmentItems;
                         let i = index
                       "
-                      [ngClass]="{ 'alternate-row': i % 2 !== 0, 'custom-row-padding': true }"
+                      [ngClass]="{
+                        'alternate-row': i % 2 !== 0,
+                        'custom-row-padding': true
+                      }"
                     >
                       <td class="align-middle">
                         <button
@@ -914,7 +925,9 @@
 <!-- Modal: INSERT-TICKLER -->
 <modal id="modal-new-tickler">
   <div class="modal-header">
-    <h1 class="modal-title"><strong>{{ typeTickler.type }}</strong> - Tickler</h1>
+    <h1 class="modal-title">
+      <strong>{{ typeTickler.type }}</strong> - Tickler
+    </h1>
   </div>
   <div class="modal-body">
     <div>

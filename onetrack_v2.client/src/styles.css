@@ -220,7 +220,7 @@ body {
 }
 
 .alternate-row {
-  background-color: aliceblue;
+  background-color: #E6E6FA;
 }
 
 .button-font-size {
@@ -235,8 +235,9 @@ body {
   text-decoration: underline;
 }
 
-.table tbody tr:hover {
-  background-color: #E6E6FA;
+.table-sm tbody tr:hover {
+  /* background-color: #E6E6FA; */
+  background-color: #D8BFD8;
 }
 
 .no-hover-bg {

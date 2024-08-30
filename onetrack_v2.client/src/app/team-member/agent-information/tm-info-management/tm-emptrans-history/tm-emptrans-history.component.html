@@ -17,10 +17,14 @@
       <div class="col panel-default">
         <div
           class="d-flex justify-content-between"
-          style="background-color: white; padding: 1rem; border-radius: 0.5rem"
+          style="
+            background-color: aliceblue;
+            padding: 1rem;
+            border-radius: 0.5rem;
+          "
         >
           <span
-            class="ms-2 mt-3"
+            class="ms-1 mt-3"
             style="font-size: large; color: grey; font-weight: 500"
             >Employment History</span
           >
@@ -41,7 +45,7 @@
         >
           No records found
         </div>
-        <table class="table w-100" *ngIf="employmentHistory.length !== 0">
+        <table class="table-sm w-100" *ngIf="employmentHistory.length !== 0">
           <thead>
             <tr style="background-color: whitesmoke">
               <th scope="col" *ngIf="appComService.isShowEditID">History ID</th>
@@ -129,9 +133,15 @@
       <div class="col panel-default">
         <div
           class="d-flex justify-content-between"
-          style="background-color: white; padding: 1rem; border-radius: 0.5rem"
+          style="
+            background-color: aliceblue;
+            padding: 1rem;
+            border-radius: 0.5rem;
+          "
         >
-          <span style="font-size: large; color: grey; font-weight: 500"
+          <span
+            class="ms-1 mt-3"
+            style="font-size: large; color: grey; font-weight: 500"
             >Transfer History</span
           >
           <button
@@ -151,7 +161,7 @@
         >
           No records found
         </div>
-        <table class="table w-100" *ngIf="transferHistory.length !== 0">
+        <table class="table-sm w-100" *ngIf="transferHistory.length !== 0">
           <thead>
             <tr style="background-color: whitesmoke">
               <th scope="col">Branch Code</th>
@@ -220,10 +230,14 @@
       <div class="col panel-default">
         <div
           class="d-flex justify-content-between"
-          style="background-color: white; padding: 1rem; border-radius: 0.5rem"
+          style="
+            background-color: aliceblue;
+            padding: 1rem;
+            border-radius: 0.5rem;
+          "
         >
           <span
-            class="ms-2 mt-3"
+            class="ms-1 mt-3"
             style="font-size: large; color: grey; font-weight: 500"
             >Co. Requirement History</span
           >
@@ -245,7 +259,7 @@
           No records found
         </div>
         <table
-          class="table w-100"
+          class="table-sm w-100"
           *ngIf="companyRequirementsHistory.length !== 0"
         >
           <thead>
@@ -314,10 +328,14 @@
       <div class="col">
         <div
           class="d-flex justify-content-between"
-          style="background-color: white; padding: 1rem; border-radius: 0.5rem"
+          style="
+            background-color: aliceblue;
+            padding: 1rem;
+            border-radius: 0.5rem;
+          "
         >
           <span
-            class="ms-2 mt-3"
+            class="ms-1 mt-3"
             style="font-size: large; color: grey; font-weight: 500"
             >Job Title History</span
           >
@@ -339,7 +357,7 @@
           No records found
         </div>
         <table
-          class="table w-100"
+          class="table-sm w-100"
           *ngIf="employmentJobTitleHistory.length !== 0"
         >
           <thead>
@@ -443,7 +461,7 @@
         </div>
         <div class="row" *ngIf="employmentHistory.length !== 0">
           <div class="col">
-            <table class="table">
+            <table class="table-sm">
               <thead>
                 <tr style="background-color: whitesmoke">
                   <th scope="col" *ngIf="appComService.isShowEditID">
@@ -566,7 +584,7 @@
           No records found
         </div>
         <div class="row" *ngIf="transferHistory.length !== 0">
-          <table class="table">
+          <table class="table-sm">
             <thead>
               <tr style="background-color: whitesmoke">
                 <th scope="col" *ngIf="appComService.isShowEditID">
@@ -676,7 +694,7 @@
           No records found
         </div>
         <div class="row" *ngIf="companyRequirementsHistory.length !== 0">
-          <table class="table">
+          <table class="table-sm">
             <thead>
               <tr style="background-color: whitesmoke">
                 <th scope="col" *ngIf="appComService.isShowEditID">
@@ -784,7 +802,7 @@
         No records found
       </div>
       <div class="row" *ngIf="employmentJobTitleHistory.length !== 0">
-        <table class="table">
+        <table class="table-sm">
           <thead>
             <tr style="background-color: whitesmoke">
               <th scope="col" *ngIf="appComService.isShowEditID">
