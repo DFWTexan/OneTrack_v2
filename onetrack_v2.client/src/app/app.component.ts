@@ -22,7 +22,7 @@ import {
 } from './_services';
 import { environment } from './environments/environment';
 import { MinLengthValidator } from '@angular/forms';
-import { LicenseTech } from './_Models';
+import { LicenseTech, UserAcctInfo } from './_Models';
 import { InfoDialogComponent } from './_components';
 import { Router } from '@angular/router';
 
@@ -37,6 +37,7 @@ export class AppComponent implements OnInit, OnDestroy {
   // sidenav!: MatSidenav;
   // isMobile = true;
   // isCollapsed = true;
+  userAcctInfo: UserAcctInfo = {} as UserAcctInfo;
   branchCodes: any[] = [];
   licenseTechs: any[] = [];
 
@@ -74,11 +75,23 @@ export class AppComponent implements OnInit, OnDestroy {
       });
     }
 
+    this.userAcctInfo = this.userInfoService.userAcctInfo;
+    this.subscriptions.add(
+      this.userInfoService.userAcctInfoChanged.subscribe(
+        (userAcctInfo: UserAcctInfo) => {
+          this.userAcctInfo = userAcctInfo;
+        }
+      )
+    );
+
     this.licenseTechs = this.licIncentiveInfoDataService.licenseTeches;
     this.subscriptions.add(
       this.licIncentiveInfoDataService.licenseTechesChanged.subscribe(
         (licenseTechs: any[]) => {
-          this.licenseTechs = [{ value: null, label: "Select" },  ...licenseTechs];
+          this.licenseTechs = [
+            { value: null, label: 'Select' },
+            ...licenseTechs,
+          ];
         }
       )
     );
@@ -259,7 +272,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   title = 'onetrack_v2';
 
-onImpersonateChange(event: Event) {
+  onImpersonateChange(event: Event) {
     const soeid = (event.target as HTMLInputElement).value;
     this.userInfoService.updateUserAcctInfo({
       displayName: 'Impersonating User',
@@ -274,8 +287,20 @@ onImpersonateChange(event: Event) {
       isReadRole: true,
       isSuperUser: true,
     });
-}
+  }
 
+  onRoleChange(event: Event) {
+    const role = (event.target as HTMLInputElement).value;
+    // const currentUserInfo = this.userInfoService.getUserAcctInfo(); // Assuming this method exists to get current user info
+  
+    this.userInfoService.updateUserAcctInfo({
+      ...this.userAcctInfo,
+      isAdminRole: role === 'Admin',
+      isTechRole: role === 'Tech',
+      isReadRole: role === 'Read',
+      isSuperUser: role === 'DVLPER',
+    });
+  }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
