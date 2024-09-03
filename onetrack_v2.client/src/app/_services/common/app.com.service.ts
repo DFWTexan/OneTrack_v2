@@ -15,6 +15,7 @@ import { ErrorMessageService } from '../error/error.message.service';
   providedIn: 'root',
 })
 export class AppComService {
+  environment = environment;
   isLoggedIn = false;
   isLoggedInChanged = new Subject<boolean>();
   loginErrorMsg = '';
@@ -40,6 +41,10 @@ export class AppComService {
   updateIsLoggedIn(isLoggedIn: boolean) {
     this.isLoggedIn = isLoggedIn;
     this.isLoggedInChanged.next(this.isLoggedIn);
+  }
+
+  updateEnvironment(value: string) {
+
   }
 
   updateLoginErrorMsg(loginErrorMsg: string) {

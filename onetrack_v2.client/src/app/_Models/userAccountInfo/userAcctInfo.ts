@@ -1,14 +1,14 @@
 export interface UserAcctInfo {
     displayName: string;
     soeid: string;
-    email: string;
-    enabled: boolean;
-    employeeId: string;
-    homeDirectory: string;
-    lastLogon: string;
-    isAdminRole: boolean;
+    email: string | null;
+    enabled: boolean | null;
+    employeeId: string | null;
+    homeDirectory: string | null;
+    lastLogon: string | null;
+    isAdminRole: boolean | null;
     isTechRole: boolean | null;
-    isReadRole: boolean;
-    isSuperUser: boolean;
+    isReadRole: boolean | null;
+    isSuperUser: boolean | null;
   }
   

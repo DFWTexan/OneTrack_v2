@@ -56,11 +56,11 @@
         [routerLinkActiveOptions]="{ exact: true }"
         [disabled]="!appComService.isLoggedIn"
         (click)="
-              onLinkClick($event, {
-                message: 'Loading Dashboard..',
-                route: '/dashboard'
-              })
-            "
+          onLinkClick($event, {
+            message: 'Loading Dashboard..',
+            route: '/dashboard'
+          })
+        "
       >
         <mat-icon>dashboard</mat-icon><span>Dashboard</span>
       </mat-list-item>
@@ -282,11 +282,11 @@
         routerLinkActive="active"
         [disabled]="!appComService.isLoggedIn"
         (click)="
-              onLinkClick($event, {
-                message: 'Loading Worklist...',
-                route: '/work-lists'
-              })
-            "
+          onLinkClick($event, {
+            message: 'Loading Worklist...',
+            route: '/work-lists'
+          })
+        "
       >
         <mat-icon>list_alt</mat-icon>
         <span style="font-size: 1.5rem; font-weight: 500" class="text-center">
@@ -298,6 +298,38 @@
     <mat-divider></mat-divider>
 
     <app-login *ngIf="!appComService.isLoggedIn"></app-login>
+    <br />
+    <br />
+    <br />
+    <!-- <div class="d-flex justify-content-center">
+      <button
+        mat-raised-button
+        color="warn"
+        *ngIf="appComService.isLoggedIn"
+      >
+        Logout
+      </button>
+    </div> -->
+    <div *ngIf="appComService.environment.isDevLoginEnabled">
+      <div class="ms-3 justify-content-start">
+        <label for="devLogin">Impersonate:</label><br />
+        <select class="form-select select-size-med-small" type="text" id="licTech" (change)="onImpersonateChange($event)">
+          <option
+            *ngFor="let tech of licenseTechs"
+            [value]="tech.value"
+          >
+            {{ tech.label }}
+          </option>
+        </select>
+        <label class="mt-2" for="devLogin">As</label><br />
+        <select class="form-select select-size-small" type="text" id="licTech">
+          <option>Select</option>
+          <option>AdminRole</option>
+          <option>TechRole</option>
+          <option>ReadRole</option>
+        </select>
+      </div>
+    </div>
   </mat-sidenav>
 
   <mat-sidenav-content style="background-color: aliceblue">

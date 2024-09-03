@@ -38,6 +38,7 @@ export class AppComponent implements OnInit, OnDestroy {
   // isMobile = true;
   // isCollapsed = true;
   branchCodes: any[] = [];
+  licenseTechs: any[] = [];
 
   private subscriptions = new Subscription();
 
@@ -65,13 +66,22 @@ export class AppComponent implements OnInit, OnDestroy {
         enabled: true,
         employeeId: '2229513',
         homeDirectory: '\\\\corp.fin\\users\\EVNAS_Users\\3\\T2229513',
-        lastLogon: '2024-05-07T14:30:59.1941967Z',
+        lastLogon: Date.now().toString(),
         isAdminRole: true,
         isTechRole: null,
         isReadRole: true,
         isSuperUser: true,
       });
     }
+
+    this.licenseTechs = this.licIncentiveInfoDataService.licenseTeches;
+    this.subscriptions.add(
+      this.licIncentiveInfoDataService.licenseTechesChanged.subscribe(
+        (licenseTechs: any[]) => {
+          this.licenseTechs = [{ value: null, label: "Select" },  ...licenseTechs];
+        }
+      )
+    );
 
     // DROPDOWN DATA
     this.subscriptions.add(
@@ -220,22 +230,6 @@ export class AppComponent implements OnInit, OnDestroy {
     );
   }
 
-  // onDashboardClick(event: Event) {
-  //   event.preventDefault();
-
-  //   const dialogRef = this.dialog.open(InfoDialogComponent, {
-  //     data: { message: 'Loading Dashboard...' },
-  //   });
-
-  //   // Delay the execution of the blocking operation
-  //   setTimeout(() => {
-  //     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-  //       this.router.navigate(['/dashboard']);
-  //     });
-  //     dialogRef.close();
-  //   }, 100);
-  // }
-
   onPanelOpened(vTitle: string) {
     const dialogRef = this.dialog.open(InfoDialogComponent, {
       data: { message: 'Loading...' },
@@ -263,266 +257,25 @@ export class AppComponent implements OnInit, OnDestroy {
     }, 100);
   }
 
-  // Administration
-  // onCompanyEditClick(event: Event) {
-  //   event.preventDefault();
-
-  //   const dialogRef = this.dialog.open(InfoDialogComponent, {
-  //     data: { message: 'Loading Company Edit...' },
-  //   });
-
-  //   // Delay the execution of the blocking operation
-  //   setTimeout(() => {
-  //     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-  //       this.router.navigate(['/admin/company-edit']);
-  //     });
-  //     dialogRef.close();
-  //   }, 100);
-  // }
-
-  // onCompanyRequirementsClick(event: Event) {
-  //   event.preventDefault();
-
-  //   const dialogRef = this.dialog.open(InfoDialogComponent, {
-  //     data: { message: 'Loading Company Requirements...' },
-  //   });
-
-  //   // Delay the execution of the blocking operation
-  //   setTimeout(() => {
-  //     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-  //       this.router.navigate(['/admin/company-requirements']);
-  //     });
-  //     dialogRef.close();
-  //   }, 100);
-  // }
-
-  // onConEduEditClick(event: Event) {
-  //   event.preventDefault();
-
-  //   const dialogRef = this.dialog.open(InfoDialogComponent, {
-  //     data: { message: 'Loading Contiuing Edu Edit...' },
-  //   });
-
-  //   // Delay the execution of the blocking operation
-  //   setTimeout(() => {
-  //     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-  //       this.router.navigate(['/admin/con-education-edit']);
-  //     });
-  //     dialogRef.close();
-  //   }, 100);
-  // }
-
-  // onDropdownListEditClick(event: Event) {
-  //   event.preventDefault();
-
-  //   const dialogRef = this.dialog.open(InfoDialogComponent, {
-  //     data: { message: 'Loading Dropdown List Edit...' },
-  //   });
-
-  //   // Delay the execution of the blocking operation
-  //   setTimeout(() => {
-  //     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-  //       this.router.navigate(['/admin/dropdown-list-edit']);
-  //     });
-  //     dialogRef.close();
-  //   }, 100);
-  // }
-
-  // onExamEditClick(event: Event) {
-  //   event.preventDefault();
-
-  //   const dialogRef = this.dialog.open(InfoDialogComponent, {
-  //     data: { message: 'Loading Exam Edit...' },
-  //   });
-
-  //   // Delay the execution of the blocking operation
-  //   setTimeout(() => {
-  //     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-  //       this.router.navigate(['/admin/examp-edit']);
-  //     });
-  //     dialogRef.close();
-  //   }, 100);
-  // }
-
-  // onJobTitleLicensedClick(event: Event) {
-  //   event.preventDefault();
-
-  //   const dialogRef = this.dialog.open(InfoDialogComponent, {
-  //     data: { message: 'Loading Job Title Licensed...' },
-  //   });
-
-  //   // Delay the execution of the blocking operation
-  //   setTimeout(() => {
-  //     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-  //       this.router.navigate(['/admin/job-title-license']);
-  //     });
-  //     dialogRef.close();
-  //   }, 100);
-  // }
-
-  // onLicenseEditClick(event: Event) {
-  //   event.preventDefault();
-
-  //   const dialogRef = this.dialog.open(InfoDialogComponent, {
-  //     data: { message: 'Loading License Edit...' },
-  //   });
-
-  //   // Delay the execution of the blocking operation
-  //   setTimeout(() => {
-  //     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-  //       this.router.navigate(['/admin/license-edit']);
-  //     });
-  //     dialogRef.close();
-  //   }, 100);
-  // }
-
-  // onLicenseTechEditClick(event: Event) {
-  //   event.preventDefault();
-
-  //   const dialogRef = this.dialog.open(InfoDialogComponent, {
-  //     data: { message: 'Loading License Tech Edit...' },
-  //   });
-
-  //   // Delay the execution of the blocking operation
-  //   setTimeout(() => {
-  //     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-  //       this.router.navigate(['/admin/license-tech-edit']);
-  //     });
-  //     dialogRef.close();
-  //   }, 100);
-  // }
-
-  // onPreEduEditClick(event: Event) {
-  //   event.preventDefault();
-
-  //   const dialogRef = this.dialog.open(InfoDialogComponent, {
-  //     data: { message: 'Loading Pre Edu Edit...' },
-  //   });
-
-  //   // Delay the execution of the blocking operation
-  //   setTimeout(() => {
-  //     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-  //       this.router.navigate(['/admin/pre-education-edit']);
-  //     });
-  //     dialogRef.close();
-  //   }, 100);
-  // }
-
-  // onProductEditClick(event: Event) {
-  //   event.preventDefault();
-
-  //   const dialogRef = this.dialog.open(InfoDialogComponent, {
-  //     data: { message: 'Loading Product Edit...' },
-  //   });
-
-  //   // Delay the execution of the blocking operation
-  //   setTimeout(() => {
-  //     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-  //       this.router.navigate(['/admin/product-edit']);
-  //     });
-  //     dialogRef.close();
-  //   }, 100);
-  // }
-
-  // onStateLicenseRequirementsClick(event: Event) {
-  //   event.preventDefault();
-
-  //   const dialogRef = this.dialog.open(InfoDialogComponent, {
-  //     data: { message: 'Loading State License Requirements...' },
-  //   });
-
-  //   // Delay the execution of the blocking operation
-  //   setTimeout(() => {
-  //     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-  //       this.router.navigate(['/admin/state-lic-reuirements']);
-  //     });
-  //     dialogRef.close();
-  //   }, 100);
-  // }
-
-  // onStateProvinceEditClick(event: Event) {
-  //   event.preventDefault();
-
-  //   const dialogRef = this.dialog.open(InfoDialogComponent, {
-  //     data: { message: 'Loading State Province Edit...' },
-  //   });
-
-  //   // Delay the execution of the blocking operation
-  //   setTimeout(() => {
-  //     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-  //       this.router.navigate(['/admin/state-province-edit']);
-  //     });
-  //     dialogRef.close();
-  //   }, 100);
-  // }
-
-  // onXBorLicenseRequirementsClick(event: Event) {
-  //   event.preventDefault();
-
-  //   const dialogRef = this.dialog.open(InfoDialogComponent, {
-  //     data: { message: 'Loading XBor License Requirements...' },
-  //   });
-
-  //   // Delay the execution of the blocking operation
-  //   setTimeout(() => {
-  //     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-  //       this.router.navigate(['/admin/xbor-lic-requirements']);
-  //     });
-  //     dialogRef.close();
-  //   }, 100);
-  // }
-
-  // Team Members
-  // onAddMemberClick(event: Event) {
-  //   event.preventDefault();
-
-  //   const dialogRef = this.dialog.open(InfoDialogComponent, {
-  //     data: { message: 'Loading Add Team Member...' },
-  //   });
-
-  //   // Delay the execution of the blocking operation
-  //   setTimeout(() => {
-  //     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-  //       this.router.navigate(['/team/add-member']);
-  //     });
-  //     dialogRef.close();
-  //   }, 100);
-  // }
-
-  // onSearchMemberClick(event: Event) {
-  //   event.preventDefault();
-
-  //   const dialogRef = this.dialog.open(InfoDialogComponent, {
-  //     data: { message: 'Loading Search Team Member...' },
-  //   });
-
-  //   // Delay the execution of the blocking operation
-  //   setTimeout(() => {
-  //     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-  //       this.router.navigate(['/team/search-members']);
-  //     });
-  //     dialogRef.close();
-  //   }, 100);
-  // }
-  
-  // Worklists
-  // onWorklistClick(event: Event) {
-  //   event.preventDefault();
-
-  //   const dialogRef = this.dialog.open(InfoDialogComponent, {
-  //     data: { message: 'Loading Worklist...' },
-  //   });
-
-  //   // Delay the execution of the blocking operation
-  //   setTimeout(() => {
-  //     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-  //       this.router.navigate(['/work-lists']);
-  //     });
-  //     dialogRef.close();
-  //   }, 100);
-  // }
-
   title = 'onetrack_v2';
+
+onImpersonateChange(event: Event) {
+    const soeid = (event.target as HTMLInputElement).value;
+    this.userInfoService.updateUserAcctInfo({
+      displayName: 'Impersonating User',
+      soeid: soeid,
+      email: null,
+      enabled: true,
+      employeeId: null,
+      homeDirectory: '\\\\corp.fin\\users\\EVNAS_Users\\3\\T2229513',
+      lastLogon: Date.now().toString(),
+      isAdminRole: true,
+      isTechRole: null,
+      isReadRole: true,
+      isSuperUser: true,
+    });
+}
+
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
