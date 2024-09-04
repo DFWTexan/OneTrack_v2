@@ -11,7 +11,12 @@ import {
   TicklerMgmtDataService,
   UserAcctInfoDataService,
 } from '../../../_services';
-import { AgentInfo, StockTickler, TicklerInfo, UserAcctInfo } from '../../../_Models';
+import {
+  AgentInfo,
+  StockTickler,
+  TicklerInfo,
+  UserAcctInfo,
+} from '../../../_Models';
 import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
 
 @Component({
@@ -43,6 +48,8 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
     private userInfoDataService: UserAcctInfoDataService
   ) {
     this.userAcctInfo = this.userInfoDataService.userAcctInfo;
+    this.stockTicklerItems = this.ticklerMgmtDataService.stockTicklerItems;
+    this.licenseTechItems = this.ticklerMgmtDataService.licenseTechItems;
   }
 
   ngOnInit(): void {
@@ -57,27 +64,19 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptionData.add(
-      this.ticklerMgmtDataService
-        .fetchLicenseTech(0, null)
-        .subscribe((licenseTechItems) => {
+      this.ticklerMgmtDataService.licenseTechItemsChanged.subscribe(
+        (licenseTechItems: any) => {
           this.licenseTechItems = licenseTechItems;
-        })
+        }
+      )
     );
 
     this.subscriptionData.add(
-      this.ticklerMgmtDataService
-        .fetchStockTickler()
-        .subscribe((stockTicklerItems) => {
+      this.ticklerMgmtDataService.stockTicklerItemsChanged.subscribe(
+        (stockTicklerItems: StockTickler[]) => {
           this.stockTicklerItems = stockTicklerItems;
-        })
-    );
-
-    this.subscriptionData.add(
-      this.ticklerMgmtDataService
-        .fetchStockTickler()
-        .subscribe((stockTicklerItems: any) => {
-          this.stockTicklerItems = stockTicklerItems;
-        })
+        }
+      )
     );
 
     if (this.router.url.startsWith('/team/search-members')) {

@@ -82,11 +82,11 @@ export class AppComponent implements OnInit, OnDestroy {
       });
     }
 
-    this.subscriptions.add(
-      this.appComService.isLoggedInChanged.subscribe((isLoggedIn: boolean) => {
-        this.appComService.isLoggedIn = isLoggedIn;
-      })
-    );
+    // this.subscriptions.add(
+    //   this.appComService.isLoggedInChanged.subscribe((isLoggedIn: boolean) => {
+    //     this.appComService.isLoggedIn = isLoggedIn;
+    //   })
+    // );
 
     this.subscriptions.add(
       this.appComService.openTicklerCountChanged.subscribe(

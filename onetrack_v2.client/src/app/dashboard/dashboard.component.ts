@@ -5,12 +5,16 @@ import {
   AppComService,
   DashboardDataService,
   MiscDataService,
+  ModalService,
+  TicklerMgmtComService,
   TicklerMgmtDataService,
   UserAcctInfoDataService,
   WorkListDataService,
 } from '../_services';
 import { Subscription } from 'rxjs';
-import { TicklerInfo, UserAcctInfo } from '../_Models';
+import { StockTickler, TicklerInfo, UserAcctInfo } from '../_Models';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../_components';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,9 +23,12 @@ import { TicklerInfo, UserAcctInfo } from '../_Models';
 })
 export class DashboardComponent implements OnInit, OnDestroy {
   loading: boolean = false;
+  today: Date = new Date();
   panelOpenState = false;
   userAcctInfo: UserAcctInfo = {} as UserAcctInfo;
   ticklerInfoItems: TicklerInfo[] = [];
+  stockTicklerItems: StockTickler[] = [];
+  licenseTechItems: any = ['Loading...'];
 
   private subscriptions = new Subscription();
 
@@ -67,8 +74,11 @@ export class DashboardComponent implements OnInit, OnDestroy {
     public appComService: AppComService,
     public workListDataService: WorkListDataService,
     public ticklerMgmtDataService: TicklerMgmtDataService,
+    public ticklerMgmtComService: TicklerMgmtComService,
     public miscDataService: MiscDataService,
     public dashboardDataService: DashboardDataService,
+    public dialog: MatDialog,
+    protected modalService: ModalService,
     public userAcctInfoDataService: UserAcctInfoDataService
   ) {
     this.selectedDate = null;
@@ -80,17 +90,8 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.userAcctInfoDataService.userAcctInfoChanged.subscribe(
         (userAcctInfo: UserAcctInfo) => {
           this.userAcctInfo = userAcctInfo;
-          if(userAcctInfo.licenseTechId)
-          {
-            this.subscriptions.add(
-              this.ticklerMgmtDataService
-                .fetchTicklerInfo(0, userAcctInfo.licenseTechId, 0)
-                .subscribe((ticklerInfoItems: any) => {
-                  this.ticklerInfoItems = ticklerInfoItems;
-                  this.appComService.updateOpenTicklerCount(ticklerInfoItems.length);
-                  this.loading = false;
-                })
-            );
+          if (userAcctInfo.licenseTechId) {
+            this.fetchTicklerInfo();
           }
         }
       )
@@ -101,6 +102,22 @@ export class DashboardComponent implements OnInit, OnDestroy {
         this.worklistNames = worklistNames;
         this.selectedWorkListName = worklistNames[0];
       })
+    );
+
+    this.subscriptions.add(
+      this.ticklerMgmtDataService
+        .fetchLicenseTech(0, null)
+        .subscribe((licenseTechItems) => {
+          this.licenseTechItems = licenseTechItems;
+        })
+    );
+
+    this.subscriptions.add(
+      this.ticklerMgmtDataService
+        .fetchStockTickler()
+        .subscribe((stockTicklerItems) => {
+          this.stockTicklerItems = stockTicklerItems;
+        })
     );
 
     this.subscriptions.add(
@@ -157,6 +174,97 @@ export class DashboardComponent implements OnInit, OnDestroy {
     const value = target.value;
     this.selectedDate = value;
     this.fetchWorkListData();
+  }
+
+  // TICKLER
+  fetchTicklerInfo(): void {
+    this.subscriptions.add(
+      this.ticklerMgmtDataService
+        .fetchTicklerInfo(0, this.userAcctInfo.licenseTechId ?? 0, 0)
+        .subscribe((ticklerInfoItems: any) => {
+          this.ticklerInfoItems = ticklerInfoItems;
+          this.appComService.updateOpenTicklerCount(ticklerInfoItems.length);
+          this.loading = false;
+        })
+    );
+  }
+
+  onChildCallRefreshData(): void {
+    this.fetchTicklerInfo();
+  }
+
+  isOverdue(ticklerDueDate: string | Date): boolean {
+    const dueDate = new Date(ticklerDueDate);
+    return dueDate < this.today;
+  }
+
+  onCloseTicklerItem(ticklerInfo: TicklerInfo): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+        title: 'Confirm Action',
+        message:
+          'You are about to CLOSE Tickler Item (' +
+          ticklerInfo.ticklerId +
+          ') - ' +
+          ticklerInfo.lkpValue +
+          '. Do you want to proceed?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.ticklerMgmtDataService
+          .closeTicklerItem({
+            TicklerID: ticklerInfo.ticklerId,
+            TicklerCloseByLicenseTechID: ticklerInfo.licenseTechId,
+            UserSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
+          })
+          .subscribe({
+            next: (response) => {
+              this.fetchTicklerInfo();
+            },
+            error: (error) => {
+              console.error(error);
+              // handle the error here
+            },
+          });
+      }
+    });
+  }
+
+  onDeleteTicklerItem(ticklerInfo: TicklerInfo): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+        title: 'Confirm Action',
+        message:
+          'You are about to DELETE Tickler Item (' +
+          ticklerInfo.ticklerId +
+          ') - ' +
+          ticklerInfo.lkpValue +
+          '. Do you want to proceed?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.ticklerMgmtDataService
+          .deleteTicklerItem({
+            TicklerID: ticklerInfo.ticklerId,
+            UserSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
+          })
+          .subscribe({
+            next: (response) => {
+              this.fetchTicklerInfo();
+            },
+            error: (error) => {
+              console.error(error);
+              // handle the error here
+            },
+          });
+      }
+    });
   }
 
   // ADBANKER

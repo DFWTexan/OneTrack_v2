@@ -198,7 +198,7 @@ body {
   width: 1rem;
   margin: 1rem;
   transition: color 0.3s ease;
-  color: red;
+  color: black;
 }
 
 .icon-close-button:hover {

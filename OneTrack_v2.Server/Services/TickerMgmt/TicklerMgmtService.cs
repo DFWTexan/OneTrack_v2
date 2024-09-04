@@ -84,25 +84,26 @@ namespace OneTrak_v2.Services
                             (vEmploymentID == 0 || t.EmploymentId == vEmploymentID) &&
                             (vTicklerID == 0 || t.TicklerId == vTicklerID) &&
                             t.TicklerCloseByLicenseTechId == null
-                                        select new
-                                        {
-                                            t.TicklerId,
-                                            t.TicklerDate,
-                                            t.TicklerDueDate,
-                                            t.LicenseTechId,
-                                            t.EmploymentId,
-                                            t.EmployeeLicenseId,
-                                            e.EmployeeId,
-                                            loa.LineOfAuthorityName,
-                                            e.Geid,
-                                            TeamMemberName = e.LastName + ", " + e.FirstName,
-                                            t.TicklerCloseDate,
-                                            t.TicklerCloseByLicenseTechId,
-                                            Message = (e.FirstName + " " + e.LastName + "\r\n" + "TM-" + e.Geid + "\r\n" ?? "") +
+                            orderby t.TicklerDueDate
+                            select new
+                            {
+                                t.TicklerId,
+                                t.TicklerDate,
+                                t.TicklerDueDate,
+                                t.LicenseTechId,
+                                t.EmploymentId,
+                                t.EmployeeLicenseId,
+                                e.EmployeeId,
+                                loa.LineOfAuthorityName,
+                                e.Geid,
+                                TeamMemberName = e.LastName + ", " + e.FirstName,
+                                t.TicklerCloseDate,
+                                t.TicklerCloseByLicenseTechId,
+                                Message = (e.FirstName + " " + e.LastName + "\r\n" + "TM-" + e.Geid + "\r\n" ?? "") +
                                                       (loa.LineOfAuthorityName + "\r\n" ?? "") +
                                                       (t.LkpValue == "Other" ? t.Message : t.LkpValue),
-                                            t.LkpValue
-                                        };
+                                t.LkpValue
+                            };
 
                 var resultTicklers = query.ToList();
 
@@ -276,7 +277,7 @@ namespace OneTrak_v2.Services
         }
         public ReturnResult DeleteTickler([FromBody] IputDeleteTicklerMgmt vInput)
         {
-             var result = new ReturnResult();
+            var result = new ReturnResult();
             try
             {
                 // DELETE Tickler
