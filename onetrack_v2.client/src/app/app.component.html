@@ -10,10 +10,21 @@
     <button mat-icon-button matTooltip="Share">
       <mat-icon>share</mat-icon>
     </button> -->
+  <div
+    *ngIf="appComService.openTicklerCount > 0"
+    [ngStyle]="{
+      color: '#00FF7F'
+    }"
+  >
+    {{ appComService.openTicklerCount }}
+  </div>
   <button
     mat-icon-button
     matTooltip="Notifications"
     (click)="appComService.toggleTickler()"
+    [ngStyle]="{
+      color: appComService.openTicklerCount > 0 ? '#00FF7F' : 'inherit'
+    }"
   >
     <mat-icon>notifications</mat-icon>
   </button>

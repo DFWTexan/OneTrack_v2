@@ -25,6 +25,8 @@ export class AppComService {
   tickleToggleChanged = new Subject<boolean>();
   isLegacyView = false;
   isLegacyViewChanged = new Subject<boolean>();
+  openTicklerCount = 0;
+  openTicklerCountChanged = new Subject<number>();
 
   subscriptions: Subscription = new Subscription();
 
@@ -36,6 +38,11 @@ export class AppComService {
   toggleTickler() {
     this.tickleToggle = !this.tickleToggle;
     this.tickleToggleChanged.next(this.tickleToggle);
+  }
+
+  updateOpenTicklerCount(openTicklerCount: number) {
+    this.openTicklerCount = openTicklerCount;
+    this.openTicklerCountChanged.next(this.openTicklerCount);
   }
 
   updateIsLoggedIn(isLoggedIn: boolean) {

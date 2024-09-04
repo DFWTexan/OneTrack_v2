@@ -41,6 +41,7 @@ export class AppComponent implements OnInit, OnDestroy {
   branchCodes: any[] = [];
   licenseTechs: any[] = [];
   impesonatorRole: string | null = null;
+  openTicklerCount = 0;
 
   private subscriptions = new Subscription();
 
@@ -54,7 +55,11 @@ export class AppComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private router: Router,
     private userInfoService: UserAcctInfoDataService
-  ) {}
+  ) {
+    this.openTicklerCount = this.appComService.openTicklerCount;
+    this.userAcctInfo = this.userInfoService.userAcctInfo;
+    this.licenseTechs = this.licIncentiveInfoDataService.licenseTeches;
+  }
 
   ngOnInit() {
     if (environment.isDevLoginEnabled) {
@@ -77,7 +82,20 @@ export class AppComponent implements OnInit, OnDestroy {
       });
     }
 
-    this.userAcctInfo = this.userInfoService.userAcctInfo;
+    this.subscriptions.add(
+      this.appComService.isLoggedInChanged.subscribe((isLoggedIn: boolean) => {
+        this.appComService.isLoggedIn = isLoggedIn;
+      })
+    );
+
+    this.subscriptions.add(
+      this.appComService.openTicklerCountChanged.subscribe(
+        (openTicklerCount: number) => {
+          this.openTicklerCount = openTicklerCount;
+        }
+      )
+    );
+
     this.subscriptions.add(
       this.userInfoService.userAcctInfoChanged.subscribe(
         (userAcctInfo: UserAcctInfo) => {
@@ -86,7 +104,6 @@ export class AppComponent implements OnInit, OnDestroy {
       )
     );
 
-    this.licenseTechs = this.licIncentiveInfoDataService.licenseTeches;
     this.subscriptions.add(
       this.licIncentiveInfoDataService.licenseTechesChanged.subscribe(
         (licenseTechs: any[]) => {
@@ -301,7 +318,7 @@ export class AppComponent implements OnInit, OnDestroy {
   onRoleChange(event: Event) {
     const role = (event.target as HTMLInputElement).value;
     this.impesonatorRole = role;
-  
+
     this.userInfoService.updateUserAcctInfo({
       ...this.userAcctInfo,
       isAdminRole: role === 'Admin',

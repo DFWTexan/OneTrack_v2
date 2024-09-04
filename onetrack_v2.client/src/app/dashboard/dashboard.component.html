@@ -4,7 +4,7 @@
   </div>
   <div class="row mt-5" *ngIf="appComService.isLoggedIn">
     <!-- <mat-accordion> -->
-      
+    <!-- WORKLIST -->
     <mat-expansion-panel>
       <mat-expansion-panel-header>
         <mat-panel-title style="font-size: large">
@@ -86,13 +86,21 @@
         </div>
       </div>
     </mat-expansion-panel>
+    <!-- TICKLER -->
     <mat-expansion-panel class="mt-3" *ngIf="userAcctInfo.licenseTechId">
       <mat-expansion-panel-header>
         <mat-panel-title style="font-size: large">
           Tickler Information
         </mat-panel-title>
+        <mat-panel-description
+          ><span style="font-size: larger" class="me-2">Open Items:</span>
+          <span style="font-size: large">{{
+            ticklerInfoItems.length
+          }}</span></mat-panel-description
+        >
       </mat-expansion-panel-header>
     </mat-expansion-panel>
+    <!-- ADBANKER -->
     <mat-expansion-panel
       class="mt-3"
       (opened)="panelOpenState = true"
@@ -104,11 +112,11 @@
         </mat-panel-title>
         <mat-panel-description>
           <!-- Currently I am {{panelOpenState ? 'open' : 'closed'}} -->
-          <span style="font-size: larger">{{
+          <span style="font-size: large" class="me-3">{{
             adBankerImportInfo.recordCount
           }}</span>
-          &nbsp; records - imported: &nbsp;
-          <span style="font-size: large">{{
+          <span style="font-size: larger">Records - Last Imported:</span>
+          <span style="font-size: large"class="me-3">{{
             adBankerImportInfo.lastImportDate | date : "MM/dd/yyyy"
           }}</span>
         </mat-panel-description>
@@ -228,6 +236,7 @@
         </div>
       </div>
     </mat-expansion-panel>
+    <!-- AUDIT LOG -->
     <mat-expansion-panel class="mt-3">
       <mat-expansion-panel-header>
         <mat-panel-title style="font-size: large"> Audit Log </mat-panel-title>

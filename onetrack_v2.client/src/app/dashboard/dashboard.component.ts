@@ -5,11 +5,12 @@ import {
   AppComService,
   DashboardDataService,
   MiscDataService,
+  TicklerMgmtDataService,
   UserAcctInfoDataService,
   WorkListDataService,
 } from '../_services';
 import { Subscription } from 'rxjs';
-import { UserAcctInfo } from '../_Models';
+import { TicklerInfo, UserAcctInfo } from '../_Models';
 
 @Component({
   selector: 'app-dashboard',
@@ -20,6 +21,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   panelOpenState = false;
   userAcctInfo: UserAcctInfo = {} as UserAcctInfo;
+  ticklerInfoItems: TicklerInfo[] = [];
 
   private subscriptions = new Subscription();
 
@@ -64,6 +66,7 @@ export class DashboardComponent implements OnInit, OnDestroy {
   constructor(
     public appComService: AppComService,
     public workListDataService: WorkListDataService,
+    public ticklerMgmtDataService: TicklerMgmtDataService,
     public miscDataService: MiscDataService,
     public dashboardDataService: DashboardDataService,
     public userAcctInfoDataService: UserAcctInfoDataService
@@ -77,6 +80,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
       this.userAcctInfoDataService.userAcctInfoChanged.subscribe(
         (userAcctInfo: UserAcctInfo) => {
           this.userAcctInfo = userAcctInfo;
+          if(userAcctInfo.licenseTechId)
+          {
+            this.subscriptions.add(
+              this.ticklerMgmtDataService
+                .fetchTicklerInfo(0, userAcctInfo.licenseTechId, 0)
+                .subscribe((ticklerInfoItems: any) => {
+                  this.ticklerInfoItems = ticklerInfoItems;
+                  this.appComService.updateOpenTicklerCount(ticklerInfoItems.length);
+                  this.loading = false;
+                })
+            );
+          }
         }
       )
     );
