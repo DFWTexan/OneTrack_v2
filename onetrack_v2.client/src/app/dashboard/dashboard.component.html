@@ -99,6 +99,44 @@
           }}</span></mat-panel-description
         >
       </mat-expansion-panel-header>
+      <mat-divider></mat-divider>
+      <table class="table">
+        <thead>
+          <tr style="background-color: whitesmoke">
+            <th scope="col">Date</th>
+            <th scope="col">Type</th>
+            <th scope="col">Description</th>
+            <th scope="col" class="text-center" style="width: 10rem">ACTION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of ticklerInfoItems">
+            <td class="align-middle">{{ item.ticklerDate | date : "MM/dd/yyyy" }}</td>
+            <td class="align-middle">{{ item.lkpValue }}</td>
+            <td class="align-middle">{{ item.message }}</td>
+            <td class="align-middle">
+              <div
+                class="d-flex align-middle justify-content-between mb-3 me-4"
+              >
+                <button class="icon-close-button me-5" title="Close Tickler">
+                  <span class="material-symbols-outlined"> close </span>
+                </button>
+                <button class="icon-edit-delete-button" title="Edit Tickler">
+                  <span class="material-symbols-outlined"> edit </span>
+                </button>
+                <button class="icon-edit-delete-button">
+                  <span
+                    class="material-symbols-outlined"
+                    title="Delete Tickler"
+                  >
+                    delete
+                  </span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </mat-expansion-panel>
     <!-- ADBANKER -->
     <mat-expansion-panel
@@ -116,7 +154,7 @@
             adBankerImportInfo.recordCount
           }}</span>
           <span style="font-size: larger">Records - Last Imported:</span>
-          <span style="font-size: large"class="me-3">{{
+          <span style="font-size: large" class="me-3">{{
             adBankerImportInfo.lastImportDate | date : "MM/dd/yyyy"
           }}</span>
         </mat-panel-description>

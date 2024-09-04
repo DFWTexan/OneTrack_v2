@@ -191,6 +191,25 @@ body {
   color: #ffa500;
 }
 
+.icon-close-button {
+  border-style: none;
+  background-color: transparent;
+  height: 1rem;
+  width: 1rem;
+  margin: 1rem;
+  transition: color 0.3s ease;
+  color: red;
+}
+
+.icon-close-button:hover {
+  color: grey; 
+}
+
+.icon-close-button:active {
+  transform: scale(0.9);
+  color: #ffa500;
+}
+
 .icon-toggle-button {
   border-style: none;
   background-color: transparent;
