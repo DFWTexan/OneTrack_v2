@@ -11,7 +11,7 @@ import {
   TicklerMgmtDataService,
   UserAcctInfoDataService,
 } from '../../../_services';
-import { AgentInfo, StockTickler, TicklerInfo } from '../../../_Models';
+import { AgentInfo, StockTickler, TicklerInfo, UserAcctInfo } from '../../../_Models';
 import { ConfirmDialogComponent } from '../../confirm-dialog/confirm-dialog.component';
 
 @Component({
@@ -26,6 +26,7 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
   licenseTechItems: any = ['Loading...'];
   selectedLicenseTechID: number = 0;
   ticklerInfoItems: TicklerInfo[] = [];
+  userAcctInfo: UserAcctInfo = {} as UserAcctInfo;
   eventAction: string = '';
   vObject: any = {};
 
@@ -40,10 +41,20 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     protected modalService: ModalService,
     private userInfoDataService: UserAcctInfoDataService
-  ) {}
+  ) {
+    this.userAcctInfo = this.userInfoDataService.userAcctInfo;
+  }
 
   ngOnInit(): void {
     this.loading = true;
+
+    this.subscriptionData.add(
+      this.userInfoDataService.userAcctInfoChanged.subscribe(
+        (userAcctInfo: UserAcctInfo) => {
+          this.userAcctInfo = userAcctInfo;
+        }
+      )
+    );
 
     this.subscriptionData.add(
       this.ticklerMgmtDataService

@@ -1,11 +1,7 @@
 ﻿using DataModel.Response;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using OneTrack_v2.DataModel;
 using OneTrack_v2.DbData;
-using OneTrack_v2.DbData.Models;
-using System.ComponentModel;
-using System.Linq.Expressions;
 
 namespace OneTrack_v2.Services
 {
@@ -362,6 +358,86 @@ namespace OneTrack_v2.Services
 
                 _utilityService.LogError(ex.Message, "MISC-GetLicenseTeches", new { }, null);
             }
+            return result;
+        }
+        public ReturnResult GetLicenseTechByID(int vLicenseTechID)
+        {
+
+            var result = new ReturnResult();
+            try
+            {
+                var query = from l in _db.LicenseTeches
+                            where l.LicenseTechId == vLicenseTechID
+                            select new
+                            {
+                                l.LicenseTechId,
+                                l.Soeid,
+                                l.FirstName,
+                                l.LastName,
+                                l.IsActive,
+                                l.TeamNum,
+                                l.LicenseTechPhone,
+                                l.LicenseTechFax,
+                                l.LicenseTechEmail,
+                                TechName = l.FirstName + " " + l.LastName
+                            };
+
+                var resultLicTech = query.AsNoTracking().FirstOrDefault();
+
+                result.Success = true;
+                result.ObjData = resultLicTech;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "MISC-GetLicenseTechByID", new { }, null);
+            }
+
+            return result;
+        }
+        public ReturnResult GetLicenseTechBySOEID(string vSOEID)
+        {
+
+            var result = new ReturnResult();
+            try
+            {
+                var query = from l in _db.LicenseTeches
+                            where l.Soeid == vSOEID
+                            select new
+                            {
+                                l.LicenseTechId,
+                                l.Soeid,
+                                l.FirstName,
+                                l.LastName,
+                                l.IsActive,
+                                l.TeamNum,
+                                l.LicenseTechPhone,
+                                l.LicenseTechFax,
+                                l.LicenseTechEmail,
+                                TechName = l.FirstName + " " + l.LastName
+                            };
+
+                var resultLicTech = query.AsNoTracking().FirstOrDefault();
+
+                result.Success = true;
+                result.ObjData = resultLicTech;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ErrMessage = ex.Message;
+
+                _utilityService.LogError(ex.Message, "MISC-GetLicenseTechBySOEID", new { }, null);
+            }
+
             return result;
         }
         public ReturnResult GetBackgroundStatuses()
@@ -814,8 +890,8 @@ namespace OneTrack_v2.Services
 
             return result;
         }
-        public ReturnResult GetLicenseLineOfAuthority() 
-        { 
+        public ReturnResult GetLicenseLineOfAuthority()
+        {
             var result = new ReturnResult();
             try
             {

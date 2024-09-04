@@ -9,6 +9,7 @@ import {
   WorkListDataService,
 } from '../_services';
 import { Subscription } from 'rxjs';
+import { UserAcctInfo } from '../_Models';
 
 @Component({
   selector: 'app-dashboard',
@@ -18,6 +19,7 @@ import { Subscription } from 'rxjs';
 export class DashboardComponent implements OnInit, OnDestroy {
   loading: boolean = false;
   panelOpenState = false;
+  userAcctInfo: UserAcctInfo = {} as UserAcctInfo;
 
   private subscriptions = new Subscription();
 
@@ -67,9 +69,18 @@ export class DashboardComponent implements OnInit, OnDestroy {
     public userAcctInfoDataService: UserAcctInfoDataService
   ) {
     this.selectedDate = null;
+    this.userAcctInfo = this.userAcctInfoDataService.userAcctInfo;
   }
 
   ngOnInit(): void {
+    this.subscriptions.add(
+      this.userAcctInfoDataService.userAcctInfoChanged.subscribe(
+        (userAcctInfo: UserAcctInfo) => {
+          this.userAcctInfo = userAcctInfo;
+        }
+      )
+    );
+
     this.subscriptions.add(
       this.miscDataService.fetchWorkListNames().subscribe((worklistNames) => {
         this.worklistNames = worklistNames;

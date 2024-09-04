@@ -5,15 +5,22 @@ using System.Net.NetworkInformation;
 using System.DirectoryServices.ActiveDirectory;
 using System.DirectoryServices.Protocols;
 using System.Net;
+using OneTrack_v2.DbData;
 
 namespace OneTrak_v2.Services
 {
     public class LdapService : ILdapService
     {
+        private readonly AppDataContext _db;
         private readonly string _groupNameRoleAdmin = "RG_OMS_LICEDIT_ADMIN";
         private readonly string _groupNameRoleTech = "RG_OMS_LICEDIT_FULL";
         private readonly string _groupNameRoleRead = "RG_OMS_LICEDIT_RO";
         private readonly string _groupNameDevUser = "RG_OMS_DEVELOPER";
+
+        public LdapService(AppDataContext db)
+        {
+            _db = db;
+        }
 
         public ReturnResult GetUserAcctInfo(string vUserName, string vPassWord) 
         {
@@ -48,6 +55,7 @@ namespace OneTrak_v2.Services
                             userAccount.EmployeeId = user.EmployeeId;
                             userAccount.HomeDirectory = user.HomeDirectory;
                             userAccount.LastLogon = user.LastLogon;
+                            userAccount.LicenseTechID = GetLicenseTechID(user.SamAccountName);
 
                             var userGroups = user.GetAuthorizationGroups();
                             foreach (GroupPrincipal group in userGroups)
@@ -97,6 +105,14 @@ namespace OneTrak_v2.Services
             return retResult;
         }
 
+        private int GetLicenseTechID(string vSOEID)
+        {
+            var licenseTechID = (from l in _db.LicenseTeches
+                                 where l.Soeid == vSOEID
+                                 select l.LicenseTechId).FirstOrDefault();
+
+            return licenseTechID;
+        }
         protected bool PingServer(string serverName)
         {
             try

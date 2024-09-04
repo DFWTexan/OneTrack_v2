@@ -9,8 +9,9 @@ import {
   ConstantsDataService,
   AppComService,
   PaginationComService,
+  UserAcctInfoDataService,
 } from '../../_services';
-import { EmployeeSearchResult, SearchEmployeeFilter } from '../../_Models';
+import { EmployeeSearchResult, SearchEmployeeFilter, UserAcctInfo } from '../../_Models';
 
 @Component({
   selector: 'app-search-team-member',
@@ -22,11 +23,10 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
   searchForm: FormGroup;
   loading = false;
   isSubmitted = false;
+  
   agentStatuses: string[] = ['All', ...this.conService.getAgentStatuses()];
   states: string[] = this.conService.getStates();
   stateProvinces: string[] = [];
-  // defaultAgentStatus: string[] = ['All'];
-  // defaultLicenseStatus: string[] = ['All'];
   isShowTickle: boolean = true;
   subscribeTickleToggleChanged: Subscription = new Subscription();
 
@@ -51,8 +51,10 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
     private emplyService: EmployeeDataService,
     private appComService: AppComService,
     public paginationComService: PaginationComService,
+    private userInfoService: UserAcctInfoDataService,
     private fb: FormBuilder
   ) {
+    
     this.searchForm = this.fb.group({
       EmployeeSSN: [''],
       TeamMemberGEID: [''],

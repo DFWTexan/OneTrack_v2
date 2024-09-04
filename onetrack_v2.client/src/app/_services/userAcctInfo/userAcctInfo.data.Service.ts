@@ -55,6 +55,62 @@ export class UserAcctInfoDataService {
       );
   }
 
+  fetchLicenseTechByID(licenseTechID: number): Observable<any> {
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(`${this.apiUrl}GetLicenseTechByID/=${licenseTechID}`)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            return response.objData;
+          } else {
+            this.appComService.updateLoginErrorMsg(response.errMessage);
+          }
+        }),
+        catchError((error: any) => {
+          if (error.error && error.error.errMessage) {
+            this.appComService.updateLoginErrorMsg(error.error.errMessage);
+          } else {
+            this.appComService.updateLoginErrorMsg('Unknown error');
+          }
+
+          return of(this.userAcctInfo);
+        })
+      );
+  }
+
+  fetchLicenseTechBySOEID(soeID: string): Observable<any> {
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(`${this.apiUrl}GetLicenseTechBySOEID/${soeID}`)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            return response.objData;
+          } else {
+            this.appComService.updateLoginErrorMsg(response.errMessage);
+          }
+        }),
+        catchError((error: any) => {
+          if (error.error && error.error.errMessage) {
+            this.appComService.updateLoginErrorMsg(error.error.errMessage);
+          } else {
+            this.appComService.updateLoginErrorMsg('Unknown error');
+          }
+
+          return of(this.userAcctInfo);
+        })
+      );
+  }
+
   updateUserAcctInfo(userAcctInfo: UserAcctInfo) {
     this.userAcctInfo = userAcctInfo;
     this.userAcctInfoChanged.next(userAcctInfo);

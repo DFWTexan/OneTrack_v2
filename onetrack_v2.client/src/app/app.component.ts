@@ -40,6 +40,7 @@ export class AppComponent implements OnInit, OnDestroy {
   userAcctInfo: UserAcctInfo = {} as UserAcctInfo;
   branchCodes: any[] = [];
   licenseTechs: any[] = [];
+  impesonatorRole: string | null = null;
 
   private subscriptions = new Subscription();
 
@@ -59,6 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
     if (environment.isDevLoginEnabled) {
       this.appComService.updateIsLoggedIn(true);
       this.userInfoService.updateUserAcctInfo({
+        licenseTechId: null,
         displayName: 'Erish Faggett',
         // displayName: 'Dyan Knapp',
         soeid: 'T2229513',
@@ -274,24 +276,31 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onImpersonateChange(event: Event) {
     const soeid = (event.target as HTMLInputElement).value;
-    this.userInfoService.updateUserAcctInfo({
-      displayName: 'Impersonating User',
-      soeid: soeid,
-      email: null,
-      enabled: true,
-      employeeId: null,
-      homeDirectory: '\\\\corp.fin\\users\\EVNAS_Users\\3\\T2229513',
-      lastLogon: Date.now().toString(),
-      isAdminRole: true,
-      isTechRole: null,
-      isReadRole: true,
-      isSuperUser: true,
-    });
+    this.subscriptions.add(
+      this.userInfoService
+        .fetchLicenseTechBySOEID(soeid)
+        .subscribe((licenseTech: any) => {
+          this.userInfoService.updateUserAcctInfo({
+            licenseTechId: licenseTech.licenseTechId,
+            displayName: licenseTech.techName,
+            soeid: licenseTech.soeid,
+            email: licenseTech.email,
+            enabled: licenseTech.enabled,
+            employeeId: licenseTech.employeeId,
+            homeDirectory: licenseTech.homeDirectory,
+            lastLogon: Date.now().toString(),
+            isAdminRole: this.impesonatorRole === 'Admin',
+            isTechRole: this.impesonatorRole === 'Tech',
+            isReadRole: this.impesonatorRole === 'Read',
+            isSuperUser: this.impesonatorRole === 'DVLPER',
+          });
+        })
+    );
   }
 
   onRoleChange(event: Event) {
     const role = (event.target as HTMLInputElement).value;
-    // const currentUserInfo = this.userInfoService.getUserAcctInfo(); // Assuming this method exists to get current user info
+    this.impesonatorRole = role;
   
     this.userInfoService.updateUserAcctInfo({
       ...this.userAcctInfo,

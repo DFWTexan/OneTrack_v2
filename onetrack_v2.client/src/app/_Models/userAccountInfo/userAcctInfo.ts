@@ -1,4 +1,5 @@
 export interface UserAcctInfo {
+    licenseTechId: number | null;
     displayName: string;
     soeid: string;
     email: string | null;
