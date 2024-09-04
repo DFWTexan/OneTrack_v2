@@ -35,10 +35,10 @@ export class AppComService {
     private http: HttpClient
   ) {}
 
-  toggleTickler() {
-    this.tickleToggle = !this.tickleToggle;
-    this.tickleToggleChanged.next(this.tickleToggle);
-  }
+  // toggleTickler() {
+  //   this.tickleToggle = !this.tickleToggle;
+  //   this.tickleToggleChanged.next(this.tickleToggle);
+  // }
 
   updateOpenTicklerCount(openTicklerCount: number) {
     this.openTicklerCount = openTicklerCount;

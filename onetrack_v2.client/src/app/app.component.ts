@@ -262,6 +262,10 @@ export class AppComponent implements OnInit, OnDestroy {
     );
   }
 
+  onGoToTicklerInfo() {
+    this.router.navigate(['/dashboard']);
+  }
+
   onPanelOpened(vTitle: string) {
     const dialogRef = this.dialog.open(InfoDialogComponent, {
       data: { message: 'Loading...' },

@@ -20,8 +20,9 @@
   </div>
   <button
     mat-icon-button
-    matTooltip="Notifications"
-    (click)="appComService.toggleTickler()"
+    matTooltip="Go to Tickler Info"
+    (click)="onGoToTicklerInfo()"
+    [disabled]="appComService.openTicklerCount === 0"
     [ngStyle]="{
       color: appComService.openTicklerCount > 0 ? '#00FF7F' : 'inherit'
     }"
