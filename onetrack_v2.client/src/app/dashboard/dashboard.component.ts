@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 import {
@@ -21,7 +21,7 @@ import { ConfirmDialogComponent } from '../_components';
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
-export class DashboardComponent implements OnInit, OnDestroy {
+export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   loading: boolean = false;
   today: Date = new Date();
   panelOpenState = false;
@@ -146,6 +146,12 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
     this.getAdBankerData();
   }
+
+  ngAfterViewInit(): void {
+    if(this.userAcctInfo.licenseTechId)
+      this.fetchTicklerInfo();
+  }
+  
 
   // WORKLIST
   fetchWorkListData(): void {
