@@ -289,6 +289,10 @@ namespace OneTrack_v2.Services
                 if (oputAgentAppointments != null)
                     agent.AppointmentItems = oputAgentAppointments;
 
+                //Agent Ticklers
+                var agentTicklers = FillTicklerItems(agent.EmploymentID);
+                agent.TicklerItems = agentTicklers;
+
                 result.Success = true;
                 result.ObjData = agent;
                 result.StatusCode = 200;
@@ -2706,6 +2710,23 @@ namespace OneTrack_v2.Services
                 }).ToList();
 
             return (_diaryCreatedByItems.ToArray(), entryItems.ToArray());
+        }
+        private List<TicklerItem> FillTicklerItems(int vEmploymentID)
+        {
+            var ticklerItems = _db.Ticklers
+                .Where(t => t.EmploymentId == vEmploymentID)
+                .OrderByDescending(t => t.TicklerDate)
+                .Select(t => new TicklerItem
+                {
+                    TicklerID = t.TicklerId,
+                    LicenseTechID = t.LicenseTechId,
+                    EmploymentID = t.EmploymentId,
+                    EmployeeLicenseID = t.EmployeeLicenseId,
+                    TicklerMessage = t.Message,
+                    TicklerDueDate = t.TicklerDueDate, 
+                }).ToList();
+
+            return ticklerItems;
         }
         #endregion
     }

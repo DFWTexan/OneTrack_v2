@@ -66,6 +66,7 @@ namespace OneTrack_v2.DataModel
         public List<EmploymentCommunicationItem> EmploymentCommunicationItems { get; set; }
         public List<OputAgentLicenses> LicenseItems { get; set; }
         public List<OputAgentAppointments> AppointmentItems { get; set; }
+        public List<TicklerItem> TicklerItems { get; set; }
 
         public OputAgent()
         {
@@ -82,6 +83,7 @@ namespace OneTrack_v2.DataModel
             EmploymentCommunicationItems = new List<EmploymentCommunicationItem>();
             LicenseItems = new List<OputAgentLicenses>();
             AppointmentItems = new List<OputAgentAppointments>();
+            TicklerItems = new List<TicklerItem>();
         }
     }
 
@@ -128,5 +130,14 @@ namespace OneTrack_v2.DataModel
         public string? LetterName { get; set; }
         public DateTime? EmailCreateDate { get; set; }
         public DateTime? EmailSentDate { get; set; }
+    }
+
+    public class TicklerItem {         
+        public int TicklerID { get; set; }
+        public int? LicenseTechID { get; set; }
+        public int? EmploymentID { get; set; }
+        public int? EmployeeLicenseID { get; set;}
+        public string? TicklerMessage { get; set; }
+        public DateTime? TicklerDueDate { get; set; }
     }
 }

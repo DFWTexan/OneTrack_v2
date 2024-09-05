@@ -28,23 +28,23 @@
         <div class="h1-title ms-3">
           <span style="color: lightgrey">Agent Information</span>
         </div>
-        <div>
+        <div *ngIf="ticklerCount > 0">
           <button
             mat-icon-button
             [ngStyle]="{
               color: '#228B22'
             }"
-            [matTooltip]="'View ' + '777' + ' Tickler Item(s)'"
+            [matTooltip]="'View Tickler Item(s)'"
           >
             <mat-icon
-              [matBadge]="777"
-              matBadgeSize="small"
+              [matBadge]="ticklerCount"
               matBadgeColor="warn"
-              >notifications_active</mat-icon
             >
+              notifications_active
+            </mat-icon>
           </button>
         </div>
-        <div>
+        <!-- <div>
           <button
             mat-icon-button
             [ngStyle]="{
@@ -54,8 +54,8 @@
           >
             <mat-icon>fact_check</mat-icon>
           </button>
-        </div>
-      </div>
+        </div> -->
+      </div> 
     </ng-container>
   </div>
 

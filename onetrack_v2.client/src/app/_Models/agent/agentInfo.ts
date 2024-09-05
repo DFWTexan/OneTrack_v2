@@ -63,6 +63,7 @@ export interface AgentInfo {
   employmentCommunicationItems: EmploymentCommunicationItem[];
   licenseItems: LicenseItem[];
   appointmentItems: AppointmentItem[];
+  ticklerItems: TicklerItem[];
 }
 
 export interface EmploymentHistory {
@@ -178,4 +179,13 @@ export interface AppointmentItem {
   companyID?: number;
   companyAbv?: string;
   retentionDate?: Date;
+}
+
+export interface TicklerItem {
+  ticklerID: number;
+  licenseTechID?: number;
+  employmentID?: number;
+  employeeLicenseID?: number;
+  ticklerMessage?: string;
+  ticklerDueDate?: Date;
 }
