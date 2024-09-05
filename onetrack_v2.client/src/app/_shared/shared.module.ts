@@ -19,6 +19,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatBadgeModule } from '@angular/material/badge';
 
 import { SharedRoutingModule } from './shared-routing.module';
 
@@ -66,6 +67,7 @@ import { FileUploadComponent } from '../_components/file-upload/file-upload.comp
     MatNativeDateModule,
     MatDialogModule,
     MatDividerModule,
+    MatBadgeModule,
   ],
   exports: [
     ConfirmDialogComponent,
@@ -93,6 +95,7 @@ import { FileUploadComponent } from '../_components/file-upload/file-upload.comp
     MatNativeDateModule,
     MatDialogModule,
     MatDividerModule,
+    MatBadgeModule,
     FormsModule,
   ],
 })

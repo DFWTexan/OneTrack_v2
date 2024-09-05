@@ -10,14 +10,14 @@
     <button mat-icon-button matTooltip="Share">
       <mat-icon>share</mat-icon>
     </button> -->
-  <div
+  <!-- <div
     *ngIf="appComService.openTicklerCount > 0"
     [ngStyle]="{
       color: '#00FF7F'
     }"
   >
     {{ appComService.openTicklerCount }}
-  </div>
+  </div> -->
   <button
     mat-icon-button
     matTooltip="Go to Tickler Info"
@@ -28,9 +28,18 @@
     }"
   >
     <!-- <mat-icon>notifications</mat-icon> -->
-    <span class="material-symbols-outlined">
-      {{ appComService.openTicklerCount > 0 ? 'notifications_active' : 'notifications' }}
-    </span>
+    <mat-icon
+      matBadgePosition="before"
+      [matBadge]="appComService.openTicklerCount"
+      [matBadgeHidden]="appComService.openTicklerCount === 0"
+      matBadgeColor="warn"
+    >
+      {{
+        appComService.openTicklerCount > 0
+          ? "notifications_active"
+          : "notifications"
+      }}
+    </mat-icon>
   </button>
   <!-- <button
       mat-icon-button

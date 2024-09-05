@@ -34,17 +34,24 @@
             [ngStyle]="{
               color: '#228B22'
             }"
-            matTooltip="View Tickler Item(s)"
+            [matTooltip]="'View ' + '777' + ' Tickler Item(s)'"
           >
-            <mat-icon>notifications_active</mat-icon>
+            <mat-icon
+              [matBadge]="777"
+              matBadgeSize="small"
+              matBadgeColor="warn"
+              >notifications_active</mat-icon
+            >
           </button>
         </div>
         <div>
-          <button mat-icon-button
-          [ngStyle]="{
-            color: '#228B22'
-          }"
-          matTooltip="Worklist Item(s)">
+          <button
+            mat-icon-button
+            [ngStyle]="{
+              color: '#228B22'
+            }"
+            matTooltip="Worklist Item(s)"
+          >
             <mat-icon>fact_check</mat-icon>
           </button>
         </div>

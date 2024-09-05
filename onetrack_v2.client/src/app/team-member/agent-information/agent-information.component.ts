@@ -34,7 +34,7 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
     private agentDataService: AgentDataService,
     private route: ActivatedRoute,
     public agentComService: AgentComService,
-    private appComService: AppComService,
+    public appComService: AppComService,
     private router: Router
   ) {}
 
