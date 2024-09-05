@@ -120,20 +120,17 @@
             <label for="modifiedBy">License Tech:</label><br />
             <select
               class="form-select select-size-med-small"
-              name="modifiedBy"
-              id="modifiedBy"
-              (change)="onChangeImportStaus($event)"
-              [(ngModel)]="adBankerImportStatus"
+              type="text"
+              id="licTech"
+              [(ngModel)]="selectedLicenseTechID"
+              (change)="onLicenseTechChange($event)"
             >
-              <option
-                *ngFor="let status of adBankerImportStatuses"
-                [value]="status"
-              >
-                {{ status }}
+              <option *ngFor="let tech of licenseTechs" [value]="tech.value">
+                {{ tech.label }}
               </option>
             </select>
           </div>
-          <div class="col d-flex justify-content-end align-items-center">
+          <div class="col d-flex justify-content-end align-items-center mt-2">
             <button
               class="btn btn-success button-font-size"
               type="button"

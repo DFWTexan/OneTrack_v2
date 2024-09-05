@@ -4,6 +4,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import {
   AppComService,
   DashboardDataService,
+  DropdownDataService,
+  LicIncentiveInfoDataService,
   MiscDataService,
   ModalService,
   TicklerMgmtComService,
@@ -29,6 +31,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   ticklerInfoItems: TicklerInfo[] = [];
   stockTicklerItems: StockTickler[] = [];
   licenseTechItems: any = ['Loading...'];
+  selectedLicenseTechID: number | null = null;
 
   private subscriptions = new Subscription();
 
@@ -40,6 +43,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   workListName: string = 'Agent Address Change';
   licenseTech: string = 'T9999999';
   worklistdate: string = new Date().toISOString().split('T')[0];
+  licenseTechs: any[] = [];
 
   selectedWorkListName = 'Loading...';
   selectedLicenseTech = 'T9999999';
@@ -77,12 +81,15 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     public ticklerMgmtComService: TicklerMgmtComService,
     public miscDataService: MiscDataService,
     public dashboardDataService: DashboardDataService,
+    private drpdwnDataService: DropdownDataService,
+    public licIncentiveInfoDataService: LicIncentiveInfoDataService,
     public dialog: MatDialog,
     protected modalService: ModalService,
     public userAcctInfoDataService: UserAcctInfoDataService
   ) {
     this.selectedDate = null;
     this.userAcctInfo = this.userAcctInfoDataService.userAcctInfo;
+    this.licenseTechs = this.licIncentiveInfoDataService.licenseTeches;
   }
 
   ngOnInit(): void {
@@ -91,6 +98,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         (userAcctInfo: UserAcctInfo) => {
           this.userAcctInfo = userAcctInfo;
           if (userAcctInfo.licenseTechId) {
+            this.selectedLicenseTechID = userAcctInfo.licenseTechId;
             this.fetchTicklerInfo();
           }
         }
@@ -101,6 +109,17 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.miscDataService.fetchWorkListNames().subscribe((worklistNames) => {
         this.worklistNames = worklistNames;
         this.selectedWorkListName = worklistNames[0];
+      })
+    );
+
+    this.subscriptions.add(
+      this.miscDataService.fetchLicenseTechs().subscribe((items: any[]) => {
+        let mappedLicenseTechs: { value: any; label: string }[] = [];
+        mappedLicenseTechs = items.map((tech) => ({
+          value: tech.licenseTechId,
+          label: tech.techName,
+        }));
+        this.licenseTechs = mappedLicenseTechs;
       })
     );
 
@@ -148,10 +167,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    if(this.userAcctInfo.licenseTechId)
-      this.fetchTicklerInfo();
+    if (this.userAcctInfo.licenseTechId) this.fetchTicklerInfo();
   }
-  
 
   // WORKLIST
   fetchWorkListData(): void {
@@ -186,7 +203,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   fetchTicklerInfo(): void {
     this.subscriptions.add(
       this.ticklerMgmtDataService
-        .fetchTicklerInfo(0, this.userAcctInfo.licenseTechId ?? 0, 0)
+        .fetchTicklerInfo(0, this.selectedLicenseTechID ?? 0, 0)
         .subscribe((ticklerInfoItems: any) => {
           this.ticklerInfoItems = ticklerInfoItems;
           this.appComService.updateOpenTicklerCount(ticklerInfoItems.length);
@@ -271,6 +288,12 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
           });
       }
     });
+  }
+
+  onLicenseTechChange(event: Event) {
+    const licenseID = (event.target as HTMLInputElement).value;
+    this.selectedLicenseTechID = parseInt(licenseID);
+    this.fetchTicklerInfo();
   }
 
   // ADBANKER
