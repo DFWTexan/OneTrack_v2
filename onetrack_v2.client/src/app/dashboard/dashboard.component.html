@@ -90,7 +90,7 @@
     <mat-expansion-panel
       class="mt-3"
       *ngIf="userAcctInfo.licenseTechId && appComService.openTicklerCount > 0"
-        [expanded]="isOpenTicklerInfo"
+      [expanded]="isOpenTicklerInfo"
     >
       <mat-expansion-panel-header>
         <mat-panel-title style="font-size: large">
@@ -149,6 +149,7 @@
       <table class="table">
         <thead>
           <tr style="background-color: whitesmoke">
+            <th scope="col">&nbsp;</th>
             <th scope="col">Due Date</th>
             <th scope="col">Type</th>
             <th scope="col">Description</th>
@@ -157,6 +158,13 @@
         </thead>
         <tbody>
           <tr *ngFor="let item of ticklerInfoItems">
+            <td class="align-middle">
+              <button class="icon-edit-delete-button" title="Goto Agent Info" (click)="onGotoAgentInfo(item.employeeId)">
+                <span class="material-symbols-outlined">
+                  quick_reference_all
+                </span>
+              </button>
+            </td>
             <td
               class="align-middle"
               [ngStyle]="{
@@ -475,7 +483,8 @@
 <modal id="modal-edit-tickler">
   <div class="modal-header">
     <h1 class="modal-title">
-      <strong>{{ ticklerMgmtComService.modeTicklerMgmt }}</strong> - Tickler Entry
+      <strong>{{ ticklerMgmtComService.modeTicklerMgmt }}</strong> - Tickler
+      Entry
     </h1>
   </div>
   <div class="modal-body">

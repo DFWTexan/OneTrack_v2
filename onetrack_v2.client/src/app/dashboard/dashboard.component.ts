@@ -17,6 +17,7 @@ import { Subscription } from 'rxjs';
 import { StockTickler, TicklerInfo, UserAcctInfo } from '../_Models';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../_components';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
@@ -87,6 +88,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     public dialog: MatDialog,
     protected modalService: ModalService,
     private cdr: ChangeDetectorRef,
+    private router: Router,
     public userAcctInfoDataService: UserAcctInfoDataService
   ) {
     this.selectedDate = null;
@@ -316,6 +318,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     const licenseID = (event.target as HTMLInputElement).value;
     this.selectedLicenseTechID = parseInt(licenseID);
     this.fetchTicklerInfo();
+  }
+
+  onGotoAgentInfo(employeeID: number): void {
+    this.router.navigate(['../../team/agent-info',employeeID,'tm-info-mgmt']);
   }
 
   // ADBANKER
