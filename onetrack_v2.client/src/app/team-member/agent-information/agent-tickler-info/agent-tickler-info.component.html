@@ -1,5 +1,49 @@
-<p>agent-tickler-info works!</p>
-<mat-divider></mat-divider>
+<div class="container app-modal-container">
+  <div class="row">
+    <div class="col">
+      <table class="table w-100">
+        <thead>
+          <tr style="background-color: whitesmoke">
+            <th scope="col">Due Date</th>
+            <th scope="col">Message</th>
+            <th scope="col">ACTION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of ticklerItems">
+            <td
+              [ngStyle]="{
+                color: isOverdue(item.ticklerDueDate) ? '#FF6347' : 'inherit'
+              }"
+            >
+              {{ item.ticklerDueDate | date : "MM/dd/yyyy" }}
+            </td>
+            <td
+              [ngStyle]="{
+                color: isOverdue(item.ticklerDueDate) ? '#FF6347' : 'inherit'
+              }"
+            >
+              {{ item.ticklerMessage || "N/A" }}
+            </td>
+
+            <td><div
+                class="d-flex align-middle justify-content-between mb-3 me-4"
+              >
+                <button
+                  class="icon-close-button me-5"
+                  (click)="onCloseTicklerItem(item)"
+                  title="Close Tickler"
+                >
+                  <span class="material-symbols-outlined"> close </span>
+                </button>
+                
+              </div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
   <div class="row mt-4">
     <div class="col d-flex justify-content-end">
       <button
@@ -11,3 +55,4 @@
       </button>
     </div>
   </div>
+</div>

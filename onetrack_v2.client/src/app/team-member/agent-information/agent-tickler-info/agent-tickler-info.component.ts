@@ -1,27 +1,86 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
+
+import { AgentDataService, TicklerMgmtDataService, UserAcctInfoDataService } from '../../../_services';
+import { ConfirmDialogComponent } from '../../../_components';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-agent-tickler-info',
   templateUrl: './agent-tickler-info.component.html',
-  styleUrl: './agent-tickler-info.component.css'
+  styleUrl: './agent-tickler-info.component.css',
 })
-export class AgentTicklerInfoComponent {
+export class AgentTicklerInfoComponent implements OnInit, OnDestroy {
   @Output() callParentRefreshData = new EventEmitter<any>();
-  isFormSubmitted: boolean = false;
-  form = new FormGroup({
-    ticklerID: new FormControl(0),
-    licenseTechID: new FormControl(''),
-    employmentID: new FormControl(''),
-    employeeLicenseID: new FormControl(''),
-    ticklerMessage: new FormControl(''),
-    ticklerDueDate: new FormControl(''),
-  });
+  today: Date = new Date();
+  ticklerItems: any[] = [];
 
   private subscriptionData = new Subscription();
 
-  constructor() {}
+  constructor(
+    private agentDataService: AgentDataService,
+    public ticklerMgmtDataService: TicklerMgmtDataService,
+    public dialog: MatDialog,
+    private userAcctInfoDataService: UserAcctInfoDataService
+  ) {
+    this.ticklerItems = this.agentDataService.agentInformation.ticklerItems;
+  }
+
+  ngOnInit(): void {
+    this.subscriptionData.add(
+      this.agentDataService.agentInfoChanged.subscribe((agentInfo) => {
+        this.ticklerItems = agentInfo.ticklerItems;
+      })
+    );
+  }
+
+  isOverdue(ticklerDueDate: string | Date): boolean {
+    const dueDate = new Date(ticklerDueDate);
+    return dueDate < this.today;
+  }
+
+  onCloseTicklerItem(ticklerInfo: any): void {
+    this.onCloseModal();
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+        title: 'Confirm Action',
+        message:
+          'You are about to CLOSE Tickler Item (' +
+          ticklerInfo.ticklerID +
+          ')' +
+          // ticklerInfo.lkpValue +
+          '. Do you want to proceed?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.ticklerMgmtDataService
+          .closeTicklerItem({
+            TicklerID: ticklerInfo.ticklerID,
+            TicklerCloseByLicenseTechID: ticklerInfo.licenseTechID,
+            UserSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
+          })
+          .subscribe({
+            next: (response) => {
+              // this.fetchTicklerInfo();
+            },
+            error: (error) => {
+              console.error(error);
+              // handle the error here
+            },
+          });
+      }
+    });
+  }
 
   onCloseModal() {
     const modalDiv = document.getElementById('modal-agent-tickler-info');
@@ -51,4 +110,7 @@ export class AgentTicklerInfoComponent {
     // }
   }
 
+  ngOnDestroy(): void {
+    this.subscriptionData.unsubscribe();
+  }
 }
