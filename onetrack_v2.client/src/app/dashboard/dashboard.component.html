@@ -59,29 +59,31 @@
       </div>
       <div class="row" *ngIf="worklistData.length > 0">
         <div class="col">
-          <div class="table">
-            <thead>
-              <tr>
-                <th>&nbsp;</th>
-                <th
-                  class="input-th-mini"
-                  *ngFor="let header of worklistData[0].workListData.split('|')"
-                >
-                  {{ header }}
-                </th>
-              </tr>
-            </thead>
-            <tbody class="bg-body">
-              <tr *ngFor="let row of worklistData.slice(1)">
-                <td><input type="checkbox" /></td>
-                <td
-                  class="input-td-mini"
-                  *ngFor="let cell of row.workListData.split('|')"
-                >
-                  {{ cell }}
-                </td>
-              </tr>
-            </tbody>
+          <div class="table-container" style="overflow-x: auto;">
+            <div class="table">
+              <thead>
+                <tr style="background-color: whitesmoke">
+                  <th>&nbsp;</th>
+                  <th
+                    class="input-th-mini"
+                    *ngFor="let header of worklistData[0].workListData.split('|')"
+                  >
+                    {{ header }}
+                  </th>
+                </tr>
+              </thead>
+              <tbody class="bg-body">
+                <tr *ngFor="let row of worklistData.slice(1)">
+                  <td><input type="checkbox" /></td>
+                  <td
+                    class="input-td-mini"
+                    *ngFor="let cell of row.workListData.split('|')"
+                  >
+                    {{ cell }}
+                  </td>
+                </tr>
+              </tbody>
+            </div>
           </div>
         </div>
       </div>
@@ -101,7 +103,6 @@
           <span style="font-size: large">{{
             ticklerInfoItems.length
           }}</span></mat-panel-description -->
-        >
       </mat-expansion-panel-header>
       <div
         class="row align-middle mb-2"
