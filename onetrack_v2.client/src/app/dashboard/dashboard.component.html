@@ -87,7 +87,10 @@
       </div>
     </mat-expansion-panel>
     <!-- TICKLER -->
-    <mat-expansion-panel class="mt-3" *ngIf="userAcctInfo.licenseTechId && appComService.openTicklerCount > 0">
+    <mat-expansion-panel
+      class="mt-3"
+      *ngIf="userAcctInfo.licenseTechId && appComService.openTicklerCount > 0"
+    >
       <mat-expansion-panel-header>
         <mat-panel-title style="font-size: large">
           Tickler Information
@@ -99,6 +102,51 @@
           }}</span></mat-panel-description
         >
       </mat-expansion-panel-header>
+      <div
+        class="row align-middle mb-2"
+        style="
+          background-color: black;
+          color: white;
+          opacity: 0.75;
+          padding: 0.5rem;
+          border-radius: 1rem;
+          border-color: lightgray;
+          border-width: 1px;
+          border-style: solid;
+        "
+      >
+        <div class="d-flex justify-content-between mb-3">
+          <div>
+            <label for="modifiedBy">License Tech:</label><br />
+            <select
+              class="form-select select-size-med-small"
+              name="modifiedBy"
+              id="modifiedBy"
+              (change)="onChangeImportStaus($event)"
+              [(ngModel)]="adBankerImportStatus"
+            >
+              <option
+                *ngFor="let status of adBankerImportStatuses"
+                [value]="status"
+              >
+                {{ status }}
+              </option>
+            </select>
+          </div>
+          <div class="col d-flex justify-content-end align-items-center">
+            <button
+              class="btn btn-success button-font-size"
+              type="button"
+              (click)="
+                ticklerMgmtDataService.storeTicklerInfo('INSERT', null);
+                modalService.open('modal-edit-tickler')
+              "
+            >
+              Tickle License Tech
+            </button>
+          </div>
+        </div>
+      </div>
       <mat-divider></mat-divider>
       <table class="table">
         <thead>
@@ -139,16 +187,27 @@
               <div
                 class="d-flex align-middle justify-content-between mb-3 me-4"
               >
-                <button class="icon-close-button me-5" (click)="onCloseTicklerItem(item)" title="Close Tickler">
+                <button
+                  class="icon-close-button me-5"
+                  (click)="onCloseTicklerItem(item)"
+                  title="Close Tickler"
+                >
                   <span class="material-symbols-outlined"> close </span>
                 </button>
-                <button class="icon-edit-delete-button" (click)="
-                ticklerMgmtDataService.storeTicklerInfo('EDIT', item);
-                modalService.open('modal-edit-tickler')
-              " title="Edit Tickler">
+                <button
+                  class="icon-edit-delete-button"
+                  (click)="
+                    ticklerMgmtDataService.storeTicklerInfo('EDIT', item);
+                    modalService.open('modal-edit-tickler')
+                  "
+                  title="Edit Tickler"
+                >
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
-                <button class="icon-edit-delete-button" (click)="onDeleteTicklerItem(item)">
+                <button
+                  class="icon-edit-delete-button"
+                  (click)="onDeleteTicklerItem(item)"
+                >
                   <span
                     class="material-symbols-outlined"
                     title="Delete Tickler"
@@ -433,4 +492,3 @@
     </div>
   </div>
 </modal>
-
