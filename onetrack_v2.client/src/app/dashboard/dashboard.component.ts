@@ -206,7 +206,11 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         .fetchTicklerInfo(0, this.selectedLicenseTechID ?? 0, 0)
         .subscribe((ticklerInfoItems: any) => {
           this.ticklerInfoItems = ticklerInfoItems;
-          this.appComService.updateOpenTicklerCount(ticklerInfoItems.length);
+          if(this.selectedLicenseTechID == this.userAcctInfo.licenseTechId)
+          {
+            this.appComService.updateOpenTicklerCount(ticklerInfoItems.length);
+          }
+          
           this.loading = false;
         })
     );
