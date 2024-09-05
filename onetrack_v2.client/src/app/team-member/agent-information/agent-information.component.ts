@@ -13,6 +13,7 @@ import {
   AgentComService,
   AgentDataService,
   AppComService,
+  ModalService,
 } from '../../_services';
 
 @Component({
@@ -36,6 +37,7 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     public agentComService: AgentComService,
     public appComService: AppComService,
+    protected modalService: ModalService,
     private router: Router
   ) {}
 

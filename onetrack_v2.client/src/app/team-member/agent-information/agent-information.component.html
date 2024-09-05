@@ -34,12 +34,10 @@
             [ngStyle]="{
               color: '#228B22'
             }"
+            (click)="modalService.open('modal-agent-tickler-info')"
             [matTooltip]="'View Tickler Item(s)'"
           >
-            <mat-icon
-              [matBadge]="ticklerCount"
-              matBadgeColor="warn"
-            >
+            <mat-icon [matBadge]="ticklerCount" matBadgeColor="warn">
               notifications_active
             </mat-icon>
           </button>
@@ -55,7 +53,7 @@
             <mat-icon>fact_check</mat-icon>
           </button>
         </div> -->
-      </div> 
+      </div>
     </ng-container>
   </div>
 
@@ -131,3 +129,15 @@
 
   <router-outlet></router-outlet>
 </div>
+
+<!-- Modal: DISPLAY-TICKLER-ITEMS -->
+<modal id="modal-agent-tickler-info">
+  <div class="modal-header">
+    <h1 class="modal-title">Tickler Item(s)</h1>
+  </div>
+  <div class="modal-body">
+    <div>
+      <app-agent-tickler-info></app-agent-tickler-info>
+    </div>
+  </div>
+</modal>
