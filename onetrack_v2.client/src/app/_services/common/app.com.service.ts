@@ -27,6 +27,8 @@ export class AppComService {
   isLegacyViewChanged = new Subject<boolean>();
   openTicklerCount = 0;
   openTicklerCountChanged = new Subject<number>();
+  isOpenTicklerInfo = true;
+  isOpenTicklerInfoChanged = new Subject<boolean>();
 
   subscriptions: Subscription = new Subscription();
 
@@ -50,8 +52,9 @@ export class AppComService {
     this.isLoggedInChanged.next(this.isLoggedIn);
   }
 
-  updateEnvironment(value: string) {
-
+  updateIsOpenTicklerInfo(isOpenTicklerInfo: boolean) {
+    this.isOpenTicklerInfo = isOpenTicklerInfo;
+    this.isOpenTicklerInfoChanged.next(this.isOpenTicklerInfo);
   }
 
   updateLoginErrorMsg(loginErrorMsg: string) {

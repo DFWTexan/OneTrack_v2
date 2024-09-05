@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 
 import {
@@ -32,6 +32,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   stockTicklerItems: StockTickler[] = [];
   licenseTechItems: any = ['Loading...'];
   selectedLicenseTechID: number | null = null;
+  isOpenTicklerInfo: boolean = true;
 
   private subscriptions = new Subscription();
 
@@ -85,14 +86,22 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     public licIncentiveInfoDataService: LicIncentiveInfoDataService,
     public dialog: MatDialog,
     protected modalService: ModalService,
+    private cdr: ChangeDetectorRef,
     public userAcctInfoDataService: UserAcctInfoDataService
   ) {
     this.selectedDate = null;
     this.userAcctInfo = this.userAcctInfoDataService.userAcctInfo;
     this.licenseTechs = this.licIncentiveInfoDataService.licenseTeches;
+    this.isOpenTicklerInfo = this.appComService.isOpenTicklerInfo;
   }
 
   ngOnInit(): void {
+    this.subscriptions.add(
+      this.appComService.isOpenTicklerInfoChanged.subscribe((value) => {
+        this.isOpenTicklerInfo = value;
+      })
+    );
+
     this.subscriptions.add(
       this.userAcctInfoDataService.userAcctInfoChanged.subscribe(
         (userAcctInfo: UserAcctInfo) => {
@@ -163,11 +172,20 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         })
     );
 
+    setTimeout(() => {
+      this.userAcctInfo.licenseTechId = 2; // Example value
+      this.cdr.detectChanges(); // Manually trigger change detection
+    }, 0);
+
     this.getAdBankerData();
   }
 
   ngAfterViewInit(): void {
-    if (this.userAcctInfo.licenseTechId) this.fetchTicklerInfo();
+    if (this.userAcctInfo.licenseTechId) {
+      this.selectedLicenseTechID = this.userAcctInfo.licenseTechId;
+      this.fetchTicklerInfo();
+    }
+      
   }
 
   // WORKLIST
