@@ -83,7 +83,7 @@ namespace OneTrak_v2.Services
                             where (vLicenseTechID == 0 || t.LicenseTechId == vLicenseTechID) &&
                             (vEmploymentID == 0 || t.EmploymentId == vEmploymentID) &&
                             (vTicklerID == 0 || t.TicklerId == vTicklerID) &&
-                            t.TicklerCloseByLicenseTechId == null
+                            t.TicklerCloseByLicenseTechId == null && t.TicklerCloseDate == null
                             orderby t.TicklerDueDate
                             select new
                             {

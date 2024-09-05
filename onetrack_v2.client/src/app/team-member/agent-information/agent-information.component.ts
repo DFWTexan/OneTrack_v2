@@ -90,6 +90,18 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
   //   });
   // }
 
+  onChildCallRefreshData() {
+    this.subscriptions.add(
+      this.agentDataService
+        .fetchAgentInformation(this.id)
+        .subscribe((agentInfo: AgentInfo) => {
+          this.isLoading = false;
+          this.ticklerCount = agentInfo.ticklerItems.length;
+          this.agentInfo = agentInfo;
+        })
+    );
+  }
+
   exitLicenseMgmt() {
     this.agentComService.showLicenseMgmt();
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {

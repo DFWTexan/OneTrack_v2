@@ -59,10 +59,13 @@ export class AgentTicklerInfoComponent implements OnInit, OnDestroy {
           // ticklerInfo.lkpValue +
           '. Do you want to proceed?',
       },
-    });
+    }); 
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
+       
+        console.log('EMFTEST (onCloseTicklerItem: afterClosed) - ticklerInfo => \n', ticklerInfo);  
+       
         this.ticklerMgmtDataService
           .closeTicklerItem({
             TicklerID: ticklerInfo.ticklerID,
@@ -71,7 +74,7 @@ export class AgentTicklerInfoComponent implements OnInit, OnDestroy {
           })
           .subscribe({
             next: (response) => {
-              // this.fetchTicklerInfo();
+              this.callParentRefreshData.emit();
             },
             error: (error) => {
               console.error(error);

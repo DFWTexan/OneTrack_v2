@@ -137,7 +137,9 @@
   </div>
   <div class="modal-body">
     <div>
-      <app-agent-tickler-info></app-agent-tickler-info>
+      <app-agent-tickler-info
+        (callParentRefreshData)="onChildCallRefreshData()"
+      ></app-agent-tickler-info>
     </div>
   </div>
 </modal>

@@ -2714,7 +2714,7 @@ namespace OneTrack_v2.Services
         private List<TicklerItem> FillTicklerItems(int vEmploymentID)
         {
             var ticklerItems = _db.Ticklers
-                .Where(t => t.EmploymentId == vEmploymentID)
+                .Where(t => t.EmploymentId == vEmploymentID && t.TicklerCloseByLicenseTechId == null)
                 .OrderByDescending(t => t.TicklerDate)
                 .Select(t => new TicklerItem
                 {

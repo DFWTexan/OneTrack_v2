@@ -4,14 +4,15 @@
       <table class="table w-100">
         <thead>
           <tr style="background-color: whitesmoke">
-            <th scope="col">Due Date</th>
+            <th scope="col" style="width: 15rem">Due Date</th>
             <th scope="col">Message</th>
-            <th scope="col">ACTION</th>
+            <th scope="col" style="width: 8rem">ACTION</th>
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let item of ticklerItems">
             <td
+              class="align-middle"
               [ngStyle]="{
                 color: isOverdue(item.ticklerDueDate) ? '#FF6347' : 'inherit'
               }"
@@ -19,6 +20,7 @@
               {{ item.ticklerDueDate | date : "MM/dd/yyyy" }}
             </td>
             <td
+              class="align-middle"
               [ngStyle]="{
                 color: isOverdue(item.ticklerDueDate) ? '#FF6347' : 'inherit'
               }"
@@ -26,7 +28,8 @@
               {{ item.ticklerMessage || "N/A" }}
             </td>
 
-            <td><div
+            <td class="align-middle">
+              <div
                 class="d-flex align-middle justify-content-between mb-3 me-4"
               >
                 <button
@@ -36,8 +39,8 @@
                 >
                   <span class="material-symbols-outlined"> close </span>
                 </button>
-                
-              </div></td>
+              </div>
+            </td>
           </tr>
         </tbody>
       </table>
