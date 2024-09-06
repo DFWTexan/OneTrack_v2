@@ -281,3 +281,9 @@ body {
   padding-bottom: .2rem;
 }
 
+.record-not-found {
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: red;
+}
+

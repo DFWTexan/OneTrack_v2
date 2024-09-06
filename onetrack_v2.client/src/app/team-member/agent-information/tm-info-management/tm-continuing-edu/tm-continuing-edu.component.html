@@ -27,7 +27,10 @@
           </tr>
         </thead>
         <tbody class="bg-body">
-          <tr *ngFor="let ce of agentInfo.contEduRequiredItems" class="no-hover-bg">
+          <tr
+            *ngFor="let ce of agentInfo.contEduRequiredItems"
+            class="no-hover-bg"
+          >
             <td>{{ ce.contEducationRequirementID }}</td>
             <td>{{ ce.educationStartDate | date }}</td>
             <td>{{ ce.educationEndDate | date }}</td>
@@ -90,7 +93,7 @@
     </div>
   </div>
   <div class="row" *ngIf="agentInfo?.contEduCompletedItems?.length == 0">
-    No records found.
+    <div class="col text-center record-not-found" style="font-size: larger;">No Records Found...</div>
   </div>
   <div class="row mt-3" *ngIf="agentInfo?.contEduCompletedItems?.length != 0">
     <div class="col d-flex">
@@ -106,7 +109,10 @@
           </tr>
         </thead>
         <tbody class="bg-body">
-          <tr *ngFor="let ce of agentInfo?.contEduCompletedItems; let i = index" [ngClass]="{ 'alternate-row': i % 2 !== 0 }">
+          <tr
+            *ngFor="let ce of agentInfo?.contEduCompletedItems; let i = index"
+            [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+          >
             <!-- <td>{{ ce.contEducationRequirementID }}</td> -->
             <td class="align-middle">{{ ce.educationName }}</td>
             <td class="align-middle">{{ ce.contEducationTakenDate | date }}</td>

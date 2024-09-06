@@ -4,6 +4,7 @@ import { AgentInfo, DiaryItem } from '../../../../_Models';
 import {
   AgentComService,
   AgentDataService,
+  AppComService,
   ErrorMessageService,
   ModalService,
   PaginationComService,
@@ -29,6 +30,7 @@ export class TmDiaryComponent implements OnInit, OnDestroy {
   constructor(
     public agentDataService: AgentDataService,
     public agentComService: AgentComService,
+    public appComService: AppComService,
     protected modalService: ModalService,
     public paginationComService: PaginationComService,
     public userInfoDataService: UserAcctInfoDataService,

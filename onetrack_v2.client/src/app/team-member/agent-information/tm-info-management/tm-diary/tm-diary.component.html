@@ -48,22 +48,30 @@
     "
   >
     <div class="col">
-      <div class="table">
+      <table class="table w-100">
         <thead>
           <tr class="sticky-top" style="background-color: gainsboro">
-            <th scope="col">TechName</th>
-            <th scope="col">DiaryID</th>
-            <th scope="col">DiaryDate</th>
+            <th scope="col" style="width: 10rem">TechName</th>
+            <th scope="col" *ngIf="appComService.isShowEditID">DiaryID</th>
+            <th scope="col" style="width: 10rem">DiaryDate</th>
             <th scope="col">Notes</th>
             <th scope="col" class="text-center" style="width: 10rem">Action</th>
           </tr>
         </thead>
         <tbody class="bg-body">
-          <tr *ngFor="let diary of paginationComService.paginatedResults; let i = index" [ngClass]="{ 'alternate-row': i % 2 !== 0 }">
+          <tr
+            *ngFor="
+              let diary of paginationComService.paginatedResults;
+              let i = index
+            "
+            [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+          >
             <td class="align-middle" style="font-size: larger">
               {{ diary.soeid }}
             </td>
-            <td class="align-middle">{{ diary.diaryID }}</td>
+            <td class="align-middle" *ngIf="appComService.isShowEditID">
+              {{ diary.diaryID }}
+            </td>
             <td class="align-middle text-nowrap">
               {{ diary.diaryDate | date }}
             </td>
@@ -103,7 +111,7 @@
             </td>
           </tr>
         </tbody>
-      </div>
+      </table>
     </div>
   </div>
   <!-- PAGINATION -->

@@ -45,12 +45,22 @@ export class TmContinuingEduComponent implements OnInit, OnDestroy {
           (total, item) => total + (item.requiredCreditHours || 0),
           0
         );
-        const startDate = agentInfo.contEduRequiredItems[0].educationStartDate
-          ? new Date(agentInfo.contEduRequiredItems[0].educationStartDate)
-          : null;
-        const endDate = agentInfo.contEduRequiredItems[0].educationEndDate
-          ? new Date(agentInfo.contEduRequiredItems[0].educationEndDate)
-          : null;
+        // const startDate = agentInfo.contEduRequiredItems[0].educationStartDate
+        //   ? new Date(agentInfo.contEduRequiredItems[0].educationStartDate)
+        //   : null;
+        const contEduRequiredItems = agentInfo.contEduRequiredItems;
+        const startDate =
+          contEduRequiredItems &&
+          contEduRequiredItems.length > 0 &&
+          contEduRequiredItems[0].educationStartDate
+            ? new Date(contEduRequiredItems[0].educationStartDate)
+            : null;
+        const endDate =
+          contEduRequiredItems &&
+          contEduRequiredItems.length > 0 &&
+          agentInfo.contEduRequiredItems[0].educationEndDate
+            ? new Date(agentInfo.contEduRequiredItems[0].educationEndDate)
+            : null;
 
         if (startDate && endDate) {
           this.sumHoursTaken = this.agentInfo.contEduCompletedItems.reduce(
