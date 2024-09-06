@@ -180,10 +180,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         })
     );
 
-    // setTimeout(() => {
-    //   this.cdr.detectChanges();
-    // }, 0);
-
     this.getAdBankerData();
   }
 
@@ -193,8 +189,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.fetchTicklerInfo();
     }
   }
-
-  
 
   // WORKLIST
   fetchWorkListData(): void {
