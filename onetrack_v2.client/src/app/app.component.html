@@ -22,20 +22,20 @@
     mat-icon-button
     matTooltip="Go to Tickler Info"
     (click)="onGoToTicklerInfo()"
-    [disabled]="appComService.openTicklerCount === 0"
+    [disabled]="!isNotificationActive()"
     [ngStyle]="{
-      color: appComService.openTicklerCount > 0 ? '#00FF7F' : 'inherit'
+      color: isNotificationActive() ? '#00FF7F' : 'white'
     }"
   >
     <!-- <mat-icon>notifications</mat-icon> -->
     <mat-icon
       matBadgePosition="before"
-      [matBadge]="appComService.openTicklerCount"
-      [matBadgeHidden]="appComService.openTicklerCount === 0"
+      [matBadge]="openTicklerCount"
+      [matBadgeHidden]="!isNotificationActive()"
       matBadgeColor="warn"
     >
       {{
-        appComService.openTicklerCount > 0
+        isNotificationActive()
           ? "notifications_active"
           : "notifications"
       }}

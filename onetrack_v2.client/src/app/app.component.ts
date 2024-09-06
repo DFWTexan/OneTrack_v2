@@ -35,16 +35,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  // @ViewChild(MatSidenav)
-  // sidenav!: MatSidenav;
-  // isMobile = true;
-  // isCollapsed = true;
   userAcctInfo: UserAcctInfo = {} as UserAcctInfo;
   branchCodes: any[] = [];
   licenseTechs: any[] = [];
   impesonatorRole: string | null = null;
   openTicklerCount = 0;
 
+  title = 'onetrack_v2';
   private subscriptions = new Subscription();
 
   constructor(
@@ -292,6 +289,26 @@ export class AppComponent implements OnInit, OnDestroy {
     );
   }
 
+  isBadgeVisible(): boolean {
+    if(this.openTicklerCount > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  isNotificationActive(): boolean {
+    if (
+      this.openTicklerCount > 0 &&
+      this.userAcctInfoDataService.userAcctInfo.licenseTechId !== null &&
+      this.userAcctInfoDataService.userAcctInfo.licenseTechId !== 0
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   onGoToTicklerInfo() {
     this.router.navigate(['/dashboard']);
   }
@@ -322,8 +339,6 @@ export class AppComponent implements OnInit, OnDestroy {
       dialogRef.close();
     }, 100);
   }
-
-  title = 'onetrack_v2';
 
   onImpersonateChange(event: Event) {
     const soeid = (event.target as HTMLInputElement).value;

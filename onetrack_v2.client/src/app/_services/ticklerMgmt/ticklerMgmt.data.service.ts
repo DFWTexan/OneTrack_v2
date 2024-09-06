@@ -100,7 +100,13 @@ export class TicklerMgmtDataService {
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
-            this.appComService.updateOpenTicklerCount(response.objData.length);
+            if (this.userInfoService.userAcctInfo.licenseTechId === 0) {
+              this.appComService.updateOpenTicklerCount(0);
+            } else {
+              this.appComService.updateOpenTicklerCount(
+                response.objData.length
+              );
+            }
             this.ticklerInfoItems = response.objData;
             this.ticklerInfoItemsChanged.next(this.ticklerInfoItems);
             return response.objData;
