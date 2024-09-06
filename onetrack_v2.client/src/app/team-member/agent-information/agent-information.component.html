@@ -37,7 +37,11 @@
             (click)="modalService.open('modal-agent-tickler-info')"
             [matTooltip]="'View Tickler Item(s)'"
           >
-            <mat-icon [matBadge]="ticklerCount" matBadgeColor="warn">
+            <mat-icon
+              [matBadge]="ticklerCount"
+              matBadgeColor="warn"
+              aria-hidden="false"
+            >
               notifications_active
             </mat-icon>
           </button>
