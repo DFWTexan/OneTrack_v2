@@ -85,7 +85,7 @@
     </select>
   </div>
 
-  <div class="form-group" *ngIf="ticklerComService.modeTicklerMgmt == 'EDIT'">
+  <div class="form-group" *ngIf="ticklerComService.modeTicklerMgmt == 'EDIT' || isShowMessage()">
     <label for="message">Message:</label>
     <textarea
       rows="5"

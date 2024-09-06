@@ -186,6 +186,14 @@ export class EditTicklerInfoComponent implements OnInit, OnDestroy {
     }
   }
 
+  isShowMessage(): boolean {
+    if(this.ticklerForm.get('lkpValue')?.value === 'Other'){
+      return true;
+    } else {
+      return false;
+    };
+  }
+
   ngOnDestroy(): void {
     this.subscriptionData.unsubscribe();
   }
