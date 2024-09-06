@@ -5,10 +5,11 @@ import {
   Inject,
   Injectable,
   OnDestroy,
+  ChangeDetectorRef,
 } from '@angular/core';
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { MatSidenav } from '@angular/material/sidenav';
-import { Subscription } from 'rxjs';
+import { interval, Subscription, switchMap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
 import {
@@ -18,6 +19,7 @@ import {
   ErrorMessageService,
   LicIncentiveInfoDataService,
   MiscDataService,
+  TicklerMgmtDataService,
   UserAcctInfoDataService,
 } from './_services';
 import { environment } from './environments/environment';
@@ -52,9 +54,12 @@ export class AppComponent implements OnInit, OnDestroy {
     private agentDataService: AgentDataService,
     public licIncentiveInfoDataService: LicIncentiveInfoDataService,
     private miscDataService: MiscDataService,
+    public ticklerMgmtDataService: TicklerMgmtDataService,
     public dialog: MatDialog,
     private router: Router,
-    private userInfoService: UserAcctInfoDataService
+    private userInfoService: UserAcctInfoDataService,
+    private cdr: ChangeDetectorRef,
+    public userAcctInfoDataService: UserAcctInfoDataService
   ) {
     this.openTicklerCount = this.appComService.openTicklerCount;
     this.userAcctInfo = this.userInfoService.userAcctInfo;
@@ -87,6 +92,12 @@ export class AppComponent implements OnInit, OnDestroy {
     //     this.appComService.isLoggedIn = isLoggedIn;
     //   })
     // );
+
+    this.startFetchingTicklerInfo();
+
+    setTimeout(() => {
+      this.cdr.detectChanges();
+    }, 0);
 
     this.subscriptions.add(
       this.appComService.openTicklerCountChanged.subscribe(
@@ -258,6 +269,25 @@ export class AppComponent implements OnInit, OnDestroy {
             label: tech.techName,
           }));
           this.drpdwnDataService.updateLicenseTechs(mappedLicenseTechs);
+        })
+    );
+  }
+
+  startFetchingTicklerInfo(): void {
+    this.subscriptions.add(
+      interval(5000)
+        .pipe(
+          switchMap(() =>
+            this.ticklerMgmtDataService.fetchTicklerInfo(
+              0,
+              this.userAcctInfoDataService.userAcctInfo.licenseTechId ?? 0,
+              0
+            )
+          )
+        )
+        .subscribe((ticklerInfoItems: any) => {
+          // this.ticklerInfoItems = ticklerInfoItems;
+          this.cdr.detectChanges();
         })
     );
   }

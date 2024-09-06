@@ -122,8 +122,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       )
     );
 
-    this.startFetchingTicklerInfo();
-
     this.subscriptions.add(
       this.miscDataService.fetchWorkListNames().subscribe((worklistNames) => {
         this.worklistNames = worklistNames;
@@ -182,9 +180,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         })
     );
 
-    setTimeout(() => {
-      this.cdr.detectChanges();
-    }, 0);
+    // setTimeout(() => {
+    //   this.cdr.detectChanges();
+    // }, 0);
 
     this.getAdBankerData();
   }
@@ -196,25 +194,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  startFetchingTicklerInfo(): void {
-    this.subscriptions.add(
-      interval(5000)
-        .pipe(
-          switchMap(() =>
-            this.ticklerMgmtDataService.fetchTicklerInfo(
-              0,
-              this.userAcctInfoDataService.userAcctInfo.licenseTechId ?? 0,
-              0
-            )
-          )
-        )
-        .subscribe((ticklerInfoItems: any) => {
-          this.ticklerInfoItems = ticklerInfoItems;
-          this.loading = false;
-          this.cdr.detectChanges(); 
-        })
-    );
-  }
+  
 
   // WORKLIST
   fetchWorkListData(): void {
