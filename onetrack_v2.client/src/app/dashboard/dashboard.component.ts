@@ -183,8 +183,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     );
 
     setTimeout(() => {
-      // this.userAcctInfo.licenseTechId = 2; // Example value
-      this.cdr.detectChanges(); // Manually trigger change detection
+      this.cdr.detectChanges();
     }, 0);
 
     this.getAdBankerData();
