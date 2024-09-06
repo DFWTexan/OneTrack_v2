@@ -1,5 +1,12 @@
-import { AfterViewInit, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { interval, Subscription, switchMap } from 'rxjs';
 
 import {
   AppComService,
@@ -13,7 +20,6 @@ import {
   UserAcctInfoDataService,
   WorkListDataService,
 } from '../_services';
-import { Subscription } from 'rxjs';
 import { StockTickler, TicklerInfo, UserAcctInfo } from '../_Models';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../_components';
@@ -116,6 +122,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       )
     );
 
+    this.startFetchingTicklerInfo();
+
     this.subscriptions.add(
       this.miscDataService.fetchWorkListNames().subscribe((worklistNames) => {
         this.worklistNames = worklistNames;
@@ -175,7 +183,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     );
 
     setTimeout(() => {
-      this.userAcctInfo.licenseTechId = 2; // Example value
+      // this.userAcctInfo.licenseTechId = 2; // Example value
       this.cdr.detectChanges(); // Manually trigger change detection
     }, 0);
 
@@ -187,7 +195,26 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.selectedLicenseTechID = this.userAcctInfo.licenseTechId;
       this.fetchTicklerInfo();
     }
-      
+  }
+
+  startFetchingTicklerInfo(): void {
+    this.subscriptions.add(
+      interval(5000)
+        .pipe(
+          switchMap(() =>
+            this.ticklerMgmtDataService.fetchTicklerInfo(
+              0,
+              this.userAcctInfoDataService.userAcctInfo.licenseTechId ?? 0,
+              0
+            )
+          )
+        )
+        .subscribe((ticklerInfoItems: any) => {
+          this.ticklerInfoItems = ticklerInfoItems;
+          this.loading = false;
+          this.cdr.detectChanges(); 
+        })
+    );
   }
 
   // WORKLIST
@@ -226,7 +253,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         .fetchTicklerInfo(0, this.selectedLicenseTechID ?? 0, 0)
         .subscribe((ticklerInfoItems: any) => {
           this.ticklerInfoItems = ticklerInfoItems;
-                    
+
           this.loading = false;
         })
     );
@@ -317,7 +344,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onGotoAgentInfo(employeeID: number): void {
-    this.router.navigate(['../../team/agent-info',employeeID,'tm-info-mgmt']);
+    this.router.navigate(['../../team/agent-info', employeeID, 'tm-info-mgmt']);
   }
 
   // ADBANKER
