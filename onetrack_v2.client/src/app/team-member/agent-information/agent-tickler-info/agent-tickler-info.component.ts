@@ -63,10 +63,7 @@ export class AgentTicklerInfoComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-       
-        console.log('EMFTEST (onCloseTicklerItem: afterClosed) - ticklerInfo => \n', ticklerInfo);  
-       
-        this.ticklerMgmtDataService
+       this.ticklerMgmtDataService
           .closeTicklerItem({
             TicklerID: ticklerInfo.ticklerID,
             TicklerCloseByLicenseTechID: ticklerInfo.licenseTechID,

@@ -1,11 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 import { environment } from '../../environments/environment';
 import { StockTickler, TicklerInfo, TicklerLicTech } from '../../_Models';
 import { TicklerMgmtComService } from './ticklerMgmt.com.service';
+import { AppComService } from '../common/app.com.service';
+import { UserAcctInfoDataService } from '../userAcctInfo/userAcctInfo.data.Service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,7 +29,9 @@ export class TicklerMgmtDataService {
 
   constructor(
     private http: HttpClient,
-    private ticklerMgmtComService: TicklerMgmtComService
+    public appComService: AppComService,
+    private ticklerMgmtComService: TicklerMgmtComService,
+    private userInfoService: UserAcctInfoDataService
   ) {}
 
   fetchStockTickler(): Observable<StockTickler[]> {
@@ -96,6 +100,7 @@ export class TicklerMgmtDataService {
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
+            this.appComService.updateOpenTicklerCount(response.objData.length);
             this.ticklerInfoItems = response.objData;
             this.ticklerInfoItemsChanged.next(this.ticklerInfoItems);
             return response.objData;
@@ -136,9 +141,13 @@ export class TicklerMgmtDataService {
         errMessage: string;
       }>(this.apiUrl + 'CloseTickler', ticklerInfo)
       .pipe(
-        map((response) => {
+        switchMap((response: any) => {
           if (response.success && response.statusCode === 200) {
-            return true;
+            return this.fetchTicklerInfo(
+              0,
+              this.userInfoService.userAcctInfo.licenseTechId ?? 0,
+              0
+            ).pipe(map(() => true));
           } else {
             throw new Error(response.errMessage || 'Unknown error');
           }
