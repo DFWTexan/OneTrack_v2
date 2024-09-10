@@ -301,7 +301,8 @@ export class AppComponent implements OnInit, OnDestroy {
     if (
       this.openTicklerCount > 0 &&
       this.userAcctInfoDataService.userAcctInfo.licenseTechId !== null &&
-      this.userAcctInfoDataService.userAcctInfo.licenseTechId !== 0
+      this.userAcctInfoDataService.userAcctInfo.licenseTechId !== 0 &&
+      this.userAcctInfoDataService.userAcctInfo.licenseTechId !== undefined 
     ) {
       return true;
     } else {

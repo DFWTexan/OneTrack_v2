@@ -91,7 +91,7 @@
     <!-- TICKLER -->
     <mat-expansion-panel
       class="mt-3"
-      *ngIf="userAcctInfo.licenseTechId && appComService.openTicklerCount > 0"
+      
       [expanded]="isOpenTicklerInfo"
     >
       <mat-expansion-panel-header>
@@ -147,7 +147,14 @@
         </div>
       </div>
       <mat-divider></mat-divider>
-      <table class="table">
+      <div
+          class="div d-flex justify-content-center mt-5"
+          style="font-size: larger; color: gray"
+          *ngIf="ticklerInfoItems.length === 0"
+        >
+          No records found
+      </div>
+      <table class="table" *ngIf="ticklerInfoItems.length > 0">
         <thead>
           <tr style="background-color: whitesmoke">
             <th scope="col">&nbsp;</th>

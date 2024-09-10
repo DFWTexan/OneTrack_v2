@@ -136,7 +136,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
           value: tech.licenseTechId,
           label: tech.techName,
         }));
-        this.licenseTechs = mappedLicenseTechs;
+        this.licenseTechs = [{value: null, label:"Select Tech"}, ...mappedLicenseTechs];
       })
     );
 
