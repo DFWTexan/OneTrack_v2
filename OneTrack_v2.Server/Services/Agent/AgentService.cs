@@ -2697,17 +2697,20 @@ namespace OneTrack_v2.Services
                 });
             }
 
-            var entryItems = _db.Diaries
-                .Where(d => d.EmploymentId == vEmploymentID)
-                .OrderByDescending(d => d.DiaryDate)
-                .Select(d => new DiaryItem
-                {
-                    DiaryID = d.DiaryId,
-                    SOEID = d.Soeid,
-                    DiaryName = d.DiaryName,
-                    DiaryDate = d.DiaryDate,
-                    Notes = d.Notes
-                }).ToList();
+            var entryItems = (from diary in _db.Diaries
+                              join lt in _db.LicenseTeches on diary.Soeid equals lt.Soeid into ltGroup
+                              from lt in ltGroup.DefaultIfEmpty()
+                              where diary.EmploymentId == vEmploymentID
+                              orderby diary.DiaryDate descending
+                              select new DiaryItem
+                              {
+                                  DiaryID = diary.DiaryId,
+                                  SOEID = diary.Soeid,
+                                  DiaryName = diary.DiaryName,
+                                  DiaryDate = diary.DiaryDate,
+                                  TechName = lt != null ? lt.FirstName + " " + lt.LastName : diary.Soeid,
+                                  Notes = diary.Notes
+                              }).ToList();
 
             return (_diaryCreatedByItems.ToArray(), entryItems.ToArray());
         }
