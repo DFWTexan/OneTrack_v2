@@ -9,7 +9,7 @@ import { Subscription } from 'rxjs';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
-export class LoginComponent implements OnInit, OnDestroy{
+export class LoginComponent implements OnInit, OnDestroy {
   subscribeLoginMsgChanged: Subscription = new Subscription();
 
   constructor(
@@ -18,22 +18,23 @@ export class LoginComponent implements OnInit, OnDestroy{
   ) {}
 
   ngOnInit(): void {
-    this.subscribeLoginMsgChanged = this.appComService.loginErrorMsgChanged.subscribe(
-      (errMessage) => {
-          // console.log('EMFTEST - (app-login): errMsg - ', errMessage);
-      }
-    );
+    this.subscribeLoginMsgChanged =
+      this.appComService.loginErrorMsgChanged.subscribe((errMessage) => {
+        // console.log('EMFTEST - (app-login): errMsg - ', errMessage);
+      });
   }
 
   onSubmit(form: NgForm) {
-    this.userAcctInfoService
-      .fetchUserAcctInfo(
-        form.value.loginInfo.userTID,
-        form.value.loginInfo.password
-      )
-      .subscribe((response) => {
-        // console.log('EMFTEST - (app-login): response => \n', response);
-      });
+    this.subscribeLoginMsgChanged.add(
+      this.userAcctInfoService
+        .fetchUserAcctInfo(
+          form.value.loginInfo.userTID,
+          form.value.loginInfo.password
+        )
+        .subscribe((response) => {
+          // console.log('EMFTEST - (app-login): response => \n', response);
+        })
+    );
   }
 
   ngOnDestroy(): void {

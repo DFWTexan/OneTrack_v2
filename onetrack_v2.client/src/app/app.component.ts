@@ -67,7 +67,7 @@ export class AppComponent implements OnInit, OnDestroy {
     if (environment.isDevLoginEnabled) {
       this.appComService.updateIsLoggedIn(true);
       this.userInfoService.updateUserAcctInfo({
-        licenseTechId: null,
+        licenseTechID: null,
         displayName: 'Erish Faggett',
         // displayName: 'Dyan Knapp',
         soeid: 'T2229513',
@@ -277,7 +277,7 @@ export class AppComponent implements OnInit, OnDestroy {
           switchMap(() =>
             this.ticklerMgmtDataService.fetchTicklerInfo(
               0,
-              this.userAcctInfoDataService.userAcctInfo.licenseTechId ?? 0,
+              this.userAcctInfoDataService.userAcctInfo.licenseTechID ?? 0,
               0
             )
           )
@@ -300,9 +300,9 @@ export class AppComponent implements OnInit, OnDestroy {
   isNotificationActive(): boolean {
     if (
       this.openTicklerCount > 0 &&
-      this.userAcctInfoDataService.userAcctInfo.licenseTechId !== null &&
-      this.userAcctInfoDataService.userAcctInfo.licenseTechId !== 0 &&
-      this.userAcctInfoDataService.userAcctInfo.licenseTechId !== undefined 
+      this.userAcctInfoDataService.userAcctInfo.licenseTechID !== null &&
+      this.userAcctInfoDataService.userAcctInfo.licenseTechID !== 0 &&
+      this.userAcctInfoDataService.userAcctInfo.licenseTechID !== undefined 
     ) {
       return true;
     } else {
@@ -348,7 +348,7 @@ export class AppComponent implements OnInit, OnDestroy {
         .fetchLicenseTechBySOEID(soeid)
         .subscribe((licenseTech: any) => {
           this.userInfoService.updateUserAcctInfo({
-            licenseTechId: licenseTech.licenseTechId,
+            licenseTechID: licenseTech.licenseTechId,
             displayName: licenseTech.techName,
             soeid: licenseTech.soeid,
             email: licenseTech.email,

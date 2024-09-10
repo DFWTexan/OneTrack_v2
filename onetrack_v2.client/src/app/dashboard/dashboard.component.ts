@@ -51,7 +51,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   workListName: string = 'Agent Address Change';
   licenseTech: string = 'T9999999';
   worklistdate: string = new Date().toISOString().split('T')[0];
-  licenseTechs: any[] = [];
+  licenseTechs: any[] = [{ value: null, label: 'loading...' }];
 
   selectedWorkListName = 'Loading...';
   selectedLicenseTech = 'T9999999';
@@ -114,8 +114,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.userAcctInfoDataService.userAcctInfoChanged.subscribe(
         (userAcctInfo: UserAcctInfo) => {
           this.userAcctInfo = userAcctInfo;
-          if (userAcctInfo.licenseTechId) {
-            this.selectedLicenseTechID = userAcctInfo.licenseTechId;
+          if (userAcctInfo.licenseTechID) {
+            this.selectedLicenseTechID = userAcctInfo.licenseTechID;
             this.fetchTicklerInfo();
           }
         }
@@ -184,8 +184,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    if (this.userAcctInfo.licenseTechId) {
-      this.selectedLicenseTechID = this.userAcctInfo.licenseTechId;
+    if (this.userAcctInfo.licenseTechID) {
+      this.selectedLicenseTechID = this.userAcctInfo.licenseTechID;
       this.fetchTicklerInfo();
     }
   }
