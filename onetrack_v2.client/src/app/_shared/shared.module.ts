@@ -27,6 +27,7 @@ import { ConfirmDialogComponent } from '../_components/confirm-dialog/confirm-di
 import { InfoDialogComponent } from '../_components/info-dialog/info-dialog.component';
 import { ModalComponent } from '../_components/modal/modal.component';
 import { PhoneFormatPipe } from '../_shared/Pipe-Phone-Format';
+import { ZipFormatPipe } from '../_shared/Pipe-Zip-Format'; 
 import { SsnFormatPipe } from '../_shared/Pipe-SSN-Format';
 import { FirstThreePipe } from '../_shared/Pipe-FirstThree';
 import { PaginationComponent } from '../_components/pagination/pagination.component';
@@ -39,6 +40,7 @@ import { FileUploadComponent } from '../_components/file-upload/file-upload.comp
     InfoDialogComponent,
     ModalComponent,
     PhoneFormatPipe,
+    ZipFormatPipe,
     SsnFormatPipe,
     FirstThreePipe,
     PaginationComponent,
@@ -74,6 +76,7 @@ import { FileUploadComponent } from '../_components/file-upload/file-upload.comp
     InfoDialogComponent,
     ModalComponent,
     PhoneFormatPipe,
+    ZipFormatPipe,
     SsnFormatPipe,
     FirstThreePipe,
     PaginationComponent,

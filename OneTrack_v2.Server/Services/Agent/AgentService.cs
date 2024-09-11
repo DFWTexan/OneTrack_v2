@@ -222,6 +222,8 @@ namespace OneTrack_v2.Services
                                               ScoreNumber = bif.ScoreNumber != null ? bif.ScoreNumber : "",
                                               StreetAddress1 = bif.Address1,
                                               StreetAddress2 = bif.Address2,
+                                              City = bif.City,
+                                              State = bif.State,
                                               StreetZip = bif.ZipCode,
                                               CustomerPhone = bif.Phone,
                                               FaxNumber = bif.Fax,
@@ -235,8 +237,8 @@ namespace OneTrack_v2.Services
                     agent.BranchDeptStreet1 = branchInfo.StreetAddress1;
                     agent.BranchDeptStreet2 = branchInfo.StreetAddress2;
                     agent.BranchDeptStreetZip = branchInfo.StreetZip;
-                    agent.BranchDeptStreetCity = agent.City;
-                    agent.BranchDeptStreetState = agent.State;
+                    agent.BranchDeptStreetCity = branchInfo.City;
+                    agent.BranchDeptStreetState = branchInfo.State;
                     agent.BranchDeptPhone = branchInfo.CustomerPhone;
                     agent.BranchDeptFax = branchInfo.FaxNumber;
                     agent.BranchDeptEmail = branchInfo.Email;
@@ -2708,7 +2710,8 @@ namespace OneTrack_v2.Services
                                   SOEID = diary.Soeid,
                                   DiaryName = diary.DiaryName,
                                   DiaryDate = diary.DiaryDate,
-                                  TechName = lt != null ? lt.FirstName + " " + lt.LastName : diary.Soeid,
+                                  //TechName = lt != null ? lt.FirstName + " " + lt.LastName : diary.Soeid,
+                                  TechName = lt != null ? lt.FirstName.Substring(0, 1) + ". " + lt.LastName : diary.Soeid,
                                   Notes = diary.Notes
                               }).ToList();
 
