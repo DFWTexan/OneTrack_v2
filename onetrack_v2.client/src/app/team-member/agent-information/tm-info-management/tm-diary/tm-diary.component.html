@@ -51,7 +51,7 @@
       <table class="table w-100">
         <thead>
           <tr class="sticky-top" style="background-color: gainsboro">
-            <th scope="col" style="width: 10rem">TechName</th>
+            <th scope="col" style="width: 12rem">TechName</th>
             <th scope="col" *ngIf="appComService.isShowEditID">DiaryID</th>
             <th scope="col" style="width: 10rem">DiaryDate</th>
             <th scope="col">Notes</th>
@@ -66,8 +66,8 @@
             "
             [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
           >
-            <td class="align-middle" style="font-size: larger">
-              {{ diary.soeid }}
+            <td class="align-middle" style="font-weight: 500;">
+              {{ diary.techName }}
             </td>
             <td class="align-middle" *ngIf="appComService.isShowEditID">
               {{ diary.diaryID }}

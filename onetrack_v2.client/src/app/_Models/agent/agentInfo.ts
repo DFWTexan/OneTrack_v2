@@ -132,6 +132,7 @@ export interface DiaryCreatedByItem {
 export interface DiaryItem {
   diaryID: number;
   soeid: string | null;
+  techName: string | null;
   diaryName: string | null;
   diaryDate: string | null;
   notes: string | null;
