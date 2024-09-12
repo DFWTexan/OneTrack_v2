@@ -37,11 +37,13 @@ builder.Services.AddCors(options =>
     {
         policy.WithOrigins("http://localhost:4200",
                            "http://localhost:5000",
+                           "http://localhost:5181",
                            "http://ftwebd201",
                            "http://ftwebq201",
                            "http://ftwebp201")
               .AllowAnyHeader()
-              .AllowAnyMethod();
+              .AllowAnyMethod()
+              .AllowCredentials(); // If you need to allow credentials
     });
 });
 
