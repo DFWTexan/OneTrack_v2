@@ -105,8 +105,6 @@ namespace OneTrak_v2.Controllers
         [HttpGet]
         public IActionResult GetFileDownload(string filePath)
         {
-            //var filePath = Path.Combine(path, filename);
-
             if (!System.IO.File.Exists(filePath))
             {
                 return NotFound("File not found");
