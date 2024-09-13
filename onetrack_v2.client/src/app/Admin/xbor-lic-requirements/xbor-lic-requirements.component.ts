@@ -8,6 +8,7 @@ import {
   AppComService,
   ConstantsDataService,
   ErrorMessageService,
+  FileService,
   ModalService,
   UserAcctInfoDataService,
 } from '../../_services';
@@ -39,6 +40,7 @@ export class XborLicRequirementsComponent implements OnInit, OnDestroy {
     public appComService: AppComService,
     public dialog: MatDialog,
     public modalService: ModalService,
+    public fileService: FileService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
