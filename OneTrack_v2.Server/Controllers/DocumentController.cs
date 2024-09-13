@@ -47,5 +47,115 @@ namespace OneTrak_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        // GET api/file/{filename}
+        [HttpGet]
+        public async Task<IActionResult> GetFileContent(string path, string filename)
+        {
+            var filePath = Path.Combine(path, filename);
+
+            if (!System.IO.File.Exists(filePath))
+            {
+                return NotFound("File not found");
+            }
+
+            try
+            {
+                var content = await System.IO.File.ReadAllTextAsync(filePath);
+                return Ok(content);
+            }
+            catch (IOException ioEx)
+            {
+                return StatusCode(500, $"Error reading file: {ioEx.Message}");
+            }
+        }
+
+        [HttpGet]
+        public IActionResult GetFile(string path, string filename)
+        {
+            var filePath = Path.Combine(path, filename);
+
+            if (!System.IO.File.Exists(filePath))
+            {
+                return NotFound("File not found");
+            }
+
+            try
+            {
+                // Open the file stream
+                var memory = new MemoryStream();
+                using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    stream.CopyTo(memory);
+                }
+                memory.Position = 0;
+
+                // Determine the content type based on the file extension
+                string contentType = GetContentType(filePath);
+
+                // Return the file as a FileStreamResult
+                return File(memory, contentType, filename);
+            }
+            catch (IOException ioEx)
+            {
+                return StatusCode(500, $"Error reading the file: {ioEx.Message}");
+            }
+        }
+
+        [HttpGet]
+        public IActionResult GetFileDownload(string filePath)
+        {
+            //var filePath = Path.Combine(path, filename);
+
+            if (!System.IO.File.Exists(filePath))
+            {
+                return NotFound("File not found");
+            }
+
+            try
+            {
+                // Extract the filename from the file path
+                string fileName = Path.GetFileName(filePath);
+
+                // Open the file stream
+                var memory = new MemoryStream();
+                using (var stream = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    stream.CopyTo(memory);
+                }
+                memory.Position = 0;
+
+                // Determine the content type based on the file extension
+                string contentType = GetContentType(filePath);
+
+                // Return the file as a FileStreamResult
+                return File(memory, contentType, fileName);
+            }
+            catch (IOException ioEx)
+            {
+                return StatusCode(500, $"Error reading the file: {ioEx.Message}");
+            }
+        }
+
+        private string GetContentType(string path)
+        {
+            var types = GetMimeTypes();
+            var ext = Path.GetExtension(path).ToLowerInvariant();
+            return types.ContainsKey(ext) ? types[ext] : "application/octet-stream";
+        }
+
+        private Dictionary<string, string> GetMimeTypes()
+        {
+            // Common MIME types
+            return new Dictionary<string, string>
+            {
+                {".txt", "text/plain"},
+                {".docx", "application/vnd.openxmlformats-officedocument.wordprocessingml.document"},
+                {".pdf", "application/pdf"},
+                {".png", "image/png"},
+                {".jpg", "image/jpeg"},
+                // Add more MIME types as needed
+            };
+        }
     }
 }

@@ -33,6 +33,7 @@ import { FirstThreePipe } from '../_shared/Pipe-FirstThree';
 import { PaginationComponent } from '../_components/pagination/pagination.component';
 import { EditLicenseComponent } from '../admin/license-edit/edit-license/edit-license.component';
 import { FileUploadComponent } from '../_components/file-upload/file-upload.component';
+import { FileViewerComponent } from '../_components/file-viewer/file-viewer.component';
 
 @NgModule({
   declarations: [
@@ -46,6 +47,7 @@ import { FileUploadComponent } from '../_components/file-upload/file-upload.comp
     PaginationComponent,
     EditLicenseComponent,
     FileUploadComponent,
+    FileViewerComponent,
   ],
   imports: [
     CommonModule,
@@ -82,6 +84,7 @@ import { FileUploadComponent } from '../_components/file-upload/file-upload.comp
     PaginationComponent,
     EditLicenseComponent,
     FileUploadComponent,
+    FileViewerComponent,
     MatButtonModule,
     MatSidenavModule,
     MatMenuModule,
