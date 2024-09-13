@@ -85,7 +85,9 @@
               >
                 {{ company.companyRequirementId }}
               </td>
-              <td class="align-middle text-center">{{ company.workStateAbv }}</td>
+              <td class="align-middle text-center">
+                {{ company.workStateAbv }}
+              </td>
               <td class="align-middle text-center">
                 {{ company.resStateAbv }}
               </td>
@@ -138,8 +140,9 @@
               <td class="align-middle">
                 <button
                   class="btn btn-link hover-pointer"
-                  (click)="onOpenDocument(company.document)"
+                  (click)="fileService.downloadFile(company.document)"
                   style="font-size: medium"
+                  title="Download Document"
                 >
                   {{ company.document }}
                 </button>
@@ -153,10 +156,15 @@
                       adminDataService.storeCoRequirement('EDIT', company);
                       modalService.open('modal-edit-co-requirement')
                     "
+                    title="Edit Company Requirement"
                   >
                     <span class="material-symbols-outlined"> edit </span>
                   </button>
-                  <button class="icon-edit-delete-button" type="button">
+                  <button
+                    class="icon-edit-delete-button"
+                    type="button"
+                    title="Delete Company Requirement"
+                  >
                     <span class="material-symbols-outlined"> delete </span>
                   </button>
                 </div>

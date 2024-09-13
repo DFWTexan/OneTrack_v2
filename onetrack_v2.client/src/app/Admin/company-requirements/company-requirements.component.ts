@@ -7,6 +7,7 @@ import {
   AppComService,
   ConstantsDataService,
   ErrorMessageService,
+  FileService,
   ModalService,
 } from '../../_services';
 import { CompanyRequirement } from '../../_Models';
@@ -33,6 +34,7 @@ export class CompanyRequirementsComponent implements OnInit, OnDestroy {
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
     public appComService: AppComService,
+    public fileService: FileService,
     public modalService: ModalService
   ) {}
 
