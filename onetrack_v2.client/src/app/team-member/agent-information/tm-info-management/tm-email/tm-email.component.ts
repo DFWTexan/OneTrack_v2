@@ -233,9 +233,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
 
     if (this.emailForm.invalid) {
       return;
-    }
-
-console.log('EMFTEST (onSubmit) - emailSendItem: ', emailSendItem);    
+    }    
 
     this.subscriptions.add(
       this.emailDataService.sendEmail(emailSendItem).subscribe({
@@ -290,10 +288,7 @@ console.log('EMFTEST (onSubmit) - emailSendItem: ', emailSendItem);
     );
   }
 
-  viewPdfFile(path: string, filename: string): void {
-
-console.log('EMFTEST (viewPdfFile) - path: ', path);
-
+  viewFile(path: string, filename: string): void {
     this.fileService.getFile(path, filename).subscribe(
       (blob) => {
         const url = URL.createObjectURL(blob);
