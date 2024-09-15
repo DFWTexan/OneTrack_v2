@@ -392,12 +392,12 @@ namespace OneTrack_v2.Services
                     case 124: // "AD BANKER REGISTRATION-HEALTH"
                         _attachments = GetAttachments("ADBankerRegistration-Health");
                         var appADBankerRegistrationHealthHTML = _emailTemplateService.GetADBankerRegistrationHealthHTML(vEmploymentID);
-                        result.ObjData = new { HTMLContent = appADBankerRegistrationHealthHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION AD BANKER REGISTRATION CONFIRMATION_HEALTH", isTemplateFound = true, DocAttachmentPath = docAttPath + "Templates/", Attachments = _attachments };
+                        result.ObjData = new { HTMLContent = appADBankerRegistrationHealthHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION AD BANKER REGISTRATION CONFIRMATION_HEALTH", isTemplateFound = true, DocAttachmentPath = docAttPath, Attachments = _attachments };
                         break;
                     case 125: // "AD BANKER REGISTRATION-LIFE"
                         _attachments = GetAttachments("ADBankerRegistration-Life");
                         var appADBankerRegistrationLifeHTML = _emailTemplateService.GetADBankerRegistrationLifeHTML(vEmploymentID);
-                        result.ObjData = new { HTMLContent = appADBankerRegistrationLifeHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION AD BANKER REGISTRATION CONFIRMATION_LIFE", isTemplateFound = true, DocAttachmentPath = docAttPath + "Templates/", Attachments = _attachments };
+                        result.ObjData = new { HTMLContent = appADBankerRegistrationLifeHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION AD BANKER REGISTRATION CONFIRMATION_LIFE", isTemplateFound = true, DocAttachmentPath = docAttPath, Attachments = _attachments };
                         break;
                     case 126: // "AD BANKER REGISTRATION-LIFE AND HEALTH"
                         _attachments = GetAttachments("ADBankerRegistration-LifeHealth");

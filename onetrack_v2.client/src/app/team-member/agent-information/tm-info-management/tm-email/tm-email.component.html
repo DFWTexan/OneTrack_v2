@@ -247,7 +247,8 @@
             > -->
             <button
               class="btn btn-link hover-pointer"
-              (click)="onOpenDocument(documentPath + file)"
+              type="button"
+              (click)="viewPdfFile(documentPath, file)"
               style="font-size: medium"
             >
               {{ file }}
@@ -256,6 +257,19 @@
         </div>
       </div>
 
+      <mat-divider></mat-divider>
+      <div class="d-flex" *ngIf="pdfSrc" style="background-color: whitesmoke;">
+        <iframe [src]="pdfSrc" width="100%" height="600px"></iframe>
+        <div>
+          <button
+            class="btn btn-secondary button-font-size ms-2"
+            type="button"
+            (click)="closeViewer()"
+          >
+            <span class="material-symbols-outlined"> close </span>
+          </button>
+        </div>
+      </div>
       <mat-divider></mat-divider>
 
       <div class="row bg-body mt-1 p-3">

@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { DomSanitizer, SafeHtml, SafeResourceUrl } from '@angular/platform-browser';
 
 import {
   AgentInfo,
@@ -21,6 +21,7 @@ import {
   AppComService,
   EmailDataService,
   ErrorMessageService,
+  FileService,
   UserAcctInfoDataService,
 } from '../../../../_services';
 
@@ -50,6 +51,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   FileDisplayMode = 'ATTACHMENT'; //--> CHOSEFILE / ATTACHMENT
   file: File | null = null;
   fileUri: string | null = null;
+  pdfSrc: SafeResourceUrl | null = null;
 
   private subscriptions = new Subscription();
 
@@ -69,6 +71,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     public agentDataService: AgentDataService,
     public appComService: AppComService,
     public userInfoDataService: UserAcctInfoDataService,
+    private fileService: FileService,
     private sanitizer: DomSanitizer,
     private fb: FormBuilder
   ) {}
@@ -232,6 +235,8 @@ export class TmEmailComponent implements OnInit, OnDestroy {
       return;
     }
 
+console.log('EMFTEST (onSubmit) - emailSendItem: ', emailSendItem);    
+
     this.subscriptions.add(
       this.emailDataService.sendEmail(emailSendItem).subscribe({
         next: (response) => {
@@ -283,6 +288,25 @@ export class TmEmailComponent implements OnInit, OnDestroy {
         },
       })
     );
+  }
+
+  viewPdfFile(path: string, filename: string): void {
+
+console.log('EMFTEST (viewPdfFile) - path: ', path);
+
+    this.fileService.getFile(path, filename).subscribe(
+      (blob) => {
+        const url = URL.createObjectURL(blob);
+        this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+      },
+      (error) => {
+        console.error('Error loading PDF file:', error);
+      }
+    );
+  }
+
+  closeViewer(): void {
+    this.pdfSrc = null;
   }
 
   ngOnDestroy(): void {
