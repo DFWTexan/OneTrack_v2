@@ -9,7 +9,12 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { DomSanitizer, SafeHtml, SafeResourceUrl } from '@angular/platform-browser';
+import {
+  DomSanitizer,
+  SafeHtml,
+  SafeResourceUrl,
+} from '@angular/platform-browser';
+import * as mammoth from 'mammoth';
 
 import {
   AgentInfo,
@@ -52,6 +57,8 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   file: File | null = null;
   fileUri: string | null = null;
   pdfSrc: SafeResourceUrl | null = null;
+  filePdfSrc: SafeResourceUrl | null = null;
+  fileHtmlContent: SafeHtml | null = null;
 
   private subscriptions = new Subscription();
 
@@ -134,7 +141,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
           this.subject = rawHtmlContent.subject;
           this.isTemplateFound = rawHtmlContent.isTemplateFound;
           this.emailAttachments = rawHtmlContent.attachments || [];
-          this.documentPath = rawHtmlContent.docAttachmentPath + 'Templates/' || '';
+          this.documentPath = rawHtmlContent.docAttachmentPath;
 
           if (
             rawHtmlContent.docSubType === '{MESSAGE}' ||
@@ -233,7 +240,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
 
     if (this.emailForm.invalid) {
       return;
-    }    
+    }
 
     this.subscriptions.add(
       this.emailDataService.sendEmail(emailSendItem).subscribe({
@@ -288,20 +295,57 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     );
   }
 
+  // viewFile(path: string, filename: string): void {
+  //   this.fileService.getFile(path, filename).subscribe(
+  //     (blob) => {
+  //       const url = URL.createObjectURL(blob);
+  //       this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  //     },
+  //     (error) => {
+  //       console.error('Error loading PDF file:', error);
+  //     }
+  //   );
+  // }
+
   viewFile(path: string, filename: string): void {
     this.fileService.getFile(path, filename).subscribe(
       (blob) => {
-        const url = URL.createObjectURL(blob);
-        this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        const fileExtension = filename.split('.').pop()?.toLowerCase();
+
+        // Reset previous content
+        this.filePdfSrc = null;
+        this.fileHtmlContent = null;
+        if (fileExtension === 'pdf') {
+          const url = URL.createObjectURL(blob);
+          this.filePdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        } else if (fileExtension === 'docx') {
+          const reader = new FileReader();
+          reader.onload = async () => {
+            const arrayBuffer = reader.result as ArrayBuffer;
+            try {
+              const result = await mammoth.convertToHtml({ arrayBuffer });
+              this.fileHtmlContent = this.sanitizer.bypassSecurityTrustHtml(
+                result.value
+              );
+            } catch (error) {
+              console.error('Error converting .docx file:', error);
+            }
+          };
+          reader.readAsArrayBuffer(blob);
+        } else {
+          console.error('Unsupported file type:', fileExtension);
+        }
       },
       (error) => {
-        console.error('Error loading PDF file:', error);
+        console.error('Error loading file:', error);
       }
     );
   }
 
   closeViewer(): void {
-    this.pdfSrc = null;
+    // this.pdfSrc = null;
+    this.filePdfSrc = null;
+    this.fileHtmlContent = null;
   }
 
   ngOnDestroy(): void {

@@ -104,7 +104,7 @@ namespace OneTrack_v2.Services
                             .Where(c => c.CommunicationId == vCommunicationID)
                             .FirstOrDefault();
 
-            var docAttPath = _config.GetSection("EmailAttachmentDocs:OneTrakDocumentPath").Get<string>() ?? null;
+            var _docAttPath = _config.GetSection("EmailAttachmentDocs:OneTrakDocumentPath").Get<string>() ?? null;
             List<string> _attachments;
 
             var result = new ReturnResult();
@@ -207,12 +207,12 @@ namespace OneTrack_v2.Services
                     case 41: // "Background Release"
                         _attachments = GetAttachments("BackgroundReleaseDocs");
                         var appBackgroundReleaseHTML = _emailTemplateService.GetBackgroundReleaseHTML(vEmploymentID);
-                        result.ObjData = new { HTMLContent = appBackgroundReleaseHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION BACKGROUND RELEASE IS NEEDED", isTemplateFound = true, DocAttachmentPath = docAttPath + "Templates/",  Attachments = _attachments };
+                        result.ObjData = new { HTMLContent = appBackgroundReleaseHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION BACKGROUND RELEASE IS NEEDED", isTemplateFound = true, DocAttachmentPath = _docAttPath + "Templates\\",  Attachments = _attachments };
                         break;
                     case 42: // "Background Disclosure Link"
                         _attachments = GetAttachments("BackgroundDisclosureLink");
                         var appBackgroundDisclosureLinkHTML = _emailTemplateService.GetBackgroundDisclosureLinkHTML(vEmploymentID);
-                        result.ObjData = new { HTMLContent = appBackgroundDisclosureLinkHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION BACKGROUND DISCLOSURE LINK", isTemplateFound = true, DocAttachmentPath = docAttPath + "Templates/", Attachments = _attachments };
+                        result.ObjData = new { HTMLContent = appBackgroundDisclosureLinkHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION BACKGROUND DISCLOSURE LINK", isTemplateFound = true, DocAttachmentPath = _docAttPath + "Templates\\", Attachments = _attachments };
                         break;
                     case 45: // "Exam Scheduled-CREDIT"
                         var appExamScheduledCreditHTML = _emailTemplateService.GetExamScheduledCreditHTML(vEmploymentID);
@@ -281,12 +281,12 @@ namespace OneTrack_v2.Services
                     case 61: // "Compliance Certificate"
                         _attachments = GetAttachments("ComplianceCertificate");
                         var appComplianceCertificateHTML = _emailTemplateService.GetComplianceCertificateHTML(vEmploymentID);
-                        result.ObjData = new { HTMLContent = appComplianceCertificateHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION CERTIFICATE OF COMPLIANCE", isTemplateFound = true, DocAttachmentPath = docAttPath + "Templates/", Attachments = _attachments };
+                        result.ObjData = new { HTMLContent = appComplianceCertificateHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION CERTIFICATE OF COMPLIANCE", isTemplateFound = true, DocAttachmentPath = _docAttPath + "Templates\\", Attachments = _attachments };
                         break;
                     case 62: // "Compliance Certificate-End"
                         _attachments = GetAttachments("ComplianceCertificate-End");
                         var appComplianceCertificateEndHTML = _emailTemplateService.GetComplianceCertificateEndHTML(vEmploymentID);
-                        result.ObjData = new { HTMLContent = appComplianceCertificateEndHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION CERTIFICATE OF COMPLIANCE FOR ENDORSEES", isTemplateFound = true, DocAttachmentPath = docAttPath + "Templates/", Attachments = _attachments };
+                        result.ObjData = new { HTMLContent = appComplianceCertificateEndHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION CERTIFICATE OF COMPLIANCE FOR ENDORSEES", isTemplateFound = true, DocAttachmentPath = _docAttPath + "Templates\\", Attachments = _attachments };
                         break;
                     case 63: // "Life PLS-IL"
                         var appLifePLsILHTML = _emailTemplateService.GetLifePlsILHTML(vEmploymentID);
@@ -367,7 +367,7 @@ namespace OneTrack_v2.Services
                     case 115: // "AD Banker Registration-FL"
                         _attachments = GetAttachments("ADBankerRegistration-FL");
                         var appADBankerRegistrationFLHTML = _emailTemplateService.GetADBankerRegistrationFLHTML(vEmploymentID);
-                        result.ObjData = new { HTMLContent = appADBankerRegistrationFLHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION AD BANKER REGISTRATION CONFIRMATION_LIFE_FL", isTemplateFound = true, DocAttachmentPath = docAttPath + "Templates/", Attachments = _attachments };
+                        result.ObjData = new { HTMLContent = appADBankerRegistrationFLHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION AD BANKER REGISTRATION CONFIRMATION_LIFE_FL", isTemplateFound = true, DocAttachmentPath = _docAttPath + "Templates\\", Attachments = _attachments };
                         break;
                     case 118: // "PLS LICENSING INCENTIVE EXPIRED"
                         var appPLSLicensingIncentiveExpiredHTML = _emailTemplateService.GetPLSLicensingIncentiveExpiredHTML(vEmploymentID);
@@ -392,17 +392,17 @@ namespace OneTrack_v2.Services
                     case 124: // "AD BANKER REGISTRATION-HEALTH"
                         _attachments = GetAttachments("ADBankerRegistration-Health");
                         var appADBankerRegistrationHealthHTML = _emailTemplateService.GetADBankerRegistrationHealthHTML(vEmploymentID);
-                        result.ObjData = new { HTMLContent = appADBankerRegistrationHealthHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION AD BANKER REGISTRATION CONFIRMATION_HEALTH", isTemplateFound = true, DocAttachmentPath = docAttPath, Attachments = _attachments };
+                        result.ObjData = new { HTMLContent = appADBankerRegistrationHealthHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION AD BANKER REGISTRATION CONFIRMATION_HEALTH", isTemplateFound = true, DocAttachmentPath = _docAttPath + "Templates\\", Attachments = _attachments };
                         break;
                     case 125: // "AD BANKER REGISTRATION-LIFE"
                         _attachments = GetAttachments("ADBankerRegistration-Life");
                         var appADBankerRegistrationLifeHTML = _emailTemplateService.GetADBankerRegistrationLifeHTML(vEmploymentID);
-                        result.ObjData = new { HTMLContent = appADBankerRegistrationLifeHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION AD BANKER REGISTRATION CONFIRMATION_LIFE", isTemplateFound = true, DocAttachmentPath = docAttPath, Attachments = _attachments };
+                        result.ObjData = new { HTMLContent = appADBankerRegistrationLifeHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "APPLICATION AD BANKER REGISTRATION CONFIRMATION_LIFE", isTemplateFound = true, DocAttachmentPath = _docAttPath + "Templates\\", Attachments = _attachments };
                         break;
                     case 126: // "AD BANKER REGISTRATION-LIFE AND HEALTH"
                         _attachments = GetAttachments("ADBankerRegistration-LifeHealth");
                         var appADBankerRegistrationLifeHealthHTML = _emailTemplateService.GetADBankerRegistrationLifeHealthHTML(vEmploymentID);
-                        result.ObjData = new { HTMLContent = appADBankerRegistrationLifeHealthHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "AD BANKER REGISTRATION CONFIRMATION_LIFE AND HEALTH", isTemplateFound = true, DocAttachmentPath = docAttPath + "Templates/", Attachments = _attachments };
+                        result.ObjData = new { HTMLContent = appADBankerRegistrationLifeHealthHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "AD BANKER REGISTRATION CONFIRMATION_LIFE AND HEALTH", isTemplateFound = true, DocAttachmentPath = _docAttPath + "Templates\\", Attachments = _attachments };
                         break;
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">

@@ -15,23 +15,22 @@ export class FileService {
 
   getFileContent(path: string, filename: string): Observable<string> {
     const queryParams = `?path=${path}&filename=${filename}`;
-    return this.http.get(`${this.apiUrl}GetFileContent${queryParams}`, { responseType: 'text' });
+    return this.http.get(`${this.apiUrl}GetFileContent${queryParams}`, {
+      responseType: 'text',
+    });
   }
 
   getFile(path: string, filename: string): Observable<Blob> {
-
-console.log('EMFTEST (getFile) - path: ', path);
-
     const queryParams = `?path=${path}&filename=${filename}`;
     return this.http.get(`${this.apiUrl}GetFile${queryParams}`, {
-      responseType: 'blob'
+      responseType: 'blob',
     });
   }
 
   getFileDownload(filePath: string): Observable<Blob> {
     const queryParams = `?filePath=${filePath}`;
     return this.http.get(`${this.apiUrl}GetFileDownload${queryParams}`, {
-      responseType: 'blob'
+      responseType: 'blob',
     });
   }
 
