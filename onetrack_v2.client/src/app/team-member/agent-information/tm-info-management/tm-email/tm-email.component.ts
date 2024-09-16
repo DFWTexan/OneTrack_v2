@@ -295,18 +295,6 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     );
   }
 
-  // viewFile(path: string, filename: string): void {
-  //   this.fileService.getFile(path, filename).subscribe(
-  //     (blob) => {
-  //       const url = URL.createObjectURL(blob);
-  //       this.pdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
-  //     },
-  //     (error) => {
-  //       console.error('Error loading PDF file:', error);
-  //     }
-  //   );
-  // }
-
   viewFile(path: string, filename: string): void {
     this.fileService.getFile(path, filename).subscribe(
       (blob) => {
