@@ -4,13 +4,13 @@
 
 export const environment = {
     production: false,
-    isDevLoginEnabled: true,
+    isDevLoginEnabled: false,
     isShowEditID: false,
     // LOCAL
     // apiUrl: 'https://localhost:7249/api/',
-    apiUrl: 'http://localhost:5181/api/', //--> CURRENT USE
+    // apiUrl: 'http://localhost:5181/api/', //--> CURRENT USE
     // DEVELOPMENT
-    // apiUrl: 'http://ftapid101/OneTrakV2/api/',
+    apiUrl: 'http://ftapid101/OneTrakV2/api/',
     // QUALITY
     // apiUrl: 'http://ftapiq101/OneTrakV2/api/',
   };
