@@ -39,6 +39,9 @@
               "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"
             ],
+            "allowedCommonJsDependencies": [
+              "mammoth"
+            ],
             "scripts": []
           },
           "configurations": {
@@ -103,7 +106,9 @@
               "@angular/material/prebuilt-themes/deeppurple-amber.css",
               "src/styles.css"
             ],
-            "scripts": ["node_modules/bootstrap/dist/js/bootstrap.min.js"],
+            "scripts": [
+              "node_modules/bootstrap/dist/js/bootstrap.min.js"
+            ],
             "karmaConfig": "karma.conf.js"
           }
         }
