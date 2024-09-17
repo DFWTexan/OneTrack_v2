@@ -9,7 +9,12 @@ import {
 } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import {
+  DomSanitizer,
+  SafeHtml,
+  SafeResourceUrl,
+} from '@angular/platform-browser';
+import * as mammoth from 'mammoth';
 
 import {
   AgentInfo,
@@ -21,6 +26,7 @@ import {
   AppComService,
   EmailDataService,
   ErrorMessageService,
+  FileService,
   UserAcctInfoDataService,
 } from '../../../../_services';
 
@@ -50,6 +56,9 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   FileDisplayMode = 'ATTACHMENT'; //--> CHOSEFILE / ATTACHMENT
   file: File | null = null;
   fileUri: string | null = null;
+  pdfSrc: SafeResourceUrl | null = null;
+  filePdfSrc: SafeResourceUrl | null = null;
+  fileHtmlContent: SafeHtml | null = null;
 
   private subscriptions = new Subscription();
 
@@ -69,6 +78,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     public agentDataService: AgentDataService,
     public appComService: AppComService,
     public userInfoDataService: UserAcctInfoDataService,
+    private fileService: FileService,
     private sanitizer: DomSanitizer,
     private fb: FormBuilder
   ) {}
@@ -131,7 +141,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
           this.subject = rawHtmlContent.subject;
           this.isTemplateFound = rawHtmlContent.isTemplateFound;
           this.emailAttachments = rawHtmlContent.attachments || [];
-          this.documentPath = rawHtmlContent.docAttachmentPath + 'Templates/' || '';
+          this.documentPath = rawHtmlContent.docAttachmentPath;
 
           if (
             rawHtmlContent.docSubType === '{MESSAGE}' ||
@@ -271,18 +281,59 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     return htmlContent;
   }
 
-  onOpenDocument(url: string) {
-    this.subscriptions.add(
-      this.appComService.openDocument(url).subscribe({
-        next: (response: Blob) => {
-          const blobUrl = URL.createObjectURL(response);
-          window.open(blobUrl, '_blank');
-        },
-        error: (error) => {
-          this.errorMessageService.setErrorMessage(error.message);
-        },
-      })
+  // onOpenDocument(url: string) {
+  //   this.subscriptions.add(
+  //     this.appComService.openDocument(url).subscribe({
+  //       next: (response: Blob) => {
+  //         const blobUrl = URL.createObjectURL(response);
+  //         window.open(blobUrl, '_blank');
+  //       },
+  //       error: (error) => {
+  //         this.errorMessageService.setErrorMessage(error.message);
+  //       },
+  //     })
+  //   );
+  // }
+
+  viewFile(path: string, filename: string): void {
+    this.fileService.getFile(path, filename).subscribe(
+      (blob) => {
+        const fileExtension = filename.split('.').pop()?.toLowerCase();
+
+        // Reset previous content
+        this.filePdfSrc = null;
+        this.fileHtmlContent = null;
+        if (fileExtension === 'pdf') {
+          const url = URL.createObjectURL(blob);
+          this.filePdfSrc = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+        } else if (fileExtension === 'docx') {
+          const reader = new FileReader();
+          reader.onload = async () => {
+            const arrayBuffer = reader.result as ArrayBuffer;
+            try {
+              const result = await mammoth.convertToHtml({ arrayBuffer });
+              this.fileHtmlContent = this.sanitizer.bypassSecurityTrustHtml(
+                result.value
+              );
+            } catch (error) {
+              console.error('Error converting .docx file:', error);
+            }
+          };
+          reader.readAsArrayBuffer(blob);
+        } else {
+          console.error('Unsupported file type:', fileExtension);
+        }
+      },
+      (error) => {
+        console.error('Error loading file:', error);
+      }
     );
+  }
+
+  closeViewer(): void {
+    // this.pdfSrc = null;
+    this.filePdfSrc = null;
+    this.fileHtmlContent = null;
   }
 
   ngOnDestroy(): void {

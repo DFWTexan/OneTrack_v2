@@ -25,6 +25,7 @@
     "@angular/router": "^17.3.8",
     "bootstrap": "^5.3.3",
     "jest-editor-support": "*",
+    "mammoth": "^1.8.0",
     "run-script-os": "*",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

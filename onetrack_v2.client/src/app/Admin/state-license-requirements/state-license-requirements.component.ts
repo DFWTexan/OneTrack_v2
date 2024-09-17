@@ -7,6 +7,7 @@ import {
   AppComService,
   ConstantsDataService,
   ErrorMessageService,
+  FileService,
   ModalService,
   UserAcctInfoDataService,
 } from '../../_services';
@@ -40,6 +41,7 @@ export class StateLicenseRequirementsComponent implements OnInit, OnDestroy {
     public appComService: AppComService,
     public dialog: MatDialog,
     public modalService: ModalService,
+    public fileService: FileService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
@@ -129,19 +131,20 @@ export class StateLicenseRequirementsComponent implements OnInit, OnDestroy {
     });
   }
 
-  onOpenDocument(url: string) {
-    this.subscriptionData.add(
-      this.appComService.openDocument(url).subscribe({
-        next: (response: Blob) => {
-          const blobUrl = URL.createObjectURL(response);
-          window.open(blobUrl, '_blank');
-        },
-        error: (error) => {
-          this.errorMessageService.setErrorMessage(error.message);
-        },
-      })
-    );
-  }
+  // onOpenDocument(url: string) {
+  //   this.subscriptionData.add(
+  //     this.appComService.openDocument(url).subscribe({
+  //       next: (response: Blob) => {
+  //         const blobUrl = URL.createObjectURL(response);
+  //         window.open(blobUrl, '_blank');
+  //       },
+  //       error: (error) => {
+  //         this.errorMessageService.setErrorMessage(error.message);
+  //       },
+  //     })
+  //   );
+  // }
+  
 
   ngOnDestroy(): void {
     this.subscriptionData.unsubscribe();

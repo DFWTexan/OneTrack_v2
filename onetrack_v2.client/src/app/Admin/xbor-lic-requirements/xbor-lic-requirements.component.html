@@ -1,7 +1,10 @@
 <div class="container" style="margin-left: 0.5rem; margin-right: 0.5rem">
   <div class="row">
     <div class="col">
-      <h1 class="text-end" style="font-style: italic; color: lightgrey; margin-right: 12rem;">
+      <h1
+        class="text-end"
+        style="font-style: italic; color: lightgrey; margin-right: 12rem"
+      >
         XBor License Requirements
       </h1>
     </div>
@@ -138,9 +141,27 @@
               </div>
             </td>
             <td class="align-middle" colspan="2">
-              <div class="d-flex flex-column">
-                <a [href]= "xBor.startDocument" target="_blank" style="font-size: medium;" >{{ xBor.startDocument }}</a>
-                <a [href]= "xBor.renewalDocument" target="_blank" style="font-size: medium;" >{{ xBor.renewalDocument }}</a>
+              <div class="d-flex flex-column justify-content-start">
+                <!-- <a [href]= "xBor.startDocument" target="_blank" style="font-size: medium;" >{{ xBor.startDocument }}</a> -->
+                <button
+                  class="btn btn-link hover-pointer"
+                  (click)="fileService.downloadFile(xBor.startDocument)"
+                  style="font-size: medium"
+                  title="Download Document"
+                >
+                  {{ xBor.startDocument }}
+                </button>
+              </div>
+              <div class="d-flex flex-column justify-content-start">
+                <!-- <a [href]= "xBor.renewalDocument" target="_blank" style="font-size: medium;" >{{ xBor.renewalDocument }}</a> -->
+                <button
+                  class="btn btn-link hover-pointer"
+                  (click)="fileService.downloadFile(xBor.renewalDocument)"
+                  style="font-size: medium"
+                  title="Download Document"
+                >
+                  {{ xBor.renewalDocument }}
+                </button>
               </div>
             </td>
             <td class="align-middle" style="width: 10rem">
@@ -152,10 +173,15 @@
                     adminDataService.storeXBorRequirement('EDIT', xBor);
                     modalService.open('modal-edit-xBor-requirement')
                   "
+                  title="Edit XBor Requirement"
                 >
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
-                <button class="icon-edit-delete-button" type="button">
+                <button
+                  class="icon-edit-delete-button"
+                  type="button"
+                  title="Delete XBor Requirement"
+                >
                   <span
                     class="material-symbols-outlined"
                     (click)="
