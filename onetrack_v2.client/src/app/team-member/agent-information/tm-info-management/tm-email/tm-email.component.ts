@@ -281,19 +281,19 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     return htmlContent;
   }
 
-  onOpenDocument(url: string) {
-    this.subscriptions.add(
-      this.appComService.openDocument(url).subscribe({
-        next: (response: Blob) => {
-          const blobUrl = URL.createObjectURL(response);
-          window.open(blobUrl, '_blank');
-        },
-        error: (error) => {
-          this.errorMessageService.setErrorMessage(error.message);
-        },
-      })
-    );
-  }
+  // onOpenDocument(url: string) {
+  //   this.subscriptions.add(
+  //     this.appComService.openDocument(url).subscribe({
+  //       next: (response: Blob) => {
+  //         const blobUrl = URL.createObjectURL(response);
+  //         window.open(blobUrl, '_blank');
+  //       },
+  //       error: (error) => {
+  //         this.errorMessageService.setErrorMessage(error.message);
+  //       },
+  //     })
+  //   );
+  // }
 
   viewFile(path: string, filename: string): void {
     this.fileService.getFile(path, filename).subscribe(
