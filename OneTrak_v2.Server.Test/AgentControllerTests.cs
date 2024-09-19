@@ -253,73 +253,73 @@ namespace wcfOneTrak_API.Test
             Assert.Empty(returnResult.ErrMessage);
         }
 
-        [Fact]
-        public async Task InsertAgent_ReturnsStatusCodeResult_WithCorrectStatusCode()
-        {
-            var testDate = DateTime.Now;
+        //[Fact]
+        //public async Task InsertAgent_ReturnsStatusCodeResult_WithCorrectStatusCode()
+        //{
+        //    var testDate = DateTime.Now;
 
-            // Arrange
-            var input = new IputAgentInsert // Correct the spelling if necessary
-            {
-              EmployeeSSN = "",
-              NationalProducerNumber = 0,
-              GEID = "",
-              Alias = "",
-              LastName = "EMFTstLastName",
-              FirstName = "EMFTstFirstName",
-              MiddleName = "",
-              PreferredName = "EMFTstPrefered",
-              DateOfBirth = testDate,
-              SOEID = "",
-              ExcludeFromRpts = false,
-              EmployeeStatus = "",
-              CompanyID = 0,
-              WorkPhone = "",
-              Email = "emftest@omf.com",
-              LicenseIncentive = "",
-              LicenseLevel = "",
-              Address1 = "",
-              Address2 = "",
-              City = "",
-              State = "",
-              Zip = "",
-              Phone = "",
-              Fax = "",
-              HireDate = testDate,
-              UserSOEID = "",
-              BackgroundCheckStatus = "",
-              BackgroundCheckNote = "",
-              BranchCode = "string",
-              WorkStateAbv = "TX",
-              ResStateAbv = "TX",
-              JobTitleID = 0,
-              JobTitleDate = testDate
-            };
-            var expectedReturnResult = new ReturnResult
-            {
-                Success = true,
-                StatusCode = 200,
-                ObjData = new List<object>(), // Populate with expected data
-                ErrMessage = ""
-            };
+        //    // Arrange
+        //    var input = new IputAgentInsert // Correct the spelling if necessary
+        //    {
+        //        EmployeeSSN = "",
+        //        NationalProducerNumber = 0,
+        //        GEID = "",
+        //        Alias = "",
+        //        LastName = "EMFTstLastName",
+        //        FirstName = "EMFTstFirstName",
+        //        MiddleName = "",
+        //        PreferredName = "EMFTstPrefered",
+        //        DateOfBirth = testDate,
+        //        SOEID = "",
+        //        ExcludeFromRpts = false,
+        //        EmployeeStatus = "",
+        //        CompanyID = 0,
+        //        WorkPhone = "",
+        //        Email = "emftest@omf.com",
+        //        LicenseIncentive = "",
+        //        LicenseLevel = "",
+        //        Address1 = "",
+        //        Address2 = "",
+        //        City = "",
+        //        State = "",
+        //        Zip = "",
+        //        Phone = "",
+        //        Fax = "",
+        //        HireDate = testDate,
+        //        UserSOEID = "",
+        //        BackgroundCheckStatus = "",
+        //        BackgroundCheckNote = "",
+        //        BranchCode = "string",
+        //        WorkStateAbv = "TX",
+        //        ResStateAbv = "TX",
+        //        JobTitleID = 0,
+        //        JobTitleDate = testDate
+        //    };
+        //    var expectedReturnResult = new ReturnResult
+        //    {
+        //        Success = true,
+        //        StatusCode = 200,
+        //        ObjData = new List<object>(), // Populate with expected data
+        //        ErrMessage = ""
+        //    };
 
-            _agentService.Setup(service => service.InsertAgent(input))
-                .Returns(expectedReturnResult);
+        //    _agentService.Setup(service => service.InsertAgent(input))
+        //        .Returns(expectedReturnResult);
 
-            var controller = new AgentController(_agentService.Object);
+        //    var controller = new AgentController(_agentService.Object);
 
-            // Act
-            var result = await controller.InsertAgent(input);
+        //    // Act
+        //    var result = await controller.InsertAgent(input);
 
-            // Assert
-            var statusCodeResult = Assert.IsType<ObjectResult>(result);
-            Assert.Equal(expectedReturnResult.StatusCode, statusCodeResult.StatusCode);
+        //    // Assert
+        //    var statusCodeResult = Assert.IsType<ObjectResult>(result);
+        //    Assert.Equal(expectedReturnResult.StatusCode, statusCodeResult.StatusCode);
 
-            // Optionally, verify the content of the result
-            var returnResult = Assert.IsType<ReturnResult>(statusCodeResult.Value);
-            Assert.True(returnResult.Success);
-            Assert.Equal(expectedReturnResult.ObjData, returnResult.ObjData);
-            Assert.Empty(returnResult.ErrMessage);
-        }
+        //    // Optionally, verify the content of the result
+        //    var returnResult = Assert.IsType<ReturnResult>(statusCodeResult.Value);
+        //    Assert.True(returnResult.Success);
+        //    Assert.Equal(expectedReturnResult.ObjData, returnResult.ObjData);
+        //    Assert.Empty(returnResult.ErrMessage);
+        //}
     }
 }

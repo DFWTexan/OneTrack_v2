@@ -3,57 +3,75 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Hosting;
 using OneTrack_v2.DbData;
 using OneTrack_v2.Services;
+using Microsoft.EntityFrameworkCore;
+using OneTrack_v2.DbData.Models;
 
 namespace wcfOneTrak_API.Test
 {
     public class EmployeeServiceTests
     {
-        private readonly Mock<AppDataContext> _mockDb;
-        private readonly Mock<IConfiguration> _mockConfig;
-        private readonly Mock<IWebHostEnvironment> _mockEnv;
+        private readonly Mock<IUtilityHelpService> _mockUtilityHelpService;
+        private readonly AppDataContext _dbContext;
+        private readonly EmployeeService _employeeService;
 
         public EmployeeServiceTests()
         {
-            _mockDb = new Mock<AppDataContext>();
-            _mockConfig = new Mock<IConfiguration>();
-            _mockEnv = new Mock<IWebHostEnvironment>();
+            // Set up the in-memory database
+            var options = new DbContextOptionsBuilder<AppDataContext>()
+                .UseInMemoryDatabase(databaseName: "TestDatabase")
+                .Options;
+            _dbContext = new AppDataContext(options);
 
-            // Setup mock behavior and data here
+            // Mock the utility help service
+            _mockUtilityHelpService = new Mock<IUtilityHelpService>();
+
+            // Initialize the EmployeeService with the mocked dependencies
+            _employeeService = new EmployeeService(_dbContext, _mockUtilityHelpService.Object);
         }
 
-        //[Theory]
-        //[InlineData(1)] // Add more test company IDs as needed
-        //public async Task SearchEmployee_ByCompanyID_ReturnsCorrectResults(int vCompanyID)
-        //{
-        //    // Arrange
-        //    var service = new EmployeeService(_mockDb.Object, _mockConfig.Object, _mockEnv.Object);
+        [Fact]
+        public async Task SearchEmployee_ReturnsExpectedResults()
+        {
+            // Arrange
+            // Add test data to the in-memory database
+            _dbContext.Employees.Add(new Employee { EmployeeId = 1, Geid = "12345", FirstName = "John", LastName = "Doe" });
+            _dbContext.SaveChanges();
 
-        //    // Act
-        //    var result = await service.SearchEmployee(vCompanyID, null, null, null, 0, null, null, null, null, null, null, 0, null, null, null, 0);
+            // Act
+            var result = await _employeeService.SearchEmployee(vGEID: "12345");
 
-        //    // Assert
-        //    // Verify the result is as expected, focusing on company ID filtering
-        //}
+            // Assert
+            Assert.True(result.Success);
+            Assert.NotNull(result.ObjData);
+            //Assert.Single((IAsyncEnumerable<T>)result.ObjData);
+        }
 
-        // Add more tests for other parameters similar to the above example,
-        // such as vEmployeeSSN, vGEID, vSCORENumber, etc.
+        [Fact]
+        public async Task SearchEmployee_ReturnsEmptyResults_WhenNoMatch()
+        {
+            // Act
+            var result = await _employeeService.SearchEmployee(vGEID: "NonExistentGEID");
 
-        // Example for testing null and non-null vEmployeeSSN
-        //[Theory]
-        //[InlineData(null)] // Test case for when SSN is not provided
-        //[InlineData("123-45-6789")] // Test case for when SSN is provided
-        //public async Task SearchEmployee_ByEmployeeSSN_ReturnsCorrectResults(string vEmployeeSSN)
-        //{
-        //    // Arrange
-        //    var service = new EmployeeService(_mockDb.Object, _mockConfig.Object, _mockEnv.Object);
+            // Assert
+            Assert.True(result.Success);
+            Assert.NotNull(result.ObjData);
+            Assert.Empty((string)result.ObjData);
+        }
 
-        //    // Act
-        //    var result = await service.SearchEmployee(0, vEmployeeSSN, null, null, 0, null, null, null, null, null, null, 0, null, null, null, 0);
+        [Fact]
+        public async Task SearchEmployee_HandlesException()
+        {
+            // Arrange
+            // Force an exception by passing an invalid parameter
+            _mockUtilityHelpService.Setup(x => x.LogError(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<object>(), It.IsAny<string>()));
 
-        //    // Assert
-        //    // Verify the result is as expected, focusing on employee SSN filtering
-        //}
+            // Act
+            var result = await _employeeService.SearchEmployee(vGEID: null);
 
-        // Continue with similar test methods for other parameters...
+            // Assert
+            Assert.False(result.Success);
+            Assert.Equal(500, result.StatusCode);
+            _mockUtilityHelpService.Verify(x => x.LogError(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<object>(), It.IsAny<string>()), Times.Once);
+        }
     }
 }
