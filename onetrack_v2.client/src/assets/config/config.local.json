@@ -1,0 +1,6 @@
+{
+    "production": false,
+    "isDevLoginEnabled": true,
+    "isShowEditID": false,
+    "apiUrl": "http://localhost:5181/api/"
+}

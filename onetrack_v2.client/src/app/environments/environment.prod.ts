@@ -1,4 +1,8 @@
+// environment.prod.ts (PRODUCTION environment)
 export const environment = {
-    production: true,
-    apiUrl: 'https://jsonplaceholder.typicode.com/',
-  };
+  production: true,
+  isDevLoginEnabled: false,
+  isShowEditID: false,
+  // PRODUCTION
+  apiUrl: 'http://ftapip101/OneTrakV2/api/',
+};

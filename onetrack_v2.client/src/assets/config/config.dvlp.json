@@ -1,0 +1,6 @@
+{
+    "production": false,
+    "isDevLoginEnabled": false,
+    "isShowEditID": false,
+    "apiUrl": "http://ftapid101/OneTrakV2/api/"
+}
