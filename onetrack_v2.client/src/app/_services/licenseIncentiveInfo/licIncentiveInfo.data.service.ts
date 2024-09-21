@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
-import { environment } from '../../environments/environment';
+import { environment } from '../../_environments/environment';
 import { LicenseAppointment, LicenseIncentiveInfo } from '../../_Models';
 import { AgentDataService } from '../agent/agent.data.service';
 import { ErrorMessageService } from '../error/error.message.service';

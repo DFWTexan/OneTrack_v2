@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { environment } from '../../environments/environment';
+import { environment } from '../../_environments/environment';
 import { AgentComService } from '../agent/agentInfo.com.service';
 import { EmailComTemplate } from '../../_Models';
 

@@ -7,20 +7,22 @@ import {
   throwError,
 } from 'rxjs';
 
-import { environment } from '../../environments/environment';
+import { environment } from '../../_environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ErrorMessageService } from '../error/error.message.service';
+import { ConfigService } from '../config/config.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AppComService {
-  environment = environment;
+  config: any;
+  // environment = environment;
   isLoggedIn = false;
   isLoggedInChanged = new Subject<boolean>();
   loginErrorMsg = '';
   loginErrorMsgChanged = new Subject<string>();
-  isShowEditID = environment.isShowEditID;
+  isShowEditID = false;
   tickleToggle = false;
   tickleToggleChanged = new Subject<boolean>();
   isLegacyView = false;
@@ -33,14 +35,20 @@ export class AppComService {
   subscriptions: Subscription = new Subscription();
 
   constructor(
+    private configService: ConfigService,
     public errorMessageService: ErrorMessageService,
     private http: HttpClient
-  ) {}
+  ) {
+    this.initializeConfig();
+  }
 
-  // toggleTickler() {
-  //   this.tickleToggle = !this.tickleToggle;
-  //   this.tickleToggleChanged.next(this.tickleToggle);
-  // }
+  async initializeConfig() {
+    this.config = await this.configService.getConfig();
+    if (this.config && this.config.environment) {
+      this.isLoggedIn = this.config.environment.isDevLoginEnabled;
+      this.isShowEditID = this.config.environment.isShowEditID;
+    }
+  }
 
   updateOpenTicklerCount(openTicklerCount: number) {
     this.openTicklerCount = openTicklerCount;

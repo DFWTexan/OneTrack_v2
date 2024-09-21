@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
-import { environment } from '../../environments/environment';
+import { environment } from '../../_environments/environment';
 import { StockTickler, TicklerInfo, TicklerLicTech } from '../../_Models';
 import { TicklerMgmtComService } from './ticklerMgmt.com.service';
 import { AppComService } from '../common/app.com.service';

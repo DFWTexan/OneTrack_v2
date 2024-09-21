@@ -23,10 +23,15 @@ import { EmfTestPageComponent } from './emf-test/emf-test-page.component';
 import { LoginComponent } from './_components/login/login.component';
 
 // App services
-import { ConstantsDataService } from './_services/';
+import { ConfigService, ConstantsDataService } from './_services/';
 
 // Other
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { APP_INITIALIZER } from '@angular/core';
+
+export function initializeApp(configService: ConfigService) {
+  return () => configService.loadConfig();
+}
 
 @NgModule({
   declarations: [
@@ -48,9 +53,19 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     MatDividerModule,
     TeamMemberModule,
     AdminModule,
-    RouterModule.forRoot([])
+    RouterModule.forRoot([]),
   ],
-  providers: [provideAnimationsAsync(), ConstantsDataService],
+  providers: [
+    provideAnimationsAsync(),
+    ConstantsDataService,
+    ConfigService,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: initializeApp,
+      deps: [ConfigService],
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

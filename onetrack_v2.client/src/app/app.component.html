@@ -310,18 +310,9 @@
     <br />
     <br />
     <br />
-    <!-- <div class="d-flex justify-content-center">
-      <button
-        mat-raised-button
-        color="warn"
-        *ngIf="appComService.isLoggedIn"
-      >
-        Logout
-      </button>
-    </div> -->
     <div
       class="mt-auto justify-content-end"
-      *ngIf="appComService.environment.isDevLoginEnabled"
+      *ngIf="isDevLoginEnabled"
     >
       <div class="ms-3 justify-content-start">
         <label for="devLogin">Impersonate:</label><br />

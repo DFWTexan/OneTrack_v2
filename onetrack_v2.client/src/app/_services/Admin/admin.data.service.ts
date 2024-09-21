@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 
-import { environment } from '../../environments/environment';
+// import { environment } from '../../_environments/environment';
 import { AdminComService } from './admin.com.service';
 import {
   Company,
@@ -24,12 +24,15 @@ import {
   XborLicenseRequirement,
 } from '../../_Models';
 import { ModalService } from '../common/modal.service';
+import { ConfigService } from '../config/config.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AdminDataService {
-  private apiUrl: string = environment.apiUrl + 'Admin/';
+  // private apiUrl: string = environment.apiUrl + 'Admin/';
+  config: any;
+  private apiUrl: string = '';
 
   // COMPANY
   companyType: string = '';
@@ -103,8 +106,11 @@ export class AdminDataService {
   constructor(
     private http: HttpClient,
     private adminComService: AdminComService,
+    private configService: ConfigService,
     public modalService: ModalService
-  ) {}
+  ) {
+    this.config = this.configService.getConfig();
+  }
 
   // COMPANY
   fetchCompanyTypes() {
@@ -114,7 +120,7 @@ export class AdminDataService {
         statusCode: number;
         objData: [];
         errMessage: string;
-      }>(this.apiUrl + 'GetCompanyTypes')
+      }>(this.config.environment.apiUrl + 'Admin/GetCompanyTypes')
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -139,7 +145,7 @@ export class AdminDataService {
         statusCode: number;
         objData: Company[];
         errMessage: string;
-      }>(this.apiUrl + 'GetCompaniesByType/' + this.companyType)
+      }>(this.config.environment.apiUrl + 'Admin/GetCompaniesByType/' + this.companyType)
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -160,7 +166,7 @@ export class AdminDataService {
         statusCode: number;
         objData: Company;
         errMessage: string;
-      }>(this.apiUrl + 'UpsertCompany', company, { observe: 'response' })
+      }>(this.config.environment.apiUrl + 'Admin/UpsertCompany', company, { observe: 'response' })
       .pipe(
         tap({
           next: (response) => {
@@ -174,14 +180,14 @@ export class AdminDataService {
   }
 
   deleteCompany(company: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Admin/DeleteCompany';
+    // this.apiUrl = environment.apiUrl + 'Admin/DeleteCompany';
     return this.http
       .put<{
         success: boolean;
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl, company)
+      }>(this.config.environment.apiUrl  + 'Admin/DeleteCompany', company)
       .pipe(
         // map((response) => {
         //   return response;
@@ -214,7 +220,7 @@ export class AdminDataService {
         statusCode: number;
         objData: CompanyRequirement[];
         errMessage: string;
-      }>(`${this.apiUrl}GetCompanyRequirements${queryParams}`)
+      }>(`${this.config.environment.apiUrl}Admin/GetCompanyRequirements${queryParams}`)
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -238,7 +244,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(`${this.apiUrl}GetLicenseTypes/${queryParams}`)
+      }>(`${this.config.environment.apiUrl}Admin/GetLicenseTypes/${queryParams}`)
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -263,7 +269,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(`${this.apiUrl}GetConEducationRules/${queryParams}`)
+      }>(`${this.config.environment.apiUrl}Admin/GetConEducationRules/${queryParams}`)
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -282,7 +288,7 @@ export class AdminDataService {
         statusCode: number;
         objData: EducationRule;
         errMessage: string;
-      }>(this.apiUrl + 'UpsertEducationRule', educationRule, {
+      }>(this.config.environment.apiUrl + 'Admin/UpsertEducationRule', educationRule, {
         observe: 'response',
       })
       .pipe(
@@ -304,7 +310,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'DisableEducationRule', educationRule)
+      }>(this.config.environment.apiUrl + 'Admin/DisableEducationRule', educationRule)
       .pipe(
         tap({
           next: (response) => {
@@ -330,7 +336,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(environment.apiUrl + 'Misc/GetDropdownListTypes')
+      }>(this.config.environment.apiUrl + 'Misc/GetDropdownListTypes')
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -349,7 +355,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(environment.apiUrl + 'Misc/GetDropdownByType/' + dropdownListType)
+      }>(this.config.environment.apiUrl + 'Misc/GetDropdownByType/' + dropdownListType)
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -370,7 +376,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'UpsertLkpType', lkpType, { observe: 'response' })
+      }>(this.config.environment.apiUrl + 'Admin/UpsertLkpType', lkpType, { observe: 'response' })
       .pipe(
         tap({
           next: (response) => {
@@ -390,7 +396,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'DeleteLkpType', lkpType)
+      }>(this.config.environment.apiUrl + 'Admin/DeleteLkpType', lkpType)
       .pipe(
         tap({
           next: (response) => {
@@ -416,7 +422,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'GetExamByState/' + stateProvince)
+      }>(this.config.environment.apiUrl + 'Admin/GetExamByState/' + stateProvince)
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -435,7 +441,7 @@ export class AdminDataService {
         statusCode: number;
         objData: Exam;
         errMessage: string;
-      }>(this.apiUrl + 'UpsertExam', examItem, { observe: 'response' })
+      }>(this.config.environment.apiUrl + 'Admin/UpsertExam', examItem, { observe: 'response' })
       .pipe(
         tap({
           next: (response) => {
@@ -455,7 +461,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'DeleteExam', examItem)
+      }>(this.config.environment.apiUrl + 'Admin/DeleteExam', examItem)
       .pipe(
         tap({
           next: (response) => {
@@ -481,7 +487,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'GetJobTitleLicLevel')
+      }>(this.config.environment.apiUrl + 'Admin/GetJobTitleLicLevel')
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -502,7 +508,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'GetJobTitlelicIncentive')
+      }>(this.config.environment.apiUrl + 'Admin/GetJobTitlelicIncentive')
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -523,7 +529,7 @@ export class AdminDataService {
         statusCode: number;
         objData: JobTitle[];
         errMessage: string;
-      }>(this.apiUrl + 'GetJobTitles')
+      }>(this.config.environment.apiUrl + 'Admin/GetJobTitles')
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -653,7 +659,7 @@ export class AdminDataService {
         statusCode: number;
         objData: JobTitle;
         errMessage: string;
-      }>(this.apiUrl + 'UpsertJobTitle', jobTitle, { observe: 'response' })
+      }>(this.config.environment.apiUrl + 'Admin/UpsertJobTitle', jobTitle, { observe: 'response' })
       .pipe(
         tap({
           next: (response) => {
@@ -674,7 +680,7 @@ export class AdminDataService {
         statusCode: number;
         objData: License[];
         errMessage: string;
-      }>(this.apiUrl + 'GetLicenseByStateProv/' + stateProvince)
+      }>(this.config.environment.apiUrl + 'Admin/GetLicenseByStateProv/' + stateProvince)
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -695,7 +701,7 @@ export class AdminDataService {
         statusCode: number;
         objData: License;
         errMessage: string;
-      }>(this.apiUrl + 'UpsertLicense', licenseItem, { observe: 'response' })
+      }>(this.config.environment.apiUrl + 'Admin/UpsertLicense', licenseItem, { observe: 'response' })
       .pipe(
         tap({
           next: (response) => {
@@ -715,7 +721,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'DeleteLicense', licenseItem)
+      }>(this.config.environment.apiUrl + 'Admin/DeleteLicense', licenseItem)
       .pipe(
         tap({
           next: (response) => {
@@ -742,7 +748,7 @@ export class AdminDataService {
         statusCode: number;
         objData: License;
         errMessage: string;
-      }>(this.apiUrl + 'AddLicenseCompany', item)
+      }>(this.config.environment.apiUrl + 'Admin/AddLicenseCompany', item)
       .pipe(
         tap({
           next: (response) => {
@@ -764,7 +770,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'UpdateLicenseCompany', item)
+      }>(this.config.environment.apiUrl + 'Admin/UpdateLicenseCompany', item)
       .pipe(
         tap({
           next: (response) => {
@@ -786,7 +792,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'DeleteLicenseCompany', item)
+      }>(this.config.environment.apiUrl + 'Admin/DeleteLicenseCompany', item)
       .pipe(
         tap({
           next: (response) => {
@@ -813,7 +819,7 @@ export class AdminDataService {
         statusCode: number;
         objData: License;
         errMessage: string;
-      }>(this.apiUrl + 'AddLicenseExam', item)
+      }>(this.config.environment.apiUrl + 'Admin/AddLicenseExam', item)
       .pipe(
         tap({
           next: (response) => {
@@ -835,7 +841,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'UpdateLicenseExam', item)
+      }>(this.config.environment.apiUrl + 'Admin/UpdateLicenseExam', item)
       .pipe(
         tap({
           next: (response) => {
@@ -857,7 +863,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'DeleteLicenseExam', item)
+      }>(this.config.environment.apiUrl + 'Admin/DeleteLicenseExam', item)
       .pipe(
         tap({
           next: (response) => {
@@ -884,7 +890,7 @@ export class AdminDataService {
         statusCode: number;
         objData: License;
         errMessage: string;
-      }>(this.apiUrl + 'AddLicensePreEducation', item)
+      }>(this.config.environment.apiUrl + 'Admin/AddLicensePreEducation', item)
       .pipe(
         tap({
           next: (response) => {
@@ -906,7 +912,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'UpdateLicensePreEducation', item)
+      }>(this.config.environment.apiUrl + 'Admin/UpdateLicensePreEducation', item)
       .pipe(
         tap({
           next: (response) => {
@@ -928,7 +934,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'DeleteLicensePreEducation', item)
+      }>(this.config.environment.apiUrl + 'Admin/DeleteLicensePreEducation', item)
       .pipe(
         tap({
           next: (response) => {
@@ -955,7 +961,7 @@ export class AdminDataService {
         statusCode: number;
         objData: License;
         errMessage: string;
-      }>(this.apiUrl + 'AddLicenseProduct', item)
+      }>(this.config.environment.apiUrl + 'Admin/AddLicenseProduct', item)
       .pipe(
         tap({
           next: (response) => {
@@ -977,7 +983,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'UpdateLicenseProduct', item)
+      }>(this.config.environment.apiUrl + 'Admin/UpdateLicenseProduct', item)
       .pipe(
         tap({
           next: (response) => {
@@ -999,7 +1005,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'DeleteLicenseProduct', item)
+      }>(this.config.environment.apiUrl + 'Admin/DeleteLicenseProduct', item)
       .pipe(
         tap({
           next: (response) => {
@@ -1025,7 +1031,7 @@ export class AdminDataService {
         statusCode: number;
         objData: LicenseTech[];
         errMessage: string;
-      }>(this.apiUrl + 'GetLicTechList')
+      }>(this.config.environment.apiUrl + 'Admin/GetLicTechList')
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -1044,7 +1050,7 @@ export class AdminDataService {
         statusCode: number;
         objData: LicenseTech;
         errMessage: string;
-      }>(this.apiUrl + 'UpsertLicenseTech', licenseTech, { observe: 'response' })
+      }>(this.config.environment.apiUrl + 'Admin/UpsertLicenseTech', licenseTech, { observe: 'response' })
       .pipe(
         tap({
           next: (response) => {
@@ -1064,7 +1070,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'DeleteLicenseTech', licenseTech)
+      }>(this.config.environment.apiUrl + 'Admin/DeleteLicenseTech', licenseTech)
       .pipe(
         tap({
           next: (response) => {
@@ -1090,7 +1096,7 @@ export class AdminDataService {
         statusCode: number;
         objData: PreEducation[];
         errMessage: string;
-      }>(this.apiUrl + 'GetPreEduEditByState/' + stateProvince)
+      }>(this.config.environment.apiUrl + 'Admin/GetPreEduEditByState/' + stateProvince)
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -1109,7 +1115,7 @@ export class AdminDataService {
         statusCode: number;
         objData: PreEducation;
         errMessage: string;
-      }>(this.apiUrl + 'UpsertPreEducation', preEducation, { observe: 'response' })
+      }>(this.config.environment.apiUrl + 'Admin/UpsertPreEducation', preEducation, { observe: 'response' })
       .pipe(
         tap({
           next: (response) => {
@@ -1129,7 +1135,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'DeletePreEducation', preEducation)
+      }>(this.config.environment.apiUrl + 'Admin/DeletePreEducation', preEducation)
       .pipe(
         tap({
           next: (response) => {
@@ -1155,7 +1161,7 @@ export class AdminDataService {
         statusCode: number;
         objData: Product[];
         errMessage: string;
-      }>(this.apiUrl + 'GetProductEdits')
+      }>(this.config.environment.apiUrl + 'Admin/GetProductEdits')
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -1174,7 +1180,7 @@ export class AdminDataService {
         statusCode: number;
         objData: Product;
         errMessage: string;
-      }>(this.apiUrl + 'UpsertProduct', product, { observe: 'response' })
+      }>(this.config.environment.apiUrl + 'Admin/UpsertProduct', product, { observe: 'response' })
       .pipe(
         tap({
           next: (response) => {
@@ -1194,7 +1200,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'DeleteProduct', product)
+      }>(this.config.environment.apiUrl + 'Admin/DeleteProduct', product)
       .pipe(
         tap({
           next: (response) => {
@@ -1228,7 +1234,7 @@ export class AdminDataService {
         statusCode: number;
         objData: StateRequirement[];
         errMessage: string;
-      }>(`${this.apiUrl}GetStateLicRequirements${queryParams}`)
+      }>(`${this.config.environment.apiUrl}Admin/GetStateLicRequirements${queryParams}`)
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -1249,7 +1255,7 @@ export class AdminDataService {
         statusCode: number;
         objData: StateRequirement;
         errMessage: string;
-      }>(this.apiUrl + 'UpsertRequiredLicense', stateRequirement, {
+      }>(this.config.environment.apiUrl + 'Admin/UpsertRequiredLicense', stateRequirement, {
         observe: 'response',
       })
       .pipe(
@@ -1271,7 +1277,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'DeleteRequiredLicense', stateRequirement)
+      }>(this.config.environment.apiUrl + 'Admin/DeleteRequiredLicense', stateRequirement)
       .pipe(
         tap({
           next: (response) => {
@@ -1297,7 +1303,7 @@ export class AdminDataService {
         statusCode: number;
         objData: StateProvince[];
         errMessage: string;
-      }>(this.apiUrl + 'GetStateProvinceList')
+      }>(this.config.environment.apiUrl + 'Admin/GetStateProvinceList')
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -1316,7 +1322,7 @@ export class AdminDataService {
         statusCode: number;
         objData: StateProvince;
         errMessage: string;
-      }>(this.apiUrl + 'UpsertStateProvince', stateProvince, {
+      }>(this.config.environment.apiUrl + 'Admin/UpsertStateProvince', stateProvince, {
         observe: 'response',
       })
       .pipe(
@@ -1338,7 +1344,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'DeleteStateProvince', stateProvince)
+      }>(this.config.environment.apiUrl + 'Admin/DeleteStateProvince', stateProvince)
       .pipe(
         tap({
           next: (response) => {
@@ -1364,7 +1370,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'GetXBorderBranchCodes')
+      }>(this.config.environment.apiUrl + 'Admin/GetXBorderBranchCodes')
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -1382,7 +1388,7 @@ export class AdminDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'GetXBorLicRequirements/' + branchCode)
+      }>(this.config.environment.apiUrl + 'Admin/GetXBorLicRequirements/' + branchCode)
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {

@@ -4,7 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { catchError, map, switchMap, tap } from 'rxjs/operators';
 // import { Subject } from 'rxjs';
 
-import { environment } from '../../environments/environment';
+// imporonment } from '../../_environments/environment';
 import {
   AgentInfo,
   AgentLicApplicationInfo,
@@ -21,12 +21,14 @@ import {
 } from '../../_Models';
 import { AgentComService } from './agentInfo.com.service';
 import { ErrorMessageService } from '../error/error.message.service';
+import { ConfigService } from '../config/config.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AgentDataService {
-  private apiUrl: string = environment.apiUrl;
+  private apiUrl: string = '';
+  // config: any;
   agentInformation: AgentInfo = {} as AgentInfo;
   agentInfoChanged = new Subject<AgentInfo>();
   // AGENT LICENSE APPOINTMENTS
@@ -83,13 +85,15 @@ export class AgentDataService {
   constructor(
     private http: HttpClient,
     private agentComService: AgentComService,
+    private configService: ConfigService,
     public errorMessageService: ErrorMessageService
   ) {
     this.agentLicenseAppointments = [];
+    // this.config = this.configService.getConfig();
   }
 
   fetchAgentInformation(employeeID: number): Observable<AgentInfo> {
-    this.apiUrl = environment.apiUrl + 'Agent/GetAgentByEmployeeID/';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/GetAgentByEmployeeID/';
 
     return this.http
       .get<{
@@ -122,7 +126,7 @@ export class AgentDataService {
   }
 
   fetchAgentLicenseAppointments(employmentID: number) {
-    this.apiUrl = environment.apiUrl + 'Agent/GetLicenseAppointments/';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/GetLicenseAppointments/';
 
     return this.http
       .get<{
@@ -147,7 +151,7 @@ export class AgentDataService {
   }
 
   fetchAgentLicApplicationInfo(employeeLicenseID: number) {
-    this.apiUrl = environment.apiUrl + 'Agent/GetLicenseApplcationInfo/';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/GetLicenseApplcationInfo/';
 
     return this.http
       .get<{
@@ -172,7 +176,7 @@ export class AgentDataService {
   }
 
   fetchBranchCodes() {
-    this.apiUrl = environment.apiUrl + 'Agent/GetBranchCodes';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/GetBranchCodes';
 
     return this.http
       .get<{
@@ -197,7 +201,7 @@ export class AgentDataService {
   }
 
   fetchCoReqAssetIDs() {
-    this.apiUrl = environment.apiUrl + 'Agent/GetCoRequirementAssetIDs';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/GetCoRequirementAssetIDs';
 
     return this.http
       .get<{
@@ -218,7 +222,7 @@ export class AgentDataService {
   }
 
   fetchCoReqStatuses() {
-    this.apiUrl = environment.apiUrl + 'Agent/GetCoRequirementStatuses';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/GetCoRequirementStatuses';
 
     return this.http
       .get<{
@@ -239,7 +243,7 @@ export class AgentDataService {
   }
 
   fetchLicenseLevels() {
-    this.apiUrl = environment.apiUrl + 'Agent/GetLicLevels';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/GetLicLevels';
 
     return this.http
       .get<{
@@ -260,7 +264,7 @@ export class AgentDataService {
   }
 
   fetchLicenseIncentives() {
-    this.apiUrl = environment.apiUrl + 'Agent/GetLicIncentives';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/GetLicIncentives';
 
     return this.http
       .get<{
@@ -282,7 +286,7 @@ export class AgentDataService {
 
   // EDITS TO AGENT INFORMATION
   upsertAgent(agent: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/UpsertAgent';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/UpsertAgent';
     agent.DateOfBirth = new Date(agent.DateOfBirth);
     agent.HireDate = new Date(agent.HireDate);
 
@@ -301,7 +305,7 @@ export class AgentDataService {
   }
 
   updateAgent(agent: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/UpdateAgentDetails';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/UpdateAgentDetails';
 
     return this.http
       .post<{
@@ -329,7 +333,7 @@ export class AgentDataService {
   }
 
   deleteAgent(agent: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/DeleteAgentEmployee';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/DeleteAgentEmployee';
 
     return this.http
       .put<{
@@ -346,7 +350,7 @@ export class AgentDataService {
   }
 
   upsertAgentLicense(licenseInfo: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/UpsertAgentLicense';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/UpsertAgentLicense';
 
     return this.http
       .post<{
@@ -375,7 +379,7 @@ export class AgentDataService {
   }
 
   deleteAgentLicense(licenseInfo: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/DeleteAgentLicense';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/DeleteAgentLicense';
 
     return this.http
       .put<{
@@ -402,7 +406,7 @@ export class AgentDataService {
 
   // AGENT - EDITS for EMPLOYMENT HISTORY
   upsertEmploymentHistItem(employmentHistItem: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/UpsertEmploymentHistItem';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/UpsertEmploymentHistItem';
 
     return this.http
       .post<{
@@ -428,7 +432,7 @@ export class AgentDataService {
   }
 
   deleteEmploymentHistItem(employmentHistItem: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/DeleteEmploymentHistItem';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/DeleteEmploymentHistItem';
 
     return this.http
       .put<{
@@ -485,7 +489,7 @@ export class AgentDataService {
   // }
 
   upsertTransferHistItem(transferHistItem: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/UpsertTranserHistItem';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/UpsertTranserHistItem';
 
     return this.http
       .post<{
@@ -511,7 +515,7 @@ export class AgentDataService {
   }
 
   deleteTransferHistItem(transferHistItem: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/DeleteTransferHistItem';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/DeleteTransferHistItem';
 
     return this.http
       .put<{
@@ -539,7 +543,7 @@ export class AgentDataService {
   upsertCompanyRequirementsHistItem(
     companyRequirementsHistItem: any
   ): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/UpsertCoRequirementItem';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/UpsertCoRequirementItem';
 
     return this.http
       .post<{
@@ -567,7 +571,7 @@ export class AgentDataService {
   deleteCompanyRequirementsHistItem(
     companyRequirementsItem: any
   ): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/DeleteCoRequirementItem';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/DeleteCoRequirementItem';
 
     return this.http
       .put<{
@@ -595,7 +599,7 @@ export class AgentDataService {
   upsertEmploymentJobTitleHistItem(
     employmentJobTitleHistItem: any
   ): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/UpsertEmploymentJobTitleItem';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/UpsertEmploymentJobTitleItem';
 
     return this.http
       .post<{
@@ -624,7 +628,7 @@ export class AgentDataService {
   deleteEmploymentJobTitleHistItem(
     employmentJobTitleHistItem: any
   ): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/DeleteEmploymentJobTitleItem';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/DeleteEmploymentJobTitleItem';
 
     return this.http
       .put<{
@@ -650,7 +654,7 @@ export class AgentDataService {
   }
 
   upsertContEduHoursTaken(contEduHoursTaken: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/UpsertConEduTaken';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/UpsertConEduTaken';
 
     return this.http
       .post<{
@@ -677,7 +681,7 @@ export class AgentDataService {
   }
 
   deleteContEduHoursTaken(contEduHoursTaken: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/DeleteConEduTaken';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/DeleteConEduTaken';
 
     return this.http
       .put<{
@@ -703,7 +707,7 @@ export class AgentDataService {
   }
 
   upsertDiaryEntry(diaryEntry: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/UpsertDiaryItem';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/UpsertDiaryItem';
 
     return this.http
       .post<{
@@ -729,7 +733,7 @@ export class AgentDataService {
   }
 
   deleteDiaryEntry(diaryEntry: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'Agent/DeleteDiaryItem';
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/DeleteDiaryItem';
 
     return this.http
       .put<{

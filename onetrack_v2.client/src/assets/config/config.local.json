@@ -2,5 +2,18 @@
     "production": false,
     "isDevLoginEnabled": true,
     "isShowEditID": false,
-    "apiUrl": "http://localhost:5181/api/"
+    "apiUrl": "http://localhost:5181/api/",
+    "userInfo": {
+        "licenseTechID": null,
+        "displayName": "Erish Faggett",
+        "soeid": "T2229513",
+        "email": "erish.faggett@omf.com",
+        "enabled": true,
+        "employeeId": "2229513",
+        "homeDirectory": "\\\\corp.fin\\users\\EVNAS_Users\\3\\T2229513",
+        "isAdminRole": true,
+        "isTechRole": null,
+        "isReadRole": true,
+        "isSuperUser": true
+    }
 }

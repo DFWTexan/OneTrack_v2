@@ -3,7 +3,8 @@ import { Injectable } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 
-import { environment } from '../../environments/environment';
+// import { environment } from '../../_environments/environment';
+import { ConfigService } from '../config/config.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,26 +25,30 @@ export class DropdownDataService {
   public jobTitles: { value: number; label: string }[] = [];
   jobTitlesChanged = new Subject<{ value: number; label: string }[]>();
   public conEduStartDateItems: { value: number; label: string }[] = [];
-  conEduStartDateItemsChanged = new Subject<{ value: number; label: string }[]>();
+  conEduStartDateItemsChanged = new Subject<
+    { value: number; label: string }[]
+  >();
   public conEduEndDateItems: { value: number; label: string }[] = [];
-  conEduEndtDateItemsChanged = new Subject<{ value: number; label: string }[]>();
+  conEduEndtDateItemsChanged = new Subject<
+    { value: number; label: string }[]
+  >();
   public conEduExceptions: { value: number; label: string }[] = [];
   conEduExceptionsChanged = new Subject<{ value: number; label: string }[]>();
   public conEduExemptions: { value: number; label: string }[] = [];
   conEduExemptionsChanged = new Subject<{ value: number; label: string }[]>();
-  public lineOfAuthorities: { value: number; label: string }[] = [];  
+  public lineOfAuthorities: { value: number; label: string }[] = [];
   lineOfAuthoritiesChanged = new Subject<{ value: number; label: string }[]>();
   public documentTypes: string[] = [];
   documentTypesChanged = new Subject<string[]>();
-  public licenseTechs: {value: any, label: string}[] = [];
-  licenseTechsChanged = new Subject<{value: any, label: string}[]>();
+  public licenseTechs: { value: any; label: string }[] = [];
+  licenseTechsChanged = new Subject<{ value: any; label: string }[]>();
 
-  private url: string = environment.apiUrl + 'Misc/';
+  // private url: string = environment.apiUrl + 'Misc/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private configService: ConfigService, private http: HttpClient) {}
 
   fetchDropdownData(vEndpoint: string) {
-    const url = this.url + vEndpoint;
+    const url = this.configService.config.apiUrl + 'Misc/' + vEndpoint;
     return this.http
       .get<{
         success: boolean;
@@ -70,7 +75,7 @@ export class DropdownDataService {
   }
 
   fetchDropdownNumberValueData(vEndpoint: string) {
-    const url = this.url + vEndpoint;
+    const url = this.configService.config.apiUrl + 'Misc/' + vEndpoint;
     return this.http
       .get<{
         success: boolean;
@@ -100,7 +105,7 @@ export class DropdownDataService {
     this.rollOutGroups = rollOutGroups;
     this.rollOutGroupsChanged.next(rollOutGroups);
   }
-  
+
   updateBranchNames(branchNames: { value: string; label: string }[]) {
     this.branchNames = branchNames;
     this.branchNamesChanged.next([...this.branchNames]);
@@ -131,12 +136,16 @@ export class DropdownDataService {
     this.jobTitlesChanged.next([...this.jobTitles]);
   }
 
-  updateConEduStartDateItems(conEduStartDateItems: { value: number; label: string }[]) {
+  updateConEduStartDateItems(
+    conEduStartDateItems: { value: number; label: string }[]
+  ) {
     this.conEduStartDateItems = conEduStartDateItems;
     this.conEduStartDateItemsChanged.next([...this.conEduStartDateItems]);
   }
 
-  updateConEduEndDateItems(conEduEndDateItems: { value: number; label: string }[]) {
+  updateConEduEndDateItems(
+    conEduEndDateItems: { value: number; label: string }[]
+  ) {
     this.conEduEndDateItems = conEduEndDateItems;
     this.conEduEndtDateItemsChanged.next([...this.conEduEndDateItems]);
   }
@@ -151,23 +160,25 @@ export class DropdownDataService {
     this.conEduExemptionsChanged.next([...this.conEduExemptions]);
   }
 
-  updateLineOfAuthorities(lineOfAuthorities: { value: number; label: string }[]) {
+  updateLineOfAuthorities(
+    lineOfAuthorities: { value: number; label: string }[]
+  ) {
     this.lineOfAuthorities = lineOfAuthorities;
     this.lineOfAuthoritiesChanged.next([...this.lineOfAuthorities]);
-  } 
+  }
 
   updateDocumentTypes(documentTypes: string[]) {
     this.documentTypes = documentTypes;
     this.documentTypesChanged.next([...this.documentTypes]);
   }
 
-  updateLicenseTechs(licenseTechs: {value: any, label: string}[]) {
+  updateLicenseTechs(licenseTechs: { value: any; label: string }[]) {
     this.licenseTechs = licenseTechs;
     this.licenseTechsChanged.next([...this.licenseTechs]);
   }
 
   fetchDropdownNumericData(vEndpoint: string, vValue: any | null = null) {
-    const url = this.url + vEndpoint + (vValue ? '/' + vValue : '');
+    const url = this.configService.config.apiUrl + 'Misc/' + vEndpoint + (vValue ? '/' + vValue : '');
     return this.http
       .get<{
         success: boolean;

@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material/dialog';
 import {
   AgentDataService,
   AppComService,
+  ConfigService,
   DropdownDataService,
   ErrorMessageService,
   LicIncentiveInfoDataService,
@@ -22,8 +23,8 @@ import {
   TicklerMgmtDataService,
   UserAcctInfoDataService,
 } from './_services';
-import { environment } from './environments/environment';
-import { MinLengthValidator } from '@angular/forms';
+// import { environment } from './_environments/environment';
+// import { MinLengthValidator } from '@angular/forms';
 import { LicenseTech, UserAcctInfo } from './_Models';
 import { InfoDialogComponent } from './_components';
 import { Router } from '@angular/router';
@@ -35,11 +36,13 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, OnDestroy {
+  config: any;
   userAcctInfo: UserAcctInfo = {} as UserAcctInfo;
   branchCodes: any[] = [];
   licenseTechs: any[] = [];
   impesonatorRole: string | null = null;
   openTicklerCount = 0;
+  isDevLoginEnabled = null;
 
   title = 'onetrack_v2';
   private subscriptions = new Subscription();
@@ -54,34 +57,36 @@ export class AppComponent implements OnInit, OnDestroy {
     public ticklerMgmtDataService: TicklerMgmtDataService,
     public dialog: MatDialog,
     private router: Router,
-    private userInfoService: UserAcctInfoDataService,
+    // private userInfoService: UserAcctInfoDataService,
+    private configService: ConfigService,
     private cdr: ChangeDetectorRef,
     public userAcctInfoDataService: UserAcctInfoDataService
   ) {
     this.openTicklerCount = this.appComService.openTicklerCount;
-    this.userAcctInfo = this.userInfoService.userAcctInfo;
+    // this.userAcctInfo = this.userAcctInfoDataService.userAcctInfo;
     this.licenseTechs = this.licIncentiveInfoDataService.licenseTeches;
   }
 
   ngOnInit() {
-    if (environment.isDevLoginEnabled) {
-      this.appComService.updateIsLoggedIn(true);
-      this.userInfoService.updateUserAcctInfo({
-        licenseTechID: null,
-        displayName: 'Erish Faggett',
-        // displayName: 'Dyan Knapp',
-        soeid: 'T2229513',
-        // soeid: 'T3304243', // Dyan Knapp
-        email: 'erish.faggett@omf.com',
-        enabled: true,
-        employeeId: '2229513',
-        homeDirectory: '\\\\corp.fin\\users\\EVNAS_Users\\3\\T2229513',
-        lastLogon: Date.now().toString(),
-        isAdminRole: true,
-        isTechRole: null,
-        isReadRole: true,
-        isSuperUser: true,
-      });
+    this.configService.loadConfig();
+    const configuration = this.configService.getConfig();
+
+    console.log(
+      'EMFTEST (appComponent: ngOnInit) - config => \n',
+      configuration
+    );
+
+    if (configuration && configuration.environment) {
+      this.config = configuration;
+      if (configuration.environment.isDevLoginEnabled) {
+        this.appComService.updateIsLoggedIn(true);
+        this.isDevLoginEnabled = configuration.environment.isDevLoginEnabled;
+        if (configuration.environment.userInfo) {
+          this.userAcctInfoDataService.updateUserAcctInfo(
+            configuration.environment.userInfo
+          );
+        }
+      }
     }
 
     // this.subscriptions.add(
@@ -105,7 +110,7 @@ export class AppComponent implements OnInit, OnDestroy {
     );
 
     this.subscriptions.add(
-      this.userInfoService.userAcctInfoChanged.subscribe(
+      this.userAcctInfoDataService.userAcctInfoChanged.subscribe(
         (userAcctInfo: UserAcctInfo) => {
           this.userAcctInfo = userAcctInfo;
         }
@@ -290,7 +295,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   isBadgeVisible(): boolean {
-    if(this.openTicklerCount > 0) {
+    if (this.openTicklerCount > 0) {
       return true;
     } else {
       return false;
@@ -302,7 +307,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.openTicklerCount > 0 &&
       this.userAcctInfoDataService.userAcctInfo.licenseTechID !== null &&
       this.userAcctInfoDataService.userAcctInfo.licenseTechID !== 0 &&
-      this.userAcctInfoDataService.userAcctInfo.licenseTechID !== undefined 
+      this.userAcctInfoDataService.userAcctInfo.licenseTechID !== undefined
     ) {
       return true;
     } else {
@@ -344,10 +349,10 @@ export class AppComponent implements OnInit, OnDestroy {
   onImpersonateChange(event: Event) {
     const soeid = (event.target as HTMLInputElement).value;
     this.subscriptions.add(
-      this.userInfoService
+      this.userAcctInfoDataService
         .fetchLicenseTechBySOEID(soeid)
         .subscribe((licenseTech: any) => {
-          this.userInfoService.updateUserAcctInfo({
+          this.userAcctInfoDataService.updateUserAcctInfo({
             licenseTechID: licenseTech.licenseTechId,
             displayName: licenseTech.techName,
             soeid: licenseTech.soeid,
@@ -369,7 +374,7 @@ export class AppComponent implements OnInit, OnDestroy {
     const role = (event.target as HTMLInputElement).value;
     this.impesonatorRole = role;
 
-    this.userInfoService.updateUserAcctInfo({
+    this.userAcctInfoDataService.updateUserAcctInfo({
       ...this.userAcctInfo,
       isAdminRole: role === 'Admin',
       isTechRole: role === 'Tech',
