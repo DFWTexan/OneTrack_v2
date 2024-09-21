@@ -43,6 +43,7 @@ export class AppComponent implements OnInit, OnDestroy {
   impesonatorRole: string | null = null;
   openTicklerCount = 0;
   isDevLoginEnabled = null;
+  isLoggedIn: boolean | null = null;
 
   title = 'onetrack_v2';
   private subscriptions = new Subscription();
@@ -76,14 +77,17 @@ export class AppComponent implements OnInit, OnDestroy {
       configuration
     );
 
-    if (configuration && configuration.environment) {
-      this.config = configuration;
-      if (configuration.environment.isDevLoginEnabled) {
+    if (configuration) {
+     
+console.log('EMFTEST () - GOT HERE....')     
+     
+      if (configuration.isDevLoginEnabled) {
+        this.isLoggedIn = true;
         this.appComService.updateIsLoggedIn(true);
-        this.isDevLoginEnabled = configuration.environment.isDevLoginEnabled;
-        if (configuration.environment.userInfo) {
+        this.isDevLoginEnabled = configuration.isDevLoginEnabled;
+        if (configuration.userInfo) {
           this.userAcctInfoDataService.updateUserAcctInfo(
-            configuration.environment.userInfo
+            configuration.userInfo
           );
         }
       }

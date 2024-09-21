@@ -247,7 +247,7 @@
       <mat-expansion-panel
         (opened)="onPanelOpened('TEAM')"
         [class.mat-elevation-z0]="true"
-        [disabled]="!appComService.isLoggedIn"
+        [disabled]="!isLoggedIn"
       >
         <mat-expansion-panel-header>
           <mat-icon>group</mat-icon><span>Team Members</span>
@@ -280,7 +280,7 @@
         </mat-nav-list>
       </mat-expansion-panel>
 
-      <mat-list-item [disabled]="!appComService.isLoggedIn">
+      <mat-list-item [disabled]="!isLoggedIn">
         <a href="https://omsbi/Reports/browse/Licensing" target="_blank">
           <mat-icon>library_books</mat-icon>
           <span style="font-size: 1.5rem; font-weight: 500">Reports</span>
@@ -289,7 +289,7 @@
 
       <mat-list-item
         routerLinkActive="active"
-        [disabled]="!appComService.isLoggedIn"
+        [disabled]="!isLoggedIn"
         (click)="
           onLinkClick($event, {
             message: 'Loading Worklist...',
@@ -306,7 +306,7 @@
 
     <mat-divider></mat-divider>
 
-    <app-login *ngIf="!appComService.isLoggedIn"></app-login>
+    <app-login *ngIf="!isLoggedIn"></app-login>
     <br />
     <br />
     <br />
