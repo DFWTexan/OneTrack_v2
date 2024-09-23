@@ -17,7 +17,6 @@ import { ConfigService } from '../config/config.service';
 })
 export class AppComService {
   config: any;
-  // environment = environment;
   isLoggedIn = false;
   isLoggedInChanged = new Subject<boolean>();
   loginErrorMsg = '';

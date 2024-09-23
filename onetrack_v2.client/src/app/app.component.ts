@@ -7,8 +7,8 @@ import {
   OnDestroy,
   ChangeDetectorRef,
 } from '@angular/core';
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { MatSidenav } from '@angular/material/sidenav';
+// import { BreakpointObserver } from '@angular/cdk/layout';
+// import { MatSidenav } from '@angular/material/sidenav';
 import { interval, Subscription, switchMap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -23,8 +23,6 @@ import {
   TicklerMgmtDataService,
   UserAcctInfoDataService,
 } from './_services';
-// import { environment } from './_environments/environment';
-// import { MinLengthValidator } from '@angular/forms';
 import { LicenseTech, UserAcctInfo } from './_Models';
 import { InfoDialogComponent } from './_components';
 import { Router } from '@angular/router';
@@ -58,13 +56,11 @@ export class AppComponent implements OnInit, OnDestroy {
     public ticklerMgmtDataService: TicklerMgmtDataService,
     public dialog: MatDialog,
     private router: Router,
-    // private userInfoService: UserAcctInfoDataService,
     private configService: ConfigService,
     private cdr: ChangeDetectorRef,
     public userAcctInfoDataService: UserAcctInfoDataService
   ) {
     this.openTicklerCount = this.appComService.openTicklerCount;
-    // this.userAcctInfo = this.userAcctInfoDataService.userAcctInfo;
     this.licenseTechs = this.licIncentiveInfoDataService.licenseTeches;
   }
 
@@ -72,15 +68,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.configService.loadConfig();
     const configuration = this.configService.getConfig();
 
-    console.log(
-      'EMFTEST (appComponent: ngOnInit) - config => \n',
-      configuration
-    );
-
     if (configuration) {
-     
-console.log('EMFTEST () - GOT HERE....')     
-     
       if (configuration.isDevLoginEnabled) {
         this.isLoggedIn = true;
         this.appComService.updateIsLoggedIn(true);
@@ -92,12 +80,6 @@ console.log('EMFTEST () - GOT HERE....')
         }
       }
     }
-
-    // this.subscriptions.add(
-    //   this.appComService.isLoggedInChanged.subscribe((isLoggedIn: boolean) => {
-    //     this.appComService.isLoggedIn = isLoggedIn;
-    //   })
-    // );
 
     this.startFetchingTicklerInfo();
 
@@ -137,7 +119,6 @@ console.log('EMFTEST () - GOT HERE....')
       this.drpdwnDataService
         .fetchDropdownData('GetBranches')
         .subscribe((branchNames: { value: string; label: string }[]) => {
-          // this.branchNames = branchNames;
           this.drpdwnDataService.updateBranchNames(branchNames);
         })
     );

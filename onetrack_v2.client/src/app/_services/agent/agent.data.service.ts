@@ -28,7 +28,6 @@ import { ConfigService } from '../config/config.service';
 })
 export class AgentDataService {
   private apiUrl: string = '';
-  // config: any;
   agentInformation: AgentInfo = {} as AgentInfo;
   agentInfoChanged = new Subject<AgentInfo>();
   // AGENT LICENSE APPOINTMENTS
@@ -89,7 +88,6 @@ export class AgentDataService {
     public errorMessageService: ErrorMessageService
   ) {
     this.agentLicenseAppointments = [];
-    // this.config = this.configService.getConfig();
   }
 
   fetchAgentInformation(employeeID: number): Observable<AgentInfo> {
