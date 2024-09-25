@@ -67,6 +67,12 @@ export class AppComService {
   updateLoginErrorMsg(loginErrorMsg: string) {
     this.loginErrorMsg = loginErrorMsg;
     this.loginErrorMsgChanged.next(this.loginErrorMsg);
+
+    // Clear the login error message after one minute (30000 milliseconds)
+    setTimeout(() => {
+      this.loginErrorMsg = '';
+      this.loginErrorMsgChanged.next(this.loginErrorMsg);
+    }, 30000);
   }
 
   updateIsLegacyView(isLegacyView: boolean) {
