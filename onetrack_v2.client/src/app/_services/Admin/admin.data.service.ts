@@ -107,9 +107,7 @@ export class AdminDataService {
     private adminComService: AdminComService,
     private configService: ConfigService,
     public modalService: ModalService
-  ) {
-    // this.config = this.configService.getConfig();
-  }
+  ) {}
 
   // COMPANY
   fetchCompanyTypes() {

@@ -37,7 +37,7 @@ export class AppComponent implements OnInit, OnDestroy {
   config: any;
   userAcctInfo: UserAcctInfo = {} as UserAcctInfo;
   branchCodes: any[] = [];
-  licenseTechs: any[] = [];
+  licenseTechs: any[] = [{ value: null, label: 'Loading...' }];
   impesonatorRole: string | null = null;
   openTicklerCount = 0;
   isDevLoginEnabled = null;
@@ -68,6 +68,11 @@ export class AppComponent implements OnInit, OnDestroy {
     this.configService.loadConfig();
     const configuration = this.configService.getConfig();
 
+    console.log(
+      'EMFTEST (AppComponent: ngOnInit) - configuration => \n',
+      configuration
+    );
+
     if (configuration) {
       if (configuration.isDevLoginEnabled) {
         this.isLoggedIn = true;
@@ -93,6 +98,12 @@ export class AppComponent implements OnInit, OnDestroy {
           this.openTicklerCount = openTicklerCount;
         }
       )
+    );
+
+    this.subscriptions.add(
+      this.appComService.isLoggedInChanged.subscribe((isLoggedIn: boolean) => {
+        this.isLoggedIn = isLoggedIn;
+      })
     );
 
     this.subscriptions.add(

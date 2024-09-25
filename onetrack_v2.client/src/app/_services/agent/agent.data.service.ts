@@ -84,7 +84,7 @@ export class AgentDataService {
   constructor(
     private http: HttpClient,
     private agentComService: AgentComService,
-    private configService: ConfigService,
+    public configService: ConfigService,
     public errorMessageService: ErrorMessageService
   ) {
     this.agentLicenseAppointments = [];
