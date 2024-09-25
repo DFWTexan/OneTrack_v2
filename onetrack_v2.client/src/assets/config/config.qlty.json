@@ -1,6 +1,6 @@
 {
     "production": false,
-    "environment": "QUALITY",
+    "environment": "QA",
     "isDevLoginEnabled": false,
     "isShowEditID": false,
     "apiUrl": "http://ftapiq101/OneTrakV2/api/"
