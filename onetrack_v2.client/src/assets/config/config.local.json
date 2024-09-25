@@ -1,5 +1,6 @@
 {
     "production": false,
+    "environment": "LOCAL",
     "isDevLoginEnabled": true,
     "isShowEditID": false,
     "apiUrl": "http://localhost:5181/api/",

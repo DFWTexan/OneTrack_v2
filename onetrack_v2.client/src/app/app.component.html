@@ -2,7 +2,17 @@
   <button mat-icon-button (click)="sidenav.toggle()" matTooltip="Menu">
     <mat-icon>menu</mat-icon>
   </button>
-  <span>OneTrakV2</span>
+  <div class="d-flex">
+    <span>OneTrakV2</span>
+    <div
+      *ngIf="configService.config.environment"
+      class="ms-5"
+      style="color: gray; font-size: small"
+    >
+      {{ configService.config.environment }}
+    </div>
+  </div>
+
   <span class="toolbar-item-spacer"></span>
   <!-- <button mat-icon-button matTooltip="Like">
       <mat-icon>favorite</mat-icon>
@@ -35,11 +45,7 @@
       matBadgeColor="warn"
       aria-hidden="false"
     >
-      {{
-        isNotificationActive()
-          ? "notifications_active"
-          : "notifications"
-      }}
+      {{ isNotificationActive() ? "notifications_active" : "notifications" }}
     </mat-icon>
   </button>
   <!-- <button
@@ -312,10 +318,7 @@
     <br />
     <br />
     <!-- DVLP - Impersonation -->
-    <div
-      class="mt-auto justify-content-end"
-      *ngIf="isDevLoginEnabled"
-    >
+    <div class="mt-auto justify-content-end" *ngIf="isDevLoginEnabled">
       <div class="ms-3 justify-content-start">
         <label for="devLogin">Impersonate:</label><br />
         <select

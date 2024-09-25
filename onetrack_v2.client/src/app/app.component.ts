@@ -34,7 +34,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  config: any;
+  // config: any;
   userAcctInfo: UserAcctInfo = {} as UserAcctInfo;
   branchCodes: any[] = [];
   licenseTechs: any[] = [{ value: null, label: 'Loading...' }];
@@ -56,7 +56,7 @@ export class AppComponent implements OnInit, OnDestroy {
     public ticklerMgmtDataService: TicklerMgmtDataService,
     public dialog: MatDialog,
     private router: Router,
-    private configService: ConfigService,
+    public configService: ConfigService,
     private cdr: ChangeDetectorRef,
     public userAcctInfoDataService: UserAcctInfoDataService
   ) {
@@ -68,10 +68,10 @@ export class AppComponent implements OnInit, OnDestroy {
     this.configService.loadConfig();
     const configuration = this.configService.getConfig();
 
-    console.log(
-      'EMFTEST (AppComponent: ngOnInit) - configuration => \n',
-      configuration
-    );
+    // console.log(
+    //   'EMFTEST (AppComponent: ngOnInit) - configuration => \n',
+    //   configuration
+    // );
 
     if (configuration) {
       if (configuration.isDevLoginEnabled) {
