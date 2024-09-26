@@ -17,7 +17,7 @@ import { ConfigService } from '../config/config.service';
 })
 export class AppComService {
   config: any;
-  isLoggedIn = false;
+  isLoggedIn: boolean = false;
   isLoggedInChanged = new Subject<boolean>();
   loginErrorMsg = '';
   loginErrorMsgChanged = new Subject<string>();
@@ -43,9 +43,10 @@ export class AppComService {
 
   async initializeConfig() {
     this.config = await this.configService.getConfig();
-    if (this.config && this.config.environment) {
-      this.isLoggedIn = this.config.environment.isDevLoginEnabled;
-      this.isShowEditID = this.config.environment.isShowEditID;
+    if (this.config) {
+      this.isLoggedIn = this.config.isDevLoginEnabled;
+      this.isLoggedInChanged.next(this.config.isDevLoginEnabled);
+      this.isShowEditID = this.config.isShowEditID;
     }
   }
 
@@ -56,7 +57,7 @@ export class AppComService {
 
   updateIsLoggedIn(isLoggedIn: boolean) {
     this.isLoggedIn = isLoggedIn;
-    this.isLoggedInChanged.next(this.isLoggedIn);
+    this.isLoggedInChanged.next(isLoggedIn);
   }
 
   updateIsOpenTicklerInfo(isOpenTicklerInfo: boolean) {

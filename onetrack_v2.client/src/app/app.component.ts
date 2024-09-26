@@ -60,6 +60,7 @@ export class AppComponent implements OnInit, OnDestroy {
     private cdr: ChangeDetectorRef,
     public userAcctInfoDataService: UserAcctInfoDataService
   ) {
+    this.isLoggedIn = this.appComService.isLoggedIn;
     this.openTicklerCount = this.appComService.openTicklerCount;
     this.licenseTechs = this.licIncentiveInfoDataService.licenseTeches;
   }
@@ -68,15 +69,15 @@ export class AppComponent implements OnInit, OnDestroy {
     this.configService.loadConfig();
     const configuration = this.configService.getConfig();
 
-    // console.log(
-    //   'EMFTEST (AppComponent: ngOnInit) - configuration => \n',
-    //   configuration
-    // );
+    console.log(
+      'EMFTEST (AppComponent: ngOnInit) - configuration => \n',
+      configuration
+    );
 
     if (configuration) {
       if (configuration.isDevLoginEnabled) {
         this.isLoggedIn = true;
-        this.appComService.updateIsLoggedIn(true);
+        this.appComService.updateIsLoggedIn(this.isLoggedIn);
         this.isDevLoginEnabled = configuration.isDevLoginEnabled;
         if (configuration.userInfo) {
           this.userAcctInfoDataService.updateUserAcctInfo(
@@ -103,6 +104,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.appComService.isLoggedInChanged.subscribe((isLoggedIn: boolean) => {
         this.isLoggedIn = isLoggedIn;
+        this.cdr.detectChanges();
       })
     );
 
