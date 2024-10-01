@@ -22,3 +22,13 @@
   justify-content: center;
   align-items: center;
 }
+
+.badge-title {
+  font-size: large;
+  padding-right: 20px;
+  position: relative;
+}
+
+.badge-title .mat-badge-content {
+  margin-top: 2rem; /* Add top margin to move the badge down */
+}

@@ -61,7 +61,8 @@ namespace OneTrak_v2.Services
                     x.TotalCredits,
                     x.CreateDate,
                     x.IsImportComplete
-                }).OrderByDescending(x => x.CreateDate).ToList();
+                }).OrderBy(x => x.IsImportComplete) // false first
+                  .ThenByDescending(x => x.CreateDate).ToList();
 
                 result.ObjData = adBankerImportData;
                 result.Success = true;

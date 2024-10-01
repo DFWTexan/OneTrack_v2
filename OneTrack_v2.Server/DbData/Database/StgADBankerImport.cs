@@ -11,5 +11,6 @@
         public int? TotalCredits { get; set; }
         public DateTime CreateDate { get; set; }
         public bool IsImportComplete { get; set; }
+        public string? SortOrder { get; set; }
     }
 }
