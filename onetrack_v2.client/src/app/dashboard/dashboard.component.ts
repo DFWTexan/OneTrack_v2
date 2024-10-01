@@ -81,6 +81,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     .toISOString()
     .split('T')[0];
   auditLogData: any[] = [];
+  adBankerIncompleteCount = 0;
 
   constructor(
     public appComService: AppComService,
@@ -136,7 +137,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
           value: tech.licenseTechId,
           label: tech.techName,
         }));
-        this.licenseTechs = [{value: null, label:"Select Tech"}, ...mappedLicenseTechs];
+        this.licenseTechs = [
+          { value: null, label: 'Select Tech' },
+          ...mappedLicenseTechs,
+        ];
       })
     );
 
@@ -178,6 +182,16 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         .subscribe((auditLogData) => {
           this.auditLogData = auditLogData;
         })
+    );
+
+    this.adBankerIncompleteCount =
+      this.dashboardDataService.adBankerIncompleteCount;
+    this.subscriptions.add(
+      this.dashboardDataService.adBankerIncompleteCountChanged.subscribe(
+        (count) => {
+          this.adBankerIncompleteCount = count;
+        }
+      )
     );
 
     this.getAdBankerData();
@@ -333,6 +347,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
           this.adBankerData = data;
         })
     );
+  }
+  isAdBankerIncompleted()
+  {
+    return this.adBankerIncompleteCount > 0;
   }
 
   onChangeADBankerStartDate(event: any) {

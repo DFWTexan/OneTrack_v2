@@ -52,7 +52,7 @@ namespace OneTrak_v2.Services
 
                 var adBankerImportData = query.Select(x => new
                 {
-                    x.EmployeeId,
+                    x.TeamMemberId,
                     x.CourseState,
                     x.StudentName,
                     x.CourseTitle,

@@ -252,8 +252,11 @@
         <mat-panel-description>
           <!-- Currently I am {{panelOpenState ? 'open' : 'closed'}} -->
           <span
-            matBadge="177"
+            [matBadge]="adBankerIncompleteCount"
             matBadgeColor="warn"
+            matBadgeOverlap="true"
+            matBadgeSize="medium"
+            [matBadgeHidden]="!isAdBankerIncompleted()"
             class="badge-title me-5"
           ></span>
           <span style="font-size: larger" class="me-3">{{
@@ -344,10 +347,10 @@
             <tbody style="font-size: smaller">
               <tr *ngFor="let data of adBankerData">
                 <td class="align-middle">
-                  {{ data.employeeId }}
+                  {{ data.teamMemberId == 0 ? "N/A" : data.teamMemberId }}
                 </td>
                 <td class="align-middle">
-                  {{ data.courseState }}
+                  {{ data.courseState == null ? "N/A" : data.courseState }}
                 </td>
                 <td class="align-middle wrap-text" style="width: 275px">
                   {{ data.studentName | firstThree }}

@@ -11,6 +11,8 @@ import { DashboardData } from '../../_Models';
 })
 export class DashboardDataService {
   private apiUrl: string = environment.apiUrl + 'Dashboard/';
+  adBankerIncompleteCount: number = 0;
+  adBankerIncompleteCountChanged = new Subject<number>();
 
   constructor(private http: HttpClient) {}
 
@@ -70,6 +72,11 @@ export class DashboardDataService {
       .pipe(
         map((response) => {
           if (response.success && response.objData) {
+            this.adBankerIncompleteCount = response.objData.filter((item: any) => !item.isImportComplete).length; 
+
+console.log('EMFTEST (fetchADBankerData) - adBankerIncompleteCount: ', this.adBankerIncompleteCount);
+
+            this.adBankerIncompleteCountChanged.next(this.adBankerIncompleteCount);
             return response.objData;
           } else {
             throw new Error(response.errMessage || 'Unknown error');

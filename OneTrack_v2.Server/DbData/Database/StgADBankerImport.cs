@@ -2,7 +2,7 @@
 {
     public class StgADBankerImport
     {
-        public int EmployeeId { get; set; }
+        public int TeamMemberId { get; set; }
         public string? CourseState { get; set; }
         public string? StudentName { get; set; }
         public string? CourseTitle { get; set; }

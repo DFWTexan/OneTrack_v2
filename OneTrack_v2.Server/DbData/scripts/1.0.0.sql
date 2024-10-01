@@ -9,7 +9,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 
 CREATE TABLE [dbo].[stg_ADBankerImport](
-	[EmployeeID] [int] NULL,
+	[TeamMemberID] [int] NULL,
 	[CourseState] [nvarchar](2) NULL,
 	[StudentName] [nvarchar](50) NULL,
 	[CourseTitle] [nvarchar](150) NULL,
