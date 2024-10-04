@@ -282,6 +282,7 @@
             class="form-control input-size-small"
             type="date"
             name="adBankerStartDate"
+            [disabled]="isStartDateDisabled"
             [(ngModel)]="adBankerStartDate"
             (change)="onChangeADBankerStartDate($event)"
           />
@@ -292,6 +293,7 @@
             class="form-control input-size-small"
             type="date"
             name="adBankerEndDate"
+            [disabled]="isEndDateDisabled"
             [value]="adBankerEndDate"
             [(ngModel)]="adBankerEndDate"
             (change)="onChangeADBankerEndDate($event)"

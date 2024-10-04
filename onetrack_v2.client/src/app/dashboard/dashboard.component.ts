@@ -40,6 +40,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   licenseTechItems: any = ['Loading...'];
   selectedLicenseTechID: number | null = null;
   isOpenTicklerInfo: boolean = true;
+  isStartDateDisabled: boolean = false;
+  isEndDateDisabled: boolean = false;
 
   private subscriptions = new Subscription();
 
@@ -377,6 +379,26 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     const target = event.target as HTMLInputElement;
     const value = target.value;
     this.adBankerImportStatus = value;
+    if (value == 'Failed') {
+      this.adBankerStartDate = '2024-01-01'
+      this.startDate = '2024-01-01';
+      
+      this.isStartDateDisabled = true;
+      this.isEndDateDisabled = true;
+    } else {
+      this.adBankerStartDate = new Date(
+        new Date().setDate(new Date().getDate() - 1)
+      )
+        .toISOString()
+        .split('T')[0];
+      this.startDate = new Date(
+        new Date().setDate(new Date().getDate() - 1)
+      )
+        .toISOString()
+        .split('T')[0];
+      this.isStartDateDisabled = false;
+      this.isEndDateDisabled = false;
+    }
 
     this.getAdBankerData();
   }
