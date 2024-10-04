@@ -347,9 +347,16 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
           this.adBankerData = data;
         })
     );
+
+    this.subscriptions.add(
+      this.dashboardDataService
+        .fetchIncompleteAdBankerCount()
+        .subscribe((count) => {
+          this.adBankerIncompleteCount = count;
+        })
+    );
   }
-  isAdBankerIncompleted()
-  {
+  isAdBankerIncompleted() {
     return this.adBankerIncompleteCount > 0;
   }
 

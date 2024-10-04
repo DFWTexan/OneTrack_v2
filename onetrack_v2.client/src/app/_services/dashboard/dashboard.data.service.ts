@@ -59,7 +59,6 @@ export class DashboardDataService {
     endDate: string,
     importStatus: string | null
   ) {
-
     const queryParams = `?startDate=${startDate}&endDate=${endDate}&importStatus=${importStatus}`;
 
     return this.http
@@ -72,11 +71,36 @@ export class DashboardDataService {
       .pipe(
         map((response) => {
           if (response.success && response.objData) {
-            this.adBankerIncompleteCount = response.objData.filter((item: any) => !item.isImportComplete).length; 
+            // this.adBankerIncompleteCount = response.objData.filter(
+            //   (item: any) => !item.isImportComplete
+            // ).length;
 
-console.log('EMFTEST (fetchADBankerData) - adBankerIncompleteCount: ', this.adBankerIncompleteCount);
+            // this.adBankerIncompleteCountChanged.next(
+            //   this.adBankerIncompleteCount
+            // );
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
 
-            this.adBankerIncompleteCountChanged.next(this.adBankerIncompleteCount);
+  fetchIncompleteAdBankerCount() {
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'GetAdBankerIncompleteCount')
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            this.adBankerIncompleteCount = response.objData;
+            this.adBankerIncompleteCountChanged.next(
+              this.adBankerIncompleteCount
+            );
             return response.objData;
           } else {
             throw new Error(response.errMessage || 'Unknown error');

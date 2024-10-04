@@ -251,14 +251,9 @@
         </mat-panel-title>
         <mat-panel-description>
           <!-- Currently I am {{panelOpenState ? 'open' : 'closed'}} -->
-          <span
-            [matBadge]="adBankerIncompleteCount"
-            matBadgeColor="warn"
-            matBadgeOverlap="true"
-            matBadgeSize="medium"
-            [matBadgeHidden]="!isAdBankerIncompleted()"
-            class="badge-title me-5"
-          ></span>
+          <span class="me-3 error-count" *ngIf="isAdBankerIncompleted()" title="Incomplete Import(s)">{{
+            adBankerIncompleteCount
+          }}</span>
           <span style="font-size: larger" class="me-3">{{
             adBankerImportInfo.recordCount
           }}</span>

@@ -18,6 +18,13 @@ namespace OneTrak_v2.Controllers
         }
 
         [HttpGet]
+        public async Task<ActionResult> GetAdBankerIncompleteCount()
+        {
+            var result = await Task.Run(() => _dashboardService.GetAdBankerIncompleteCount());
+
+            return StatusCode(result.StatusCode, result);
+        }
+        [HttpGet]
         public async Task<ActionResult> GetAdBankerImportStatus()
         {
             var result = await Task.Run(() => _dashboardService.GetAdBankerImportStatus());

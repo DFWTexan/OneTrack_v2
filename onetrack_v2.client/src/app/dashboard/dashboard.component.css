@@ -32,3 +32,11 @@
 .badge-title .mat-badge-content {
   margin-top: 2rem; /* Add top margin to move the badge down */
 }
+
+.error-count {
+  background-color: red;
+  color: white;
+  border-radius: 1rem;
+  padding-left: .75rem;
+  padding-right: .75rem;
+} 

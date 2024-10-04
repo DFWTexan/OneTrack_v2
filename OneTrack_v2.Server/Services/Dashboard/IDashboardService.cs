@@ -4,6 +4,7 @@ namespace OneTrak_v2.Services
 {
     public interface IDashboardService
     {
+        public ReturnResult GetAdBankerIncompleteCount();
         public ReturnResult GetAdBankerImportStatus();
         public ReturnResult GetAdBankerImportData(DateTime vStartDate, DateTime vEndDate, bool? vImportStatus = null);
         public ReturnResult GetAuditModifiedBy(bool vIsActive = true);

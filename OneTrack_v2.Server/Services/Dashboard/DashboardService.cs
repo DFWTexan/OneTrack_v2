@@ -12,6 +12,28 @@ namespace OneTrak_v2.Services
 
         public DashboardService(AppDataContext db, IUtilityHelpService utilityHelpService) { _db = db; _utilityService = utilityHelpService; }
 
+        public ReturnResult GetAdBankerIncompleteCount()
+        {
+
+            var result = new ReturnResult();
+            try
+            {
+                var incompleteCount = _db.StgADBankerImports.Count(x => x.IsImportComplete == false);
+                result.ObjData = incompleteCount;
+                result.Success = true;
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# DASH-8807-12347].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
+            }
+            return result;
+        }
         public ReturnResult GetAdBankerImportStatus()
         {
             var result = new ReturnResult();
@@ -29,9 +51,11 @@ namespace OneTrak_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# DASH-8807-32007].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
 
             return result;
@@ -71,9 +95,11 @@ namespace OneTrak_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# DASH-8807-12347].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
 
             return result;
@@ -115,9 +141,11 @@ namespace OneTrak_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# DASH-8807-12007].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
 
             return result;
@@ -153,9 +181,11 @@ namespace OneTrak_v2.Services
             catch (Exception ex)
             {
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# DASH-8807-12099].";
 
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
 
             return result;
