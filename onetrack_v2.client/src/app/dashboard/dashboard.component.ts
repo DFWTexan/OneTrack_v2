@@ -11,6 +11,7 @@ import { interval, Subscription, switchMap } from 'rxjs';
 import {
   AppComService,
   DashboardDataService,
+  ErrorMessageService,
   // DropdownDataService,
   LicIncentiveInfoDataService,
   MiscDataService,
@@ -88,6 +89,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   adBankerIncompleteCount = 0;
 
   constructor(
+    public errorMessageService: ErrorMessageService,
     public appComService: AppComService,
     public workListDataService: WorkListDataService,
     public ticklerMgmtDataService: TicklerMgmtDataService,
@@ -437,6 +439,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
                   error: (error) => {
                     console.error(error);
                     // handle the error here
+                    if (error.error && error.error.errMessage) {
+                      this.errorMessageService.setErrorMessage(error.error.errMessage);
+                    }
                   },
                 })
             );

@@ -1,5 +1,7 @@
 ﻿using DataModel.Response;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using OneTrack_v2.DbData;
 using OneTrack_v2.DbData.Models;
 using OneTrack_v2.Services;
@@ -116,17 +118,30 @@ namespace OneTrak_v2.Services
                     .FirstOrDefault(x => x.TeamMemberId == vInput.TeamMemberID && x.CourseState == vInput.CourseState && x.StudentName == vInput.StudentName && x.CourseTitle == vInput.CourseTitle);
                 if (adBankerImport != null)
                 {
-                    adBankerImport.IsImportComplete = true;
-                    adBankerImport.ModifiedBy = vInput.UserSOEID;
-                    adBankerImport.ModifyDate = DateTime.Now;
+                    //adBankerImport.IsImportComplete = true;
+                    //adBankerImport.ModifiedBy = vInput.UserSOEID;
+                    //adBankerImport.ModifyDate = DateTime.Now;
 
-                    // Log the state of the entity before saving
-                    //_utilityService.LogInfo("Entity State Before Save: " + _db.Entry(adBankerImport).State.ToString(), "DashboardService");
+                    //// Manually set the entity state to Modified
+                    //_db.Entry(adBankerImport).State = EntityState.Modified;
 
-                    _db.SaveChanges();
+                    //_db.SaveChanges();
+                    // Use raw SQL to update the record
+                    var sql = "UPDATE stg_ADBankerImport SET IsImportComplete = @IsImportComplete, ModifiedBy = @ModifiedBy, ModifyDate = @ModifyDate " +
+                              "WHERE CourseState = @CourseState AND StudentName = @StudentName AND CourseTitle = @CourseTitle";
 
-                    // Log the state of the entity after saving
-                    //_utilityService.LogInfo("Entity State After Save: " + _db.Entry(adBankerImport).State.ToString(), "DashboardService");
+                    var parameters = new[]
+                    {
+                        new SqlParameter("@IsImportComplete", true),
+                        new SqlParameter("@ModifiedBy", vInput.UserSOEID),
+                        new SqlParameter("@ModifyDate", DateTime.Now),
+                        //new SqlParameter("@TeamMemberId", vInput.TeamMemberID),
+                        new SqlParameter("@CourseState", vInput.CourseState ?? (object)DBNull.Value),
+                        new SqlParameter("@StudentName", vInput.StudentName ?? (object)DBNull.Value),
+                        new SqlParameter("@CourseTitle", vInput.CourseTitle ?? (object)DBNull.Value)
+                    };
+
+                    _db.Database.ExecuteSqlRaw(sql, parameters);
 
                     result.Success = true;
                     result.StatusCode = 200;
