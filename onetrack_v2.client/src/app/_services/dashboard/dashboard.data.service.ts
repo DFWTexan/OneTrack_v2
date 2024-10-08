@@ -109,6 +109,21 @@ export class DashboardDataService {
       );
   }
 
+  updateIncompleteStatus(vObject: any){
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl +'CompleteImportStatus', vObject)
+      .pipe(
+        map((response) => {
+          return response;
+        })
+      );
+  }
+
   fetchAuditModifiedBy(isActive: boolean): Observable<string[]> {
     return this.http
       .get<{

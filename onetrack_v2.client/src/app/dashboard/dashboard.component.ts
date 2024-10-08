@@ -408,6 +408,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   openConfirmDialog(eventAction: string, msg: string, vObject: any, checkbox: HTMLInputElement): void {
     this.eventAction = eventAction;
     this.vObject = vObject;
+    this.vObject.UserSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
     switch (eventAction) {
       case 'completeStatus':
         const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -417,8 +418,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             message:
               'You want to complete (' +
               this.vObject.studentName + ', ' + this.vObject.courseState +
-              ')\n' //+
-              // this.agentInfo.firstName +
+              ')\n' +
+              this.vObject.courseTitle
               // ' ' +
               // this.agentInfo.lastName,
           },
@@ -427,20 +428,17 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         dialogRef.afterClosed().subscribe((result) => {
           if (result) {
             this.subscriptions.add(
-              // this.agentDataService
-              //   .deleteAgent({
-              //     employeeId: this.agentInfo.employeeID,
-              //     userSOEID: this.userInfoDataService.userAcctInfo.soeid,
-              //   })
-              //   .subscribe({
-              //     next: (response) => {
-              //       this.location.back();
-              //     },
-              //     error: (error) => {
-              //       console.error(error);
-              //       // handle the error here
-              //     },
-              //   })
+              this.dashboardDataService
+                .updateIncompleteStatus(this.vObject)
+                .subscribe({
+                  next: (response) => {
+                    this.getAdBankerData();
+                  },
+                  error: (error) => {
+                    console.error(error);
+                    // handle the error here
+                  },
+                })
             );
           } else {
             // Uncheck the checkbox if the user selects "No"

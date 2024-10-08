@@ -119,7 +119,15 @@ namespace OneTrak_v2.Services
                     adBankerImport.IsImportComplete = true;
                     adBankerImport.ModifiedBy = vInput.UserSOEID;
                     adBankerImport.ModifyDate = DateTime.Now;
+
+                    // Log the state of the entity before saving
+                    //_utilityService.LogInfo("Entity State Before Save: " + _db.Entry(adBankerImport).State.ToString(), "DashboardService");
+
                     _db.SaveChanges();
+
+                    // Log the state of the entity after saving
+                    //_utilityService.LogInfo("Entity State After Save: " + _db.Entry(adBankerImport).State.ToString(), "DashboardService");
+
                     result.Success = true;
                     result.StatusCode = 200;
                 }
