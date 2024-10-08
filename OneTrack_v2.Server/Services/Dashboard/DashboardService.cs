@@ -118,7 +118,8 @@ namespace OneTrak_v2.Services
                     .FirstOrDefault(x => x.TeamMemberId == vInput.TeamMemberID && x.CourseState == vInput.CourseState && x.StudentName == vInput.StudentName && x.CourseTitle == vInput.CourseTitle);
                 if (adBankerImport != null)
                 {
-                    var sql = "UPDATE stg_ADBankerImport SET IsImportComplete = @IsImportComplete, ModifiedBy = @ModifiedBy, ModifyDate = @ModifyDate " +
+                    var sql = "UPDATE stg_ADBankerImport SET " +
+                              "IsImportComplete = @IsImportComplete, ModifiedBy = @ModifiedBy, ModifyDate = @ModifyDate " +
                               "WHERE CourseState = @CourseState AND StudentName = @StudentName AND CourseTitle = @CourseTitle";
 
                     var parameters = new[]
