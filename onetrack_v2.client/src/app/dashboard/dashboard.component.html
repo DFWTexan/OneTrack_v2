@@ -251,9 +251,12 @@
         </mat-panel-title>
         <mat-panel-description>
           <!-- Currently I am {{panelOpenState ? 'open' : 'closed'}} -->
-          <span class="me-3 error-count" *ngIf="isAdBankerIncompleted()" title="Incomplete Import(s)">{{
-            adBankerIncompleteCount
-          }}</span>
+          <span
+            class="me-3 error-count"
+            *ngIf="isAdBankerIncompleted()"
+            title="Incomplete Import(s)"
+            >{{ adBankerIncompleteCount }}</span
+          >
           <span style="font-size: larger" class="me-3">{{
             adBankerImportInfo.recordCount
           }}</span>
@@ -367,21 +370,28 @@
                 <td class="align-middle">
                   {{ data.createDate | date : "MM/dd/yyyy, h:mm a" }}
                 </td>
-                <td class="align-middle checkbox-container">
-                  <input
-                    type="checkbox"
-                    #checkbox
-                    (click)="
-                            openConfirmDialog('completeStatus', 'ADBanker ', {
-                              teamMemberID: data.teamMemberId,
-                              courseState: data.courseState,
-                              studentName: data.studentName,
-                              courseTitle: data.courseTitle
-                            }, checkbox)
-                          "
-                    [checked]="data.isImportComplete"
-                    [disabled]="data.isImportComplete"
-                  />
+                <td class="align-middle">
+                  <div class="checkbox-container">
+                    <input
+                      type="checkbox"
+                      #checkbox
+                      (click)="
+                        openConfirmDialog(
+                          'completeStatus',
+                          'ADBanker ',
+                          {
+                            teamMemberID: data.teamMemberId,
+                            courseState: data.courseState,
+                            studentName: data.studentName,
+                            courseTitle: data.courseTitle
+                          },
+                          checkbox
+                        )
+                      "
+                      [checked]="data.isImportComplete"
+                      [disabled]="data.isImportComplete"
+                    />
+                  </div>
                 </td>
               </tr>
             </tbody>
