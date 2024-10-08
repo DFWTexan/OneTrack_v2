@@ -25,7 +25,12 @@
   <button
     mat-icon-button
     matTooltip="Go to Tickler Info"
-    (click)="onGoToTicklerInfo()"
+    (click)="
+          onLinkClick($event, {
+            message: 'Loading Dashboard: Tickler Info..',
+            route: '/dashboard'
+          })
+        "
     [disabled]="!isNotificationActive()"
     [ngStyle]="{
       color: isNotificationActive() ? '#00FF7F' : 'white'

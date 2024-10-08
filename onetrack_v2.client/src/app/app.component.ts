@@ -6,6 +6,7 @@ import {
   Injectable,
   OnDestroy,
   ChangeDetectorRef,
+  AfterViewInit,
 } from '@angular/core';
 // import { BreakpointObserver } from '@angular/cdk/layout';
 // import { MatSidenav } from '@angular/material/sidenav';
@@ -33,7 +34,7 @@ import { Router } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css'],
 })
-export class AppComponent implements OnInit, OnDestroy {
+export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   // config: any;
   userAcctInfo: UserAcctInfo = {} as UserAcctInfo;
   branchCodes: any[] = [];
@@ -89,14 +90,15 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.startFetchingTicklerInfo();
 
-    setTimeout(() => {
-      this.cdr.detectChanges();
-    }, 0);
+    // setTimeout(() => {
+    //   this.cdr.detectChanges();
+    // }, 0);
 
     this.subscriptions.add(
       this.appComService.openTicklerCountChanged.subscribe(
         (openTicklerCount: number) => {
           this.openTicklerCount = openTicklerCount;
+          this.cdr.detectChanges(); // Explicitly trigger change detection
         }
       )
     );
@@ -273,6 +275,12 @@ export class AppComponent implements OnInit, OnDestroy {
     );
   }
 
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.cdr.detectChanges();
+    }, 0);
+  }
+
   startFetchingTicklerInfo(): void {
     this.subscriptions.add(
       interval(5000)
@@ -311,10 +319,6 @@ export class AppComponent implements OnInit, OnDestroy {
     } else {
       return false;
     }
-  }
-
-  onGoToTicklerInfo() {
-    this.router.navigate(['/dashboard']);
   }
 
   onPanelOpened(vTitle: string) {
