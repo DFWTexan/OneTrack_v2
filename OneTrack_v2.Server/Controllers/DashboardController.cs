@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using OneTrack_v2.Services;
+using OneTrak_v2.DataModel;
 using OneTrak_v2.Services;
 
 namespace OneTrak_v2.Controllers
@@ -35,6 +36,13 @@ namespace OneTrak_v2.Controllers
         public async Task<ActionResult> GetAdBankerImportData(DateTime startDate, DateTime endDate, string importStatus)
         {
             var result = await Task.Run(() => _dashboardService.GetAdBankerImportData(startDate, endDate, importStatus == "All" ? null : importStatus == "Success" ? true : false));
+
+            return StatusCode(result.StatusCode, result);
+        }
+        [HttpPost]
+        public async Task<ActionResult> CompleteImportStatus([FromBody] IputADBankerImportStatus input)
+        {
+            var result = await Task.Run(() => _dashboardService.CompleteImportStatus(input));
 
             return StatusCode(result.StatusCode, result);
         }

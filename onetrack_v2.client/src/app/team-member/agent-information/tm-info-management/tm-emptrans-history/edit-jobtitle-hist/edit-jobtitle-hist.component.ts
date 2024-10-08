@@ -98,8 +98,6 @@ export class EditJobtitleHistComponent implements OnInit, OnDestroy {
     jobTitleItem.employmentID = this.employmentID;
     jobTitleItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
-console.log('EMFTEST () - jobTitleItem => \n', jobTitleItem);
-
     if (
       jobTitleItem.jobTitleDate === '' ||
       jobTitleItem.jobTitleDate === null

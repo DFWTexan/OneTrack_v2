@@ -1,7 +1,9 @@
 ﻿using DataModel.Response;
+using Microsoft.AspNetCore.Mvc;
 using OneTrack_v2.DbData;
 using OneTrack_v2.DbData.Models;
 using OneTrack_v2.Services;
+using OneTrak_v2.DataModel;
 
 namespace OneTrak_v2.Services
 {
@@ -102,6 +104,41 @@ namespace OneTrak_v2.Services
                 _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
 
+            return result;
+        }
+        public ReturnResult CompleteImportStatus([FromBody] IputADBankerImportStatus vInput)
+        {
+
+            var result = new ReturnResult();
+            try
+            {
+                var adBankerImport = _db.StgADBankerImports
+                    .FirstOrDefault(x => x.TeamMemberId == vInput.TeamMemberID && x.CourseState == vInput.CourseState && x.StudentName == vInput.StudentName && x.CourseTitle == vInput.CourseTitle);
+                if (adBankerImport != null)
+                {
+                    adBankerImport.IsImportComplete = true;
+                    adBankerImport.ModifiedBy = vInput.UserSOEID;
+                    adBankerImport.ModifyDate = DateTime.Now;
+                    _db.SaveChanges();
+                    result.Success = true;
+                    result.StatusCode = 200;
+                }
+                else
+                {
+                    result.Success = false;
+                    result.StatusCode = 404;
+                    result.ErrMessage = "Record Not Found.";
+                }
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# DASH-8807-78947].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
+            }
             return result;
         }
         public ReturnResult GetAuditModifiedBy(bool vIsActive = true)

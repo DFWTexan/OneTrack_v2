@@ -1,7 +1,7 @@
 ﻿USE [License]
 GO
 
-/****** Object:  Table [dbo].[stg_ADBankerImport]    Script Date: 10/1/2024 12:22:13 PM ******/
+/****** Object:  Table [dbo].[stg_ADBankerImport]    Script Date: 10/7/2024 4:13:10 PM ******/
 SET ANSI_NULLS ON
 GO
 
@@ -18,7 +18,9 @@ CREATE TABLE [dbo].[stg_ADBankerImport](
 	[TotalCredits] [int] NULL,
 	[CreateDate] [datetime] NOT NULL,
 	[IsImportComplete] [bit] NOT NULL,
-	[SortOrder] [nchar](1) NOT NULL
+	[SortOrder] [nchar](1) NOT NULL,
+	[ModifiedBy] [nvarchar](50) NULL,
+	[ModifyDate] [datetime] NULL
 ) ON [PRIMARY]
 GO
 
@@ -29,4 +31,7 @@ ALTER TABLE [dbo].[stg_ADBankerImport] ADD  CONSTRAINT [DF_stg_ADBankerImport_Is
 GO
 
 ALTER TABLE [dbo].[stg_ADBankerImport] ADD  CONSTRAINT [DF_stg_ADBankerImport_SortOrder]  DEFAULT ((1)) FOR [SortOrder]
+GO
+
+ALTER TABLE [dbo].[stg_ADBankerImport] ADD  CONSTRAINT [DF_stg_ADBankerImport_ModifyDate]  DEFAULT (NULL) FOR [ModifyDate]
 GO

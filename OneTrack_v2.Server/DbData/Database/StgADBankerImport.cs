@@ -12,5 +12,7 @@
         public DateTime CreateDate { get; set; }
         public bool IsImportComplete { get; set; }
         public string? SortOrder { get; set; }
+        public string? ModifiedBy { get; set; }
+        public DateTime? ModifyDate { get; set; }
     }
 }

@@ -42,6 +42,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   isOpenTicklerInfo: boolean = true;
   isStartDateDisabled: boolean = false;
   isEndDateDisabled: boolean = false;
+  eventAction: string = '';
+  vObject: any = {};
 
   private subscriptions = new Subscription();
 
@@ -401,6 +403,130 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
 
     this.getAdBankerData();
+  }
+
+  openConfirmDialog(eventAction: string, msg: string, vObject: any, checkbox: HTMLInputElement): void {
+    this.eventAction = eventAction;
+    this.vObject = vObject;
+    switch (eventAction) {
+      case 'completeStatus':
+        const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+          width: '250px',
+          data: {
+            title: 'Confirm Action',
+            message:
+              'You want to complete (' +
+              this.vObject.studentName + ', ' + this.vObject.courseState +
+              ')\n' //+
+              // this.agentInfo.firstName +
+              // ' ' +
+              // this.agentInfo.lastName,
+          },
+        });
+
+        dialogRef.afterClosed().subscribe((result) => {
+          if (result) {
+            this.subscriptions.add(
+              // this.agentDataService
+              //   .deleteAgent({
+              //     employeeId: this.agentInfo.employeeID,
+              //     userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+              //   })
+              //   .subscribe({
+              //     next: (response) => {
+              //       this.location.back();
+              //     },
+              //     error: (error) => {
+              //       console.error(error);
+              //       // handle the error here
+              //     },
+              //   })
+            );
+          } else {
+            // Uncheck the checkbox if the user selects "No"
+            checkbox.checked = false;
+          }
+        });
+        break;
+      // case 'deleteLicAppt':
+      //   const dialogRef_Appt = this.dialog.open(ConfirmDialogComponent, {
+      //     width: '250px',
+      //     data: {
+      //       title: 'Confirm Action',
+      //       message:
+      //         'You are about to DELETE license appointment ' +
+      //         vObject.state + '-' + vObject.status + '-' + vObject.loa + '-' + vObject.coAbv +
+      //         '. Do you want to proceed?',
+      //     },
+      //   });
+
+      //   dialogRef_Appt.afterClosed().subscribe((result) => {
+      //     if (result) {
+      //       this.subscriptions.add(
+      //         this.licenseIncentiveInfoDataService
+      //           .deleteLicenseAppointment({
+      //             employeeAppointmentID: vObject.employeeAppointmentID,
+      //             employeeLicenseID: vObject.employeeLicenseID,
+      //             userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+      //           })
+      //           .subscribe({
+      //             next: (response) => {
+      //               alert('License Appointment Deleted');
+      //             },
+      //             error: (error) => {
+      //               console.error(error);
+      //               // handle the error here
+      //             },
+      //           })
+      //       );
+      //     }
+      //   });
+      //   break;
+      // case 'deleteLicense':
+      //   const dialogRef_License = this.dialog.open(ConfirmDialogComponent, {
+      //     width: '250px',
+      //     data: {
+      //       title: 'Confirm Action',
+      //       message:
+      //         'You are about to DELETE license (' +
+      //         vObject.employeeLicenseID + ') ' +
+      //         vObject.licenseName +
+      //         '. Do you want to proceed?',
+      //     },
+      //   });
+      //   dialogRef_License.afterClosed().subscribe((result) => {
+      //     if (result) {
+      //       this.subscriptions.add(
+      //         this.agentDataService
+      //         .deleteAgentLicense({
+      //           employmentID: this.vObject.employmentID,
+      //           employeeLicenseID: this.vObject.employeeLicenseID,
+      //           userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+      //         })
+      //         .subscribe({
+      //           next: (response) => {
+      //             this.router
+      //               .navigateByUrl('/', { skipLocationChange: true })
+      //               .then(() => {
+      //                 this.router.navigate([
+      //                   'team/agent-info',
+      //                   this.agentDataService.agentInformation.employeeID,
+      //                   'tm-license-mgmt',
+      //                 ]);
+      //               });
+      //           },
+      //           error: (error) => {
+      //             console.error(error);
+      //             // handle the error here
+      //           },
+      //         })
+      //       );
+      //     }
+      //   });
+      //   break;
+      default:
+        break;
+    }
   }
 
   // AUDIT LOG
