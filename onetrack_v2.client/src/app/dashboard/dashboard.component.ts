@@ -23,7 +23,7 @@ import {
 } from '../_services';
 import { StockTickler, TicklerInfo, UserAcctInfo } from '../_Models';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from '../_components';
+import { ConfirmDialogComponent, InfoDialogComponent } from '../_components';
 import { Router } from '@angular/router';
 
 @Component({
@@ -213,12 +213,24 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // WORKLIST
-  selectRow(index: number, element: string) {
+  selectRow(event: MouseEvent, rowDataEmployeeID: string) {
+    event.preventDefault();
 
-console.log('EMFTEST (selectRow) - index', index);
-console.log('EMFTEST (selectRow) element:', element);
+    const dialogRef = this.dialog.open(InfoDialogComponent, {
+      data: { message: 'Loading Agent Info..' },
+    });
 
-    this.selectedRowIndex = index;
+    // Delay the execution of the blocking operation
+    setTimeout(() => {
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate([
+          '../../team/agent-info',
+          rowDataEmployeeID,
+          'tm-info-mgmt',
+        ]);
+      });
+      dialogRef.close();
+    }, 100);
   }
   fetchWorkListData(): void {
     this.subscriptions.add(
@@ -391,9 +403,9 @@ console.log('EMFTEST (selectRow) element:', element);
     const value = target.value;
     this.adBankerImportStatus = value;
     if (value == 'Failed') {
-      this.adBankerStartDate = '2024-01-01'
+      this.adBankerStartDate = '2024-01-01';
       this.startDate = '2024-01-01';
-      
+
       this.isStartDateDisabled = true;
       this.isEndDateDisabled = true;
     } else {
@@ -402,9 +414,7 @@ console.log('EMFTEST (selectRow) element:', element);
       )
         .toISOString()
         .split('T')[0];
-      this.startDate = new Date(
-        new Date().setDate(new Date().getDate() - 1)
-      )
+      this.startDate = new Date(new Date().setDate(new Date().getDate() - 1))
         .toISOString()
         .split('T')[0];
       this.isStartDateDisabled = false;
@@ -413,7 +423,12 @@ console.log('EMFTEST (selectRow) element:', element);
 
     this.getAdBankerData();
   }
-  openConfirmDialog(eventAction: string, msg: string, vObject: any, checkbox: HTMLInputElement): void {
+  openConfirmDialog(
+    eventAction: string,
+    msg: string,
+    vObject: any,
+    checkbox: HTMLInputElement
+  ): void {
     this.eventAction = eventAction;
     this.vObject = vObject;
     this.vObject.UserSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
@@ -425,11 +440,13 @@ console.log('EMFTEST (selectRow) element:', element);
             title: 'Confirm Action',
             message:
               'You want to complete (' +
-              this.vObject.studentName + ', ' + this.vObject.courseState +
+              this.vObject.studentName +
+              ', ' +
+              this.vObject.courseState +
               ')\n' +
-              this.vObject.courseTitle
-              // ' ' +
-              // this.agentInfo.lastName,
+              this.vObject.courseTitle,
+            // ' ' +
+            // this.agentInfo.lastName,
           },
         });
 
@@ -446,7 +463,9 @@ console.log('EMFTEST (selectRow) element:', element);
                     console.error(error);
                     // handle the error here
                     if (error.error && error.error.errMessage) {
-                      this.errorMessageService.setErrorMessage(error.error.errMessage);
+                      this.errorMessageService.setErrorMessage(
+                        error.error.errMessage
+                      );
                     }
                   },
                 })

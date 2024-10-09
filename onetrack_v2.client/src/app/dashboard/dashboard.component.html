@@ -78,7 +78,7 @@
                 <tr
                   *ngFor="let row of worklistData.slice(1); let i = index"
                   [class.selected]="selectedRowIndex === i"
-                  (click)="selectRow(i, row.workListData.split('|')[2])"
+                  (click)="selectRow($event, row.workListData.split('|')[2])"
                 >
                   <td><input type="checkbox" /></td>
                   <td

@@ -12,6 +12,7 @@ import {
 // import { MatSidenav } from '@angular/material/sidenav';
 import { interval, Subscription, switchMap } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 import {
   AgentDataService,
@@ -26,7 +27,7 @@ import {
 } from './_services';
 import { LicenseTech, UserAcctInfo } from './_Models';
 import { InfoDialogComponent } from './_components';
-import { Router } from '@angular/router';
+
 
 @Injectable()
 @Component({
