@@ -40,3 +40,11 @@
   padding-left: .75rem;
   padding-right: .75rem;
 } 
+
+.selected {
+  background-color: lightblue;
+}
+
+.selected-row tbody tr:hover {
+  cursor: pointer;
+}

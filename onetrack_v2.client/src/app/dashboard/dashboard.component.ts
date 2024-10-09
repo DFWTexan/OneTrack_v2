@@ -87,6 +87,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     .split('T')[0];
   auditLogData: any[] = [];
   adBankerIncompleteCount = 0;
+  selectedRowIndex: number | null = null;
+  selectedElement: string | null = null;
 
   constructor(
     public errorMessageService: ErrorMessageService,
@@ -211,6 +213,13 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // WORKLIST
+  selectRow(index: number, element: string) {
+
+console.log('EMFTEST (selectRow) - index', index);
+console.log('EMFTEST (selectRow) element:', element);
+
+    this.selectedRowIndex = index;
+  }
   fetchWorkListData(): void {
     this.subscriptions.add(
       this.workListDataService
@@ -224,14 +233,12 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         })
     );
   }
-
   onChangeWorkListName(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;
     this.selectedWorkListName = value;
     this.fetchWorkListData();
   }
-
   onChangeImportDate(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;
@@ -406,7 +413,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.getAdBankerData();
   }
-
   openConfirmDialog(eventAction: string, msg: string, vObject: any, checkbox: HTMLInputElement): void {
     this.eventAction = eventAction;
     this.vObject = vObject;
