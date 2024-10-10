@@ -52,6 +52,7 @@ import { SearchListComponent } from '../team-member/search-team-member/search-li
 import { TmInfoManagementComponent } from '../team-member/agent-information/tm-info-management/tm-info-management.component';
 import { InsertMemberLoaTicklerComponent } from './agent-information/tm-info-management/tm-information/insert-member-loa-tickler/insert-member-loa-tickler.component';
 import { AgentTicklerInfoComponent } from './agent-information/agent-tickler-info/agent-tickler-info.component';
+import { AgentWishlistItemsComponent } from './agent-information/agent-wishlist-items/agent-wishlist-items.component';
 
 @NgModule({
   declarations: [
@@ -98,6 +99,7 @@ import { AgentTicklerInfoComponent } from './agent-information/agent-tickler-inf
     InsertIncentiveLicenseComponent,
     InsertMemberLoaTicklerComponent,
     AgentTicklerInfoComponent,
+    AgentWishlistItemsComponent,
   ],
   imports: [
     CommonModule,
