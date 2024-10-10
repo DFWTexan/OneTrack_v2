@@ -1,62 +1,59 @@
 <div class="container app-modal-container">
-    <div class="row">
-      <!-- <div class="col">
-        <table class="table w-100">
-          <thead>
-            <tr style="background-color: whitesmoke">
-              <th scope="col" style="width: 15rem">Due Date</th>
-              <th scope="col">Message</th>
-              <th scope="col" style="width: 8rem">ACTION</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of ticklerItems">
-              <td
-                class="align-middle"
-                [ngStyle]="{
-                  color: isOverdue(item.ticklerDueDate) ? '#FF6347' : 'inherit'
-                }"
+  <div class="row">
+    <div class="col">
+      <table class="table w-100">
+        <thead>
+          <tr style="background-color: whitesmoke">
+            <th scope="col" style="width: 15rem">Worklist ID</th>
+            <th scope="col">Worklist Name</th>
+            <th scope="col">Create Date</th>
+            <th scope="col">License Texh</th>
+            <th scope="col" style="width: 8rem">ACTION</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of worklistItems">
+            <td class="align-middle">
+              {{ item.workListDataID || "N/A" }}
+            </td>
+            <td class="align-middle">
+              {{ item.workListName || "N/A" }}
+            </td>
+            <td class="align-middle">
+              {{ item.createDate | date : "MM/dd/yyyy" }}
+            </td>
+            <td class="align-middle">
+              {{ item.licenseTech || "N/A" }}
+            </td>
+
+            <td class="align-middle">
+              <div
+                class="d-flex align-middle justify-content-between mb-3 me-4"
               >
-                {{ item.ticklerDueDate | date : "MM/dd/yyyy" }}
-              </td>
-              <td
-                class="align-middle"
-                [ngStyle]="{
-                  color: isOverdue(item.ticklerDueDate) ? '#FF6347' : 'inherit'
-                }"
-              >
-                {{ item.ticklerMessage || "N/A" }}
-              </td>
-  
-              <td class="align-middle">
-                <div
-                  class="d-flex align-middle justify-content-between mb-3 me-4"
-                >
-                  <button
+                <button
                     class="icon-close-button me-5"
-                    (click)="onCloseTicklerItem(item)"
-                    title="Close Tickler"
+                    (click)="onCloseWorklistItem(item)"
+                    title="Close Worklist Item"
                   >
                     <span class="material-symbols-outlined"> close </span>
                   </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div> -->
-    </div>
-    <mat-divider></mat-divider>
-    <div class="row mt-4">
-      <div class="col d-flex justify-content-end">
-        <button
-          type="button"
-          class="btn btn-secondary cancel-button me-3"
-          (click)="onCloseModal()"
-        >
-          Close
-        </button>
-      </div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-  
+  <mat-divider></mat-divider>
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button
+        type="button"
+        class="btn btn-secondary cancel-button me-3"
+        (click)="onCloseModal()"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</div>

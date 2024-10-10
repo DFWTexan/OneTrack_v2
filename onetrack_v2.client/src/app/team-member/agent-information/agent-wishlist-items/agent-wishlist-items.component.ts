@@ -1,16 +1,38 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
+import { Subscription } from 'rxjs';
+import { AgentDataService, UserAcctInfoDataService } from '../../../_services';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-agent-wishlist-items',
   templateUrl: './agent-wishlist-items.component.html',
-  styleUrl: './agent-wishlist-items.component.css'
+  styleUrl: './agent-wishlist-items.component.css',
 })
 export class AgentWishlistItemsComponent implements OnInit, OnDestroy {
   @Output() callParentRefreshData = new EventEmitter<any>();
+  worklistItems: any[] = [];
 
-  constructor() {}
+  private subscriptionData = new Subscription();
 
-  ngOnInit(): void {}
+  constructor(
+    private agentDataService: AgentDataService,
+    public dialog: MatDialog,
+    private userAcctInfoDataService: UserAcctInfoDataService
+  ) {}
+
+  ngOnInit(): void {
+    this.subscriptionData.add(
+      this.agentDataService.agentInfoChanged.subscribe((agentInfo) => {
+        this.worklistItems = agentInfo.worklistItems;
+      })
+    );
+  }
 
   onCloseModal() {
     const modalDiv = document.getElementById('modal-agent-worklist-info');
@@ -40,7 +62,9 @@ export class AgentWishlistItemsComponent implements OnInit, OnDestroy {
     // }
   }
 
+  onCloseWorklistItem(worklistInfo: any): void {
+    this.onCloseModal();
+  }
 
   ngOnDestroy(): void {}
-
 }
