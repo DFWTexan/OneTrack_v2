@@ -27,6 +27,7 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
   id: number = 0;
   agentInfo: AgentInfo = {} as AgentInfo;
   ticklerCount: number = 0;
+  worklistCount: number = 0;
   isShowLicenseMgmt: boolean = false;
   isShowTickle: boolean = false;
 
@@ -52,6 +53,7 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
           .subscribe((agentInfo: AgentInfo) => {
             this.isLoading = false;
             this.ticklerCount = agentInfo.ticklerItems.length;
+            this.worklistCount = agentInfo.worklistItems.length;
             this.agentInfo = agentInfo;
           })
       );
@@ -97,6 +99,7 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
         .subscribe((agentInfo: AgentInfo) => {
           this.isLoading = false;
           this.ticklerCount = agentInfo.ticklerItems.length;
+          this.worklistCount = agentInfo.worklistItems.length;
           this.agentInfo = agentInfo;
         })
     );

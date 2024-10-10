@@ -64,6 +64,7 @@ export interface AgentInfo {
   licenseItems: LicenseItem[];
   appointmentItems: AppointmentItem[];
   ticklerItems: TicklerItem[];
+  worklistItems: WorklistItem[];
 }
 
 export interface EmploymentHistory {
@@ -165,7 +166,6 @@ export interface LicenseItem {
   ascEmployeeLicenseID?: number;
   ascLicenseName?: string;
 }
-
 export interface AppointmentItem {
   licenseID: number;
   licenseState: string;
@@ -189,4 +189,11 @@ export interface TicklerItem {
   employeeLicenseID?: number;
   ticklerMessage?: string;
   ticklerDueDate?: Date;
+}
+
+export interface WorklistItem {
+  workListDataID: number;
+  workListName?: string;
+  createDate?: Date;
+  licenseTech?: string;
 }

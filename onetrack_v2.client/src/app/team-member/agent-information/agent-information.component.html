@@ -46,6 +46,24 @@
             </mat-icon>
           </button>
         </div>
+        <div *ngIf="worklistCount > 0">
+          <button
+            mat-icon-button
+            [ngStyle]="{
+              color: '#228B22'
+            }"
+            (click)="modalService.open('modal-agent-worklist-info')"
+            [matTooltip]="'View Worklist Item(s)'"
+          >
+            <mat-icon
+              [matBadge]="worklistCount"
+              matBadgeColor="warn"
+              aria-hidden="false"
+            >
+            assignment
+            </mat-icon>
+          </button>
+        </div>
         <!-- <div>
           <button
             mat-icon-button
@@ -144,6 +162,21 @@
       <app-agent-tickler-info
         (callParentRefreshData)="onChildCallRefreshData()"
       ></app-agent-tickler-info>
+    </div>
+  </div>
+</modal>
+
+<!-- Modal: DISPLAY-WORKLIST-ITEMS -->
+<modal id="modal-agent-worklist-info">
+  <div class="modal-header">
+    <h1 class="modal-title">Worklist Item(s)</h1>
+  </div>
+  <div class="modal-body">
+    <div>
+      <!-- <app-agent-tickler-info
+        (callParentRefreshData)="onChildCallRefreshData()"
+      ></app-agent-tickler-info> -->
+      WORKLIST ITEMS...
     </div>
   </div>
 </modal>

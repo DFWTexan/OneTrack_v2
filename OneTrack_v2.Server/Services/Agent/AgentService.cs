@@ -295,6 +295,10 @@ namespace OneTrack_v2.Services
                 var agentTicklers = FillTicklerItems(agent.EmploymentID);
                 agent.TicklerItems = agentTicklers;
 
+                //Agent Worklist Items
+                var agentWorklist = FillWorklistItems(agent.EmployeeID);
+                agent.WorklistItems = agentWorklist;
+
                 result.Success = true;
                 result.ObjData = agent;
                 result.StatusCode = 200;
@@ -2733,6 +2737,25 @@ namespace OneTrack_v2.Services
                 }).ToList();
 
             return ticklerItems;
+        }
+        private List<WorklistItem> FillWorklistItems(int vEmployeeID)
+        {
+            var result = _db.WorkListData
+                    .AsEnumerable() // Switch to in-memory processing
+                    .Where(w => w.WorkListData != null &&
+                                w.WorkListData.Split('|').ElementAtOrDefault(0) == vEmployeeID.ToString() &&
+                                w.ProcessDate == null &&
+                                w.ProcessedBy == null)
+                    .Select(w => new WorklistItem
+                    {
+                        WorkListDataID = w.WorkListDataId,
+                        WorkListName = w.WorkListName,
+                        CreateDate = w.CreateDate,
+                        LicenseTech = w.LicenseTech
+                    })
+                    .ToList();
+
+            return result;
         }
         #endregion
     }
