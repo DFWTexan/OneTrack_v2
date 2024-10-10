@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { MiscDataService, WorkListDataService } from '../_services';
+import { MiscDataService, UserAcctInfoDataService, WorkListDataService } from '../_services';
 import { LicenseTech } from '../_Models';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { InfoDialogComponent } from '../_components';
 
 @Component({
   selector: 'app-work-list',
@@ -12,6 +15,8 @@ export class WorkListComponent implements OnInit {
   worklistData: any[] = [];
   worklistNames: string[] = ['Loading...'];
   licenseTechs: LicenseTech[] = [];
+  selectedRowIndex: number | null = null;
+  selectedElement: string | null = null;
 
   workListName: string = 'Agent Address Change';
   licenseTech: string = 'T9999999';
@@ -23,7 +28,10 @@ export class WorkListComponent implements OnInit {
 
   constructor(
     public workListDataService: WorkListDataService,
-    public miscDataService: MiscDataService
+    public miscDataService: MiscDataService,
+    public dialog: MatDialog,
+    private router: Router,
+    public userAcctInfoDataService: UserAcctInfoDataService
   ) {
     // this.selectedLicenseTech = null;
     this.selectedDate = null;
@@ -73,6 +81,26 @@ export class WorkListComponent implements OnInit {
     const value = target.value;
     this.selectedLicenseTech = value;
     this.fetchWorkListData();
+  }
+
+  selectRow(event: MouseEvent, rowDataEmployeeID: string) {
+    event.preventDefault();
+
+    const dialogRef = this.dialog.open(InfoDialogComponent, {
+      data: { message: 'Loading Agent Info..' },
+    });
+
+    // Delay the execution of the blocking operation
+    setTimeout(() => {
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate([
+          '../../team/agent-info',
+          rowDataEmployeeID,
+          'tm-info-mgmt',
+        ]);
+      });
+      dialogRef.close();
+    }, 100);
   }
 
   onSubmit(): void {

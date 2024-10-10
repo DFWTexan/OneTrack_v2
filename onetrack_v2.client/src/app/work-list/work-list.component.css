@@ -8,3 +8,7 @@
   width: 150px;
   font-size: 1.3rem;
 }
+
+.table tbody tr:hover {
+  cursor: pointer;
+}
