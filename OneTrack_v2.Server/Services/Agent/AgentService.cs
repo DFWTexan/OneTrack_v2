@@ -2343,7 +2343,7 @@ namespace OneTrack_v2.Services
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
 
-                        cmd.Parameters.Add(new SqlParameter("@WorklistID", vInput.WorkListDataID));
+                        cmd.Parameters.Add(new SqlParameter("@WorkListDataID", vInput.WorkListDataID));
                         cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
 
                         conn.Open();

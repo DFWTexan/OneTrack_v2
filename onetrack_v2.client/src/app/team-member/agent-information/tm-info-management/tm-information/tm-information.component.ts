@@ -8,6 +8,7 @@ import {
   AgentComService,
   AgentDataService,
   AppComService,
+  ErrorMessageService,
   LicIncentiveInfoDataService,
   UserAcctInfoDataService,
 } from '../../../../_services';
@@ -39,6 +40,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
 
   constructor(
+    public errorMessageService: ErrorMessageService,
     public agentDataService: AgentDataService,
     public agentComService: AgentComService,
     protected modalService: ModalService,
@@ -145,8 +147,9 @@ export class TmInformationComponent implements OnInit, OnDestroy {
                     alert('License Appointment Deleted');
                   },
                   error: (error) => {
-                    console.error(error);
-                    // handle the error here
+                    if (error.error && error.error.errMessage) {
+                      this.errorMessageService.setErrorMessage(error.error.errMessage);
+                    }
                   },
                 })
             );
@@ -188,8 +191,9 @@ export class TmInformationComponent implements OnInit, OnDestroy {
                     });
                 },
                 error: (error) => {
-                  console.error(error);
-                  // handle the error here
+                  if (error.error && error.error.errMessage) {
+                    this.errorMessageService.setErrorMessage(error.error.errMessage);
+                  }
                 },
               })
             );

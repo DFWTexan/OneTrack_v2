@@ -6,7 +6,7 @@ import {
   Output,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AgentDataService, UserAcctInfoDataService } from '../../../_services';
+import { AgentDataService, ErrorMessageService, UserAcctInfoDataService } from '../../../_services';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../_components';
 
@@ -22,6 +22,7 @@ export class AgentWishlistItemsComponent implements OnInit, OnDestroy {
   private subscriptionData = new Subscription();
 
   constructor(
+    public errorMessageService: ErrorMessageService,
     private agentDataService: AgentDataService,
     public dialog: MatDialog,
     private userAcctInfoDataService: UserAcctInfoDataService
@@ -59,21 +60,21 @@ export class AgentWishlistItemsComponent implements OnInit, OnDestroy {
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-      //  this.ticklerMgmtDataService
-      //     .closeTicklerItem({
-      //       TicklerID: ticklerInfo.ticklerID,
-      //       TicklerCloseByLicenseTechID: ticklerInfo.licenseTechID,
-      //       UserSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
-      //     })
-      //     .subscribe({
-      //       next: (response) => {
-      //         this.callParentRefreshData.emit();
-      //       },
-      //       error: (error) => {
-      //         console.error(error);
-      //         // handle the error here
-      //       },
-      //     });
+       this.agentDataService
+          .closeWorklistItem({
+            WorkListDataID: worklistInfo.workListDataID,
+            UserSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
+          })
+          .subscribe({
+            next: (response) => {
+              this.callParentRefreshData.emit();
+            },
+            error: (error) => {
+              if (error.error && error.error.errMessage) {
+                this.errorMessageService.setErrorMessage(error.error.errMessage);
+              }
+            },
+          });
       }
     });
   }
