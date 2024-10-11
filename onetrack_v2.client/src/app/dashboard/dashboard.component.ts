@@ -9,6 +9,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { interval, Subscription, switchMap } from 'rxjs';
 
 import {
+  AgentDataService,
   AppComService,
   DashboardDataService,
   ErrorMessageService,
@@ -93,12 +94,12 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(
     public errorMessageService: ErrorMessageService,
     public appComService: AppComService,
+    private agentDataService: AgentDataService,
     public workListDataService: WorkListDataService,
     public ticklerMgmtDataService: TicklerMgmtDataService,
     public ticklerMgmtComService: TicklerMgmtComService,
     public miscDataService: MiscDataService,
     public dashboardDataService: DashboardDataService,
-    // private drpdwnDataService: DropdownDataService,
     public licIncentiveInfoDataService: LicIncentiveInfoDataService,
     public dialog: MatDialog,
     protected modalService: ModalService,
@@ -476,40 +477,46 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
           }
         });
         break;
-      // case 'deleteLicAppt':
-      //   const dialogRef_Appt = this.dialog.open(ConfirmDialogComponent, {
-      //     width: '250px',
-      //     data: {
-      //       title: 'Confirm Action',
-      //       message:
-      //         'You are about to DELETE license appointment ' +
-      //         vObject.state + '-' + vObject.status + '-' + vObject.loa + '-' + vObject.coAbv +
-      //         '. Do you want to proceed?',
-      //     },
-      //   });
+      case 'closeWorklistItem':
+        const dialogRef_whisItem = this.dialog.open(ConfirmDialogComponent, {
+          width: '250px',
+          data: {
+            title: 'Confirm Action',
+            message:
+              'You want to close Worklist Item (' +
+              this.vObject.WorkListDataID +
+              ')\n',
+            // ' ' +
+            // this.agentInfo.lastName,
+          },
+        });
 
-      //   dialogRef_Appt.afterClosed().subscribe((result) => {
-      //     if (result) {
-      //       this.subscriptions.add(
-      //         this.licenseIncentiveInfoDataService
-      //           .deleteLicenseAppointment({
-      //             employeeAppointmentID: vObject.employeeAppointmentID,
-      //             employeeLicenseID: vObject.employeeLicenseID,
-      //             userSOEID: this.userInfoDataService.userAcctInfo.soeid,
-      //           })
-      //           .subscribe({
-      //             next: (response) => {
-      //               alert('License Appointment Deleted');
-      //             },
-      //             error: (error) => {
-      //               console.error(error);
-      //               // handle the error here
-      //             },
-      //           })
-      //       );
-      //     }
-      //   });
-      //   break;
+        dialogRef_whisItem.afterClosed().subscribe((result) => {
+          if (result) {
+            this.agentDataService
+              .closeWorklistItem({
+                WorkListDataID: this.vObject.WorkListDataID,
+                UserSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
+              })
+              .subscribe({
+                next: (response) => {
+                  // this.callParentRefreshData.emit();
+                },
+                error: (error) => {
+                  if (error.error && error.error.errMessage) {
+                    this.errorMessageService.setErrorMessage(
+                      error.error.errMessage
+                    );
+                  }
+                },
+              }
+            );
+          } else {
+            // Uncheck the checkbox if the user selects "No"
+            checkbox.checked = false;
+          }
+        });
+        break;
       // case 'deleteLicense':
       //   const dialogRef_License = this.dialog.open(ConfirmDialogComponent, {
       //     width: '250px',

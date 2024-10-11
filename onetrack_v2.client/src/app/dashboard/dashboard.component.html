@@ -80,7 +80,24 @@
                   [class.selected]="selectedRowIndex === i"
                   (click)="selectRow($event, row.workListData.split('|')[2])"
                 >
-                  <td><input type="checkbox" /></td>
+                  <td>
+                    <input
+                      type="checkbox"
+                      #checkbox
+                      (click)="
+                        openConfirmDialog(
+                          'closeWorklistItem',
+                          'Worklist',
+                          {
+                            WorkListDataID: row.workListData.split('|')[0],
+                            UserSOEID: userAcctInfoDataService.userAcctInfo.soeid,
+                          },
+                          checkbox
+                        );
+                        $event.stopPropagation();
+                      "
+                    />
+                  </td>
                   <td
                     class="input-td-mini"
                     *ngFor="let cell of row.workListData.split('|')"

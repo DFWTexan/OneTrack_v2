@@ -6,7 +6,11 @@ import {
   Output,
 } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AgentDataService, ErrorMessageService, UserAcctInfoDataService } from '../../../_services';
+import {
+  AgentDataService,
+  ErrorMessageService,
+  UserAcctInfoDataService,
+} from '../../../_services';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../_components';
 
@@ -56,11 +60,11 @@ export class AgentWishlistItemsComponent implements OnInit, OnDestroy {
           // ticklerInfo.lkpValue +
           '. Do you want to proceed?',
       },
-    }); 
+    });
 
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-       this.agentDataService
+        this.agentDataService
           .closeWorklistItem({
             WorkListDataID: worklistInfo.workListDataID,
             UserSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
@@ -71,10 +75,13 @@ export class AgentWishlistItemsComponent implements OnInit, OnDestroy {
             },
             error: (error) => {
               if (error.error && error.error.errMessage) {
-                this.errorMessageService.setErrorMessage(error.error.errMessage);
+                this.errorMessageService.setErrorMessage(
+                  error.error.errMessage
+                );
               }
             },
-          });
+          }
+        );
       }
     });
   }
