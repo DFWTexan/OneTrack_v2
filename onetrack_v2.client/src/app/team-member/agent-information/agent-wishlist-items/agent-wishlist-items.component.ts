@@ -8,6 +8,7 @@ import {
 import { Subscription } from 'rxjs';
 import { AgentDataService, UserAcctInfoDataService } from '../../../_services';
 import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../../_components';
 
 @Component({
   selector: 'app-agent-wishlist-items',
@@ -39,31 +40,42 @@ export class AgentWishlistItemsComponent implements OnInit, OnDestroy {
     if (modalDiv != null) {
       modalDiv.style.display = 'none';
     }
-    // if (this.jobTitleForm.dirty && !this.isFormSubmitted) {
-    //   if (
-    //     confirm('You have unsaved changes. Are you sure you want to close?')
-    //   ) {
-    //     const modalDiv = document.getElementById('modal-edit-jobTitle-history');
-    //     if (modalDiv != null) {
-    //       modalDiv.style.display = 'none';
-    //     }
-    //     this.jobTitleForm.reset();
-    //     this.jobTitleForm.patchValue({
-    //       jobTitleID: 0,
-    //       isCurrent: false,
-    //     });
-    //   }
-    // } else {
-    //   this.isFormSubmitted = false;
-    //   const modalDiv = document.getElementById('modal-edit-jobTitle-history');
-    //   if (modalDiv != null) {
-    //     modalDiv.style.display = 'none';
-    //   }
-    // }
   }
 
   onCloseWorklistItem(worklistInfo: any): void {
     this.onCloseModal();
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+        title: 'Confirm Action',
+        message:
+          'You are about to CLOSE Worklist Item (' +
+          worklistInfo.workListDataID +
+          ')' +
+          // ticklerInfo.lkpValue +
+          '. Do you want to proceed?',
+      },
+    }); 
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+      //  this.ticklerMgmtDataService
+      //     .closeTicklerItem({
+      //       TicklerID: ticklerInfo.ticklerID,
+      //       TicklerCloseByLicenseTechID: ticklerInfo.licenseTechID,
+      //       UserSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
+      //     })
+      //     .subscribe({
+      //       next: (response) => {
+      //         this.callParentRefreshData.emit();
+      //       },
+      //       error: (error) => {
+      //         console.error(error);
+      //         // handle the error here
+      //       },
+      //     });
+      }
+    });
   }
 
   ngOnDestroy(): void {}

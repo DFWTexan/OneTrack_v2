@@ -292,6 +292,14 @@ namespace OneTrack_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpPut]
+        public async Task<ActionResult> CloseWorklistItem([FromBody] IputAgentWorklistItem input)
+        {
+            var result = await Task.Run(() => _agentService.CloseWorklistItem(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
         #endregion
     }
 }
