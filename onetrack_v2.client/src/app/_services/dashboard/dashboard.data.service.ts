@@ -1,20 +1,22 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 
 import { environment } from '../../_environments/environment';
 import { DashboardData } from '../../_Models';
+import { ConfigService } from '../config/config.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DashboardDataService {
-  private apiUrl: string = environment.apiUrl + 'Dashboard/';
+  // private apiUrl: string = environment.apiUrl + 'Dashboard/';
+  private apiUrl: string = this.configService.config.apiUrl + 'Dashboard/';
   adBankerIncompleteCount: number = 0;
   adBankerIncompleteCountChanged = new Subject<number>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, public configService: ConfigService) {}
 
   // fetchDashboardData(): Observable<DashboardData> {
   //   return this.http
@@ -109,14 +111,14 @@ export class DashboardDataService {
       );
   }
 
-  updateIncompleteStatus(vObject: any){
+  updateIncompleteStatus(vObject: any) {
     return this.http
       .post<{
         success: boolean;
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl +'CompleteImportStatus', vObject)
+      }>(this.apiUrl + 'CompleteImportStatus', vObject)
       .pipe(
         map((response) => {
           return response;
@@ -161,6 +163,27 @@ export class DashboardDataService {
         objData: any;
         errMessage: string;
       }>(`${this.apiUrl}GetAuditLog${queryParams}`)
+      .pipe(
+        map((response) => {
+          if (response.success && response.objData) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  closeWorklistItem(wishlistItem: any): Observable<any> {
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/CloseWorklistItem';
+
+    return this.http
+      .put<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, wishlistItem)
       .pipe(
         map((response) => {
           if (response.success && response.objData) {

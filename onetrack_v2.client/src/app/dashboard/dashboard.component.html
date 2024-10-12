@@ -50,6 +50,10 @@
             [(ngModel)]="worklistdate"
           />
         </div>
+        <div class="col-md-6 d-flex justify-content-end" *ngIf="worklistData.length > 0">
+          <span>Number of Items: {{worklistData.length}}</span>
+        </div>
+
       </div>
       <mat-divider></mat-divider>
       <div class="row" *ngIf="worklistData.length == 0">

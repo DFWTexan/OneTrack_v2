@@ -243,6 +243,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         )
         .subscribe((worklistData) => {
           this.worklistData = worklistData;
+          this.cdr.detectChanges(); 
         })
     );
   }
@@ -493,14 +494,14 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
         dialogRef_whisItem.afterClosed().subscribe((result) => {
           if (result) {
-            this.agentDataService
+            this.dashboardDataService
               .closeWorklistItem({
                 WorkListDataID: this.vObject.WorkListDataID,
                 UserSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
               })
               .subscribe({
                 next: (response) => {
-                  // this.callParentRefreshData.emit();
+                  this.fetchWorkListData();
                 },
                 error: (error) => {
                   if (error.error && error.error.errMessage) {
