@@ -12,5 +12,6 @@ namespace OneTrak_v2.Services
         public ReturnResult CompleteImportStatus([FromBody] IputADBankerImportStatus vInput);
         public ReturnResult GetAuditModifiedBy(bool vIsActive = true);
         public ReturnResult GetAuditLog(DateTime vStartDate, DateTime vEndDate, string? vModifiedBy = null);
+        public ReturnResult GetEmployeeIdWithTMemberID(string vMemberID);
     }
 }

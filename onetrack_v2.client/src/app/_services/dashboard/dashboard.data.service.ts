@@ -6,6 +6,7 @@ import { map, switchMap } from 'rxjs/operators';
 import { environment } from '../../_environments/environment';
 import { DashboardData } from '../../_Models';
 import { ConfigService } from '../config/config.service';
+import { AgentDataService } from '../agent/agent.data.service';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,10 @@ export class DashboardDataService {
   adBankerIncompleteCount: number = 0;
   adBankerIncompleteCountChanged = new Subject<number>();
 
-  constructor(private http: HttpClient, public configService: ConfigService) {}
+  constructor(
+    private http: HttpClient,
+    public configService: ConfigService,
+  ) {}
 
   // fetchDashboardData(): Observable<DashboardData> {
   //   return this.http
@@ -103,6 +107,25 @@ export class DashboardDataService {
             this.adBankerIncompleteCountChanged.next(
               this.adBankerIncompleteCount
             );
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  fetchEmployeeIdWithTMemberID(memberID: string): Observable<any> {
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl + 'GetEmployeeIdWithTMemberID/' + memberID )
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
             return response.objData;
           } else {
             throw new Error(response.errMessage || 'Unknown error');

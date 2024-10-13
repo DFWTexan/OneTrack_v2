@@ -243,7 +243,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         )
         .subscribe((worklistData) => {
           this.worklistData = worklistData;
-          this.cdr.detectChanges(); 
+          this.cdr.detectChanges();
         })
     );
   }
@@ -510,8 +510,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
                     );
                   }
                 },
-              }
-            );
+              });
           } else {
             // Uncheck the checkbox if the user selects "No"
             checkbox.checked = false;
@@ -564,6 +563,20 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         break;
     }
   }
+  onSelectADBankerRow(event: MouseEvent, memberID: any): void {
+    if (memberID === 0 || memberID === null || memberID === '') return;
+    this.subscriptions.add(
+      this.dashboardDataService
+        .fetchEmployeeIdWithTMemberID(memberID)
+        .subscribe((employeeID: number) => {
+          this.router.navigate([
+            '../../team/agent-info',
+            employeeID,
+            'tm-info-mgmt',
+          ]);
+        })
+    );
+  }
 
   // AUDIT LOG
   onChangesStartDate(event: any) {
@@ -580,8 +593,18 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             ? null
             : this.modifiedBySelected
         )
-        .subscribe((auditLogData) => {
-          this.auditLogData = auditLogData;
+        // .subscribe((auditLogData) => {
+        //   this.auditLogData = auditLogData;
+        // })
+        .subscribe({
+          next: (auditLogData) => {
+            this.auditLogData = auditLogData;
+          },
+          error: (error) => {
+            if (error.error && error.error.errMessage) {
+              this.errorMessageService.setErrorMessage(error.error.errMessage);
+            }
+          },
         })
     );
   }

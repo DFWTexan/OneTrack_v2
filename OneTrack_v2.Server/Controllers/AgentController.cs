@@ -39,6 +39,14 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
+        //[HttpGet("{memberID}")]
+        //public async Task<IActionResult> GetAgentByTMemberID(int memberID)
+        //{
+        //    var result = await Task.Run(() => _agentService.GetAgentByTMemberID(memberID));
+
+        //    return StatusCode(result.StatusCode, result);
+        //}
+
         [HttpGet("{employmentID}")]
         public async Task<ActionResult> GetLicenses(int employmentID)
         {

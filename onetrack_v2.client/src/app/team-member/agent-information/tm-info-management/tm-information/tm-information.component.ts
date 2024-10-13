@@ -113,8 +113,9 @@ export class TmInformationComponent implements OnInit, OnDestroy {
                     this.location.back();
                   },
                   error: (error) => {
-                    console.error(error);
-                    // handle the error here
+                    if (error.error && error.error.errMessage) {
+                      this.errorMessageService.setErrorMessage(error.error.errMessage);
+                    }
                   },
                 })
             );

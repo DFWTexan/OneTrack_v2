@@ -241,6 +241,29 @@ namespace OneTrak_v2.Services
 
             return result;
         }
+        public ReturnResult GetEmployeeIdWithTMemberID(string vMemberID)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var employeeID = _db.Employees.Where(e => e.Geid == vMemberID).Select(e => e.EmployeeId).FirstOrDefault();
+
+                result.ObjData = employeeID;
+                result.Success = true;
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# DASH-8807-22872].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
+            }
+
+            return result;
+        }
 
     }
 }

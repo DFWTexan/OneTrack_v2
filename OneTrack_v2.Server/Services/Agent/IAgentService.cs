@@ -8,6 +8,7 @@ namespace OneTrack_v2.Services
     public interface IAgentService
     {
         public ReturnResult GetAgentByEmployeeID(int vEmployeeID);
+        //public ReturnResult GetAgentByTMemberID(int vTMemberID);
         public ReturnResult GetLicenses(int vEmploymentID);
         public ReturnResult GetAppointments(int vEmploymentID);
         public ReturnResult GetLicenseAppointments(int vEmploymentID);

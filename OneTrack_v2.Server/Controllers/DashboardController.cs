@@ -60,6 +60,12 @@ namespace OneTrak_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+        [HttpGet("{memberID}")]
+        public async Task<ActionResult> GetEmployeeIdWithTMemberID(string memberID)
+        {
+            var result = await Task.Run(() => _dashboardService.GetEmployeeIdWithTMemberID(memberID));
 
+            return StatusCode(result.StatusCode, result);
+        }
     }
 }

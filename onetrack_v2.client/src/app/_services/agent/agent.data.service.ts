@@ -123,6 +123,39 @@ export class AgentDataService {
       );
   }
 
+  // fetchAgentInfoByMemberID(memberID: number): Observable<AgentInfo> {
+  //   this.apiUrl = this.configService.config.apiUrl + 'Agent/GetAgentByTMemberID/';
+
+  //   return this.http
+  //     .get<{
+  //       success: boolean;
+  //       statusCode: number;
+  //       objData: AgentInfo;
+  //       errMessage: string;
+  //     }>(this.apiUrl + memberID)
+  //     .pipe(
+  //       map((response) => {
+  //         if (response.success && response.statusCode === 200) {
+  //           this.agentInformation = response.objData;
+  //           this.agentInfoChanged.next(this.agentInformation);
+
+  //           this.diaryItems = this.agentInformation.diaryItems;
+  //           this.diaryItemsChanged.next(this.diaryItems);
+
+  //           this.agentLicenseAppointments =
+  //             this.agentInformation.agentLicenseAppointments;
+  //           this.agentLicenseAppointmentsChanged.next(
+  //             this.agentInformation.agentLicenseAppointments
+  //           );
+  //           this.fetchAgentLicenseAppointments(response.objData.employmentID);
+  //           return response.objData;
+  //         } else {
+  //           throw new Error(response.errMessage || 'Unknown error');
+  //         }
+  //       })
+  //     );
+  // }
+
   fetchAgentLicenseAppointments(employmentID: number) {
     this.apiUrl = this.configService.config.apiUrl + 'Agent/GetLicenseAppointments/';
 

@@ -317,6 +317,12 @@ namespace OneTrack_v2.Services
             return result;
         }
 
+        //public ReturnResult GetAgentByTMemberID(int vTMemberID)
+        //{
+        //    var employeeID = _db.Employees.Where(e => e.Geid == vTMemberID.ToString()).Select(e => e.EmployeeId).FirstOrDefault();
+        //    return GetAgentByEmployeeID(employeeID);
+        //}
+
         /// <summary>
         ///  <param name="@vchEmploymentID" int>606709</param>   
         ///  <returns>
