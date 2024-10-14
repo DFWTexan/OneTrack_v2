@@ -37,6 +37,10 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   isLegacyView = false;
   activeTab: string = 'license';
 
+  sortedLicenseItems = [...this.agentInfo.licenseItems];
+  sortColumn: string = '';
+  sortDirection: 'asc' | 'desc' = 'asc';
+
   private subscriptions = new Subscription();
 
   constructor(
@@ -263,6 +267,28 @@ export class TmInformationComponent implements OnInit, OnDestroy {
 
   onSetOpenLicenseID(displayOpenLicenseID: number) {
     this.displayOpenLicenseID = displayOpenLicenseID;
+  }
+
+  onSortData(column: string) {
+    if (this.sortColumn === column) {
+      this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
+    } else {
+      this.sortColumn = column;
+      this.sortDirection = 'asc';
+    }
+
+    // this.sortedLicenseItems.sort((a, b) => {
+    //   const valueA = a[column];
+    //   const valueB = b[column];
+
+    //   if (valueA < valueB) {
+    //     return this.sortDirection === 'asc' ? -1 : 1;
+    //   } else if (valueA > valueB) {
+    //     return this.sortDirection === 'asc' ? 1 : -1;
+    //   } else {
+    //     return 0;
+    //   }
+    // });
   }
 
   ngOnDestroy() {
