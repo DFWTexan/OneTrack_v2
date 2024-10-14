@@ -84,6 +84,7 @@
                 <tr
                   *ngFor="let row of worklistData.slice(1); let i = index"
                   [class.selected]="selectedRowIndex === i"
+                  [class.no-pointer]="selectedWorkListName === 'In Process Status'"
                   (click)="selectRow($event, row.workListData.split('|')[2])"
                 >
                   <td>

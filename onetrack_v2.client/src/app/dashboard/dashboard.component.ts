@@ -215,6 +215,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   // WORKLIST
   selectRow(event: MouseEvent, rowDataEmployeeID: string) {
+    if(this.selectedWorkListName === 'In Process Status') return;
+    
     event.preventDefault();
 
     const dialogRef = this.dialog.open(InfoDialogComponent, {
@@ -250,6 +252,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   onChangeWorkListName(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;
+
     this.selectedWorkListName = value;
     this.fetchWorkListData();
   }

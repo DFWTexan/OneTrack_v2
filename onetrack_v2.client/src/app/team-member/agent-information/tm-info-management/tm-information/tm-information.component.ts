@@ -64,12 +64,24 @@ export class TmInformationComponent implements OnInit, OnDestroy {
 
     this.agentInfo = this.agentDataService.agentInformation;
     this.subscriptions.add(
-      this.agentDataService.agentInfoChanged.subscribe(
-        (agentInfo: AgentInfo) => {
+      this.agentDataService.agentInfoChanged
+      // .subscribe(
+      //   (agentInfo: AgentInfo) => {
+      //     this.isLoading = false;
+      //     this.agentInfo = agentInfo;
+      //   }
+      // )
+      .subscribe({
+        next: (agentInfo: AgentInfo) => {
           this.isLoading = false;
           this.agentInfo = agentInfo;
-        }
-      )
+        },
+        error: (error) => {
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+          }
+        },
+      })
     );
   }
 
