@@ -542,25 +542,115 @@
                     <tr style="background-color: whitesmoke">
                       <th scope="col">&nbsp;</th>
                       <!-- <th scope="col">State</th> -->
-                      <th scope="col" (click)="onSortData('licenseState')">State</th>
+                      <th
+                        scope="col"
+                        [ngClass]="{
+                          'th-sort-active': sortColumn === 'licenseState',
+                          'th-sort': sortColumn !== 'licenseState'
+                        }"
+                        (click)="onSortData('licenseState', 'license')"
+                      >
+                        State
+                      </th>
                       <!-- <th scope="col">L.O.A</th> -->
-                      <th scope="col" (click)="onSortData('lineOfAuthority')">L.O.A</th>
+                      <th
+                        scope="col"
+                        [ngClass]="{
+                          'th-sort-active': sortColumn === 'lineOfAuthority',
+                          'th-sort': sortColumn !== 'lineOfAuthority'
+                        }"
+                        (click)="onSortData('lineOfAuthority', 'license')"
+                      >
+                        L.O.A
+                      </th>
                       <!-- <th scope="col">Status</th> -->
-                      <th scope="col" (click)="onSortData('licenseStatus')">Status</th>
+                      <th
+                        scope="col"
+                        [ngClass]="{
+                          'th-sort-active': sortColumn === 'licenseStatus',
+                          'th-sort': sortColumn !== 'licenseStatus'
+                        }"
+                        (click)="onSortData('licenseStatus', 'license')"
+                      >
+                        Status
+                      </th>
                       <!-- <th scope="col">License ID</th> -->
-                      <th scope="col" (click)="onSortData('employeeLicenseId')">License ID</th>
+                      <th
+                        scope="col"
+                        [ngClass]="{
+                          'th-sort-active': sortColumn === 'employeeLicenseId',
+                          'th-sort': sortColumn !== 'employeeLicenseId'
+                        }"
+                        (click)="onSortData('employeeLicenseId', 'license')"
+                      >
+                        License ID
+                      </th>
                       <!-- <th scope="col">Name</th> -->
-                      <th scope="col" (click)="onSortData('licenseName')">Name</th>
+                      <th
+                        scope="col"
+                        [ngClass]="{
+                          'th-sort-active': sortColumn === 'licenseName',
+                          'th-sort': sortColumn !== 'licenseName'
+                        }"
+                        (click)="onSortData('licenseName', 'license')"
+                      >
+                        Name
+                      </th>
                       <!-- <th scope="col">Res/NonRes</th> -->
-                      <th scope="col" (click)="onSortData('nonResident')">Res/NonRes</th>
+                      <th
+                        scope="col"
+                        [ngClass]="{
+                          'th-sort-active': sortColumn === 'nonResident',
+                          'th-sort': sortColumn !== 'nonResident'
+                        }"
+                        (click)="onSortData('nonResident', 'license')"
+                      >
+                        Res/NonRes
+                      </th>
                       <!-- <th scope="col">Org. Date</th> -->
-                      <th scope="col" (click)="onSortData('originalIssueDate')">Org. Date</th>
+                      <th
+                        scope="col"
+                        [ngClass]="{
+                          'th-sort-active': sortColumn === 'originalIssueDate',
+                          'th-sort': sortColumn !== 'originalIssueDate'
+                        }"
+                        (click)="onSortData('originalIssueDate', 'license')"
+                      >
+                        Org. Date
+                      </th>
                       <!-- <th scope="col">LOA Date</th> -->
-                      <th scope="col" (click)="onSortData('lineOfAuthIssueDate')">LOA Date</th>
+                      <th
+                        scope="col"
+                        [ngClass]="{
+                          'th-sort-active': sortColumn === 'lineOfAuthIssueDate',
+                          'th-sort': sortColumn !== 'lineOfAuthIssueDate'
+                        }"
+                        (click)="onSortData('lineOfAuthIssueDate', 'license')"
+                      >
+                        LOA Date
+                      </th>
                       <!-- <th scope="col">Eff. Date</th> -->
-                      <th scope="col" (click)="onSortData('licenseEffectiveDate')">Eff. Date</th>
+                      <th
+                        scope="col"
+                        [ngClass]="{
+                          'th-sort-active': sortColumn === 'licenseEffectiveDate',
+                          'th-sort': sortColumn !== 'licenseEffectiveDate'
+                        }"
+                        (click)="onSortData('licenseEffectiveDate', 'license')"
+                      >
+                        Eff. Date
+                      </th>
                       <!-- <th scope="col">Exp. Date</th> -->
-                      <th scope="col" (click)="onSortData('licenseExpirationDate')">Exp. Date</th>
+                      <th
+                        scope="col"
+                        [ngClass]="{
+                          'th-sort-active': sortColumn === 'licenseExpirationDate',
+                          'th-sort': sortColumn !== 'licenseExpirationDate'
+                        }"
+                        (click)="onSortData('licenseExpirationDate', 'license')"
+                      >
+                        Exp. Date
+                      </th>
                       <th scope="col" class="text-center" style="width: 10rem">
                         ACTION
                       </th>
@@ -568,10 +658,7 @@
                   </thead>
                   <tbody>
                     <tr
-                      *ngFor="
-                        let license of sortedLicenseItems;
-                        let i = index
-                      "
+                      *ngFor="let license of sortedLicenseItems; let i = index"
                       [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
                     >
                       <td class="align-middle">
@@ -710,16 +797,114 @@
                   <thead>
                     <tr style="background-color: whitesmoke">
                       <th scope="col">&nbsp;</th>
-                      <th scope="col">State</th>
-                      <th scope="col">L.O.A</th>
-                      <th scope="col">License ID</th>
-                      <th scope="col">Status</th>
-                      <!-- <th scope="col">Co. ID</th> -->
-                      <th scope="col">Co. Abv.</th>
-                      <th scope="col">Car. Date</th>
-                      <th scope="col">Eff Date</th>
-                      <th scope="col">Exp. Date</th>
-                      <th scope="col">Term. Date</th>
+                      <!-- <th scope="col">State</th> -->
+                      <th
+                        scope="col"
+                        [ngClass]="{
+                          'th-sort-active': sortColumn === 'licenseState',
+                          'th-sort': sortColumn !== 'licenseState'
+                        }"
+                        (click)="onSortData('licenseState', 'appointment')"
+                      >
+                        State
+                      </th>
+                      <!-- <th scope="col">L.O.A</th> -->
+                      <th
+                        scope="col"
+                        [ngClass]="{
+                          'th-sort-active': sortColumn === 'lineOfAuthority',
+                          'th-sort': sortColumn !== 'lineOfAuthority'
+                        }"
+                        (click)="onSortData('lineOfAuthority', 'appointment')"
+                      >
+                        L.O.A
+                      </th>
+                      <!-- <th scope="col">License ID</th> -->
+                      <th
+                        scope="col"
+                        [ngClass]="{
+                          'th-sort-active': sortColumn === 'employeeLicenseID',
+                          'th-sort': sortColumn !== 'employeeLicenseID'
+                        }"
+                        (click)="onSortData('employeeLicenseID', 'appointment')"
+                      >
+                        License ID
+                      </th>
+                      <!-- <th scope="col">Status</th> -->
+                      <th
+                        scope="col"
+                        [ngClass]="{
+                          'th-sort-active': sortColumn === 'appointmentStatus',
+                          'th-sort': sortColumn !== 'appointmentStatus'
+                        }"
+                        (click)="onSortData('appointmentStatus', 'appointment')"
+                      >
+                        Status
+                      </th>
+                      <!-- <th scope="col">Co. Abv.</th> -->
+                      <th
+                        scope="col"
+                        [ngClass]="{
+                          'th-sort-active': sortColumn === 'companyAbv',
+                          'th-sort': sortColumn !== 'companyAbv'
+                        }"
+                        (click)="onSortData('companyAbv', 'appointment')"
+                      >
+                        Co. Abv.
+                      </th>
+                      <!-- <th scope="col">Car. Date</th> -->
+                      <th
+                        scope="col"
+                        [ngClass]="{
+                          'th-sort-active': sortColumn === 'carrierDate',
+                          'th-sort': sortColumn !== 'carrierDate'
+                        }"
+                        (click)="onSortData('carrierDate', 'appointment')"
+                      >
+                        Car. Date
+                      </th>
+                      <!-- <th scope="col">Eff Date</th> -->
+                      <th
+                        scope="col"
+                        [ngClass]="{
+                          'th-sort-active': sortColumn === 'appointmentEffectiveDate',
+                          'th-sort': sortColumn !== 'appointmentEffectiveDate'
+                        }"
+                        (click)="
+                          onSortData('appointmentEffectiveDate', 'appointment')
+                        "
+                      >
+                        Eff Date
+                      </th>
+                      <!-- <th scope="col">Exp. Date</th> -->
+                      <th
+                        scope="col"
+                        [ngClass]="{
+                          'th-sort-active': sortColumn === 'appointmentExpireDate',
+                          'th-sort': sortColumn !== 'appointmentExpireDate'
+                        }"
+                        (click)="
+                          onSortData('appointmentExpireDate', 'appointment')
+                        "
+                      >
+                        Exp. Date
+                      </th>
+                      <!-- <th scope="col">Term. Date</th> -->
+                      <th
+                        scope="col"
+                        [ngClass]="{
+                          'th-sort-active': sortColumn === 'appointmentTerminationDate',
+                          'th-sort': sortColumn !== 'appointmentTerminationDate'
+                        }"
+                        (click)="
+                          onSortData(
+                            'appointmentTerminationDate',
+                            'appointment'
+                          )
+                        "
+                      >
+                        Term. Date
+                      </th>
                       <th scope="col" class="text-center" style="width: 10rem">
                         ACTION
                       </th>
@@ -728,7 +913,7 @@
                   <tbody>
                     <tr
                       *ngFor="
-                        let appointment of agentInfo.appointmentItems;
+                        let appointment of sortedAppointmentItems;
                         let i = index
                       "
                       [ngClass]="{

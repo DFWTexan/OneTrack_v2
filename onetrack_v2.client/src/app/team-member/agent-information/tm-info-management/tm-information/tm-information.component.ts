@@ -38,6 +38,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   activeTab: string = 'license';
 
   sortedLicenseItems: any[] = [];
+  sortedAppointmentItems: any[] = [];
   sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
@@ -69,24 +70,25 @@ export class TmInformationComponent implements OnInit, OnDestroy {
     this.agentInfo = this.agentDataService.agentInformation;
     this.subscriptions.add(
       this.agentDataService.agentInfoChanged
-      // .subscribe(
-      //   (agentInfo: AgentInfo) => {
-      //     this.isLoading = false;
-      //     this.agentInfo = agentInfo;
-      //   }
-      // )
-      .subscribe({
-        next: (agentInfo: AgentInfo) => {
-          this.isLoading = false;
-          this.agentInfo = agentInfo;
-          this.sortedLicenseItems = [...agentInfo.licenseItems];
-        },
-        error: (error) => {
-          if (error.error && error.error.errMessage) {
-            this.errorMessageService.setErrorMessage(error.error.errMessage);
-          }
-        },
-      })
+        // .subscribe(
+        //   (agentInfo: AgentInfo) => {
+        //     this.isLoading = false;
+        //     this.agentInfo = agentInfo;
+        //   }
+        // )
+        .subscribe({
+          next: (agentInfo: AgentInfo) => {
+            this.isLoading = false;
+            this.agentInfo = agentInfo;
+            this.sortedLicenseItems = [...agentInfo.licenseItems];
+            this.sortedAppointmentItems = [...agentInfo.appointmentItems];
+          },
+          error: (error) => {
+            if (error.error && error.error.errMessage) {
+              this.errorMessageService.setErrorMessage(error.error.errMessage);
+            }
+          },
+        })
     );
   }
 
@@ -131,7 +133,9 @@ export class TmInformationComponent implements OnInit, OnDestroy {
                   },
                   error: (error) => {
                     if (error.error && error.error.errMessage) {
-                      this.errorMessageService.setErrorMessage(error.error.errMessage);
+                      this.errorMessageService.setErrorMessage(
+                        error.error.errMessage
+                      );
                     }
                   },
                 })
@@ -146,7 +150,13 @@ export class TmInformationComponent implements OnInit, OnDestroy {
             title: 'Confirm Action',
             message:
               'You are about to DELETE license appointment ' +
-              vObject.state + '-' + vObject.status + '-' + vObject.loa + '-' + vObject.coAbv +
+              vObject.state +
+              '-' +
+              vObject.status +
+              '-' +
+              vObject.loa +
+              '-' +
+              vObject.coAbv +
               '. Do you want to proceed?',
           },
         });
@@ -166,7 +176,9 @@ export class TmInformationComponent implements OnInit, OnDestroy {
                   },
                   error: (error) => {
                     if (error.error && error.error.errMessage) {
-                      this.errorMessageService.setErrorMessage(error.error.errMessage);
+                      this.errorMessageService.setErrorMessage(
+                        error.error.errMessage
+                      );
                     }
                   },
                 })
@@ -181,7 +193,8 @@ export class TmInformationComponent implements OnInit, OnDestroy {
             title: 'Confirm Action',
             message:
               'You are about to DELETE license (' +
-              vObject.employeeLicenseID + ') ' +
+              vObject.employeeLicenseID +
+              ') ' +
               vObject.licenseName +
               '. Do you want to proceed?',
           },
@@ -191,29 +204,31 @@ export class TmInformationComponent implements OnInit, OnDestroy {
           if (result) {
             this.subscriptions.add(
               this.agentDataService
-              .deleteAgentLicense({
-                employmentID: this.vObject.employmentID,
-                employeeLicenseID: this.vObject.employeeLicenseID,
-                userSOEID: this.userInfoDataService.userAcctInfo.soeid,
-              })
-              .subscribe({
-                next: (response) => {
-                  this.router
-                    .navigateByUrl('/', { skipLocationChange: true })
-                    .then(() => {
-                      this.router.navigate([
-                        'team/agent-info',
-                        this.agentDataService.agentInformation.employeeID,
-                        'tm-license-mgmt',
-                      ]);
-                    });
-                },
-                error: (error) => {
-                  if (error.error && error.error.errMessage) {
-                    this.errorMessageService.setErrorMessage(error.error.errMessage);
-                  }
-                },
-              })
+                .deleteAgentLicense({
+                  employmentID: this.vObject.employmentID,
+                  employeeLicenseID: this.vObject.employeeLicenseID,
+                  userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+                })
+                .subscribe({
+                  next: (response) => {
+                    this.router
+                      .navigateByUrl('/', { skipLocationChange: true })
+                      .then(() => {
+                        this.router.navigate([
+                          'team/agent-info',
+                          this.agentDataService.agentInformation.employeeID,
+                          'tm-license-mgmt',
+                        ]);
+                      });
+                  },
+                  error: (error) => {
+                    if (error.error && error.error.errMessage) {
+                      this.errorMessageService.setErrorMessage(
+                        error.error.errMessage
+                      );
+                    }
+                  },
+                })
             );
           }
         });
@@ -270,18 +285,18 @@ export class TmInformationComponent implements OnInit, OnDestroy {
     this.displayOpenLicenseID = displayOpenLicenseID;
   }
 
-  onSortData(column: string) {
+  onSortData(column: string, type: string) {
     if (this.sortColumn === column) {
       this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
     } else {
       this.sortColumn = column;
       this.sortDirection = 'asc';
     }
-  
+
     const compareFunction = (a: LicenseItem, b: LicenseItem) => {
       const valueA = a[column as keyof LicenseItem];
       const valueB = b[column as keyof LicenseItem];
-  
+
       if (valueA === undefined && valueB === undefined) {
         return 0;
       } else if (valueA === undefined) {
@@ -296,8 +311,12 @@ export class TmInformationComponent implements OnInit, OnDestroy {
         return 0;
       }
     };
-  
-    this.sortedLicenseItems.sort(compareFunction);
+
+    if (type === 'appointment') {
+      this.sortedAppointmentItems.sort(compareFunction);
+    } else {
+      this.sortedLicenseItems.sort(compareFunction);
+    }
   }
 
   ngOnDestroy() {
