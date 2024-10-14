@@ -12,7 +12,7 @@ import {
   LicIncentiveInfoDataService,
   UserAcctInfoDataService,
 } from '../../../../_services';
-import { AgentInfo } from '../../../../_Models';
+import { AgentInfo, LicenseItem } from '../../../../_Models';
 import { ModalService } from '../../../../_services';
 import {
   ConfirmDialogComponent,
@@ -37,7 +37,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   isLegacyView = false;
   activeTab: string = 'license';
 
-  sortedLicenseItems = [...this.agentInfo.licenseItems];
+  sortedLicenseItems: any[] = [];
   sortColumn: string = '';
   sortDirection: 'asc' | 'desc' = 'asc';
 
@@ -79,6 +79,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
         next: (agentInfo: AgentInfo) => {
           this.isLoading = false;
           this.agentInfo = agentInfo;
+          this.sortedLicenseItems = [...agentInfo.licenseItems];
         },
         error: (error) => {
           if (error.error && error.error.errMessage) {
@@ -276,19 +277,27 @@ export class TmInformationComponent implements OnInit, OnDestroy {
       this.sortColumn = column;
       this.sortDirection = 'asc';
     }
-
-    // this.sortedLicenseItems.sort((a, b) => {
-    //   const valueA = a[column];
-    //   const valueB = b[column];
-
-    //   if (valueA < valueB) {
-    //     return this.sortDirection === 'asc' ? -1 : 1;
-    //   } else if (valueA > valueB) {
-    //     return this.sortDirection === 'asc' ? 1 : -1;
-    //   } else {
-    //     return 0;
-    //   }
-    // });
+  
+    const compareFunction = (a: LicenseItem, b: LicenseItem) => {
+      const valueA = a[column as keyof LicenseItem];
+      const valueB = b[column as keyof LicenseItem];
+  
+      if (valueA === undefined && valueB === undefined) {
+        return 0;
+      } else if (valueA === undefined) {
+        return this.sortDirection === 'asc' ? -1 : 1;
+      } else if (valueB === undefined) {
+        return this.sortDirection === 'asc' ? 1 : -1;
+      } else if (valueA < valueB) {
+        return this.sortDirection === 'asc' ? -1 : 1;
+      } else if (valueA > valueB) {
+        return this.sortDirection === 'asc' ? 1 : -1;
+      } else {
+        return 0;
+      }
+    };
+  
+    this.sortedLicenseItems.sort(compareFunction);
   }
 
   ngOnDestroy() {

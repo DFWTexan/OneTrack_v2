@@ -543,15 +543,24 @@
                       <th scope="col">&nbsp;</th>
                       <!-- <th scope="col">State</th> -->
                       <th scope="col" (click)="onSortData('licenseState')">State</th>
-                      <th scope="col">L.O.A</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">License ID</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Res/NonRes</th>
-                      <th scope="col">Org. Date</th>
-                      <th scope="col">LOA Date</th>
-                      <th scope="col">Eff. Date</th>
-                      <th scope="col">Exp. Date</th>
+                      <!-- <th scope="col">L.O.A</th> -->
+                      <th scope="col" (click)="onSortData('lineOfAuthority')">L.O.A</th>
+                      <!-- <th scope="col">Status</th> -->
+                      <th scope="col" (click)="onSortData('licenseStatus')">Status</th>
+                      <!-- <th scope="col">License ID</th> -->
+                      <th scope="col" (click)="onSortData('employeeLicenseId')">License ID</th>
+                      <!-- <th scope="col">Name</th> -->
+                      <th scope="col" (click)="onSortData('licenseName')">Name</th>
+                      <!-- <th scope="col">Res/NonRes</th> -->
+                      <th scope="col" (click)="onSortData('nonResident')">Res/NonRes</th>
+                      <!-- <th scope="col">Org. Date</th> -->
+                      <th scope="col" (click)="onSortData('originalIssueDate')">Org. Date</th>
+                      <!-- <th scope="col">LOA Date</th> -->
+                      <th scope="col" (click)="onSortData('lineOfAuthIssueDate')">LOA Date</th>
+                      <!-- <th scope="col">Eff. Date</th> -->
+                      <th scope="col" (click)="onSortData('licenseEffectiveDate')">Eff. Date</th>
+                      <!-- <th scope="col">Exp. Date</th> -->
+                      <th scope="col" (click)="onSortData('licenseExpirationDate')">Exp. Date</th>
                       <th scope="col" class="text-center" style="width: 10rem">
                         ACTION
                       </th>
@@ -560,7 +569,7 @@
                   <tbody>
                     <tr
                       *ngFor="
-                        let license of agentInfo.licenseItems;
+                        let license of sortedLicenseItems;
                         let i = index
                       "
                       [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
