@@ -45,7 +45,7 @@ export class DropdownDataService {
 
   // private url: string = environment.apiUrl + 'Misc/';
 
-  constructor(private configService: ConfigService, private http: HttpClient) {}
+  constructor(private http: HttpClient, private configService: ConfigService) {}
 
   fetchDropdownData(vEndpoint: string) {
     const url = this.configService.config.apiUrl + 'Misc/' + vEndpoint;

@@ -5,14 +5,15 @@ import { map } from 'rxjs/operators';
 
 import { environment } from '../../_environments/environment';
 import { LicenseTech } from '../../_Models';
+import { ConfigService } from '../config/config.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MiscDataService {
-  private url: string = environment.apiUrl + 'Misc/';
+  private url: string = this.configService.config.apiUrl + 'Misc/';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private configService: ConfigService) {}
 
   // fetchDropdownData(vEndpoint: string) {
   //   const url = this.url + vEndpoint;
@@ -107,7 +108,7 @@ export class MiscDataService {
       .get<{
         success: boolean;
         statusCode: number;
-        objData: Array<{ value: number, label: string }>;
+        objData: Array<{ value: number; label: string }>;
         errMessage: string;
       }>(url)
       .pipe(
@@ -127,7 +128,7 @@ export class MiscDataService {
       .get<{
         success: boolean;
         statusCode: number;
-        objData: Array<{ value: number, label: string }>;
+        objData: Array<{ value: number; label: string }>;
         errMessage: string;
       }>(url)
       .pipe(
@@ -147,7 +148,7 @@ export class MiscDataService {
       .get<{
         success: boolean;
         statusCode: number;
-        objData: Array<{ value: number, label: string }>;
+        objData: Array<{ value: number; label: string }>;
         errMessage: string;
       }>(url)
       .pipe(

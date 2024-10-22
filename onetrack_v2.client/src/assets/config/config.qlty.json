@@ -3,5 +3,6 @@
     "environment": "QA",
     "isDevLoginEnabled": false,
     "isShowEditID": false,
-    "apiUrl": "http://ftapiq101/OneTrakV2/api/"
+    "apiUrl": "http://ftapiq101/OneTrakV2/api/",
+    "User": null
 }
