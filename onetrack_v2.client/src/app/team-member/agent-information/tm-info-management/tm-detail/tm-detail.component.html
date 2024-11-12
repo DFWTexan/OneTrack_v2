@@ -58,10 +58,17 @@
         <strong>Streat Address2:</strong><br />
         {{ agentInfo.address2 || "N/A" }}
       </p>
-      <p>
-        <strong>City:</strong><br />
-        {{ agentInfo.city || "N/A" }}
-      </p>
+      <div class="d-flex justify-content-between">
+        <p>
+          <strong>City:</strong><br />
+          {{ agentInfo.city || "N/A" }}
+        </p>
+        <p>
+          <strong>State:</strong><br />
+          {{ agentInfo.state || "N/A" }}
+        </p>
+      </div>
+
       <p>
         <strong>Zip:</strong><br />
         {{ agentInfo.zip || "N/A" }}
@@ -122,7 +129,11 @@
           </p>
           <p>
             <strong>Zip:</strong><br />
-            {{ agentInfo.branchDeptStreetZip ? (agentInfo.branchDeptStreetZip | ZipFormat) : "N/A" }}
+            {{
+              agentInfo.branchDeptStreetZip
+                ? (agentInfo.branchDeptStreetZip | ZipFormat)
+                : "N/A"
+            }}
           </p>
         </div>
         <div class="col">
@@ -136,15 +147,22 @@
           </p>
           <p>
             <strong>Phone:</strong><br />
-            {{ agentInfo.branchDeptPhone ? (agentInfo.branchDeptPhone | PhoneFormat) : "N/A" }}
+            {{
+              agentInfo.branchDeptPhone
+                ? (agentInfo.branchDeptPhone | PhoneFormat)
+                : "N/A"
+            }}
           </p>
           <p>
             <strong>Fax:</strong><br />
-            {{ agentInfo.branchDeptFax ? (agentInfo.branchDeptFax | PhoneFormat) : "N/A" }}
+            {{
+              agentInfo.branchDeptFax
+                ? (agentInfo.branchDeptFax | PhoneFormat)
+                : "N/A"
+            }}
           </p>
         </div>
       </div>
-      
     </div>
     <div class="col">
       <p style="font-size: larger; color: lightgrey">
@@ -160,7 +178,7 @@
         "
       >
         <thead>
-          <tr style="background-color: #FFA500">
+          <tr style="background-color: #ffa500">
             <th>Mgr. Name</th>
             <th>Mgr. Title</th>
             <th>Mgr. Dept Phone</th>
