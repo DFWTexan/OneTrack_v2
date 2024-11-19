@@ -262,6 +262,7 @@ body {
 .table tbody tr:hover {
   /* background-color: #E6E6FA; */
   background-color: #FFF0F5;
+  font-weight: 500;
 }
 
 .no-hover-bg {
