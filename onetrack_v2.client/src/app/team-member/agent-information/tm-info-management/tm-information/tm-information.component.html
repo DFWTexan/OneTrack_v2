@@ -182,6 +182,7 @@
                         style="opacity: 0.75"
                         (click)="
                           onSetOpenLicenseID(license.employeeLicenseId);
+                          setModeLicenseMgmt('EDIT');
                           agentDataService.storeLicenseInfo('EDIT', license);
                           storeLicApptLicenseID(license.licenseID);
                           modalService.open('modal-edit-license-info')

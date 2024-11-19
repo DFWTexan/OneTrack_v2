@@ -19,12 +19,13 @@
       >
         <label for="employeeLicenseId" class="form-label">
           Employee License ID:
-          <!-- <input
+          <input
             type="text"
             id="employeeLicenseId"
             class="form-control input-size-small"
             formControlName="employeeLicenseId"
-          /> --> </label
+            hidden
+          /> </label
         ><br />
         <span>{{ licenseForm.get("employeeLicenseId")?.value }}</span>
       </div>

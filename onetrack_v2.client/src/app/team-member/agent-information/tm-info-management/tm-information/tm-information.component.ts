@@ -211,15 +211,15 @@ export class TmInformationComponent implements OnInit, OnDestroy {
                 })
                 .subscribe({
                   next: (response) => {
-                    this.router
-                      .navigateByUrl('/', { skipLocationChange: true })
-                      .then(() => {
-                        this.router.navigate([
-                          'team/agent-info',
-                          this.agentDataService.agentInformation.employeeID,
-                          'tm-license-mgmt',
-                        ]);
-                      });
+                    // this.router
+                    //   .navigateByUrl('/', { skipLocationChange: true })
+                    //   .then(() => {
+                    //     this.router.navigate([
+                    //       'team/agent-info',
+                    //       this.agentDataService.agentInformation.employeeID,
+                    //       'tm-license-info',
+                    //     ]);
+                    //   });
                   },
                   error: (error) => {
                     if (error.error && error.error.errMessage) {

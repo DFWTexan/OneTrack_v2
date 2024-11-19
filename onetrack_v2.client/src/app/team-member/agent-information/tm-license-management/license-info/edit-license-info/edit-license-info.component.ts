@@ -65,7 +65,8 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       sentToAgentDate: [null],
       licenseNote: [''],
       // UPDATE FORM FIELDS HERE
-      employeeLicenseId: [{ value: '', disabled: true }],
+      // employeeLicenseId: [{ value: '', disabled: true }],
+      employeeLicenseId: [null],
       appointmentStatus: [''],
       companyID: [0],
       carrierDate: [null],
@@ -266,8 +267,10 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
     licenseInfo.UserSOEID = this.userInfoDataService.userAcctInfo.soeid;
 
     if (this.agentComService.modeLicenseMgmt == 'EDIT') {
-      licenseInfo.employeeLicenseId =
-        this.licenseMgmtData[this.currentIndex].employeeLicenseId;
+      // licenseInfo.employeeLicenseId =
+        // this.licenseMgmtData[this.currentIndex].employeeLicenseId;
+        // this.agentDataService.agentLicApptLicenseID;
+
     } else {
       licenseInfo.employeeLicenseId = 0;
     }

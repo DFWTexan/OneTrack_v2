@@ -133,7 +133,7 @@ namespace OneTrack_v2.DbData
         public virtual DbSet<XxxEdr> XxxEdrs { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-            => optionsBuilder.UseSqlServer("Server=FTSQLDVLP2;Database=License;Trusted_Connection=True;");
+            => optionsBuilder.UseSqlServer("Name=DefaultConnection");
 
         #region STORED PROCEDURES
         //public virtual DbSet<OputEmployeeSearchResult> SPOUT_SearchEmployees { get; set; }
