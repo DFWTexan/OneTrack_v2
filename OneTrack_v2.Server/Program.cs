@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 var environment = builder.Configuration["Environment"];
 var environmentSettings = builder.Configuration.GetSection($"EnvironmentSettings:{environment}");
 builder.Configuration["ConnectionStrings:DefaultConnection"] = environmentSettings["DefaultConnection"];
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 // Add services to the container.
 builder.Services.AddScoped<ILdapService, LdapService>();
