@@ -40,11 +40,12 @@ namespace OneTrack_v2.Services
         {
             _db = db;
             _config = config;
-            _connectionString = _config.GetConnectionString(name: "DefaultConnection");
+            //_connectionString = _config.GetConnectionString(name: "DefaultConnection");
             _utilityService = utilityHelpService;
             _emailTemplateService = emailTemplateService;
             // Retrieve the current environment setting
             string environment = _config.GetValue<string>("Environment") ?? "DVLP";
+            _connectionString = _config.GetSection($"EnvironmentSettings:{environment}:DefaultConnection").Value;
 
             // Construct the keys for accessing environment-specific settings
             string mailServerKey = $"EnvironmentSettings:{environment}:mailServer";

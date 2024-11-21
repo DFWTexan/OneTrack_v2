@@ -8,7 +8,9 @@ using OneTrak_v2.Services;
 var builder = WebApplication.CreateBuilder(args);
 
 // Connect to the database
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var environment = builder.Configuration["Environment"];
+var environmentSettings = builder.Configuration.GetSection($"EnvironmentSettings:{environment}");
+builder.Configuration["ConnectionStrings:DefaultConnection"] = environmentSettings["DefaultConnection"];
 
 // Add services to the container.
 builder.Services.AddScoped<ILdapService, LdapService>();

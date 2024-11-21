@@ -30,7 +30,20 @@ namespace OneTrack_v2.Services
         {
             _db = db;
             _config = config;
-            _connectionString = _config.GetConnectionString(name: "DefaultConnection");
+            //_connectionString = _config.GetConnectionString(name: "DefaultConnection");
+            var environment = _config["Environment"];
+            if (string.IsNullOrEmpty(environment))
+            {
+                throw new InvalidOperationException("Environment is not specified in the configuration.");
+            }
+
+            // Get the connection string for the designated environment
+            _connectionString = _config.GetSection($"EnvironmentSettings:{environment}:DefaultConnection").Value;
+
+            if (string.IsNullOrEmpty(_connectionString))
+            {
+                throw new InvalidOperationException($"Connection string for environment '{environment}' is not configured.");
+            }
             _utilityService = utilityHelpService;
         }
 
