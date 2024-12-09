@@ -22,7 +22,7 @@ namespace OneTrak_v2.Services
             var result = new ReturnResult();
             try
             {
-                var incompleteCount = _db.StgADBankerImports.Count(x => x.IsImportComplete == false);
+                var incompleteCount = _db.StgADBankerImports.Count(x => x.IsImportComplete == false && x.TeamMemberId != 0);
                 result.ObjData = incompleteCount;
                 result.Success = true;
                 result.StatusCode = 200;
@@ -72,6 +72,7 @@ namespace OneTrak_v2.Services
                 var query = _db.StgADBankerImports.AsQueryable();
 
                 query = query.Where(x => x.CreateDate.Date >= vStartDate.Date && x.CreateDate.Date <= vEndDate.Date);
+                query = query.Where(x => x.TeamMemberId != 0);
 
                 if (vImportStatus.HasValue)
                 {
@@ -216,7 +217,7 @@ namespace OneTrak_v2.Services
                 }
 
                 var data = query.ToList();
-                
+
                 var auditLog = data.Select(x => new
                 {
                     x.ModifyDate,
