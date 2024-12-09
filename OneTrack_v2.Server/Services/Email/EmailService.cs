@@ -48,12 +48,12 @@ namespace OneTrack_v2.Services
             _connectionString = _config.GetSection($"EnvironmentSettings:{environment}:DefaultConnection").Value;
 
             // Construct the keys for accessing environment-specific settings
-            string mailServerKey = $"EnvironmentSettings:{environment}:mailServer";
-            string mailFromAddressKey = $"EnvironmentSettings:{environment}:mailFromAddress";
-            string isSendtoTestKey = $"EnvironmentSettings:{environment}:isSendtoTest";
-            string testmailToAddressKey = $"EnvironmentSettings:{environment}:testmailToAddress";
-            string testmailCCAddressKey = $"EnvironmentSettings:{environment}:testmailCCAddress";
-            string testmailFromAddressKey = $"EnvironmentSettings:{environment}:testmailFromAddress";
+            string mailServerKey = $"EnvironmentSettings:{environment}:MailSettings:mailServer";
+            string mailFromAddressKey = $"EnvironmentSettings:{environment}:MailSettings:mailFromAddress";
+            string isSendtoTestKey = $"EnvironmentSettings:{environment}:MailSettings:isSendtoTest";
+            string testmailToAddressKey = $"EnvironmentSettings:{environment}:MailSettings:testmailToAddress";
+            string testmailCCAddressKey = $"EnvironmentSettings:{environment}:MailSettings:testmailCCAddress";
+            string testmailFromAddressKey = $"EnvironmentSettings:{environment}:MailSettings:testmailFromAddress";
 
             // Retrieve the values based on the constructed keys
             _mailServer = _config.GetValue<string>(mailServerKey);

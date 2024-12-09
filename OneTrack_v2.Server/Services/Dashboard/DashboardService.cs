@@ -215,15 +215,30 @@ namespace OneTrak_v2.Services
                     query = query.Where(x => x.ModifiedBy != null && x.ModifiedBy == vModifiedBy);
                 }
 
-                var auditLog = query.Select(x => new AuditLog
+                var data = query.ToList();
+                
+                var auditLog = data.Select(x => new
                 {
-                    ModifyDate = x.ModifyDate,
-                    ModifiedBy = x.ModifiedBy,
-                    AuditFieldName = x.AuditFieldName,
-                    AuditAction = x.AuditAction,
-                    AuditValueBefore = x.AuditValueBefore,
-                    AuditValueAfter = x.AuditValueAfter
-                }).OrderByDescending(x => x.ModifyDate).ToList();
+                    x.ModifyDate,
+                    x.ModifiedBy,
+                    x.AuditFieldName,
+                    x.AuditAction,
+                    x.AuditValueBefore,
+                    x.AuditValueAfter,
+                    LicenseTechName = GetLicensTechName(x.ModifiedBy)
+                })
+                    .AsEnumerable()
+                    .Select(x => new AuditLog
+                    {
+                        ModifyDate = x.ModifyDate,
+                        ModifiedBy = string.IsNullOrEmpty(x.LicenseTechName) ? x.ModifiedBy : x.LicenseTechName,
+                        AuditFieldName = x.AuditFieldName,
+                        AuditAction = x.AuditAction,
+                        AuditValueBefore = x.AuditValueBefore,
+                        AuditValueAfter = x.AuditValueAfter
+                    })
+                    .OrderByDescending(x => x.ModifyDate)
+                    .ToList();
 
                 result.ObjData = auditLog;
                 result.Success = true;
@@ -265,5 +280,15 @@ namespace OneTrak_v2.Services
             return result;
         }
 
+        private string GetLicensTechName(string vSoeid)
+        {
+            var licenseTech = _db.LicenseTeches.FirstOrDefault(x => x.Soeid == vSoeid);
+            if (licenseTech != null)
+            {
+                var firstNameInitial = licenseTech.FirstName?.FirstOrDefault().ToString() ?? string.Empty;
+                return firstNameInitial + ". " + licenseTech.LastName;
+            }
+            return string.Empty;
+        }
     }
 }
