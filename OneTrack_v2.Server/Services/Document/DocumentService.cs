@@ -69,13 +69,13 @@ namespace OneTrak_v2.Services
             }
             catch (Exception ex)
             {
-                _utilityService.LogError(ex.Message, "Server Error - Please Contact Support [REF# DOCS-3509-93412].", new { }, null);
+                _utilityService.LogError(ex.Message, "Server Error - Please Contact Support [REF# DOCS-3509-93312].", new { }, null);
 
                 return new ReturnResult
                 {
                     StatusCode = 500,
                     Success = false,
-                    ErrMessage = "Server Error - Please Contact Support [REF# DOCS-3509-93412]."
+                    ErrMessage = "Server Error - Please Contact Support [REF# DOCS-3509-93312]."
                 };
             }
         }
