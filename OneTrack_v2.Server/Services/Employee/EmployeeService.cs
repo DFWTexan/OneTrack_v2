@@ -172,7 +172,8 @@ namespace OneTrack_v2.Services
                 //_logger.LogError(ex, "Error in EmployeeService.SearchEmployee()");
                 _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
             }
-            return result;
+            //return result;
+            return Task.FromResult(result);
         }
         
         public Task<ReturnResult> SearchEmployeeName(string vInput)
@@ -184,39 +185,5 @@ namespace OneTrack_v2.Services
         {
             throw new NotImplementedException();
         }
-        //private static List<string> StringToTable(string input, char delimiter, bool trimSpace)
-        //{
-        //    var result = new List<string>();
-
-        //    if (input == null) return result;
-
-        //    var elements = input.Split(new[] { delimiter }, StringSplitOptions.None);
-        //    foreach (var element in elements)
-        //    {
-        //        var val = trimSpace ? element.Trim() : element;
-        //        result.Add(val);
-        //    }
-
-        //    return result;
-        //}
-
-        //public DataModel.Response.ReturnResult GetEmployee(int vEmployeeID)
-        //{
-        //    var result = new DataModel.Response.ReturnResult();
-        //    try
-        //    {
-        //        var employees = _db.Employees.ToList();
-        //        result.ObjData = employees;
-        //        result.Success = true;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        result.Success = false;
-        //        result.ErrMessage = ex.Message;
-        //        //_logger.LogError(ex, "Error in EmployeeService.GetEmployees()");
-        //    }
-        //    return result;
-        //}
-
     }
 }

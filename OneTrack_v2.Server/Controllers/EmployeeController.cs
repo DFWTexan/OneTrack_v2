@@ -42,6 +42,22 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
+        [HttpGet("{searchName}")]
+        public async Task<ActionResult> SearchEmployeeName(string searchName)
+        {
+            var result = await Task.Run(() => _employeeService.SearchEmployeeName(searchName));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpGet("{searchNumber}")]
+        public async Task<ActionResult> SearchEmployeeTMNumber(string searchNumber)
+        {
+            var result = await Task.Run(() => _employeeService.SearchEmployeeTMNumber(searchNumber));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
         //public async Task<ActionResult<IEnumerable<Employee>>> SearchEmployee_GEN(string searchString)
         //{
         //    if (_db.Employees == null)
