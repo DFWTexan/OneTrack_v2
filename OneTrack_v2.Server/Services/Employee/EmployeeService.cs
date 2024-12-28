@@ -65,7 +65,7 @@ namespace OneTrack_v2.Services
         ///            State = "  "
         ///        }
         /// </returns>
-        public async Task<ReturnResult> SearchEmployee(string? vEmployeeSSN = null, string? vGEID = null, string? vSCORENumber = null, int? vCompanyID = 0,
+        public Task<ReturnResult> SearchEmployee(string? vEmployeeSSN = null, string? vGEID = null, string? vSCORENumber = null, int? vCompanyID = 0,
             string? vLastName = null, string? vFirstName = null, List<string>? vAgentStatus = null, string? vResState = null, string? vWrkState = null, string? vBranchCode = null, 
             int? vEmployeeLicenseID = 0, List<string>? vLicStatus = null, string? vLicState = null, string? vLicenseName = null, int? vNationalProducerNumber = 0)
         {
@@ -174,7 +174,15 @@ namespace OneTrack_v2.Services
             }
             return result;
         }
+        public Task<ReturnResult> SearchEmployeeName(string vInput)
+        {
+            throw new NotImplementedException();
+        }
 
+        public Task<ReturnResult> SearchEmployeeTMNumber(string vInput)
+        {
+            throw new NotImplementedException();
+        }
         //private static List<string> StringToTable(string input, char delimiter, bool trimSpace)
         //{
         //    var result = new List<string>();
