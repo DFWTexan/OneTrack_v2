@@ -28,6 +28,7 @@ import { ConfigService, ConstantsDataService } from './_services/';
 // Other
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { APP_INITIALIZER } from '@angular/core';
+import { QuickFindComponent } from './_components/quick-find/quick-find.component';
 
 export function initializeApp(configService: ConfigService) {
   return () => configService.loadConfig();
@@ -41,6 +42,7 @@ export function initializeApp(configService: ConfigService) {
     WorkListComponent,
     EmfTestPageComponent,
     LoginComponent,
+    QuickFindComponent,
   ],
   imports: [
     AppRoutingModule,

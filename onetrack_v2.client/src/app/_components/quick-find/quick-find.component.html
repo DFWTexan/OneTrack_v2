@@ -1,0 +1,23 @@
+<div class="d-flex justify-content-center align-items-center mt-3 mb-3">
+  Find by
+  <input
+    type="text"
+    class="form-control ms-3 me-3"
+    placeholder="TM Number"
+    [(ngModel)]="tmNumber"
+    (change)="onChangeByTmNumber()"
+    [disabled]="isByTMDisabled"
+  />
+  or
+  <input
+    type="text"
+    class="form-control ms-2 ms-3 me-2"
+    placeholder="Agent Name"
+    [(ngModel)]="agentName"
+    (change)="onChangeByAgentName()"
+    [disabled]="isByAgentNameDisabled"
+  />
+  <button class="btn">
+    <span class="material-symbols-outlined align-items-center" style="color: white; font-size: 3.5rem;"> search </span>
+  </button>
+</div>

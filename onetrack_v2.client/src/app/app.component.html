@@ -22,6 +22,8 @@
   >
     {{ appComService.openTicklerCount }}
   </div> -->
+  <app-quick-find></app-quick-find>
+  <span class="toolbar-item-spacer"></span>
   <button
     mat-icon-button
     matTooltip="Go to Tickler Info"
@@ -36,7 +38,7 @@
       color: isNotificationActive() ? '#00FF7F' : 'white'
     }"
   >
-    <!-- <mat-icon>notifications</mat-icon> -->
+    <!-- TICKLER NOTIFICATIONS ICON -->
     <mat-icon
       matBadgePosition="before"
       [matBadge]="openTicklerCount"
@@ -58,7 +60,7 @@
     >
       <mat-icon>account_circle</mat-icon>
     </button> -->
-  <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below">
+  <!-- <mat-menu #userAccountMenu [overlapTrigger]="false" yPosition="below">
     <button mat-menu-item routerLink="#">
       <mat-icon>person</mat-icon><span>My Account</span>
     </button>
@@ -72,7 +74,7 @@
     <button mat-menu-item routerLink="#">
       <mat-icon>exit_to_app</mat-icon>Logout
     </button>
-  </mat-menu>
+  </mat-menu> -->
 </mat-toolbar>
 
 <mat-sidenav-container class="app-container">

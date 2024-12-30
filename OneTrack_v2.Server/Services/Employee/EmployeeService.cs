@@ -66,7 +66,7 @@ namespace OneTrack_v2.Services
         ///        }
         /// </returns>
         public Task<ReturnResult> SearchEmployee(string? vEmployeeSSN = null, string? vGEID = null, string? vSCORENumber = null, int? vCompanyID = 0,
-            string? vLastName = null, string? vFirstName = null, List<string>? vAgentStatus = null, string? vResState = null, string? vWrkState = null, string? vBranchCode = null, 
+            string? vLastName = null, string? vFirstName = null, List<string>? vAgentStatus = null, string? vResState = null, string? vWrkState = null, string? vBranchCode = null,
             int? vEmployeeLicenseID = 0, List<string>? vLicStatus = null, string? vLicState = null, string? vLicenseName = null, int? vNationalProducerNumber = 0)
         {
 
@@ -175,15 +175,67 @@ namespace OneTrack_v2.Services
             //return result;
             return Task.FromResult(result);
         }
-        
+
         public Task<ReturnResult> SearchEmployeeName(string vInput)
         {
-            throw new NotImplementedException();
+            var result = new ReturnResult();
+            try
+            {
+                var query = _db.Employees
+                    .Where(e => (e.FirstName + " " + e.LastName).Contains(vInput))
+                    .Select(e => new
+                    {
+                        e.EmployeeId,
+                        e.Geid,
+                        Name = e.LastName + ", " + e.FirstName + " " + (e.MiddleName != null ? e.MiddleName.Substring(0, 1) : ""),
+                    })
+                    .ToList();
+
+                 result.Success = true;
+                 result.ObjData = query;
+                 result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+                //_logger.LogError(ex, "Error in EmployeeService.SearchEmployee()");
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+            }
+
+            return Task.FromResult(result);
         }
 
         public Task<ReturnResult> SearchEmployeeTMNumber(string vInput)
         {
-            throw new NotImplementedException();
+            var result = new ReturnResult();
+            try
+            {
+                var query = _db.Employees
+                    .Where(e => (e.Geid == vInput))
+                    .Select(e => new
+                    {
+                        e.EmployeeId,
+                        e.Geid,
+                        Name = e.LastName + ", " + e.FirstName + " " + (e.MiddleName != null ? e.MiddleName.Substring(0, 1) : ""),
+                    })
+                    .FirstOrDefault();
+
+                result.Success = true;
+                result.ObjData = query;
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.StatusCode = 500;
+                result.ErrMessage = ex.Message;
+                //_logger.LogError(ex, "Error in EmployeeService.SearchEmployee()");
+                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+            }
+
+            return Task.FromResult(result);
         }
     }
 }
