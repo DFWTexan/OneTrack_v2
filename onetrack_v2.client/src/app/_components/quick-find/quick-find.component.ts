@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 
+import { EmployeeDataService } from '../../_services';
+
 @Component({
   selector: 'app-quick-find',
   templateUrl: './quick-find.component.html',
@@ -12,7 +14,7 @@ export class QuickFindComponent {
   isByTMDisabled: boolean = false;
   isByAgentNameDisabled: boolean = false;
 
-  constructor() {}
+  constructor(public employeeDataService: EmployeeDataService) {}
 
   onChangeByTmNumber() {
     this.isByTMDisabled = false;
@@ -29,6 +31,18 @@ export class QuickFindComponent {
       this.isByTMDisabled = true;
     } else {
       this.isByTMDisabled = false;
+    }
+  }
+
+  onSearch() {
+    if(this.tmNumber.length > 0) {
+      this.employeeDataService.fetchEmployeeByTmNumber(this.tmNumber).subscribe((response) => {
+        console.log('Search by TM Number: ', response);
+      });
+    } else if(this.agentName.length > 0) {
+      this.employeeDataService.fetchEmployeeByAgentName(this.agentName).subscribe((response) => {
+        console.log('Search by Agent Name: ', response);
+      });
     }
   }
 }

@@ -51,4 +51,52 @@ export class EmployeeDataService {
         })
       );
   }
+
+  fetchEmployeeByTmNumber(vTmNumber: string): Observable<EmployeeSearchResult> {
+    console.log(
+      'EMFTEST (employee.data.service: fetchEmployeeByTmNumber) - vTmNumber => \n',
+      vTmNumber
+    );
+
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: EmployeeSearchResult;
+        errMessage: string;
+      }>(environment.apiUrl + 'Employee/SearchEmployeeTMNumber' + '/' + vTmNumber)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  fetchEmployeeByAgentName(vAgentName: string): Observable<EmployeeSearchResult> {
+    console.log(
+      'EMFTEST (employee.data.service: fetchEmployeeByAgentName) - vAgentName => \n',
+      vAgentName
+    );
+
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: EmployeeSearchResult;
+        errMessage: string;
+      }>(environment.apiUrl + 'Employee/SearchEmployeeName' + '/' + vAgentName)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
 }
