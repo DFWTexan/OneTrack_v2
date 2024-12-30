@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { EmployeeDataService } from '../../_services';
 
@@ -14,7 +15,10 @@ export class QuickFindComponent {
   isByTMDisabled: boolean = false;
   isByAgentNameDisabled: boolean = false;
 
-  constructor(public employeeDataService: EmployeeDataService) {}
+  constructor(
+    public employeeDataService: EmployeeDataService,
+    private router: Router
+  ) {}
 
   onChangeByTmNumber() {
     this.isByTMDisabled = false;
@@ -35,14 +39,28 @@ export class QuickFindComponent {
   }
 
   onSearch() {
-    if(this.tmNumber.length > 0) {
-      this.employeeDataService.fetchEmployeeByTmNumber(this.tmNumber).subscribe((response) => {
-        console.log('Search by TM Number: ', response);
-      });
-    } else if(this.agentName.length > 0) {
-      this.employeeDataService.fetchEmployeeByAgentName(this.agentName).subscribe((response) => {
-        console.log('Search by Agent Name: ', response);
-      });
+    if (this.tmNumber.length > 0) {
+      this.employeeDataService
+        .fetchEmployeeByTmNumber(this.tmNumber)
+        .subscribe((response) => {
+          if (response === null) {
+            alert('Employee not found');
+          } else {
+            this.tmNumber = '';
+            this.isByAgentNameDisabled = false;
+            this.router.navigate([
+              '../../team/agent-info',
+              response.employeeId,
+              'tm-info-mgmt',
+            ]);
+          }
+        });
+    } else if (this.agentName.length > 0) {
+      this.employeeDataService
+        .fetchEmployeeByAgentName(this.agentName)
+        .subscribe((response) => {
+          console.log('Search by Agent Name: ', response);
+        });
     }
   }
 }
