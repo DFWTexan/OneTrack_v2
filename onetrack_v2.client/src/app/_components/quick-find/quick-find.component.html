@@ -17,7 +17,72 @@
     (change)="onChangeByAgentName()"
     [disabled]="isByAgentNameDisabled"
   />
-  <button class="btn" (click)="onSearch()">
+  <div class="spinner-border align-items-center" *ngIf="isLoading"></div>
+  <button class="btn" *ngIf="isLoading == false" (click)="onSearch()">
     <span class="material-symbols-outlined align-items-center" style="color: white; font-size: 3.5rem;"> search </span>
   </button>
+</div>
+
+<!-- Modal: DISPLAY-AGENT-ITEMS -->
+<modal id="modal-agent-find-info">
+  <div class="modal-header">
+    <h1 class="modal-title">Agents</h1>
+  </div>
+  <div class="modal-body">
+    <div>
+      <table>
+        <thead>
+          <tr>
+            <th>TM Number</th>
+            <th>Agent Name</th>
+            <th>Worklist Item(s)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let agent of agents">
+            <td>{{ agent.tmNumber }}</td>
+            <td>{{ agent.agentName }}</td>
+            <td>
+              <!-- <button
+                mat-icon-button
+                [ngStyle]="{
+                  color: '#228B22'
+                }"
+                (click)="modalService.open('modal-agent-worklist-info')"
+                [matTooltip]="'View Worklist Item(s)'"
+              >
+                <mat-icon
+                  [matBadge]="worklistCount"
+                  matBadgeColor="warn"
+                  aria-hidden="false"
+                >
+                  assignment
+                </mat-icon>
+              </button> -->
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</modal>
+
+<!-- Modal -->
+<div class="modal fade" id="modal-agent-find-info" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Agent Find Info</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Modal content goes here -->
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>

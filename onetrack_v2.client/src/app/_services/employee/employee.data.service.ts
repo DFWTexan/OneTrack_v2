@@ -76,7 +76,7 @@ export class EmployeeDataService {
       );
   }
 
-  fetchEmployeeByAgentName(vAgentName: string): Observable<EmployeeFind> {
+  fetchEmployeeByAgentName(vAgentName: string): Observable<EmployeeFind[]> {
     console.log(
       'EMFTEST (employee.data.service: fetchEmployeeByAgentName) - vAgentName => \n',
       vAgentName
@@ -86,7 +86,7 @@ export class EmployeeDataService {
       .get<{
         success: boolean;
         statusCode: number;
-        objData: EmployeeFind;
+        objData: EmployeeFind[];
         errMessage: string;
       }>(environment.apiUrl + 'Employee/SearchEmployeeName' + '/' + vAgentName)
       .pipe(
