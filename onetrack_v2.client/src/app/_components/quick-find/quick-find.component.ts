@@ -75,8 +75,6 @@ export class QuickFindComponent {
   }
 
   openModal() {
-    // const modalElement = this.modalAgentFindInfo.nativeElement;
-    // const modal = new bootstrap.Modal(modalElement);
-    // modal.show();
+    this.modalService.open('modal-agent-find-info')
   }
 }
