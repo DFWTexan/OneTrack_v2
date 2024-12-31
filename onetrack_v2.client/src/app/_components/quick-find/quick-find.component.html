@@ -26,10 +26,15 @@
 <!-- Modal: DISPLAY-AGENT-ITEMS -->
 <modal id="modal-agent-find-info">
   <div class="modal-header">
-    <h1 class="modal-title">Agents</h1>
+    <h1 class="modal-title">Select Agent</h1>
   </div>
   <div class="modal-body">
     <div>
+      <div class="d-flex justify-content-end">
+        <button class="btn" (click)="onCloseModal()">
+          <span class="material-symbols-outlined" style="color: black; font-size: 3.5rem;"> close </span>
+        </button>
+      </div>
       <table class="table">
         <thead>
           <tr>
