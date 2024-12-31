@@ -22,7 +22,7 @@
   >
     {{ appComService.openTicklerCount }}
   </div> -->
-  <app-quick-find></app-quick-find>
+  <app-quick-find *ngIf="isLoggedIn"></app-quick-find>
   <span class="toolbar-item-spacer"></span>
   <button
     mat-icon-button
