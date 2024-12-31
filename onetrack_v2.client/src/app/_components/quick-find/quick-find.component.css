@@ -1,0 +1,7 @@
+.hover-pointer {
+    cursor: pointer;
+  }
+  
+  .hover-pointer:hover {
+    background-color: #f1f1f1; /* Optional: Add a background color on hover */
+  }

@@ -30,7 +30,7 @@
   </div>
   <div class="modal-body">
     <div>
-      <table class="table table-striped">
+      <table class="table">
         <thead>
           <tr>
             <th>TM Number</th>
@@ -38,27 +38,9 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let agent of agents">
+          <tr *ngFor="let agent of agents" class="hover-pointer" (click)="onSelectAgent(agent)">
             <td>{{ agent.geid }}</td>
             <td>{{ agent.name }}</td>
-            <td>
-              <!-- <button
-                mat-icon-button
-                [ngStyle]="{
-                  color: '#228B22'
-                }"
-                (click)="modalService.open('modal-agent-worklist-info')"
-                [matTooltip]="'View Worklist Item(s)'"
-              >
-                <mat-icon
-                  [matBadge]="worklistCount"
-                  matBadgeColor="warn"
-                  aria-hidden="false"
-                >
-                  assignment
-                </mat-icon>
-              </button> -->
-            </td>
           </tr>
         </tbody>
       </table>

@@ -75,6 +75,21 @@ export class QuickFindComponent {
   }
 
   openModal() {
-    this.modalService.open('modal-agent-find-info')
+    this.modalService.open('modal-agent-find-info');
+  }
+
+  onSelectAgent(agent: any) {
+    this.agentName = '';
+    this.isByTMDisabled = false;
+    const modalDiv = document.getElementById('modal-agent-find-info');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+
+    this.router.navigate([
+      '../../team/agent-info',
+      agent.employeeId,
+      'tm-info-mgmt',
+    ]);
   }
 }
