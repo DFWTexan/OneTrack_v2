@@ -1,7 +1,11 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 
-import { EmployeeDataService, ModalService } from '../../_services';
+import {
+  AgentComService,
+  EmployeeDataService,
+  ModalService,
+} from '../../_services';
 
 @Component({
   selector: 'app-quick-find',
@@ -21,6 +25,7 @@ export class QuickFindComponent {
   constructor(
     public employeeDataService: EmployeeDataService,
     protected modalService: ModalService,
+    public agentComService: AgentComService,
     private router: Router
   ) {}
 
@@ -49,6 +54,7 @@ export class QuickFindComponent {
         .fetchEmployeeByTmNumber(this.tmNumber)
         .subscribe((response) => {
           this.isLoading = false;
+          this.agentComService.updateShowLicenseMgmt(false);
           if (response === null) {
             alert('Employee not found');
           } else {
@@ -66,6 +72,7 @@ export class QuickFindComponent {
       this.employeeDataService
         .fetchEmployeeByAgentName(this.agentName)
         .subscribe((response) => {
+          this.agentComService.updateShowLicenseMgmt(false);
           this.isLoading = false;
           console.log('Search by Agent Name: ', response);
           this.agents = response;

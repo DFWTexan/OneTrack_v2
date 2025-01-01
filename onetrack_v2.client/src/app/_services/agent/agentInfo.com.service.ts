@@ -51,6 +51,11 @@ export class AgentComService {
     this.isShowLicenseMgmtChanged.next(this.isShowLicenseMgmt);
   }
 
+  updateShowLicenseMgmt(show: boolean): void {
+    this.isShowLicenseMgmt = show;
+    this.isShowLicenseMgmtChanged.next(this.isShowLicenseMgmt);
+  }
+
   // Employment Transfer History
   modeEmploymentHistModal(mode: string) {
     this.modeEmploymentHist = mode;
