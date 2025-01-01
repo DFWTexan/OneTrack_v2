@@ -37,16 +37,23 @@
   </div>
   <div class="modal-body">
     <div>
-      <div class="d-flex justify-content-end">
-        <button class="btn" (click)="onCloseModal()">
-          <span
-            class="material-symbols-outlined"
-            style="color: black; font-size: 3rem"
-          >
-            close
-          </span>
-        </button>
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <span style="font-size: medium; font-weight: 400">Records:</span>
+          <span class="ms-2" style="font-size: large; font-weight: 600;">{{ agents.length }}</span>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button class="btn" (click)="onCloseModal()">
+            <span
+              class="material-symbols-outlined"
+              style="color: black; font-size: 3rem"
+            >
+              close
+            </span>
+          </button>
+        </div>
       </div>
+
       <table class="table selected-row">
         <thead>
           <tr style="background-color: whitesmoke; font-size: smaller">
