@@ -77,6 +77,8 @@ export class QuickFindComponent {
             alert('Employee not found');
             return;
           } else if (response.length === 1) {
+            this.isLoading = false;
+            this.agentName = '';
             this.router.navigate([
               '../../team/agent-info',
               response[0].employeeId,
@@ -86,6 +88,7 @@ export class QuickFindComponent {
           } else {
             this.agentComService.updateShowLicenseMgmt(false);
             this.isLoading = false;
+            this.agentName = '';
             console.log('Search by Agent Name: ', response);
             this.agents = response;
             this.openModal();
