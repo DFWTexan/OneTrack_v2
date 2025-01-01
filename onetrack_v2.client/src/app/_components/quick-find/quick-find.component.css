@@ -1,7 +1,13 @@
-.hover-pointer {
-    cursor: pointer;
+  .selected {
+    background-color: lightblue;
   }
   
-  .hover-pointer:hover {
-    background-color: #f1f1f1; /* Optional: Add a background color on hover */
+  .selected-row tbody tr:hover {
+    cursor: pointer;
+    color: blue;
+  }
+  
+  .selected-row tbody tr.no-pointer:hover {
+    cursor: default;
+    color: red;
   }

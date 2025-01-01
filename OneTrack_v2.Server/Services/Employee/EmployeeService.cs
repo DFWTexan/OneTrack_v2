@@ -181,19 +181,38 @@ namespace OneTrack_v2.Services
             var result = new ReturnResult();
             try
             {
-                var query = _db.Employees
-                    .Where(e => (e.FirstName + " " + e.LastName).Contains(vInput))
-                    .Select(e => new
-                    {
-                        e.EmployeeId,
-                        e.Geid,
-                        Name = e.LastName + ", " + e.FirstName + " " + (e.MiddleName != null ? e.MiddleName.Substring(0, 1) : ""),
-                    })
-                    .ToList();
+                var query = from a in _db.Employees
+                            join b in _db.Employments on a.EmployeeId equals b.EmployeeId
+                            join c in (
+                                from th in _db.TransferHistories
+                                group th by th.EmploymentId into g
+                                select new
+                                {
+                                    EmploymentId = g.Key,
+                                    TransferHistoryId = g.Max(th => th.TransferHistoryId)
+                                }
+                            ) on b.EmploymentId equals c.EmploymentId into cGroup
+                            from c in cGroup.DefaultIfEmpty()
+                            join d in _db.TransferHistories on c.TransferHistoryId equals d.TransferHistoryId into dGroup
+                            from d in dGroup.DefaultIfEmpty()
+                            join bdh in _db.Bifs on d.BranchCode.Substring(d.BranchCode.Length - 8) equals bdh.HrDepartmentId.Substring(bdh.HrDepartmentId.Length - 8) into bdhGroup
+                            from bdh in bdhGroup.DefaultIfEmpty()
+                            where (a.FirstName + " " + a.LastName).Contains(vInput)
+                            select new
+                            {
+                                a.EmployeeId,
+                                a.Geid,
+                                Name = a.LastName + ", " + a.FirstName + (a.MiddleName != null ? a.MiddleName.Substring(0, 1) : ""),
+                                ResState = d.ResStateAbv,
+                                WorkState = d.WorkStateAbv,
+                                BranchName = bdh.Name ?? "UNKNOWN",
+                            };
 
-                 result.Success = true;
-                 result.ObjData = query;
-                 result.StatusCode = 200;
+                var queryResult = query.ToList();
+
+                result.Success = true;
+                result.ObjData = queryResult;
+                result.StatusCode = 200;
             }
             catch (Exception ex)
             {

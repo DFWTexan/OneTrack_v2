@@ -72,12 +72,26 @@ export class QuickFindComponent {
       this.employeeDataService
         .fetchEmployeeByAgentName(this.agentName)
         .subscribe((response) => {
-          this.agentComService.updateShowLicenseMgmt(false);
-          this.isLoading = false;
-          console.log('Search by Agent Name: ', response);
-          this.agents = response;
-          this.openModal();
-        });
+          if (response.length === 0) {
+            this.isLoading = false;
+            alert('Employee not found');
+            return;
+          } else if (response.length === 1) {
+            this.router.navigate([
+              '../../team/agent-info',
+              response[0].employeeId,
+              'tm-info-mgmt',
+            ]);
+            return;
+          } else {
+            this.agentComService.updateShowLicenseMgmt(false);
+            this.isLoading = false;
+            console.log('Search by Agent Name: ', response);
+            this.agents = response;
+            this.openModal();
+          }
+        }
+      );
     }
   }
 

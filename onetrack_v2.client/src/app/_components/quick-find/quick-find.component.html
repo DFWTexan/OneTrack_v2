@@ -41,17 +41,20 @@
         <button class="btn" (click)="onCloseModal()">
           <span
             class="material-symbols-outlined"
-            style="color: black; font-size: 3.5rem"
+            style="color: black; font-size: 3rem"
           >
             close
           </span>
         </button>
       </div>
-      <table class="table">
+      <table class="table selected-row">
         <thead>
-          <tr>
-            <th>TM Number</th>
-            <th>Agent Name</th>
+          <tr style="background-color: whitesmoke; font-size: smaller">
+            <th scope="col">TM Number</th>
+            <th scope="col">Agent Name</th>
+            <th scope="col">Res State</th>
+            <th scope="col">Work State</th>
+            <th scope="col">Branch Name</th>
           </tr>
         </thead>
         <tbody>
@@ -62,6 +65,9 @@
           >
             <td>{{ agent.geid }}</td>
             <td>{{ agent.name }}</td>
+            <td>{{ agent.resState }}</td>
+            <td>{{ agent.workState }}</td>
+            <td>{{ agent.branchName }}</td>
           </tr>
         </tbody>
       </table>
