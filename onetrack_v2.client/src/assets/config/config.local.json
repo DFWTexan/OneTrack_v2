@@ -6,7 +6,7 @@
     "apiUrl": "http://localhost:5181/api/",
     "userInfo": {
         "licenseTechID": null,
-        "displayName": "EMFTEST",
+        "displayName": "localhost-Test User",
         "soeid": "T2229513",
         "email": "erish.faggett@omf.com",
         "enabled": true,
