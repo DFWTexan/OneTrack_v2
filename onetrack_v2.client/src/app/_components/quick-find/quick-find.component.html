@@ -17,7 +17,7 @@
     (change)="onChangeByAgentName()"
     [disabled]="isByAgentNameDisabled"
   />
-  <div class="spinner-border ms-3" *ngIf="isLoading"></div>
+  <div class="spinner-border" *ngIf="isLoading"></div>
   <div class="justify-content-center" *ngIf="isLoading == false">
     <button class="btn" (click)="onSearch()">
       <span
