@@ -164,25 +164,47 @@ namespace OneTrak_v2.Services
                 if (vIsActive)
                 {
                     var modifiedBy = _db.AuditLogs
-                        .Join(
-                            _db.LicenseTeches,
-                            auditLog => auditLog.ModifiedBy,
-                            licenseTech => licenseTech.Soeid,
-                            (auditLog, licenseTech) => auditLog.ModifiedBy
-                        )
-                        .Distinct()
-                        .OrderBy(x => x)
-                        .ToList();
+                                    .Join(
+                                        _db.LicenseTeches,
+                                        auditLog => auditLog.ModifiedBy,
+                                        licenseTech => licenseTech.Soeid,
+                                        (auditLog, licenseTech) => new
+                                        {
+                                            auditLog.ModifiedBy,
+                                            IsActive = licenseTech.IsActive,
+                                            FullName = (licenseTech.FirstName != null ? licenseTech.FirstName.Substring(0, 1) + ". " : "") + licenseTech.LastName
+                                        }
+                                    )
+                                    .Where(x => x.IsActive == true)
+                                    .Select(x => new { x.ModifiedBy, x.FullName })
+                                    .Distinct()
+                                    .OrderBy(x => x.ModifiedBy)
+                                    .ToList();
 
                     result.ObjData = modifiedBy;
                 }
                 else
                 {
                     var modifiedBy = _db.AuditLogs
-                        .Select(x => x.ModifiedBy)
-                        .Distinct()
-                        .OrderBy(x => x)
-                        .ToList();
+                                    .GroupJoin(
+                                        _db.LicenseTeches,
+                                        auditLog => auditLog.ModifiedBy,
+                                        licenseTech => licenseTech.Soeid,
+                                        (auditLog, licenseTeches) => new { auditLog, licenseTeches }
+                                    )
+                                    .SelectMany(
+                                        x => x.licenseTeches.DefaultIfEmpty(),
+                                        (x, licenseTech) => new
+                                        {
+                                            x.auditLog.ModifiedBy,
+                                            FullName = licenseTech != null
+                                                ? (licenseTech.FirstName != null ? licenseTech.FirstName.Substring(0, 1) + ". " : "") + licenseTech.LastName
+                                                : x.auditLog.ModifiedBy
+                                        }
+                                    )
+                                    .Distinct()
+                                    .OrderBy(x => x.ModifiedBy)
+                                    .ToList();
 
                     result.ObjData = modifiedBy;
                 }

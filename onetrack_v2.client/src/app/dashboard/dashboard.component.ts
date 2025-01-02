@@ -22,7 +22,7 @@ import {
   UserAcctInfoDataService,
   WorkListDataService,
 } from '../_services';
-import { StockTickler, TicklerInfo, UserAcctInfo } from '../_Models';
+import { AuditModifyBy, StockTickler, TicklerInfo, UserAcctInfo } from '../_Models';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent, InfoDialogComponent } from '../_components';
 import { Router } from '@angular/router';
@@ -78,7 +78,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   adBankerImportStatus: string = 'All';
   adBankerImportStatuses: string[] = ['All', 'Success', 'Failed'];
 
-  modifiedBy: string[] = ['Loading...'];
+  modifiedBy: AuditModifyBy[] = [{modifiedBy: null, fullName: 'Loading...'}];
   modifiedBySelected: string = 'Select Tech';
   startDate: string = new Date(new Date().setDate(new Date().getDate()))
     .toISOString()
@@ -181,7 +181,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.dashboardDataService
         .fetchAuditModifiedBy(this.isTechActive)
         .subscribe((modifiedBy) => {
-          this.modifiedBy = ['Select Tech', ...modifiedBy];
+          this.modifiedBy = [{modifiedBy: null, fullName: 'Select Tech'}, ...modifiedBy];
         })
     );
 

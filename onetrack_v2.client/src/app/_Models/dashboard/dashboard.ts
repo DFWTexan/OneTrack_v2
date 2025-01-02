@@ -14,3 +14,8 @@ export interface AuditLog {
     auditValueBefore: string | null;
     auditValueAfter: string;
   }
+
+  export interface AuditModifyBy {
+    modifiedBy: string | null;
+    fullName: string;
+  }

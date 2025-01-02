@@ -4,7 +4,7 @@ import { Observable, Subject } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
 import { environment } from '../../_environments/environment';
-import { DashboardData } from '../../_Models';
+import { AuditModifyBy, DashboardData } from '../../_Models';
 import { ConfigService } from '../config/config.service';
 import { AgentDataService } from '../agent/agent.data.service';
 
@@ -149,7 +149,7 @@ export class DashboardDataService {
       );
   }
 
-  fetchAuditModifiedBy(isActive: boolean): Observable<string[]> {
+  fetchAuditModifiedBy(isActive: boolean): Observable<AuditModifyBy[]> {
     return this.http
       .get<{
         success: boolean;
