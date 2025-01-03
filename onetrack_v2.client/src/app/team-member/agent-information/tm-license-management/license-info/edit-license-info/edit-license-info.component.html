@@ -195,15 +195,15 @@
 
       <div class="mb-3">
         <label for="licenseIssueDate" class="form-label"
-          >Original Issue Date: <span class="text-danger">*</span></label
-        >
+           >Original Issue Date: <!-- <span class="text-danger">*</span> -->
+        </label>
         <input
           class="form-control input-size-small"
           type="date"
           id="licenseIssueDate"
           formControlName="licenseIssueDate"
         />
-        <div
+        <!-- <div
           *ngIf="
             (licenseForm.controls['licenseIssueDate'].touched ||
               isFormSubmitted) &&
@@ -213,7 +213,7 @@
           class="text-danger"
         >
           Please select Issue Date
-        </div>
+        </div> -->
       </div>
 
       <div class="mb-3">
