@@ -1,0 +1,51 @@
+FTWEBD201 (ANGULAR)
+1. Run ng build --base-href /OneTrakV2/  <!-- ng build --configuration=dvlp --base-href /OneTrakV2/ -->
+2. Copy /dist to server
+3. Delete contents of the /Browser in ISS under onetrakv2.client
+4. Replace the deleted contents with contenst from new build /browser
+5. Run CMD as admin then execute command: issreset
+
+NOTE: web.config needs to be in top folder.
+
+Configure URL Rewrite (if necessary for SPA routing):
+-> In IIS Manager, select your website.
+-> In the middle panel, double-click on URL Rewrite.
+-> Add a new rule to handle Angular routes:
+	- Click on Add Rule(s) and select Blank Rule.
+	- Name the rule (e.g., AngularRoutes).
+	- In Match URL, set Requested URL to Matches the Pattern and Using to Regular Expressions.
+	- Set the Pattern to ^(?!.*\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|eot|ttf|json)$).*$.
+	- In Conditions, click Add and set:
+		+ Condition input: {REQUEST_FILENAME}
+		+ Check if input string: Does Not Match the Pattern
+		+ Pattern: .*
+	- In Action, set Action type to Rewrite and Rewrite URL to /OneTrakV2/index.html.
+-> Restart IIS to apply all changes. You can do this by right-clicking on your server name in the left-hand panel and selecting Restart.
+
+NOTE: IUSR needs security (Read & execute, List folder Contents, Read, Write) permissions. 
+
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <system.webServer>
+        <rewrite>
+            <rules>
+                <rule name="AngularRoutes">
+                    <match url="(?!.*\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|eot|ttf|json)$).*$" />
+                    <conditions>
+                        <add input="{REQUEST_FILENAME}" pattern=".*" negate="true" />
+                    </conditions>
+                    <action type="Rewrite" url="/OneTrakV2/index.html" />
+                </rule>
+            </rules>
+        </rewrite>
+    </system.webServer>
+</configuration>
+
+
+FTAPID101 (SERVER)
+1. Run command: dotnet build
+2. Run command: dotnet publish -c Release -o ./publish
+3. Delete contents on server D:inetpub/onetrakv2 
+4. Replace deleted contents with contents from /publish
+5. Stop/Start site
+
