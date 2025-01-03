@@ -647,6 +647,21 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         })
     );
   }
+  onChangeTechActive(event: any) {
+    const target = event.target as HTMLInputElement;
+    const value = target.checked;
+    this.isTechActive = value;
+
+    this.subscriptions.add(
+      this.dashboardDataService
+        .fetchAuditModifiedBy(value)
+        .subscribe((modifiedBy) => {
+          this.modifiedBy = [{modifiedBy: null, fullName: 'Select Tech'}, ...modifiedBy];
+        }
+      )
+    );
+  }
+  
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }

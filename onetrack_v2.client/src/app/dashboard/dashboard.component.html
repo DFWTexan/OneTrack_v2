@@ -497,6 +497,7 @@
             class="form-check-input me-2"
             type="checkbox"
             id="isTechActive"
+            (change)="onChangeTechActive($event)"
             [(ngModel)]="isTechActive"
           />
           <label
