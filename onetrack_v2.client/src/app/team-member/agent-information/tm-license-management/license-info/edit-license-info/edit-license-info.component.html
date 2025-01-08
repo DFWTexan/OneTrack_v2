@@ -172,7 +172,7 @@
     <div class="col">
       <div class="mb-3" *ngIf="agentComService.modeLicenseMgmt == 'ADD'">
         <label for="sentToAgentDate" class="form-label"
-          >Sent to Agent Date:
+          >Sent to Agent Date: <span class="text-danger">*</span>
         </label>
         <input
           class="form-control input-size-small"
@@ -180,7 +180,7 @@
           id="sentToAgentDate"
           formControlName="sentToAgentDate"
         />
-        <!-- <div
+        <div
           *ngIf="
             (licenseForm.controls['sentToAgentDate'].touched ||
               isFormSubmitted) &&
@@ -190,7 +190,7 @@
           class="text-danger"
         >
           Please select Sent to Agent Date
-        </div> -->
+        </div>
       </div>
 
       <div class="mb-3">

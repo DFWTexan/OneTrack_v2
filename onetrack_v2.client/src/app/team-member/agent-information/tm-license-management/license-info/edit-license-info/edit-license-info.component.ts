@@ -60,7 +60,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       required: [''],
       nonResident: [''],
       licenseEffectiveDate: [null],
-      licenseIssueDate: ['01/01/0001 00:00:00', Validators.required],
+      licenseIssueDate: ['01/01/0001 00:00:00'],
       lineOfAuthorityIssueDate: [null],
       sentToAgentDate: [null],
       licenseNote: [''],
@@ -283,14 +283,14 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       this.licenseForm.controls['licenseStatus'].setErrors({ invalid: true });
     }
 
-    // if (
-    //   licenseInfo.licenseIssueDate === '01/01/0001 00:00:00' ||
-    //   licenseInfo.licenseIssueDate === null
-    // ) {
-    //   this.licenseForm.controls['licenseIssueDate'].setErrors({
-    //     invalid: true,
-    //   });
-    // }
+    if (
+      licenseInfo.sentToAgentDate === '01/01/0001 00:00:00' ||
+      licenseInfo.sentToAgentDate === null
+    ) {
+      this.licenseForm.controls['sentToAgentDate'].setErrors({
+        invalid: true,
+      });
+    }
 
     if (this.licenseForm.invalid) {
       this.licenseForm.setErrors({ invalid: true });
