@@ -226,16 +226,16 @@
                 </div>
               </mat-panel-title>
               <mat-panel-description>
-                <div *ngIf="license.licenseAppointments.length > 0" class="row">
+                <!-- <div *ngIf="license.licenseAppointments.length > 0" class="row"> -->
+                <div class="row">
                   <div class="col d-flex justify-content-end">
                     <div class="me-5">
                       <label>Status:</label><br /><span
                         class="ms-2"
                         [ngStyle]="{
-                          color:
-                            license.licenseStatus === 'Active' ? 'green' : ''
+                          color: license.licenseStatus === 'Active' ? 'green' : 'black',
+                          fontWeight: license.licenseStatus === 'Active' ? '600' : 'normal'
                         }"
-                        style="font-weight: 600"
                         >{{ license.licenseStatus.toUpperCase() }}</span
                       >
                     </div>
@@ -300,10 +300,10 @@
                   <strong>Number:</strong> <br />
                   {{ license.licenseNumber }}
                 </div>
-                <div class="col">
+                <!-- <div class="col">
                   <strong>Resident:</strong> <br />
                   {{ license.resNoneRes ? "Res" : "NonRes" }}
-                </div>
+                </div> -->
                 <div class="col">
                   <strong>Original Date:</strong> <br />
                   {{ license.originalIssueDate | date : "MM/dd/yyyy" }}
