@@ -35,6 +35,7 @@ namespace OneTrack_v2.DataModel
         public string? DiaryEntryName { get; set; }
         public DateTime? DiaryEntryDate { get; set; }
         public string? DiaryNotes { get; set; }
+        public string? DiaryTechName { get; set; }
         public string? LicenseIncentive { get; set; }
         public string? LicenseLevel { get; set; }
         public bool? IsLicenseincentiveSecondChance { get; set; }

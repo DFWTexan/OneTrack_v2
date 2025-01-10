@@ -83,7 +83,20 @@ namespace OneTrack_v2.Services
                             let transferHistory = _db.TransferHistories.Where(th => th.EmploymentId == employment.EmploymentId && th.IsCurrent).FirstOrDefault()
                             let employmentJobTitle = _db.EmploymentJobTitles.FirstOrDefault(ejt => ejt.EmploymentId == employment.EmploymentId && ejt.IsCurrent)
                             let jobTitle = _db.JobTitles.FirstOrDefault(jt => jt.JobTitleId == employmentJobTitle.JobTitleId)
-                            let diary = _db.Diaries.Where(d => d.DiaryName == "Agent" && d.EmploymentId == employment.EmploymentId).OrderByDescending(d => d.DiaryDate).FirstOrDefault()
+                            //let diary = _db.Diaries.Where(d => d.DiaryName == "Agent" && d.EmploymentId == employment.EmploymentId).OrderByDescending(d => d.DiaryDate).FirstOrDefault()
+                            let diary = (from d in _db.Diaries
+                                         join lt in _db.LicenseTeches on d.Soeid equals lt.Soeid
+                                         where d.DiaryName == "Agent" && d.EmploymentId == employment.EmploymentId
+                                         orderby d.DiaryDate descending
+                                         select new
+                                         {
+                                             Diary = d,
+                                             DiaryName = d.DiaryName,
+                                             DiaryDate = d.DiaryDate,
+                                             Notes = d.Notes,
+                                             Soeid = d.Soeid,
+                                             TechName = lt.FirstName + " " + lt.LastName
+                                         }).FirstOrDefault()
                             let licenseTech = _db.LicenseTeches.Where(lt => lt.TeamNum == employee.Geid).FirstOrDefault()
                             select new OputAgent
                             {
@@ -120,6 +133,7 @@ namespace OneTrack_v2.Services
                                 DiaryEntryName = diary != null ? diary.DiaryName : null,
                                 DiaryEntryDate = diary != null ? diary.DiaryDate : null,
                                 DiaryNotes = diary != null ? diary.Notes : null,
+                                DiaryTechName = diary != null ? diary.TechName : null,
                                 BranchCode = transferHistory != null ? transferHistory.BranchCode : null,
                                 WorkStateAbv = transferHistory != null ? transferHistory.WorkStateAbv : null,
                                 ResStateAbv = transferHistory != null ? transferHistory.ResStateAbv : null
