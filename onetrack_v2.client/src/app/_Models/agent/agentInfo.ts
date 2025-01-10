@@ -34,6 +34,7 @@ export interface AgentInfo {
   diaryEntryName: string | null;
   diaryEntryDate: string | null;
   diaryNotes: string | null;
+  diaryTechName: string | null; 
   licenseIncentive: string;
   licenseLevel: string;
   isLicenseincentiveSecondChance: boolean;

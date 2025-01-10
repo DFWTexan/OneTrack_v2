@@ -116,12 +116,19 @@
         <div class="panel-body">
           <div class="row">
             <div class="col">
-              <p>
-                <strong>Preferred Name:</strong><br />
+              <div class="d-flex justify-content-between mb-4"> 
+                <div>
+                  <strong>Full Name:</strong><br />
+                  {{ agentInfo.firstName }} {{agentInfo.middleName}} {{ agentInfo.lastName }}
+                </div>
+                <div class="me-5">
+                  <strong>Preferred Name:</strong><br />
                 <!-- {{ agentInfo.firstName }}
                 {{ agentInfo.middleName }} {{ agentInfo.lastName }} -->
                 {{ agentInfo.alias || "N/A" }}
-              </p>
+                </div>
+                
+              </div>
               <p>
                 <strong>Employee ID:</strong><br />
                 {{ agentInfo.employeeID }}
