@@ -250,7 +250,12 @@
         <div class="d-flex justify-content-between">
           <span
             class="ms-1 mt-3"
-            style="font-size: large; color: black; font-weight: 500; padding: .5rem;"
+            style="
+              font-size: large;
+              color: black;
+              font-weight: 500;
+              padding: 0.5rem;
+            "
             >Co. Requirement History</span
           >
           <button
@@ -742,10 +747,7 @@
                   {{ coReq.employmentCompanyRequirementID }}
                 </td>
                 <td class="align-middle">
-                  {{ coReq.assetIdString }} -
-                  <span style="font-weight: 700; color: red"
-                    >TBD: DATA PROBLEM</span
-                  >
+                  {{ coReq.assetIdString }}
                 </td>
                 <td class="align-middle">
                   {{ coReq.learningProgramStatus.toUpperCase() }}
