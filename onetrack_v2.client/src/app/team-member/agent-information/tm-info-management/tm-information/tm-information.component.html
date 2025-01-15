@@ -579,12 +579,12 @@
                       <th
                         scope="col"
                         [ngClass]="{
-                          'th-sort-active': sortColumn === 'employeeLicenseId',
-                          'th-sort': sortColumn !== 'employeeLicenseId'
+                          'th-sort-active': sortColumn === 'licenseNumber',
+                          'th-sort': sortColumn !== 'licenseNumber'
                         }"
-                        (click)="onSortData('employeeLicenseId', 'license')"
+                        (click)="onSortData('licenseNumber', 'license')"
                       >
-                        License ID
+                        License #
                       </th>
                       <!-- <th scope="col">Name</th> -->
                       <th
@@ -683,7 +683,7 @@
                         {{ license.licenseStatus?.toUpperCase() }}
                       </td>
                       <td class="align-middle">
-                        {{ license.employeeLicenseId }}
+                        {{ license.licenseNumber }}
                       </td>
                       <td class="align-middle">{{ license.licenseName }}</td>
                       <td class="align-middle">
