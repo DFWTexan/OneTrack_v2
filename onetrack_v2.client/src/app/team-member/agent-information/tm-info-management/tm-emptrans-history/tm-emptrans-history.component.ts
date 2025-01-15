@@ -77,7 +77,7 @@ export class TmEmptransHistoryComponent implements OnInit, OnDestroy {
       width: '250px',
       data: {
         title: 'Confirm Action',
-        message: 'You are about to DELETE' + msg,
+        message: 'You are about to DELETE ' + msg,
       },
     });
 

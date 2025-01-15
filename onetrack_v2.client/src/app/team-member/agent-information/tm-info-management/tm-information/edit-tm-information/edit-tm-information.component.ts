@@ -98,10 +98,10 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
       agentDetailItem.city = this.agentInfo.city;
       agentDetailItem.state = this.agentInfo.state;
       agentDetailItem.zip = this.agentInfo.zip;  
-      agentDetailItem.phone = this.agentInfo.phone;
-      agentDetailItem.fax = this.agentInfo.branchDeptFax;
+      agentDetailItem.phone = this.agentInfo.homePhone;
+      agentDetailItem.fax = this.agentInfo.faxPhone;
       agentDetailItem.email = this.agentInfo.email;
-      agentDetailItem.workPhone = this.agentInfo.phone;
+      agentDetailItem.workPhone = this.agentInfo.workPhone;
       //--> agentDetailItem.employeeStatus = this.agentInfo.employeeStatus;
       //--> agentDetailItem.companyID = this.agentInfo.companyID;
       agentDetailItem.ceRequired = this.agentInfo.ceRequired;

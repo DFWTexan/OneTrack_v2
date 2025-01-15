@@ -5,7 +5,11 @@ import { map } from 'rxjs/operators';
 // import { Subject } from 'rxjs';
 
 import { environment } from '../../_environments/environment';
-import { SearchEmployeeFilter, EmployeeSearchResult, EmployeeFind } from '../../_Models';
+import {
+  SearchEmployeeFilter,
+  EmployeeSearchResult,
+  EmployeeFind,
+} from '../../_Models';
 
 @Injectable({
   providedIn: 'root',
@@ -64,7 +68,9 @@ export class EmployeeDataService {
         statusCode: number;
         objData: EmployeeFind;
         errMessage: string;
-      }>(environment.apiUrl + 'Employee/SearchEmployeeTMNumber' + '/' + vTmNumber)
+      }>(
+        environment.apiUrl + 'Employee/SearchEmployeeTMNumber' + '/' + vTmNumber
+      )
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -77,11 +83,6 @@ export class EmployeeDataService {
   }
 
   fetchEmployeeByAgentName(vAgentName: string): Observable<EmployeeFind[]> {
-    console.log(
-      'EMFTEST (employee.data.service: fetchEmployeeByAgentName) - vAgentName => \n',
-      vAgentName
-    );
-
     return this.http
       .get<{
         success: boolean;

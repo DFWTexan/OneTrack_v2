@@ -14,21 +14,24 @@
   <!-- LEGACY View -->
   <div class="row" *ngIf="isLegacyView">
     <div class="row">
-      <div class="col panel-default">
-        <div
-          class="d-flex justify-content-between"
-          style="
-            background-color: aliceblue;
-            padding: 1rem;
-            border-radius: 0.5rem;
-          "
-        >
+      <div
+        class="col panel-default"
+        style="
+          padding: 1rem;
+          border: 1px solid #e0e0e0;
+          background-color: #ffffff;
+          border-radius: 0.5rem;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        "
+      >
+        <div class="d-flex justify-content-between">
           <span
-            class="ms-1 mt-3"
-            style="font-size: large; color: grey; font-weight: 500"
+            class="mt-3 mb-3"
+            style="font-size: large; color: black; font-weight: 500"
             >Employment History</span
           >
-          <button
+          <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
+          <!-- <button
             class="btn btn-success button-font-size"
             (click)="
               agentDataService.storeEmploymentTransferHistory('INSERT', null);
@@ -36,7 +39,7 @@
             "
           >
             Insert - Employment History
-          </button>
+          </button> -->
         </div>
         <div
           class="div d-flex justify-content-center mb-3"
@@ -58,9 +61,10 @@
               <th scope="col">Background Check Status</th>
               <th scope="col">Background Check Notes</th>
               <th scope="col">Is Current</th>
-              <th scope="col" class="text-center" style="width: 10rem">
+              <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
+              <!-- <th scope="col" class="text-center" style="width: 10rem">
                 ACTION
-              </th>
+              </th> -->
             </tr>
           </thead>
           <tbody class="tbody" style="background-color: white">
@@ -94,7 +98,8 @@
               <td class="align-middle">
                 {{ emp.isCurrent ? "Yes" : "No" }}
               </td>
-              <td style="width: 10rem">
+              <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
+              <!-- <td style="width: 10rem">
                 <div class="d-flex justify-content-between mb-3 me-4">
                   <button
                     class="icon-edit-delete-button"
@@ -123,28 +128,31 @@
                     <span class="material-symbols-outlined"> delete </span>
                   </button>
                 </div>
-              </td>
+              </td> -->
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <div class="row">
-      <div class="col panel-default">
-        <div
-          class="d-flex justify-content-between"
-          style="
-            background-color: aliceblue;
-            padding: 1rem;
-            border-radius: 0.5rem;
-          "
-        >
+    <div class="row mt-2">
+      <div
+        class="col panel-default"
+        style="
+          padding: 1rem;
+          border: 1px solid #e0e0e0;
+          background-color: #ffffff;
+          border-radius: 0.5rem;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        "
+      >
+        <div class="d-flex justify-content-between">
           <span
-            class="ms-1 mt-3"
-            style="font-size: large; color: grey; font-weight: 500"
+            class="mt-3 mb-3"
+            style="font-size: large; color: black; font-weight: 500"
             >Transfer History</span
           >
-          <button
+          <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
+          <!-- <button
             class="btn btn-success button-font-size"
             (click)="
               agentDataService.storeTransferHistory('INSERT', null);
@@ -152,7 +160,7 @@
             "
           >
             Insert - Transfer History
-          </button>
+          </button> -->
         </div>
         <div
           class="div d-flex justify-content-center mb-3"
@@ -169,9 +177,10 @@
               <th scope="col">Work St. Code</th>
               <th scope="col">Trans. Date</th>
               <th scope="col">Is Current</th>
-              <th scope="col" class="text-center" style="width: 10rem">
+              <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
+              <!-- <th scope="col" class="text-center" style="width: 10rem">
                 ACTION
-              </th>
+              </th> -->
             </tr>
           </thead>
           <tbody class="tbody" style="background-color: white">
@@ -194,7 +203,8 @@
               <td class="align-middle">
                 {{ transfer.isCurrent ? "Yes" : "NO" }}
               </td>
-              <td style="width: 10rem">
+              <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
+              <!-- <td style="width: 10rem">
                 <div class="d-flex justify-content-between mb-3 me-4">
                   <button
                     class="icon-edit-delete-button"
@@ -220,29 +230,36 @@
                     <span class="material-symbols-outlined"> delete </span>
                   </button>
                 </div>
-              </td>
+              </td> -->
             </tr>
           </tbody>
         </table>
       </div>
     </div>
-    <div class="row">
-      <div class="col panel-default">
-        <div
-          class="d-flex justify-content-between"
-          style="
-            background-color: aliceblue;
-            padding: 1rem;
-            border-radius: 0.5rem;
-          "
-        >
+    <div class="row mt-2">
+      <div
+        class="col panel-default"
+        style="
+          padding: 1rem;
+          border: 1px solid #e0e0e0;
+          background-color: #ffffff;
+          border-radius: 0.5rem;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        "
+      >
+        <div class="d-flex justify-content-between">
           <span
             class="ms-1 mt-3"
-            style="font-size: large; color: grey; font-weight: 500"
+            style="
+              font-size: large;
+              color: black;
+              font-weight: 500;
+              padding: 0.5rem;
+            "
             >Co. Requirement History</span
           >
           <button
-            class="btn btn-success button-font-size"
+            class="btn btn-success button-font-size mb-3"
             (click)="
               agentDataService.storeCompanyRequirementsHistory('INSERT', null);
               modalService.open('modal-edit-co-req-history')
@@ -290,8 +307,9 @@
                 {{ coReq.learningProgramCompletionDate | date : "MM/dd/yyyy" }}
               </td>
               <td style="width: 10rem">
-                <div class="d-flex justify-content-between mb-3 me-4">
-                  <button
+                <div class="d-flex justify-content-center mb-3 me-4">
+                  <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
+                  <!-- <button
                     class="icon-edit-delete-button"
                     (click)="
                       agentDataService.storeCompanyRequirementsHistory(
@@ -303,7 +321,7 @@
                     title="Edit Co. Requirement"
                   >
                     <span class="material-symbols-outlined"> edit </span>
-                  </button>
+                  </button> -->
                   <button
                     class="icon-edit-delete-button"
                     (click)="
@@ -324,22 +342,25 @@
         </table>
       </div>
     </div>
-    <div class="row">
-      <div class="col">
-        <div
-          class="d-flex justify-content-between"
-          style="
-            background-color: aliceblue;
-            padding: 1rem;
-            border-radius: 0.5rem;
-          "
-        >
+    <div class="row mt-2">
+      <div
+        class="col panel-default"
+        style="
+          padding: 1rem;
+          border: 1px solid #e0e0e0;
+          background-color: #ffffff;
+          border-radius: 0.5rem;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        "
+      >
+        <div class="d-flex justify-content-between">
           <span
-            class="ms-1 mt-3"
-            style="font-size: large; color: grey; font-weight: 500"
+            class="mt-3 mb-3"
+            style="font-size: large; color: black; font-weight: 500"
             >Job Title History</span
           >
-          <button
+          <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
+          <!-- <button
             class="btn btn-success button-font-size"
             (click)="
               agentDataService.storeEmploymentJobTitleHistory('INSERT', null);
@@ -347,7 +368,7 @@
             "
           >
             Insert - Job Title
-          </button>
+          </button> -->
         </div>
         <div
           class="div d-flex justify-content-center mb-3"
@@ -366,9 +387,10 @@
               <th scope="col">Job Title</th>
               <th scope="col">Job Code</th>
               <th scope="col">Is Current</th>
-              <th scope="col" class="text-center" style="width: 10rem">
+              <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
+              <!-- <th scope="col" class="text-center" style="width: 10rem">
                 ACTION
-              </th>
+              </th> -->
             </tr>
           </thead>
           <tbody class="tbody" style="background-color: white">
@@ -388,7 +410,8 @@
               <td class="align-middle">
                 {{ jobTitle.isCurrent ? "Yes" : "No" }}
               </td>
-              <td style="width: 10rem">
+              <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
+              <!-- <td style="width: 10rem">
                 <div class="d-flex justify-content-between mb-3 me-4">
                   <button
                     class="icon-edit-delete-button"
@@ -417,7 +440,7 @@
                     <span class="material-symbols-outlined"> delete </span>
                   </button>
                 </div>
-              </td>
+              </td> -->
             </tr>
           </tbody>
         </table>
@@ -440,7 +463,8 @@
       </mat-expansion-panel-header>
       <div class="mat-description">
         <div class="row mb-3">
-          <div class="col">
+          <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
+          <!-- <div class="col">
             <button
               class="btn btn-success button-font-size"
               (click)="
@@ -450,7 +474,7 @@
             >
               Insert - Employment History
             </button>
-          </div>
+          </div> -->
         </div>
         <div
           class="div d-flex justify-content-center mt-5"
@@ -476,9 +500,10 @@
                   <th scope="col">Background Check Status</th>
                   <th scope="col">Background Check Notes</th>
                   <th scope="col">Is Current</th>
-                  <th scope="col" class="text-center" style="width: 10rem">
+                  <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
+                  <!-- <th scope="col" class="text-center" style="width: 10rem">
                     ACTION
-                  </th>
+                  </th> -->
                 </tr>
               </thead>
               <tbody>
@@ -513,7 +538,8 @@
                   <td class="align-middle">
                     {{ emp.isCurrent ? "Yes" : "No" }}
                   </td>
-                  <td style="width: 10rem">
+                  <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
+                  <!-- <td style="width: 10rem">
                     <div class="d-flex justify-content-between mb-3 me-4">
                       <button
                         class="icon-edit-delete-button"
@@ -542,7 +568,7 @@
                         <span class="material-symbols-outlined"> delete </span>
                       </button>
                     </div>
-                  </td>
+                  </td> -->
                 </tr>
               </tbody>
             </table>
@@ -564,7 +590,8 @@
       </mat-expansion-panel-header>
       <div class="mat-description">
         <div class="row mb-3">
-          <div class="col">
+          <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
+          <!-- <div class="col">
             <button
               class="btn btn-success button-font-size"
               (click)="
@@ -574,7 +601,7 @@
             >
               Insert - Transfer History
             </button>
-          </div>
+          </div> -->
         </div>
         <div
           class="div d-flex justify-content-center mt-5"
@@ -595,9 +622,10 @@
                 <th scope="col">Work St. Code</th>
                 <th scope="col">Trans. Date</th>
                 <th scope="col">Is Current</th>
-                <th scope="col" class="text-center" style="width: 10rem">
+                <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
+                <!-- <th scope="col" class="text-center" style="width: 10rem">
                   ACTION
-                </th>
+                </th> -->
               </tr>
             </thead>
             <tbody>
@@ -624,7 +652,8 @@
                 <td class="align-middle">
                   {{ transfer.isCurrent ? "Yes" : "NO" }}
                 </td>
-                <td style="width: 10rem">
+                <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
+                <!-- <td style="width: 10rem">
                   <div class="d-flex justify-content-between mb-3 me-4">
                     <button
                       class="icon-edit-delete-button"
@@ -650,7 +679,7 @@
                       <span class="material-symbols-outlined"> delete </span>
                     </button>
                   </div>
-                </td>
+                </td> -->
               </tr>
             </tbody>
           </table>
@@ -718,10 +747,7 @@
                   {{ coReq.employmentCompanyRequirementID }}
                 </td>
                 <td class="align-middle">
-                  {{ coReq.assetIdString }} -
-                  <span style="font-weight: 700; color: red"
-                    >TBD: DATA PROBLEM</span
-                  >
+                  {{ coReq.assetIdString }}
                 </td>
                 <td class="align-middle">
                   {{ coReq.learningProgramStatus.toUpperCase() }}
@@ -732,8 +758,9 @@
                   }}
                 </td>
                 <td style="width: 10rem">
-                  <div class="d-flex justify-content-between mb-3 me-4">
-                    <button
+                  <div class="d-flex justify-content-center mb-3 me-4">
+                    <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
+                    <!-- <button
                       class="icon-edit-delete-button"
                       (click)="
                         agentDataService.storeCompanyRequirementsHistory(
@@ -745,14 +772,14 @@
                       title="Edit Co. Requirement"
                     >
                       <span class="material-symbols-outlined"> edit </span>
-                    </button>
+                    </button> -->
                     <button class="icon-edit-delete-button">
                       <span
                         class="material-symbols-outlined"
                         (click)="
                           onOpenConfirmDialog(
                             'deleteCoRequirementItem',
-                            'Co. RequirementItem',
+                            'Company Requirement Item',
                             coReq
                           )
                         "
@@ -782,7 +809,8 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
       <div class="row mb-3">
-        <div class="col">
+        <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
+        <!-- <div class="col">
           <button
             class="btn btn-success button-font-size"
             (click)="
@@ -792,7 +820,7 @@
           >
             Insert - Job Title
           </button>
-        </div>
+        </div> -->
       </div>
       <div
         class="div d-flex justify-content-center mt-5"
@@ -812,9 +840,10 @@
               <th scope="col">Job Title</th>
               <th scope="col">Job Code</th>
               <th scope="col">Is Current</th>
-              <th scope="col" class="text-center" style="width: 10rem">
+              <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
+              <!-- <th scope="col" class="text-center" style="width: 10rem">
                 ACTION
-              </th>
+              </th> -->
             </tr>
           </thead>
           <tbody>
@@ -838,7 +867,8 @@
               <td class="align-middle">
                 {{ jobTitle.isCurrent ? "Yes" : "No" }}
               </td>
-              <td style="width: 10rem">
+              <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
+              <!-- <td style="width: 10rem">
                 <div class="d-flex justify-content-between mb-3 me-4">
                   <button
                     class="icon-edit-delete-button"
@@ -867,7 +897,7 @@
                     <span class="material-symbols-outlined"> delete </span>
                   </button>
                 </div>
-              </td>
+              </td> -->
             </tr>
           </tbody>
         </table>

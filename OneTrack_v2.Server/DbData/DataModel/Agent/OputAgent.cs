@@ -25,7 +25,9 @@ namespace OneTrack_v2.DataModel
         public string? City { get; set; }
         public string? State { get; set; }
         public string? Zip { get; set; }
-        public string? Phone { get; set; }
+        public string? HomePhone { get; set; }
+        public string? WorkPhone { get; set; }
+        public string? FaxPhone { get; set; }
         public string? Email { get; set; }
         public int? NationalProdercerNumber { get; set; }   
         public bool? CERequired { get; set; }
