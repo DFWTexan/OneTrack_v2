@@ -260,6 +260,8 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.isFormSubmitted = true;
 
+console.log('EMFTEST (onSubmit) A - licenseForm => \n ', this.licenseForm.value);   
+
     let licenseInfo: any = this.licenseForm.value;
     licenseInfo.employeeID = this.agentDataService.agentInformation.employeeID;
     licenseInfo.employmentID =
@@ -285,7 +287,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
 
     if (
       licenseInfo.sentToAgentDate === '01/01/0001 00:00:00' ||
-      licenseInfo.sentToAgentDate === null
+      licenseInfo.sentToAgentDate === null && this.agentComService.modeLicenseMgmt != 'EDIT'
     ) {
       this.licenseForm.controls['sentToAgentDate'].setErrors({
         invalid: true,
@@ -296,6 +298,8 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       this.licenseForm.setErrors({ invalid: true });
       return;
     }
+
+console.log('EMFTEST (onSubmit) B - licenseInfo => \n ', licenseInfo);    
 
     this.subscriptions.add(
       this.agentDataService.upsertAgentLicense(licenseInfo).subscribe({

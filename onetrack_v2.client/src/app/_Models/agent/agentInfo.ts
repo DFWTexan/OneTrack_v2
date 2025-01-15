@@ -22,7 +22,9 @@ export interface AgentInfo {
   city: string;
   state: string;
   zip: string;
-  phone: string | null;
+  homePhone: string | null;
+  workPhone: string | null;
+  faxPhone: string | null;
   email: string;
   nationalProdercerNumber: string | null;
   employerAgency: string | null;

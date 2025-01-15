@@ -89,7 +89,7 @@ export class QuickFindComponent {
             this.agentComService.updateShowLicenseMgmt(false);
             this.isLoading = false;
             this.agentName = '';
-            console.log('Search by Agent Name: ', response);
+            // console.log('Search by Agent Name: ', response);
             this.agents = response;
             this.openModal();
           }

@@ -20,7 +20,7 @@
         public string? AppointmentStatus { get; set; } = "";
         public int? CompanyID { get; set; } = 0;
         public DateTime? CarrierDate { get; set; } = null;
-        public DateTime SentToAgentDate { get; set; }
+        public DateTime? SentToAgentDate { get; set; } = null;
         public DateTime? AppointmentEffectiveDate { get; set; } = null;
         public DateTime? AppointmentExpireDate { get; set; } = null;
         public DateTime? AppointmentTerminationDate { get; set; } = null;
