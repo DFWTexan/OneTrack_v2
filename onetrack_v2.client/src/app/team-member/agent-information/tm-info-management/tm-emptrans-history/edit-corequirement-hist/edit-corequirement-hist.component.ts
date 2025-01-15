@@ -46,7 +46,7 @@ export class EditCorequirementHistComponent implements OnInit, OnDestroy {
       assetIdString: ['', Validators.required],
       assetSk: [''],
       learningProgramStatus: ['', Validators.required],
-      learningProgramEnrollmentDate: ['', Validators.required],
+      learningProgramEnrollmentDate: [''],
       learningProgramCompletionDate: [''],
     });
 
@@ -122,26 +122,34 @@ export class EditCorequirementHistComponent implements OnInit, OnDestroy {
       this.coRequirementsForm.controls['assetIdString'].setErrors({
         invalid: true,
       });
+    } else {
+      this.coRequirementsForm.controls['assetIdString'].setErrors(null);
     }
-
-    // Mark the control as touched
-    // this.coRequirementsForm.controls['assetIdString'].markAsTouched();
 
     if (coReqItem.learningProgramStatus === 'Select Status') {
       this.coRequirementsForm.controls['learningProgramStatus'].setErrors({
         invalid: true,
       });
+    } else {
+      this.coRequirementsForm.controls['learningProgramStatus'].setErrors(null);
     }
 
-    if (
-      coReqItem.learningProgramEnrollmentDate === '' ||
-      coReqItem.learningProgramEnrollmentDate === null
-    ) {
-      this.coRequirementsForm.controls[
-        'learningProgramEnrollmentDate'
-      ].setErrors({
-        invalid: true,
-      });
+    if (coReqItem.learningProgramStatus === 'Completed') {
+      if (
+        coReqItem.learningProgramCompletionDate === '' ||
+        coReqItem.learningProgramCompletionDate === null
+      ) {
+        this.coRequirementsForm.controls[
+          'learningProgramCompletionDate'
+        ].setErrors({
+          invalid: true,
+        });
+      } else {
+        this.coRequirementsForm.controls['learningProgramCompletionDate'].setErrors(null);
+      }
+    } else {
+      coReqItem.learningProgramCompletionDate = null;
+      this.coRequirementsForm.controls['learningProgramCompletionDate'].setErrors(null);
     }
 
     if (this.coRequirementsForm.invalid) {
