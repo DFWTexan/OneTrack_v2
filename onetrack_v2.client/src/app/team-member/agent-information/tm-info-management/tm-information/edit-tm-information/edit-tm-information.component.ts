@@ -21,12 +21,12 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
   @Output() callParentRefreshData = new EventEmitter<any>();
   isFormSubmitted: boolean = false;
   form = new FormGroup({
-    CompanyID: new FormControl(0),
-    Alias: new FormControl(''),
-    GEID: new FormControl(''),
+    CompanyID: new FormControl({ value: 0, disabled: true }),
+    Alias: new FormControl({ value: '', disabled: true }),
+    GEID: new FormControl({ value: '', disabled: true }),
     NationalProducerNumber: new FormControl(''),
-    EmployeeStatus: new FormControl(''),
-    ResStateAbv: new FormControl(''),
+    EmployeeStatus: new FormControl({ value: '', disabled: true }),
+    ResStateAbv: new FormControl({ value: '', disabled: true }),
     CERequired: new FormControl(false),
     ExcludeFromRpts: new FormControl(false),
   });
