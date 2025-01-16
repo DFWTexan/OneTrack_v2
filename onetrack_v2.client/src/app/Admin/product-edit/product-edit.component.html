@@ -1,0 +1,119 @@
+<div class="container app-component-container">
+  <div class="row">
+    <div class="col">
+      <h1 class="text-end" style="font-style: italic; color: lightgrey">
+        Product Edit
+      </h1>
+    </div>
+  </div>
+  <div class="row mt-5 mb-3">
+    <div class="col d-flex justify-content-start align-items-start">
+      <button
+        class="btn btn-success button-font-size"
+        type="button"
+        (click)="
+          adminDataService.storeProduct('INSERT', null);
+          modalService.open('modal-edit-product')
+        "
+      >
+        Create New Product
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="mt-5 mb-5 d-flex justify-content-center" *ngIf="loading">
+    <div class="spinner-border text-primary"></div>
+  </div>
+  <div class="row mt-4" *ngIf="!loading">
+    <div class="col">
+      <div class="table" *ngIf="products.length > 0">
+        <thead>
+          <tr class="sticky-top" style="background-color: gainsboro">
+            <th
+              scope="col"
+              style="width: 15rem"
+              *ngIf="appComService.isShowEditID"
+            >
+              ProductID
+            </th>
+            <th scope="col" style="width: 15rem">ProductAbv</th>
+            <th scope="col">ProductName</th>
+            <th scope="col">EffectiveDate</th>
+            <th scope="col">ExpireDate</th>
+            <th scope="col" class="text-center">ACTION</th>
+          </tr>
+        </thead>
+        <tbody class="bg-body">
+          <tr *ngFor="let product of products">
+            <td
+              class="align-middle text-center"
+              style="width: 15rem"
+              *ngIf="appComService.isShowEditID"
+            >
+              {{ product.productId }}
+            </td>
+            <td class="align-middle text-center" style="width: 15rem">
+              {{ product.productAbv }}
+            </td>
+            <td class="align-middle text-nowrap">
+              {{ product.productName }}
+            </td>
+            <td class="align-middle text-nowrap">
+              {{ product.effectiveDate | date : "MM/dd/yyyy" }}
+            </td>
+            <td class="align-middle text-nowrap">
+              {{ product.expireDate | date : "MM/dd/yyyy" }}
+            </td>
+            <td class="align-middle" style="width: 15rem">
+              <div class="d-flex justify-content-between mb-3 me-4">
+                <button
+                  class="icon-edit-delete-button"
+                  type="button"
+                  (click)="
+                    adminDataService.storeProduct('EDIT', product);
+                    modalService.open('modal-edit-product')
+                  "
+                >
+                  <span class="material-symbols-outlined"> edit </span>
+                </button>
+                <button class="icon-edit-delete-button" type="button">
+                  <span
+                    class="material-symbols-outlined"
+                    (click)="
+                      openConfirmDialog('deleteProduct', 'Product', product)
+                    "
+                  >
+                    delete
+                  </span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: EDIT-PRODUCT -->
+<modal id="modal-edit-product">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      <strong>{{ adminComService.modes.product.mode }}</strong> - Product
+    </h1>
+    <!-- <button
+                      type="button"
+                      class="btn-close"
+                      (click)="modalService.close()"
+                    ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-edit-product
+          (callParentRefreshData)="onChildCallRefreshData()"
+        ></app-edit-product>
+      </div>
+    </div>
+  </div>
+</modal>

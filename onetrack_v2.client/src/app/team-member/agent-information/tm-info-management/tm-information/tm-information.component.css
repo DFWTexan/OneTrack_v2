@@ -1,0 +1,78 @@
+
+.mat-title {
+  font-size: 2rem;
+}
+
+.mat-description {
+  font-size: 1.2rem;
+}
+
+.page-button {
+  border-style: none;
+  background-color: transparent;
+  height: 3rem;
+  width: 3rem;
+  margin-right: 2rem;
+}
+
+.page-button:hover {
+  color: grey; 
+}
+
+.appointment-edit-button {
+  padding-right: 2.5rem;
+  padding-bottom: 2.5rem;
+}
+
+.click-effect {
+  transition: transform 0.1s;
+}
+
+.click-effect:active {
+  transform: scale(0.95);
+  color: #ffa500;
+}
+
+/* .alternate-row {
+  background-color: aliceblue;
+} */
+
+.icon-add-button {
+  border-style: none;
+  background-color: transparent;
+  height: 1rem;
+  width: 1rem;
+  margin: 1rem;
+  transition: color 0.3s ease;
+  color: black;
+  opacity: .7;
+}
+
+.icon-add-button:hover {
+  color: #90EE90; 
+}
+
+.icon-add-button:active {
+  transform: scale(0.9);
+  color: #ffa500;
+}
+
+.custom-row-padding {
+  margin-top: 0rem !important;
+  padding-bottom: 0rem !important;
+}
+
+.th-sort {
+  font-size: 1.2rem;
+  text-decoration: underline;
+}
+
+.th-sort-active {
+  font-size: 1.2rem;
+  text-decoration: underline;
+  color: #ffa500;
+}
+
+.th-sort:hover {
+  cursor: pointer;
+}

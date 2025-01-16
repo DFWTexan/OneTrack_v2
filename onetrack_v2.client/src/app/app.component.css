@@ -1,0 +1,113 @@
+﻿/* :host {
+    max-width: 1280px;
+    padding: 2rem;
+    text-align: center;
+}
+
+tr:nth-child(even) {
+    background: #F2F2F2;
+}
+
+tr:nth-child(odd) {
+    background: #FFF;
+}
+
+th, td {
+    padding-left: 1rem;
+    padding-right: 1rem;
+}
+
+table {
+    margin: 0 auto;
+}
+
+h1 {
+    padding: 0 1rem;
+}
+
+h2 {padding: 1rem;}
+
+mat-toolbar{
+    position:fixed;
+    top:0;
+    z-index: 2;
+}
+
+mat-sidenav-container {
+    height:100%;
+}
+
+mat-sidenav {
+    padding-top: 3.5rem;
+    @media screen and (min-width: 600px) {
+      padding-top: 4rem;
+    }
+
+    .entry{
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        padding:0.75rem;
+    }
+  }
+
+mat-sidenav-content{
+    padding-top: 3.5rem;
+    @media screen and (min-width: 600px) {
+        padding-top: 4rem;
+    }
+}
+
+.app-sidenav-content {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+} 
+
+/* .app-sidenav-item-text {
+    font-size: smaller;
+} 
+
+a[mat-list-item][routerLink] {
+    font-size: smaller;
+} */
+.toolbar-item-spacer {
+    flex: 1 1 auto;
+  }
+  
+  .app-container {
+    height: 90%;
+    margin: 0;
+  }
+  .app-sidenav {
+    width: 250px;
+  }
+  .app-sidenav-content {
+    display: flex;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .active {
+    background-color: #d8bfd8;
+  }
+  
+  mat-nav-list a {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    color: inherit;
+    padding: 8px 16px;
+    margin: 8px 0;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+    font-size: smaller;
+  }
+  
+  mat-icon {
+    margin-right: 0.8rem; /* Adjust the space between the icon and the text as needed */
+  }
+  
+

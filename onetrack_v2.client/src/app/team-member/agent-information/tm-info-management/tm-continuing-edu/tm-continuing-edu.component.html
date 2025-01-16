@@ -1,0 +1,192 @@
+<div class="container app-component-container">
+  <div class="row mt-5">
+    <div
+      class="col d-flex justify-content-start"
+      style="color: grey; font-size: large; font-weight: 700"
+    >
+      Cont. Education Required Hours
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <div class="col d-flex">
+      <table
+        class="table"
+        style="
+          border-radius: 1rem;
+          padding: 1rem;
+          box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+        "
+      >
+        <thead>
+          <tr style="background-color: gainsboro">
+            <th scope="col">Cont. Ed. ID</th>
+            <th scope="col">Ed. Start Date</th>
+            <th scope="col">Ed. End Date</th>
+            <th scope="col">Required Hours</th>
+          </tr>
+        </thead>
+        <tbody class="bg-body">
+          <tr
+            *ngFor="let ce of agentInfo.contEduRequiredItems"
+            class="no-hover-bg"
+          >
+            <td>{{ ce.contEducationRequirementID }}</td>
+            <td>{{ ce.educationStartDate | date }}</td>
+            <td>{{ ce.educationEndDate | date }}</td>
+            <td style="font-size: large">{{ ce.requiredCreditHours }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="row mt-3">
+    <table
+      class="bg-body p-3"
+      style="
+        border-radius: 1rem;
+        border-radius: 1rem;
+        padding: 1rem;
+        box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
+      "
+    >
+      <thead>
+        <tr>
+          <th class="p-3 ms-5" style="color: dodgerblue">Hours Required</th>
+          <th class="p-3" style="color: dodgerblue">- Hours Taken</th>
+          <th class="p-3" style="color: dodgerblue">= Hours Remaining</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="ps-3 ms-5 pb-3" style="font-size: large">
+            {{ sumHoursRequired }}
+          </td>
+          <td class="ps-3 pb-3" style="font-size: large">
+            {{ sumHoursTaken }}
+          </td>
+          <td class="ps-3 pb-3" style="font-size: large">
+            {{ totalHoursRemaining }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row mt-5">
+    <div class="col" style="color: grey; font-size: large; font-weight: 700">
+      Cont. Education Hours Taken Details
+    </div>
+    <div class="col w-100">
+      <div class="d-flex justify-content-end">
+        <button
+          class="btn btn-success button-font-size"
+          (click)="
+            agentDataService.storeContEduHoursTaken('INSERT', null);
+            modalService.open('modal-edit-edu-hours-taken')
+          "
+        >
+          Add Hours Taken
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="row" *ngIf="agentInfo?.contEduCompletedItems?.length == 0">
+    <div class="col text-center record-not-found" style="font-size: larger;">No Records Found...</div>
+  </div>
+  <div class="row mt-3" *ngIf="agentInfo?.contEduCompletedItems?.length != 0">
+    <div class="col d-flex">
+      <table class="table-sm w-100">
+        <thead>
+          <tr style="background-color: gainsboro">
+            <!-- <th scope="col">Taken ID</th> -->
+            <th scope="col">Class Taken</th>
+            <th scope="col">Taken Date</th>
+            <th scope="col">Hours Taken</th>
+            <th scope="col">Notes</th>
+            <th scope="col" class="text-center" style="width: 10rem">ACTION</th>
+          </tr>
+        </thead>
+        <tbody class="bg-body">
+          <tr
+            *ngFor="let ce of agentInfo?.contEduCompletedItems; let i = index"
+            [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+          >
+            <!-- <td>{{ ce.contEducationRequirementID }}</td> -->
+            <td class="align-middle">{{ ce.educationName }}</td>
+            <td class="align-middle">{{ ce.contEducationTakenDate | date }}</td>
+            <td class="text-center" style="font-size: larger">
+              {{ ce.creditHoursTaken }}
+            </td>
+            <td class="align-middle">{{ ce.additionalNotes }}</td>
+            <td class="align-middle" style="width: 10rem">
+              <div class="d-flex justify-content-between mb-3 me-4">
+                <button
+                  class="icon-edit-delete-button"
+                  (click)="
+                    agentDataService.storeContEduHoursTaken('EDIT', ce);
+                    modalService.open('modal-edit-edu-hours-taken')
+                  "
+                  title="Edit Continuing Education Item"
+                >
+                  <span class="material-symbols-outlined"> edit </span>
+                </button>
+                <button class="icon-edit-delete-button">
+                  <span
+                    class="material-symbols-outlined"
+                    (click)="
+                      onOpenConfirmDialog(
+                        'Continuing Education Item ' +
+                          ce.employeeEducationID +
+                          '. Do you want to proceed?',
+                        ce
+                      )
+                    "
+                    title="Delete Continuing Education Item"
+                  >
+                    delete
+                  </span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: EDIT-TM-HOURS-TAKEN -->
+<modal id="modal-edit-edu-hours-taken">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      <strong>{{ agentComService.modeContEduHoursTaken }}</strong> - Education
+      Hours Taken
+    </h1>
+    <!-- <button
+          type="button"
+          class="btn-close"
+          (click)="modalService.close()"
+        ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-edit-hours-taken
+          [employeeID]="agentDataService.agentInformation.employeeID"
+          [employmentID]="agentDataService.agentInformation.employmentID"
+        ></app-edit-hours-taken>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="modalService.close()"
+        >
+          Close
+        </button>
+      </div> -->
+</modal>

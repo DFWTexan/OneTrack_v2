@@ -1,0 +1,179 @@
+<div
+  class="container app-container overflow-auto"
+  [style.max-height]="
+    router.url.startsWith('/team/agent-info/') ? '30vh' : '60vh'
+  "
+  style="
+    background-color: whitesmoke;
+    overflow-x: hidden;
+    border-bottom-style: inset;
+    border-bottom-color: lightgray;
+    border-bottom-width: 1px;
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+  "
+>
+  <div
+    style="
+      border-width: 1px;
+      border-color: gray;
+      border-bottom-left-radius: 1rem;
+      border-bottom-right-radius: 1rem;
+    "
+  >
+    <div
+      class="row p-3 sticky-top"
+      style="
+        top: 0;
+        background-color: #9370db;
+        /* opacity: 0.7; */
+        z-index: 1020;
+        color: white;
+        border-bottom-style: ridge;
+        border-bottom-width: 1px;
+        border-color: gray;
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+      "
+    >
+      <div
+        *ngIf="!router.url.startsWith('/team/agent-info/')"
+        class="d-flex justify-content-between"
+      >
+        <div class="col">
+          <label for="licenseTech">License Tech:</label>
+          <select
+            class="form-select select-size-med-small"
+            type="text"
+            id="licenseTech"
+            (change)="onChangeStockTicklerItems($event)"
+          >
+            <option
+              *ngFor="let item of licenseTechItems"
+              [value]="item.licenseTechId"
+            >
+              {{ item.techName }}
+            </option>
+          </select>
+        </div>
+        <div class="col d-flex justify-content-center align-items-end">
+          <button
+            class="btn btn-success button-font-size"
+            type="button"
+            (click)="
+              ticklerMgmtDataService.storeTicklerInfo('INSERT', null);
+              modalService.open('modal-edit-tickler')
+            "
+          >
+            Tickle License Tech
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div
+        class="col"
+        style="
+          border-right-style: ridge;
+          border-left-style: ridge;
+          border-bottom-style: ridge;
+          border-right-width: 1px;
+          border-left-width: 1px;
+          border-bottom-width: 1px;
+          border-color: lightgray;
+          border-bottom-right-radius: 1rem;
+          border-bottom-left-radius: 1rem;
+        "
+      >
+        <div class="mt-5 mb-5 d-flex justify-content-center" *ngIf="loading">
+          <div class="spinner-border text-primary"></div>
+        </div>
+
+        <div
+          class="d-flex flex-column align-items-center justify-content-center"
+          *ngIf="!loading"
+        >
+          <div
+            class="mt-5 mb-5 d-flex justify-content-center"
+            *ngIf="ticklerInfoItems.length == 0"
+          >
+            <h1 class="text-center" style="font-size: large; font-weight: 500">
+              No record(s) Found...
+            </h1>
+          </div>
+          <div
+            *ngFor="let item of ticklerInfoItems"
+            class="card m-2"
+            style="width: 95%"
+          >
+            <div class="card-body" style="border-radius: 1rem">
+              <h5
+                class="card-title"
+                style="font-size: larger; font-weight: 500"
+              >
+                {{ item.ticklerId }}
+              </h5>
+              <p class="card-text">
+                <strong>Date Due:</strong>
+                {{ item.ticklerDueDate | date : "MM/dd/yyyy" }}<br />
+                <strong>Message:</strong> {{ item.message }}
+              </p>
+              <div class="d-flex justify-content-between mb-3 me-4">
+                <button
+                  class="icon-edit-delete-button"
+                  type="button"
+                  (click)="
+                    ticklerMgmtDataService.storeTicklerInfo('EDIT', item);
+                    modalService.open('modal-edit-tickler')
+                  "
+                >
+                  <span class="material-symbols-outlined"> edit </span>
+                </button>
+                <button
+                  class="icon-edit-delete-button"
+                  type="button"
+                  (click)="onDeleteTicklerItem(item)"
+                >
+                  <span class="material-symbols-outlined"> delete </span>
+                </button>
+                <button
+                  class="btn btn-secondary"
+                  type="button"
+                  (click)="onCloseTicklerItem(item)"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- agentDataService.storeContEduHoursTaken('EDIT', diary); -->
+
+<!-- Modal: EDIT-TICKLER -->
+<modal id="modal-edit-tickler">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      {{ ticklerMgmtComService.modeTicklerMgmt }} - Tickler Entry
+    </h1>
+    <!-- <button
+            type="button"
+            class="btn-close"
+            (click)="modalService.close()"
+          ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-edit-tickler-info
+          [licenseTechItems]="licenseTechItems"
+          [stockTicklerItems]="stockTicklerItems"
+          (callParentRefreshData)="onChildCallRefreshData()"
+        ></app-edit-tickler-info>
+      </div>
+    </div>
+  </div>
+</modal>

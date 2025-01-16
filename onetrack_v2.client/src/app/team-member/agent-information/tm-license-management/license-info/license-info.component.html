@@ -1,0 +1,328 @@
+<div class="container app-component-container">
+  <div class="row">
+    <div
+      class="col d-flex justify-content-start mt-4"
+      style="font-size: larger"
+    >
+      <strong style="margin-right: 1rem">License Name:</strong
+      >{{ licenseMgmtData[currentIndex].licenseName }}
+    </div>
+
+    <div class="col d-flex justify-content-center mb-3 mt-1">
+      <button
+        class="btn btn-link page-button mb-5"
+        *ngIf="isDisplayPrevious()"
+        (click)="previousPage()"
+      >
+        <span class="material-symbols-outlined"> arrow_back_ios </span></button
+      ><span class="page-info">{{ getPageInfo() }}</span>
+      <button
+        class="btn btn-link page-button mb-5"
+        *ngIf="isDisplayNext()"
+        (click)="nextPage()"
+      >
+        <span class="material-symbols-outlined"> arrow_forward_ios </span>
+      </button>
+    </div>
+
+    <div class="col d-flex justify-content-end me-5">
+      <button
+        class="icon-edit-delete-button me-5"
+        (click)="
+          setModeLicenseMgmt('EDIT');
+          modalService.open('modal-edit-license-info')
+        "
+      >
+        <span class="material-symbols-outlined"> edit </span>
+      </button>
+      <button
+        class="icon-edit-delete-button"
+        (click)="
+          openConfirmDialog('deleteAgentLicense', 'Agent License', {
+            employmentID: licenseMgmtData[currentIndex].employmentID,
+            employeeLicenseID: licenseMgmtData[currentIndex].employeeLicenseId,
+            licenseName: licenseMgmtData[currentIndex].licenseName,
+          })
+        "
+      >
+        <span class="material-symbols-outlined"> delete </span>
+      </button>
+    </div>
+  </div>
+  <div class="row panel panel-default bg-body p-3" style="border-radius: 1rem">
+    <div class="col">
+      <p>
+        <strong>License ID:</strong> <br />
+        {{ licenseMgmtData[currentIndex].employeeLicenseId }}
+      </p>
+      <p>
+        <strong>Status:</strong> <br />
+        {{ licenseMgmtData[currentIndex].licenseStatus.toUpperCase() }}
+      </p>
+      <p>
+        <strong>Number:</strong> <br />
+        {{ licenseMgmtData[currentIndex].licenseNumber }}
+      </p>
+    </div>
+
+    <div class="col">
+      <p>
+        <strong>Affilliated License:</strong> <br />
+        {{
+          licenseMgmtData[currentIndex].ascLicenseName == null
+            ? "None"
+            : licenseMgmtData[currentIndex].ascLicenseName
+        }}
+      </p>
+      <p>
+        <strong>Note:</strong> <br />
+        {{
+          licenseMgmtData[currentIndex].licenseNote == null
+            ? "N/A"
+            : licenseMgmtData[currentIndex].licenseNote
+        }}
+      </p>
+    </div>
+
+    <div class="col">
+      <p>
+        <strong>Required:</strong> <br />
+        {{ licenseMgmtData[currentIndex].required ? "Yes" : "No" }}
+      </p>
+      <p>
+        <strong>Reinstatement:</strong> <br />
+        {{ licenseMgmtData[currentIndex].reinstatement ? "Yes" : "No" }}
+      </p>
+      <p>
+        <strong>Non-Resident:</strong> <br />
+        {{ licenseMgmtData[currentIndex].nonResident ? "Yes" : "No" }}
+      </p>
+    </div>
+
+    <div class="col">
+      <p>
+        <strong>Org Issue Date:</strong> <br />
+        {{
+          licenseMgmtData[currentIndex].originalIssueDate
+            ? (licenseMgmtData[currentIndex].originalIssueDate
+              | date : "MM/dd/yyyy")
+            : "N/A"
+        }}
+      </p>
+      <p>
+        <strong>LOA Issue Date:</strong> <br />
+        {{
+          licenseMgmtData[currentIndex].lineOfAuthIssueDate
+            ? (licenseMgmtData[currentIndex].lineOfAuthIssueDate
+              | date : "MM/dd/yyyy")
+            : "N/A"
+        }}
+      </p>
+    </div>
+
+    <div class="col">
+      <p>
+        <strong>Effective Date:</strong> <br />
+        {{
+          licenseMgmtData[currentIndex].licenseEffectiveDate
+            ? (licenseMgmtData[currentIndex].licenseEffectiveDate
+              | date : "MM/dd/yyyy")
+            : "N/A"
+        }}
+      </p>
+      <p>
+        <strong>Expire Date:</strong> <br />
+        {{
+          licenseMgmtData[currentIndex].licenseExpirationDate
+            ? (licenseMgmtData[currentIndex].licenseExpirationDate
+              | date : "MM/dd/yyyy")
+            : "N/A"
+        }}
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div
+      class="col d-flex justify-content-start mt-5"
+      style="font-weight: 700; font-size: larger"
+    >
+      APPOINTMENTS
+    </div>
+    <div class="col d-flex justify-content-end mt-3 mb-3">
+      <button
+        class="btn btn-success"
+        (click)="modalService.open('modal-add-license-appt')"
+      >
+        <span style="font-size: larger"> Add - Appointment </span>
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <table class="table">
+      <thead>
+        <tr style="background-color: gainsboro; border-radius: 5rem">
+          <th>Status</th>
+          <th *ngIf="appComService.isShowEditID">License ID</th>
+          <th *ngIf="appComService.isShowEditID">Company ID</th>
+          <th>Company Abv.</th>
+          <th>Carrier Date</th>
+          <th>Effective Date</th>
+          <th>Expire Date</th>
+          <th>Termination Date</th>
+          <th class="text-center" style="width: 10rem">ACTION</th>
+        </tr>
+      </thead>
+      <tbody class="bg-body">
+        <tr
+          *ngFor="
+            let appointment of licenseMgmtData[currentIndex].licenseAppointments
+          "
+        >
+          <td class="align-middle">
+            {{ appointment.appointmentStatus.toUpperCase() }}
+          </td>
+          <td class="align-middle" *ngIf="appComService.isShowEditID">
+            {{ appointment.licenseID }}
+          </td>
+          <td class="align-middle" *ngIf="appComService.isShowEditID">
+            {{ appointment.companyID }}
+          </td>
+          <td class="align-middle">{{ appointment.companyAbv }}</td>
+          <td class="align-middle">
+            {{ appointment.carrierDate | date : "MM/dd/yyyy" }}
+          </td>
+          <td class="align-middle">
+            {{ appointment.appointmentEffectiveDate | date : "MM/dd/yyyy" }}
+          </td>
+          <td class="align-middle">
+            {{ appointment.appointmentExpireDate | date : "MM/dd/yyyy" }}
+          </td>
+          <td class="align-middle">
+            {{ appointment.appointmentTerminationDate | date : "MM/dd/yyyy" }}
+          </td>
+          <td class="align-middle" style="min-width: 10rem">
+            <div class="d-flex justify-content-between me-4">
+              <!-- <button
+                class="icon-edit-delete-button"
+                (click)="
+                  agentDataService.storeLicenseAppointment(appointment);
+                  storeLicApptLicenseID(
+                    licenseMgmtData[currentIndex].licenseID
+                  );
+                  modalService.open('modal-edit-license-appt')
+                "
+              >
+                <span class="material-symbols-outlined"> edit </span>
+              </button> -->
+              <button
+                class="icon-edit-delete-button"
+                (click)="
+                  storeLicAppointment(appointment);
+                  storeLicApptLicenseID(appointment.licenseID);
+                  modalService.open('modal-edit-license-appt')
+                "
+                title="Edit Appointment"
+              >
+                <span class="material-symbols-outlined"> edit </span>
+              </button>
+              <button class="icon-edit-delete-button">
+                <span
+                  class="material-symbols-outlined"
+                  (click)="
+                openConfirmDialog('deleteLicAppt', 'License Appointment', {
+                  employeeAppointmentID: appointment.employeeAppointmentID,
+                  employeeLicenseID: appointment.employeeLicenseID,
+                })
+              "
+                >
+                  delete
+                </span>
+              </button>
+            </div>
+          </td>
+          <!-- <td>{{ appointment.employeeAppointmentID }}</td>
+          <td>{{ appointment.retentionDate | date : "MM/dd/yyyy" }}</td> -->
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal: EDIT-LICENSE-INFO -->
+<modal id="modal-edit-license-info">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      {{ agentComService.modeLicenseMgmt }} - License Information
+    </h1>
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-edit-license-info
+          [currentIndex]="agentDataService.licenseMgmtDataIndex"
+          [isIndex]="isIndex"
+          [modeCloseModal]="'EDIT'"
+        ></app-edit-license-info>
+      </div>
+    </div>
+  </div>
+</modal>
+
+<!-- Modal: ADD-LICAPPT-INFO -->
+<modal id="modal-add-license-appt">
+  <div class="modal-header">
+    <h1 class="modal-title"><strong>ADD</strong> - License Appointment</h1>
+    <!-- <button
+        type="button"
+        class="btn-close"
+        (click)="modalService.close()"
+      ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-add-license-appt
+          [employeeLicenseID]="licenseMgmtData[currentIndex].employeeLicenseId"
+          [employeeID]="agentDataService.agentInformation.employeeID"
+        ></app-add-license-appt>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="modalService.close()"
+      >
+        Close
+      </button>
+    </div> -->
+</modal>
+
+<!-- Modal: EDIT-LICAPPT-INFO -->
+<modal id="modal-edit-license-appt">
+  <div class="modal-header">
+    <h1 class="modal-title">Edit - License Appointment</h1>
+    <!-- <button
+        type="button"
+        class="btn-close"
+        (click)="modalService.close()"
+      ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-edit-license-appointment></app-edit-license-appointment>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="modal-footer">
+      <button
+        type="button"
+        class="btn btn-secondary"
+        (click)="modalService.close()"
+      >
+        Close
+      </button>
+    </div> -->
+</modal>

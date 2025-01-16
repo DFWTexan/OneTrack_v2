@@ -1,0 +1,148 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  class="container app-modal-container"
+>
+  <div class="row">
+    <div class="col">
+      <!-- <div class="mb-3">
+        <label for="licenseID" class="form-label">License ID:</label>
+        <input
+          class="form-control input-size-small disabled"
+          type="text"
+          id="licenseID"
+          formControlName="licenseID"
+        />
+      </div> -->
+      <div class="mb-3">
+        <label for="appointmentStatus" class="form-label">
+          Status: <span class="text-danger">*</span></label
+        >
+        <select
+          class="form-select select-size-small"
+          type="text"
+          id="appointmentStatus"
+          formControlName="appointmentStatus"
+        >
+          <option *ngFor="let status of appointmentStatuses" [value]="status">
+            {{ status }}
+          </option>
+        </select>
+        <div
+          *ngIf="
+            (form.controls['appointmentStatus'].touched || isFormSubmitted) &&
+            form.controls['appointmentStatus'].errors &&
+            form.controls['appointmentStatus'].errors['invalid']
+          "
+          class="text-danger"
+        >
+          Please select Appointment Status
+        </div>
+      </div>
+      <!-- <div class="mb-3">
+        <label for="employeeAppointmentID" class="form-label">Appt. ID:</label>
+        <input
+          class="form-control input-size-small disabled"
+          type="text"
+          id="employeeAppointmentID"
+          formControlName="employeeAppointmentID"
+        />
+      </div> -->
+      <div class="mb-3">
+        <label for="companyID" class="form-label">Company Abv: <span class="text-danger">*</span></label>
+        <select
+          class="form-select select-size-small"
+          type="text"
+          id="companyID"
+          formControlName="companyID"
+        >
+          <option
+            *ngFor="let abbr of companyAbbreviations"
+            [value]="abbr.value"
+          >
+            {{ abbr.label }}
+          </option>
+        </select>
+        <div
+          *ngIf="
+            (form.controls['companyID'].touched || isFormSubmitted) &&
+            form.controls['companyID'].errors &&
+            form.controls['companyID'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please select Company Abv
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="mb-3">
+        <label for="carrierDate" class="form-label">Carrier Date:</label>
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="carrierDate"
+          formControlName="carrierDate"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="appointmentEffectiveDate" class="form-label"
+          >Effective Date:</label
+        >
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="appointmentEffectiveDate"
+          formControlName="appointmentEffectiveDate"
+        />
+      </div>
+    </div>
+    
+    <div class="col">
+      <div class="mb-3">
+        <label for="appointmentExpireDate" class="form-label"
+          >Expire Date:</label
+        >
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="appointmentExpireDate"
+          formControlName="appointmentExpireDate"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="appointmentTerminationDate" class="form-label"
+          >Termination Date:</label
+        >
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="appointmentTerminationDate"
+          formControlName="appointmentTerminationDate"
+        />
+      </div>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button
+        type="button"
+        class="btn btn-secondary me-3 cancel-button"
+        (click)="onCancel()"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary save-button"
+        [disabled]="form.pristine"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</form>

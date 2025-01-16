@@ -1,0 +1,126 @@
+<form
+  [formGroup]="form"
+  (ngSubmit)="onSubmit()"
+  class="container app-modal-container"
+>
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        <label for="companyID" class="form-label">Employer/Agency</label>
+        <select
+          id="companyID"
+          class="form-select form-select-lg select-size-large"
+          formControlName="CompanyID"
+          [disabled]="true"
+        >
+          <option
+            *ngFor="let agency of employerAgencies"
+            [value]="agency.value"
+          >
+            {{ agency.label }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="Alias" class="form-label">Preferred Name</label>
+        <input
+          type="text"
+          id="Alias"
+          class="form-control input-size-medium"
+          formControlName="Alias"
+          [disabled]="true"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="geid" class="form-label">Team Member ID</label>
+        <input
+          type="text"
+          id="geid"
+          class="form-control input-size-small"
+          formControlName="GEID"
+          [disabled]="true"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="nationalProdercerNumber" class="form-label"
+          >National Producer #</label
+        >
+        <input
+          type="text"
+          id="nationalProdercerNumber"
+          class="form-control input-size-small"
+          formControlName="NationalProducerNumber"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="agentStatus" class="form-label">Agent Status</label>
+        <select
+          id="agentStatus"
+          class="form-select form-select-lg select-size-small"
+          formControlName="EmployeeStatus"
+          [disabled]="true"
+        >
+          <option *ngFor="let status of agentStatuses" [value]="status">
+            {{ status }}
+          </option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label for="residentSate" class="form-label">Resident State</label>
+        <select
+          id="residentSate"
+          class="form-select form-select-lg select-size-x-small"
+          formControlName="ResStateAbv"
+          [disabled]="true"
+        >
+          <option *ngFor="let state of states" [value]="state">
+            {{ state }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col">
+      <div class="mb-3 form-check">
+        <input
+          type="checkbox"
+          id="requiresContEdu"
+          class="form-check-input"
+          formControlName="CERequired"
+        />
+        <label for="requiresContEdu" class="form-check-label"
+          >Requires Cont. Education</label
+        >
+      </div>
+      <div class="mb-3 form-check">
+        <input
+          type="checkbox"
+          id="excludeFromReports"
+          class="form-check-input"
+          formControlName="ExcludeFromRpts"
+        />
+        <label for="excludeFromReports" class="form-check-label"
+          >Exclude from Reports</label
+        >
+      </div>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button
+        type="button"
+        class="btn btn-secondary cancel-button me-3"
+        (click)="onCloseModal()"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary save-button"
+        [disabled]="!form.valid || form.pristine"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</form>

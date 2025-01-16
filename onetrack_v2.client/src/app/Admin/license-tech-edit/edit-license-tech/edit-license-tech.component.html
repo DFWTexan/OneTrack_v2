@@ -1,0 +1,143 @@
+<form
+  [formGroup]="licenseTechForm"
+  (ngSubmit)="onSubmit()"
+  class="container app-modal-container"
+>
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        <label for="teamNum" class="form-label"
+          >Team Number:<span class="text-danger ms-1">*</span></label
+        >
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="teamNum"
+          formControlName="teamNum"
+        />
+        <div
+          *ngIf="
+            (licenseTechForm.controls['teamNum'].touched || isFormSubmitted) &&
+            licenseTechForm.controls['teamNum'].errors &&
+            licenseTechForm.controls['teamNum'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please Enter Team #
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="lastName" class="form-label"
+          >Last Name:<span class="text-danger ms-1">*</span></label
+        >
+        <input
+          class="form-control input-size-medium"
+          type="text"
+          id="lastName"
+          formControlName="lastName"
+        />
+        <div
+          *ngIf="
+            (licenseTechForm.controls['lastName'].touched || isFormSubmitted) &&
+            licenseTechForm.controls['lastName'].errors &&
+            licenseTechForm.controls['lastName'].errors['required']
+          "
+          class="text-danger"
+        >
+          Enter Last Name
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="firstName" class="form-label"
+          >First Name:<span class="text-danger ms-1">*</span></label
+        >
+        <input
+          class="form-control input-size-medium"
+          type="text"
+          id="firstName"
+          formControlName="firstName"
+        />
+        <div
+          *ngIf="
+            (licenseTechForm.controls['firstName'].touched ||
+              isFormSubmitted) &&
+            licenseTechForm.controls['firstName'].errors &&
+            licenseTechForm.controls['firstName'].errors['required']
+          "
+          class="text-danger"
+        >
+          Enter First Name
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="licenseTechPhone" class="form-label">Phone Number:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="licenseTechPhone"
+          formControlName="licenseTechPhone"
+        />
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="mb-3">
+        <input
+          class="form-check-input me-2 align-middle"
+          type="checkbox"
+          id="isActive"
+          formControlName="isActive"
+        />
+        <label for="isActive" class="form-label"> Active </label>
+      </div>
+      <div class="mb-3">
+        <label for="soeid" class="form-label">SOEID:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="soeid"
+          formControlName="soeid"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="licenseTechEmail" class="form-label">Tech Email:</label>
+        <input
+          class="form-control input-size-medium"
+          type="text"
+          id="licenseTechEmail"
+          formControlName="licenseTechEmail"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="licenseTechFax" class="form-label">Fax Number:</label>
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="licenseTechFax"
+          formControlName="licenseTechFax"
+        />
+      </div>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button
+        type="button"
+        class="btn btn-secondary me-3 cancel-button"
+        (click)="onCloseModal()"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary save-button"
+        [disabled]="licenseTechForm.pristine"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</form>

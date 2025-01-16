@@ -1,0 +1,79 @@
+<form 
+  [formGroup]="diaryItemForm" 
+  (ngSubmit)="onSubmit()" 
+  class="mt-3"
+>
+  <div class="row">
+    <div class="col" *ngIf="agentComService.modeDiary == 'EDIT'">
+      <div class="mb-3">
+        <label for="diaryID" class="form-label ms-3">Diary ID</label> <br />
+        <!-- <input
+          type="number"
+          class="form-control input-size-small"
+          id="diaryID"
+          formControlName="diaryID"
+          readonly
+        /> -->
+        <span class="ms-3">{{ diaryItemForm.get("diaryID")?.value }}</span>
+      </div>
+    </div>
+    <div class="col">
+      <div class="mb-3">
+        <label for="soeid" class="form-label ms-3">Team Member</label><br />
+        <!-- <input
+            type="text"
+            class="form-control input-size-small"
+            id="soeid"
+            formControlName="soeid"
+          /> -->
+        <span class="ms-3">{{ diaryItemForm.get("soeid")?.value }}</span>
+      </div>
+    </div>
+    <div class="col">
+      <div class="mb-3">
+        <label for="diaryDate" class="form-label">Diary Date</label><br />
+        <!-- <input
+            type="date"
+            class="form-control input-size-small"
+            id="diaryDate"
+            formControlName="diaryDate"
+          /> -->
+        {{ diaryItemForm.get("diaryDate")?.value }}
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <div class="mb-3 me-5">
+        <label for="notes" class="form-label ms-3">Notes</label>
+        <textarea
+          class="form-control ms-3"
+          id="notes"
+          formControlName="notes"
+        ></textarea>
+      </div>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button
+        type="button"
+        class="btn btn-secondary me-3 cancel-button"
+        (click)="onCloseModal()"
+      >
+        Cancel
+      </button>
+      <button
+        type="submit"
+        class="btn btn-primary save-button"
+        [disabled]="diaryItemForm.pristine"
+      >
+        Save
+      </button>
+    </div>
+  </div>
+</form>

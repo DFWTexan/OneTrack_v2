@@ -1,0 +1,104 @@
+<div class="container">
+  <div class="row mb-3">
+    <form #agentForm="ngForm" (ngSubmit)="onSubmit()">
+      <div class="row mt-5">
+        <div class="col">
+          <label for="workListName">Work List Name:</label><br />
+          <select
+            class="form-select select-size-med-small"
+            name="workListName"
+            id="workListName"
+            (change)="changeWorkListName($event)"
+            [(ngModel)]="workListName"
+          >
+            <option *ngFor="let item of worklistNames" [value]="item">
+              {{ item }}
+            </option>
+          </select>
+        </div>
+        <div class="col">
+          <label for="licenseTech">License Tech:</label><br />
+          <select
+            class="form-select select-size-med-small"
+            name="licenseTech"
+            id="licenseTech"
+            value="selectedLicenseTech"
+            (change)="changeLicenseTech($event)"
+            [(ngModel)]="licenseTech"
+          >
+            <option *ngFor="let tech of licenseTechs" [value]="tech.soeid">
+              {{ tech.techName }}
+            </option>
+          </select>
+        </div>
+        <div class="col">
+          <label for="date">Date:</label><br />
+          <input
+            class="form-control input-size-small"
+            type="date"
+            name="date"
+            [(ngModel)]="date"
+          />
+        </div>
+        <!-- <div class="col align-middle">
+          <button class="btn btn-primary" type="submit">Search</button>
+        </div> -->
+      </div>
+    </form>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row" *ngIf="worklistData.length == 0">
+    <div class="col d-flex justify-content-center mt-5">
+      <h3>No data found</h3>
+    </div>
+  </div>
+  <div class="row" *ngIf="worklistData.length > 0">
+    <div class="col">
+      <div class="table">
+        <thead>
+          <tr>
+            <th>&nbsp;</th>
+            <th
+              class="input-hdr-mini"
+              *ngFor="let header of worklistData[0].workListData.split('|')"
+            >
+              {{ header }}
+            </th>
+          </tr>
+        </thead>
+        <tbody class="bg-body">
+          <tr
+            *ngFor="let row of worklistData.slice(1); let i = index"
+            [class.selected]="selectedRowIndex === i"
+            (click)="selectRow($event, row.workListData.split('|')[2])"
+          >
+            <td>
+              <input
+                type="checkbox"
+                #checkbox
+                (click)="
+                openConfirmDialog(
+                  'closeWorklistItem',
+                  'Worklist',
+                  {
+                    WorkListDataID: row.workListData.split('|')[0],
+                    UserSOEID: userAcctInfoDataService.userAcctInfo.soeid,
+                  },
+                  checkbox
+                );
+                $event.stopPropagation();
+                "
+              />
+            </td>
+            <td
+              class="input-cell-mini"
+              *ngFor="let cell of row.workListData.split('|')"
+            >
+              {{ cell }}
+            </td>
+          </tr>
+        </tbody>
+      </div>
+    </div>
+  </div>
+</div>

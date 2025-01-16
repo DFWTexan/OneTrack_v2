@@ -1,0 +1,4 @@
+<mat-tab-group animationDuration="0ms">
+  <mat-tab label="Tickler"><app-tickler-info></app-tickler-info></mat-tab>
+  <mat-tab *ngIf="router.url !== '/team/search-members'" label="Search"><app-tickler-search></app-tickler-search></mat-tab>
+</mat-tab-group>

@@ -1,0 +1,132 @@
+<form
+  [formGroup]="preEducationForm"
+  (ngSubmit)="onSubmit()"
+  class="container app-modal-container"
+>
+  <div class="row">
+    <div class="col">
+      <div class="mb-3">
+        <label for="educationName" class="form-label"
+          >Pre-Education Name:<span class="text-danger ms-1">*</span></label
+        >
+        <input
+          class="form-control input-size-large"
+          type="text"
+          id="educationName"
+          formControlName="educationName"
+        />
+        <div
+          *ngIf="
+            (preEducationForm.controls['educationName'].touched || isFormSubmitted) &&
+            preEducationForm.controls['educationName'].errors &&
+            preEducationForm.controls['educationName'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please enter Pre-Education Name
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="creditHours" class="form-label">Credit Hours:</label>
+        <input
+          class="form-control input-size-mini"
+          type="number"
+          id="creditHours"
+          formControlName="creditHours"
+          min="0"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="deliveryMethod" class="form-label">Delivery Method:<span class="text-danger ms-1">*</span></label>
+        <select
+          class="form-select select-size-small"
+          id="deliveryMethod"
+          formControlName="deliveryMethod"
+        >
+          <option *ngFor="let method of deliveryMethods" [value]="method">
+            {{ method }}
+          </option>
+        </select>
+        <div
+          *ngIf="
+            (preEducationForm.controls['deliveryMethod'].touched || isFormSubmitted) &&
+            preEducationForm.controls['deliveryMethod'].errors &&
+            preEducationForm.controls['deliveryMethod'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please Select Delivery Method
+        </div>
+      </div>
+    </div>
+
+    <div class="col">
+      <div class="mb-3">
+        <label for="educationProviderID" class="form-label"
+          >Pre-Education Provider:<span class="text-danger ms-1">*</span></label
+        >
+        <select
+          class="form-select select-size-medium"
+          id="educationProviderID"
+          formControlName="educationProviderID"
+        >
+          <option *ngFor="let provider of providers" [value]="provider.value">
+            {{ provider.label }}
+          </option>
+        </select>
+        <div
+          *ngIf="
+            (preEducationForm.controls['educationProviderID'].touched || isFormSubmitted) &&
+            preEducationForm.controls['educationProviderID'].errors &&
+            preEducationForm.controls['educationProviderID'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please Select Provider
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label for="stateProvinceAbv" class="form-label"
+          >Pre-Education State:<span class="text-danger ms-1">*</span></label
+        >
+        <select
+          class="form-select select-size-x-small"
+          id="stateProvinceAbv"
+          formControlName="stateProvinceAbv"
+        >
+          <option *ngFor="let state of stateProvinces" [value]="state">
+            {{ state }}
+          </option>
+        </select>
+        <div
+          *ngIf="
+            (preEducationForm.controls['stateProvinceAbv'].touched || isFormSubmitted) &&
+            preEducationForm.controls['stateProvinceAbv'].errors &&
+            preEducationForm.controls['stateProvinceAbv'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please Select State
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button
+        type="button"
+        class="btn btn-secondary me-3 cancel-button"
+        (click)="closeModal()"
+      >
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary save-button" [disabled]="preEducationForm.pristine">Save</button>
+    </div>
+  </div>
+</form>

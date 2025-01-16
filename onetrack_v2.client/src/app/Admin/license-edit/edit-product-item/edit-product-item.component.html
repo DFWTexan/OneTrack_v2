@@ -1,0 +1,44 @@
+<form
+  [formGroup]="productItemForm"
+  (ngSubmit)="onSubmit()"
+  class="container app-modal-container"
+>
+<div class="row">
+  <div class="col">
+    <div class="mb-3">
+      <label for="educationName" class="form-label">Education Name:</label><br />
+      <span>{{ productItemForm.get("productName")?.value }}</span>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="mb-3">
+      <label for="productAbv" class="form-label">Product Abbr:</label><br />
+      <span>{{ productItemForm.get("productAbv")?.value }}</span>
+    </div>
+  </div>
+
+  <div class="col">
+    <div class="mb-3">
+      <input
+        class="form-check-input me-2 align-middle"
+        type="checkbox"
+        id="isActive"
+        formControlName="isActive"
+      />
+      <label for="isActive" class="form-label"> Active </label>
+    </div>
+  </div>
+</div>
+
+  <mat-divider></mat-divider>
+
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button type="button" class="btn btn-secondary me-3 cancel-button" (click)="onCloseModal()">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary save-button" [disabled]="productItemForm.pristine">Save</button>
+    </div>
+  </div>
+</form>

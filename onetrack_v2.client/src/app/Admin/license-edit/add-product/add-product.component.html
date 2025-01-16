@@ -1,0 +1,55 @@
+<div>
+  <div class="row mb-3">
+    <div class="col d-flex justify-content-center">
+      <button
+        type="button"
+        class="btn btn-secondary ms-3 cancel-button"
+        (click)="onCloseModal()"
+      >
+        <span class="material-symbols-outlined"> close </span>
+      </button>
+    </div>
+  </div>
+
+  <table class="table w-100" *ngIf="products.length > 0">
+    <thead>
+      <tr style="background-color: gainsboro">
+        <th scope="col"></th>
+        <th scope="col" *ngIf="appComService.isShowEditID">Product ID</th>
+        <th scope="col">Product Name</th>
+        <th scope="col">Product Abv</th>
+      </tr>
+    </thead>
+    <tbody class="bg-body">
+      <!-- <tr *ngFor="let product of license.productItems"> -->
+      <tr *ngFor="let product of products; let i = index">
+        <td>
+          <button class="icon-add-button" type="button">
+            <span
+              class="material-symbols-outlined"
+              (click)="
+                onAddItem({
+                  licenseID: licenseId,
+                  productID: product.productId
+                })
+              "
+            >
+              add_circle
+            </span>
+          </button>
+        </td>
+        <td class="align-middle text-nowrap" *ngIf="appComService.isShowEditID">
+          {{ product.productId }}
+        </td>
+        <td class="align-middle">
+          {{ product.productName }}
+        </td>
+        <td class="align-middle">
+          {{ product.productAbv }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <mat-divider></mat-divider>
+</div>

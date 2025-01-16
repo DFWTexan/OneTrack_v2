@@ -1,0 +1,44 @@
+<div *ngIf="displayMode && displayMode == 'ATTACHMENT'; else chooseFileBlock">
+  <input
+    type="file"
+    class="file-input"
+    (change)="onFileSelected($event)"
+    #fileUpload
+  />
+  <div class="file-upload">
+    <button
+      mat-mini-fab
+      color="primary"
+      class="upload-btn"
+      (click)="fileUpload.click()"
+      [disabled]="isDisabled"
+    >
+      <mat-icon>attach_file</mat-icon>
+    </button>
+    <span class="ms-3" style="font-size: larger; font-weight: 400">
+      {{ fileName || "No file attached." }}
+    </span>
+  </div>
+</div>
+
+<ng-template #chooseFileBlock>
+  <div>
+    <input
+      class="file-upload button-font-size me-3"
+      type="file"
+      (change)="onFileSelected($event)"
+      [disabled]="isDisabled"
+      #fileUpload
+    />
+    <!-- <input
+      class="file-upload"
+      type="file"
+      (change)="onFileSelected($event)"
+      [disabled]="isDisabled"
+      [attr.aria-label]="isDisabled ? 'File upload disabled' : 'Upload file'"
+      accept="image/png, image/jpeg"
+      multiple
+      #fileUpload
+    /> -->
+  </div>
+</ng-template>

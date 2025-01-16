@@ -1,0 +1,83 @@
+<div class="d-flex justify-content-center align-items-center mt-3 mb-3">
+  Find by
+  <input
+    type="text"
+    class="form-control ms-3 me-3"
+    placeholder="TM Number"
+    [(ngModel)]="tmNumber"
+    (change)="onChangeByTmNumber()"
+    [disabled]="isByTMDisabled"
+  />
+  or
+  <input
+    type="text"
+    class="form-control ms-3 me-1"
+    placeholder="Agent Name"
+    [(ngModel)]="agentName"
+    (change)="onChangeByAgentName()"
+    [disabled]="isByAgentNameDisabled"
+  />
+  <div class="spinner-border" *ngIf="isLoading"></div>
+  <div class="justify-content-center" *ngIf="isLoading == false">
+    <button class="btn" (click)="onSearch()">
+      <span
+        class="material-symbols-outlined mt-3"
+        style="color: white; font-size: 3rem"
+      >
+        search
+      </span>
+    </button>
+  </div>
+</div>
+
+<!-- Modal: DISPLAY-AGENT-ITEMS -->
+<modal id="modal-agent-find-info">
+  <div class="modal-header">
+    <h1 class="modal-title">Select Agent</h1>
+  </div>
+  <div class="modal-body">
+    <div>
+      <div class="d-flex justify-content-between align-items-center">
+        <div>
+          <span style="font-size: medium; font-weight: 400">Records:</span>
+          <span class="ms-2" style="font-size: large; font-weight: 600;">{{ agents.length }}</span>
+        </div>
+        <div class="d-flex justify-content-end">
+          <button class="btn" (click)="onCloseModal()">
+            <span
+              class="material-symbols-outlined"
+              style="color: black; font-size: 3rem"
+            >
+              close
+            </span>
+          </button>
+        </div>
+      </div>
+
+      <table class="table selected-row">
+        <thead>
+          <tr style="background-color: whitesmoke; font-size: smaller">
+            <th scope="col">TM Number</th>
+            <th scope="col">Agent Name</th>
+            <th scope="col">Res State</th>
+            <th scope="col">Work State</th>
+            <th scope="col">Branch Name</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr
+            *ngFor="let agent of agents"
+            class="hover-pointer"
+            (click)="onSelectAgent(agent)"
+          >
+            <td>{{ agent.geid }}</td>
+            <td>{{ agent.name }}</td>
+            <td>{{ agent.resState }}</td>
+            <td>{{ agent.workState }}</td>
+            <td>{{ agent.branchName }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</modal>

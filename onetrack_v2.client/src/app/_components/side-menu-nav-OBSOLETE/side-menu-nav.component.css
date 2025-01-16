@@ -1,0 +1,37 @@
+.toolbar-item-spacer {
+  flex: 1 1 auto;
+}
+
+.app-container {
+  height: 90%;
+  margin: 0;
+}
+.app-sidenav {
+  width: 250px;
+}
+.app-sidenav-content {
+  display: flex;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.active {
+  background-color: #d8bfd8;
+}
+
+mat-nav-list a {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+  padding: 8px 16px;
+  margin: 8px 0;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  font-size: smaller;
+}
+
+mat-icon {
+  margin-right: 0.8rem; /* Adjust the space between the icon and the text as needed */
+}

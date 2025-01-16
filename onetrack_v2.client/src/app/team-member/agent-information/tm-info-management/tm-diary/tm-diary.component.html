@@ -1,0 +1,164 @@
+<div class="container app-component-container">
+  <div class="row">
+    <div class="col">
+      <label for="createdBy">Created By:</label>
+      <select
+        class="form-select form-select-lg select-size-small"
+        type="text"
+        id="createdBy"
+        (change)="agentDataService.filterBySOEID($event)"
+      >
+        <option
+          *ngFor="let createdBy of agentInfo.diaryCreatedByItems"
+          [value]="createdBy.soeid"
+        >
+          {{ createdBy.techName }}
+        </option>
+      </select>
+    </div>
+
+    <div class="col d-flex align-items-end justify-content-center">
+      <div style="font-size: medium; font-weight: 500">
+        {{ diaryItems.length | number }} - record(s) found
+      </div>
+    </div>
+
+    <div class="col d-flex align-items-end justify-content-end me-5">
+      <button
+        class="btn btn-success button-font-size"
+        type="button"
+        (click)="
+          agentDataService.storeDiaryEntry('INSERT', null);
+          modalService.open('modal-edit-diary-entry')
+        "
+      >
+        Insert New Diary Entry
+      </button>
+    </div>
+  </div>
+  <div
+    class="row mt-4"
+    style="
+      width: 100%;
+      max-height: 700px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      border-top-left-radius: 0.7rem;
+      border-top-right-radius: 0.7rem;
+    "
+  >
+    <div class="col">
+      <table class="table w-100">
+        <thead>
+          <tr class="sticky-top" style="background-color: gainsboro">
+            <th scope="col" style="width: 12rem">TechName</th>
+            <th scope="col" *ngIf="appComService.isShowEditID">DiaryID</th>
+            <th scope="col" style="width: 10rem">DiaryDate</th>
+            <th scope="col">Notes</th>
+            <th scope="col" class="text-center" style="width: 10rem">Action</th>
+          </tr>
+        </thead>
+        <tbody class="bg-body">
+          <tr
+            *ngFor="
+              let diary of paginationComService.paginatedResults;
+              let i = index
+            "
+            [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+          >
+            <td class="align-middle" style="font-weight: 500;">
+              {{ diary.techName }}
+            </td>
+            <td class="align-middle" *ngIf="appComService.isShowEditID">
+              {{ diary.diaryID }}
+            </td>
+            <td class="align-middle text-nowrap">
+              {{ diary.diaryDate | date }}
+            </td>
+            <td class="align-middle" style="width: max-content">
+              {{ diary.notes }}
+            </td>
+            <td class="align-middle" style="width: 10rem">
+              <div class="d-flex justify-content-between mb-3 me-4">
+                <button
+                  class="icon-edit-delete-button"
+                  type="button"
+                  (click)="
+                    agentDataService.storeDiaryEntry('EDIT', diary);
+                    modalService.open('modal-edit-diary-entry')
+                  "
+                  title="Edit Diary Item"
+                >
+                  <span class="material-symbols-outlined"> edit </span>
+                </button>
+                <button class="icon-edit-delete-button" type="button">
+                  <span
+                    class="material-symbols-outlined"
+                    (click)="
+                      onOpenConfirmDialog(
+                        'Diary Item ' +
+                          diary.diaryID +
+                          '. Do you want to proceed?',
+                        diary
+                      )
+                    "
+                    title="Delete Diary Item"
+                  >
+                    delete
+                  </span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <!-- PAGINATION -->
+  <div>
+    <app-pagination
+      *ngIf="!isLoading && diaryItems.length > 50"
+      [currentPage]="paginationComService.currentPage"
+      [totalItems]="paginationComService.displayItems.length"
+      [itemsPerPage]="paginationComService.itemsPerPage"
+      (pageChange)="
+        paginationComService.currentPage = $any($event);
+        paginationComService.updatePaginatedResults()
+      "
+    >
+    </app-pagination>
+  </div>
+</div>
+
+<!-- Modal: EDIT-DIARY-ENTRY -->
+<modal id="modal-edit-diary-entry">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      <strong>{{ agentComService.modeDiary }}</strong> - Diary Entry
+    </h1>
+    <!-- <button
+          type="button"
+          class="btn-close"
+          (click)="modalService.close()"
+        ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-edit-diary-entry
+          [employeeID]="agentDataService.agentInformation.employeeID"
+          [employmentID]="agentDataService.agentInformation.employmentID"
+        ></app-edit-diary-entry>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary"
+          (click)="modalService.close()"
+        >
+          Close
+        </button>
+      </div> -->
+</modal>

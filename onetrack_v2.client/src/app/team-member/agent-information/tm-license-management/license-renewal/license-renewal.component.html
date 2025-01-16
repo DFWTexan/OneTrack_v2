@@ -1,0 +1,158 @@
+<div class="container app-component-container">
+  <div class="row mb-3">
+    <div
+      class="col d-flex justify-content-start mt-4"
+      style="font-size: larger"
+    >
+      <strong style="margin-right: 1rem">License Name:</strong
+      >{{ licenseMgmtData[currentIndex].licenseName }}
+    </div>
+
+    <div class="col d-flex justify-content-center mb-3 mt-1">
+      <!-- <button
+              class="btn btn-link page-button mb-5"
+              *ngIf="isDisplayPrevious()"
+              (click)="previousPage()"
+            >
+              <span class="material-symbols-outlined"> arrow_back_ios </span></button
+            ><span class="page-info">{{ getPageInfo() }}</span>
+            <button
+              class="btn btn-link page-button mb-5"
+              *ngIf="isDisplayNext()"
+              (click)="nextPage()"
+            >
+              <span class="material-symbols-outlined"> arrow_forward_ios </span>
+            </button> -->
+    </div>
+
+    <div class="col d-flex justify-content-end me-5">
+      <!--   <button
+              class="edit-button me-5"
+              (click)="
+                modalService.open('modal-edit-license-info')
+              "
+            >
+              <span class="material-symbols-outlined"> edit </span>
+            </button>
+            <button class="edit-button">
+              <span class="material-symbols-outlined"> delete </span>
+            </button> -->
+    </div>
+  </div>
+  <div class="row mb-3">
+    <div class="col">
+      <button
+        class="btn btn-success"
+        (click)="
+          agentDataService.storeLicRenewal('INSERT', null);
+          modalService.open('modal-edit-lic-renewal')
+        "
+      >
+        <span style="font-size: larger"> Insert - Renewal </span>
+      </button>
+    </div>
+  </div>
+  <div class="row">
+    <div
+      class="div d-flex justify-content-center mt-3 mb-3"
+      style="font-size: larger; color: gray"
+      *ngIf="
+        agentDataService.agentLicApplicationInfo.licenseRenewalItems.length ===
+        0
+      "
+    >
+      No records found
+    </div>
+  </div>
+  <div
+    class="row"
+    *ngIf="
+      agentDataService.agentLicApplicationInfo.licenseRenewalItems.length !== 0
+    "
+  >
+    <table class="table">
+      <thead>
+        <tr style="background-color: gainsboro; border-radius: 5rem">
+          <th class="ms-2">Renewal ID</th>
+          <th>Sent to Agent</th>
+          <th>Rec. From Agent</th>
+          <th>Sent to State</th>
+          <th>Renewal Date</th>
+          <th>Renewal Method</th>
+          <th class="text-center" style="width: 10rem">Action</th>
+        </tr>
+      </thead>
+      <tbody class="bg-body">
+        <tr
+          *ngFor="
+            let licRenewal of agentDataService.agentLicApplicationInfo
+              .licenseRenewalItems
+          "
+        >
+          <td class="align-middle">
+            {{ licRenewal.licenseApplicationID }}
+          </td>
+          <td class="align-middle">
+            {{ licRenewal.sentToAgentDate | date : "MM/dd/yyyy" }}
+          </td>
+          <td class="align-middle">
+            {{ licRenewal.recFromAgentDate | date : "MM/dd/yyyy" }}
+          </td>
+          <td class="align-middle">
+            {{ licRenewal.sentToStateDate | date : "MM/dd/yyyy" }}
+          </td>
+          <td class="align-middle">
+            {{ licRenewal.renewalDate | date : "MM/dd/yyyy" }}
+          </td>
+          <td class="align-middle">
+            {{ licRenewal.renewalMethod }}
+          </td>
+          <td>
+            <div class="d-flex justify-content-between mb-3 me-4">
+              <button
+                class="icon-edit-delete-button"
+                (click)="
+                  agentDataService.storeLicRenewal('EDIT', licRenewal);
+                  modalService.open('modal-edit-lic-renewal')
+                "
+              >
+                <span class="material-symbols-outlined"> edit </span>
+              </button>
+              <button class="icon-edit-delete-button">
+                <span
+                  class="material-symbols-outlined"
+                  (click)="
+                  openConfirmDialog('deleteLicenseRenewal', 'License Renewal', {
+                    employeeLicenseID: licenseMgmtData[currentIndex].employeeLicenseId,
+                    licenseApplicationID: licRenewal.licenseApplicationID,
+                  })
+                "
+                >
+                  delete
+                </span>
+              </button>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- Modal: EDIT-LIC-RENEWAL -->
+<modal id="modal-edit-lic-renewal">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      <strong>{{ agentComService.modeLicRenewal }}</strong> - Renewal
+    </h1>
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-edit-license-renewal
+          (callParentGetData)="onChildCallGetData()"
+        ></app-edit-license-renewal>
+      </div>
+    </div>
+  </div>
+</modal>

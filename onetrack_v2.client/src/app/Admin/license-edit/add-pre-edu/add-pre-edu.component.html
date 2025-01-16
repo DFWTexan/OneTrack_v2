@@ -1,0 +1,56 @@
+<div>
+  <div class="row mb-3">
+    <div class="col d-flex justify-content-center">
+      <button
+        type="button"
+        class="btn btn-secondary ms-3 cancel-button"
+        (click)="onCloseModal()"
+      >
+        <span class="material-symbols-outlined"> close </span>
+      </button>
+    </div>
+  </div>
+
+  <table class="table w-100" *ngIf="preEducations.length > 0">
+    <thead>
+      <tr style="background-color: gainsboro">
+        <th scope="col"></th>
+        <th scope="col" *ngIf="appComService.isShowEditID">PreEducation ID</th>
+        <th scope="col">Education Name</th>
+        <th scope="col">PreEd Provider</th>
+        <th scope="col">Delivery Method</th>
+      </tr>
+    </thead>
+    <tbody class="bg-body">
+      <!-- <tr *ngFor="let preEdu of license.preEducationItems"> -->
+      <tr *ngFor="let preEdu of preEducations; let i = index">
+        <td>
+          <button
+            class="icon-add-button"
+            type="button"
+            (click)="
+              onAddItem({
+                licenseID: licenseId,
+                preEducationID: preEdu.preEducationId
+              })
+            "
+          >
+            <span class="material-symbols-outlined"> add_circle </span>
+          </button>
+        </td>
+        <td class="align-middle" *ngIf="appComService.isShowEditID">
+          {{ preEdu.preEducationId }}
+        </td>
+        <td class="align-middle text-nowrap">
+          {{ preEdu.educationName }}
+        </td>
+        <td class="align-middle" style="width: max-content">
+          {{ preEdu.companyName }}
+        </td>
+        <td class="align-middle" style="width: max-content">
+          {{ preEdu.deliveryMethod }}
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

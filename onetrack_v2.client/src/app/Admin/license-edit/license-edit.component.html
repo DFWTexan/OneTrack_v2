@@ -1,0 +1,954 @@
+<div class="container app-component-container mb-5">
+  <div class="row">
+    <div class="col">
+      <h1 class="text-end" style="font-style: italic; color: lightgrey">
+        License Edit
+      </h1>
+    </div>
+  </div>
+  <div class="row mt-5 mb-3">
+    <div class="col">
+      <label for="companyType">Exam State/Province:</label><br />
+      <select
+        class="form-select select-size-x-small"
+        type="text"
+        id="companyType"
+        (change)="changeStateProvince($event)"
+      >
+        <option *ngFor="let state of stateProvinces" [value]="state">
+          {{ state }}
+        </option>
+      </select>
+    </div>
+    <div class="col d-flex justify-content-center align-items-end">
+      <button
+        class="btn btn-success button-font-size"
+        type="button"
+        (click)="
+          adminDataService.storeLicenseItem('INSERT', null);
+          modalService.open('modal-edit-license')
+        "
+      >
+        Create New License
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row mt-4">
+    <div
+      class="col-md-12 d-flex justify-content-center align-items-center mt-5"
+      *ngIf="selectedStateProvince == 'Select'"
+    >
+      <h1>No State Province Selected</h1>
+    </div>
+    <div
+      class="col-md-12 d-flex justify-content-center align-items-center mt-5"
+      *ngIf="
+        selectedStateProvince !== 'Select' &&
+        licenseItems.length == 0 &&
+        !loading
+      "
+    >
+      <h1>No Record(s) Found</h1>
+    </div>
+    <div class="mt-5 mb-5 d-flex justify-content-center" *ngIf="loading">
+      <div class="spinner-border text-primary"></div>
+    </div>
+    <div class="col">
+      <mat-accordion
+        *ngIf="selectedStateProvince !== 'Select' && licenseItems.length > 0"
+      >
+        <mat-expansion-panel
+          *ngFor="let license of licenseItems"
+          [expanded]="license.licenseId === licenseIdItem"
+        >
+          <mat-expansion-panel-header>
+            <mat-panel-title style="font-size: large; font-weight: 600">
+              {{ license.licenseName }}
+            </mat-panel-title>
+            <mat-panel-description>
+              <div style="display: flex; align-items: flex-end">
+                Active:
+                <span
+                  class="ms-3"
+                  style="font-size: larger"
+                  [ngStyle]="{ color: license.isActive ? 'green' : 'inherit' }"
+                  >{{ license.isActive ? "Yes" : "No" }}</span
+                >
+              </div>
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <div class="row">
+            <div class="col">
+              <label>License Abv: </label><br />
+              <span>{{ license.licenseAbv }}</span
+              ><br />
+              <label> License State Abv: </label><br />
+              <span
+                class="ms-3"
+                style="font-size: larger; font-weight: 400; color: gray"
+                >{{ license.stateProvinceAbv }}</span
+              >
+            </div>
+            <div class="col">
+              <label> Sent to CICS: </label><br />
+              <span
+                class="ms-3"
+                style="font-size: larger; font-weight: 400; color: gray"
+                >{{ license.agentStateTable ? "Yes" : "No" }}</span
+              >
+              <br />
+              <label> Line of Auth.: </label><br />
+              <span
+                class="ms-3"
+                style="font-size: larger; font-weight: 400; color: gray"
+                >{{ license.lineOfAuthorityAbv }}</span
+              >
+              <!-- <p>License ID: <span style="font-size: larger; font-weight: 500">{{ license.licenseId }}</span></p> -->
+            </div>
+            <div class="col">
+              <label> Incentive2 Plus TMPay: </label><br />
+              <span
+                class="ms-3"
+                style="font-size: larger; font-weight: 400; color: gray"
+                >{{ license.incentive2PlusTmpay | currency }}</span
+              ><br />
+              <label> Incentive2 Plus MRPay: </label><br />
+              <span
+                class="ms-3"
+                style="font-size: larger; font-weight: 400; color: gray"
+                >{{ license.incentive2PlusMrpay | currency }}</span
+              >
+            </div>
+            <div class="col">
+              <label> PLS Incentive 1 TMPay: </label><br />
+              <span
+                class="ms-3"
+                style="font-size: larger; font-weight: 400; color: gray"
+                >{{ license.plsIncentive1Tmpay | currency }}</span
+              ><br />
+              <label> PLS Incentive 1 MRPay: </label><br />
+              <span
+                class="ms-3"
+                style="font-size: larger; font-weight: 400; color: gray"
+                >{{ license.plsIncentive1Mrpay | currency }}</span
+              >
+            </div>
+            <div class="col">
+              <div
+                class="d-flex justify-content-end mb-3 me-4"
+                style="width: 15rem"
+              >
+                <button
+                  class="icon-edit-delete-button me-5"
+                  type="button"
+                  (click)="
+                    adminDataService.storeLicenseItem('EDIT', license);
+                    modalService.open('modal-edit-license')
+                  "
+                >
+                  <span class="material-symbols-outlined"> edit </span>
+                </button>
+                <button class="icon-edit-delete-button" type="button">
+                  <span
+                    class="material-symbols-outlined"
+                    (click)="
+                      onOpenConfirmDialog(
+                        'LICENSEITEM',
+                        'License Item',
+                        license
+                      )
+                    "
+                  >
+                    delete
+                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <mat-divider></mat-divider>
+          <!-- COMPANY(S) -->
+          <div
+            class="row mt-2 mb-3"
+            style="
+              padding: 0.5rem;
+              border-style: solid;
+              border-width: 1px;
+              border-color: lightgray;
+              border-radius: 0.5rem;
+            "
+          >
+            <div class="row">
+              <div
+                class="col d-flex align-items-baseline"
+                style="font-size: larger; font-weight: 500; color: grey"
+              >
+                Company(s)
+              </div>
+              <div class="col d-flex justify-content-end align-middle">
+                <button
+                  class="btn btn-success button-font-size"
+                  (click)="
+                    adminDataService.storeCompanyItem(
+                      'INSERT',
+                      null,
+                      license.licenseId
+                    );
+                    modalService.open('modal-add-company-item')
+                  "
+                >
+                  Add New Company
+                </button>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col d-flex">
+                <div class="ms-5" *ngIf="license.companyItems.length == 0">
+                  <span style="font-size: medium; font-weight: 400"
+                    >No Record(s) Found</span
+                  >
+                </div>
+                <table
+                  class="table w-100"
+                  *ngIf="license.companyItems.length > 0"
+                >
+                  <thead>
+                    <tr class="sticky-top" style="background-color: gainsboro">
+                      <th scope="col" *ngIf="appComService.isShowEditID">
+                        License Company Id
+                      </th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">
+                        Company Id
+                      </th>
+                      <th scope="col">Company Name</th>
+                      <th scope="col">Company Abv</th>
+                      <th scope="col">Company Type</th>
+                      <th scope="col">TIN</th>
+                      <th scope="col">NAIC Number</th>
+                      <th scope="col" class="text-center">isActive</th>
+                      <th scope="col" class="text-center" style="width: 10rem">
+                        ACTION
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-body">
+                    <tr
+                      *ngFor="
+                        let company of license.companyItems;
+                        let i = index
+                      "
+                      [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+                    >
+                      <td
+                        class="align-middle"
+                        *ngIf="appComService.isShowEditID"
+                      >
+                        {{ company.licenseCompanyId }}
+                      </td>
+                      <td
+                        class="align-middle"
+                        *ngIf="appComService.isShowEditID"
+                      >
+                        {{ company.companyId }}
+                      </td>
+                      <td class="align-middle text-nowrap">
+                        {{ company.companyName }}
+                      </td>
+                      <td class="align-middle" style="width: max-content">
+                        {{ company.companyAbv }}
+                      </td>
+                      <td class="align-middle" style="width: max-content">
+                        {{ company.companyType }}
+                      </td>
+                      <td class="align-middle" style="width: max-content">
+                        {{ company.tin }}
+                      </td>
+                      <td class="align-middle" style="width: max-content">
+                        {{ company.naicNumber }}
+                      </td>
+                      <!-- <td class="align-middle" style="width: max-content">
+                        {{ company.isActive }}
+                      </td> -->
+                      <td class="align-middle" style="width: max-content">
+                        <div class="form-check d-flex justify-content-center">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            [checked]="company.isActive"
+                            disabled
+                          />
+                        </div>
+                      </td>
+                      <td class="align-middle" style="width: 10rem">
+                        <div class="d-flex justify-content-between mb-3 me-4">
+                          <button
+                            class="icon-edit-delete-button"
+                            type="button"
+                            (click)="
+                              adminDataService.storeCompanyItem(
+                                'EDIT',
+                                company
+                              );
+                              modalService.open('modal-edit-company-item')
+                            "
+                          >
+                            <span class="material-symbols-outlined">
+                              edit
+                            </span>
+                          </button>
+                          <button class="icon-edit-delete-button" type="button">
+                            <span
+                              class="material-symbols-outlined"
+                              (click)="
+                                onOpenConfirmDialog(
+                                  'COMPANYITEM',
+                                  'Company Item',
+                                  company
+                                )
+                              "
+                            >
+                              delete
+                            </span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- PRE-EXAMS(S) -->
+          <div
+            class="row"
+            class="row mb-3"
+            style="
+              padding: 0.5rem;
+              border-style: solid;
+              border-width: 1px;
+              border-color: lightgray;
+              border-radius: 0.5rem;
+            "
+          >
+            <div class="row">
+              <div
+                class="col align-middle"
+                style="font-size: larger; font-weight: 500; color: grey"
+              >
+                Pre-Exam(s)
+              </div>
+              <div class="col d-flex justify-content-end align-middle">
+                <button
+                  class="btn btn-success button-font-size"
+                  (click)="
+                    adminDataService.storePreExamItem(
+                      'INSERT',
+                      null,
+                      license.licenseId
+                    );
+                    modalService.open('modal-add-preExam-item')
+                  "
+                >
+                  Add New Pre-Exam
+                </button>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col d-flex">
+                <div class="ms-5" *ngIf="license.preExamItems.length == 0">
+                  <span style="font-size: medium; font-weight: 400"
+                    >No Record(s) Found</span
+                  >
+                </div>
+                <table
+                  class="table w-100"
+                  *ngIf="license.preExamItems.length > 0"
+                >
+                  <thead>
+                    <tr class="sticky-top" style="background-color: gainsboro">
+                      <th scope="col" *ngIf="appComService.isShowEditID">
+                        Lic ExamID
+                      </th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">
+                        ExamID
+                      </th>
+                      <th scope="col">Exam Name</th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">Exam Provider ID</th>
+                      <th scope="col">Exam Provider</th>
+                      <th scope="col">Delivery Method</th>
+                      <th scope="col" class="text-center">isActive</th>
+                      <th scope="col" class="text-center" style="width: 10rem">
+                        ACTION
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-body">
+                    <!-- <tr *ngFor="let preExam of license.preExamItems"> -->
+                    <tr
+                      *ngFor="
+                        let preExam of license.preExamItems;
+                        let i = index
+                      "
+                      [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+                    >
+                      <td
+                        class="align-middle"
+                        *ngIf="appComService.isShowEditID"
+                      >
+                        {{ preExam.licenseExamID }}
+                      </td>
+                      <td
+                        class="align-middle"
+                        *ngIf="appComService.isShowEditID"
+                      >
+                        {{ preExam.examId }}
+                      </td>
+                      <td class="align-middle text-nowrap">
+                        {{ preExam.examName }}
+                      </td>
+                      <td *ngIf="appComService.isShowEditID" class="align-middle" style="width: max-content">
+                        {{ preExam.examProviderID }}
+                      </td>
+                      <td class="align-middle" style="width: max-content">
+                        {{ preExam.companyName }}
+                      </td>
+                      <td class="align-middle" style="width: max-content">
+                        {{ preExam.deliveryMethod }}
+                      </td>
+                      <!-- <td class="align-middle" style="width: max-content">
+                          {{ company.isActive }}
+                        </td> -->
+                      <td class="align-middle" style="width: max-content">
+                        <div class="form-check d-flex justify-content-center">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            [checked]="preExam.isActive"
+                            disabled
+                          />
+                        </div>
+                      </td>
+                      <td class="align-middle" style="width: 10rem">
+                        <div class="d-flex justify-content-between mb-3 me-4">
+                          <button
+                            class="icon-edit-delete-button"
+                            type="button"
+                            (click)="
+                              adminDataService.storePreExamItem(
+                                'EDIT',
+                                preExam
+                              );
+                              modalService.open('modal-edit-preExam-item')
+                            "
+                          >
+                            <span class="material-symbols-outlined">
+                              edit
+                            </span>
+                          </button>
+                          <button class="icon-edit-delete-button" type="button">
+                            <span
+                              class="material-symbols-outlined"
+                              (click)="
+                                onOpenConfirmDialog(
+                                  'PREEXAMITEM',
+                                  'Pre-Exam Item',
+                                  preExam
+                                )
+                              "
+                            >
+                              delete
+                            </span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- PRE-EDUCATION(S) -->
+          <div
+            class="row mb-3"
+            style="
+              padding: 0.5rem;
+              border-style: solid;
+              border-width: 1px;
+              border-color: lightgray;
+              border-radius: 0.5rem;
+            "
+          >
+            <div class="row">
+              <div
+                class="col align-middle"
+                style="font-size: larger; font-weight: 500; color: grey"
+              >
+                Pre-Education(s)
+              </div>
+              <div class="col d-flex justify-content-end align-middle">
+                <button
+                  class="btn btn-success button-font-size"
+                  (click)="
+                    adminDataService.storePreEduItem(
+                      'INSERT',
+                      null,
+                      license.licenseId
+                    );
+                    modalService.open('modal-add-preEdu-Item')
+                  "
+                >
+                  Add New Pre-Education
+                </button>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="col d-flex">
+                <div class="ms-5" *ngIf="license.preEducationItems.length == 0">
+                  <span style="font-size: medium; font-weight: 400"
+                    >No Record(s) Found</span
+                  >
+                </div>
+                <table
+                  class="table w-100"
+                  *ngIf="license.preEducationItems.length > 0"
+                >
+                  <thead>
+                    <tr style="background-color: gainsboro">
+                      <th scope="col" *ngIf="appComService.isShowEditID">
+                        Lic PreEd ID
+                      </th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">
+                        PreEducation ID
+                      </th>
+                      <th scope="col">Education Name</th>
+                      <th scope="col">Pre-Edu Provider</th>
+                      <th scope="col">Delivery Method</th>
+                      <th scope="col" class="text-center">isActive</th>
+                      <th scope="col" class="text-center" style="width: 10rem">
+                        ACTION
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-body">
+                    <!-- <tr *ngFor="let preEdu of license.preEducationItems"> -->
+                    <tr
+                      *ngFor="
+                        let preEdu of license.preEducationItems;
+                        let i = index
+                      "
+                      [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+                    >
+                      <td
+                        class="align-middle"
+                        *ngIf="appComService.isShowEditID"
+                      >
+                        {{ preEdu.licensePreEducationID }}
+                      </td>
+                      <td
+                        class="align-middle"
+                        *ngIf="appComService.isShowEditID"
+                      >
+                        {{ preEdu.preEducationID }}
+                      </td>
+                      <td class="align-middle text-nowrap">
+                        {{ preEdu.educationName }}
+                      </td>
+                      <td class="align-middle" style="width: max-content">
+                        {{ preEdu.companyName }}
+                      </td>
+                      <td class="align-middle" style="width: max-content">
+                        {{ preEdu.deliveryMethod }}
+                      </td>
+                      <td class="align-middle" style="width: max-content">
+                        <div class="form-check d-flex justify-content-center">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            [checked]="preEdu.isActive"
+                            disabled
+                          />
+                        </div>
+                      </td>
+                      <td class="align-middle" style="width: 10rem">
+                        <div class="d-flex justify-content-between mb-3 me-4">
+                          <button
+                            class="icon-edit-delete-button"
+                            type="button"
+                            (click)="
+                              adminDataService.storePreEduItem('EDIT', preEdu);
+                              modalService.open('modal-edit-preEdu-Item')
+                            "
+                          >
+                            <span class="material-symbols-outlined">
+                              edit
+                            </span>
+                          </button>
+                          <button class="icon-edit-delete-button" type="button">
+                            <span
+                              class="material-symbols-outlined"
+                              (click)="
+                                onOpenConfirmDialog(
+                                  'PREEDUCATIONITEM',
+                                  'Pre-Education Item',
+                                  preEdu
+                                )
+                              "
+                            >
+                              delete
+                            </span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- PRODUCT(S) -->
+          <div
+            class="row"
+            style="
+              padding: 0.5rem;
+              border-style: solid;
+              border-width: 1px;
+              border-color: lightgray;
+              border-radius: 0.5rem;
+            "
+          >
+            <div class="row">
+              <div
+                class="col align-middle"
+                style="font-size: larger; font-weight: 500; color: grey"
+              >
+                Product(s)
+              </div>
+              <div class="col d-flex justify-content-end align-middle">
+                <button
+                  class="btn btn-success button-font-size"
+                  (click)="
+                    adminDataService.storeProductItem(
+                      'INSERT',
+                      null,
+                      license.licenseId
+                    );
+                    modalService.open('modal-add-product-Item')
+                  "
+                >
+                  Add New Product
+                </button>
+              </div>
+            </div>
+            <div class="row mt-2">
+              <div class="co d-flex">
+                <div class="ms-5" *ngIf="license.productItems.length == 0">
+                  <span style="font-size: medium; font-weight: 400"
+                    >No Record(s) Found</span
+                  >
+                </div>
+                <table
+                  class="table w-100"
+                  *ngIf="license.productItems.length > 0"
+                >
+                  <thead>
+                    <tr style="background-color: gainsboro">
+                      <th scope="col" *ngIf="appComService.isShowEditID">
+                        Lic Prod ID
+                      </th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">
+                        Product ID
+                      </th>
+                      <th scope="col">Product Name</th>
+                      <th scope="col">Product Abv</th>
+                      <th scope="col" class="text-center">isActive</th>
+                      <th scope="col" class="text-center" style="width: 10rem">
+                        ACTION
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="bg-body">
+                    <!-- <tr *ngFor="let product of license.productItems"> -->
+                    <tr
+                      *ngFor="
+                        let product of license.productItems;
+                        let i = index
+                      "
+                      [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
+                    >
+                      <td
+                        class="align-middle"
+                        *ngIf="appComService.isShowEditID"
+                      >
+                        {{ product.licenseProductID }}
+                      </td>
+                      <td
+                        class="align-middle text-nowrap"
+                        *ngIf="appComService.isShowEditID"
+                      >
+                        {{ product.productID }}
+                      </td>
+                      <td class="align-middle">
+                        {{ product.productName }}
+                      </td>
+                      <td class="align-middle">
+                        {{ product.productAbv }}
+                      </td>
+                      <td class="align-middle">
+                        <div class="form-check d-flex justify-content-center">
+                          <input
+                            class="form-check-input"
+                            type="checkbox"
+                            [checked]="product.isActive"
+                            disabled
+                          />
+                        </div>
+                      </td>
+                      <td class="align-middle" style="width: 10rem">
+                        <div class="d-flex justify-content-between mb-3 me-4">
+                          <button
+                            class="icon-edit-delete-button"
+                            type="button"
+                            (click)="
+                              adminDataService.storeProductItem(
+                                'EDIT',
+                                product
+                              );
+                              modalService.open('modal-edit-product-Item')
+                            "
+                          >
+                            <span class="material-symbols-outlined">
+                              edit
+                            </span>
+                          </button>
+                          <button class="icon-edit-delete-button" type="button">
+                            <span
+                              class="material-symbols-outlined"
+                              (click)="
+                                onOpenConfirmDialog(
+                                  'PRODUCTITEM',
+                                  'Product Item',
+                                  product
+                                )
+                              "
+                            >
+                              delete
+                            </span>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: EDIT-LICENSE -->
+<modal id="modal-edit-license">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      <strong>{{ adminComService.modes.licenseItem.mode }}</strong> - License
+    </h1>
+    <!-- <button
+                  type="button"
+                  class="btn-close"
+                  (click)="modalService.close()"
+                ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-edit-license
+          (callParentRefreshData)="onChildCallRefreshData()"
+          [stateProvinces]="stateProvinces"
+          [lineOfAuthorities]="lineOfAuthorities"
+        ></app-edit-license>
+      </div>
+    </div>
+  </div>
+</modal>
+
+<!-- Modal: ADD-COMPANY-ITEM -->
+<modal id="modal-add-company-item">
+  <div class="modal-header">
+    <h1 class="modal-title">ADD - License Company</h1>
+    <!-- <button
+                  type="button"
+                  class="btn-close"
+                  (click)="modalService.close()"
+                ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-add-company
+          (callParentRefreshData)="onChildCallRefreshData()"
+          [companies]="companies"
+        ></app-add-company>
+      </div>
+    </div>
+  </div>
+</modal>
+<!-- Modal: EDIT-COMPANY-ITEM -->
+<modal id="modal-edit-company-item">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      <strong>{{ adminComService.modes.companyItem.mode }}</strong> - License
+      Company
+    </h1>
+    <!-- <button
+                  type="button"
+                  class="btn-close"
+                  (click)="modalService.close()"
+                ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-edit-company-item
+          (callParentRefreshData)="onChildCallRefreshData()"
+        ></app-edit-company-item>
+      </div>
+    </div>
+  </div>
+</modal>
+
+<!-- Modal: ADD-PRE-EXAM_ITEM -->
+<modal id="modal-add-preExam-item">
+  <div class="modal-header">
+    <h1 class="modal-title">ADD - License Pre-Exam</h1>
+    <!-- <button
+                  type="button"
+                  class="btn-close"
+                  (click)="modalService.close()"
+                ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-add-pre-exam
+          [preExams]="preExams"
+          (callParentRefreshData)="onChildCallRefreshData()"
+        ></app-add-pre-exam>
+      </div>
+    </div>
+  </div>
+</modal>
+<!-- Modal: EDIT-PRE-EXAM_ITEM -->
+<modal id="modal-edit-preExam-item">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      <strong>{{ adminComService.modes.preExamItem.mode }}</strong> - License
+      Pre-Exam
+    </h1>
+    <!-- <button
+                  type="button"
+                  class="btn-close"
+                  (click)="modalService.close()"
+                ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-edit-pre-exam-item
+          (callParentRefreshData)="onChildCallRefreshData()"
+        ></app-edit-pre-exam-item>
+      </div>
+    </div>
+  </div>
+</modal>
+
+<!-- Modal: ADD-PRE-EDU-ITEM -->
+<modal id="modal-add-preEdu-Item">
+  <div class="modal-header">
+    <h1 class="modal-title">ADD - License Pre-Education</h1>
+    <!-- <button
+                  type="button"
+                  class="btn-close"
+                  (click)="modalService.close()"
+                ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-add-pre-edu
+          [preEducations]="preEducations"
+          (callParentRefreshData)="onChildCallRefreshData()"
+        ></app-add-pre-edu>
+      </div>
+    </div>
+  </div>
+</modal>
+<!-- Modal: EDIT-PRE-EDU-ITEM -->
+<modal id="modal-edit-preEdu-Item">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      <strong>{{ adminComService.modes.preEduItem.mode }}</strong> - License
+      Pre-Education
+    </h1>
+    <!-- <button
+                  type="button"
+                  class="btn-close"
+                  (click)="modalService.close()"
+                ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-edit-pre-edu-item
+          (callParentRefreshData)="onChildCallRefreshData()"
+        ></app-edit-pre-edu-item>
+      </div>
+    </div>
+  </div>
+</modal>
+
+<!-- Modal: ADD-PRODUCT-ITEM -->
+<modal id="modal-add-product-Item">
+  <div class="modal-header">
+    <h1 class="modal-title">ADD - License Product</h1>
+    <!-- <button
+                  type="button"
+                  class="btn-close"
+                  (click)="modalService.close()"
+                ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-add-product
+          [products]="products"
+          (callParentRefreshData)="onChildCallRefreshData()"
+        ></app-add-product>
+      </div>
+    </div>
+  </div>
+</modal>
+<!-- Modal: EDIT-PRODUCT-ITEM -->
+<modal id="modal-edit-product-Item">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      <strong>{{ adminComService.modes.productItem.mode }}</strong> - License
+      Product
+    </h1>
+    <!-- <button
+                  type="button"
+                  class="btn-close"
+                  (click)="modalService.close()"
+                ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-edit-product-item
+          (callParentRefreshData)="onChildCallRefreshData()"
+        ></app-edit-product-item>
+      </div>
+    </div>
+  </div>
+</modal>

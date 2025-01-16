@@ -1,0 +1,145 @@
+<div class="container app-component-container">
+  <div class="row">
+    <div class="col">
+      <h1 class="text-end" style="font-style: italic; color: lightgrey">
+        Pre Education Edit
+      </h1>
+    </div>
+  </div>
+  <div class="row mt-5 mb-3">
+    <div class="col">
+      <label for="companyType">PreEdu State/Province:</label><br />
+      <select
+        class="form-select select-size-x-small"
+        type="text"
+        id="companyType"
+        (change)="changeStateProvince($event)"
+      >
+        <option *ngFor="let state of stateProvinces" [value]="state">
+          {{ state }}
+        </option>
+      </select>
+    </div>
+    <div class="col d-flex justify-content-center align-items-end">
+      <button
+        class="btn btn-success button-font-size"
+        type="button"
+        (click)="
+          adminDataService.storePreEducation('INSERT', null);
+          modalService.open('modal-edit-pre-education')
+        "
+      >
+        Create Pre-Education
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row mt-4">
+    <div
+      class="col-md-12 d-flex justify-content-center align-items-center mt-5"
+      *ngIf="selectedStateProvince == 'Select'"
+    >
+      <h1>No State Province Selected</h1>
+    </div>
+    <div
+      class="col-md-12 d-flex justify-content-center align-items-center mt-5"
+      *ngIf="
+        selectedStateProvince !== 'Select' && preEducationItems.length == 0
+      "
+    >
+      <h1>No Record(s) Found</h1>
+    </div>
+    <div class="col">
+      <div
+        class="table"
+        *ngIf="
+          preEducationItems.length > 0 && selectedStateProvince != 'Select'
+        "
+      >
+        <thead>
+          <tr class="sticky-top" style="background-color: gainsboro">
+            <th
+              scope="col"
+              style="width: 15rem"
+              *ngIf="appComService.isShowEditID"
+            >
+              PreEducationID
+            </th>
+            <th scope="col">EducationName</th>
+            <th scope="col">StateProvinceAbv</th>
+            <th scope="col">CreditHours</th>
+            <th scope="col">DeliveryMethod</th>
+            <th scope="col" class="text-center">ACTION</th>
+          </tr>
+        </thead>
+        <tbody class="bg-body">
+          <tr *ngFor="let preEdu of preEducationItems">
+            <td
+              class="align-middle text-center"
+              style="width: 15rem"
+              *ngIf="appComService.isShowEditID"
+            >
+              {{ preEdu.preEducationId }}
+            </td>
+            <td class="align-middle">{{ preEdu.educationName }}</td>
+            <td class="align-middle text-center" style="width: max-content">
+              {{ preEdu.stateProvinceAbv }}
+            </td>
+            <td class="align-middle text-nowrap">
+              {{ preEdu.creditHours }}
+            </td>
+            <td class="align-middle" style="width: max-content">
+              {{ preEdu.deliveryMethod }}
+            </td>
+            <td class="align-middle" style="width: 10rem">
+              <div class="d-flex justify-content-between mb-3 me-4">
+                <button
+                  class="icon-edit-delete-button"
+                  type="button"
+                  (click)="
+                    adminDataService.storePreEducation('EDIT', preEdu);
+                    modalService.open('modal-edit-pre-education')
+                  "
+                >
+                  <span class="material-symbols-outlined"> edit </span>
+                </button>
+                <button class="icon-edit-delete-button" type="button">
+                  <span class="material-symbols-outlined" (click)="
+                  openConfirmDialog('deletePreEducation', 'Pre-Edu', preEdu)
+                "> delete </span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: EDIT-PRE-EDUCATION -->
+<modal id="modal-edit-pre-education">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      <strong>{{ adminComService.modes.preEducation.mode }}</strong> -
+      Pre-Education
+    </h1>
+    <!-- <button
+                  type="button"
+                  class="btn-close"
+                  (click)="modalService.close()"
+                ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-edit-pre-education
+          [deliveryMethods]="deliveryMethods"
+          [providers]="providers"
+          [stateProvinces]="stateProvinces"
+          (callParentRefreshData)="onChildCallRefreshData()"
+        ></app-edit-pre-education>
+      </div>
+    </div>
+  </div>
+</modal>

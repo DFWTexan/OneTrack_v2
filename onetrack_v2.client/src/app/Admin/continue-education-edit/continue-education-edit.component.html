@@ -1,0 +1,158 @@
+<div class="container app-component-container">
+  <div class="row">
+    <div class="col">
+      <h1 class="text-end" style="font-style: italic; color: lightgrey">
+        Contiuing Education Rules
+      </h1>
+    </div>
+  </div>
+  <div class="row mt-5 mb-3">
+    <div class="col">
+      <label for="stateProvince">State Province:</label><br />
+      <select
+        class="form-select select-size-x-small"
+        type="text"
+        id="stateProvince"
+        (change)="changeStateProvince($event)"
+      >
+        <option *ngFor="let state of stateProvinces" [value]="state">
+          {{ state }}
+        </option>
+      </select>
+    </div>
+    <div class="col">
+      <label for="licenseType">License Type:</label><br />
+      <select
+        class="form-select select-size-large"
+        type="text"
+        id="licenseType"
+        (change)="changeLicenseType($event)"
+      >
+        <option *ngFor="let licType of licenseTypes" [value]="licType">
+          {{ licType }}
+        </option>
+      </select>
+    </div>
+    <div class="col d-flex justify-content-center align-items-end">
+      <button
+        class="btn btn-success button-font-size"
+        type="button"
+        (click)="
+          adminDataService.storeEducationRule('INSERT', null);
+          modalService.open('modal-edit-edu-rule')
+        "
+      >
+        New
+      </button>
+    </div>
+  </div>
+  <mat-divider></mat-divider>
+  <div class="row mt-4">
+    <div class="col">
+      <div class="table" *ngIf="contEducationRules.length > 0">
+        <thead>
+          <tr class="sticky-top" style="background-color: gainsboro">
+            <th scope="col">Rule</th>
+            <th scope="col">State</th>
+            <th scope="col">Type</th>
+            <th scope="col">Credit Hours</th>
+            <th scope="col">CE Start ID</th>
+            <th scope="col">CE Start</th>
+            <th scope="col">CE End ID</th>
+            <th scope="col">CE End</th>
+            <th scope="col">ExeptionID</th>
+            <th scope="col">ExemptionID</th>
+            <th scope="col" class="text-center">ACTION</th>
+          </tr>
+        </thead>
+        <tbody class="bg-body">
+          <tr *ngFor="let rule of contEducationRules">
+            <td class="align-middle">
+              {{ rule.ruleNumber }}
+            </td>
+            <td class="align-middle">{{ rule.stateProvince }}</td>
+            <td class="align-middle">
+              {{ rule.licenseType }}
+            </td>
+            <td class="align-middle" style="width: max-content">
+              {{ rule.requiredCreditHours }}
+            </td>
+            <td class="align-middle" style="width: max-content">
+              {{ rule.educationStartDateID }}
+            </td>
+            <td class="align-middle" style="width: max-content">
+              {{ rule.educationStartDate }}
+            </td>
+            <td class="align-middle" style="width: max-content">
+              {{ rule.educationEndDateID }}
+            </td>
+            <td class="align-middle" style="width: max-content">
+              {{ rule.educationEndDate }}
+            </td>
+            <td class="align-middle" style="width: max-content">
+              {{ rule.exceptionID }}
+            </td>
+            <td class="align-middle">
+              {{ rule.exemptionID }}
+            </td>
+            <td class="align-middle" style="width: 10rem">
+              <div class="d-flex justify-content-between mb-3 me-4">
+                <button
+                  class="icon-edit-delete-button"
+                  type="button"
+                  (click)="
+                    adminDataService.storeEducationRule('EDIT', rule);
+                    modalService.open('modal-edit-edu-rule')
+                  "
+                >
+                  <span class="material-symbols-outlined"> edit </span>
+                </button>
+                <button class="icon-edit-delete-button" type="button">
+                  <span
+                    class="material-symbols-outlined"
+                    (click)="
+                      openConfirmDialog('disableEduRuleEdit', 'Edu Rule Disable', rule)
+                    "
+                  >
+                    delete
+                  </span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: EDIT-EDU-RULE -->
+<modal id="modal-edit-edu-rule">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      <strong>{{ adminComService.modes.educationRule.mode }}</strong> -
+      Education Rule
+    </h1>
+    <!-- <button
+                type="button"
+                class="btn-close"
+                (click)="modalService.close()"
+              ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-edit-edu-rule
+          (callParentRefreshData)="onChildCallRefreshData()"
+          [stateProvinces]="stateProvinces"
+          [selectedStateProvince]="selectedStateProvince"
+          [conStartDates]="conStartDates"
+          [conEndDates]="conEndDates"
+          [exceptions]="exceptions"
+          [exemptions]="exemptions"
+        >
+        </app-edit-edu-rule>
+      </div>
+    </div>
+  </div>
+</modal>

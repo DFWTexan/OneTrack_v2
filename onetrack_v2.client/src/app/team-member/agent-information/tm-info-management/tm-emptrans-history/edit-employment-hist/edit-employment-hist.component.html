@@ -1,0 +1,162 @@
+<form
+  [formGroup]="employmentHistoryForm"
+  (ngSubmit)="onSubmit()"
+  class="container app-modal-container"
+>
+  <div class="row">
+    <div class="col">
+      <div
+        class="mb-3"
+        *ngIf="
+          agentComService.modeEmploymentHist === 'EDIT' &&
+          appComService.isShowEditID
+        "
+      >
+        <label for="employmentHistoryID" class="form-label"
+          >Employment History ID</label
+        >
+        <input
+          class="form-control input-size-small"
+          type="text"
+          id="employmentHistoryID"
+          formControlName="employmentHistoryID"
+        />
+      </div>
+      <div class="mb-3">
+        <label for="hireDate" class="form-label">Hire Date:<span class="ms-1 text-danger">*</span></label>
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="hireDate"
+          formControlName="hireDate"
+        />
+        <div
+          *ngIf="
+          employmentHistoryForm.controls['hireDate'].errors &&
+          employmentHistoryForm.controls['hireDate'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please select Background Check Status
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="rehireDate" class="form-label">Rehire Date:</label>
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="rehireDate"
+          formControlName="rehireDate"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="backgroundCheckStatus" class="form-label"
+          >Background Check Status:<span class="ms-1 text-danger">*</span></label
+        >
+        <select
+          class="form-select select-size-small"
+          type="text"
+          id="backgroundCheckStatus"
+          formControlName="backgroundCheckStatus"
+          [value]="employmentHistoryForm.get('backgroundCheckStatus')?.value"
+        >
+          <option
+            *ngFor="let status of backgroundStatuses"
+            [value]="status.lkpValue"
+          >
+            {{ status.lkpValue }}
+          </option>
+        </select>
+        <div
+          *ngIf="
+          employmentHistoryForm.controls['backgroundCheckStatus'].errors &&
+          employmentHistoryForm.controls['backgroundCheckStatus'].errors['required']
+          "
+          class="text-danger"
+        >
+          Please select Background Check Status
+        </div>
+      </div>
+      <div class="mb-3">
+        <label for="backGroundCheckNotes" class="form-label"
+          >Background Check Notes:</label
+        >
+        <textarea
+          class="form-control input-size-medium"
+          type="text"
+          id="backGroundCheckNotes"
+          formControlName="backGroundCheckNotes"
+        ></textarea>
+      </div>
+    </div>
+    <div class="col">
+      <div class="mb-3">
+        <label for="notifiedTermDate" class="form-label"
+          >Notified Term Date:</label
+        >
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="notifiedTermDate"
+          formControlName="notifiedTermDate"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="hrTermDate" class="form-label">HR Term Date:</label>
+        <input
+          class="form-control input-size-small"
+          type="date"
+          id="hrTermDate"
+          formControlName="hrTermDate"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label for="hrTermCode" class="form-label">HR Term Code:</label>
+        <input
+          class="form-control input-size-mini"
+          type="text"
+          id="hrTermCode"
+          formControlName="hrTermCode"
+          pattern="[a-zA-Z0-9]*"
+          (keypress)="alphaNumericOnly($event)"
+          maxlength="2"
+        />
+        TermCode for Death is "DT"
+      </div>
+
+      <div class="mb-3">
+        <input
+          class="form-check-input me-2"
+          type="checkbox"
+          id="isForCause"
+          formControlName="isForCause"
+        />
+        <label for="isForCause" class="form-label">ForCause</label>
+      </div>
+
+      <div class="mb-3">
+        <input
+          class="form-check-input me-2"
+          type="checkbox"
+          id="isCurrent"
+          formControlName="isCurrent"
+        />
+        <label for="isCurrent" class="form-label">Is Current Record</label>
+      </div>
+    </div>
+  </div>
+
+  <mat-divider></mat-divider>
+
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button type="button" class="btn btn-secondary me-3 cancel-button" (click)="closeModal()">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary save-button" [disabled]="!employmentHistoryForm.valid">Save</button>
+    </div>
+  </div>
+</form>
