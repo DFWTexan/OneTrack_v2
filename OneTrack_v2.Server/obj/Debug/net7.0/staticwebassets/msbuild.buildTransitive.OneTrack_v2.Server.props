@@ -1,3 +1,0 @@
-﻿<Project>
-  <Import Project="..\buildMultiTargeting\OneTrack_v2.Server.props" />
-</Project>

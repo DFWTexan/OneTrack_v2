@@ -1,8 +1,0 @@
-{
-    "production": false,
-    "environment": "DEVELOPMENT",
-    "isDevLoginEnabled": false,
-    "isShowEditID": false,
-    "apiUrl": "http://ftapid101/OneTrakV2/api/",
-    "User": null
-}
