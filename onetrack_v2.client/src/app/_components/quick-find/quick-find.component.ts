@@ -51,7 +51,7 @@ export class QuickFindComponent {
     if (this.tmNumber.length > 0) {
       this.isLoading = true;
       this.employeeDataService
-        .fetchEmployeeByTmNumber(this.tmNumber)
+        .fetchEmployeeByTmNumber(this.tmNumber.trim())
         .subscribe((response) => {
           this.isLoading = false;
           this.agentComService.updateShowLicenseMgmt(false);
