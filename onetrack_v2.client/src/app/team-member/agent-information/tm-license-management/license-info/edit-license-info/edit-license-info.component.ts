@@ -31,7 +31,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
   licenseStatuses: { value: string; label: string }[] = [];
   licenseNames: { value: number; label: string }[] = [];
   affiliatedLicenses: string[] = ['None'];
-  defaultLicenseState: string = null || 'Select';
+  defaultLicenseState: string = 'Select';
   licenseState: string = '';
 
   private subscriptions = new Subscription();
