@@ -198,6 +198,7 @@ namespace OneTrack_v2.Services
                             join bdh in _db.Bifs on d.BranchCode.Substring(d.BranchCode.Length - 8) equals bdh.HrDepartmentId.Substring(bdh.HrDepartmentId.Length - 8) into bdhGroup
                             from bdh in bdhGroup.DefaultIfEmpty()
                             where (a.FirstName + " " + a.LastName).Contains(vInput)
+                            orderby a.FirstName, d.ResStateAbv, d.WorkStateAbv
                             select new
                             {
                                 a.EmployeeId,
