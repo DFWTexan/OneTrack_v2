@@ -213,6 +213,7 @@
                           onSetOpenLicenseID(license.employeeLicenseId);
                           agentDataService.storeLicenseAppt('INSERT', license);
                           storeLicApptLicenseID(license.licenseID);
+                          storeEmployeeLicenseID(license.employeeLicenseId);
                           modalService.open('modal-edit-license-appt')
                         "
                         title="Add Appointment"

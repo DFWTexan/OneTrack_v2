@@ -33,6 +33,8 @@ export class AgentDataService {
   // AGENT LICENSE APPOINTMENTS
   agentLicApptLicenseID: number = 0;
   agentLicApptLicenseIDChanged = new Subject<number>();
+  agentEmployeeLicenseID: number = 0;
+  agentEmployeeLicenseIDChanged = new Subject<number>();
   agentLicenseAppointments: AgentLicenseAppointments[];
   agentLicenseAppointmentsChanged = new Subject<AgentLicenseAppointments[]>();
   licenseAppointment: LicenseAppointment = {} as LicenseAppointment;
@@ -824,6 +826,11 @@ export class AgentDataService {
   storeLicApptLicenseID(licenseID: number) {
     this.agentLicApptLicenseID = licenseID;
     this.agentLicApptLicenseIDChanged.next(this.agentLicApptLicenseID);
+  }
+
+  storeEmployeeLicenseID(employeeLicenseID: number) {
+    this.agentEmployeeLicenseID = employeeLicenseID;
+    this.agentEmployeeLicenseIDChanged.next(this.agentEmployeeLicenseID);
   }
 
   storeLicenseMgmtDataIndex(index: number) {

@@ -595,6 +595,71 @@ namespace OneTrak_v2.Services
 
             return result;
         }
+        public ReturnResult UpsertLicenseAppointment([FromBody] IputUpsertLicenseAppointment vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                if (vInput.EmployeeAppointmentID == 0)
+                {
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspAppointmentInsert", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeID", vInput.EmployeeID));
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeLicenseID", vInput.EmployeeLicenseID));
+                            cmd.Parameters.Add(new SqlParameter("@CompanyID", vInput.CompanyID));
+                            cmd.Parameters.Add(new SqlParameter("@CarrierDate", vInput.CarrierDate));
+                            cmd.Parameters.Add(new SqlParameter("@AppointmentStatus", vInput.AppointmentStatus));
+                            cmd.Parameters.Add(new SqlParameter("@AppointmentEffectiveDate", vInput.AppointmentEffectiveDate));
+                            cmd.Parameters.Add(new SqlParameter("@AppointmentExpireDate", vInput.AppointmentExpireDate));
+                            cmd.Parameters.Add(new SqlParameter("@AppointmentTerminationDate", vInput.AppointmentTerminationDate));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                else
+                {
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspAppointmentUpdate", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeAppointmentID", vInput.EmployeeAppointmentID));
+                            cmd.Parameters.Add(new SqlParameter("@AppointmentStatus", vInput.AppointmentStatus));
+                            cmd.Parameters.Add(new SqlParameter("@CompanyID", vInput.CompanyID));
+                            cmd.Parameters.Add(new SqlParameter("@CarrierDate", vInput.CarrierDate));
+                            cmd.Parameters.Add(new SqlParameter("@AppointmentEffectiveDate", vInput.AppointmentEffectiveDate));
+                            cmd.Parameters.Add(new SqlParameter("@AppointmentExpireDate", vInput.AppointmentExpireDate));
+                            cmd.Parameters.Add(new SqlParameter("@AppointmentTerminationDate", vInput.AppointmentTerminationDate));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                result.Success = true;
+                result.ObjData = new { Message = "License Appointment Created/Updated Successfully." };
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# LINFO-6128-198030].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+            return result;
+        }
         public ReturnResult DeleteLicenseAppointment([FromBody] IputDeleteLicenseAppointment vInput)
         {
             var result = new ReturnResult();

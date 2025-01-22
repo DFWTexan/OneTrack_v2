@@ -23,6 +23,7 @@ export interface AgentLicenseAppointments {
 
   export interface LicenseAppointment {
     licenseID: number;
+    employeeLicenseId: number | null;
     employeeAppointmentID: number;
     appointmentEffectiveDate: string | null;
     appointmentStatus: string;

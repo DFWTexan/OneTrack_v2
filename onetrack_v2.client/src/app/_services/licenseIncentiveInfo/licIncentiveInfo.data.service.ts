@@ -187,6 +187,38 @@ export class LicIncentiveInfoDataService {
       );
   }
 
+  upsertLicenseAppointment(appointment: LicenseAppointment): Observable<any> {
+    this.apiUrl = environment.apiUrl + 'LicenseInfo/UpsertLicenseAppointment';
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, appointment)
+      .pipe(
+        switchMap((response) => {
+          if (response.success && response.statusCode === 200) {
+            return this.agentDataService.fetchAgentLicenseAppointments(
+              this.agentDataService.agentInformation.employmentID
+            );
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        }),
+        map((appointments) => {
+          // this.agentDataService.agentInformation.agentLicenseAppointments =
+          //   appointments;
+          // this.agentDataService.agentLicenseAppointmentsChanged.next(
+          //   this.agentDataService.agentInformation.agentLicenseAppointments
+          // );
+
+          // this.agentDataService.updateAgentLicenseAppointments(appointments);
+          return appointments;
+        })
+      );
+  }
+
   deleteLicenseAppointment(appointment: any): Observable<any> {
     this.apiUrl = environment.apiUrl + 'LicenseInfo/DeleteLicenseAppointment';
 

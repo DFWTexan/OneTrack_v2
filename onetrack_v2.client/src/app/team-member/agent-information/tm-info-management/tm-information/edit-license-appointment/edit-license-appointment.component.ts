@@ -40,8 +40,10 @@ export class EditLicenseAppointmentComponent
     ...this.conService.getAppointmentStatuses(),
   ];
   employeeAppointmentID: number = 0;
+  employeeLicenseID: number = 0;
   form = this.fb.group({
     licenseID: new FormControl({ value: 0, disabled: true }),
+    employeeLicenseId: new FormControl(0),
     employeeAppointmentID: new FormControl({ value: 0, disabled: true }),
     appointmentStatus: new FormControl(''),
     companyID: new FormControl(0),
@@ -67,6 +69,14 @@ export class EditLicenseAppointmentComponent
   ) {}
 
   ngOnInit(): void {
+    this.subscriptions.add(
+      this.agentDataService.agentEmployeeLicenseIDChanged.subscribe(
+        (employeeLicenseID: number) => {
+          this.employeeLicenseID = employeeLicenseID;
+        }
+      )
+    );
+
     this.subscriptions.add(
       this.agentComService.modeLicenseApptChanged
         .pipe(
@@ -147,6 +157,7 @@ export class EditLicenseAppointmentComponent
   private updateFormValues(): void {
     this.form.patchValue({
       licenseID: this.licenseAppointment.licenseID,
+      employeeLicenseId: this.licenseAppointment.employeeLicenseId,
       employeeAppointmentID: this.licenseAppointment.employeeAppointmentID,
       appointmentStatus: this.licenseAppointment.appointmentStatus,
       companyID: this.licenseAppointment.companyID, // Ensure this value is updated
@@ -189,6 +200,7 @@ export class EditLicenseAppointmentComponent
     licenseApptItem.employeeID =
       this.agentDataService.agentInformation.employeeID;
     licenseApptItem.employeeAppointmentID = this.employeeAppointmentID;
+    licenseApptItem.employeeLicenseID = this.employeeLicenseID;
     licenseApptItem.UserSOEID = this.userInfoDataService.userAcctInfo.soeid;
 
     if (licenseApptItem.appointmentStatus === 'Select') {
@@ -215,21 +227,14 @@ export class EditLicenseAppointmentComponent
       this.form.controls['companyID'].setErrors({ required: true });
     }
 
-console.log('EMFTEST () - Agent License Appt. this.licenseApptForm.invalid:  ', this.form.invalid);       
-
     if (this.form.invalid) {
-
-console.log('EMFTEST () - Agent License Appt. ERROR response => \n ', licenseApptItem);
-
       this.form.setErrors({ invalid: true });
       return;
     }
 
-console.log('EMFTEST () - Agent License Appt. added successfully response => \n ', licenseApptItem);    
-
     this.subscriptions.add(
       this.licIncentiveInfoDataService
-        .updateLicenseAppointment(licenseApptItem)
+        .upsertLicenseAppointment(licenseApptItem)
         .subscribe({
           next: (response) => {
             // const modalDiv = document.getElementById('modal-edit-license-appt');

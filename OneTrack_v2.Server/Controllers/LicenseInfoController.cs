@@ -81,6 +81,14 @@ namespace OneTrak_v2.Server.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
+        [HttpPost]
+        public async Task<ActionResult> UpsertLicenseAppointment([FromBody] IputUpsertLicenseAppointment input)
+        {
+            var result = await Task.Run(() => _licenseInfo.UpsertLicenseAppointment(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
         [HttpPut]
         public async Task<ActionResult> DeleteLicenseAppointment([FromBody] IputDeleteLicenseAppointment input)
         {
