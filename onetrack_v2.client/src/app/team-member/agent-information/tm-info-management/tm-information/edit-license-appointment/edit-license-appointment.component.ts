@@ -215,10 +215,17 @@ export class EditLicenseAppointmentComponent
       this.form.controls['companyID'].setErrors({ required: true });
     }
 
+console.log('EMFTEST () - Agent License Appt. this.licenseApptForm.invalid:  ', this.form.invalid);       
+
     if (this.form.invalid) {
+
+console.log('EMFTEST () - Agent License Appt. ERROR response => \n ', licenseApptItem);
+
       this.form.setErrors({ invalid: true });
       return;
     }
+
+console.log('EMFTEST () - Agent License Appt. added successfully response => \n ', licenseApptItem);    
 
     this.subscriptions.add(
       this.licIncentiveInfoDataService

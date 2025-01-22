@@ -11,7 +11,6 @@
           id="companyID"
           class="form-select form-select-lg select-size-large"
           formControlName="CompanyID"
-          [disabled]="true"
         >
           <option
             *ngFor="let agency of employerAgencies"
@@ -28,7 +27,6 @@
           id="Alias"
           class="form-control input-size-medium"
           formControlName="Alias"
-          [disabled]="true"
         />
       </div>
       <div class="mb-3">
@@ -38,7 +36,6 @@
           id="geid"
           class="form-control input-size-small"
           formControlName="GEID"
-          [disabled]="true"
         />
       </div>
       <div class="mb-3">
@@ -58,7 +55,6 @@
           id="agentStatus"
           class="form-select form-select-lg select-size-small"
           formControlName="EmployeeStatus"
-          [disabled]="true"
         >
           <option *ngFor="let status of agentStatuses" [value]="status">
             {{ status }}
@@ -71,7 +67,6 @@
           id="residentSate"
           class="form-select form-select-lg select-size-x-small"
           formControlName="ResStateAbv"
-          [disabled]="true"
         >
           <option *ngFor="let state of states" [value]="state">
             {{ state }}
