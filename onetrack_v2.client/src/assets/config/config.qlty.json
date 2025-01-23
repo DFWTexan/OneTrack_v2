@@ -4,5 +4,19 @@
     "isDevLoginEnabled": false,
     "isShowEditID": false,
     "apiUrl": "http://ftapiq101/OneTrakV2/api/",
-    "User": null
+    "isImpersonationEnabled": true,
+    "userInfo": {
+        "licenseTechID": null,
+        "displayName": "QLTY - Test User",
+        "soeid": "T333777",
+        "email": "erish.faggett@omf.com",
+        "enabled": true,
+        "employeeId": "2229513",
+        "homeDirectory": "\\\\corp.fin\\users\\EVNAS_Users\\3\\T333777",
+        "isAdminRole": true,
+        "isTechRole": null,
+        "isReadRole": true,
+        "isQARole": true,
+        "isSuperUser": true
+    }
 }

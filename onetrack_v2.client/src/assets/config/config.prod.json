@@ -4,5 +4,6 @@
     "isDevLoginEnabled": false,
     "isShowEditID": false,
     "apiUrl": "http://ftapip101/OneTrakV2/api/",
-    "User": null
+    "isImpersonationEnabled": false,
+    "userInfo": null
 }

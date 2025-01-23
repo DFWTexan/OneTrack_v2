@@ -44,6 +44,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   openTicklerCount = 0;
   isDevLoginEnabled = null;
   isLoggedIn: boolean | null = null;
+  isImpersonationEnabled = false;
 
   title = 'onetrack_v2';
   private subscriptions = new Subscription();
@@ -81,6 +82,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
         this.isLoggedIn = true;
         this.appComService.updateIsLoggedIn(this.isLoggedIn);
         this.isDevLoginEnabled = configuration.isDevLoginEnabled;
+        this.isImpersonationEnabled = configuration.isImpersonationEnabled;
         if (configuration.userInfo) {
           this.userAcctInfoDataService.updateUserAcctInfo(
             configuration.userInfo
@@ -347,43 +349,6 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       });
       dialogRef.close();
     }, 100);
-  }
-
-  onImpersonateChange(event: Event) {
-    const soeid = (event.target as HTMLInputElement).value;
-    this.subscriptions.add(
-      this.userAcctInfoDataService
-        .fetchLicenseTechBySOEID(soeid)
-        .subscribe((licenseTech: any) => {
-          this.userAcctInfoDataService.updateUserAcctInfo({
-            licenseTechID: licenseTech.licenseTechId,
-            displayName: licenseTech.techName,
-            soeid: licenseTech.soeid,
-            email: licenseTech.email,
-            enabled: licenseTech.enabled,
-            employeeId: licenseTech.employeeId,
-            homeDirectory: licenseTech.homeDirectory,
-            lastLogon: Date.now().toString(),
-            isAdminRole: this.impesonatorRole === 'Admin',
-            isTechRole: this.impesonatorRole === 'Tech',
-            isReadRole: this.impesonatorRole === 'Read',
-            isSuperUser: this.impesonatorRole === 'DVLPER',
-          });
-        })
-    );
-  }
-
-  onRoleChange(event: Event) {
-    const role = (event.target as HTMLInputElement).value;
-    this.impesonatorRole = role;
-
-    this.userAcctInfoDataService.updateUserAcctInfo({
-      ...this.userAcctInfo,
-      isAdminRole: role === 'Admin',
-      isTechRole: role === 'Tech',
-      isReadRole: role === 'Read',
-      isSuperUser: role === 'DVLPER',
-    });
   }
 
   ngOnDestroy(): void {

@@ -4,6 +4,7 @@
     "isDevLoginEnabled": true,
     "isShowEditID": false,
     "apiUrl": "http://localhost:5181/api/",
+    "isImpersonationEnabled": true,
     "userInfo": {
         "licenseTechID": null,
         "displayName": "localhost - Test User",
@@ -15,6 +16,7 @@
         "isAdminRole": true,
         "isTechRole": null,
         "isReadRole": true,
+        "isQARole": true,
         "isSuperUser": true
     }
 }

@@ -1,0 +1,28 @@
+<div class="mt-auto justify-content-end">
+  <div class="ms-3 justify-content-start">
+    <label for="devLogin">Impersonate:</label><br />
+    <select
+      class="form-select select-size-med-small"
+      type="text"
+      id="licTech"
+      (change)="onImpersonateChange($event)"
+    >
+      <option *ngFor="let tech of licenseTechs" [value]="tech.value">
+        {{ tech.label }}
+      </option>
+    </select>
+    <label class="mt-2" for="devLogin">As</label><br />
+    <select
+      class="form-select select-size-small"
+      type="text"
+      id="licTech"
+      (change)="onRoleChange($event)"
+    >
+      <option>Select</option>
+      <option>Admin</option>
+      <option>Tech</option>
+      <option>Read</option>
+      <option>DVLPER</option>
+    </select>
+  </div>
+</div>
