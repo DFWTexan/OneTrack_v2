@@ -117,6 +117,11 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       this.userAcctInfoDataService.userAcctInfoChanged.subscribe(
         (userAcctInfo: UserAcctInfo) => {
           this.userAcctInfo = userAcctInfo;
+
+          console.log(
+            'EMFTEST (AppComponent: userAcctInfoChanged) - userAcctInfo => \n',
+            userAcctInfo
+          );
         }
       )
     );

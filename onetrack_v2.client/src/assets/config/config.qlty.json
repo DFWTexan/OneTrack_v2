@@ -8,15 +8,15 @@
     "userInfo": {
         "licenseTechID": null,
         "displayName": "QLTY - Test User",
-        "soeid": "T333777",
-        "email": "erish.faggett@omf.com",
+        "soeid": "T1234567",
+        "email": null,
         "enabled": true,
-        "employeeId": "2229513",
-        "homeDirectory": "\\\\corp.fin\\users\\EVNAS_Users\\3\\T333777",
-        "isAdminRole": true,
+        "employeeId": null,
+        "homeDirectory": null,
+        "isAdminRole": null,
         "isTechRole": null,
-        "isReadRole": true,
-        "isQARole": true,
+        "isReadRole": null,
+        "isQARole": null,
         "isSuperUser": true
     }
 }

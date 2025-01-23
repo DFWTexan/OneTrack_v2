@@ -27,6 +27,7 @@ export class ImpersonationComponent implements OnInit, OnDestroy {
     public licIncentiveInfoDataService: LicIncentiveInfoDataService
   ) {
     this.licenseTechs = this.licIncentiveInfoDataService.licenseTeches;
+    this.userAcctInfo = this.userAcctInfoDataService.userAcctInfo;
   }
 
   ngOnInit() {
@@ -48,8 +49,6 @@ export class ImpersonationComponent implements OnInit, OnDestroy {
   onImpersonateChange(event: Event) {
     const soeid = (event.target as HTMLInputElement).value;
 
-console.log('EMFTEST (onImpersonateChange) - soeid: ', soeid);
-
     if (soeid && soeid !== 'null') {
       this.subscriptions.add(
         this.userAcctInfoDataService
@@ -64,16 +63,23 @@ console.log('EMFTEST (onImpersonateChange) - soeid: ', soeid);
               employeeId: licenseTech.employeeId,
               homeDirectory: licenseTech.homeDirectory,
               lastLogon: Date.now().toString(),
-              isAdminRole: this.impesonatorRole === 'Admin',
-              isTechRole: this.impesonatorRole === 'Tech',
-              isReadRole: this.impesonatorRole === 'Read',
-              isSuperUser: this.impesonatorRole === 'DVLPER',
+              isAdminRole: this.impesonatorRole === 'ADMIN' ? true : false,
+              isTechRole: this.impesonatorRole === 'TECH' ? true : false,
+              isReadRole: this.impesonatorRole === 'READ' ? true : false,
+              isSuperUser:
+                this.impesonatorRole === 'DVLPER'
+                  ? true
+                  : this.impesonatorRole === null
+                  ? true
+                  : false,
             });
           })
       );
     } else {
-      if (this.config.userInfo) {
-        this.userAcctInfoDataService.updateUserAcctInfo(this.config.userInfo);
+      if (this.config.environment === 'LOCAL') {
+        if (this.config.userInfo) {
+          this.userAcctInfoDataService.updateUserAcctInfo(this.config.userInfo);
+        }
       }
     }
   }
@@ -82,13 +88,14 @@ console.log('EMFTEST (onImpersonateChange) - soeid: ', soeid);
     const role = (event.target as HTMLInputElement).value;
     this.impesonatorRole = role;
 
-    this.userAcctInfoDataService.updateUserAcctInfo({
-      ...this.userAcctInfo,
-      isAdminRole: role === 'Admin',
-      isTechRole: role === 'Tech',
-      isReadRole: role === 'Read',
-      isSuperUser: role === 'DVLPER',
-    });
+    this.userAcctInfo.isAdminRole = role === 'ADMIN' ? true : false,
+    this.userAcctInfo.isTechRole = role === 'TECH' ? true : false,
+    this.userAcctInfo.isReadRole = role === 'READ' ? true : false,
+    this.userAcctInfo.isSuperUser = role === 'DVLPER' ? true : role === null ? true : false,
+
+    this.userAcctInfoDataService.updateUserAcctInfo(
+      this.userAcctInfo,
+    );
   }
 
   ngOnDestroy(): void {
