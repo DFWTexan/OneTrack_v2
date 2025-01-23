@@ -125,8 +125,11 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         (userAcctInfo: UserAcctInfo) => {
           this.userAcctInfo = userAcctInfo;
           if (userAcctInfo.licenseTechID) {
-            this.selectedLicenseTechID = userAcctInfo.licenseTechID;
+            this.selectedLicenseTechID = userAcctInfo.licenseTechID ?? 0;
+            this.appComService.updateIsOpenTicklerInfo(true);
             this.fetchTicklerInfo();
+          } else {
+            this.appComService.updateIsOpenTicklerInfo(false);
           }
         }
       )
@@ -157,6 +160,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.ticklerMgmtDataService
         .fetchLicenseTech(0, null)
         .subscribe((licenseTechItems) => {
+
           this.licenseTechItems = licenseTechItems;
         })
     );

@@ -14,6 +14,8 @@ export class UserAcctInfoDataService {
   private apiUrl: string = environment.apiUrl + 'UserAcct/';
   userAcctInfo: UserAcctInfo = {} as UserAcctInfo;
   userAcctInfoChanged = new Subject<UserAcctInfo>();
+  userID: string = '';
+  userPassWord: string = '';
 
   constructor(private http: HttpClient, private appComService: AppComService) {}
 
@@ -115,4 +117,9 @@ export class UserAcctInfoDataService {
     this.userAcctInfo = userAcctInfo;
     this.userAcctInfoChanged.next(userAcctInfo);
   }
+
+  storeUserCredentials(userId: string, passWord: string) {
+    this.userID = userId;
+    this.userPassWord = passWord;
+  } 
 }

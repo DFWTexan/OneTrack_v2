@@ -13,7 +13,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   subscribeLoginMsgChanged: Subscription = new Subscription();
 
   constructor(
-    private userAcctInfoService: UserAcctInfoDataService,
+    private userAcctInfoDataService: UserAcctInfoDataService,
     public appComService: AppComService
   ) {}
 
@@ -25,8 +25,17 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(form: NgForm) {
+    if (!form.valid) {
+      return;
+    }
+
+    this.userAcctInfoDataService.storeUserCredentials(
+      form.value.loginInfo.userTID,
+      form.value.loginInfo.password
+    );
+
     this.subscribeLoginMsgChanged.add(
-      this.userAcctInfoService
+      this.userAcctInfoDataService
         .fetchUserAcctInfo(
           form.value.loginInfo.userTID,
           form.value.loginInfo.password
