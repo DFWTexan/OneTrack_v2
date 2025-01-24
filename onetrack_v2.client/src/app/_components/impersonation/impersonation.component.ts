@@ -26,7 +26,7 @@ export class ImpersonationComponent implements OnInit, OnDestroy {
     public userAcctInfoDataService: UserAcctInfoDataService,
     public licIncentiveInfoDataService: LicIncentiveInfoDataService
   ) {
-    this.licenseTechs = this.licIncentiveInfoDataService.licenseTeches;
+    this.licenseTechs = [ { value: null, label: 'Select' }, ...this.licIncentiveInfoDataService.licenseTeches];
     this.userAcctInfo = this.userAcctInfoDataService.userAcctInfo;
   }
 

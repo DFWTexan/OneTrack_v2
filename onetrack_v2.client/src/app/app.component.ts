@@ -44,7 +44,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   openTicklerCount = 0;
   isDevLoginEnabled = null;
   isLoggedIn: boolean | null = null;
-  isImpersonationEnabled = false;
+  isImpersonationEnabled: boolean | null = null;
 
   title = 'onetrack_v2';
   private subscriptions = new Subscription();

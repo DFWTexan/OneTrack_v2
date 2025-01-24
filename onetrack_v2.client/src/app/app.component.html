@@ -321,9 +321,10 @@
     <app-login *ngIf="!isLoggedIn"></app-login>
     <br />
     <br />
+    <!-- <p>isLoggedIn: {{ isLoggedIn }}</p>
+    <p>isImpersonationEnabled: {{ configService.config.isImpersonationEnabled }}</p> -->
     <br />
-    <!-- DVLP - Impersonation -->
-    <app-impersonation *ngIf="isImpersonationEnabled"></app-impersonation>
+    <app-impersonation *ngIf="isLoggedIn && configService.config.isImpersonationEnabled"></app-impersonation>
   </mat-sidenav>
 
   <mat-sidenav-content style="background-color: aliceblue">
