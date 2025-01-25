@@ -60,7 +60,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       required: [''],
       nonResident: [''],
       licenseEffectiveDate: [null],
-      licenseIssueDate: ['01/01/0001 00:00:00'],
+      licenseIssueDate: [null],
       lineOfAuthorityIssueDate: [null],
       sentToAgentDate: [null],
       licenseNote: [''],
@@ -261,6 +261,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
     this.isFormSubmitted = true;
 
 console.log('EMFTEST (onSubmit) A - licenseForm => \n ', this.licenseForm.value);   
+console.log('EMFTEST (onSubmit) A - modeLicenseMgmt: ', this.agentComService.modeLicenseMgmt);
 
     let licenseInfo: any = this.licenseForm.value;
     licenseInfo.employeeID = this.agentDataService.agentInformation.employeeID;
@@ -270,7 +271,7 @@ console.log('EMFTEST (onSubmit) A - licenseForm => \n ', this.licenseForm.value)
 
     if (this.agentComService.modeLicenseMgmt == 'EDIT') {
       // licenseInfo.employeeLicenseId =
-        // this.licenseMgmtData[this.currentIndex].employeeLicenseId;
+      //   this.licenseMgmtData[this.currentIndex].employeeLicenseId;
         // this.agentDataService.agentLicApptLicenseID;
 
     } else {
@@ -279,25 +280,34 @@ console.log('EMFTEST (onSubmit) A - licenseForm => \n ', this.licenseForm.value)
 
     if (licenseInfo.licenseID === 0) {
       this.licenseForm.controls['licenseID'].setErrors({ invalid: true });
-    }
+  } else {
+      this.licenseForm.controls['licenseID'].setErrors(null);
+  }
 
-    if (licenseInfo.licenseStatus === 'Select') {
+  if (licenseInfo.licenseStatus === 'Select') {
       this.licenseForm.controls['licenseStatus'].setErrors({ invalid: true });
-    }
+  } else {
+      this.licenseForm.controls['licenseStatus'].setErrors(null);
+  }
 
-    if (
+  if (
       licenseInfo.sentToAgentDate === '01/01/0001 00:00:00' ||
-      licenseInfo.sentToAgentDate === null && this.agentComService.modeLicenseMgmt != 'EDIT'
-    ) {
-      this.licenseForm.controls['sentToAgentDate'].setErrors({
-        invalid: true,
-      });
-    }
+      (licenseInfo.sentToAgentDate === null && this.agentComService.modeLicenseMgmt !== 'EDIT')
+  ) {
+      this.licenseForm.controls['sentToAgentDate'].setErrors({ invalid: true });
+  } else {
+      this.licenseForm.controls['sentToAgentDate'].setErrors(null);
+  }
 
-    if (this.licenseForm.invalid) {
+  if (this.licenseForm.invalid) {
+
+console.log('EMFTEST (onSubmit) C - licenseForm => \n ', this.licenseForm.value);
+
       this.licenseForm.setErrors({ invalid: true });
       return;
-    }
+  } else {
+      this.licenseForm.setErrors(null);
+  }
 
 console.log('EMFTEST (onSubmit) B - licenseInfo => \n ', licenseInfo);    
 
