@@ -388,6 +388,8 @@ namespace OneTrack_v2.Services
                                 EmploymentID = employeeLicense.EmploymentId,
                                 LicenseName = license.LicenseName,
                                 LicenseNumber = employeeLicense.LicenseNumber,
+                                Required = (bool)employeeLicense.Required,
+                                Reinstatement = (bool)employeeLicense.Reinstatement,
                                 NonResident = (bool)employeeLicense.NonResident,
                                 OriginalIssueDate = employeeLicense.LicenseIssueDate,
                                 LineOfAuthIssueDate = employeeLicense.LineOfAuthorityIssueDate,
