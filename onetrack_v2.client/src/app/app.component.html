@@ -4,9 +4,15 @@
   </button>
   <div class="d-flex">
     <span>OneTrakV2</span>
-    <div *ngIf="configService.config.environment" class="ms-5" style="color: gray; font-size: small;">{{ configService.config.environment }}</div>
+    <div
+      *ngIf="configService.config.environment"
+      class="ms-5"
+      style="color: gray; font-size: small"
+    >
+      {{ configService.config.environment }}
+    </div>
   </div>
-  
+
   <span class="toolbar-item-spacer"></span>
   <!-- <button mat-icon-button matTooltip="Like">
       <mat-icon>favorite</mat-icon>
@@ -24,15 +30,42 @@
   </div> -->
   <app-quick-find *ngIf="isLoggedIn"></app-quick-find>
   <span class="toolbar-item-spacer"></span>
+  <!-- WORKLIST COUNT  -->
+  <button
+    mat-icon-button
+    matTooltip="Go Worklist Info"
+    (click)="
+      onLinkClick($event, {
+        message: 'Loading Dashboard: Worklist Info..',
+        route: '/dashboard'
+      })
+    "
+    [disabled]="!isWorklistActive()"
+    [ngStyle]="{
+      color: isWorklistActive() ? '#00FF7F' : 'white'
+    }"
+  >
+    <!-- WORKLIST NOTIFICATIONS ICON -->
+    <mat-icon
+      matBadgePosition="before"
+      [matBadge]="openWorklistCount"
+      [matBadgeHidden]="!isWorklistActive()"
+      matBadgeColor="warn"
+      aria-hidden="false"
+    >
+      {{ isNotificationActive() ? "assignment_active" : "assignment" }}
+    </mat-icon>
+  </button>
+  <!-- TICKLER COUNT  -->
   <button
     mat-icon-button
     matTooltip="Go to Tickler Info"
     (click)="
-          onLinkClick($event, {
-            message: 'Loading Dashboard: Tickler Info..',
-            route: '/dashboard'
-          })
-        "
+      onLinkClick($event, {
+        message: 'Loading Dashboard: Tickler Info..',
+        route: '/dashboard'
+      })
+    "
     [disabled]="!isNotificationActive()"
     [ngStyle]="{
       color: isNotificationActive() ? '#00FF7F' : 'white'
@@ -46,11 +79,7 @@
       matBadgeColor="warn"
       aria-hidden="false"
     >
-      {{
-        isNotificationActive()
-          ? "notifications_active"
-          : "notifications"
-      }}
+      {{ isNotificationActive() ? "notifications_active" : "notifications" }}
     </mat-icon>
   </button>
   <!-- <button
@@ -97,7 +126,8 @@
           })
         "
       >
-        <mat-icon>dashboard</mat-icon><span style="font-size:medium; font-weight: 500;">Dashboard</span>
+        <mat-icon>dashboard</mat-icon
+        ><span style="font-size: medium; font-weight: 500">Dashboard</span>
       </mat-list-item>
 
       <mat-expansion-panel
@@ -106,7 +136,10 @@
         [disabled]="!appComService.isLoggedIn"
       >
         <mat-expansion-panel-header>
-          <mat-icon>business</mat-icon><span style="font-size: medium; font-weight: 500;">Administration</span>
+          <mat-icon>business</mat-icon
+          ><span style="font-size: medium; font-weight: 500"
+            >Administration</span
+          >
         </mat-expansion-panel-header>
         <mat-nav-list>
           <a
@@ -261,7 +294,8 @@
         [disabled]="!isLoggedIn"
       >
         <mat-expansion-panel-header>
-          <mat-icon>group</mat-icon><span style="font-size: medium; font-weight: 500;">Team Members</span>
+          <mat-icon>group</mat-icon
+          ><span style="font-size: medium; font-weight: 500">Team Members</span>
         </mat-expansion-panel-header>
         <mat-nav-list>
           <a
@@ -274,7 +308,8 @@
               })
             "
           >
-            <mat-icon>person_add</mat-icon><span style="font-size: medium; font-weight: 500;">Add Member</span>
+            <mat-icon>person_add</mat-icon
+            ><span style="font-size: medium; font-weight: 500">Add Member</span>
           </a>
           <a
             mat-list-item
@@ -286,7 +321,10 @@
               })
             "
           >
-            <mat-icon>search</mat-icon><span style="font-size: medium; font-weight: 500;">Search Members</span>
+            <mat-icon>search</mat-icon
+            ><span style="font-size: medium; font-weight: 500"
+              >Search Members</span
+            >
           </a>
         </mat-nav-list>
       </mat-expansion-panel>
@@ -302,15 +340,13 @@
         "
       >
         <mat-icon>list_alt</mat-icon>
-        <span style="font-size: medium; font-weight: 500;">
-          Work Lists
-        </span>
+        <span style="font-size: medium; font-weight: 500"> Work Lists </span>
       </mat-list-item>
 
       <mat-list-item [disabled]="!isLoggedIn">
         <a href="https://omsbi/Reports/browse/Licensing" target="_blank">
           <mat-icon>library_books</mat-icon>
-          <span style="font-size: medium; font-weight: 500;">Reports</span>
+          <span style="font-size: medium; font-weight: 500">Reports</span>
         </a>
       </mat-list-item>
     </mat-nav-list>
@@ -324,7 +360,9 @@
     <!-- <p>isLoggedIn: {{ isLoggedIn }}</p>
     <p>isImpersonationEnabled: {{ configService.config.isImpersonationEnabled }}</p> -->
     <br />
-    <app-impersonation *ngIf="isLoggedIn && configService.config.isImpersonationEnabled"></app-impersonation>
+    <app-impersonation
+      *ngIf="isLoggedIn && configService.config.isImpersonationEnabled"
+    ></app-impersonation>
   </mat-sidenav>
 
   <mat-sidenav-content style="background-color: aliceblue">

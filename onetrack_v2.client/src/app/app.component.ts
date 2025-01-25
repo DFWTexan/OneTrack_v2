@@ -41,6 +41,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   branchCodes: any[] = [];
   licenseTechs: any[] = [{ value: null, label: 'Loading...' }];
   impesonatorRole: string | null = null;
+  openWorklistCount = 0;
   openTicklerCount = 0;
   isDevLoginEnabled = null;
   isLoggedIn: boolean | null = null;
@@ -310,6 +311,19 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
 
   isBadgeVisible(): boolean {
     if (this.openTicklerCount > 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  isWorklistActive(): boolean {
+    if (
+      this.openWorklistCount > 0 &&
+      this.userAcctInfoDataService.userAcctInfo.licenseTechID !== null &&
+      this.userAcctInfoDataService.userAcctInfo.licenseTechID !== 0 &&
+      this.userAcctInfoDataService.userAcctInfo.licenseTechID !== undefined
+    ) {
       return true;
     } else {
       return false;
