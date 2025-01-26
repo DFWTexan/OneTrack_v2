@@ -49,7 +49,7 @@
   <mat-divider></mat-divider>
   <div class="row" *ngIf="worklistData.length == 0">
     <div class="col d-flex justify-content-center mt-5">
-      <h3>No data found</h3>
+      <h3>No Data Found</h3>
     </div>
   </div>
   <div class="row" *ngIf="worklistData.length > 0">
@@ -70,7 +70,13 @@
           <tr
             *ngFor="let row of worklistData.slice(1); let i = index"
             [class.selected]="selectedRowIndex === i"
-            (click)="selectRow($event, row.workListData.split('|')[2])"
+            (click)="
+              selectRow(
+                $event,
+                row.workListData.split('|')[2],
+                row.workListData.split('|')[3]
+              )
+            "
           >
             <td>
               <input

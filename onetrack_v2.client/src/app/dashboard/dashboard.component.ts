@@ -9,9 +9,11 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { interval, Subscription, switchMap } from 'rxjs';
 
 import {
+  AgentComService,
   AgentDataService,
   AppComService,
   DashboardDataService,
+  EmployeeDataService,
   ErrorMessageService,
   // DropdownDataService,
   LicIncentiveInfoDataService,
@@ -22,7 +24,12 @@ import {
   UserAcctInfoDataService,
   WorkListDataService,
 } from '../_services';
-import { AuditModifyBy, StockTickler, TicklerInfo, UserAcctInfo } from '../_Models';
+import {
+  AuditModifyBy,
+  StockTickler,
+  TicklerInfo,
+  UserAcctInfo,
+} from '../_Models';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent, InfoDialogComponent } from '../_components';
 import { Router } from '@angular/router';
@@ -78,7 +85,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   adBankerImportStatus: string = 'All';
   adBankerImportStatuses: string[] = ['All', 'Success', 'Failed'];
 
-  modifiedBy: AuditModifyBy[] = [{modifiedBy: null, fullName: 'Loading...'}];
+  modifiedBy: AuditModifyBy[] = [{ modifiedBy: null, fullName: 'Loading...' }];
   modifiedBySelected: string = 'Select Tech';
   startDate: string = new Date(new Date().setDate(new Date().getDate()))
     .toISOString()
@@ -105,6 +112,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     protected modalService: ModalService,
     private cdr: ChangeDetectorRef,
     private router: Router,
+    public agentComService: AgentComService,
+    public employeeDataService: EmployeeDataService,
     public userAcctInfoDataService: UserAcctInfoDataService
   ) {
     this.selectedDate = null;
@@ -160,7 +169,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.ticklerMgmtDataService
         .fetchLicenseTech(0, null)
         .subscribe((licenseTechItems) => {
-
           this.licenseTechItems = licenseTechItems;
         })
     );
@@ -185,7 +193,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.dashboardDataService
         .fetchAuditModifiedBy(this.isTechActive)
         .subscribe((modifiedBy) => {
-          this.modifiedBy = [{modifiedBy: null, fullName: 'Select Tech'}, ...modifiedBy];
+          this.modifiedBy = [
+            { modifiedBy: null, fullName: 'Select Tech' },
+            ...modifiedBy,
+          ];
         })
     );
 
@@ -218,26 +229,49 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   // WORKLIST
-  selectRow(event: MouseEvent, rowDataEmployeeID: string) {
-    if(this.selectedWorkListName === 'In Process Status') return;
-    
+  selectRow(
+    event: MouseEvent,
+    rowDataEmployeeID: string,
+    rowDataTmNumberID: string
+  ) {
     event.preventDefault();
 
-    const dialogRef = this.dialog.open(InfoDialogComponent, {
-      data: { message: 'Loading Agent Info..' },
-    });
+    if (this.selectedWorkListName === 'In Process Status') {
+      rowDataTmNumberID = rowDataTmNumberID.replace(/^T/, '');
 
-    // Delay the execution of the blocking operation
-    setTimeout(() => {
-      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-        this.router.navigate([
-          '../../team/agent-info',
-          rowDataEmployeeID,
-          'tm-info-mgmt',
-        ]);
+      this.employeeDataService
+        .fetchEmployeeByTmNumber(rowDataTmNumberID.trim())
+        .subscribe((response) => {
+          this.agentComService.updateShowLicenseMgmt(false);
+          if (response === null) {
+            alert('Employee not found');
+          } else {
+            this.router.navigate([
+              '../../team/agent-info',
+              response.employeeId,
+              'tm-info-mgmt',
+            ]);
+          }
+        });
+    } else {
+      const dialogRef = this.dialog.open(InfoDialogComponent, {
+        data: { message: 'Loading Agent Info..' },
       });
-      dialogRef.close();
-    }, 100);
+
+      // Delay the execution of the blocking operation
+      setTimeout(() => {
+        this.router
+          .navigateByUrl('/', { skipLocationChange: true })
+          .then(() => {
+            this.router.navigate([
+              '../../team/agent-info',
+              rowDataEmployeeID,
+              'tm-info-mgmt',
+            ]);
+          });
+        dialogRef.close();
+      }, 100);
+    }
   }
   fetchWorkListData(): void {
     this.subscriptions.add(
@@ -660,12 +694,14 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       this.dashboardDataService
         .fetchAuditModifiedBy(value)
         .subscribe((modifiedBy) => {
-          this.modifiedBy = [{modifiedBy: null, fullName: 'Select Tech'}, ...modifiedBy];
-        }
-      )
+          this.modifiedBy = [
+            { modifiedBy: null, fullName: 'Select Tech' },
+            ...modifiedBy,
+          ];
+        })
     );
   }
-  
+
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }

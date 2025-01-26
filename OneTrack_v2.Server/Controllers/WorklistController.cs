@@ -23,5 +23,13 @@ namespace OneTrak_v2.Server.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpGet]
+        public async Task<ActionResult> GetWorklistDataByLicenseTech(string licenseTech)
+        {
+            var result = await Task.Run(() => _worklistService.GetWorklistData(licenseTech));
+
+            return StatusCode(result.StatusCode, result);
+        }
     }
 }

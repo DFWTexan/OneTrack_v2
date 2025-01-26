@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import {
+  AgentComService,
   AgentDataService,
+  EmployeeDataService,
   ErrorMessageService,
   MiscDataService,
   UserAcctInfoDataService,
@@ -45,6 +47,8 @@ export class WorkListComponent implements OnInit, OnDestroy {
     public miscDataService: MiscDataService,
     public dialog: MatDialog,
     private router: Router,
+    public agentComService: AgentComService,
+    public employeeDataService: EmployeeDataService,
     public userAcctInfoDataService: UserAcctInfoDataService
   ) {
     // this.selectedLicenseTech = null;
@@ -96,24 +100,49 @@ export class WorkListComponent implements OnInit, OnDestroy {
     this.fetchWorkListData();
   }
 
-  selectRow(event: MouseEvent, rowDataEmployeeID: string) {
+  selectRow(
+    event: MouseEvent,
+    rowDataEmployeeID: string,
+    rowDataTmNumberID: string
+  ) {
     event.preventDefault();
 
-    const dialogRef = this.dialog.open(InfoDialogComponent, {
-      data: { message: 'Loading Agent Info..' },
-    });
+    if (this.selectedWorkListName === 'In Process Status') {
+      rowDataTmNumberID = rowDataTmNumberID.replace(/^T/, '');
 
-    // Delay the execution of the blocking operation
-    setTimeout(() => {
-      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-        this.router.navigate([
-          '../../team/agent-info',
-          rowDataEmployeeID,
-          'tm-info-mgmt',
-        ]);
+      this.employeeDataService
+        .fetchEmployeeByTmNumber(rowDataTmNumberID.trim())
+        .subscribe((response) => {
+          this.agentComService.updateShowLicenseMgmt(false);
+          if (response === null) {
+            alert('Employee not found');
+          } else {
+            this.router.navigate([
+              '../../team/agent-info',
+              response.employeeId,
+              'tm-info-mgmt',
+            ]);
+          }
+        });
+    } else {
+      const dialogRef = this.dialog.open(InfoDialogComponent, {
+        data: { message: 'Loading Agent Info..' },
       });
-      dialogRef.close();
-    }, 100);
+
+      // Delay the execution of the blocking operation
+      setTimeout(() => {
+        this.router
+          .navigateByUrl('/', { skipLocationChange: true })
+          .then(() => {
+            this.router.navigate([
+              '../../team/agent-info',
+              rowDataEmployeeID,
+              'tm-info-mgmt',
+            ]);
+          });
+        dialogRef.close();
+      }, 100);
+    }
   }
 
   onSubmit(): void {
@@ -168,8 +197,7 @@ export class WorkListComponent implements OnInit, OnDestroy {
                       );
                     }
                   },
-                }
-              )
+                })
             );
           } else {
             // Uncheck the checkbox if the user selects "No"
