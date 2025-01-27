@@ -27,7 +27,7 @@ namespace OneTrak_v2.Server.Controllers
         [HttpGet]
         public async Task<ActionResult> GetWorklistDataByLicenseTech(string licenseTech)
         {
-            var result = await Task.Run(() => _worklistService.GetWorklistData(licenseTech));
+            var result = await Task.Run(() => _worklistService.GetWorklistDataByLicenseTech(licenseTech));
 
             return StatusCode(result.StatusCode, result);
         }

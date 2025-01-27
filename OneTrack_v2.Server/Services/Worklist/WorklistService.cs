@@ -76,42 +76,53 @@ namespace OneTrak_v2.Services
             try
             {
 
-                var sql = @"
-                        SELECT DISTINCT 
-                            'WorklistDataID|CreateDate|' + FieldList as WorkListData 
-                        FROM dbo.WorkList 
-                        INNER JOIN dbo.WorkListData ON WorkList.WorkListName = WorkListData.WorkListName
-	                    WHERE WorkList.IsActive = 1
-	                        AND ProcessDate IS NULL
-	                        AND LicenseTech = @LicenseTech
+                //var sql = @"
+                //        SELECT DISTINCT 
+                //            'WorklistDataID|CreateDate|' + FieldList as WorkListData 
+                //        FROM dbo.WorkList 
+                //        INNER JOIN dbo.WorkListData ON WorkList.WorkListName = WorkListData.WorkListName
+                //     WHERE WorkList.IsActive = 1
+                //         AND ProcessDate IS NULL
+                //         AND LicenseTech = @LicenseTech
 
-	                    Union all
+                //     Union all
 
-	                    SELECT 
-                            CONVERT(VARCHAR,WorkListDataID) + '|' 
-	                        + REPLACE(CONVERT(VARCHAR(10), CreateDate, 111), '/', '-')  
-	                        + '|' + WorkListData as WorklistData 
-	                    FROM dbo.WorkList 
-                        INNER JOIN dbo.WorkListData ON WorkList.WorkListName = WorkListData.WorkListName
-	                    WHERE WorkList.IsActive = 1
-	                        AND ProcessDate IS NULL
-	                        AND LicenseTech = @LicenseTech
-	                        AND CONVERT(VARCHAR,WorkListDataID) + '|' 
-	                            + REPLACE(CONVERT(VARCHAR(10), CreateDate, 111), '/', '-')  
-	                            + '|' + WorkListData IS NOT NULL ";
+                //     SELECT 
+                //            CONVERT(VARCHAR,WorkListDataID) + '|' 
+                //         + REPLACE(CONVERT(VARCHAR(10), CreateDate, 111), '/', '-')  
+                //         + '|' + WorkListData as WorklistData 
+                //     FROM dbo.WorkList 
+                //        INNER JOIN dbo.WorkListData ON WorkList.WorkListName = WorkListData.WorkListName
+                //     WHERE WorkList.IsActive = 1
+                //         AND ProcessDate IS NULL
+                //         AND LicenseTech = @LicenseTech
+                //         AND CONVERT(VARCHAR,WorkListDataID) + '|' 
+                //             + REPLACE(CONVERT(VARCHAR(10), CreateDate, 111), '/', '-')  
+                //             + '|' + WorkListData IS NOT NULL ";
 
-                var parameters = new[]
+                //var parameters = new[]
+                //            {
+                //                new SqlParameter("@LicenseTech", vLicenseTech)
+                //            };
+
+                //var queryWorklistDataResults = _db.OputWorkListDataItems
+                //                            .FromSqlRaw(sql, parameters)
+                //                            .AsNoTracking()
+                //                            .ToList();
+                var query = _db.WorkListData
+                            .Where(w => w.LicenseTech == vLicenseTech && w.ProcessDate == null)
+                            .Select(w => new
                             {
-                                new SqlParameter("@LicenseTech", vLicenseTech)
-                            };
-
-                var queryWorklistDataResults = _db.OputWorkListDataItems
-                                            .FromSqlRaw(sql, parameters)
-                                            .AsNoTracking()
-                                            .ToList();
+                                w.WorkListDataId,
+                                w.WorkListName,
+                                w.CreateDate,
+                                w.WorkListData,
+                                w.LicenseTech
+                            })
+                            .ToList();
 
                 result.Success = true;
-                result.ObjData = queryWorklistDataResults;
+                result.ObjData = query;
                 result.StatusCode = 200;
 
                 return result;
