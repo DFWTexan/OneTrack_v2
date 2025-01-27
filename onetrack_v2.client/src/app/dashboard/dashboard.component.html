@@ -128,7 +128,14 @@
       <div class="row" *ngIf="techWorklistData.length > 0">
         <div class="col" style="max-height: 500px; overflow-y: auto">
           <table class="table selected-row">
-            <thead style="position: sticky; top: 0; background-color: whitesmoke; z-index: 1;">
+            <thead
+              style="
+                position: sticky;
+                top: 0;
+                background-color: whitesmoke;
+                z-index: 1;
+              "
+            >
               <tr>
                 <th scope="col">List Name</th>
                 <th scope="col">Create Date</th>
@@ -142,13 +149,13 @@
                 *ngFor="let data of techWorklistData; let i = index"
                 [class.selected]="selectedRowIndex === i"
                 (click)="
-                    selectRow(
-                      $event,
-                      data.workListName,
-                      data.workListData.split('|')[0],
-                      data.workListData.split('|')[1]
-                    )
-                  "
+                  selectRow(
+                    $event,
+                    data.workListName,
+                    data.workListData.split('|')[0],
+                    data.workListData.split('|')[1]
+                  )
+                "
               >
                 <td class="align-middle">
                   {{ data.workListName }}
@@ -159,6 +166,10 @@
                 <td class="align-middle">
                   <!-- {{ data.agentName }} -->
                   {{ getWorkListDataField(data.workListData, 4) }}
+                  <!-- {{ getWorkListDataField(data.workListData, 9) }} -->
+                  <span class="ms-2" *ngIf="data.workListName === 'In Process Status'">
+                    ( {{ getWorkListDataField(data.workListData, 9) }} )
+                  </span>
                 </td>
                 <td class="align-middle">
                   {{ data.licenseTech }}
@@ -243,15 +254,24 @@
       >
         No records found
       </div>
-      <div class="table-container" style="max-height: 500px; overflow-y: auto;">
+      <div class="table-container" style="max-height: 500px; overflow-y: auto">
         <table class="table" *ngIf="ticklerInfoItems.length > 0">
-          <thead style="position: sticky; top: 0; background-color: whitesmoke; z-index: 1;">
+          <thead
+            style="
+              position: sticky;
+              top: 0;
+              background-color: whitesmoke;
+              z-index: 1;
+            "
+          >
             <tr>
               <th scope="col">&nbsp;</th>
               <th scope="col">Due Date</th>
               <th scope="col">Type</th>
               <th scope="col">Description</th>
-              <th scope="col" class="text-center" style="width: 10rem">ACTION</th>
+              <th scope="col" class="text-center" style="width: 10rem">
+                ACTION
+              </th>
             </tr>
           </thead>
           <tbody style="font-size: smaller">
@@ -262,7 +282,9 @@
                   title="Goto Agent Info"
                   (click)="onGotoAgentInfo(item.employeeId)"
                 >
-                  <span class="material-symbols-outlined">quick_reference_all</span>
+                  <span class="material-symbols-outlined"
+                    >quick_reference_all</span
+                  >
                 </button>
               </td>
               <td
@@ -290,7 +312,9 @@
                 {{ item.message }}
               </td>
               <td class="align-middle">
-                <div class="d-flex align-middle justify-content-between mb-3 me-4">
+                <div
+                  class="d-flex align-middle justify-content-between mb-3 me-4"
+                >
                   <button
                     class="icon-close-button me-5"
                     (click)="onCloseTicklerItem(item)"
@@ -422,10 +446,21 @@
       >
         No records found
       </div>
-      <div class="row" *ngIf="adBankerData.length !== 0" style="max-height: 500px; overflow-y: auto;">
+      <div
+        class="row"
+        *ngIf="adBankerData.length !== 0"
+        style="max-height: 500px; overflow-y: auto"
+      >
         <div class="col mt-3">
           <table class="table selected-row">
-            <thead style="position: sticky; top: 0; background-color: whitesmoke; z-index: 1;">
+            <thead
+              style="
+                position: sticky;
+                top: 0;
+                background-color: whitesmoke;
+                z-index: 1;
+              "
+            >
               <tr>
                 <th scope="col">Member #</th>
                 <th scope="col">State</th>
