@@ -22,12 +22,12 @@ import {
   ErrorMessageService,
   LicIncentiveInfoDataService,
   MiscDataService,
+  ModalService,
   TicklerMgmtDataService,
   UserAcctInfoDataService,
 } from './_services';
 import { LicenseTech, UserAcctInfo } from './_Models';
 import { InfoDialogComponent } from './_components';
-
 
 @Injectable()
 @Component({
@@ -60,6 +60,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     public ticklerMgmtDataService: TicklerMgmtDataService,
     public dialog: MatDialog,
     private router: Router,
+    protected modalService: ModalService,
     public configService: ConfigService,
     private cdr: ChangeDetectorRef,
     public userAcctInfoDataService: UserAcctInfoDataService
@@ -361,6 +362,56 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     setTimeout(() => {
       dialogRef.close();
     }, 200);
+  }
+
+  isRouteActive(route: string): boolean {
+    return this.router.url === route;
+  }
+
+  onTechWrkListNotificationClick(event: Event, vObject: any) {
+    event.preventDefault();
+
+    if (this.isRouteActive(vObject.route)) {
+      console.log('The route is already active.');
+      return;
+    }
+
+    this.modalService.open('modal-tech-work-list');
+
+    // const dialogRef = this.dialog.open(InfoDialogComponent, {
+    //   data: { message: vObject.message },
+    // });
+
+    // // Delay the execution of the blocking operation
+    // setTimeout(() => {
+    //   this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+    //     this.router.navigate([vObject.route]);
+    //   });
+    //   dialogRef.close();
+    // }, 100);
+  }
+
+  onTicklerNotificationClick(event: Event, vObject: any) {
+    event.preventDefault();
+
+    if (this.isRouteActive(vObject.route)) {
+      console.log('The route is already active.');
+      return;
+    }
+
+    this.modalService.open('modal-tech-tickler-items');
+
+    // const dialogRef = this.dialog.open(InfoDialogComponent, {
+    //   data: { message: vObject.message },
+    // });
+
+    // // Delay the execution of the blocking operation
+    // setTimeout(() => {
+    //   this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+    //     this.router.navigate([vObject.route]);
+    //   });
+    //   dialogRef.close();
+    // }, 100);
   }
 
   onLinkClick(event: Event, vObject: any) {

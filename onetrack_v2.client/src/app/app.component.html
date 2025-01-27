@@ -35,7 +35,7 @@
     mat-icon-button
     matTooltip="Go Worklist Info"
     (click)="
-      onLinkClick($event, {
+      onTechWrkListNotificationClick($event, {
         message: 'Loading Dashboard: Worklist Info..',
         route: '/dashboard'
       })
@@ -62,7 +62,7 @@
     mat-icon-button
     matTooltip="Go to Tickler Info"
     (click)="
-      onLinkClick($event, {
+      onTicklerNotificationClick($event, {
         message: 'Loading Dashboard: Tickler Info..',
         route: '/dashboard'
       })
@@ -377,3 +377,45 @@
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
+
+<!-- Modal: TECH-WORK-LIST -->
+<modal id="modal-tech-work-list">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      Worklist - <strong>TECH</strong>
+    </h1>
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-tech-worklist></app-tech-worklist>
+        <!-- <app-insert-incentive-license
+          [employeeID]="agentInfo.employeeID"
+          [employmentID]="agentInfo.employmentID"
+          [branchState]="workState"
+        ></app-insert-incentive-license> -->
+      </div>
+    </div>
+  </div>
+</modal>
+
+<!-- Modal: TECH-TICKLER-ITEMS -->
+<modal id="modal-tech-tickler-items">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      Tickler Items - <strong>TECH</strong>
+    </h1>
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-tech-tickler-items></app-tech-tickler-items>
+        <!-- <app-insert-incentive-license
+          [employeeID]="agentInfo.employeeID"
+          [employmentID]="agentInfo.employmentID"
+          [branchState]="workState"
+        ></app-insert-incentive-license> -->
+      </div>
+    </div>
+  </div>
+</modal>

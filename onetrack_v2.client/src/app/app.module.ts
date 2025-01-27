@@ -30,6 +30,8 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { APP_INITIALIZER } from '@angular/core';
 import { QuickFindComponent } from './_components/quick-find/quick-find.component';
 import { ImpersonationComponent } from './_components/impersonation/impersonation.component';
+import { TechWorklistComponent } from './_appModals/tech-worklist/tech-worklist.component';
+import { TechTicklerItemsComponent } from './_appModals/tech-tickler-items/tech-tickler-items.component';
 
 export function initializeApp(configService: ConfigService) {
   return () => configService.loadConfig();
@@ -45,6 +47,8 @@ export function initializeApp(configService: ConfigService) {
     LoginComponent,
     QuickFindComponent,
     ImpersonationComponent,
+    TechWorklistComponent,
+    TechTicklerItemsComponent,
   ],
   imports: [
     AppRoutingModule,
