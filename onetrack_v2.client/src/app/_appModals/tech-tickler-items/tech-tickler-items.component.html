@@ -1,60 +1,109 @@
 <div class="container app-modal-container">
-    <div class="row">
-      <div class="col" style="max-height: 500px; overflow-y: auto">
-        <!-- <table class="table w-100">
-          <thead>
-            <tr style="background-color: whitesmoke">
-              <th scope="col" style="width: 15rem">Worklist ID</th>
-              <th scope="col">Worklist Name</th>
-              <th scope="col">Create Date</th>
-              <th scope="col">License Texh</th>
-              <th scope="col" style="width: 8rem">ACTION</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let item of worklistItems">
-              <td class="align-middle">
-                {{ item.workListDataID || "N/A" }}
-              </td>
-              <td class="align-middle">
-                {{ item.workListName || "N/A" }}
-              </td>
-              <td class="align-middle">
-                {{ item.createDate | date : "MM/dd/yyyy" }}
-              </td>
-              <td class="align-middle">
-                {{ item.licenseTech || "N/A" }}
-              </td>
-  
-              <td class="align-middle">
-                <div
-                  class="d-flex align-middle justify-content-between mb-3 me-4"
-                >
-                  <button
-                      class="icon-close-button me-5"
-                      (click)="onCloseWorklistItem(item)"
-                      title="Close Worklist Item"
-                    >
-                      <span class="material-symbols-outlined"> close </span>
-                    </button>
-                </div>
-              </td>
-            </tr>
-          </tbody>
-        </table> -->
-      </div>
-    </div>
-    <mat-divider></mat-divider>
-    <div class="row mt-4">
-      <div class="col d-flex justify-content-end">
-        <button
-          type="button"
-          class="btn btn-secondary cancel-button me-3"
-          (click)="forceCloseModal()"
+  <div class="row">
+    <div class="table-container" style="max-height: 500px; overflow-y: auto">
+      <table class="table">
+        <thead
+          style="
+            position: sticky;
+            top: 0;
+            background-color: whitesmoke;
+            z-index: 1;
+          "
         >
-          Close
-        </button>
-      </div>
+          <tr>
+            <th scope="col">&nbsp;</th>
+            <th scope="col">Due Date</th>
+            <th scope="col">Type</th>
+            <th scope="col">Description</th>
+            <th scope="col" class="text-center" style="width: 10rem">ACTION</th>
+          </tr>
+        </thead>
+        <tbody style="font-size: smaller">
+          <tr *ngFor="let item of techTicklerItems">
+            <td class="align-middle">
+              <button
+                class="icon-edit-delete-button"
+                title="Goto Agent Info"
+                (click)="onGotoAgentInfo(item.employeeId)"
+              >
+                <span class="material-symbols-outlined"
+                  >quick_reference_all</span
+                >
+              </button>
+            </td>
+            <td
+              class="align-middle"
+              [ngStyle]="{
+                color: isOverdue(item.ticklerDueDate) ? '#FF6347' : 'inherit'
+              }"
+            >
+              {{ item.ticklerDueDate | date : "MM/dd/yyyy" }}
+            </td>
+            <td
+              class="align-middle"
+              [ngStyle]="{
+                color: isOverdue(item.ticklerDueDate) ? '#FF6347' : 'inherit'
+              }"
+            >
+              {{ item.lkpValue }}
+            </td>
+            <td
+              class="align-middle"
+              [ngStyle]="{
+                color: isOverdue(item.ticklerDueDate) ? '#FF6347' : 'inherit'
+              }"
+            >
+              {{ item.message }}
+            </td>
+            <td class="align-middle">
+              <div
+                class="d-flex align-middle justify-content-between mb-3 me-4"
+              >
+                <button
+                  class="icon-close-button me-5"
+                  (click)="onCloseTicklerItem(item)"
+                  title="Close Tickler"
+                >
+                  <span class="material-symbols-outlined">close</span>
+                </button>
+                <button
+                  class="icon-edit-delete-button"
+                  (click)="
+                    ticklerMgmtDataService.storeTicklerInfo('EDIT', item);
+                    modalService.open('modal-edit-tickler')
+                  "
+                  title="Edit Tickler"
+                >
+                  <span class="material-symbols-outlined">edit</span>
+                </button>
+                <button
+                  class="icon-edit-delete-button"
+                  (click)="onDeleteTicklerItem(item)"
+                >
+                  <span
+                    class="material-symbols-outlined"
+                    title="Delete Tickler"
+                  >
+                    delete
+                  </span>
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-  
+  <mat-divider></mat-divider>
+  <div class="row mt-4">
+    <div class="col d-flex justify-content-end">
+      <button
+        type="button"
+        class="btn btn-secondary cancel-button me-3"
+        (click)="forceCloseModal()"
+      >
+        Close
+      </button>
+    </div>
+  </div>
+</div>
