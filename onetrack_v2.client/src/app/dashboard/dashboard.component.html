@@ -58,7 +58,7 @@
         </div>
       </div>
       <mat-divider></mat-divider>
-      <div class="row" *ngIf="techWorklistData.length == 0">
+      <div class="row" *ngIf="filteredTechWorklistData.length == 0">
         <div class="col d-flex justify-content-center mt-5">
           <h3>No data found</h3>
         </div>
@@ -125,7 +125,7 @@
           </div>
         </div>
       </div> -->
-      <div class="row" *ngIf="techWorklistData.length > 0">
+      <div class="row" *ngIf="filteredTechWorklistData.length > 0">
         <div class="col" style="max-height: 500px; overflow-y: auto">
           <table class="table selected-row">
             <thead
@@ -146,7 +146,7 @@
             </thead>
             <tbody style="font-size: smaller">
               <tr
-                *ngFor="let data of techWorklistData; let i = index"
+                *ngFor="let data of filteredTechWorklistData; let i = index"
                 [class.selected]="selectedRowIndex === i"
                 (click)="
                   selectRow(

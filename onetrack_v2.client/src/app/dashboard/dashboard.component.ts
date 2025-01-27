@@ -60,6 +60,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   adBankerImportInfo: any = {};
   worklistData: any[] = [];
   techWorklistData: TechWorklistData[] = [];
+  filteredTechWorklistData: TechWorklistData[] = [];
   worklistNames: string[] = ['Loading...'];
   defaultWorkListName: string = 'Loading...';
 
@@ -298,6 +299,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         .fetchTechWorklistData(this.userAcctInfoDataService.userAcctInfo.soeid)
         .subscribe((techWrklistData) => {
           this.techWorklistData = techWrklistData;
+          this.filteredTechWorklistData = this.techWorklistData;
           this.cdr.detectChanges();
         })
     );
@@ -311,7 +313,14 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     const value = target.value;
 
     this.selectedWorkListName = value;
-    this.fetchWorkListData();
+    // this.fetchWorkListData();
+    if (value === 'ALL') {
+      this.filteredTechWorklistData = this.techWorklistData;
+    } else {
+      this.filteredTechWorklistData = this.techWorklistData.filter(
+        (data) => data.workListName === value
+      );
+    }
   }
   onChangeImportDate(event: any) {
     const target = event.target as HTMLInputElement;
