@@ -126,7 +126,7 @@
         </div>
       </div> -->
       <div class="row" *ngIf="techWorklistData.length > 0">
-        <div class="col">
+        <div class="col" style="max-height: 500px; overflow-y: auto">
           <table class="table selected-row">
             <thead>
               <tr style="background-color: whitesmoke; font-size: smaller">
@@ -155,7 +155,7 @@
                 <td class="align-middle">
                   {{ data.licenseTech }}
                 </td>
-                <td class="align-middle"  style="width: 10rem;">
+                <td class="align-middle" style="width: 10rem">
                   <div class="d-flex align-middle justify-content-between mb-3">
                     <button
                       class="icon-close-button me-5"
@@ -235,90 +235,94 @@
       >
         No records found
       </div>
-      <table class="table" *ngIf="ticklerInfoItems.length > 0">
-        <thead>
-          <tr style="background-color: whitesmoke">
-            <th scope="col">&nbsp;</th>
-            <th scope="col">Due Date</th>
-            <th scope="col">Type</th>
-            <th scope="col">Description</th>
-            <th scope="col" class="text-center" style="width: 10rem">ACTION</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of ticklerInfoItems">
-            <td class="align-middle">
-              <button
-                class="icon-edit-delete-button"
-                title="Goto Agent Info"
-                (click)="onGotoAgentInfo(item.employeeId)"
-              >
-                <span class="material-symbols-outlined">
-                  quick_reference_all
-                </span>
-              </button>
-            </td>
-            <td
-              class="align-middle"
-              [ngStyle]="{
-                color: isOverdue(item.ticklerDueDate) ? '#FF6347' : 'inherit'
-              }"
-            >
-              {{ item.ticklerDueDate | date : "MM/dd/yyyy" }}
-            </td>
-            <td
-              class="align-middle"
-              [ngStyle]="{
-                color: isOverdue(item.ticklerDueDate) ? '#FF6347' : 'inherit'
-              }"
-            >
-              {{ item.lkpValue }}
-            </td>
-            <td
-              class="align-middle"
-              [ngStyle]="{
-                color: isOverdue(item.ticklerDueDate) ? '#FF6347' : 'inherit'
-              }"
-            >
-              {{ item.message }}
-            </td>
-            <td class="align-middle">
-              <div
-                class="d-flex align-middle justify-content-between mb-3 me-4"
-              >
-                <button
-                  class="icon-close-button me-5"
-                  (click)="onCloseTicklerItem(item)"
-                  title="Close Tickler"
-                >
-                  <span class="material-symbols-outlined"> close </span>
-                </button>
+      <div style="max-height: 500px; overflow-y: auto">
+        <table class="table" *ngIf="ticklerInfoItems.length > 0">
+          <thead>
+            <tr style="background-color: whitesmoke">
+              <th scope="col">&nbsp;</th>
+              <th scope="col">Due Date</th>
+              <th scope="col">Type</th>
+              <th scope="col">Description</th>
+              <th scope="col" class="text-center" style="width: 10rem">
+                ACTION
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of ticklerInfoItems">
+              <td class="align-middle">
                 <button
                   class="icon-edit-delete-button"
-                  (click)="
-                    ticklerMgmtDataService.storeTicklerInfo('EDIT', item);
-                    modalService.open('modal-edit-tickler')
-                  "
-                  title="Edit Tickler"
+                  title="Goto Agent Info"
+                  (click)="onGotoAgentInfo(item.employeeId)"
                 >
-                  <span class="material-symbols-outlined"> edit </span>
-                </button>
-                <button
-                  class="icon-edit-delete-button"
-                  (click)="onDeleteTicklerItem(item)"
-                >
-                  <span
-                    class="material-symbols-outlined"
-                    title="Delete Tickler"
-                  >
-                    delete
+                  <span class="material-symbols-outlined">
+                    quick_reference_all
                   </span>
                 </button>
-              </div>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+              </td>
+              <td
+                class="align-middle"
+                [ngStyle]="{
+                  color: isOverdue(item.ticklerDueDate) ? '#FF6347' : 'inherit'
+                }"
+              >
+                {{ item.ticklerDueDate | date : "MM/dd/yyyy" }}
+              </td>
+              <td
+                class="align-middle"
+                [ngStyle]="{
+                  color: isOverdue(item.ticklerDueDate) ? '#FF6347' : 'inherit'
+                }"
+              >
+                {{ item.lkpValue }}
+              </td>
+              <td
+                class="align-middle"
+                [ngStyle]="{
+                  color: isOverdue(item.ticklerDueDate) ? '#FF6347' : 'inherit'
+                }"
+              >
+                {{ item.message }}
+              </td>
+              <td class="align-middle">
+                <div
+                  class="d-flex align-middle justify-content-between mb-3 me-4"
+                >
+                  <button
+                    class="icon-close-button me-5"
+                    (click)="onCloseTicklerItem(item)"
+                    title="Close Tickler"
+                  >
+                    <span class="material-symbols-outlined"> close </span>
+                  </button>
+                  <button
+                    class="icon-edit-delete-button"
+                    (click)="
+                      ticklerMgmtDataService.storeTicklerInfo('EDIT', item);
+                      modalService.open('modal-edit-tickler')
+                    "
+                    title="Edit Tickler"
+                  >
+                    <span class="material-symbols-outlined"> edit </span>
+                  </button>
+                  <button
+                    class="icon-edit-delete-button"
+                    (click)="onDeleteTicklerItem(item)"
+                  >
+                    <span
+                      class="material-symbols-outlined"
+                      title="Delete Tickler"
+                    >
+                      delete
+                    </span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </mat-expansion-panel>
     <!-- ADBANKER -->
     <mat-expansion-panel
@@ -416,7 +420,7 @@
       >
         No records found
       </div>
-      <div class="row" *ngIf="adBankerData.length !== 0">
+      <div class="row" *ngIf="adBankerData.length !== 0" style="max-height: 500px; overflow-y: auto;">
         <div class="col mt-3">
           <table class="table selected-row">
             <thead>
