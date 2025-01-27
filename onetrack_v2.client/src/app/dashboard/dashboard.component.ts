@@ -63,7 +63,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   worklistNames: string[] = ['Loading...'];
   defaultWorkListName: string = 'Loading...';
 
-  workListName: string = 'Agent Address Change';
+  workListName: string = 'ALL';
   licenseTech: string = 'T9999999';
   worklistdate: string = new Date().toISOString().split('T')[0];
   licenseTechs: any[] = [{ value: null, label: 'loading...' }];
@@ -149,8 +149,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
     this.subscriptions.add(
       this.miscDataService.fetchWorkListNames().subscribe((worklistNames) => {
-        this.worklistNames = worklistNames;
-        this.selectedWorkListName = worklistNames[0];
+        this.worklistNames = ['ALL', ...worklistNames];
+        // this.selectedWorkListName = 'worklistNames[0]';
+        this.selectedWorkListName = this.worklistNames[0];
       })
     );
 
@@ -293,9 +294,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   fetchTechWorkListData(): void {
     this.subscriptions.add(
       this.dashboardDataService
-        .fetchTechWorklistData(
-          this.userAcctInfoDataService.userAcctInfo.soeid
-        )
+        .fetchTechWorklistData(this.userAcctInfoDataService.userAcctInfo.soeid)
         .subscribe((techWrklistData) => {
           this.techWorklistData = techWrklistData;
           this.cdr.detectChanges();
@@ -305,7 +304,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   getWorkListDataField(workListData: string, index: number): string {
     const fields = workListData.split('|');
     return fields[index] || '';
-}
+  }
   onChangeWorkListName(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;
@@ -344,7 +343,9 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             },
             error: (error) => {
               if (error.error && error.error.errMessage) {
-                this.errorMessageService.setErrorMessage(error.error.errMessage);
+                this.errorMessageService.setErrorMessage(
+                  error.error.errMessage
+                );
               }
             },
           });
