@@ -24,6 +24,6 @@ export interface AuditLog {
     workListDataId: number;
     workListName: string | null;
     createDate: string | null;
-    workListData: string | null;
+    workListData: string;
     licenseTech: string | null;
 }

@@ -302,6 +302,10 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         })
     );
   }
+  getWorkListDataField(workListData: string, index: number): string {
+    const fields = workListData.split('|');
+    return fields[index] || '';
+}
   onChangeWorkListName(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;

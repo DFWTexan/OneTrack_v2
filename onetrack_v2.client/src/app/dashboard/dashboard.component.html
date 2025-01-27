@@ -146,20 +146,21 @@
                   {{ data.workListName }}
                 </td>
                 <td class="align-middle">
-                  {{ data.createDate | date : "MM/dd/yyyy, h:mm a" }}
+                  {{ data.createDate | date : "MM/dd/yyyy" }}
                 </td>
                 <td class="align-middle">
                   <!-- {{ data.agentName }} -->
+                  {{ getWorkListDataField(data.workListData, 4) }}
                 </td>
                 <td class="align-middle">
                   {{ data.licenseTech }}
                 </td>
-                <td class="align-middle">
+                <td class="align-middle"  style="width: 10rem;">
                   <div class="d-flex align-middle justify-content-between mb-3">
                     <button
                       class="icon-close-button me-5"
                       (click)="onCloseWorklistItem(data)"
-                      title="Close Worklist"
+                      title="Close Item"
                     >
                       <span class="material-symbols-outlined"> close </span>
                     </button>
