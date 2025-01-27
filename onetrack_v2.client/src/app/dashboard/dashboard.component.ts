@@ -299,6 +299,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         .fetchTechWorklistData(this.userAcctInfoDataService.userAcctInfo.soeid)
         .subscribe((techWrklistData) => {
           this.techWorklistData = techWrklistData;
+          this.appComService.updateTechWorklistItems(techWrklistData);
           this.filteredTechWorklistData = this.techWorklistData;
           this.cdr.detectChanges();
         })
@@ -349,7 +350,8 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
           })
           .subscribe({
             next: (response) => {
-              this.fetchWorkListData();
+              // this.fetchWorkListData();
+              this.fetchTechWorkListData();
             },
             error: (error) => {
               if (error.error && error.error.errMessage) {
@@ -370,7 +372,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         .fetchTicklerInfo(0, this.selectedLicenseTechID ?? 0, 0)
         .subscribe((ticklerInfoItems: any) => {
           this.ticklerInfoItems = ticklerInfoItems;
-
+          this.appComService.updateTechTicklerItems(ticklerInfoItems);
           this.loading = false;
         })
     );

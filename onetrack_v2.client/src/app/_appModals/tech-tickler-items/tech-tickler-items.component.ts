@@ -1,4 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
+
+import { AppComService } from '../../_services';
+import { TechWorklistData } from '../../_Models';
+
 
 @Component({
   selector: 'app-tech-tickler-items',
@@ -6,10 +11,20 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
   styleUrl: './tech-tickler-items.component.css'
 })
 export class TechTicklerItemsComponent implements OnInit, OnDestroy {
+  techTicklerItems: any[] = [];
 
-  constructor() { }
+  subscriptions: Subscription = new Subscription();
+  
+  constructor(public appComService: AppComService) { }
 
   ngOnInit(): void {
+    this.subscriptions.add(
+      this.appComService.techTicklerItemsChanged.subscribe(
+        (techTicklerItems: any[]) => {
+          this.techTicklerItems = techTicklerItems;
+        }
+      )
+    );
   }
 
   forceCloseModal() {

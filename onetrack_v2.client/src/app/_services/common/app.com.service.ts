@@ -11,6 +11,7 @@ import { environment } from '../../_environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ErrorMessageService } from '../error/error.message.service';
 import { ConfigService } from '../config/config.service';
+import { TechWorklistData } from '../../_Models';
 
 @Injectable({
   providedIn: 'root',
@@ -32,6 +33,10 @@ export class AppComService {
   isOpenTicklerInfoChanged = new Subject<boolean>();
   openTechWorklistCount = 0;
   openTechWorklistCountChanged = new Subject<number>();
+  techWorklistItems: TechWorklistData[] =[];
+  techWorklistItemsChanged = new Subject<TechWorklistData[]>();
+  techTicklerItems: any[] = [];
+  techTicklerItemsChanged = new Subject<any[]>();
 
   subscriptions: Subscription = new Subscription();
 
@@ -57,9 +62,19 @@ export class AppComService {
     this.openTicklerCountChanged.next(this.openTicklerCount);
   }
 
+  updateTechWorklistItems(techWorklistItems: TechWorklistData[]) {
+    this.techWorklistItems = techWorklistItems;
+    this.techWorklistItemsChanged.next(this.techWorklistItems);
+  }
+
   updateOpenTechWorklistCount(openTechWrkListCount: number) {
     this.openTechWorklistCount = openTechWrkListCount;
     this.openTechWorklistCountChanged.next(this.openTechWorklistCount);
+  }
+
+  updateTechTicklerItems(techTicklerItems: any[]) {
+    this.techTicklerItems = techTicklerItems;
+    this.techTicklerItemsChanged.next(this.techTicklerItems);
   }
 
   updateIsLoggedIn(isLoggedIn: boolean) {

@@ -328,26 +328,36 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   }
 
   isTechWorklistActive(): boolean {
+    const currentRoute = this.router.url;
     if (
       this.openTechWorklistCount > 0 &&
       this.userAcctInfoDataService.userAcctInfo.licenseTechID !== null &&
       this.userAcctInfoDataService.userAcctInfo.licenseTechID !== 0 &&
       this.userAcctInfoDataService.userAcctInfo.licenseTechID !== undefined
     ) {
-      return true;
+      // if (this.isRouteActive(currentRoute)) {
+      //   return false;
+      // } else {
+        return true;
+      // }
     } else {
       return false;
     }
   }
 
   isNotificationActive(): boolean {
+    const currentRoute = this.router.url;
     if (
       this.openTicklerCount > 0 &&
       this.userAcctInfoDataService.userAcctInfo.licenseTechID !== null &&
       this.userAcctInfoDataService.userAcctInfo.licenseTechID !== 0 &&
-      this.userAcctInfoDataService.userAcctInfo.licenseTechID !== undefined
+      this.userAcctInfoDataService.userAcctInfo.licenseTechID !== undefined 
     ) {
-      return true;
+      // if (this.isRouteActive(currentRoute)) {
+      //   return false;
+      // } else {
+        return true;
+      // }
     } else {
       return false;
     }
