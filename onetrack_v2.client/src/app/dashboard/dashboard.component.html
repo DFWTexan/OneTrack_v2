@@ -58,12 +58,12 @@
         </div>
       </div>
       <mat-divider></mat-divider>
-      <div class="row" *ngIf="worklistData.length == 0">
+      <div class="row" *ngIf="techWorklistData.length == 0">
         <div class="col d-flex justify-content-center mt-5">
           <h3>No data found</h3>
         </div>
       </div>
-      <div class="row" *ngIf="worklistData.length > 0">
+      <!-- <div class="row" *ngIf="worklistData.length > 0">
         <div class="col">
           <div class="table-container" style="overflow-x: auto">
             <div class="table selected-row">
@@ -123,6 +123,51 @@
               </tbody>
             </div>
           </div>
+        </div>
+      </div> -->
+      <div class="row" *ngIf="techWorklistData.length > 0">
+        <div class="col">
+          <table class="table selected-row">
+            <thead>
+              <tr style="background-color: whitesmoke; font-size: smaller">
+                <th scope="col">List Name</th>
+                <th scope="col">Create Date</th>
+                <th scope="col">Agent Name</th>
+                <th scope="col">License Tech</th>
+                <th scope="col">ACTION</th>
+              </tr>
+            </thead>
+            <tbody style="font-size: smaller">
+              <tr
+                *ngFor="let data of techWorklistData; let i = index"
+                [class.selected]="selectedRowIndex === i"
+              >
+                <td class="align-middle">
+                  {{ data.workListName }}
+                </td>
+                <td class="align-middle">
+                  {{ data.createDate | date : "MM/dd/yyyy, h:mm a" }}
+                </td>
+                <td class="align-middle">
+                  <!-- {{ data.agentName }} -->
+                </td>
+                <td class="align-middle">
+                  {{ data.licenseTech }}
+                </td>
+                <td class="align-middle">
+                  <div class="d-flex align-middle justify-content-between mb-3">
+                    <button
+                      class="icon-close-button me-5"
+                      (click)="onCloseWorklistItem(data)"
+                      title="Close Worklist"
+                    >
+                      <span class="material-symbols-outlined"> close </span>
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
         </div>
       </div>
     </mat-expansion-panel>

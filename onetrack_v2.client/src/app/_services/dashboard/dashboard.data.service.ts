@@ -4,9 +4,11 @@ import { Observable, Subject } from 'rxjs';
 import { map, switchMap } from 'rxjs/operators';
 
 import { environment } from '../../_environments/environment';
-import { AuditModifyBy, DashboardData } from '../../_Models';
+import { AuditModifyBy, DashboardData, TechWorklistData } from '../../_Models';
 import { ConfigService } from '../config/config.service';
 import { AgentDataService } from '../agent/agent.data.service';
+import { AppComService } from '../common/app.com.service';
+import { UserAcctInfoDataService } from '../userAcctInfo/userAcctInfo.data.Service';
 
 @Injectable({
   providedIn: 'root',
@@ -19,27 +21,36 @@ export class DashboardDataService {
 
   constructor(
     private http: HttpClient,
+    public appComService: AppComService,
     public configService: ConfigService,
+    private userInfoService: UserAcctInfoDataService
   ) {}
 
-  // fetchDashboardData(): Observable<DashboardData> {
-  //   return this.http
-  //     .get<{
-  //       success: boolean;
-  //       statusCode: number;
-  //       objData: any;
-  //       errMessage: string;
-  //     }>(this.apiUrl + 'GetDashboardData')
-  //     .pipe(
-  //       map((response) => {
-  //         if (response.success && response.statusCode === 200) {
-  //           return response.objData;
-  //         } else {
-  //           throw new Error(response.errMessage || 'Unknown error');
-  //         }
-  //       })
-  //     );
-  // }
+  fetchTechWorklistData(vLicenseTech: string): Observable<TechWorklistData[]> {
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.configService.config.apiUrl + 'Worklist/' + 'GetWorklistDataByLicenseTech?licenseTech=' + vLicenseTech)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            if (this.userInfoService.userAcctInfo.licenseTechID === 0) {
+              this.appComService.updateOpenTechWorklistCount(0);
+            } else {
+              this.appComService.updateOpenTechWorklistCount(
+                response.objData.length
+              );
+            }
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
 
   fetchAdBankerImportInfo(): Observable<DashboardData> {
     return this.http

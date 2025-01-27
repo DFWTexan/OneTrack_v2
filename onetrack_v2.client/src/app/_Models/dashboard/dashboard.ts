@@ -19,3 +19,11 @@ export interface AuditLog {
     modifiedBy: string | null;
     fullName: string;
   }
+
+  export interface TechWorklistData {
+    workListDataId: number;
+    workListName: string | null;
+    createDate: string | null;
+    workListData: string | null;
+    licenseTech: string | null;
+}

@@ -30,6 +30,8 @@ export class AppComService {
   openTicklerCountChanged = new Subject<number>();
   isOpenTicklerInfo = true;
   isOpenTicklerInfoChanged = new Subject<boolean>();
+  openTechWorklistCount = 0;
+  openTechWorklistCountChanged = new Subject<number>();
 
   subscriptions: Subscription = new Subscription();
 
@@ -53,6 +55,11 @@ export class AppComService {
   updateOpenTicklerCount(openTicklerCount: number) {
     this.openTicklerCount = openTicklerCount;
     this.openTicklerCountChanged.next(this.openTicklerCount);
+  }
+
+  updateOpenTechWorklistCount(openTechWrkListCount: number) {
+    this.openTechWorklistCount = openTechWrkListCount;
+    this.openTechWorklistCountChanged.next(this.openTechWorklistCount);
   }
 
   updateIsLoggedIn(isLoggedIn: boolean) {

@@ -27,6 +27,7 @@ import {
 import {
   AuditModifyBy,
   StockTickler,
+  TechWorklistData,
   TicklerInfo,
   UserAcctInfo,
 } from '../_Models';
@@ -58,6 +59,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
 
   adBankerImportInfo: any = {};
   worklistData: any[] = [];
+  techWorklistData: TechWorklistData[] = [];
   worklistNames: string[] = ['Loading...'];
   defaultWorkListName: string = 'Loading...';
 
@@ -136,6 +138,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
           if (userAcctInfo.licenseTechID) {
             this.selectedLicenseTechID = userAcctInfo.licenseTechID ?? 0;
             this.appComService.updateIsOpenTicklerInfo(true);
+            this.fetchTechWorkListData();
             this.fetchTicklerInfo();
           } else {
             this.appComService.updateIsOpenTicklerInfo(false);
@@ -287,6 +290,18 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         })
     );
   }
+  fetchTechWorkListData(): void {
+    this.subscriptions.add(
+      this.dashboardDataService
+        .fetchTechWorklistData(
+          this.userAcctInfoDataService.userAcctInfo.soeid
+        )
+        .subscribe((techWrklistData) => {
+          this.techWorklistData = techWrklistData;
+          this.cdr.detectChanges();
+        })
+    );
+  }
   onChangeWorkListName(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;
@@ -299,6 +314,38 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     const value = target.value;
     this.selectedDate = value;
     this.fetchWorkListData();
+  }
+  onCloseWorklistItem(worklistDataID: TechWorklistData): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+        title: 'Confirm Action',
+        message:
+          'You are about to CLOSE Worklist Item (' +
+          worklistDataID +
+          '). Do you want to proceed?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.dashboardDataService
+          .closeWorklistItem({
+            WorkListDataID: worklistDataID,
+            UserSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
+          })
+          .subscribe({
+            next: (response) => {
+              this.fetchWorkListData();
+            },
+            error: (error) => {
+              if (error.error && error.error.errMessage) {
+                this.errorMessageService.setErrorMessage(error.error.errMessage);
+              }
+            },
+          });
+      }
+    });
   }
 
   // TICKLER

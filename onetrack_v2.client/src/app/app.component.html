@@ -40,22 +40,23 @@
         route: '/dashboard'
       })
     "
-    [disabled]="!isWorklistActive()"
+    [disabled]="!isTechWorklistActive()"
     [ngStyle]="{
-      color: isWorklistActive() ? '#00FF7F' : 'white'
+      color: isTechWorklistActive() ? '#00FF7F' : 'white'
     }"
   >
     <!-- WORKLIST NOTIFICATIONS ICON -->
     <mat-icon
       matBadgePosition="before"
-      [matBadge]="openWorklistCount"
-      [matBadgeHidden]="!isWorklistActive()"
+      [matBadge]="openTechWorklistCount"
+      [matBadgeHidden]="!isTechWorklistActive()"
       matBadgeColor="warn"
       aria-hidden="false"
     >
       assignment
     </mat-icon>
   </button>
+
   <!-- TICKLER COUNT  -->
   <button
     mat-icon-button
