@@ -235,12 +235,17 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   // WORKLIST
   selectRow(
     event: MouseEvent,
+    worklistName: string,
     rowDataEmployeeID: string,
     rowDataTmNumberID: string
   ) {
     event.preventDefault();
 
-    if (this.selectedWorkListName === 'In Process Status') {
+// console.log('EMFTEST (Dashboard: selectRow) - rowDataEmployeeID: ', rowDataEmployeeID);
+// console.log('EMFTEST (Dashboard: selectRow) - rowDataTmNumberID: ', rowDataTmNumberID);
+// return;
+
+    if (worklistName === 'In Process Status') {
       rowDataTmNumberID = rowDataTmNumberID.replace(/^T/, '');
 
       this.employeeDataService

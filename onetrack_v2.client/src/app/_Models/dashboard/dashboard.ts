@@ -22,7 +22,7 @@ export interface AuditLog {
 
   export interface TechWorklistData {
     workListDataId: number;
-    workListName: string | null;
+    workListName: string;
     createDate: string | null;
     workListData: string;
     licenseTech: string | null;

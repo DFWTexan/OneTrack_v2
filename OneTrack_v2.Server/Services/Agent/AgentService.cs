@@ -325,7 +325,7 @@ namespace OneTrack_v2.Services
                 agent.TicklerItems = agentTicklers;
 
                 //Agent Worklist Items
-                var agentWorklist = FillWorklistItems(agent.EmployeeID);
+                var agentWorklist = FillWorklistItems(agent.GEID);
                 agent.WorklistItems = agentWorklist;
 
                 result.Success = true;
@@ -2810,22 +2810,35 @@ namespace OneTrack_v2.Services
 
             return ticklerItems;
         }
-        private List<WorklistItem> FillWorklistItems(int vEmployeeID)
+        private List<WorklistItem> FillWorklistItems(string vTmNumber)
         {
+            //var result = _db.WorkListData
+            //        .AsEnumerable() // Switch to in-memory processing
+            //        .Where(w => w.WorkListData != null &&
+            //                    w.WorkListData.Split('|').ElementAtOrDefault(1) == vTmNumber && 
+            //                    w.ProcessDate == null &&
+            //                    w.ProcessedBy == null)
+            //        .Select(w => new WorklistItem
+            //        {
+            //            WorkListDataID = w.WorkListDataId,
+            //            WorkListName = w.WorkListName,
+            //            CreateDate = w.CreateDate,
+            //            LicenseTech = w.LicenseTech
+            //        })
+            //        .ToList();
             var result = _db.WorkListData
-                    .AsEnumerable() // Switch to in-memory processing
-                    .Where(w => w.WorkListData != null &&
-                                w.WorkListData.Split('|').ElementAtOrDefault(0) == vEmployeeID.ToString() &&
-                                w.ProcessDate == null &&
-                                w.ProcessedBy == null)
-                    .Select(w => new WorklistItem
-                    {
-                        WorkListDataID = w.WorkListDataId,
-                        WorkListName = w.WorkListName,
-                        CreateDate = w.CreateDate,
-                        LicenseTech = w.LicenseTech
-                    })
-                    .ToList();
+                        .Where(w => w.WorkListData != null && w.ProcessDate == null && w.ProcessedBy == null)
+                        .AsEnumerable() // Switch to in-memory processing
+                        .Where(w => w.WorkListData.Split('|').ElementAtOrDefault(1) == vTmNumber ||
+                                    w.WorkListData.Split('|').ElementAtOrDefault(1) == "T" + vTmNumber)
+                        .Select(w => new WorklistItem
+                        {
+                            WorkListDataID = w.WorkListDataId,
+                            WorkListName = w.WorkListName,
+                            CreateDate = w.CreateDate,
+                            LicenseTech = w.LicenseTech
+                        })
+                        .ToList();
 
             return result;
         }
