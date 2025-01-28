@@ -363,8 +363,8 @@
     </p>
     <p>
       isLoggedIn: {{ isLoggedIn }}
-    </p>
-    <p>
+    </p> -->
+     <!-- <p>
       isImpersonationEnabled: {{ configService.config.isImpersonationEnabled }}
     </p>
     <p>
@@ -389,7 +389,10 @@
           configService.config.isImpersonationEnabled) ||
         (isLoggedIn &&
           configService.config.isImpersonationEnabled &&
-          userAcctInfo.isQARole)
+          userAcctInfo.isQARole) ||
+        (isLoggedIn &&
+          configService.config.isImpersonationEnabled &&
+          userAcctInfo.isSuperUser)
       "
     ></app-impersonation>
     <!-- <app-impersonation

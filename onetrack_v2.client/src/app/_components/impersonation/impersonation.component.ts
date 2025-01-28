@@ -72,12 +72,12 @@ export class ImpersonationComponent implements OnInit, OnDestroy {
     const role = (event.target as HTMLInputElement).value;
     this.impesonatorRole = role;
 
-    (this.userAcctInfo.isAdminRole = role === 'ADMIN' ? true : false),
-      (this.userAcctInfo.isTechRole = role === 'TECH' ? true : false),
-      (this.userAcctInfo.isReadRole = role === 'READ' ? true : false),
-      (this.userAcctInfo.isSuperUser =
-        role === 'DVLPER' ? true : role === null ? true : false),
-      this.userAcctInfoDataService.updateUserAcctInfo(this.userAcctInfo);
+    // (this.userAcctInfo.isAdminRole = role === 'ADMIN' ? true : false),
+    //   (this.userAcctInfo.isTechRole = role === 'TECH' ? true : false),
+    //   (this.userAcctInfo.isReadRole = role === 'READ' ? true : false),
+    //   (this.userAcctInfo.isSuperUser =
+    //     role === 'DVLPER' ? true : role === null ? true : false),
+    //   this.userAcctInfoDataService.updateUserAcctInfo(this.userAcctInfo);
   }
 
   onImpersonate() {
