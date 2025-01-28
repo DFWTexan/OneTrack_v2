@@ -110,7 +110,7 @@ namespace OneTrak_v2.Services
                 //                            .AsNoTracking()
                 //                            .ToList();
                 var query = _db.WorkListData
-                            .Where(w => w.LicenseTech == vLicenseTech && w.ProcessDate == null)
+                            .Where(w => w.LicenseTech == vLicenseTech && w.ProcessDate == null && w.WorkListData != null)
                             .Select(w => new
                             {
                                 w.WorkListDataId,

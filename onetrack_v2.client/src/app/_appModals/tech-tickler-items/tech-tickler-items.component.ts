@@ -69,6 +69,7 @@ export class TechTicklerItemsComponent implements OnInit, OnDestroy {
   }
 
   onCloseTicklerItem(ticklerInfo: TicklerInfo): void {
+    this.forceCloseModal();
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '250px',
       data: {
