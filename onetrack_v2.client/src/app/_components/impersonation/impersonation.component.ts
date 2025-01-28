@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import {
+  AppComService,
   ConfigService,
   LicIncentiveInfoDataService,
   UserAcctInfoDataService,
@@ -22,23 +23,34 @@ export class ImpersonationComponent implements OnInit, OnDestroy {
   config: any = null;
   licenseTechs: any[] = [{ value: null, label: 'Loading...' }];
   impesonatorRole: string | null = null;
+  isLoggedIn: boolean = false;
 
   private subscriptions = new Subscription();
 
   constructor(
+    public appComService: AppComService,
     public configService: ConfigService,
     public dialog: MatDialog,
     private router: Router,
     public userAcctInfoDataService: UserAcctInfoDataService,
     public licIncentiveInfoDataService: LicIncentiveInfoDataService
   ) {
-    this.licenseTechs = [ { value: null, label: 'Select' }, ...this.licIncentiveInfoDataService.licenseTeches];
+    this.licenseTechs = [
+      { value: null, label: 'Select' },
+      ...this.licIncentiveInfoDataService.licenseTeches,
+    ];
     this.userAcctInfo = this.userAcctInfoDataService.userAcctInfo;
   }
 
   ngOnInit() {
     this.configService.loadConfig();
     this.config = this.configService.getConfig();
+
+    this.subscriptions.add(
+      this.appComService.isLoggedInChanged.subscribe((isLoggedIn: boolean) => {
+        this.isLoggedIn = isLoggedIn;
+      })
+    );
 
     this.subscriptions.add(
       this.licIncentiveInfoDataService.licenseTechesChanged.subscribe(
