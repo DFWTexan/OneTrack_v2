@@ -13,6 +13,7 @@
         public bool? IsAdminRole { get; set; }
         public bool? IsTechRole { get; set; }
         public bool? IsReadRole { get; set; }
+        public bool? IsQARole { get; set; }
         public bool? IsSuperUser { get; set; }
     }
 }

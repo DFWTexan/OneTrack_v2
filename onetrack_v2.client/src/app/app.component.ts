@@ -80,7 +80,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     );
 
     if (configuration) {
-      if (configuration.isDevLoginEnabled) {
+      if (configuration.environment == 'LOCAL') {
         this.isLoggedIn = true;
         this.appComService.updateIsLoggedIn(this.isLoggedIn);
         this.isDevLoginEnabled = configuration.isDevLoginEnabled;
@@ -89,6 +89,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
           this.userAcctInfoDataService.updateUserAcctInfo(
             configuration.userInfo
           );
+          this.userAcctInfo = configuration.userInfo;
         }
       }
     }
@@ -338,7 +339,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       // if (this.isRouteActive(currentRoute)) {
       //   return false;
       // } else {
-        return true;
+      return true;
       // }
     } else {
       return false;
@@ -351,12 +352,12 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       this.openTicklerCount > 0 &&
       this.userAcctInfoDataService.userAcctInfo.licenseTechID !== null &&
       this.userAcctInfoDataService.userAcctInfo.licenseTechID !== 0 &&
-      this.userAcctInfoDataService.userAcctInfo.licenseTechID !== undefined 
+      this.userAcctInfoDataService.userAcctInfo.licenseTechID !== undefined
     ) {
       // if (this.isRouteActive(currentRoute)) {
       //   return false;
       // } else {
-        return true;
+      return true;
       // }
     } else {
       return false;

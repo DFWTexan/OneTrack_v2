@@ -10,6 +10,7 @@ export interface UserAcctInfo {
     isAdminRole: boolean | null;
     isTechRole: boolean | null;
     isReadRole: boolean | null;
+    isQARole: boolean | null;
     isSuperUser: boolean | null;
   }
   

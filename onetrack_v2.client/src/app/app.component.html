@@ -358,12 +358,43 @@
     <app-login *ngIf="!isLoggedIn"></app-login>
     <br />
     <br />
-    <!-- <p>isLoggedIn: {{ isLoggedIn }}</p>
-    <p>isImpersonationEnabled: {{ configService.config.isImpersonationEnabled }}</p> -->
+    <!-- <p>
+      environment: {{ configService.config.environment }}
+    </p>
+    <p>
+      isLoggedIn: {{ isLoggedIn }}
+    </p>
+    <p>
+      isImpersonationEnabled: {{ configService.config.isImpersonationEnabled }}
+    </p>
+    <p>
+      displayName: {{ userAcctInfo.displayName }}
+    </p> -->
+    <!-- <p>
+      isAdminRole: {{ userAcctInfo.isAdminRole }}
+    </p> 
+    <p>
+      isTechRole: {{ userAcctInfo.isTechRole }}
+    </p> 
+    <p>
+      isReadRole: {{ userAcctInfo.isReadRole }}
+    </p> 
+    <p>
+      isQARole: {{ userAcctInfo.isQARole }}
+    </p>  -->
     <br />
     <app-impersonation
-      *ngIf="isLoggedIn && configService.config.isImpersonationEnabled"
+      *ngIf="
+        (configService.config.userInfo.isSuperUser &&
+          configService.config.isImpersonationEnabled) ||
+        (isLoggedIn &&
+          configService.config.isImpersonationEnabled &&
+          userAcctInfo.isQARole)
+      "
     ></app-impersonation>
+    <!-- <app-impersonation
+      *ngIf="configService.config.userInfo.isSuperUser"
+    ></app-impersonation> -->
   </mat-sidenav>
 
   <mat-sidenav-content style="background-color: aliceblue">
@@ -381,9 +412,7 @@
 <!-- Modal: TECH-WORK-LIST -->
 <modal id="modal-tech-work-list">
   <div class="modal-header">
-    <h1 class="modal-title">
-      Worklist - <strong>TECH</strong>
-    </h1>
+    <h1 class="modal-title">Worklist - <strong>TECH</strong></h1>
   </div>
   <div class="modal-body">
     <div>
@@ -402,9 +431,7 @@
 <!-- Modal: TECH-TICKLER-ITEMS -->
 <modal id="modal-tech-tickler-items">
   <div class="modal-header">
-    <h1 class="modal-title">
-      Tickler Items - <strong>TECH</strong>
-    </h1>
+    <h1 class="modal-title">Tickler Items - <strong>TECH</strong></h1>
   </div>
   <div class="modal-body">
     <div>

@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
   styleUrl: './impersonation.component.css',
 })
 export class ImpersonationComponent implements OnInit, OnDestroy {
+  selectedSOIED: string | null = null;
   userAcctInfo: UserAcctInfo = {} as UserAcctInfo;
   config: any = null;
   licenseTechs: any[] = [{ value: null, label: 'Loading...' }];
@@ -52,12 +53,26 @@ export class ImpersonationComponent implements OnInit, OnDestroy {
   }
 
   onImpersonateChange(event: Event) {
-    const soeid = (event.target as HTMLInputElement).value;
+    this.selectedSOIED = (event.target as HTMLInputElement).value;
+  }
 
-    if (soeid && soeid !== 'null') {
+  onRoleChange(event: Event) {
+    const role = (event.target as HTMLInputElement).value;
+    this.impesonatorRole = role;
+
+    (this.userAcctInfo.isAdminRole = role === 'ADMIN' ? true : false),
+      (this.userAcctInfo.isTechRole = role === 'TECH' ? true : false),
+      (this.userAcctInfo.isReadRole = role === 'READ' ? true : false),
+      (this.userAcctInfo.isSuperUser =
+        role === 'DVLPER' ? true : role === null ? true : false),
+      this.userAcctInfoDataService.updateUserAcctInfo(this.userAcctInfo);
+  }
+
+  onImpersonate() {
+    if (this.selectedSOIED && this.selectedSOIED !== 'null') {
       this.subscriptions.add(
         this.userAcctInfoDataService
-          .fetchLicenseTechBySOEID(soeid)
+          .fetchLicenseTechBySOEID(this.selectedSOIED)
           .subscribe((licenseTech: any) => {
             this.userAcctInfoDataService.updateUserAcctInfo({
               licenseTechID: licenseTech.licenseTechId,
@@ -71,12 +86,8 @@ export class ImpersonationComponent implements OnInit, OnDestroy {
               isAdminRole: this.impesonatorRole === 'ADMIN' ? true : false,
               isTechRole: this.impesonatorRole === 'TECH' ? true : false,
               isReadRole: this.impesonatorRole === 'READ' ? true : false,
-              isSuperUser:
-                this.impesonatorRole === 'DVLPER'
-                  ? true
-                  : this.impesonatorRole === null
-                  ? true
-                  : false,
+              isQARole: false,
+              isSuperUser: false,
             });
           })
       );
@@ -110,18 +121,6 @@ export class ImpersonationComponent implements OnInit, OnDestroy {
       });
       dialogRef.close();
     }, 100);
-  }
-
-  onRoleChange(event: Event) {
-    const role = (event.target as HTMLInputElement).value;
-    this.impesonatorRole = role;
-
-    (this.userAcctInfo.isAdminRole = role === 'ADMIN' ? true : false),
-      (this.userAcctInfo.isTechRole = role === 'TECH' ? true : false),
-      (this.userAcctInfo.isReadRole = role === 'READ' ? true : false),
-      (this.userAcctInfo.isSuperUser =
-        role === 'DVLPER' ? true : role === null ? true : false),
-      this.userAcctInfoDataService.updateUserAcctInfo(this.userAcctInfo);
   }
 
   ngOnDestroy(): void {

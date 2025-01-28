@@ -11,15 +11,32 @@ namespace OneTrak_v2.Services
 {
     public class LdapService : ILdapService
     {
+        private readonly IConfiguration _config;
         private readonly AppDataContext _db;
-        private readonly string _groupNameRoleAdmin = "RG_OMS_LICEDIT_ADMIN";
-        private readonly string _groupNameRoleTech = "RG_OMS_LICEDIT_FULL";
-        private readonly string _groupNameRoleRead = "RG_OMS_LICEDIT_RO";
-        private readonly string _groupNameDevUser = "RG_OMS_DEVELOPER";
+        private readonly string? _groupNameRoleAdmin = string.Empty;
+        private readonly string? _groupNameRoleTech = string.Empty;
+        private readonly string? _groupNameRoleRead = string.Empty;
+        private readonly string? _groupNameRoleQA = string.Empty;
+        private readonly string? _groupNameDevUser = string.Empty;
 
-        public LdapService(AppDataContext db)
+        public LdapService(AppDataContext db, IConfiguration config)
         {
             _db = db;
+            _config = config;
+            string environment = _config.GetValue<string>("Environment") ?? "DVLP";
+
+            string adminRolekey = $"EnvironmentSettings:{environment}:AdminRole";
+            string techRolekey = $"EnvironmentSettings:{environment}:TechRole";
+            string readRolekey = $"EnvironmentSettings:{environment}:ReadRole";
+            string qaRolekey = $"EnvironmentSettings:{environment}:QARole";
+            string dvlpRolekey = $"EnvironmentSettings:{environment}:DvlpRole";
+
+            _groupNameRoleAdmin = _config.GetValue<string>(adminRolekey);
+            _groupNameRoleTech = _config.GetValue<string>(techRolekey);
+            _groupNameRoleRead = _config.GetValue<string>(readRolekey);
+            _groupNameRoleQA = _config.GetValue<string>(qaRolekey);
+            _groupNameDevUser = _config.GetValue<string>(dvlpRolekey);
+
         }
 
         public ReturnResult GetUserAcctInfo(string vUserName, string vPassWord) 
@@ -60,23 +77,31 @@ namespace OneTrak_v2.Services
                             var userGroups = user.GetAuthorizationGroups();
                             foreach (GroupPrincipal group in userGroups)
                             {
-                                if (group.Name == _groupNameRoleAdmin)
+                                if (new[] { _groupNameRoleAdmin, _groupNameRoleTech, _groupNameRoleRead, _groupNameDevUser }.Contains(group.Name))
                                 {
-                                    userAccount.IsAdminRole = true;
-                                }
-                                else if (group.Name == _groupNameRoleTech)
-                                {
-                                    userAccount.IsTechRole = true;
-                                }
-                                else if (group.Name == _groupNameRoleRead)
-                                {
-                                    userAccount.IsReadRole = true;
-                                }
-                                else if (group.Name == _groupNameDevUser)
-                                {
-                                    userAccount.IsSuperUser = true;
+                                    if (group.Name == _groupNameRoleAdmin)
+                                    {
+                                        userAccount.IsAdminRole = true;
+                                    }
+                                    else if (group.Name == _groupNameRoleTech)
+                                    {
+                                        userAccount.IsTechRole = true;
+                                    }
+                                    else if (group.Name == _groupNameRoleRead)
+                                    {
+                                        userAccount.IsReadRole = true;
+                                    }
+                                    else if (group.Name == _groupNameRoleRead)
+                                    {
+                                        userAccount.IsQARole = true;
+                                    }
+                                    else if (group.Name == _groupNameDevUser)
+                                    {
+                                        userAccount.IsSuperUser = true;
+                                    }
                                 }
                             }
+
 
                             retResult.StatusCode = 200;
                             retResult.ObjData = userAccount;
