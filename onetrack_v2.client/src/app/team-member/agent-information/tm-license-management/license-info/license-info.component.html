@@ -5,7 +5,12 @@
       style="font-size: larger"
     >
       <strong style="margin-right: 1rem">License Name:</strong
-      >{{ licenseMgmtData[currentIndex].licenseName }}
+      ><span style="font-size: x-large; font-weight: 500">{{
+        licenseMgmtData[currentIndex].licenseName
+      }}</span>
+      <span class="ms-2 mt-1" style="font-size: smaller; font-weight: 400"
+        >({{ licenseMgmtData[currentIndex].licenseState }})</span
+      >
     </div>
 
     <div class="col d-flex justify-content-center mb-3 mt-1">

@@ -405,7 +405,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     event.preventDefault();
 
     if (this.isRouteActive(vObject.route)) {
-      console.log('The route is already active.');
+      // console.log('The route is already active.');
       return;
     }
 

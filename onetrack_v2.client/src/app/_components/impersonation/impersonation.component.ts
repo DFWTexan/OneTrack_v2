@@ -7,6 +7,9 @@ import {
   UserAcctInfoDataService,
 } from '../../_services';
 import { UserAcctInfo } from '../../_Models';
+import { InfoDialogComponent } from '../info-dialog/info-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-impersonation',
@@ -23,6 +26,8 @@ export class ImpersonationComponent implements OnInit, OnDestroy {
 
   constructor(
     public configService: ConfigService,
+    public dialog: MatDialog,
+    private router: Router,
     public userAcctInfoDataService: UserAcctInfoDataService,
     public licIncentiveInfoDataService: LicIncentiveInfoDataService
   ) {
@@ -93,6 +98,18 @@ export class ImpersonationComponent implements OnInit, OnDestroy {
         );
       }
     }
+
+    const dialogRef = this.dialog.open(InfoDialogComponent, {
+      data: { message: 'Load User...' },
+    });
+
+    // Delay the execution of the blocking operation
+    setTimeout(() => {
+      this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+        this.router.navigate(['/dashboard']);
+      });
+      dialogRef.close();
+    }, 100);
   }
 
   onRoleChange(event: Event) {
