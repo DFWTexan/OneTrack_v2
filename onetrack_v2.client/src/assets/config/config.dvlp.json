@@ -17,6 +17,6 @@
         "isTechRole": null,
         "isReadRole": null,
         "isQARole": null,
-        "isSuperUser": true
+        "isSuperUser": null
     }
 }
