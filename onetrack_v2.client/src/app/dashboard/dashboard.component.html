@@ -54,7 +54,10 @@
           class="col d-flex justify-content-end align-items-center"
           *ngIf="filteredTechWorklistData.length > 0"
         >
-          Number of Items: <span class="ms-3" style="font-size: large;">{{ filteredTechWorklistData.length }}</span>
+          Number of Items:
+          <span class="ms-3" style="font-size: large">{{
+            filteredTechWorklistData.length
+          }}</span>
         </div>
       </div>
       <mat-divider></mat-divider>
@@ -167,7 +170,10 @@
                   <!-- {{ data.agentName }} -->
                   {{ getWorkListDataField(data.workListData, 4) }}
                   <!-- {{ getWorkListDataField(data.workListData, 9) }} -->
-                  <span class="ms-2" *ngIf="data.workListName === 'In Process Status'">
+                  <span
+                    class="ms-2"
+                    *ngIf="data.workListName === 'In Process Status'"
+                  >
                     ( {{ getWorkListDataField(data.workListData, 9) }} )
                   </span>
                 </td>
@@ -178,7 +184,9 @@
                   <div class="d-flex align-middle justify-content-between mb-3">
                     <button
                       class="icon-close-button me-5"
-                      (click)="onCloseWorklistItem(data)"
+                      (click)="
+                        onCloseWorklistItem(data); $event.stopPropagation()
+                      "
                       title="Close Item"
                     >
                       <span class="material-symbols-outlined"> close </span>

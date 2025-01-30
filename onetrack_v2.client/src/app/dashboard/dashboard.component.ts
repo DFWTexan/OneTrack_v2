@@ -345,7 +345,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       if (result) {
         this.dashboardDataService
           .closeWorklistItem({
-            WorkListDataID: worklistDataID,
+            WorkListDataID: worklistDataID.workListDataId,
             UserSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
           })
           .subscribe({
