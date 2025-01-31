@@ -34,9 +34,20 @@
       <button
         class="icon-edit-delete-button me-5"
         (click)="
+          setModeLicenseMgmt('ADD');
+          modalService.open('modal-edit-license-info')
+        "
+        title="Add License Information"
+      >
+        <span class="material-symbols-outlined"> add </span>
+      </button>
+      <button
+        class="icon-edit-delete-button me-5"
+        (click)="
           setModeLicenseMgmt('EDIT');
           modalService.open('modal-edit-license-info')
         "
+        title="Edit License Information"
       >
         <span class="material-symbols-outlined"> edit </span>
       </button>
@@ -49,6 +60,7 @@
             licenseName: licenseMgmtData[currentIndex].licenseName,
           })
         "
+        title="Delete License"
       >
         <span class="material-symbols-outlined"> delete </span>
       </button>
@@ -234,11 +246,12 @@
                 <span
                   class="material-symbols-outlined"
                   (click)="
-                openConfirmDialog('deleteLicAppt', 'License Appointment', {
-                  employeeAppointmentID: appointment.employeeAppointmentID,
-                  employeeLicenseID: appointment.employeeLicenseID,
-                })
-              "
+                    openConfirmDialog('deleteLicAppt', 'License Appointment', {
+                      employeeAppointmentID: appointment.employeeAppointmentID,
+                      employeeLicenseID: appointment.employeeLicenseID,
+                    })
+                  "
+                  title="Delete Appointment"
                 >
                   delete
                 </span>
