@@ -36,7 +36,7 @@ export class ImpersonationComponent implements OnInit, OnDestroy {
     public licIncentiveInfoDataService: LicIncentiveInfoDataService
   ) {
     this.licenseTechs = [
-      { value: null, label: 'Select' },
+      { value: null, label: 'No Impersonation' },
       ...this.licIncentiveInfoDataService.licenseTeches,
     ];
     this.userAcctInfo = this.userAcctInfoDataService.userAcctInfo;
@@ -56,7 +56,7 @@ export class ImpersonationComponent implements OnInit, OnDestroy {
       this.licIncentiveInfoDataService.licenseTechesChanged.subscribe(
         (licenseTechs: any[]) => {
           this.licenseTechs = [
-            { value: null, label: 'Select' },
+            { value: null, label: 'No Impersonation' },
             ...licenseTechs,
           ];
         }

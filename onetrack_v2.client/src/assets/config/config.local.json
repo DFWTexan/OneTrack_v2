@@ -8,7 +8,7 @@
     "userInfo": {
         "licenseTechID": null,
         "displayName": "localhost - Test User",
-        "soeid": "T1234567",
+        "soeid": "TESTSOEID",
         "email": null,
         "enabled": true,
         "employeeId": null,
