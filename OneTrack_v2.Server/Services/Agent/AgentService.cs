@@ -2789,7 +2789,9 @@ namespace OneTrack_v2.Services
                                   //TechName = lt != null ? lt.FirstName + " " + lt.LastName : diary.Soeid,
                                   TechName = lt != null ? lt.FirstName.Substring(0, 1) + ". " + lt.LastName : diary.Soeid,
                                   Notes = diary.Notes
-                              }).ToList();
+                              })
+                              .Distinct()
+                              .ToList();
 
             return (_diaryCreatedByItems.ToArray(), entryItems.ToArray());
         }
