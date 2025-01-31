@@ -70,7 +70,7 @@ export class QuickFindComponent {
     } else if (this.agentName.length > 0) {
       this.isLoading = true;
       this.employeeDataService
-        .fetchEmployeeByAgentName(this.agentName)
+        .fetchEmployeeByAgentName(this.agentName.trim())
         .subscribe((response) => {
           if (response.length === 0) {
             this.isLoading = false;
