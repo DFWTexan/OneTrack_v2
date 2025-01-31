@@ -142,6 +142,7 @@ export class TechWorklistComponent implements OnInit, OnDestroy {
         .subscribe((techWrklistData) => {
           this.techWorklistItems = techWrklistData;
           this.appComService.updateTechWorklistItems(techWrklistData);
+          this.appComService.updateOpenTechWorklistCount(techWrklistData.length);
           // this.cdr.detectChanges();
         })
     );
@@ -189,6 +190,6 @@ export class TechWorklistComponent implements OnInit, OnDestroy {
   // }
 
   ngOnDestroy() {
-    // this.subscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }

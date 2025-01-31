@@ -8,6 +8,8 @@ import {
 import { Subscription } from 'rxjs';
 import {
   AgentDataService,
+  AppComService,
+  DashboardDataService,
   ErrorMessageService,
   UserAcctInfoDataService,
 } from '../../../_services';
@@ -28,6 +30,8 @@ export class AgentWishlistItemsComponent implements OnInit, OnDestroy {
   constructor(
     public errorMessageService: ErrorMessageService,
     private agentDataService: AgentDataService,
+    public appComService: AppComService,
+    public dashboardDataService: DashboardDataService,
     public dialog: MatDialog,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
@@ -72,6 +76,14 @@ export class AgentWishlistItemsComponent implements OnInit, OnDestroy {
           .subscribe({
             next: (response) => {
               this.callParentRefreshData.emit();
+              // this.subscriptions.add(
+                this.dashboardDataService
+                  .fetchTechWorklistData(this.userAcctInfoDataService.userAcctInfo.soeid)
+                  .subscribe((techWrklistData) => {
+                    this.appComService.updateOpenTechWorklistCount(techWrklistData.length);
+                    // this.cdr.detectChanges();
+                  })
+              // );
             },
             error: (error) => {
               if (error.error && error.error.errMessage) {

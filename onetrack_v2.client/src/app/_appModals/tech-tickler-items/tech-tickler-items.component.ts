@@ -180,6 +180,6 @@ export class TechTicklerItemsComponent implements OnInit, OnDestroy {
   // }
 
   ngOnDestroy() {
-    // this.subscription.unsubscribe();
+    this.subscriptions.unsubscribe();
   }
 }
