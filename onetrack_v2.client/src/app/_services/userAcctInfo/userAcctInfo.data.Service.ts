@@ -35,14 +35,19 @@ export class UserAcctInfoDataService {
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
+            
+console.log('EMFTEST - (userAcctInfo.data.Service): objData => \n', response.objData);            
+            
             this.userAcctInfo = response.objData;
+            
             this.userAcctInfoChanged.next(this.userAcctInfo);
             this.appComService.updateIsLoggedIn(true);
-            // return this.userAcctInfo;
+            
           } else {
             this.appComService.updateIsLoggedIn(false);
             this.appComService.updateLoginErrorMsg(response.errMessage);
           }
+          // return this.userAcctInfo;
         }),
         catchError((error: any) => {
           this.appComService.updateIsLoggedIn(false);

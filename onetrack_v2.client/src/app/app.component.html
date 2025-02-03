@@ -364,24 +364,20 @@
     <p>
       isLoggedIn: {{ isLoggedIn }}
     </p> -->
-     <!-- <p>
+    <!-- <p>
       isImpersonationEnabled: {{ configService.config.isImpersonationEnabled }}
     </p>
     <p>
       displayName: {{ userAcctInfo.displayName }}
     </p> -->
-    <!-- <p>
-      isAdminRole: {{ userAcctInfo.isAdminRole }}
-    </p> 
-    <p>
-      isTechRole: {{ userAcctInfo.isTechRole }}
-    </p> 
-    <p>
-      isReadRole: {{ userAcctInfo.isReadRole }}
-    </p> 
-    <p>
-      isQARole: {{ userAcctInfo.isQARole }}
-    </p>  -->
+    <!-- -->
+    <div class="ms-2">
+      <p>isAdminRole: {{ userAcctInfo.isAdminRole }}</p>
+      <p>isTechRole: {{ userAcctInfo.isTechRole }}</p>
+      <p>isReadRole: {{ userAcctInfo.isReadRole }}</p>
+      <p>isQARole: {{ userAcctInfo.isQARole }}</p>
+      <p>isSuperUser: {{ userAcctInfo.isSuperUser }}</p>
+    </div>
     <br />
     <app-impersonation
       *ngIf="
