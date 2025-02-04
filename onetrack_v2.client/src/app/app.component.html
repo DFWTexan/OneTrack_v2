@@ -358,19 +358,6 @@
     <app-login *ngIf="!isLoggedIn"></app-login>
     <br />
     <br />
-    <!-- <p>
-      environment: {{ configService.config.environment }}
-    </p>
-    <p>
-      isLoggedIn: {{ isLoggedIn }}
-    </p> -->
-    <!-- <p>
-      isImpersonationEnabled: {{ configService.config.isImpersonationEnabled }}
-    </p>
-    <p>
-      displayName: {{ userAcctInfo.displayName }}
-    </p> -->
-    <!-- -->
     <!-- <div class="ms-2">
       <p>isAdminRole: {{ userAcctInfo.isAdminRole }}</p>
       <p>isTechRole: {{ userAcctInfo.isTechRole }}</p>
@@ -390,10 +377,8 @@
           configService.config.isImpersonationEnabled &&
           userAcctInfo.isSuperUser)
       "
-    ></app-impersonation>
-    <!-- <app-impersonation
-      *ngIf="configService.config.userInfo.isSuperUser"
-    ></app-impersonation> -->
+    >
+    </app-impersonation>
   </mat-sidenav>
 
   <mat-sidenav-content style="background-color: aliceblue">
