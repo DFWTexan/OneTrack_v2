@@ -29,15 +29,12 @@ export class UserAcctInfoDataService {
       .get<{
         success: boolean;
         statusCode: number;
-        objData: any;
+        objData: UserAcctInfo;
         errMessage: string;
       }>(`${this.apiUrl}GetUserAcctInfo${queryParams}`)
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
-            
-console.log('EMFTEST - (userAcctInfo.data.Service): objData => \n', response.objData);            
-            
             this.userAcctInfo = response.objData;
             
             this.userAcctInfoChanged.next(this.userAcctInfo);

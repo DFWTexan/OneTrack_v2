@@ -77,7 +77,7 @@ namespace OneTrak_v2.Services
                             var userGroups = user.GetAuthorizationGroups();
                             foreach (GroupPrincipal group in userGroups)
                             {
-                                if (new[] { _groupNameRoleAdmin, _groupNameRoleTech, _groupNameRoleRead, _groupNameDevUser }.Contains(group.Name))
+                                if (new[] { _groupNameRoleAdmin, _groupNameRoleTech, _groupNameRoleRead, _groupNameRoleQA, _groupNameDevUser }.Contains(group.Name))
                                 {
                                     if (group.Name == _groupNameRoleAdmin)
                                     {
@@ -91,7 +91,7 @@ namespace OneTrak_v2.Services
                                     {
                                         userAccount.IsReadRole = true;
                                     }
-                                    else if (group.Name == _groupNameRoleRead)
+                                    else if (group.Name == _groupNameRoleQA)
                                     {
                                         userAccount.IsQARole = true;
                                     }
