@@ -102,7 +102,6 @@ namespace OneTrak_v2.Services
                                 }
                             }
 
-
                             retResult.StatusCode = 200;
                             retResult.ObjData = userAccount;
                         }
@@ -129,7 +128,6 @@ namespace OneTrak_v2.Services
 
             return retResult;
         }
-
         private int GetLicenseTechID(string vSOEID)
         {
             var licenseTechID = (from l in _db.LicenseTeches
