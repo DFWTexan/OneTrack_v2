@@ -93,7 +93,7 @@ namespace OneTrak_v2.Services
                                     else if (group.Name == _groupNameRoleRead)
                                     {
                                         userAccount.IsReadRole = true;
-                                        //isAuthorized = true;
+                                        isAuthorized = true;
                                     }
                                     else if (group.Name == _groupNameRoleQA)
                                     {
@@ -103,7 +103,7 @@ namespace OneTrak_v2.Services
                                     else if (group.Name == _groupNameDevUser)
                                     {
                                         userAccount.IsSuperUser = true;
-                                        //isAuthorized = true;
+                                        isAuthorized = true;
                                     }
                                 }
                             }
