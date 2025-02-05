@@ -58,6 +58,7 @@ namespace OneTrak_v2.Services
                 {
                     // Validate the credentials
                     bool isValid = pc.ValidateCredentials(vUserName, vPassWord);
+                    bool isAuthorized = false;
 
                     if (isValid)
                     {
@@ -82,28 +83,41 @@ namespace OneTrak_v2.Services
                                     if (group.Name == _groupNameRoleAdmin)
                                     {
                                         userAccount.IsAdminRole = true;
+                                        isAuthorized = true;
                                     }
                                     else if (group.Name == _groupNameRoleTech)
                                     {
                                         userAccount.IsTechRole = true;
+                                        isAuthorized = true;
                                     }
                                     else if (group.Name == _groupNameRoleRead)
                                     {
                                         userAccount.IsReadRole = true;
+                                        //isAuthorized = true;
                                     }
                                     else if (group.Name == _groupNameRoleQA)
                                     {
                                         userAccount.IsQARole = true;
+                                        isAuthorized = true;
                                     }
                                     else if (group.Name == _groupNameDevUser)
                                     {
                                         userAccount.IsSuperUser = true;
+                                        //isAuthorized = true;
                                     }
                                 }
                             }
 
-                            retResult.StatusCode = 200;
-                            retResult.ObjData = userAccount;
+                            if (!isAuthorized)
+                            {
+                                retResult.StatusCode = 403;
+                                retResult.ErrMessage = "User not authorized";
+                            }
+                            else
+                            {
+                                retResult.StatusCode = 200;
+                                retResult.ObjData = userAccount;
+                            }
                         }
                         else
                         {
