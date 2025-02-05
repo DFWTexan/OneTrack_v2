@@ -47,6 +47,16 @@ export class QuickFindComponent {
     }
   }
 
+  focusSubmitSearch(event: any) {
+    if (event.key === 'Tab') {
+      event.preventDefault();
+      const submitSearchButton = document.getElementById('submitSearch');
+      if (submitSearchButton) {
+        submitSearchButton.focus();
+      }
+    }
+  }
+
   onSearch() {
     if (this.tmNumber.length > 0) {
       this.isLoading = true;

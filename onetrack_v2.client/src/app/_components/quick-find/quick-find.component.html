@@ -1,25 +1,32 @@
 <div class="d-flex justify-content-center align-items-center mt-3 mb-3">
   Find by
   <input
+    id="tmNumber"
     type="text"
     class="form-control ms-3 me-3"
     placeholder="TM Number"
     [(ngModel)]="tmNumber"
     (change)="onChangeByTmNumber()"
     [disabled]="isByTMDisabled"
+    (keydown.enter)="onSearch()"
+    (keydown.tab)="focusSubmitSearch($event)"
+    tabindex="1"
   />
   or
   <input
+    id="agentName"
     type="text"
     class="form-control ms-3 me-1"
     placeholder="Agent Name"
     [(ngModel)]="agentName"
     (change)="onChangeByAgentName()"
     [disabled]="isByAgentNameDisabled"
+    (keydown.enter)="onSearch()"
+    tabindex="2"
   />
   <div class="spinner-border ms-3 me-5" *ngIf="isLoading"></div>
   <div class="justify-content-center" *ngIf="isLoading == false">
-    <button class="btn" (click)="onSearch()">
+    <button class="btn" id="submitSearch" (click)="onSearch()" tabindex="3">
       <span
         class="material-symbols-outlined mt-3"
         style="color: white; font-size: 3rem"
@@ -40,7 +47,9 @@
       <div class="d-flex justify-content-between align-items-center">
         <div>
           <span style="font-size: medium; font-weight: 400">Records:</span>
-          <span class="ms-2" style="font-size: large; font-weight: 600;">{{ agents.length }}</span>
+          <span class="ms-2" style="font-size: large; font-weight: 600">{{
+            agents.length
+          }}</span>
         </div>
         <div class="d-flex justify-content-end">
           <button class="btn" (click)="onCloseModal()">
