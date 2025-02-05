@@ -53,20 +53,20 @@
     >
       <thead>
         <tr>
-          <th class="p-3 ms-5" style="color: dodgerblue">Hours Required</th>
-          <th class="p-3" style="color: dodgerblue">- Hours Taken</th>
-          <th class="p-3" style="color: dodgerblue">= Hours Remaining</th>
+          <th class="text-center p-3 ms-5" style="color: dodgerblue">Hours Required</th>
+          <th class="text-center p-3" style="color: dodgerblue">- Hours Taken</th>
+          <th class="text-center p-3" style="color: dodgerblue">= Hours Remaining</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td class="ps-3 ms-5 pb-3" style="font-size: large">
+          <td class="text-center ps-3 ms-5 pb-3" style="font-size: large">
             {{ sumHoursRequired }}
           </td>
-          <td class="ps-3 pb-3" style="font-size: large">
+          <td class="text-center ps-3 pb-3" style="font-size: large">
             {{ sumHoursTaken }}
           </td>
-          <td class="ps-3 pb-3" style="font-size: large">
+          <td class="text-center ps-3 pb-3" style="font-size: large">
             {{ totalHoursRemaining }}
           </td>
         </tr>
@@ -80,7 +80,7 @@
     </div>
     <div class="col w-100">
       <div class="d-flex justify-content-end">
-        <button
+        <button *ngIf="agentInfo.contEduRequiredItems[0].requiredCreditHours !== 0"
           class="btn btn-success button-font-size"
           (click)="
             agentDataService.storeContEduHoursTaken('INSERT', null);
