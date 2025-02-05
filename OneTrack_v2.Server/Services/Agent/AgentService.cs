@@ -2780,7 +2780,6 @@ namespace OneTrack_v2.Services
                               join lt in _db.LicenseTeches on diary.Soeid equals lt.Soeid into ltGroup
                               from lt in ltGroup.DefaultIfEmpty()
                               where diary.EmploymentId == vEmploymentID
-                              orderby diary.DiaryDate descending
                               select new DiaryItem
                               {
                                   DiaryID = diary.DiaryId,
@@ -2792,6 +2791,7 @@ namespace OneTrack_v2.Services
                                   Notes = diary.Notes
                               })
                               .Distinct()
+                              .OrderByDescending(d => d.DiaryDate)
                               .ToList();
 
             return (_diaryCreatedByItems.ToArray(), entryItems.ToArray());
