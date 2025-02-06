@@ -2702,18 +2702,31 @@ namespace OneTrack_v2.Services
                                      EducationEndDate = ce.EducationEndDate ?? defaultDate,
                                      ce.RequiredCreditHours,
                                      ce.IsExempt,
-                                     ce.EmploymentId
+                                     EmploymentId = ce.EmploymentId
                                  });
-
-            foreach (var item in requiredQuery)
+            if (requiredQuery.Any())
+            {
+                foreach (var item in requiredQuery)
+                {
+                    _requiredItems.Add(new AgentContEduRequiredItem
+                    {
+                        ContEducationRequirementID = item.ContEducationRequirementId,
+                        EducationStartDate = item.EducationStartDate,
+                        EducationEndDate = item.EducationEndDate,
+                        RequiredCreditHours = item.RequiredCreditHours,
+                        IsExempt = item.IsExempt
+                    });
+                }
+            } 
+            else
             {
                 _requiredItems.Add(new AgentContEduRequiredItem
                 {
-                    ContEducationRequirementID = item.ContEducationRequirementId,
-                    EducationStartDate = item.EducationStartDate,
-                    EducationEndDate = item.EducationEndDate,
-                    RequiredCreditHours = item.RequiredCreditHours,
-                    IsExempt = item.IsExempt
+                    ContEducationRequirementID = 0,
+                    EducationStartDate = defaultDate,
+                    EducationEndDate = defaultDate,
+                    RequiredCreditHours = 0,
+                    IsExempt = false
                 });
             }
 
