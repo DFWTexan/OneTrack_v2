@@ -24,6 +24,8 @@ export class TmContinuingEduComponent implements OnInit, OnDestroy {
   sumHoursRequired: number = 0;
   sumHoursTaken: number = 0;
   totalHoursRemaining: number = 0;
+  isAddContEduHoursTaken: boolean = false;
+  requiredCreditHours: number = 0;
 
   private subscriptions = new Subscription();
 
@@ -41,6 +43,7 @@ export class TmContinuingEduComponent implements OnInit, OnDestroy {
       this.agentDataService.agentInfoChanged.subscribe((agentInfo: any) => {
         this.agentInfo = agentInfo;
 
+        this.requiredCreditHours = this.agentInfo.contEduRequiredItems[0].requiredCreditHours ?? 0;
         this.sumHoursRequired = this.agentInfo.contEduRequiredItems.reduce(
           (total, item) => total + (item.requiredCreditHours || 0),
           0
@@ -84,6 +87,14 @@ export class TmContinuingEduComponent implements OnInit, OnDestroy {
         }
       })
     );
+  }
+
+  isAddContEduEnabled(): boolean {
+    if (this.requiredCreditHours > 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   onOpenConfirmDialog(msg: string, vObject: any): void {

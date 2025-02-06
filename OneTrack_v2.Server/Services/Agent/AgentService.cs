@@ -2704,6 +2704,7 @@ namespace OneTrack_v2.Services
                                      ce.IsExempt,
                                      EmploymentId = ce.EmploymentId
                                  });
+
             if (requiredQuery.Any())
             {
                 foreach (var item in requiredQuery)
