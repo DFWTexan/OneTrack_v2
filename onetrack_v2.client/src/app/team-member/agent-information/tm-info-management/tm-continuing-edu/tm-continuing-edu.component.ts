@@ -90,10 +90,10 @@ export class TmContinuingEduComponent implements OnInit, OnDestroy {
   }
 
   isAddContEduEnabled(): boolean {
-    if (this.requiredCreditHours > 0) {
-      return true;
-    } else {
+    if (this.requiredCreditHours = 0) {
       return false;
+    } else {
+      return true;
     }
   }
 
