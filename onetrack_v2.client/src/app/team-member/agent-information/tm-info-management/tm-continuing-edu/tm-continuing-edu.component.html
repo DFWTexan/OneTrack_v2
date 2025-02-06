@@ -87,7 +87,7 @@
     <div class="col w-100">
       <div class="d-flex justify-content-end">
         <button
-          *ngIf="isAddContEduEnabled"
+          *ngIf="requiredCreditHours !== 0"
           class="btn btn-success button-font-size"
           (click)="
             agentDataService.storeContEduHoursTaken('INSERT', null);

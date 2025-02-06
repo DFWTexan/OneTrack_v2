@@ -24,7 +24,6 @@ export class TmContinuingEduComponent implements OnInit, OnDestroy {
   sumHoursRequired: number = 0;
   sumHoursTaken: number = 0;
   totalHoursRemaining: number = 0;
-  isAddContEduHoursTaken: boolean = false;
   requiredCreditHours: number = 0;
 
   private subscriptions = new Subscription();
@@ -87,14 +86,6 @@ export class TmContinuingEduComponent implements OnInit, OnDestroy {
         }
       })
     );
-  }
-
-  isAddContEduEnabled(): boolean {
-    if (this.requiredCreditHours = 0) {
-      return false;
-    } else {
-      return true;
-    }
   }
 
   onOpenConfirmDialog(msg: string, vObject: any): void {
