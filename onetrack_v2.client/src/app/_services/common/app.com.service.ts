@@ -57,6 +57,7 @@ export class AppComService {
   };
   // searchEmployeeFilterChanged = new Subject<SearchEmployeeFilter>();
   searchEmployeeResult: EmployeeSearchResult[] =[];
+  searchEmployeeResultChanged = new Subject<EmployeeSearchResult[]>();
 
   subscriptions: Subscription = new Subscription();
 
@@ -89,6 +90,7 @@ export class AppComService {
 
   updateSearchEmployeeResult(searchEmployeeResult: EmployeeSearchResult[]) {
     this.searchEmployeeResult = searchEmployeeResult;
+    this.searchEmployeeResultChanged.next(this.searchEmployeeResult);
   }
 
   updateOpenTicklerCount(openTicklerCount: number) {

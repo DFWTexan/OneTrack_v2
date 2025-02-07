@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
+import { Component, OnInit, Injectable, OnDestroy, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { Subscription } from 'rxjs';
@@ -56,7 +56,8 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
     private appComService: AppComService,
     public paginationComService: PaginationComService,
     private userInfoService: UserAcctInfoDataService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
   ) {
     this.searchForm = this.fb.group({
       EmployeeSSN: [''],
@@ -80,10 +81,10 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
     this.fetchData();
 
     this.searchForm.patchValue(this.appComService.searchEmployeeFilter);
-    this.searchEmployeeResult = this.appComService.searchEmployeeResult;
-    if (this.searchEmployeeResult.length > 0) {
-      this.isSubmitted = true;
+    if(this.appComService.searchEmployeeResult.length > 0) {
+      this.onSubmit();
     }
+
   }
 
   fetchData() {
@@ -197,6 +198,7 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
       this.loading = false;
       this.searchEmployeeResult = results;
       this.appComService.updateSearchEmployeeResult(this.searchEmployeeResult);
+      this.cdr.detectChanges();
     });
   }
 
@@ -228,5 +230,6 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
+    this.searchEmployeeResult = [];
   }
 }
