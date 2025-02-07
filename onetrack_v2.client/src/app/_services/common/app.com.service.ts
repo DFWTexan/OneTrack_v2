@@ -11,7 +11,7 @@ import { environment } from '../../_environments/environment';
 import { HttpClient } from '@angular/common/http';
 import { ErrorMessageService } from '../error/error.message.service';
 import { ConfigService } from '../config/config.service';
-import { TechWorklistData } from '../../_Models';
+import { EmployeeSearchResult, SearchEmployeeFilter, TechWorklistData } from '../../_Models';
 
 @Injectable({
   providedIn: 'root',
@@ -33,10 +33,30 @@ export class AppComService {
   isOpenTicklerInfoChanged = new Subject<boolean>();
   openTechWorklistCount = 0;
   openTechWorklistCountChanged = new Subject<number>();
-  techWorklistItems: TechWorklistData[] =[];
+  techWorklistItems: TechWorklistData[] = [];
   techWorklistItemsChanged = new Subject<TechWorklistData[]>();
   techTicklerItems: any[] = [];
   techTicklerItemsChanged = new Subject<any[]>();
+  selectAllAgents: any[] = [];
+  // selectAllAgentsChanged = new Subject<any[]>();
+  searchEmployeeFilter: SearchEmployeeFilter = {
+    EmployeeSSN: null,
+    TeamMemberGEID: null,
+    NationalProducerNumber: 0,
+    LastName: null,
+    FirstName: null,
+    ResState: null,
+    WrkState: null,
+    BranchCode: null,
+    AgentStatus: ['All'],
+    ScoreNumber: null,
+    CompanyID: null,
+    LicStatus: ['All'],
+    LicState: null,
+    LicenseName: null,
+  };
+  // searchEmployeeFilterChanged = new Subject<SearchEmployeeFilter>();
+  searchEmployeeResult: EmployeeSearchResult[] =[];
 
   subscriptions: Subscription = new Subscription();
 
@@ -55,6 +75,20 @@ export class AppComService {
       this.isLoggedInChanged.next(this.config.isDevLoginEnabled);
       this.isShowEditID = this.config.isShowEditID;
     }
+  }
+
+  updateSearchEmployeeFilter(searchEmployeeFilter: SearchEmployeeFilter) {
+    this.searchEmployeeFilter = searchEmployeeFilter;
+    // this.searchEmployeeFilterChanged.next(this.searchEmployeeFilter);
+  }
+
+  updateSelectAllAgents(selectAllAgents: any[]) {
+    this.selectAllAgents = selectAllAgents;
+    // this.selectAllAgentsChanged.next(this.selectAllAgents);
+  }
+
+  updateSearchEmployeeResult(searchEmployeeResult: EmployeeSearchResult[]) {
+    this.searchEmployeeResult = searchEmployeeResult;
   }
 
   updateOpenTicklerCount(openTicklerCount: number) {

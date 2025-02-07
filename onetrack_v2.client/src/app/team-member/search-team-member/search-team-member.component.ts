@@ -11,7 +11,11 @@ import {
   PaginationComService,
   UserAcctInfoDataService,
 } from '../../_services';
-import { EmployeeSearchResult, SearchEmployeeFilter, UserAcctInfo } from '../../_Models';
+import {
+  EmployeeSearchResult,
+  SearchEmployeeFilter,
+  UserAcctInfo,
+} from '../../_Models';
 
 @Component({
   selector: 'app-search-team-member',
@@ -23,7 +27,7 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
   searchForm: FormGroup;
   loading = false;
   isSubmitted = false;
-  
+
   agentStatuses: string[] = ['All', ...this.conService.getAgentStatuses()];
   states: string[] = this.conService.getStates();
   stateProvinces: string[] = [];
@@ -54,7 +58,6 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
     private userInfoService: UserAcctInfoDataService,
     private fb: FormBuilder
   ) {
-    
     this.searchForm = this.fb.group({
       EmployeeSSN: [''],
       TeamMemberGEID: [''],
@@ -75,6 +78,8 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.fetchData();
+
+    this.searchForm.patchValue(this.appComService.searchEmployeeFilter);
   }
 
   fetchData() {
@@ -150,6 +155,8 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
     this.isSubmitted = true;
 
     let searchFilter: SearchEmployeeFilter = this.searchForm.value;
+    this.appComService.updateSearchEmployeeFilter(searchFilter);
+
     // const searchFilter: SearchEmployeeFilter = {
     //   EmployeeSSN: form.value.searchFilter.EmployeeSSN || null,
     //   TeamMemberGEID: form.value.searchFilter.TeamMemberGEID || null,
