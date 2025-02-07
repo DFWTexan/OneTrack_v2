@@ -80,6 +80,10 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
     this.fetchData();
 
     this.searchForm.patchValue(this.appComService.searchEmployeeFilter);
+    this.searchEmployeeResult = this.appComService.searchEmployeeResult;
+    if (this.searchEmployeeResult.length > 0) {
+      this.isSubmitted = true;
+    }
   }
 
   fetchData() {
@@ -192,6 +196,7 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
     this.emplyService.fetchEmployeeSearch(searchFilter).subscribe((results) => {
       this.loading = false;
       this.searchEmployeeResult = results;
+      this.appComService.updateSearchEmployeeResult(this.searchEmployeeResult);
     });
   }
 
