@@ -15,15 +15,17 @@
 
     <div class="col d-flex justify-content-center mb-3 mt-1">
       <button
+        id="btn-agent-prev"
         class="btn btn-link page-button mb-5"
-        [class.invisible]="isDisplayPrevious()"
+        [class.invisible]="!isDisplayPrevious()"
         (click)="previousPage()"
       >
         <span class="material-symbols-outlined"> arrow_back_ios </span></button
       ><span class="page-info">{{ getPageInfo() }}</span>
       <button
+        id="btn-agent-next"
         class="btn btn-link page-button mb-5"
-        [class.invisible]="isDisplayNext()"
+        [class.invisible]="!isDisplayNext()"
         (click)="nextPage()"
       >
         <span class="material-symbols-outlined"> arrow_forward_ios </span>

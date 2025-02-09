@@ -179,7 +179,7 @@
 
   <mat-divider></mat-divider>
 
-  <div class="col d-flex justify-content-center mt-3 mb-3">
+  <div class="col d-flex justify-content-center mt-3 mb-3" *ngIf="appComService.isAllAgentsSelected">
     <button
       id="btn-agent-prev"
       class="btn btn-link page-button mb-3"

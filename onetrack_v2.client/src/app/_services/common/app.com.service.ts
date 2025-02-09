@@ -37,6 +37,8 @@ export class AppComService {
   techWorklistItemsChanged = new Subject<TechWorklistData[]>();
   techTicklerItems: any[] = [];
   techTicklerItemsChanged = new Subject<any[]>();
+  isAllAgentsSelected = false;
+  isAllAgentsSelectedChanged = new Subject<boolean>();
   selectAllAgents: number[] = [];
   selectAllAgentsChanged = new Subject<number[]>();
   searchEmployeeFilter: SearchEmployeeFilter = {
@@ -79,6 +81,11 @@ export class AppComService {
 
   updateSearchEmployeeFilter(searchEmployeeFilter: SearchEmployeeFilter) {
     this.searchEmployeeFilter = searchEmployeeFilter;
+  }
+
+  updateIsAllAgentsSelected(isAllAgentsSelected: boolean) {
+    this.isAllAgentsSelected = isAllAgentsSelected;
+    this.isAllAgentsSelectedChanged.next(this.isAllAgentsSelected);
   }
 
   updateSelectAllAgents(selectAllAgents: number[]) {

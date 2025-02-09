@@ -4,6 +4,7 @@ import { EmployeeSearchResult } from '../../../_Models';
 import { Subscription } from 'rxjs';
 
 import {
+  AppComService,
   EmployeeDataService,
   ModalService,
   PaginationComService,
@@ -21,6 +22,7 @@ export class SearchListComponent implements OnInit, OnDestroy {
   constructor(
     public emplyService: EmployeeDataService,
     public modalService: ModalService,
+    public appComService: AppComService,
     public paginationComService: PaginationComService
   ) {}
 

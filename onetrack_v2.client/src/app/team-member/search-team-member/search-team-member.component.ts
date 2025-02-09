@@ -211,6 +211,7 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
   }
 
   selectAll() {
+    this.appComService.updateIsAllAgentsSelected(true);
     this.router.navigate([
       '../../team/agent-info',
       this.selectAllAgentsFirstemployeeID,
