@@ -86,14 +86,6 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
         }
       )
     );
-
-    // this.subscriptions.add(
-    //   this.appComService.selectAllAgentsChanged.subscribe(
-    //     (selectedAgentData: number[]) => {
-    //       this.selectedAgentData = selectedAgentData;
-    //     }
-    //   )
-    // );
   }
 
   // viewLicenseMgmt() {
