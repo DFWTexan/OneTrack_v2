@@ -49,16 +49,17 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
     this.route.params.subscribe((params: Params) => {
       this.id = +params['id'];
 
-      this.subscriptions.add(
-        this.agentDataService
-          .fetchAgentInformation(this.id)
-          .subscribe((agentInfo: AgentInfo) => {
-            this.isLoading = false;
-            this.ticklerCount = agentInfo.ticklerItems.length;
-            this.worklistCount = agentInfo.worklistItems.length;
-            this.agentInfo = agentInfo;
-          })
-      );
+      // this.subscriptions.add(
+      //   this.agentDataService
+      //     .fetchAgentInformation(this.id)
+      //     .subscribe((agentInfo: AgentInfo) => {
+      //       this.isLoading = false;
+      //       this.ticklerCount = agentInfo.ticklerItems.length;
+      //       this.worklistCount = agentInfo.worklistItems.length;
+      //       this.agentInfo = agentInfo;
+      //     })
+      // );
+      this.getAgentInfo(this.id);
     });
 
     this.subscriptions.add(
@@ -102,10 +103,10 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
   //   });
   // }
 
-  onChildCallRefreshData() {
+  private getAgentInfo(employeeId: number) {
     this.subscriptions.add(
       this.agentDataService
-        .fetchAgentInformation(this.id)
+        .fetchAgentInformation(employeeId)
         .subscribe((agentInfo: AgentInfo) => {
           this.isLoading = false;
           this.ticklerCount = agentInfo.ticklerItems.length;
@@ -113,6 +114,20 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
           this.agentInfo = agentInfo;
         })
     );
+  }
+
+  onChildCallRefreshData() {
+    // this.subscriptions.add(
+    //   this.agentDataService
+    //     .fetchAgentInformation(this.id)
+    //     .subscribe((agentInfo: AgentInfo) => {
+    //       this.isLoading = false;
+    //       this.ticklerCount = agentInfo.ticklerItems.length;
+    //       this.worklistCount = agentInfo.worklistItems.length;
+    //       this.agentInfo = agentInfo;
+    //     })
+    // );
+    this.getAgentInfo(this.id);
   }
 
   exitLicenseMgmt() {
@@ -126,14 +141,14 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
   nextPage() {
     if (this.currentIndex < this.appComService.selectAllAgents.length - 1) {
       this.currentIndex++;
-      // this.agentDataService.updateLicenseMgmtDataIndex(this.currentIndex);
+      this.getAgentInfo(this.appComService.selectAllAgents[this.currentIndex]);
     }
   }
 
   previousPage() {
     if (this.currentIndex > 0) {
       this.currentIndex--;
-      // this.agentDataService.updateLicenseMgmtDataIndex(this.currentIndex);
+      this.getAgentInfo(this.appComService.selectAllAgents[this.currentIndex]);
     }
   }
 
