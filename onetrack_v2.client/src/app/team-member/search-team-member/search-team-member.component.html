@@ -1,6 +1,4 @@
-<div
-  class="container app-container"
->
+<div class="container app-container">
   <div class="row mt-3">
     <div class="col-md-12">
       <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
@@ -41,9 +39,8 @@
                   id="FirstName"
                   formControlName="FirstName"
                 />
-              
+
                 <!-- <mat-divider class="mt-5 mb-3"></mat-divider> -->
-              
               </div>
             </div>
             <div class="col">
@@ -73,9 +70,9 @@
                   >
                 </mat-select>
               </mat-form-field>
-              
+
               <!-- <mat-divider class="mt-2 mb-3"></mat-divider> -->
-              
+
               <mat-form-field>
                 <mat-label>License Status</mat-label>
                 <mat-select
@@ -256,6 +253,16 @@
         <div class="d-flex justify-content-center mt-5">
           <div class="spinner-border text-primary"></div>
         </div>
+      </div>
+      <div>
+        <button
+          class="btn btn-primary"
+          style="font-size: large"
+          *ngIf="searchEmployeeResult.length > 1"
+          (click)="selectAll()"
+        >
+          Select All
+        </button>
       </div>
       <app-search-list></app-search-list>
     </div>

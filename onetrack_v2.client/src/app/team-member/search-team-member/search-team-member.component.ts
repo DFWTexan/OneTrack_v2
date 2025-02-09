@@ -16,6 +16,7 @@ import {
   SearchEmployeeFilter,
   UserAcctInfo,
 } from '../../_Models';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-team-member',
@@ -48,6 +49,7 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
   selectedAgentStatuses: string[] = ['All'];
   selectedLicenseStatuses: string[] = ['All'];
   searchEmployeeResult: EmployeeSearchResult[] = [];
+  selectAllAgentsFirstemployeeID: number = 0;
 
   constructor(
     private conService: ConstantsDataService,
@@ -57,6 +59,7 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
     public paginationComService: PaginationComService,
     private userInfoService: UserAcctInfoDataService,
     private fb: FormBuilder,
+    private router: Router,
     private cdr: ChangeDetectorRef
   ) {
     this.searchForm = this.fb.group({
@@ -182,7 +185,7 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
     searchFilter.EmployeeSSN = searchFilter.EmployeeSSN || null;
     searchFilter.TeamMemberGEID = searchFilter.TeamMemberGEID || null;
     searchFilter.NationalProducerNumber =
-      searchFilter.NationalProducerNumber || 0;
+    searchFilter.NationalProducerNumber || 0;
     searchFilter.LastName = searchFilter.LastName || null;
     searchFilter.FirstName = searchFilter.FirstName || null;
     searchFilter.ResState = searchFilter.ResState || null;
@@ -197,9 +200,22 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
     this.emplyService.fetchEmployeeSearch(searchFilter).subscribe((results) => {
       this.loading = false;
       this.searchEmployeeResult = results;
+      if (this.searchEmployeeResult.length > 1) {
+        const selectAllAgents: number[] = this.searchEmployeeResult.map(employee => employee.employeeID);
+        this.selectAllAgentsFirstemployeeID = selectAllAgents[0];
+        this.appComService.updateSelectAllAgents(selectAllAgents);
+      }
       this.appComService.updateSearchEmployeeResult(this.searchEmployeeResult);
       this.cdr.detectChanges();
     });
+  }
+
+  selectAll() {
+    this.router.navigate([
+      '../../team/agent-info',
+      this.selectAllAgentsFirstemployeeID,
+      'tm-info-mgmt',
+    ]);
   }
 
   onReset() {

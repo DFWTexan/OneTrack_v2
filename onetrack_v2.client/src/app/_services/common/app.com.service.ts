@@ -37,8 +37,8 @@ export class AppComService {
   techWorklistItemsChanged = new Subject<TechWorklistData[]>();
   techTicklerItems: any[] = [];
   techTicklerItemsChanged = new Subject<any[]>();
-  selectAllAgents: any[] = [];
-  // selectAllAgentsChanged = new Subject<any[]>();
+  selectAllAgents: number[] = [];
+  selectAllAgentsChanged = new Subject<number[]>();
   searchEmployeeFilter: SearchEmployeeFilter = {
     EmployeeSSN: null,
     TeamMemberGEID: null,
@@ -55,7 +55,6 @@ export class AppComService {
     LicState: null,
     LicenseName: null,
   };
-  // searchEmployeeFilterChanged = new Subject<SearchEmployeeFilter>();
   searchEmployeeResult: EmployeeSearchResult[] =[];
   searchEmployeeResultChanged = new Subject<EmployeeSearchResult[]>();
 
@@ -80,12 +79,11 @@ export class AppComService {
 
   updateSearchEmployeeFilter(searchEmployeeFilter: SearchEmployeeFilter) {
     this.searchEmployeeFilter = searchEmployeeFilter;
-    // this.searchEmployeeFilterChanged.next(this.searchEmployeeFilter);
   }
 
-  updateSelectAllAgents(selectAllAgents: any[]) {
+  updateSelectAllAgents(selectAllAgents: number[]) {
     this.selectAllAgents = selectAllAgents;
-    // this.selectAllAgentsChanged.next(this.selectAllAgents);
+    this.selectAllAgentsChanged.next(this.selectAllAgents);
   }
 
   updateSearchEmployeeResult(searchEmployeeResult: EmployeeSearchResult[]) {
