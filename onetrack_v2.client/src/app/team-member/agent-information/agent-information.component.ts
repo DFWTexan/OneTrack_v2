@@ -59,7 +59,12 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
       //       this.agentInfo = agentInfo;
       //     })
       // );
+      if (this.appComService.isAllAgentsSelected) {
+        this.currentIndex = this.appComService.selectAllAgentsIndex;
+        this.getAgentInfo(this.appComService.selectAllAgents[this.currentIndex]);
+      } else {
       this.getAgentInfo(this.id);
+      }
     });
 
     this.subscriptions.add(
@@ -83,6 +88,14 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
       this.appComService.tickleToggleChanged.subscribe(
         (tickleToggle: boolean) => {
           this.isShowTickle = tickleToggle;
+        }
+      )
+    );
+
+    this.subscriptions.add(
+      this.appComService.selectAllAgentsIndexChanged.subscribe(
+        (index: number) => {
+          this.currentIndex = index;
         }
       )
     );
@@ -133,6 +146,7 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
   nextPage() {
     if (this.currentIndex < this.appComService.selectAllAgents.length - 1) {
       this.currentIndex++;
+      this.appComService.updateSelectAllAgentsIndex(this.currentIndex);
       this.getAgentInfo(this.appComService.selectAllAgents[this.currentIndex]);
     }
   }
@@ -140,6 +154,7 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
   previousPage() {
     if (this.currentIndex > 0) {
       this.currentIndex--;
+      this.appComService.updateSelectAllAgentsIndex(this.currentIndex);
       this.getAgentInfo(this.appComService.selectAllAgents[this.currentIndex]);
     }
   }

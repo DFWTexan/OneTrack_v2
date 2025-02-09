@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import {
   AgentComService,
+  AppComService,
   EmployeeDataService,
   ModalService,
 } from '../../_services';
@@ -26,6 +27,7 @@ export class QuickFindComponent {
     public employeeDataService: EmployeeDataService,
     protected modalService: ModalService,
     public agentComService: AgentComService,
+    public appComService: AppComService,
     private router: Router
   ) {}
 
@@ -70,6 +72,7 @@ export class QuickFindComponent {
           } else {
             this.tmNumber = '';
             this.isByAgentNameDisabled = false;
+            this.appComService.updateIsAllAgentsSelected(false);
             this.router.navigate([
               '../../team/agent-info',
               response.employeeId,
@@ -89,6 +92,7 @@ export class QuickFindComponent {
           } else if (response.length === 1) {
             this.isLoading = false;
             this.agentName = '';
+            this.appComService.updateIsAllAgentsSelected(false);
             this.router.navigate([
               '../../team/agent-info',
               response[0].employeeId,

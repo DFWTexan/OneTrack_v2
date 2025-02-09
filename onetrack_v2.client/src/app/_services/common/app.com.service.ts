@@ -59,6 +59,8 @@ export class AppComService {
   };
   searchEmployeeResult: EmployeeSearchResult[] =[];
   searchEmployeeResultChanged = new Subject<EmployeeSearchResult[]>();
+  selectAllAgentsIndex: number = 0;
+  selectAllAgentsIndexChanged = new Subject<number>();
 
   subscriptions: Subscription = new Subscription();
 
@@ -81,6 +83,11 @@ export class AppComService {
 
   updateSearchEmployeeFilter(searchEmployeeFilter: SearchEmployeeFilter) {
     this.searchEmployeeFilter = searchEmployeeFilter;
+  }
+
+  updateSelectAllAgentsIndex(selectAllAgentsIndex: number) {
+    this.selectAllAgentsIndex = selectAllAgentsIndex;
+    this.selectAllAgentsIndexChanged.next(this.selectAllAgentsIndex);
   }
 
   updateIsAllAgentsSelected(isAllAgentsSelected: boolean) {
