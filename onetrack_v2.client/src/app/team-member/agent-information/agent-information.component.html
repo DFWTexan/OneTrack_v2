@@ -170,6 +170,7 @@
         </div>
       </div>
     </div>
+    
     <div class="col-md-5 mb-3" *ngIf="isShowTickle">
       <app-tickler-mgmt></app-tickler-mgmt>
     </div>
@@ -177,6 +178,23 @@
   <!-- END -Header -->
 
   <mat-divider></mat-divider>
+
+  <div class="col d-flex justify-content-center mt-3 mb-3">
+    <button
+      class="btn btn-link page-button mb-5"
+      *ngIf="isDisplayPrevious()"
+      (click)="previousPage()"
+    >
+      <span class="material-symbols-outlined"> arrow_back_ios </span></button
+    ><span class="page-info">{{ getPageInfo() }}</span>
+    <button
+      class="btn btn-link page-button mb-5"
+      *ngIf="isDisplayNext()"
+      (click)="nextPage()"
+    >
+      <span class="material-symbols-outlined"> arrow_forward_ios </span>
+    </button>
+  </div>
 
   <router-outlet></router-outlet>
 </div>

@@ -24,6 +24,7 @@ import {
 @Injectable()
 export class AgentInformationComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
+  currentIndex: number = 0;
   id: number = 0;
   agentInfo: AgentInfo = {} as AgentInfo;
   ticklerCount: number = 0;
@@ -110,6 +111,33 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['../../team/agent-info', this.id, 'tm-info-mgmt']);
     });
+  }
+
+  // Pagination
+  nextPage() {
+    if (this.currentIndex < this.appComService.selectAllAgents.length - 1) {
+      this.currentIndex++;
+      // this.agentDataService.updateLicenseMgmtDataIndex(this.currentIndex);
+    }
+  }
+
+  previousPage() {
+    if (this.currentIndex > 0) {
+      this.currentIndex--;
+      // this.agentDataService.updateLicenseMgmtDataIndex(this.currentIndex);
+    }
+  }
+
+  getPageInfo(): string {
+    return `${this.currentIndex + 1} of ${this.appComService.selectAllAgents.length}`;
+  }
+
+  isDisplayPrevious(): boolean {
+    return this.currentIndex > 0;
+  }
+
+  isDisplayNext(): boolean {
+    return this.currentIndex < this.appComService.selectAllAgents.length - 1;
   }
 
   ngOnDestroy(): void {
