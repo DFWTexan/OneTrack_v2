@@ -27,6 +27,7 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
   currentIndex: number = 0;
   id: number = 0;
   agentInfo: AgentInfo = {} as AgentInfo;
+  // selectedAgentData: number[] = [];
   ticklerCount: number = 0;
   worklistCount: number = 0;
   isShowLicenseMgmt: boolean = false;
@@ -84,6 +85,14 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
         }
       )
     );
+
+    // this.subscriptions.add(
+    //   this.appComService.selectAllAgentsChanged.subscribe(
+    //     (selectedAgentData: number[]) => {
+    //       this.selectedAgentData = selectedAgentData;
+    //     }
+    //   )
+    // );
   }
 
   // viewLicenseMgmt() {

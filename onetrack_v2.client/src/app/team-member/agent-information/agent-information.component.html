@@ -116,18 +116,18 @@
         <div class="panel-body">
           <div class="row">
             <div class="col">
-              <div class="d-flex justify-content-between mb-4"> 
+              <div class="d-flex justify-content-between mb-4">
                 <div>
                   <strong>Full Name:</strong><br />
-                  {{ agentInfo.firstName }} {{agentInfo.middleName}} {{ agentInfo.lastName }}
+                  {{ agentInfo.firstName }} {{ agentInfo.middleName }}
+                  {{ agentInfo.lastName }}
                 </div>
                 <div class="me-5">
                   <strong>Preferred Name:</strong><br />
-                <!-- {{ agentInfo.firstName }}
+                  <!-- {{ agentInfo.firstName }}
                 {{ agentInfo.middleName }} {{ agentInfo.lastName }} -->
-                {{ agentInfo.alias || "N/A" }}
+                  {{ agentInfo.alias || "N/A" }}
                 </div>
-                
               </div>
               <p>
                 <strong>Employee ID:</strong><br />
@@ -170,7 +170,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="col-md-5 mb-3" *ngIf="isShowTickle">
       <app-tickler-mgmt></app-tickler-mgmt>
     </div>
@@ -181,15 +181,17 @@
 
   <div class="col d-flex justify-content-center mt-3 mb-3">
     <button
-      class="btn btn-link page-button mb-5"
-      *ngIf="isDisplayPrevious()"
+      id="btn-agent-prev"
+      class="btn btn-link page-button mb-3"
+      [class.invisible]="!isDisplayPrevious()"
       (click)="previousPage()"
     >
       <span class="material-symbols-outlined"> arrow_back_ios </span></button
-    ><span class="page-info">{{ getPageInfo() }}</span>
+    ><span class="page-info mt-2">{{ getPageInfo() }}</span>
     <button
-      class="btn btn-link page-button mb-5"
-      *ngIf="isDisplayNext()"
+      id="btn-agent-next"
+      class="btn btn-link page-button mb-4"
+      [class.invisible]="!isDisplayNext()"
       (click)="nextPage()"
     >
       <span class="material-symbols-outlined"> arrow_forward_ios </span>
