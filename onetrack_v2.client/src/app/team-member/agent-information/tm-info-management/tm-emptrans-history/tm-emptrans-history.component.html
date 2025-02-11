@@ -30,7 +30,8 @@
             style="font-size: large; color: black; font-weight: 500"
             >Employment History</span
           >
-          <button
+          <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
+          <!-- <button
             class="btn btn-success button-font-size mb-3"
             (click)="
               agentDataService.storeEmploymentTransferHistory('INSERT', null);
@@ -38,7 +39,7 @@
             "
           >
             Insert - Employment History
-          </button>
+          </button> -->
         </div>
         <div
           class="div d-flex justify-content-center mb-3"
@@ -97,7 +98,7 @@
                 {{ emp.isCurrent ? "Yes" : "No" }}
               </td>
               <td style="width: 10rem">
-                <div class="d-flex justify-content-between mb-3 me-4">
+                <div class="d-flex justify-content-center mb-3 me-4">
                   <button
                     class="icon-edit-delete-button"
                     (click)="
@@ -111,7 +112,8 @@
                   >
                     <span class="material-symbols-outlined"> edit </span>
                   </button>
-                  <button
+                  <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
+                  <!-- <button
                     class="icon-edit-delete-button"
                     (click)="
                       onOpenConfirmDialog(
@@ -123,7 +125,7 @@
                     title="Delete Employment History"
                   >
                     <span class="material-symbols-outlined"> delete </span>
-                  </button>
+                  </button> -->
                 </div>
               </td>
             </tr>
