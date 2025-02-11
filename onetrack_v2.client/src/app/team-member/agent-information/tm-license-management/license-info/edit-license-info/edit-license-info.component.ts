@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 
@@ -13,6 +13,7 @@ import {
   UserAcctInfoDataService,
 } from '../../../../../_services';
 import { AgentLicenseAppointments } from '../../../../../_Models';
+import { dateValidator } from '../../../../../_shared';
 
 @Component({
   selector: 'app-edit-license-info',
@@ -52,17 +53,17 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       employmentID: [''],
       ascEmployeeLicenseID: [0],
       licenseID: [0, Validators.required],
-      licenseExpireDate: [null],
+      licenseExpireDate: ['', [Validators.required, dateValidator]],
       licenseState: ['Select'],
       licenseStatus: ['Select', Validators.required],
       licenseNumber: [''],
       reinstatement: [''],
       required: [''],
       nonResident: [''],
-      licenseEffectiveDate: [null],
-      licenseIssueDate: [null],
-      lineOfAuthorityIssueDate: [null],
-      sentToAgentDate: [null],
+      licenseEffectiveDate: ['', [Validators.required, dateValidator]],
+      licenseIssueDate: ['', [Validators.required, dateValidator]],
+      lineOfAuthorityIssueDate: ['', [Validators.required, dateValidator]],
+      sentToAgentDate: ['', [Validators.required, dateValidator]],
       licenseNote: [''],
       // UPDATE FORM FIELDS HERE
       // employeeLicenseId: [{ value: '', disabled: true }],
