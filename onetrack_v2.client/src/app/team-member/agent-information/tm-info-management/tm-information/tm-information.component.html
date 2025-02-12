@@ -211,7 +211,7 @@
                         class="icon-add-button me-5"
                         (click)="
                           onSetOpenLicenseID(license.employeeLicenseId);
-                          agentDataService.storeLicenseAppt('INSERT', license);
+                          agentDataService.storeLicenseAppt('INSERT', null);
                           storeLicApptLicenseID(license.licenseID);
                           storeEmployeeLicenseID(license.employeeLicenseId);
                           modalService.open('modal-edit-license-appt')
@@ -739,7 +739,7 @@
                               onSetOpenLicenseID(license.employeeLicenseId);
                               agentDataService.storeLicenseAppt(
                                 'INSERT',
-                                license
+                                null
                               );
                               storeLicApptLicenseID(license.licenseID);
                               storeEmployeeLicenseID(license.employeeLicenseId);
