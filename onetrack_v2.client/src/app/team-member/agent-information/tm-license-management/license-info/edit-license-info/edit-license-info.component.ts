@@ -53,17 +53,17 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       employmentID: [''],
       ascEmployeeLicenseID: [0],
       licenseID: [0, Validators.required],
-      licenseExpireDate: ['', [Validators.required, dateValidator]],
+      licenseExpireDate: ['', dateValidator],
       licenseState: ['Select'],
       licenseStatus: ['Select', Validators.required],
       licenseNumber: [''],
       reinstatement: [''],
       required: [''],
       nonResident: [''],
-      licenseEffectiveDate: ['', [Validators.required, dateValidator]],
-      licenseIssueDate: ['', [Validators.required, dateValidator]],
-      lineOfAuthorityIssueDate: ['', [Validators.required, dateValidator]],
-      sentToAgentDate: ['', [Validators.required, dateValidator]],
+      licenseEffectiveDate: ['', dateValidator],
+      licenseIssueDate: ['', dateValidator],
+      lineOfAuthorityIssueDate: ['', dateValidator],
+      sentToAgentDate: ['', dateValidator],
       licenseNote: [''],
       // UPDATE FORM FIELDS HERE
       // employeeLicenseId: [{ value: '', disabled: true }],
@@ -309,6 +309,9 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
 
     if (this.licenseForm.invalid) {
       this.licenseForm.setErrors({ invalid: true });
+
+console.log('EMFTEST (EDIT-LIC-INFO: onSubmit) - licenseForm.invalid: ', this.licenseForm.invalid);
+
       return;
     } else {
       this.licenseForm.setErrors(null);

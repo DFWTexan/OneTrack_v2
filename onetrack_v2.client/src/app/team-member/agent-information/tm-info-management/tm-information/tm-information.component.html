@@ -234,8 +234,14 @@
                       <label>Status:</label><br /><span
                         class="ms-2"
                         [ngStyle]="{
-                          color: license.licenseStatus === 'Active' ? 'green' : 'black',
-                          fontWeight: license.licenseStatus === 'Active' ? '600' : 'normal'
+                          color:
+                            license.licenseStatus === 'Active'
+                              ? 'green'
+                              : 'black',
+                          fontWeight:
+                            license.licenseStatus === 'Active'
+                              ? '600'
+                              : 'normal'
                         }"
                         >{{ license.licenseStatus.toUpperCase() }}</span
                       >
@@ -624,7 +630,8 @@
                       <th
                         scope="col"
                         [ngClass]="{
-                          'th-sort-active': sortColumn === 'lineOfAuthIssueDate',
+                          'th-sort-active':
+                            sortColumn === 'lineOfAuthIssueDate',
                           'th-sort': sortColumn !== 'lineOfAuthIssueDate'
                         }"
                         (click)="onSortData('lineOfAuthIssueDate', 'license')"
@@ -635,7 +642,8 @@
                       <th
                         scope="col"
                         [ngClass]="{
-                          'th-sort-active': sortColumn === 'licenseEffectiveDate',
+                          'th-sort-active':
+                            sortColumn === 'licenseEffectiveDate',
                           'th-sort': sortColumn !== 'licenseEffectiveDate'
                         }"
                         (click)="onSortData('licenseEffectiveDate', 'license')"
@@ -646,7 +654,8 @@
                       <th
                         scope="col"
                         [ngClass]="{
-                          'th-sort-active': sortColumn === 'licenseExpirationDate',
+                          'th-sort-active':
+                            sortColumn === 'licenseExpirationDate',
                           'th-sort': sortColumn !== 'licenseExpirationDate'
                         }"
                         (click)="onSortData('licenseExpirationDate', 'license')"
@@ -737,10 +746,7 @@
                             class="icon-add-button me-5"
                             (click)="
                               onSetOpenLicenseID(license.employeeLicenseId);
-                              agentDataService.storeLicenseAppt(
-                                'INSERT',
-                                null
-                              );
+                              agentDataService.storeLicenseAppt('INSERT', null);
                               storeLicApptLicenseID(license.licenseID);
                               storeEmployeeLicenseID(license.employeeLicenseId);
                               modalService.open('modal-edit-license-appt')
@@ -870,7 +876,8 @@
                       <th
                         scope="col"
                         [ngClass]="{
-                          'th-sort-active': sortColumn === 'appointmentEffectiveDate',
+                          'th-sort-active':
+                            sortColumn === 'appointmentEffectiveDate',
                           'th-sort': sortColumn !== 'appointmentEffectiveDate'
                         }"
                         (click)="
@@ -883,7 +890,8 @@
                       <th
                         scope="col"
                         [ngClass]="{
-                          'th-sort-active': sortColumn === 'appointmentExpireDate',
+                          'th-sort-active':
+                            sortColumn === 'appointmentExpireDate',
                           'th-sort': sortColumn !== 'appointmentExpireDate'
                         }"
                         (click)="
@@ -896,7 +904,8 @@
                       <th
                         scope="col"
                         [ngClass]="{
-                          'th-sort-active': sortColumn === 'appointmentTerminationDate',
+                          'th-sort-active':
+                            sortColumn === 'appointmentTerminationDate',
                           'th-sort': sortColumn !== 'appointmentTerminationDate'
                         }"
                         (click)="
