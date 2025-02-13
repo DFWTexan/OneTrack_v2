@@ -11,6 +11,7 @@ import {
   LicIncentiveInfoDataService,
   UserAcctInfoDataService,
 } from '../../../../../_services';
+import { dateValidator } from '../../../../../_shared';
 
 @Component({
   selector: 'app-add-license-appt',
@@ -47,10 +48,10 @@ export class AddLicenseApptComponent implements OnInit, OnDestroy {
       employeeLicenseID: [0],
       appointmentStatus: ['Select'],
       companyID: [0],
-      carrierDate: [null],
-      appointmentEffectiveDate: [null],
-      appointmentExpireDate: [null],
-      appointmentTerminationDate: [null],
+      carrierDate: ['', dateValidator],
+      appointmentEffectiveDate: ['', dateValidator],
+      appointmentExpireDate: ['', dateValidator],
+      appointmentTerminationDate: ['', dateValidator],
     });
   }
 

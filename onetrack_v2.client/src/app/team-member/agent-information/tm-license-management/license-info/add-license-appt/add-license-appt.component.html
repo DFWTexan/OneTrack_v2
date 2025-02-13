@@ -38,7 +38,9 @@
         </div>
       </div>
       <div class="mb-3">
-        <label for="companyID" class="form-label">Company Abv:  <span class="text-danger">*</span></label>
+        <label for="companyID" class="form-label"
+          >Company Abv: <span class="text-danger">*</span></label
+        >
         <select
           class="form-select select-size-small"
           type="text"
@@ -74,6 +76,22 @@
           id="carrierDate"
           formControlName="carrierDate"
         />
+        <div
+          *ngIf="
+            (licenseApptForm.controls['carrierDate'].touched ||
+              isFormSubmitted) &&
+            licenseApptForm.controls['carrierDate'].errors
+          "
+          class="text-danger"
+        >
+          <div
+            *ngIf="
+              licenseApptForm.controls['carrierDate'].errors['invalidFormat']
+            "
+          >
+            Date must be in mm/dd/yyyy format
+          </div>
+        </div>
       </div>
       <div class="mb-3">
         <label for="appointmentEffectiveDate" class="form-label"
@@ -85,6 +103,24 @@
           id="appointmentEffectiveDate"
           formControlName="appointmentEffectiveDate"
         />
+        <div
+          *ngIf="
+            (licenseApptForm.controls['appointmentEffectiveDate'].touched ||
+              isFormSubmitted) &&
+            licenseApptForm.controls['appointmentEffectiveDate'].errors
+          "
+          class="text-danger"
+        >
+          <div
+            *ngIf="
+              licenseApptForm.controls['appointmentEffectiveDate'].errors[
+                'invalidFormat'
+              ]
+            "
+          >
+            Date must be in mm/dd/yyyy format
+          </div>
+        </div>
       </div>
     </div>
     <div class="col">
@@ -98,6 +134,24 @@
           id="appointmentExpireDate"
           formControlName="appointmentExpireDate"
         />
+        <div
+          *ngIf="
+            (licenseApptForm.controls['appointmentExpireDate'].touched ||
+              isFormSubmitted) &&
+            licenseApptForm.controls['appointmentExpireDate'].errors
+          "
+          class="text-danger"
+        >
+          <div
+            *ngIf="
+              licenseApptForm.controls['appointmentExpireDate'].errors[
+                'invalidFormat'
+              ]
+            "
+          >
+            Date must be in mm/dd/yyyy format
+          </div>
+        </div>
       </div>
       <div class="mb-3">
         <label for="appointmentTerminationDate" class="form-label"
@@ -107,8 +161,26 @@
           class="form-control input-size-small"
           type="date"
           id="appointmentTerminationDate"
-          formControlName="appointmentExpireDate"
+          formControlName="appointmentTerminationDate"
         />
+        <div
+          *ngIf="
+            (licenseApptForm.controls['appointmentTerminationDate'].touched ||
+              isFormSubmitted) &&
+            licenseApptForm.controls['appointmentTerminationDate'].errors
+          "
+          class="text-danger"
+        >
+          <div
+            *ngIf="
+              licenseApptForm.controls['appointmentTerminationDate'].errors[
+                'invalidFormat'
+              ]
+            "
+          >
+            Date must be in mm/dd/yyyy format
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -127,7 +199,7 @@
       <button
         type="submit"
         class="btn btn-primary save-button"
-        [disabled]="licenseApptForm.pristine"
+        [disabled]="licenseApptForm.pristine || licenseApptForm.invalid"
       >
         Save
       </button>

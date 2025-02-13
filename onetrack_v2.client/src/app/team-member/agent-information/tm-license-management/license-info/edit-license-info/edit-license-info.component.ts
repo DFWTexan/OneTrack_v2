@@ -309,9 +309,6 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
 
     if (this.licenseForm.invalid) {
       this.licenseForm.setErrors({ invalid: true });
-
-console.log('EMFTEST (EDIT-LIC-INFO: onSubmit) - licenseForm.invalid: ', this.licenseForm.invalid);
-
       return;
     } else {
       this.licenseForm.setErrors(null);

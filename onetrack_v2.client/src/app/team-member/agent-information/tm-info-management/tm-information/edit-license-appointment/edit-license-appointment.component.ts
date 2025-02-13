@@ -22,6 +22,7 @@ import {
 } from '../../../../../_services';
 import { LicenseAppointment } from '../../../../../_Models';
 import { formatDate } from '@angular/common';
+import { dateValidator } from '../../../../../_shared';
 
 @Component({
   selector: 'app-edit-license-appointment',
@@ -47,10 +48,10 @@ export class EditLicenseAppointmentComponent
     employeeAppointmentID: new FormControl({ value: 0, disabled: true }),
     appointmentStatus: new FormControl(''),
     companyID: new FormControl(0),
-    carrierDate: new FormControl(''),
-    appointmentEffectiveDate: new FormControl(''),
-    appointmentExpireDate: new FormControl(''),
-    appointmentTerminationDate: new FormControl(''),
+    carrierDate: new FormControl('', dateValidator),
+    appointmentEffectiveDate: new FormControl('', dateValidator),
+    appointmentExpireDate: new FormControl('', dateValidator),
+    appointmentTerminationDate: new FormControl('', dateValidator),
   });
 
   private subscriptions = new Subscription();

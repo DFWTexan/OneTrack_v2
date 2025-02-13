@@ -49,7 +49,9 @@
         />
       </div> -->
       <div class="mb-3">
-        <label for="companyID" class="form-label">Company Abv: <span class="text-danger">*</span></label>
+        <label for="companyID" class="form-label"
+          >Company Abv: <span class="text-danger">*</span></label
+        >
         <select
           class="form-select select-size-small"
           type="text"
@@ -85,6 +87,17 @@
           id="carrierDate"
           formControlName="carrierDate"
         />
+        <div
+          *ngIf="
+            (form.controls['carrierDate'].touched || isFormSubmitted) &&
+            form.controls['carrierDate'].errors
+          "
+          class="text-danger"
+        >
+          <div *ngIf="form.controls['carrierDate'].errors['invalidFormat']">
+            Date must be in mm/dd/yyyy format
+          </div>
+        </div>
       </div>
       <div class="mb-3">
         <label for="appointmentEffectiveDate" class="form-label"
@@ -96,9 +109,25 @@
           id="appointmentEffectiveDate"
           formControlName="appointmentEffectiveDate"
         />
+        <div
+          *ngIf="
+            (form.controls['appointmentEffectiveDate'].touched ||
+              isFormSubmitted) &&
+            form.controls['appointmentEffectiveDate'].errors
+          "
+          class="text-danger"
+        >
+          <div
+            *ngIf="
+              form.controls['appointmentEffectiveDate'].errors['invalidFormat']
+            "
+          >
+            Date must be in mm/dd/yyyy format
+          </div>
+        </div>
       </div>
     </div>
-    
+
     <div class="col">
       <div class="mb-3">
         <label for="appointmentExpireDate" class="form-label"
@@ -110,6 +139,22 @@
           id="appointmentExpireDate"
           formControlName="appointmentExpireDate"
         />
+        <div
+          *ngIf="
+            (form.controls['appointmentExpireDate'].touched ||
+              isFormSubmitted) &&
+            form.controls['appointmentExpireDate'].errors
+          "
+          class="text-danger"
+        >
+          <div
+            *ngIf="
+              form.controls['appointmentExpireDate'].errors['invalidFormat']
+            "
+          >
+            Date must be in mm/dd/yyyy format
+          </div>
+        </div>
       </div>
       <div class="mb-3">
         <label for="appointmentTerminationDate" class="form-label"
@@ -121,6 +166,24 @@
           id="appointmentTerminationDate"
           formControlName="appointmentTerminationDate"
         />
+        <div
+          *ngIf="
+            (form.controls['appointmentTerminationDate'].touched ||
+              isFormSubmitted) &&
+            form.controls['appointmentTerminationDate'].errors
+          "
+          class="text-danger"
+        >
+          <div
+            *ngIf="
+              form.controls['appointmentTerminationDate'].errors[
+                'invalidFormat'
+              ]
+            "
+          >
+            Date must be in mm/dd/yyyy format
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -139,7 +202,7 @@
       <button
         type="submit"
         class="btn btn-primary save-button"
-        [disabled]="form.pristine"
+        [disabled]="form.pristine || form.invalid"
       >
         Save
       </button>
