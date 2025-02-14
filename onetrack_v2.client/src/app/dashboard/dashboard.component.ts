@@ -75,6 +75,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   isTechActive: boolean = true;
 
   adBankerData: any[] = [];
+  adBankerDataFiltered: any[] = [];
   adBankerStartDate: string = new Date(
     new Date().setDate(new Date().getDate() - 1)
   )
@@ -98,6 +99,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     .split('T')[0];
   auditLogData: any[] = [];
   adBankerIncompleteCount = 0;
+  adBankerAgentName: string = '';
   selectedRowIndex: number | null = null;
   selectedElement: string | null = null;
 
@@ -477,6 +479,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         )
         .subscribe((data) => {
           this.adBankerData = data;
+          this.adBankerDataFiltered = data;
         })
     );
 
@@ -504,6 +507,15 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     const value = target.value;
     this.endDate = value;
     this.getAdBankerData();
+  }
+  onChangeADBankerAgentName(event: any) {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    // this.adBankerAgentName = value;
+    // this.getAdBankerData();
+    this.adBankerDataFiltered = this.adBankerData.filter((data) =>
+      data.studentName.toLowerCase().includes(value.toLowerCase())
+    );
   }
   onChangeImportStaus(event: any) {
     const target = event.target as HTMLInputElement;
