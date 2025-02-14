@@ -387,7 +387,7 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
       <div
-        class="row align-middle mb-2"
+        class="row d-flex justify-content-between mb-2"
         style="
           background-color: black;
           color: white;
@@ -399,7 +399,7 @@
           border-style: solid;
         "
       >
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label for="adBankerStartDate">Start Date:</label><br />
           <input
             class="form-control input-size-small"
@@ -410,7 +410,7 @@
             (change)="onChangeADBankerStartDate($event)"
           />
         </div>
-        <div class="col-md-3">
+        <div class="col-md-2">
           <label for="adBankerEndDate">End Date:</label><br />
           <input
             class="form-control input-size-small"
@@ -422,24 +422,18 @@
             (change)="onChangeADBankerEndDate($event)"
           />
         </div>
-        <!-- <div class="col-md-3">
-          <label for="modifiedBy">Import Status:</label><br />
-          <select
-            class="form-select select-size-med-small"
-            name="modifiedBy"
-            id="modifiedBy"
-            (change)="onChangeImportStaus($event)"
-            [(ngModel)]="adBankerImportStatus"
-          >
-            <option
-              *ngFor="let status of adBankerImportStatuses"
-              [value]="status"
-            >
-              {{ status }}
-            </option>
-          </select>
-        </div> -->
-        <div class="col-md-3">
+        <div class="col-md-2">
+          <label for="modifiedBy">TM #:</label><br />
+          <input
+            class="form-control input-size-med"
+            type="text"
+            name="tmNumber"
+            [(ngModel)]="adBankerTMNumber"
+            (input)="onChangeADBankerTMNumber($event)"
+            placeholder="Filter by TM #"
+          />
+        </div>
+        <div class="col-md-2">
           <label for="modifiedBy">Agent Name:</label><br />
           <input
             class="form-control input-size-med"
@@ -450,11 +444,10 @@
             placeholder="Filter by Agent Name"
           />
         </div>
-        <div
-          class="col-md-3 d-flex justify-content-end"
-          *ngIf="adBankerData.length > 0"
-        >
-          <span>Number of Items: {{ adBankerDataFiltered.length }}</span>
+        <div class="col-md-2 d-flex align-items-end justify-content-end">
+          <span *ngIf="adBankerData.length > 0"
+            >Number of Items: {{ adBankerDataFiltered.length }}</span
+          >
         </div>
       </div>
       <mat-divider></mat-divider>
@@ -505,7 +498,7 @@
                 <td class="align-middle">
                   {{ data.courseState == null ? "N/A" : data.courseState }}
                 </td>
-                <td class="align-middle wrap-text" style="width: 275px">
+                <td class="align-middle wrap-text" style="width: 250px">
                   {{ data.studentName | firstThree | uppercase }}
                 </td>
                 <td class="align-middle">

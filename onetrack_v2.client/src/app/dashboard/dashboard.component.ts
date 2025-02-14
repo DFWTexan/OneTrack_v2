@@ -99,6 +99,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     .split('T')[0];
   auditLogData: any[] = [];
   adBankerIncompleteCount = 0;
+  adBankerTMNumber: string = '';
   adBankerAgentName: string = '';
   selectedRowIndex: number | null = null;
   selectedElement: string | null = null;
@@ -508,11 +509,16 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.endDate = value;
     this.getAdBankerData();
   }
+  onChangeADBankerTMNumber(event: any) {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    this.adBankerDataFiltered = this.adBankerData.filter((data) =>
+      data.teamMemberId.toString().includes(value)
+    );
+  }
   onChangeADBankerAgentName(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;
-    // this.adBankerAgentName = value;
-    // this.getAdBankerData();
     this.adBankerDataFiltered = this.adBankerData.filter((data) =>
       data.studentName.toLowerCase().includes(value.toLowerCase())
     );
