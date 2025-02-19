@@ -97,16 +97,16 @@ export class EditLicApplInfoComponent implements OnInit, OnDestroy {
                     'yyyy-MM-dd',
                     'en-US'
                   ),
-                  sentToStateDate: formatDate(
+                  sentToStateDate: licApplication.sentToStateDate != '12/31/1969' ? formatDate(
                     licApplication.sentToStateDate,
                     'yyyy-MM-dd',
                     'en-US'
-                  ),
-                  recFromStateDate: formatDate(
+                  ) : null,
+                  recFromStateDate: licApplication.recFromStateDate != '12/31/1969' ? formatDate(
                     licApplication.recFromStateDate,
                     'yyyy-MM-dd',
                     'en-US'
-                  ),
+                  ) : null,
                   applicationStatus: licApplication.applicationStatus,
                   applicationType: licApplication.applicationType,
                 });
