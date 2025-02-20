@@ -11,6 +11,7 @@ namespace OneTrack_v2.Services
             int? vEmployeeLicenseID = null, List<string>? vLicStatus = null, string? vLicState = null, string? vLicenseName = null, int? vNationalProducerNumber = null);         
         public Task<ReturnResult> SearchEmployeeName(string vInput);
         public Task<ReturnResult> SearchEmployeeTMNumber(string vInput);
+        public Task<ReturnResult> GetEmploymentCommunication(int vInput);
         //public DataModel.Response.ReturnResult GetEmployee(int vEmployeeID);
     }
 }

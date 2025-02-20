@@ -90,7 +90,23 @@
           type="text"
           id="tin"
           formControlName="tin"
+          [maxLength]="9"
+          pattern="[0-9]*"
         />
+        <div
+          *ngIf="
+            (companyForm.controls['tin'].touched || isFormSubmitted) &&
+            companyForm.controls['tin'].errors
+          "
+          class="text-danger"
+        >
+          <div *ngIf="companyForm.controls['tin'].errors['pattern']">
+            TIN must be numeric
+          </div>
+          <div *ngIf="companyForm.controls['tin'].errors['maxlength']">
+            TIN cannot exceed 9 characters
+          </div>
+        </div>
       </div>
 
       <div class="mb-3">
@@ -100,7 +116,23 @@
           type="text"
           id="naicnumber"
           formControlName="naicnumber"
+          [maxLength]="5"
+          pattern="[0-9]*"
         />
+        <div
+          *ngIf="
+            (companyForm.controls['naicnumber'].touched || isFormSubmitted) &&
+            companyForm.controls['naicnumber'].errors
+          "
+          class="text-danger"
+        >
+          <div *ngIf="companyForm.controls['naicnumber'].errors['pattern']">
+            NAIC Number must be numeric
+          </div>
+          <div *ngIf="companyForm.controls['naicnumber'].errors['maxlength']">
+            NAIC Number cannot exceed 5 characters
+          </div>
+        </div>
       </div>
 
       <div class="mb-3">
@@ -110,8 +142,21 @@
           type="text"
           id="phone"
           formControlName="phone"
-          pattern="\(\d{3}\) \d{3}-\d{4}"
+          mask="(000) 000-0000"
+          [pattern]="phonePattern"
+          maxlength="14"
         />
+        <div
+          *ngIf="
+            (companyForm.controls['phone'].touched || isFormSubmitted) &&
+            companyForm.controls['phone'].errors
+          "
+          class="text-danger"
+        >
+          <div *ngIf="companyForm.controls['phone'].errors['pattern']">
+            Phone number must be in the format (###) ###-#### or ###-###-####
+          </div>
+        </div>
       </div>
     </div>
 
@@ -175,6 +220,20 @@
           id="zip"
           formControlName="zip"
         />
+        <div
+          *ngIf="
+            (companyForm.controls['zip'].touched || isFormSubmitted) &&
+            companyForm.controls['zip'].errors
+          "
+          class="text-danger"
+        >
+          <div *ngIf="companyForm.controls['zip'].errors['pattern']">
+            Zip code must be in the format ##### or #####-####
+          </div>
+          <div *ngIf="companyForm.controls['zip'].errors['maxlength']">
+            Zip code cannot exceed 10 characters
+          </div>
+        </div>
       </div>
 
       <div class="mb-3">

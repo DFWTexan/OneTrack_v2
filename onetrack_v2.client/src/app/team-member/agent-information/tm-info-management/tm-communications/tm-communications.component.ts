@@ -33,6 +33,10 @@ export class TmCommunicationsComponent implements OnInit, OnDestroy {
     );
   }
 
+  onViewCommunication(communication: any) {
+    // this.agentComService.viewCommunication(communication);
+  }
+
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
   }

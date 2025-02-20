@@ -100,4 +100,28 @@ export class EmployeeDataService {
         })
       );
   }
+
+  fetchEmploymentCommunication(vTmNumber: string): Observable<any> {
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(
+        environment.apiUrl +
+          'Employee/GetEmploymentCommunication' +
+          '/' +
+          vTmNumber
+      )
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
 }

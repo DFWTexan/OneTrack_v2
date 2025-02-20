@@ -6,7 +6,7 @@
         public string? CompanyAbv { get; set; }
         public string? CompanyType { get; set; }
         public string? CompanyName { get; set; }
-        public int Tin { get; set; }
+        public int? Tin { get; set; }
         public int? Naicnumber { get; set; }
         public int? AddressId { get; set; }
         public string? Address1 { get; set; }

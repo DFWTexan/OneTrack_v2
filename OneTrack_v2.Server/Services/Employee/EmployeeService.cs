@@ -219,9 +219,11 @@ namespace OneTrack_v2.Services
             {
                 result.Success = false;
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# EMPL-1309-30410].";
+
                 //_logger.LogError(ex, "Error in EmployeeService.SearchEmployee()");
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EmplQuick-Name-Search");
             }
 
             return Task.FromResult(result);
@@ -250,12 +252,53 @@ namespace OneTrack_v2.Services
             {
                 result.Success = false;
                 result.StatusCode = 500;
-                result.ErrMessage = ex.Message;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# EMPL-1309-90412].";
+
                 //_logger.LogError(ex, "Error in EmployeeService.SearchEmployee()");
-                _utilityService.LogError(ex.Message, "EMFTEST-Source", new { }, "EMFTEST-UserSOEID");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EmplQuick-TM-Search");
             }
 
             return Task.FromResult(result);
+        }
+
+        public Task<ReturnResult> GetEmploymentCommunication(int vEmploymentCommunicationID)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var query = _db.EmploymentCommunications
+                    .Where(ec => ec.EmploymentCommunicationId == vEmploymentCommunicationID)
+                    .Select(ec => new
+                    {
+                        ec.EmploymentCommunicationId,
+                        ec.EmailTo,
+                        ec.EmailFrom,
+                        ec.EmailSubject,
+                        ec.EmailBodyHtml,
+                        ec.EmailAttachments,
+                        ec.EmailCreator,
+                        ec.EmailCreateDate,
+                        ec.EmailSentDate,
+                    })
+                    .FirstOrDefault();
+
+                result.Success = true;
+                result.ObjData = query;
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.StatusCode = 500;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# EMPL-6309-90412].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "Employment-Comm");
+            }
+
+            return Task.FromResult(result);
+
         }
     }
 }

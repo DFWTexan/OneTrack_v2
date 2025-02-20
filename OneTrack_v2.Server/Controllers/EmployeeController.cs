@@ -58,6 +58,14 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
+        [HttpGet("{employmentCommunicationID}")]
+        public async Task<ActionResult> GetEmploymentCommunication(int employmentCommunicationID)
+        {
+            var result = await Task.Run(() => _employeeService.GetEmploymentCommunication(employmentCommunicationID));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
         //public async Task<ActionResult<IEnumerable<Employee>>> SearchEmployee_GEN(string searchString)
         //{
         //    if (_db.Employees == null)

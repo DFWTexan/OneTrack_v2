@@ -8,11 +8,21 @@
     </div>
   </div>
 
-  <div class="row mt-3">
+  <div
+    class="row mt-3"
+    style="
+      width: 100%;
+      max-height: 550px;
+      overflow-y: auto;
+      overflow-x: hidden;
+      border-top-left-radius: 0.7rem;
+      border-top-right-radius: 0.7rem;
+    "
+  >
     <div class="col d-flex">
-      <table class="table">
+      <table class="table selected-row">
         <thead>
-          <tr style="background-color: gainsboro">
+          <tr class="sticky-top" style="background-color: gainsboro">
             <th scope="col">LetterID</th>
             <th scope="col">Comunication Name</th>
             <th scope="col">CreateDate</th>
@@ -20,7 +30,12 @@
           </tr>
         </thead>
         <tbody class="bg-body">
-          <tr class="no-hover-bg:hover" *ngFor="let comItem of agentInfo.employmentCommunicationItems">
+          <tr
+            class="hover-pointer"
+            *ngFor="let comItem of agentInfo.employmentCommunicationItems"
+            (click)="onViewCommunication(comItem)"
+            style="cursor: pointer;"
+          >
             <td>{{ comItem.employmentCommunicationID }}</td>
             <td>{{ comItem.letterName }}</td>
             <td>{{ comItem.emailCreateDate | date }}</td>
@@ -30,5 +45,28 @@
       </table>
     </div>
   </div>
-
 </div>
+
+<!-- Modal: VIEW-EMPLOYEE-COMMUNICATION -->
+<modal id="modal-view-employee-communication" class="modal-lg">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      <!-- <strong>{{ adminComService.modes.company.mode }}</strong> - Company -->
+    </h1>
+    <!-- <button
+              type="button"
+              class="btn-close"
+              (click)="modalService.close()"
+            ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <!-- <app-edit-company
+          [companyTypes]="companyTypes"
+          (callParentRefreshData)="onChildCallRefreshData()"
+        ></app-edit-company> -->
+      </div>
+    </div>
+  </div>
+</modal>
