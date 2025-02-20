@@ -20,6 +20,8 @@ export class EmployeeDataService {
   employeeSearchResultsChanged = new Subject<EmployeeSearchResult[]>();
   selectedEmployee: EmployeeSearchResult | null = null;
   selectedEmployeeChanged = new Subject<EmployeeSearchResult | null>();
+  employmentCommunicationItem: any;
+  employmentCommunicationItemChanged = new Subject<any>();
 
   constructor(private http: HttpClient) {}
 
@@ -101,7 +103,7 @@ export class EmployeeDataService {
       );
   }
 
-  fetchEmploymentCommunication(vTmNumber: string): Observable<any> {
+  fetchEmployeeCommunicationByID(vTmNumber: number): Observable<any> {
     return this.http
       .get<{
         success: boolean;
@@ -117,6 +119,10 @@ export class EmployeeDataService {
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
+            this.employmentCommunicationItem = response.objData;
+            this.employmentCommunicationItemChanged.next(
+              this.employmentCommunicationItem
+            );
             return response.objData;
           } else {
             throw new Error(response.errMessage || 'Unknown error');

@@ -51,21 +51,17 @@
 <modal id="modal-view-employee-communication" class="modal-lg">
   <div class="modal-header">
     <h1 class="modal-title">
-      <!-- <strong>{{ adminComService.modes.company.mode }}</strong> - Company -->
+      <strong class="mt-5">Message</strong>
     </h1>
     <button
       type="button"
-      class="btn-close"
+      class="btn-close me-5"
       (click)="modalService.close()"
     ></button>
   </div>
   <div class="modal-body">
     <div>
       <div>
-        <!-- <app-edit-company
-          [companyTypes]="companyTypes"
-          (callParentRefreshData)="onChildCallRefreshData()"
-        ></app-edit-company> -->
         <app-view-employee-communication></app-view-employee-communication>
       </div>
     </div>

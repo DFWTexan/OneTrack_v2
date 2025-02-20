@@ -61,6 +61,8 @@ export class AppComService {
   searchEmployeeResultChanged = new Subject<EmployeeSearchResult[]>();
   selectAllAgentsIndex: number = 0;
   selectAllAgentsIndexChanged = new Subject<number>();
+  selectedEmploymentCommunicationID: number = 0;
+  selectedEmploymentCommunicationIDChanged = new Subject<number>();
 
   subscriptions: Subscription = new Subscription();
 
@@ -149,6 +151,11 @@ export class AppComService {
   updateIsLegacyView(isLegacyView: boolean) {
     this.isLegacyView = isLegacyView;
     this.isLegacyViewChanged.next(this.isLegacyView);
+  }
+
+  updateSelectedEmploymentCommunicationID(selectedEmploymentCommunicationID: number) {
+    this.selectedEmploymentCommunicationID = selectedEmploymentCommunicationID;
+    this.selectedEmploymentCommunicationIDChanged.next(this.selectedEmploymentCommunicationID);
   }
 
   openDocument(url: string): Observable<Blob> {
