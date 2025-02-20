@@ -1,1 +1,37 @@
-<p>view-employee-communication works!</p>
+<div
+  class="container"
+  style="
+    width: 100%;
+    max-height: 550px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-top-left-radius: 0.7rem;
+    border-top-right-radius: 0.7rem;
+  "
+>
+  <div class="d-flex justify-content-between mb-5">
+    <div>
+      <label for="emailFrom" class="form-label">From:</label><br />
+      {{ empCommItem?.emailFrom }}
+    </div>
+    <div>
+      <label for="emailCreateDate" class="form-label">Create Date:</label><br />
+      {{ empCommItem?.emailCreateDate | date }}
+    </div>
+  </div>
+  <div class="d-flex justify-content-between mb-5">
+    <div>
+      <label for="emailTo" class="form-label">To:</label><br />
+      {{ empCommItem?.emailTo }}
+    </div>
+    <div>
+        <label for="emailSentDate" class="form-label">Sent Date:</label><br />
+      {{ empCommItem?.emailSentDate | date }}
+    </div>
+  </div>
+  <div class="mb-5">
+    <label for="subject" class="form-label">Subject:</label><br />
+    {{ empCommItem?.emailSubject }}
+  </div>
+  <div></div>
+</div>

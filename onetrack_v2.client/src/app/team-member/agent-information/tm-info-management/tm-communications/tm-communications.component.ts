@@ -39,8 +39,6 @@ export class TmCommunicationsComponent implements OnInit, OnDestroy {
   }
 
   onViewCommunication(vCommunicationItem: any) {
-    // console.log('EMFTEST (tm-communications.component: onViewCommunication) - vCommunicationItem => \n', vCommunicationItem);
-
     this.appComService.updateSelectedEmploymentCommunicationID(
       vCommunicationItem.employmentCommunicationID
     );
@@ -50,17 +48,11 @@ export class TmCommunicationsComponent implements OnInit, OnDestroy {
           vCommunicationItem.employmentCommunicationID
         )
         .subscribe((response) => {
-          // this.employeeDataService.employmentCommunicationItem = response;
-          // this.employeeDataService.employmentCommunicationItemChanged.next(this.employeeDataService.employmentCommunicationItem);
           this.selectedCommunicationItem = vCommunicationItem;
           this.modalService.open('modal-view-employee-communication');
         })
     );
   }
-
-  // onViewEmployeeCommunication(vCommunicationItem: any) {
-
-  // }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
