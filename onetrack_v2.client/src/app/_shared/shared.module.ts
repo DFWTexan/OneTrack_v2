@@ -34,6 +34,7 @@ import { PaginationComponent } from '../_components/pagination/pagination.compon
 import { EditLicenseComponent } from '../admin/license-edit/edit-license/edit-license.component';
 import { FileUploadComponent } from '../_components/file-upload/file-upload.component';
 import { FileViewerComponent } from '../_components/file-viewer/file-viewer.component';
+import { ViewEmployeeCommunicationComponent } from '../_components/view-employee-communication/view-employee-communication.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { FileViewerComponent } from '../_components/file-viewer/file-viewer.comp
     EditLicenseComponent,
     FileUploadComponent,
     FileViewerComponent,
+    ViewEmployeeCommunicationComponent,
   ],
   imports: [
     CommonModule,
@@ -85,6 +87,7 @@ import { FileViewerComponent } from '../_components/file-viewer/file-viewer.comp
     EditLicenseComponent,
     FileUploadComponent,
     FileViewerComponent,
+    ViewEmployeeCommunicationComponent,
     MatButtonModule,
     MatSidenavModule,
     MatMenuModule,

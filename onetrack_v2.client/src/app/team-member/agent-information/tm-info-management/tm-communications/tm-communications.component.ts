@@ -16,6 +16,7 @@ import { AgentInfo } from '../../../../_Models';
 @Injectable()
 export class TmCommunicationsComponent implements OnInit, OnDestroy {
   agentInfo: AgentInfo = {} as AgentInfo;
+  selectedCommunicationItem: any;
 
   private subscriptions = new Subscription();
 
@@ -33,8 +34,10 @@ export class TmCommunicationsComponent implements OnInit, OnDestroy {
     );
   }
 
-  onViewCommunication(communication: any) {
+  onViewCommunication(vCommunicationItem: any) {
     // this.agentComService.viewCommunication(communication);
+    this.selectedCommunicationItem = vCommunicationItem;
+    this.modalService.open('modal-view-employee-communication');
   }
 
   ngOnDestroy(): void {

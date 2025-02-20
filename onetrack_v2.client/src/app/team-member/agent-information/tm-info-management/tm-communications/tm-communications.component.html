@@ -34,7 +34,7 @@
             class="hover-pointer"
             *ngFor="let comItem of agentInfo.employmentCommunicationItems"
             (click)="onViewCommunication(comItem)"
-            style="cursor: pointer;"
+            style="cursor: pointer"
           >
             <td>{{ comItem.employmentCommunicationID }}</td>
             <td>{{ comItem.letterName }}</td>
@@ -53,11 +53,11 @@
     <h1 class="modal-title">
       <!-- <strong>{{ adminComService.modes.company.mode }}</strong> - Company -->
     </h1>
-    <!-- <button
-              type="button"
-              class="btn-close"
-              (click)="modalService.close()"
-            ></button> -->
+    <button
+      type="button"
+      class="btn-close"
+      (click)="modalService.close()"
+    ></button>
   </div>
   <div class="modal-body">
     <div>
@@ -66,6 +66,7 @@
           [companyTypes]="companyTypes"
           (callParentRefreshData)="onChildCallRefreshData()"
         ></app-edit-company> -->
+        <app-view-employee-communication></app-view-employee-communication>
       </div>
     </div>
   </div>

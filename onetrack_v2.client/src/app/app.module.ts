@@ -32,7 +32,6 @@ import { QuickFindComponent } from './_components/quick-find/quick-find.componen
 import { ImpersonationComponent } from './_components/impersonation/impersonation.component';
 import { TechWorklistComponent } from './_appModals/tech-worklist/tech-worklist.component';
 import { TechTicklerItemsComponent } from './_appModals/tech-tickler-items/tech-tickler-items.component';
-import { ViewEmployeeCommunicationComponent } from './_components/view-employee-communication/view-employee-communication.component';
 
 export function initializeApp(configService: ConfigService) {
   return () => configService.loadConfig();
@@ -50,7 +49,6 @@ export function initializeApp(configService: ConfigService) {
     ImpersonationComponent,
     TechWorklistComponent,
     TechTicklerItemsComponent,
-    ViewEmployeeCommunicationComponent,
   ],
   imports: [
     AppRoutingModule,

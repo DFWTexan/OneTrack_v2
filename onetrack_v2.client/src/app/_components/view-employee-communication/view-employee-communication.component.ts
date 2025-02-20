@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-view-employee-communication',
@@ -6,5 +6,6 @@ import { Component } from '@angular/core';
   styleUrl: './view-employee-communication.component.css'
 })
 export class ViewEmployeeCommunicationComponent {
+ @Input() communicationItem: any;
 
 }
