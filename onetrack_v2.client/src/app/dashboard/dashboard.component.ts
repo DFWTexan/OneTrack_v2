@@ -129,6 +129,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.fetchTechWorkListData();
     this.subscriptions.add(
       this.appComService.isOpenTicklerInfoChanged.subscribe((value) => {
         this.isOpenTicklerInfo = value;
