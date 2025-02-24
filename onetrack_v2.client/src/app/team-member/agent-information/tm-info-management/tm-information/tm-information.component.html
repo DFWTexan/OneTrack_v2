@@ -163,10 +163,15 @@
                     class="d-flex justify-content-between align-items-center w-100"
                   >
                     <div style="width: 250px">
-                      <span class="me-1">{{ license.licenseName }}</span>
-                      <span class="ms-1" style="font-size: small"
-                        >({{ license.licenseState }})</span
-                      >
+                      <span style="font-size: small">{{
+                        license.licenseNumber
+                      }}</span>
+                      <div>
+                        <span class="me-1">{{ license.licenseName }}</span>
+                        <span class="ms-1" style="font-size: small"
+                          >({{ license.licenseState }})</span
+                        >
+                      </div>
                     </div>
                     <div
                       class="align-middle"
