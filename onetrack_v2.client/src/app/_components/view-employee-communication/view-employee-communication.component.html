@@ -25,7 +25,7 @@
       {{ empCommItem?.emailTo }}
     </div>
     <div>
-        <label for="emailSentDate" class="form-label">Sent Date:</label><br />
+      <label for="emailSentDate" class="form-label">Sent Date:</label><br />
       {{ empCommItem?.emailSentDate | date }}
     </div>
   </div>
@@ -33,5 +33,7 @@
     <label for="subject" class="form-label">Subject:</label><br />
     {{ empCommItem?.emailSubject }}
   </div>
-  <div></div>
+  <div class="mb-2" style="border: solid 1px lightgray; border-radius: .5rem;">
+    <div [innerHTML]="empCommItem?.emailBodyHtml" style="padding: 1rem; color: black;"></div>
+  </div>
 </div>
