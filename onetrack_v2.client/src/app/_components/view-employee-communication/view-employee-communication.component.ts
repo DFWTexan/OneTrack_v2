@@ -11,6 +11,7 @@ import { AppComService, EmployeeDataService } from '../../_services';
 export class ViewEmployeeCommunicationComponent implements OnInit, OnDestroy {
   empCommID: number = 0;
   empCommItem: any;
+  attachments: any[] = [];
 
   private subscriptions = new Subscription();
 
@@ -25,9 +26,14 @@ export class ViewEmployeeCommunicationComponent implements OnInit, OnDestroy {
       this.employeeDataService.employmentCommunicationItemChanged.subscribe(
         (response) => {
           this.empCommItem = response;
-
+  
+          // Split the emailAttachments string by '|' and assign to this.attachments
+          if (response.emailAttachments) {
+            this.attachments = response.emailAttachments.split('|');
+          }
+  
 console.log('EMFTEST (view-employee-communication.component: ngOnInit) - this.empCommItem => \n', this.empCommItem);
-
+console.log('Attachments:', this.attachments);
         }
       )
     );

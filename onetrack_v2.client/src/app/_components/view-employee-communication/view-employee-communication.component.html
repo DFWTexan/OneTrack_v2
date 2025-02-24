@@ -9,7 +9,7 @@
     border-top-right-radius: 0.7rem;
   "
 >
-  <div class="d-flex justify-content-between mb-5">
+  <div class="d-flex justify-content-between mb-3">
     <div>
       <label for="emailFrom" class="form-label">From:</label><br />
       {{ empCommItem?.emailFrom }}
@@ -19,7 +19,7 @@
       {{ empCommItem?.emailCreateDate | date }}
     </div>
   </div>
-  <div class="d-flex justify-content-between mb-5">
+  <div class="d-flex justify-content-between mb-3">
     <div>
       <label for="emailTo" class="form-label">To:</label><br />
       {{ empCommItem?.emailTo }}
@@ -29,9 +29,15 @@
       {{ empCommItem?.emailSentDate | date }}
     </div>
   </div>
-  <div class="mb-5">
+  <div class="mb-3">
     <label for="subject" class="form-label">Subject:</label><br />
     {{ empCommItem?.emailSubject }}
+  </div>
+  <div class="mb-3">
+    <label for="attachments" class="form-label">Attachments:</label><br />
+    <div *ngFor="let attachment of attachments">
+      <div *ngIf="attachment">{{ attachment }}</div>
+    </div>
   </div>
   <div class="mb-2" style="border: solid 1px lightgray; border-radius: 0.5rem">
     <div
