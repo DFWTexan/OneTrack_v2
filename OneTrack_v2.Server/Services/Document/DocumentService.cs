@@ -43,10 +43,10 @@ namespace OneTrak_v2.Services
                     };
                 }
 
-                string filePath = vFilePathUri != null ? vFilePathUri : _attachmentLocation;
+                string? filePath = vFilePathUri != null ? vFilePathUri : _attachmentLocation;
 
                 // Ensure the directory exists before trying to create a file
-                string directoryPath = Path.GetDirectoryName(filePath);
+                string? directoryPath = Path.GetDirectoryName(filePath);
                 if (!Directory.Exists(directoryPath))
                 {
                     Directory.CreateDirectory(directoryPath);
@@ -55,7 +55,8 @@ namespace OneTrak_v2.Services
                 // Use Path.Combine to ensure the path is correctly formatted
                 string fullPath = Path.Combine(directoryPath, Path.GetFileName(filePath));
 
-                using (var fileStream = new FileStream(fullPath, FileMode.Create, FileAccess.Write, FileShare.None))
+                //using (var fileStream = new FileStream(fullPath, FileMode.Create, FileAccess.Write, FileShare.Write))
+                using (var fileStream = new FileStream(fullPath, FileMode.Create))
                 {
                     await vStream.CopyToAsync(fileStream);
                 }

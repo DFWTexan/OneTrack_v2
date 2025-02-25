@@ -392,10 +392,10 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       event.target.value !==
       this.agentDataService.agentInformation.branchDeptStreetState
     ) {
-      alert(
-        'Selection is different than Agent Work State: ' +
-          this.agentDataService.agentInformation.branchDeptStreetState
-      );
+      // alert(
+      //   'Selection is different than Agent Work State: ' +
+      //     this.agentDataService.agentInformation.branchDeptStreetState
+      // );
     }
 
     this.getStateLicenseNames(event.target.value);

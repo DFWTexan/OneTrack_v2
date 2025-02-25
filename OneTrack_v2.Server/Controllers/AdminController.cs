@@ -12,8 +12,7 @@ namespace OneTrack_v2.Controllers
     [Route("api/[controller]/[action]")]
     [ApiController]
     public class AdminController : ControllerBase
-    {
-        
+    {     
         private readonly IAdminService _adminService;
 
         public AdminController(IAdminService adminService)
