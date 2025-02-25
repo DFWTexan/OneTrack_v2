@@ -62,6 +62,8 @@ export class QuickFindComponent {
   onSearch() {
     if (this.tmNumber.length > 0) {
       this.isLoading = true;
+      this.tmNumber = '';
+      this.isByAgentNameDisabled = false;
       this.employeeDataService
         .fetchEmployeeByTmNumber(this.tmNumber.trim())
         .subscribe((response) => {
@@ -70,8 +72,6 @@ export class QuickFindComponent {
           if (response === null) {
             alert('Employee not found');
           } else {
-            this.tmNumber = '';
-            this.isByAgentNameDisabled = false;
             this.appComService.updateIsAllAgentsSelected(false);
             this.router.navigate([
               '../../team/agent-info',
@@ -85,13 +85,16 @@ export class QuickFindComponent {
       this.employeeDataService
         .fetchEmployeeByAgentName(this.agentName.trim())
         .subscribe((response) => {
+          this.isLoading = false;
+          this.agentName = '';
+          this.isByTMDisabled = false;
           if (response.length === 0) {
             this.isLoading = false;
             alert('Employee not found');
             return;
           } else if (response.length === 1) {
-            this.isLoading = false;
-            this.agentName = '';
+            // this.isLoading = false;
+            // this.agentName = '';
             this.appComService.updateIsAllAgentsSelected(false);
             this.router.navigate([
               '../../team/agent-info',
@@ -101,14 +104,14 @@ export class QuickFindComponent {
             return;
           } else {
             this.agentComService.updateShowLicenseMgmt(false);
-            this.isLoading = false;
-            this.agentName = '';
+            // this.isLoading = false;
+            // this.agentName = '';
+
             // console.log('Search by Agent Name: ', response);
             this.agents = response;
             this.openModal();
           }
-        }
-      );
+        });
     }
   }
 

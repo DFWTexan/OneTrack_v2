@@ -311,7 +311,7 @@ namespace OneTrack_v2.Services
                 //Agent Licenses
                 var agentLicenses = GetLicenses(agent.EmploymentID);
                 List<OputAgentLicenses>? oputAgentLicenses = agentLicenses.ObjData == null ? null : agentLicenses.ObjData as List<OputAgentLicenses>;
-                if(oputAgentLicenses != null)
+                if (oputAgentLicenses != null)
                     agent.LicenseItems = oputAgentLicenses;
 
                 //Agent Appointments
@@ -2023,7 +2023,10 @@ namespace OneTrack_v2.Services
                             cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
                             cmd.Parameters.Add(new SqlParameter("@LicenseIssueDate", vInput.LicenseIssueDate));
                             cmd.Parameters.Add(new SqlParameter("@LineOfAuthorityIssueDate", vInput.LineOfAuthorityIssueDate));
-                            cmd.Parameters.Add(new SqlParameter("@SentToAgentDate", vInput.SentToAgentDate));
+                            //cmd.Parameters.Add(new SqlParameter("@SentToAgentDate", vInput.SentToAgentDate));
+                            cmd.Parameters.Add(new SqlParameter("@SentToAgentDate",
+                                string.IsNullOrEmpty(vInput.SentToAgentDate?.ToString()) ? (object)DBNull.Value : vInput.SentToAgentDate));
+
                             cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
                             cmd.Parameters.Add(new SqlParameter("@LicenseNote", vInput.LicenseNote));
                             conn.Open();
@@ -2406,7 +2409,7 @@ namespace OneTrack_v2.Services
         }
         #endregion
 
-        
+
         #region Private Methods
         private bool ExecuteAddressInsert(IputUpsertAgent vInput, string? vCountry = null)
         {
@@ -2718,7 +2721,7 @@ namespace OneTrack_v2.Services
                         IsExempt = item.IsExempt
                     });
                 }
-            } 
+            }
             else
             {
                 _requiredItems.Add(new AgentContEduRequiredItem
@@ -2822,7 +2825,7 @@ namespace OneTrack_v2.Services
                     EmploymentID = t.EmploymentId,
                     EmployeeLicenseID = t.EmployeeLicenseId,
                     TicklerMessage = t.Message,
-                    TicklerDueDate = t.TicklerDueDate, 
+                    TicklerDueDate = t.TicklerDueDate,
                 }).ToList();
 
             return ticklerItems;

@@ -169,10 +169,10 @@ export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
     if (
       event.target.value !== this.agentDataService.agentInformation.workStateAbv
     ) {
-      alert(
-        'Selection is different than Agent Work State: ' +
-          this.agentDataService.agentInformation.workStateAbv
-      );
+      // alert(
+      //   'Selection is different than Agent Work State: ' +
+      //     this.agentDataService.agentInformation.workStateAbv
+      // );
     }
 
     this.getStateLicenseNames(event.target.value);
