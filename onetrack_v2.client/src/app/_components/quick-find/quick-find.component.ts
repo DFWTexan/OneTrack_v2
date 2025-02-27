@@ -60,14 +60,21 @@ export class QuickFindComponent {
   }
 
   onSearch() {
+    this.isByAgentNameDisabled = false;
+    this.isByTMDisabled = false;
+
     if (this.tmNumber.length > 0) {
       this.isLoading = true;
-      this.tmNumber = '';
-      this.isByAgentNameDisabled = false;
+
       this.employeeDataService
         .fetchEmployeeByTmNumber(this.tmNumber.trim())
         .subscribe((response) => {
           this.isLoading = false;
+          this.tmNumber = '';
+
+          this.isByAgentNameDisabled = false;
+          this.isByTMDisabled = false;
+
           this.agentComService.updateShowLicenseMgmt(false);
           if (response === null) {
             alert('Employee not found');
@@ -82,12 +89,15 @@ export class QuickFindComponent {
         });
     } else if (this.agentName.length > 0) {
       this.isLoading = true;
+
       this.employeeDataService
         .fetchEmployeeByAgentName(this.agentName.trim())
         .subscribe((response) => {
-          this.isLoading = false;
           this.agentName = '';
+
+          this.isByAgentNameDisabled = false;
           this.isByTMDisabled = false;
+
           if (response.length === 0) {
             this.isLoading = false;
             alert('Employee not found');

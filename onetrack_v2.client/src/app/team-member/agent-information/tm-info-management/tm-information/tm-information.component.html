@@ -115,7 +115,7 @@
           Agent License & Appointments:
         </div>
         <button
-          *ngIf="!isLoading"
+          *ngIf="!isLoading && agentInfo.agentLicenseAppointments.length > 0"
           class="icon-toggle-button"
           style="padding-bottom: 3rem; padding-right: 2.5rem"
           (click)="onToggleView()"

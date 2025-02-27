@@ -19,24 +19,6 @@ namespace OneTrak_v2.Controllers
             _documentService = documentService;
         }
 
-        //[HttpPost]
-        //public async Task<ActionResult> Upload([FromForm] OneTrak_v2.Document.Model.IputFileUploadDelete input)
-        //{
-
-        //    if (input.File == null || input.File.Length == 0)
-        //        return BadRequest("File is empty");
-
-        //    string fileBytes = string.Empty;
-
-        //    string fileName = input.File.FileName;
-
-        //    var stream = input.File.OpenReadStream();
-
-        //    var result = await Task.Run(() => _documentService.Upload(stream, input));
-
-        //    return StatusCode(result.StatusCode, result);
-        //}
-
         [HttpPost]
         public async Task<ActionResult> Upload([FromForm] IFormFile file, [FromForm] string fileName, [FromForm] string filePathType)
         {
