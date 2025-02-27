@@ -22,7 +22,7 @@ namespace OneTrak_v2.Services
             string environment = _config.GetValue<string>("Environment") ?? "DVLP";
 
             // Construct the keys for accessing environment-specific settings
-            string attachmentLocKey = $"EnvironmentSettings:{environment}:AttachmentLoc";
+            string attachmentLocKey = $"EnvironmentSettings:{environment}:Paths:AttachmentLoc";
 
             // Retrieve the values based on the constructed keys
             _attachmentLocation = _config.GetValue<string>(attachmentLocKey);
@@ -98,7 +98,7 @@ namespace OneTrak_v2.Services
                 string environment = _config.GetValue<string>("Environment") ?? "DVLP";
 
                 // Construct the keys for accessing environment-specific settings
-                string fileDestinationPath = $"EnvironmentSettings:{environment}:{vFilePathType}";
+                string fileDestinationPath = $"EnvironmentSettings:{environment}:Paths:{vFilePathType}";
 
                 // Retrieve the values based on the constructed keys
                 string? fileDestinationLocPath = _config.GetValue<string>(fileDestinationPath);

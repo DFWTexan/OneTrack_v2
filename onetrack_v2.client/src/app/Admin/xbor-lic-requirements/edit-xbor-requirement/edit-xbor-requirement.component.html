@@ -91,9 +91,7 @@
           id="plS_Incentive1"
           formControlName="plS_Incentive1"
         />
-        <label for="plS_Incentive1" class="form-label">
-          Lic Incentive 1
-        </label>
+        <label for="plS_Incentive1" class="form-label"> Lic Incentive 1 </label>
       </div>
     </div>
     <div class="col">
@@ -113,7 +111,9 @@
           id="incentive2_Plus"
           formControlName="incentive2_Plus"
         />
-        <label for="incentive2_Plus" class="form-label"> Lic Incentive 2 </label>
+        <label for="incentive2_Plus" class="form-label">
+          Lic Incentive 2
+        </label>
       </div>
     </div>
     <div class="col">
@@ -133,9 +133,7 @@
           id="licIncentive3"
           formControlName="licIncentive3"
         />
-        <label for="licIncentive3" class="form-label">
-          Lic Incentive 3
-        </label>
+        <label for="licIncentive3" class="form-label"> Lic Incentive 3 </label>
       </div>
     </div>
     <div class="col">
@@ -170,7 +168,13 @@
       >
         <span class="material-symbols-outlined me-3">delete_forever</span>
       </button>
-      <a [href]="xborLicenseRequirementForm.get('startDocument')?.value" target="_blank" class="ms-5 mt-3 mb-3" style="font-size: medium;">{{ xborLicenseRequirementForm.get('startDocument')?.value }}</a>
+      <a
+        [href]="xborLicenseRequirementForm.get('startDocument')?.value"
+        target="_blank"
+        class="ms-5 mt-3 mb-3"
+        style="font-size: medium"
+        >{{ xborLicenseRequirementForm.get("startDocument")?.value }}</a
+      >
     </div>
   </div>
 
@@ -178,6 +182,7 @@
     <div class="col-md-12">
       <label for="startDoc" class="form-label"> Start Document: </label>
       <app-file-upload
+        [uploadType]="uploadStartNewType"
         [filePathUri]="fileUri"
         [displayMode]="FileDisplayMode"
         (fileSelected)="onFileSelected($event)"
@@ -206,7 +211,13 @@
       >
         <span class="material-symbols-outlined me-3">delete_forever</span>
       </button>
-      <a [href]="xborLicenseRequirementForm.get('renewalDocument')?.value" target="_blank" class="ms-5 mt-3 mb-3" style="font-size: medium;">{{ xborLicenseRequirementForm.get('renewalDocument')?.value }}</a>
+      <a
+        [href]="xborLicenseRequirementForm.get('renewalDocument')?.value"
+        target="_blank"
+        class="ms-5 mt-3 mb-3"
+        style="font-size: medium"
+        >{{ xborLicenseRequirementForm.get("renewalDocument")?.value }}</a
+      >
     </div>
   </div>
 
@@ -214,6 +225,7 @@
     <div class="col-md-12">
       <label for="renewalDoc" class="form-label"> Renewal Document: </label>
       <app-file-upload
+        [uploadType]="uploadRenewalType"
         [filePathUri]="fileUri"
         [displayMode]="FileDisplayMode"
         (fileSelected)="onFileSelected($event)"
@@ -234,7 +246,13 @@
       >
         Cancel
       </button>
-      <button type="submit" class="btn btn-primary save-button button-font-size" [disabled]="xborLicenseRequirementForm.pristine">Save</button>
+      <button
+        type="submit"
+        class="btn btn-primary save-button button-font-size"
+        [disabled]="xborLicenseRequirementForm.pristine"
+      >
+        Save
+      </button>
     </div>
   </div>
 </form>

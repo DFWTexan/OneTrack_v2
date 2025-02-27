@@ -34,11 +34,6 @@ export class FileUploadComponent {
         formData.append('FileName', this.fileName);
         formData.append('FilePathType', this.uploadType || '');
 
-        // const data = {
-        //   UploadType: file,
-        //   FilePathUri: this.filePathUri || '',
-        // };
-
         const upload$ = this.http.post(this.url + 'Upload', formData);
         upload$.subscribe({
           next: (response) => {

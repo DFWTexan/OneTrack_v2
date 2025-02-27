@@ -62,7 +62,10 @@
           id="licenseId"
           formControlName="licenseId"
         >
-          <option *ngFor="let license of stateLicenseItems" [value]="license.value">
+          <option
+            *ngFor="let license of stateLicenseItems"
+            [value]="license.value"
+          >
             {{ license.label }}
           </option>
         </select>
@@ -119,7 +122,9 @@
           id="incentive2_Plus"
           formControlName="incentive2_Plus"
         />
-        <label for="incentive2_Plus" class="form-label"> Incentive 2 Plus </label>
+        <label for="incentive2_Plus" class="form-label">
+          Incentive 2 Plus
+        </label>
       </div>
     </div>
     <div class="col">
@@ -159,7 +164,13 @@
         style="font-size: medium; font-weight: 500"
         >{{ stateRequirementForm.get("startDocument")?.value }}</span
       > -->
-      <a [href]="stateRequirementForm.get('startDocument')?.value" target="_blank" class="ms-5 mt-3 mb-3" style="font-size: medium;">{{ stateRequirementForm.get('startDocument')?.value }}</a>
+      <a
+        [href]="stateRequirementForm.get('startDocument')?.value"
+        target="_blank"
+        class="ms-5 mt-3 mb-3"
+        style="font-size: medium"
+        >{{ stateRequirementForm.get("startDocument")?.value }}</a
+      >
     </div>
   </div>
 
@@ -167,6 +178,7 @@
     <div class="col-md-12">
       <label for="startDoc" class="form-label"> Start Document: </label>
       <app-file-upload
+        [uploadType]="uploadStartNewType"
         [filePathUri]="fileUri"
         [displayMode]="FileDisplayMode"
         (fileSelected)="onFileSelected($event)"
@@ -200,7 +212,13 @@
         style="font-size: medium; font-weight: 500"
         >{{ stateRequirementForm.get("renewalDocument")?.value }}</span
       > -->
-      <a [href]="stateRequirementForm.get('renewalDocument')?.value" target="_blank" class="ms-5 mt-3 mb-3" style="font-size: medium;">{{ stateRequirementForm.get('renewalDocument')?.value }}</a>
+      <a
+        [href]="stateRequirementForm.get('renewalDocument')?.value"
+        target="_blank"
+        class="ms-5 mt-3 mb-3"
+        style="font-size: medium"
+        >{{ stateRequirementForm.get("renewalDocument")?.value }}</a
+      >
     </div>
   </div>
 
@@ -208,6 +226,7 @@
     <div class="col-md-12">
       <label for="renewalDoc" class="form-label"> Renewal Document: </label>
       <app-file-upload
+        [uploadType]="uploadRenewalType"
         [filePathUri]="fileUri"
         [displayMode]="FileDisplayMode"
         (fileSelected)="onFileSelected($event)"
@@ -228,7 +247,13 @@
       >
         Cancel
       </button>
-      <button type="submit" class="btn btn-primary save-button button-font-size" [disabled]="stateRequirementForm.pristine">Save</button>
+      <button
+        type="submit"
+        class="btn btn-primary save-button button-font-size"
+        [disabled]="stateRequirementForm.pristine"
+      >
+        Save
+      </button>
     </div>
   </div>
 </form>

@@ -38,6 +38,8 @@ export class EditStateRequirementComponent implements OnInit, OnDestroy {
   file: File | null = null;
   fileUri: string | null = null;
   document: string = '';
+  uploadStartNewType: string = 'StateNewStartPDF';
+  uploadRenewalType: string = 'SateRenewalPDF';
 
   subscriptionData: Subscription = new Subscription();
 
