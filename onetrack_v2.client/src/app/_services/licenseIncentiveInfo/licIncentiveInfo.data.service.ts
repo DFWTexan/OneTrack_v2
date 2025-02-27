@@ -501,20 +501,20 @@ export class LicIncentiveInfoDataService {
   //       })
   //     );
   // }
-  updateLicenseIncentiveInfo(licenseIncentiveInfo: any): Promise<any> {
-    this.apiUrl = environment.apiUrl + 'LicenseInfo/UpdateLicenseIncentive';
-
+  updateLicenseIncentiveInfo(licenseIncentiveInfo: LicenseIncentiveInfo): Promise<any> {
+    const apiUrl = `${environment.apiUrl}LicenseInfo/UpdateLicenseIncentive`;
+  
     return this.http
       .post<{
         success: boolean;
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl, licenseIncentiveInfo)
+      }>(apiUrl, licenseIncentiveInfo)
       .pipe(
-        map((response) => {
+        switchMap((response) => {
           if (response.success && response.statusCode === 200) {
-            // return response;
+            return this.fetchLicIncentiveInfo(licenseIncentiveInfo.employeeLicenseID);
           } else {
             throw new Error(response.errMessage || 'Unknown error');
           }

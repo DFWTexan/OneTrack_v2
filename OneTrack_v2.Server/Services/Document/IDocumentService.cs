@@ -4,8 +4,10 @@ namespace OneTrak_v2.Services
 {
     public interface IDocumentService
     {
-        Task<ReturnResult> Upload(string vFilePathUri, Stream vStream);
+        Task<ReturnResult> Upload(Stream vStream, string vFileName, string vFilePathType);
 
-        Task<ReturnResult> Delete(string? vFilePathUri = null, string? vFilename = null);
+        //Task<ReturnResult> Upload_v2(Stream vStream, OneTrak_v2.Document.Model.IputFileUploadDelete input);
+
+        //Task<ReturnResult> Delete(OneTrak_v2.Document.Model.IputFileUploadDelete input);
     }
 }

@@ -3,7 +3,8 @@
     public class IputFileUploadDelete
     {
         public string? FilePathUri { get; set; } = null;
-        public IFormFile? File { get; set; } = null;
-        public string? FileName { get; set; } = null;
+        public required IFormFile? File { get; set; }
+        public required string FileName { get; set; }
+        public required string FileExt { get; set; }
     }
 }

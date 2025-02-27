@@ -27,7 +27,7 @@ export interface LicenseIncentiveInfo {
     dmMgrJobTitle: string;
     cCdBRMgrName: string;
     cCdBRMgrJobTitle: string;
-    dmSentBy: string;
+    dmSentBy?: string  | null;
     dmSentDate?: any;
     dmApprovalDate: string;
     dmDeclinedDate?: any;

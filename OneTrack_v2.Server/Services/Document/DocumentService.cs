@@ -28,34 +28,81 @@ namespace OneTrak_v2.Services
             _attachmentLocation = _config.GetValue<string>(attachmentLocKey);
         }
 
-        public async Task<ReturnResult> Upload(string vFilePathUri, Stream vStream)
+        //public async Task<ReturnResult> Upload(Stream vStream, OneTrak_v2.Document.Model.IputFileUploadDelete input)
+        //{
+        //    try
+        //    {
+        //        if (vStream == null)
+        //        {
+        //            _utilityService.LogError("vStream is NULL.", "Server Error - Please Contact Support [REF# DOCS-3569-92418].", new { }, null);
+
+        //            return new ReturnResult
+        //            {
+        //                StatusCode = 400,
+        //                Success = false
+        //            };
+        //        }
+
+        //        string? filePath = input.TargetPathUri != null ? input.TargetPathUri : _attachmentLocation;
+
+        //        // Ensure the directory exists before trying to create a file
+        //        string? directoryPath = Path.GetDirectoryName(filePath);
+        //        if (!Directory.Exists(directoryPath))
+        //        {
+        //            Directory.CreateDirectory(directoryPath);
+        //        }
+
+        //        // Use Path.Combine to ensure the path is correctly formatted
+        //        string fullPath = Path.Combine(directoryPath, Path.GetFileName(filePath));
+
+        //        //using (var fileStream = new FileStream(fullPath, FileMode.Create, FileAccess.Write, FileShare.Write))
+        //        using (var fileStream = new FileStream(fullPath, FileMode.Create))
+        //        {
+        //            await vStream.CopyToAsync(fileStream);
+        //        }
+
+        //        return new ReturnResult
+        //        {
+        //            StatusCode = 200,
+        //            Success = true,
+        //            ObjData = new { Message = "File Upload Successful" }
+        //        };
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _utilityService.LogError(ex.Message, "Server Error - Please Contact Support [REF# DOCS-3509-93312].", new { }, null);
+
+        //        return new ReturnResult
+        //        {
+        //            StatusCode = 500,
+        //            Success = false,
+        //            ErrMessage = "Server Error - Please Contact Support [REF# DOCS-3509-93312]."
+        //        };
+        //    }
+        //}
+        public async Task<ReturnResult> Upload(Stream vStream, string vFileName, string vFilePathType)
         {
+            if (vStream == null)
+            {
+                _utilityService.LogError("vStream is NULL.", "Server Error - Please Contact Support [REF# DOCS-3569-92418].", new { }, null);
+                return new ReturnResult
+                {
+                    StatusCode = 400,
+                    Success = false
+                };
+            }
+
             try
             {
-                if (vStream == null)
-                {
-                    _utilityService.LogError("vStream is NULL.", "Server Error - Please Contact Support [REF# DOCS-3569-92418].", new { }, null);
+                //var destPath = _attachmentLocation;
 
-                    return new ReturnResult
-                    {
-                        StatusCode = 400,
-                        Success = false
-                    };
+                if (!Directory.Exists(_attachmentLocation))
+                {
+                    Directory.CreateDirectory(_attachmentLocation);
                 }
 
-                string? filePath = vFilePathUri != null ? vFilePathUri : _attachmentLocation;
+                var fullPath = Path.Combine(_attachmentLocation, vFileName);
 
-                // Ensure the directory exists before trying to create a file
-                string? directoryPath = Path.GetDirectoryName(filePath);
-                if (!Directory.Exists(directoryPath))
-                {
-                    Directory.CreateDirectory(directoryPath);
-                }
-
-                // Use Path.Combine to ensure the path is correctly formatted
-                string fullPath = Path.Combine(directoryPath, Path.GetFileName(filePath));
-
-                //using (var fileStream = new FileStream(fullPath, FileMode.Create, FileAccess.Write, FileShare.Write))
                 using (var fileStream = new FileStream(fullPath, FileMode.Create))
                 {
                     await vStream.CopyToAsync(fileStream);
@@ -70,51 +117,47 @@ namespace OneTrak_v2.Services
             }
             catch (Exception ex)
             {
-                _utilityService.LogError(ex.Message, "Server Error - Please Contact Support [REF# DOCS-3509-93312].", new { }, null);
-
                 return new ReturnResult
                 {
                     StatusCode = 500,
-                    Success = false,
-                    ErrMessage = "Server Error - Please Contact Support [REF# DOCS-3509-93312]."
+                    Success = false
                 };
             }
         }
+        //public async Task<ReturnResult> Delete(OneTrak_v2.Document.Model.IputFileUploadDelete input)
+        //{
+        //    var result = new ReturnResult();
+        //    try
+        //    {
+        //        string filePath = input.TargetPathUri != null ? input.TargetPathUri : _attachmentLocation;
 
-        public async Task<ReturnResult> Delete(string? vFilePathUri = null, string? vFilename = null)
-        {
-            var result = new ReturnResult();
-            try
-            {
-                string filePath = vFilePathUri != null ? vFilePathUri : _attachmentLocation;
+        //        string fullPath = Path.Combine(filePath, vFilename);
 
-                string fullPath = Path.Combine(filePath, vFilename);
+        //        if (File.Exists(fullPath))
+        //        {
+        //            File.Delete(fullPath);
 
-                if (File.Exists(fullPath))
-                {
-                    File.Delete(fullPath);
+        //            result.StatusCode = 200;
+        //            result.Success = true;
+        //            result.ObjData = new { Message = "File Deleted Successfully" };
+        //        }
+        //        else
+        //        {
+        //            result.StatusCode = 404;
+        //            result.Success = false;
+        //            result.ErrMessage = "File Not Found";
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        result.StatusCode = 500;
+        //        result.Success = false;
+        //        result.ErrMessage = "Server Error - Please Contact Support [REF# DOCS-3509-93412].";
 
-                    result.StatusCode = 200;
-                    result.Success = true;
-                    result.ObjData = new { Message = "File Deleted Successfully" };
-                }
-                else
-                {
-                    result.StatusCode = 404;
-                    result.Success = false;
-                    result.ErrMessage = "File Not Found";
-                }
-            }
-            catch (Exception ex)
-            {
-                result.StatusCode = 500;
-                result.Success = false;
-                result.ErrMessage = "Server Error - Please Contact Support [REF# DOCS-3509-93412].";
+        //        _utilityService.LogError(ex.Message, "Server Error - Please Contact Support [REF# DOCS-3509-93413].", new { }, null);
+        //    }
 
-                _utilityService.LogError(ex.Message, "Server Error - Please Contact Support [REF# DOCS-3509-93413].", new { }, null);
-            }
-
-            return await Task.FromResult(result);
-        }
+        //    return await Task.FromResult(result);
+        //}
     }
 }

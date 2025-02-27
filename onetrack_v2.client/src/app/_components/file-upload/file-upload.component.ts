@@ -10,24 +10,35 @@ import { ErrorMessageService } from '../../_services';
   styleUrl: './file-upload.component.css',
 })
 export class FileUploadComponent {
+  @Input() uploadType: string | null = null;
   @Input() filePathUri: string | null = null;
   @Input() displayMode: string | null = null;
   @Input() isDisabled: boolean = false;
   private url: string = environment.apiUrl + 'Document/';
   fileName = '';
 
-  constructor(private http: HttpClient, private errorMessageService: ErrorMessageService) {}
+  constructor(
+    private http: HttpClient,
+    private errorMessageService: ErrorMessageService
+  ) {}
 
   onFileSelected(event: any) {
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length) {
       const file: File = target.files[0];
-  
+
       if (file) {
         this.fileName = file.name;
         const formData = new FormData();
         formData.append('File', file);
-        formData.append('FilePathUri', this.filePathUri || '');
+        formData.append('FileName', this.fileName);
+        formData.append('FilePathType', this.uploadType || '');
+
+        // const data = {
+        //   UploadType: file,
+        //   FilePathUri: this.filePathUri || '',
+        // };
+
         const upload$ = this.http.post(this.url + 'Upload', formData);
         upload$.subscribe({
           next: (response) => {
@@ -36,12 +47,11 @@ export class FileUploadComponent {
           },
           error: (error) => {
             if (error.error && error.error.errMessage) {
-
-console.log('EMFTEST (UPLOAD) - error', error.error.errMessage);
+              console.log('EMFTEST (UPLOAD) - error', error.error.errMessage);
 
               this.errorMessageService.setErrorMessage(error.error.errMessage);
             }
-          }
+          },
         });
       }
     }

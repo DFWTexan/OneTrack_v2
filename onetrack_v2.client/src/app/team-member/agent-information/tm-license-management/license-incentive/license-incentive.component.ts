@@ -67,7 +67,7 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
       DM10DaySentDate: [''],
       DM20DaySentDate: [''],
       DMComment: [''],
-      DMSentBySOEID: [''],
+      DMSentBySOEID: [],
       DM10DaySentBySOEID: [''],
       DM20DaySentBySOEID: [''],
       TMSentDate: [''],

@@ -19,34 +19,48 @@ namespace OneTrak_v2.Controllers
             _documentService = documentService;
         }
 
+        //[HttpPost]
+        //public async Task<ActionResult> Upload([FromForm] OneTrak_v2.Document.Model.IputFileUploadDelete input)
+        //{
+
+        //    if (input.File == null || input.File.Length == 0)
+        //        return BadRequest("File is empty");
+
+        //    string fileBytes = string.Empty;
+
+        //    string fileName = input.File.FileName;
+
+        //    var stream = input.File.OpenReadStream();
+
+        //    var result = await Task.Run(() => _documentService.Upload(stream, input));
+
+        //    return StatusCode(result.StatusCode, result);
+        //}
+
         [HttpPost]
-        public async Task<ActionResult> Upload([FromForm] OneTrak_v2.Document.Model.IputFileUploadDelete input)
+        public async Task<ActionResult> Upload([FromForm] IFormFile file, [FromForm] string fileName, [FromForm] string filePathType)
         {
 
-            if (input.File == null || input.File.Length == 0)
+            if (file == null || file.Length == 0)
                 return BadRequest("File is empty");
 
-            string fileBytes = string.Empty;
+            var stream = file.OpenReadStream();
 
-            string fileName = input.File.FileName;
-
-            var stream = input.File.OpenReadStream();
-
-            var result = await Task.Run(() => _documentService.Upload(input.FilePathUri, stream));
+            var result = await _documentService.Upload(stream, fileName, filePathType);
 
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpPost]
-        public async Task<ActionResult> Delete([FromBody] OneTrak_v2.Document.Model.IputFileUploadDelete input)
-        {
-            if (string.IsNullOrEmpty(input.FilePathUri) || string.IsNullOrEmpty(input.FileName))
-                return BadRequest("File path or file name is empty");
+        //[HttpPost]
+        //public async Task<ActionResult> Delete([FromBody] OneTrak_v2.Document.Model.IputFileUploadDelete input)
+        //{
+        //    if (string.IsNullOrEmpty(input.TargetPathUri) || string.IsNullOrEmpty(input.FileName))
+        //        return BadRequest("File path or file name is empty");
 
-            var result = await Task.Run(() => _documentService.Delete(input.FilePathUri, input.FileName));
+        //    var result = await Task.Run(() => _documentService.Delete(input.TargetPathUri, input.FileName));
 
-            return StatusCode(result.StatusCode, result);
-        }
+        //    return StatusCode(result.StatusCode, result);
+        //}
 
         // GET api/file/{filename}
         [HttpGet]

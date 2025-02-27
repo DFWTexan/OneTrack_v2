@@ -56,6 +56,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   FileDisplayMode = 'ATTACHMENT'; //--> CHOSEFILE / ATTACHMENT
   file: File | null = null;
   fileUri: string | null = null;
+  uploadType: string = 'AttachmentLoc';
   pdfSrc: SafeResourceUrl | null = null;
   filePdfSrc: SafeResourceUrl | null = null;
   fileHtmlContent: SafeHtml | null = null;
