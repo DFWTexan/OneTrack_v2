@@ -94,14 +94,21 @@ namespace OneTrak_v2.Services
 
             try
             {
-                //var destPath = _attachmentLocation;
+                // Retrieve the current environment setting
+                string environment = _config.GetValue<string>("Environment") ?? "DVLP";
 
-                if (!Directory.Exists(_attachmentLocation))
+                // Construct the keys for accessing environment-specific settings
+                string fileDestinationPath = $"EnvironmentSettings:{environment}:{vFilePathType}";
+
+                // Retrieve the values based on the constructed keys
+                string? fileDestinationLocPath = _config.GetValue<string>(fileDestinationPath);
+
+                if (!Directory.Exists(fileDestinationLocPath))
                 {
-                    Directory.CreateDirectory(_attachmentLocation);
+                    Directory.CreateDirectory(fileDestinationLocPath);
                 }
 
-                var fullPath = Path.Combine(_attachmentLocation, vFileName);
+                var fullPath = Path.Combine(fileDestinationLocPath, vFileName);
 
                 using (var fileStream = new FileStream(fullPath, FileMode.Create))
                 {
