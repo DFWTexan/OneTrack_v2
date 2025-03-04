@@ -42,15 +42,15 @@ export class EditEmploymentHistComponent implements OnInit, OnDestroy {
       employmentHistoryID: new FormControl({ value: '', disabled: true }),
       employmentID: new FormControl({ value: '', disabled: true }),
       employeeID: new FormControl({ value: '', disabled: true }),
-      hireDate: new FormControl(null),
-      rehireDate: new FormControl(null),
-      notifiedTermDate: new FormControl(null),
-      hrTermDate: new FormControl(null),
-      hrTermCode: new FormControl(null),
-      isForCause: new FormControl(null),
+      hireDate: new FormControl({value: null, disabled: true}),
+      rehireDate: new FormControl({value: null, disabled: true}),
+      notifiedTermDate: new FormControl({value: null, disabled: true}),
+      hrTermDate: new FormControl({value: null, disabled: true}),
+      hrTermCode: new FormControl({value: null, disabled: true}),
+      isForCause: new FormControl({value: null, disabled: true}),
       backgroundCheckStatus: new FormControl(null),
       backGroundCheckNotes: new FormControl(null),
-      isCurrent: new FormControl(null),
+      isCurrent: new FormControl({value: null, disabled: true}),
     });
 
     this.subscriptions.add(
