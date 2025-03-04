@@ -309,19 +309,19 @@
           class="form-control input-size-small"
           type="date"
           id="renewalDate"
-          formControlName="reinstatement"
+          formControlName="licenseEffectiveDate"
         />
         <div
           *ngIf="
-            (licenseForm.controls['reinstatement'].touched ||
+            (licenseForm.controls['licenseEffectiveDate'].touched ||
               isFormSubmitted) &&
-            licenseForm.controls['reinstatement'].errors
+            licenseForm.controls['licenseEffectiveDate'].errors
           "
           class="text-danger"
         >
           <div
             *ngIf="
-              licenseForm.controls['reinstatement'].errors[
+              licenseForm.controls['licenseEffectiveDate'].errors[
                 'invalidFormat'
               ]
             "

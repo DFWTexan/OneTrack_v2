@@ -1,5 +1,10 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 
@@ -12,7 +17,7 @@ import {
   ErrorMessageService,
   UserAcctInfoDataService,
 } from '../../../../../_services';
-import { AgentLicenseAppointments } from '../../../../../_Models';
+import { AgentLicenseAppointments, LicenseInfo } from '../../../../../_Models';
 import { dateValidator } from '../../../../../_shared';
 
 @Component({
@@ -56,10 +61,10 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       licenseExpireDate: ['', dateValidator],
       licenseState: ['Select'],
       licenseStatus: ['Select', Validators.required],
-      licenseNumber: [''],
-      reinstatement: [''],
-      required: [''],
-      nonResident: [''],
+      licenseNumber: [null],
+      reinstatement: [false],
+      required: [false],
+      nonResident: [false],
       licenseEffectiveDate: ['', dateValidator],
       licenseIssueDate: ['', dateValidator],
       lineOfAuthorityIssueDate: ['', dateValidator],
@@ -68,7 +73,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       // UPDATE FORM FIELDS HERE
       // employeeLicenseId: [{ value: '', disabled: true }],
       employeeLicenseId: [null],
-      appointmentStatus: [''],
+      appointmentStatus: [null],
       companyID: [0],
       carrierDate: [null],
       appointmentEffectiveDate: [null],
@@ -271,40 +276,62 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.isFormSubmitted = true;
 
-    let licenseInfo: any = this.licenseForm.value;
-    licenseInfo.employeeID = this.agentDataService.agentInformation.employeeID;
-    licenseInfo.employmentID =
+    console.log(
+      'EMFTEST (GOT HERE - ! - ! - !) - onSubmit() => \n ',
+      this.licenseForm.value
+    );
+
+    let licenseDataInfo: LicenseInfo = this.licenseForm.value;
+    licenseDataInfo.employeeID =
+      this.agentDataService.agentInformation.employeeID;
+    licenseDataInfo.employmentID =
       this.agentDataService.agentInformation.employmentID;
-    licenseInfo.UserSOEID = this.userInfoDataService.userAcctInfo.soeid;
+    licenseDataInfo.UserSOEID = this.userInfoDataService.userAcctInfo.soeid;
 
     if (this.agentComService.modeLicenseMgmt == 'EDIT') {
       // licenseInfo.employeeLicenseId =
       //   this.licenseMgmtData[this.currentIndex].employeeLicenseId;
       // this.agentDataService.agentLicApptLicenseID;
     } else {
-      licenseInfo.employeeLicenseId = 0;
+      licenseDataInfo.employeeLicenseId = 0;
     }
 
-    if (licenseInfo.licenseID === 0) {
+    if (licenseDataInfo.licenseID === 0) {
       this.licenseForm.controls['licenseID'].setErrors({ invalid: true });
     } else {
       this.licenseForm.controls['licenseID'].setErrors(null);
     }
 
-    if (licenseInfo.licenseStatus === 'Select') {
+    if (licenseDataInfo.licenseStatus === 'Select') {
       this.licenseForm.controls['licenseStatus'].setErrors({ invalid: true });
     } else {
       this.licenseForm.controls['licenseStatus'].setErrors(null);
     }
 
     if (
-      licenseInfo.sentToAgentDate === '01/01/0001 00:00:00' ||
-      (licenseInfo.sentToAgentDate === null &&
+      licenseDataInfo.sentToAgentDate === '01/01/0001 00:00:00' ||
+      (licenseDataInfo.sentToAgentDate === null &&
         this.agentComService.modeLicenseMgmt !== 'EDIT')
     ) {
       this.licenseForm.controls['sentToAgentDate'].setErrors({ invalid: true });
     } else {
       this.licenseForm.controls['sentToAgentDate'].setErrors(null);
+    }
+
+    if (this.licenseForm.controls['licenseIssueDate'].value === '') {
+      licenseDataInfo.licenseIssueDate = null;
+    }
+
+    if (this.licenseForm.controls['lineOfAuthorityIssueDate'].value === '') {
+      licenseDataInfo.lineOfAuthorityIssueDate = null;
+    }
+
+    if (this.licenseForm.controls['licenseEffectiveDate'].value === '') {
+      licenseDataInfo.licenseEffectiveDate = null;
+    }
+
+    if (this.licenseForm.controls['licenseExpireDate'].value === '') {
+      licenseDataInfo.licenseExpireDate = null;
     }
 
     if (this.licenseForm.invalid) {
@@ -315,7 +342,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
     }
 
     this.subscriptions.add(
-      this.agentDataService.upsertAgentLicense(licenseInfo).subscribe({
+      this.agentDataService.upsertAgentLicense(licenseDataInfo).subscribe({
         next: (response) => {
           // const modalDiv = document.getElementById('modal-edit-license-info');
           // if (modalDiv != null) {

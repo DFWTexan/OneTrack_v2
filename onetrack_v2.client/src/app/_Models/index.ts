@@ -23,3 +23,4 @@ export * from './admin/stateRequirement';
 export * from './admin/stateProvince';
 export * from './admin/xborLicenseRequirement';
 export * from './employee/employeeFind';
+export * from './LicenseInfo/LicenseInfo';

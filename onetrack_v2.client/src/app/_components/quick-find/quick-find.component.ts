@@ -97,6 +97,7 @@ export class QuickFindComponent {
 
           this.isByAgentNameDisabled = false;
           this.isByTMDisabled = false;
+          this.isLoading = false;
 
           if (response.length === 0) {
             this.isLoading = false;
