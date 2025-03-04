@@ -28,13 +28,13 @@
             : (agentInfo.dateOfBirth | date : "MM/dd/yyyy")
         }}
       </p>
-    </div>
-    <div class="col">
       <p>
         <strong>Email:</strong><br />
         {{ agentInfo.email || "N/A" }}
       </p>
-      <p>
+    </div>
+    <!-- <div class="col">
+     <p>
         <strong>Home Phone:</strong><br />
         {{ agentInfo.homePhone || "N/A" }}
       </p>
@@ -46,7 +46,7 @@
         <strong>Fax Phone:</strong><br />
         {{ agentInfo.faxPhone || "N/A" }}
       </p>
-    </div>
+    </div> -->
     <div class="col">
       <p>
         <strong>Streat Address1:</strong><br />
@@ -61,7 +61,7 @@
           <strong>City:</strong><br />
           {{ agentInfo.city || "N/A" }}
         </p>
-        <p>
+        <p style="margin-right: 10rem">
           <strong>State:</strong><br />
           {{ agentInfo.state || "N/A" }}
         </p>
