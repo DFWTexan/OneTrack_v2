@@ -9,7 +9,7 @@
         public string? MiddleName { get; set; } = "";
         public string? SOEID { get; set; } = "";
         public DateTime? DateOfBirth { get; set; } 
-        public int? NationalProducerNumber { get; set; } = 0;
+        public int? NationalProducerNumber { get; set; }
         public string? GEID { get; set; } = "";
         public string? Alias { get; set; } = "";
         public bool ExcludeFromRpts { get; set; } = false;

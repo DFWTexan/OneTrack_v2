@@ -97,7 +97,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
   }
 
   onChildCallRefreshData(data: any) {
-    // this.agentInfo = data;
+    this.agentInfo = data;
   }
 
   openConfirmDialog(eventAction: string, msg: string, vObject: any): void {
