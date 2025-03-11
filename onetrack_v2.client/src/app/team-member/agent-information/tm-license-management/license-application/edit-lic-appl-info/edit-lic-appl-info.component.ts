@@ -85,28 +85,26 @@ export class EditLicApplInfoComponent implements OnInit, OnDestroy {
             this.agentDataService.licenseApplicationItemChanged.subscribe(
               (licApplication: any) => {
                 this.employeeLicenseID = licApplication.employeeLicenseID;
+
+                console.log(
+                  'EMFTest (EditLicApplInfoComponent: ngOnInit) - licApplication => \n',
+                  licApplication
+                );
+
                 this.licApplicationForm.patchValue({
                   licenseApplicationID: licApplication.licenseApplicationID,
-                  sentToAgentDate: formatDate(
-                    licApplication.sentToAgentDate,
-                    'yyyy-MM-dd',
-                    'en-US'
-                  ),
-                  recFromAgentDate: formatDate(
-                    licApplication.recFromAgentDate,
-                    'yyyy-MM-dd',
-                    'en-US'
-                  ),
-                  sentToStateDate: licApplication.sentToStateDate != '12/31/1969' ? formatDate(
-                    licApplication.sentToStateDate,
-                    'yyyy-MM-dd',
-                    'en-US'
-                  ) : null,
-                  recFromStateDate: licApplication.recFromStateDate != '12/31/1969' ? formatDate(
-                    licApplication.recFromStateDate,
-                    'yyyy-MM-dd',
-                    'en-US'
-                  ) : null,
+                  sentToAgentDate: licApplication.sentToAgentDate
+                    ? formatDate(licApplication.sentToAgentDate, 'yyyy-MM-dd', 'en-US')
+                    : null,
+                  recFromAgentDate: licApplication.recFromAgentDate
+                    ? formatDate(licApplication.recFromAgentDate, 'yyyy-MM-dd', 'en-US')
+                    : null,
+                  sentToStateDate: licApplication.sentToStateDate
+                    ? formatDate(licApplication.sentToStateDate, 'yyyy-MM-dd', 'en-US')
+                    : null,
+                  recFromStateDate: licApplication.recFromStateDate 
+                    ? formatDate(licApplication.recFromStateDate, 'yyyy-MM-dd', 'en-US')
+                    : null,
                   applicationStatus: licApplication.applicationStatus,
                   applicationType: licApplication.applicationType,
                 });
