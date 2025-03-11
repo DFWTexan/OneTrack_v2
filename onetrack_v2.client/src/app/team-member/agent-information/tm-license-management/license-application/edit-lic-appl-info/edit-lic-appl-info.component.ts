@@ -86,11 +86,6 @@ export class EditLicApplInfoComponent implements OnInit, OnDestroy {
               (licApplication: any) => {
                 this.employeeLicenseID = licApplication.employeeLicenseID;
 
-                console.log(
-                  'EMFTest (EditLicApplInfoComponent: ngOnInit) - licApplication => \n',
-                  licApplication
-                );
-
                 this.licApplicationForm.patchValue({
                   licenseApplicationID: licApplication.licenseApplicationID,
                   sentToAgentDate: licApplication.sentToAgentDate
