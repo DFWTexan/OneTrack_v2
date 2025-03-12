@@ -2213,7 +2213,7 @@ namespace OneTrack_v2.Services
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
 
-                            cmd.Parameters.Add(new SqlParameter("@ContEducationID", contEducationID));
+                            cmd.Parameters.Add(new SqlParameter("@ContEducationID", 1));
                             cmd.Parameters.Add(new SqlParameter("@ContEducationRequirementID", vInput.ContEducationRequirementID));
                             cmd.Parameters.Add(new SqlParameter("@ContEducationTakenDate", vInput.ContEducationTakenDate));
                             cmd.Parameters.Add(new SqlParameter("@CreditHoursTaken", vInput.CreditHoursTaken));

@@ -129,7 +129,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
             licenseIssueDate: licenseInfo.originalIssueDate
               ? formatDate(licenseInfo.originalIssueDate, 'yyyy-MM-dd', 'en-US')
               : null,
-            lineOfAuthIssueDate: licenseInfo.lineOfAuthIssueDate
+            lineOfAuthorityIssueDate: licenseInfo.lineOfAuthIssueDate
               ? formatDate(
                   licenseInfo.lineOfAuthIssueDate,
                   'yyyy-MM-dd',
@@ -214,7 +214,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
               licenseIssueDate: originalIssueDate
                 ? formatDate(originalIssueDate, 'yyyy-MM-dd', 'en-US')
                 : null,
-              lineOfAuthIssueDate: lineOfAuthIssueDate
+              lineOfAuthorityIssueDate: lineOfAuthIssueDate
                 ? formatDate(lineOfAuthIssueDate, 'yyyy-MM-dd', 'en-US')
                 : '01/01/0001 00:00:00',
               licenseEffectiveDate: licenseEffectiveDate
