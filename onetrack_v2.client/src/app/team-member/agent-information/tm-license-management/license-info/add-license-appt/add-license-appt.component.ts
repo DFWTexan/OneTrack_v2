@@ -98,6 +98,22 @@ export class AddLicenseApptComponent implements OnInit, OnDestroy {
       this.licenseApptForm.controls['companyID'].setErrors({ required: true });
     }
 
+    if (licenseApptItem.carrierDate === '') {
+      licenseApptItem.carrierDate = null;
+    }
+
+    if (licenseApptItem.appointmentEffectiveDate === '') {
+      licenseApptItem.appointmentEffectiveDate = null;
+    }
+
+    if (licenseApptItem.appointmentExpireDate === '') {
+      licenseApptItem.appointmentExpireDate = null;
+    }
+
+    if (licenseApptItem.appointmentTerminationDate === '') {
+      licenseApptItem.appointmentTerminationDate = null;
+    }
+
     if (this.licenseApptForm.invalid) {
       this.licenseApptForm.setErrors({ invalid: true });
       return;

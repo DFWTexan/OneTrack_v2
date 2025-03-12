@@ -1505,6 +1505,7 @@ namespace OneTrack_v2.Services
 
             return result;
         }
+        /* NOTE - THIS STORED PROCEDURE EXECUTES SUCCESSFULLY WITHOUT ACTUALLY UPDATING THE NATIONAL PRODUCER NUMBER. */
         public ReturnResult UpdateAgentDetails([FromBody] IputAgentDetail vInput)
         {
             var result = new ReturnResult();
@@ -1548,6 +1549,37 @@ namespace OneTrack_v2.Services
                         conn.Open();
                         cmd.ExecuteNonQuery();
                     }
+                }
+
+                result.Success = true;
+                result.StatusCode = 200;
+
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# AGNT-6509-49334].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+
+            return result;
+        }
+        public ReturnResult UpdateAgentDetails_v2([FromBody] IputAgentDetail vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var employee = _db.Employees
+                    .Where(e => e.EmployeeId == vInput.EmployeeID)
+                    .FirstOrDefault();
+
+                if (employee != null)
+                {
+                    employee.NationalProducerNumber = vInput.NationalProducerNumber;
+                    _db.SaveChanges();
                 }
 
                 result.Success = true;

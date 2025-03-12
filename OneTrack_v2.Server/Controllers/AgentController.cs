@@ -174,7 +174,7 @@ namespace OneTrack_v2.Controllers
         [HttpPost]
         public async Task<ActionResult> UpdateAgentDetails([FromBody] IputAgentDetail input)
         {
-            var result = await Task.Run(() => _agentService.UpdateAgentDetails(input));
+            var result = await Task.Run(() => _agentService.UpdateAgentDetails_v2(input));
 
             return StatusCode(result.StatusCode, result);
         }
