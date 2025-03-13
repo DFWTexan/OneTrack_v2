@@ -103,6 +103,7 @@ export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
     incentiveLicenseItem.employeeLicenseID = 0;
     incentiveLicenseItem.employeeID = this.employeeID;
     incentiveLicenseItem.employmentID = this.employmentID;
+    incentiveLicenseItem.licenseStatus = 'Incentive';
     incentiveLicenseItem.userSOEID =
       this.userAcctInfoDataService.userAcctInfo.soeid;
 
