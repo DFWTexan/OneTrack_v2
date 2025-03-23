@@ -26,7 +26,7 @@ namespace OneTrack_v2.Services
         public ReturnResult InsertAgent_v2([FromBody] IputUpsertAgent vInput);
         public ReturnResult DeleteAgentEmployee(int vEmployeeID, string vUserSOEID);
         public ReturnResult UpdateAgentDetails([FromBody] IputAgentDetail vInput);
-        public ReturnResult UpdateAgentDetails_v2([FromBody] IputAgentDetail vInput);
+        public ReturnResult UpdateAgentNatNumber([FromBody] IputAgentDetail vInput);
         public ReturnResult UpsertEmploymentHistItem([FromBody] InputEmploymentHistItem vInput);
         public ReturnResult DeleteEmploymentHistItem([FromBody] IputDeleteEmploymentHistoryItem vInput);
         public ReturnResult UpsertTranserHistItem([FromBody] IputTransferHistoryItem vInput);

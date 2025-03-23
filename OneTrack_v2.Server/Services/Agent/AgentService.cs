@@ -1567,7 +1567,7 @@ namespace OneTrack_v2.Services
 
             return result;
         }
-        public ReturnResult UpdateAgentDetails_v2([FromBody] IputAgentDetail vInput)
+        public ReturnResult UpdateAgentNatNumber([FromBody] IputAgentDetail vInput)
         {
             var result = new ReturnResult();
             try

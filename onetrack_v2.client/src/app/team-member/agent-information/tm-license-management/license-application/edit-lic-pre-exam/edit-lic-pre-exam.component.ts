@@ -10,8 +10,18 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
 import { Subscription } from 'rxjs';
 
-import { AgentComService, AgentDataService, AppComService, ConstantsDataService, DropdownDataService, ErrorMessageService, LicIncentiveInfoDataService, UserAcctInfoDataService } from '../../../../../_services';
+import {
+  AgentComService,
+  AgentDataService,
+  AppComService,
+  ConstantsDataService,
+  DropdownDataService,
+  ErrorMessageService,
+  LicIncentiveInfoDataService,
+  UserAcctInfoDataService,
+} from '../../../../../_services';
 import { AgentLicenseAppointments } from '../../../../../_Models';
+import { dateValidator } from '../../../../../_shared';
 
 @Component({
   selector: 'app-edit-lic-pre-exam',
@@ -52,8 +62,8 @@ export class EditLicPreExamComponent implements OnInit, OnDestroy {
       status: new FormControl(null),
       examID: new FormControl(null),
       examName: new FormControl(null),
-      examScheduleDate: new FormControl(null),
-      examTakenDate: new FormControl(null),
+      examScheduleDate: new FormControl(null, [dateValidator]),
+      examTakenDate: new FormControl(null, [dateValidator]),
       additionalNotes: new FormControl(null),
     });
 
@@ -99,16 +109,20 @@ export class EditLicPreExamComponent implements OnInit, OnDestroy {
                   status: licPreExam.status,
                   examID: licPreExam.examID,
                   examName: licPreExam.examName,
-                  examScheduleDate: formatDate(
-                    licPreExam.examScheduleDate,
-                    'yyyy-MM-dd',
-                    'en-US'
-                  ),
-                  examTakenDate: formatDate(
-                    licPreExam.examTakenDate,
-                    'yyyy-MM-dd',
-                    'en-US'
-                  ),
+                  examScheduleDate: licPreExam.examScheduleDate
+                    ? formatDate(
+                        licPreExam.examScheduleDate,
+                        'yyyy-MM-dd',
+                        'en-US'
+                      )
+                    : null,
+                  examTakenDate: licPreExam.examTakenDate
+                    ? formatDate(
+                        licPreExam.examTakenDate,
+                        'yyyy-MM-dd',
+                        'en-US'
+                      )
+                    : null,
                   additionalNotes: licPreExam.additionalNotes,
                 });
               }
@@ -139,6 +153,14 @@ export class EditLicPreExamComponent implements OnInit, OnDestroy {
 
     if (this.agentComService.modeLicPreExam === 'INSERT') {
       licPreExamItem.employeeLicensePreExamID = 0;
+    }
+
+    if (licPreExamItem.examScheduleDate === '') {
+      licPreExamItem.examScheduleDate = null;
+    }
+
+    if (licPreExamItem.examTakenDate === '') {
+      licPreExamItem.examTakenDate = null;
     }
 
     this.subscriptions.add(

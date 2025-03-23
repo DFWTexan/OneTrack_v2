@@ -152,7 +152,7 @@ private updateForm(agentInfo: AgentInfo): void {
     }
 
     this.subscriptions.add(
-      this.agentDataService.updateAgent(agentDetailItem).subscribe({
+      this.agentDataService.updateAgentNatNumber(agentDetailItem).subscribe({
         next: (response) => {
           this.callParentRefreshData.emit(response);
           this.forceCloseModal();

@@ -365,6 +365,34 @@ export class AgentDataService {
       );
   }
 
+  updateAgentNatNumber(agent: any): Observable<any> {
+    this.apiUrl = this.configService.config.apiUrl + 'Agent/UpdateAgentNatNumber';
+
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.apiUrl, agent)
+      .pipe(
+        switchMap((response) => {
+          if (response.success && response.statusCode === 200) {
+            return this.fetchAgentInformation(this.agentInformation.employeeID);
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        }),
+        map((agentInfo) => {
+          return this.agentInformation;
+        }),
+        catchError((error) => {
+          console.error('Error:', error);
+          throw error;
+        })
+      );
+  }
+
   deleteAgent(agent: any): Observable<any> {
     this.apiUrl = this.configService.config.apiUrl + 'Agent/DeleteAgentEmployee';
 

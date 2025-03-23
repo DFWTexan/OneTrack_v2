@@ -21,6 +21,7 @@ import {
   UserAcctInfoDataService,
 } from '../../../../../_services';
 import { AgentLicenseAppointments } from '../../../../../_Models';
+import { dateValidator } from '../../../../../_shared';
 
 @Component({
   selector: 'app-edit-lic-pre-edu',
@@ -58,9 +59,9 @@ export class EditLicPreEduComponent implements OnInit, OnDestroy {
     this.licPreEduForm = new FormGroup({
       employeeLicensePreEducationID: new FormControl(0),
       status: new FormControl(null),
-      educationEndDate: new FormControl(null),
+      educationEndDate: new FormControl(null, [dateValidator]),
       preEducationID: new FormControl(null),
-      educationStartDate: new FormControl(null),
+      educationStartDate: new FormControl(null, [dateValidator]),
       employeeLicenseID: new FormControl(null),
       additionalNotes: new FormControl(null),
     });
@@ -105,16 +106,20 @@ export class EditLicPreEduComponent implements OnInit, OnDestroy {
                   employeeLicensePreEducationID:
                     licPreEdu.employeeLicensePreEducationID,
                   status: licPreEdu.status,
-                  educationStartDate: formatDate(
-                    licPreEdu.educationStartDate,
-                    'yyyy-MM-dd',
-                    'en-US'
-                  ),
-                  educationEndDate: formatDate(
-                    licPreEdu.educationEndDate,
-                    'yyyy-MM-dd',
-                    'en-US'
-                  ),
+                  educationStartDate: licPreEdu.educationStartDate
+                    ? formatDate(
+                        licPreEdu.educationStartDate,
+                        'yyyy-MM-dd',
+                        'en-US'
+                      )
+                    : null,
+                  educationEndDate: licPreEdu.educationEndDate
+                    ? formatDate(
+                        licPreEdu.educationEndDate,
+                        'yyyy-MM-dd',
+                        'en-US'
+                      )
+                    : null,
                   preEducationID: licPreEdu.preEducationID,
                   // companyID: licPreEdu.companyID,
                   // educationName: licPreEdu.educationName,
@@ -149,6 +154,18 @@ export class EditLicPreEduComponent implements OnInit, OnDestroy {
 
     if (this.agentComService.modeLicPreEdu === 'INSERT') {
       licPreEduItem.employeeLicensePreEducationID = 0;
+    }
+
+    if (licPreEduItem.educationStartDate === '') {
+      licPreEduItem.educationStartDate = null;
+    }
+
+    if (licPreEduItem.educationEndDate === '') {
+      licPreEduItem.educationEndDate = null;
+    }
+
+    if (licPreEduItem.additionalNotes === '') {
+      licPreEduItem.additionalNotes = null;
     }
 
     this.subscriptions.add(
