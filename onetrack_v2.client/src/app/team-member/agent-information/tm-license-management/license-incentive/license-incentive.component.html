@@ -77,7 +77,9 @@
               {{ licenseIncentiveInfo.rollOutGroup }}
             </td>
             <td style="font-size: smaller">
-              {{ licenseIncentiveInfo.dmMgrName }}
+              {{ licenseIncentiveInfo.dmMgrName }}<br />{{
+                licenseIncentiveInfo.dmMgrJobTitle
+              }}
             </td>
             <td style="font-size: smaller">
               {{ licenseIncentiveInfo.cCdBRMgrName }}<br />{{
@@ -96,8 +98,12 @@
             <td style="font-size: smaller">
               {{ licenseIncentiveInfo.dmApprovalStatus }}
             </td>
-            <td></td>
-            <td></td>
+            <td>
+              {{ licenseIncentiveInfo.dM10DaySentBy }}
+            </td>
+            <td>
+              {{ licenseIncentiveInfo.dM20DaySentBy }}
+            </td>
           </tr>
           <tr>
             <td></td>
@@ -134,11 +140,23 @@
         <tbody>
           <tr>
             <td>{{ licenseIncentiveInfo.tmProgramEligable }}</td>
-            <!-- <td>{{ licenseIncentiveInfo.licenseType }}</td>
-            <td>{{ licenseIncentiveInfo.licenseStatus }}</td>
-            <td>{{ licenseIncentiveInfo.licenseExpirationDate }}</td>
-            <td>{{ licenseIncentiveInfo.licenseState }}</td>
-            <td>{{ licenseIncentiveInfo.licenseIncentive }}</td> -->
+            <td>
+              {{ licenseIncentiveInfo.tmSentDate }} <br />
+              {{ licenseIncentiveInfo.tmSentBy }}
+            </td>
+            <td>
+              {{ licenseIncentiveInfo.cCdBRMgrName }}<br />{{
+                licenseIncentiveInfo.cCdBRMgrJobTitle
+              }}
+            </td>
+            <td>{{ licenseIncentiveInfo.tmApprovalDate }}</td>
+            <td>{{ licenseIncentiveInfo.tmDeclinedDate }}</td>
+            <td>{{ licenseIncentiveInfo.tM10DaySentDate }}</td>
+            <td></td>
+            <td>{{ licenseIncentiveInfo.tmApprovalStatus }}</td>
+            <td>{{ licenseIncentiveInfo.enrollDate }}</td>
+            <td>{{ licenseIncentiveInfo.tmExceptionDate }}</td>
+            <td>{{ licenseIncentiveInfo.tM90DayExpirationDate }}</td>
           </tr>
           <tr>
             <td></td>
@@ -184,7 +202,7 @@
         <tbody>
           <tr>
             <td>{{ licenseIncentiveInfo.completedIn90Days }}</td>
-            <td></td>
+            <td>{{ licenseIncentiveInfo.tmOkToSellSentBy }}</td>
             <td></td>
             <td>{{ licenseIncentiveInfo.originalIssueDate }}</td>
             <td>{{ licenseIncentiveInfo.certificationDate }}</td>
