@@ -169,7 +169,7 @@ namespace OneTrak_v2.Services
             var result = new ReturnResult();
             try
             {
-                if (vInput.TicklerID == 0)
+                if (vInput.TicklerID == 0 || vInput.TicklerID == null)
                 {
                     // INSERT Tickler
                     using (SqlConnection conn = new SqlConnection(_connectionString))

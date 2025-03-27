@@ -17,6 +17,7 @@ export class AddTicklerComponent implements OnInit, OnDestroy {
   stockTicklerItems: any[] = [];
   employee: EmployeeSearchResult | null = null;
   today: string = new Date().toISOString().split('T')[0];
+  isDisplayOtherMsg: boolean = false;
 
   private subscriptionData = new Subscription();
 
@@ -44,6 +45,14 @@ export class AddTicklerComponent implements OnInit, OnDestroy {
       message: [null],
       lkpValue: [null],
     });
+  }
+
+  onChangeTiclerMsg(event: any) {
+    if (event.target.value === 'Other') {
+      this.isDisplayOtherMsg = true;
+    } else {
+      this.isDisplayOtherMsg = false;
+    } 
   }
 
   ngOnInit() {

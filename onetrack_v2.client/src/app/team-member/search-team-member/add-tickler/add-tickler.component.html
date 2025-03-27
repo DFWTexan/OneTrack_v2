@@ -46,6 +46,7 @@
           type="text"
           id="stockTicker"
           formControlName="lkpValue"
+          (change)="onChangeTiclerMsg($event)"
         >
           <option
             *ngFor="let item of stockTicklerItems"
@@ -55,6 +56,17 @@
           </option>
         </select>
       </div>
+    </div>
+
+    <div class="form-group" *ngIf="isDisplayOtherMsg">
+      <label for="message">Message:</label>
+      <textarea
+        rows="5"
+        id="message"
+        type="text"
+        formControlName="message"
+        class="form-control"
+      ></textarea>
     </div>
   </div>
 
