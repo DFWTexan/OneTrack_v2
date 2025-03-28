@@ -97,7 +97,7 @@
         <strong>Note:</strong> <br />
         {{
           licenseMgmtData[currentIndex].licenseNote == null
-            ? "N/A"
+            ? ""
             : licenseMgmtData[currentIndex].licenseNote
         }}
       </p>
@@ -125,7 +125,7 @@
           licenseMgmtData[currentIndex].originalIssueDate
             ? (licenseMgmtData[currentIndex].originalIssueDate
               | date : "MM/dd/yyyy")
-            : "N/A"
+            : ""
         }}
       </p>
       <p>
@@ -134,7 +134,7 @@
           licenseMgmtData[currentIndex].lineOfAuthIssueDate
             ? (licenseMgmtData[currentIndex].lineOfAuthIssueDate
               | date : "MM/dd/yyyy")
-            : "N/A"
+            : ""
         }}
       </p>
     </div>
@@ -146,7 +146,7 @@
           licenseMgmtData[currentIndex].licenseEffectiveDate
             ? (licenseMgmtData[currentIndex].licenseEffectiveDate
               | date : "MM/dd/yyyy")
-            : "N/A"
+            : ""
         }}
       </p>
       <p>
@@ -155,7 +155,7 @@
           licenseMgmtData[currentIndex].licenseExpirationDate
             ? (licenseMgmtData[currentIndex].licenseExpirationDate
               | date : "MM/dd/yyyy")
-            : "N/A"
+            : ""
         }}
       </p>
     </div>

@@ -14,16 +14,16 @@
         <tbody>
           <tr *ngFor="let item of worklistItems">
             <td class="align-middle">
-              {{ item.workListDataID || "N/A" }}
+              {{ item.workListDataID || "" }}
             </td>
             <td class="align-middle">
-              {{ item.workListName || "N/A" }}
+              {{ item.workListName || "" }}
             </td>
             <td class="align-middle">
               {{ item.createDate | date : "MM/dd/yyyy" }}
             </td>
             <td class="align-middle">
-              {{ item.licenseTech || "N/A" }}
+              {{ item.licenseTech || "" }}
             </td>
 
             <td class="align-middle">

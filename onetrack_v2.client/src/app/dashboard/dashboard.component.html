@@ -381,7 +381,7 @@
             adBankerImportInfo.recordCount
           }}</span>
           <span style="font-size: larger">Records - Last Imported:</span>
-          <span style="font-size: large; font-weight: 500;" class="ms-3">{{
+          <span style="font-size: large; font-weight: 500" class="ms-3">{{
             adBankerImportInfo.lastImportDate | date : "MM/dd/yyyy"
           }}</span>
         </mat-panel-description>
@@ -399,6 +399,43 @@
           border-style: solid;
         "
       >
+        <div class="col-md-2">
+          <label for="modifiedBy">TM #:</label><br />
+          <input
+            class="form-control input-size-med"
+            type="text"
+            name="tmNumber"
+            [(ngModel)]="adBankerTMNumber"
+            (input)="onChangeADBankerTMNumber($event)"
+            placeholder="Filter by TM #"
+          />
+        </div>
+        <div class="col-md-1">
+          <label for="modifiedBy">State:</label><br />
+          <select
+            class="form-select select-size-xx-small"
+            type="text"
+            id="filterState"
+            default="ALL"
+            [(ngModel)]="selectedFilterState"
+            (change)="onChangeFilterState($event)"
+          >
+            <option *ngFor="let state of states" [value]="state">
+              {{ state }}
+            </option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <label for="modifiedBy">Agent Name:</label><br />
+          <input
+            class="form-control input-size-med"
+            type="text"
+            name="agentName"
+            [(ngModel)]="adBankerAgentName"
+            (input)="onChangeADBankerAgentName($event)"
+            placeholder="Filter by Agent Name"
+          />
+        </div>
         <div class="col-md-2">
           <label for="adBankerStartDate">Start Date:</label><br />
           <input
@@ -422,28 +459,7 @@
             (change)="onChangeADBankerEndDate($event)"
           />
         </div>
-        <div class="col-md-2">
-          <label for="modifiedBy">TM #:</label><br />
-          <input
-            class="form-control input-size-med"
-            type="text"
-            name="tmNumber"
-            [(ngModel)]="adBankerTMNumber"
-            (input)="onChangeADBankerTMNumber($event)"
-            placeholder="Filter by TM #"
-          />
-        </div>
-        <div class="col-md-2">
-          <label for="modifiedBy">Agent Name:</label><br />
-          <input
-            class="form-control input-size-med"
-            type="text"
-            name="agentName"
-            [(ngModel)]="adBankerAgentName"
-            (input)="onChangeADBankerAgentName($event)"
-            placeholder="Filter by Agent Name"
-          />
-        </div>
+
         <div class="col-md-2 d-flex align-items-end justify-content-end">
           <span *ngIf="adBankerData.length > 0"
             >Number of Items: {{ adBankerDataFiltered.length }}</span
@@ -493,10 +509,10 @@
                 (click)="onSelectADBankerRow($event, data.teamMemberId)"
               >
                 <td class="align-middle">
-                  {{ data.teamMemberId == 0 ? "N/A" : data.teamMemberId }}
+                  {{ data.teamMemberId == 0 ? "" : data.teamMemberId }}
                 </td>
                 <td class="align-middle">
-                  {{ data.courseState == null ? "N/A" : data.courseState }}
+                  {{ data.courseState == null ? "" : data.courseState }}
                 </td>
                 <td class="align-middle wrap-text" style="width: 250px">
                   {{ data.studentName | firstThree | uppercase }}

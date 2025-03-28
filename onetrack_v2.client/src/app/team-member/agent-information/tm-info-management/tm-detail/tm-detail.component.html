@@ -14,23 +14,23 @@
     <div class="col">
       <p>
         <strong>EmploymentID:</strong><br />
-        {{ agentInfo.employmentID || "N/A" }}
+        {{ agentInfo.employmentID || "" }}
       </p>
       <p>
         <strong>Social Security #:</strong><br />
-        {{ (agentInfo.employeeSSN | ssnFormat) || "N/A" }}
+        {{ (agentInfo.employeeSSN | ssnFormat) || "" }}
       </p>
       <p>
         <strong>Birth Date:</strong><br />
         {{
           agentInfo.dateOfBirth === "1900-01-01T00:00:00"
-            ? "N/A"
+            ? ""
             : (agentInfo.dateOfBirth | date : "MM/dd/yyyy")
         }}
       </p>
       <p>
         <strong>Email:</strong><br />
-        {{ agentInfo.email || "N/A" }}
+        {{ agentInfo.email || "" }}
       </p>
     </div>
     <!-- <div class="col">
@@ -50,26 +50,26 @@
     <div class="col">
       <p>
         <strong>Streat Address1:</strong><br />
-        {{ agentInfo.address1 || "N/A" }}
+        {{ agentInfo.address1 || "" }}
       </p>
       <p>
         <strong>Streat Address2:</strong><br />
-        {{ agentInfo.address2 || "N/A" }}
+        {{ agentInfo.address2 || "" }}
       </p>
       <div class="d-flex justify-content-between">
         <p>
           <strong>City:</strong><br />
-          {{ agentInfo.city || "N/A" }}
+          {{ agentInfo.city || "" }}
         </p>
         <p style="margin-right: 10rem">
           <strong>State:</strong><br />
-          {{ agentInfo.state || "N/A" }}
+          {{ agentInfo.state || "" }}
         </p>
       </div>
 
       <p>
         <strong>Zip:</strong><br />
-        {{ agentInfo.zip || "N/A" }}
+        {{ agentInfo.zip || "" }}
       </p>
     </div>
     <div class="col">
@@ -86,11 +86,11 @@
       </div>
       <p>
         <strong>License Level:</strong><br />
-        {{ agentInfo.licenseLevel || "N/A" }}
+        {{ agentInfo.licenseLevel || "" }}
       </p>
       <p>
         <strong>License Incentive:</strong><br />
-        {{ agentInfo.licenseIncentive || "N/A" }}
+        {{ agentInfo.licenseIncentive || "" }}
       </p>
       <p>
         <strong>License Incentive Second Chance:</strong><br />
@@ -107,48 +107,48 @@
         <div class="col ms-3">
           <p>
             <strong>Name:</strong><br />
-            {{ agentInfo.branchDeptName || "N/A" }}
+            {{ agentInfo.branchDeptName || "" }}
           </p>
           <div class="mb-3">
             <strong>Address:</strong>
             <div>
-              {{ agentInfo.branchDeptStreet1 || "N/A" }}
+              {{ agentInfo.branchDeptStreet1 || "" }}
               <br />
-              {{ agentInfo.branchDeptStreet2 || "N/A" }}
+              {{ agentInfo.branchDeptStreet2 || "" }}
             </div>
           </div>
           <p>
             <strong>City:</strong><br />
-            {{ agentInfo.branchDeptStreetCity || "N/A" }}
+            {{ agentInfo.branchDeptStreetCity || "" }}
           </p>
           <p>
             <strong>State:</strong><br />
-            {{ agentInfo.branchDeptStreetState || "N/A" }}
+            {{ agentInfo.branchDeptStreetState || "" }}
           </p>
           <p>
             <strong>Zip:</strong><br />
             {{
               agentInfo.branchDeptStreetZip
                 ? (agentInfo.branchDeptStreetZip | ZipFormat)
-                : "N/A"
+                : ""
             }}
           </p>
         </div>
         <div class="col">
           <p>
             <strong>SCORE #:</strong><br />
-            {{ agentInfo.branchDeptScoreNumber || "N/A" }}
+            {{ agentInfo.branchDeptScoreNumber || "" }}
           </p>
           <p>
             <strong>Branch/Dept #:</strong><br />
-            {{ agentInfo.branchDeptNumber || "N/A" }}
+            {{ agentInfo.branchDeptNumber || "" }}
           </p>
           <p>
             <strong>Phone:</strong><br />
             {{
               agentInfo.branchDeptPhone
                 ? (agentInfo.branchDeptPhone | PhoneFormat)
-                : "N/A"
+                : ""
             }}
           </p>
           <p>
@@ -156,7 +156,7 @@
             {{
               agentInfo.branchDeptFax
                 ? (agentInfo.branchDeptFax | PhoneFormat)
-                : "N/A"
+                : ""
             }}
           </p>
         </div>
@@ -179,20 +179,20 @@
           <tr style="background-color: #ffa500">
             <th>Mgr. Name</th>
             <th>Mgr. Title</th>
-            <th>Mgr. Dept Phone</th>
+            <!-- <th>Mgr. Dept Phone</th> -->
           </tr>
         </thead>
         <tbody>
           <tr *ngFor="let manager of agentInfo.mgrHiearchy" class="no-hover-bg">
-            <td>{{ manager.mgrName || "N/A" }}</td>
-            <td>{{ manager.mgrTitle || "N/A" }}</td>
-            <td>
+            <td>{{ manager.mgrName || "" }}</td>
+            <td>{{ manager.mgrTitle || "" }}</td>
+            <!-- <td>
               {{
                 manager.mgrDeptPhone === "0000000000"
                   ? "N/A"
                   : (manager.mgrDeptPhone | PhoneFormat)
               }}
-            </td>
+            </td> -->
           </tr>
         </tbody>
       </table>

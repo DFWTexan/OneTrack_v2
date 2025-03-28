@@ -12,6 +12,7 @@ import {
   AgentComService,
   AgentDataService,
   AppComService,
+  ConstantsDataService,
   DashboardDataService,
   EmployeeDataService,
   ErrorMessageService,
@@ -43,6 +44,8 @@ import { Router } from '@angular/router';
 export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   loading: boolean = false;
   today: Date = new Date();
+  states: any[] = [];
+  selectedFilterState: string | null = 'ALL'; // Default to "ALL"
   panelOpenState = false;
   userAcctInfo: UserAcctInfo = {} as UserAcctInfo;
   ticklerInfoItems: TicklerInfo[] = [];
@@ -105,6 +108,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedElement: string | null = null;
 
   constructor(
+    private conService: ConstantsDataService,
     public errorMessageService: ErrorMessageService,
     public appComService: AppComService,
     private agentDataService: AgentDataService,
@@ -126,6 +130,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     this.userAcctInfo = this.userAcctInfoDataService.userAcctInfo;
     this.licenseTechs = this.licIncentiveInfoDataService.licenseTeches;
     this.isOpenTicklerInfo = this.appComService.isOpenTicklerInfo;
+    this.states = ['ALL', ...this.conService.getStates()];
   }
 
   ngOnInit(): void {
@@ -496,7 +501,21 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   isAdBankerIncompleted() {
     return this.adBankerIncompleteCount > 0;
   }
+  onChangeFilterState(event: any) {
+    this.loading = true;
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    this.selectedFilterState = value;
 
+    this.adBankerDataFiltered = this.adBankerData.filter((data) => {
+      if (value === 'ALL') {
+        return true; // Include all data if "ALL" is selected
+      } else {
+        return data.courseState === value;
+      }
+    }
+    );
+  }
   onChangeADBankerStartDate(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;

@@ -46,7 +46,7 @@
           <div class="col">
             <p>
               <strong>Job Title:</strong><br />
-              {{ agentInfo.jobTitle || "N/A" }}
+              {{ agentInfo.jobTitle || "" }}
             </p>
             <p>
               <strong>Job Date:</strong><br />
@@ -65,7 +65,7 @@
           <div class="col">
             <p>
               <strong>Team Member Status:</strong><br />
-              {{ agentInfo.employeeStatus.toUpperCase() || "N/A" }}
+              {{ agentInfo.employeeStatus.toUpperCase() || "" }}
             </p>
             <p>
               <strong>Requires Cont. Edu:</strong><br />
