@@ -167,15 +167,13 @@
               </p>
             </div>
             <div class="col-md-1 restricted-width">
-              <!-- <mat-icon
-                matBadgePosition="before"
-                matBadgeColor="warn"
-                aria-hidden="false"
+              <button
+                class="icon-edit-delete-button"
+                type="button"
+                title="Add Tickler"
+                (click)="modalService.open('modal-new-tickler')"
               >
-                notifications_add
-              </mat-icon> -->
-              <button class="icon-edit-delete-button" type="button" title="Add Tickler" (click)="modalService.open('modal-new-tickler')">
-                <span class="material-symbols-outlined">
+                <span class="material-symbols-outlined" style="font-size: 3rem;">
                   notification_add
                 </span>
               </button>
