@@ -144,8 +144,6 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
         )
         .subscribe((licenseIncentiveInfo: LicenseIncentiveInfo) => {
 
-console.log('EMFTET (LicenseIncentiveComponent: fetchLicIncentiveInfo) - License Incentive Info +> \n', licenseIncentiveInfo);
-
           this.licenseIncentiveInfo = licenseIncentiveInfo;
           this.employmentLicenseIncentiveID =
             licenseIncentiveInfo.employmentLicenseIncentiveID;
@@ -497,6 +495,7 @@ console.log('EMFTET (LicenseIncentiveComponent: fetchLicIncentiveInfo) - License
     this.isFormSubmitted = true;
   
     let incentiveUpdateItem: any = this.incentiveUpdateForm.value;
+    incentiveUpdateItem.employeeLicenseID = this.employeeLicenseID;
     incentiveUpdateItem.EmploymentLicenseIncentiveID = this.employmentLicenseIncentiveID;
     incentiveUpdateItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
   
@@ -528,7 +527,9 @@ console.log('EMFTET (LicenseIncentiveComponent: fetchLicIncentiveInfo) - License
     this.licIncentiveInfoDataService
       .updateLicenseIncentiveInfo(incentiveUpdateItem)
       .then((response) => {
-        console.log('Update successful:', response);
+
+        console.log('EMFTEST (LicenseIncentiveComponent: onSubmit()) Update successful => \n', response);
+
         this.refreshData(incentiveUpdateItem);
       })
       .catch((error) => {
