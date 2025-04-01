@@ -1030,70 +1030,42 @@ namespace OneTrak_v2.Services
                     using (SqlCommand cmd = new SqlCommand("uspEmploymentLicenseIncentiveUpdate", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
+
                         cmd.Parameters.Add(new SqlParameter("@EmploymentLicenseIncentiveID", vInput.EmploymentLicenseIncentiveID));
                         cmd.Parameters.Add(new SqlParameter("@RollOutGroup", vInput.RollOutGroup));
                         cmd.Parameters.Add(new SqlParameter("@DMEmploymentID", vInput.DMEmploymentID));
                         cmd.Parameters.Add(new SqlParameter("@CCdBMEmploymentID", vInput.CCd2BMEmploymentID));
-                        cmd.Parameters.Add(new SqlParameter("@DMSentBySOEID", vInput.DMSentBySOEID));
-                        //cmd.Parameters.Add(new SqlParameter("@DMSentDate", vInput.DMSentDate));
-                        cmd.Parameters.Add(new SqlParameter("@DMSentDate", string.IsNullOrEmpty(vInput.DMSentDate?.ToString()) 
-                            ? (object)DBNull.Value : vInput.DMSentDate));
-                        //cmd.Parameters.Add(new SqlParameter("@DMApprovalDate", vInput.DMApprovalDate));
-                        cmd.Parameters.Add(new SqlParameter("@DMApprovalDate", string.IsNullOrEmpty(vInput.DMApprovalDate?.ToString())
-                            ? (object)DBNull.Value : vInput.DMApprovalDate));
-                        //cmd.Parameters.Add(new SqlParameter("@DMDeclinedDate", vInput.DMDeclinedDate));
-                        cmd.Parameters.Add(new SqlParameter("@DMDeclinedDate", string.IsNullOrEmpty(vInput.DMDeclinedDate?.ToString())
-                            ? (object)DBNull.Value : vInput.DMDeclinedDate));
-                        //cmd.Parameters.Add(new SqlParameter("@DM10DaySentDate", vInput.DM10DaySentDate));
-                        cmd.Parameters.Add(new SqlParameter("@DM10DaySentDate", string.IsNullOrEmpty(vInput.DM10DaySentDate?.ToString())
-                            ? (object)DBNull.Value : vInput.DM10DaySentDate));
-                        cmd.Parameters.Add(new SqlParameter("@DM10DaySentBySOEID", vInput.DM10DaySentBySOEID));
-                        //cmd.Parameters.Add(new SqlParameter("@DM20DaySentDate", vInput.DM20DaySentDate));
-                        cmd.Parameters.Add(new SqlParameter("@DM20DaySentDate", string.IsNullOrEmpty(vInput.DM20DaySentDate?.ToString())
-                            ? (object)DBNull.Value : vInput.DM20DaySentDate));
-                        cmd.Parameters.Add(new SqlParameter("@DM20DaySentBySOEID", vInput.DM20DaySentBySOEID));
-                        cmd.Parameters.Add(new SqlParameter("@DMComment", vInput.DMComment));
-                        cmd.Parameters.Add(new SqlParameter("@TMSentBySOEID", vInput.TMSentBySOEID));
-                        //cmd.Parameters.Add(new SqlParameter("@TMSentDate", vInput.TMSentDate));
-                        cmd.Parameters.Add(new SqlParameter("@TMSentDate", string.IsNullOrEmpty(vInput.TMSentDate?.ToString())
-                            ? (object)DBNull.Value : vInput.TMSentDate));
+                        cmd.Parameters.Add(new SqlParameter("@DMSentBySOEID", vInput.DMSentBySOEID ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@DMSentDate", vInput.DMSentDate ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@DMApprovalDate", vInput.DMApprovalDate ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@DMDeclinedDate", vInput.DMDeclinedDate ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@DM10DaySentDate", vInput.DM10DaySentDate ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@DM10DaySentBySOEID", vInput.DM10DaySentBySOEID ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@DM20DaySentDate", vInput.DM20DaySentDate ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@DM20DaySentBySOEID", vInput.DM20DaySentBySOEID ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@DMComment", vInput.DMComment ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@TMSentBySOEID", vInput.TMSentBySOEID ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@TMSentDate", vInput.TMSentDate ?? (object)DBNull.Value));
                         cmd.Parameters.Add(new SqlParameter("@CCd2BMEmploymentID", vInput.CCd2BMEmploymentID));
-                        //cmd.Parameters.Add(new SqlParameter("@TMApprovalDate", vInput.TMApprovalDate));
-                        cmd.Parameters.Add(new SqlParameter("@TMApprovalDate", string.IsNullOrEmpty(vInput.TMApprovalDate?.ToString())
-                            ? (object)DBNull.Value : vInput.TMApprovalDate));
-                        //cmd.Parameters.Add(new SqlParameter("@TMDeclinedDate", vInput.TMDeclinedDate));
-                        cmd.Parameters.Add(new SqlParameter("@TMDeclinedDate", string.IsNullOrEmpty(vInput.TMDeclinedDate?.ToString())
-                            ? (object)DBNull.Value : vInput.TMDeclinedDate));
-                        //cmd.Parameters.Add(new SqlParameter("@TM10DaySentDate", vInput.TM10DaySentDate));
-                        cmd.Parameters.Add(new SqlParameter("@TM10DaySentDate", string.IsNullOrEmpty(vInput.TM10DaySentDate?.ToString())
-                            ? (object)DBNull.Value : vInput.TM10DaySentDate));
-                        cmd.Parameters.Add(new SqlParameter("@TM10DaySentBySOEID", vInput.TM10DaySentBySOEID));
-                        //cmd.Parameters.Add(new SqlParameter("@TM45DaySentDate", vInput.TM45DaySentDate));
-                        cmd.Parameters.Add(new SqlParameter("@TM45DaySentDate", string.IsNullOrEmpty(vInput.TM45DaySentDate?.ToString())
-                            ? (object)DBNull.Value : vInput.TM45DaySentDate));
-                        cmd.Parameters.Add(new SqlParameter("@TM45DaySentBySOEID", vInput.TM45DaySentBySOEID));
-                        //cmd.Parameters.Add(new SqlParameter("@TMExceptionDate", vInput.TMExceptionDate));
-                        cmd.Parameters.Add(new SqlParameter("@TMExceptionDate", string.IsNullOrEmpty(vInput.TMExceptionDate?.ToString())
-                            ? (object)DBNull.Value : vInput.TMExceptionDate));
-                        cmd.Parameters.Add(new SqlParameter("@TMException", vInput.TMException));
-                        cmd.Parameters.Add(new SqlParameter("@TMComment", vInput.TMComment));
-                        cmd.Parameters.Add(new SqlParameter("@TMOkToSellSentBySOEID", vInput.TMOkToSellSentBySOEID));
-                        //cmd.Parameters.Add(new SqlParameter("@TMOkToSellSentDate", vInput.TMOkToSellSentDate));
-                        cmd.Parameters.Add(new SqlParameter("@TMOkToSellSentDate", string.IsNullOrEmpty(vInput.TMOkToSellSentDate?.ToString())
-                            ? (object)DBNull.Value : vInput.TMOkToSellSentDate));
+                        cmd.Parameters.Add(new SqlParameter("@TMApprovalDate", vInput.TMApprovalDate ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@TMDeclinedDate", vInput.TMDeclinedDate ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@TM10DaySentDate", vInput.TM10DaySentDate ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@TM10DaySentBySOEID", vInput.TM10DaySentBySOEID ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@TM45DaySentDate", vInput.TM45DaySentDate ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@TM45DaySentBySOEID", vInput.TM45DaySentBySOEID ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@TMExceptionDate", vInput.TMExceptionDate ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@TMException", vInput.TMException ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@TMComment", vInput.TMComment ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@TMOkToSellSentBySOEID", vInput.TMOkToSellSentBySOEID ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@TMOkToSellSentDate", vInput.TMOkToSellSentDate ?? (object)DBNull.Value));
                         cmd.Parameters.Add(new SqlParameter("@CCOkToSellBMEmploymentID", vInput.CCOkToSellBMEmploymentID));
-                        //cmd.Parameters.Add(new SqlParameter("@TMOMSApprtoSendToHRDate", vInput.TMOMSApprtoSendToHRDate));
-                        cmd.Parameters.Add(new SqlParameter("@TMOMSApprtoSendToHRDate", string.IsNullOrEmpty(vInput.TMOMSApprtoSendToHRDate?.ToString())
-                            ? (object)DBNull.Value : vInput.TMOMSApprtoSendToHRDate));
-                        //cmd.Parameters.Add(new SqlParameter("@TMSentToHRDate", vInput.TMSentToHRDate));
-                        cmd.Parameters.Add(new SqlParameter("@TMSentToHRDate", string.IsNullOrEmpty(vInput.TMSentToHRDate?.ToString())
-                            ? (object)DBNull.Value : vInput.TMSentToHRDate));
-                        //cmd.Parameters.Add(new SqlParameter("@IncetivePeriodDate", vInput.IncetivePeriodDate));
-                        cmd.Parameters.Add(new SqlParameter("@IncetivePeriodDate", string.IsNullOrEmpty(vInput.IncetivePeriodDate?.ToString())
-                            ? (object)DBNull.Value : vInput.IncetivePeriodDate));
-                        cmd.Parameters.Add(new SqlParameter("@IncentiveStatus", vInput.IncentiveStatus));
-                        cmd.Parameters.Add(new SqlParameter("@Notes", vInput.Notes));
+                        cmd.Parameters.Add(new SqlParameter("@TMOMSApprtoSendToHRDate", vInput.TMOMSApprtoSendToHRDate ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@TMSentToHRDate", vInput.TMSentToHRDate ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@IncetivePeriodDate", vInput.IncetivePeriodDate ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@IncentiveStatus", vInput.IncentiveStatus ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@Notes", vInput.Notes ?? (object)DBNull.Value));
                         cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+
                         conn.Open();
                         cmd.ExecuteNonQuery();
                     }

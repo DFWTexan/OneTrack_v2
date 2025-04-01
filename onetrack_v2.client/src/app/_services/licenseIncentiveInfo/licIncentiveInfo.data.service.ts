@@ -504,6 +504,8 @@ export class LicIncentiveInfoDataService {
   updateLicenseIncentiveInfo(licenseIncentiveInfo: LicenseIncentiveInfo): Promise<any> {
     const apiUrl = `${environment.apiUrl}LicenseInfo/UpdateLicenseIncentive`;
   
+console.log('EMFTEST (updateLicenseIncentiveInfo) - licenseIncentiveInfo => \n ', licenseIncentiveInfo);
+
     return this.http
       .post<{
         success: boolean;
