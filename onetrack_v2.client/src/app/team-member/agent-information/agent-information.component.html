@@ -166,6 +166,20 @@
                 {{ agentInfo.nationalProdercerNumber || "" }}
               </p>
             </div>
+            <div class="col-md-1 restricted-width">
+              <!-- <mat-icon
+                matBadgePosition="before"
+                matBadgeColor="warn"
+                aria-hidden="false"
+              >
+                notifications_add
+              </mat-icon> -->
+              <button class="icon-edit-delete-button" type="button" title="Add Tickler" (click)="modalService.open('modal-new-tickler')">
+                <span class="material-symbols-outlined">
+                  notification_add
+                </span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -179,7 +193,14 @@
 
   <mat-divider></mat-divider>
 
-  <div class="col d-flex justify-content-center mt-3 mb-3" *ngIf="!isLoading && appComService.isAllAgentsSelected && !agentComService.isShowLicenseMgmt">
+  <div
+    class="col d-flex justify-content-center mt-3 mb-3"
+    *ngIf="
+      !isLoading &&
+      appComService.isAllAgentsSelected &&
+      !agentComService.isShowLicenseMgmt
+    "
+  >
     <button
       id="btn-agent-prev"
       class="btn btn-link page-button mb-3"
