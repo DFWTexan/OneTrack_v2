@@ -8,12 +8,14 @@ import {
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { AgentInfo } from '../../_Models';
+import { AgentInfo, StockTickler } from '../../_Models';
 import {
   AgentComService,
   AgentDataService,
   AppComService,
   ModalService,
+  TicklerMgmtComService,
+  TicklerMgmtDataService,
 } from '../../_services';
 
 @Component({
@@ -33,6 +35,9 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
   isShowLicenseMgmt: boolean = false;
   isShowTickle: boolean = false;
 
+  stockTicklerItems: StockTickler[] = [];
+  licenseTechItems: any = ['Loading...'];
+
   private subscriptions = new Subscription();
 
   constructor(
@@ -40,6 +45,8 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     public agentComService: AgentComService,
     public appComService: AppComService,
+    public ticklerMgmtComService: TicklerMgmtComService,
+    public ticklerMgmtDataService: TicklerMgmtDataService,
     protected modalService: ModalService,
     private router: Router
   ) {}
@@ -98,6 +105,22 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
           this.currentIndex = index;
         }
       )
+    );
+
+    this.subscriptions.add(
+      this.ticklerMgmtDataService
+        .fetchLicenseTech(0, null)
+        .subscribe((licenseTechItems) => {
+          this.licenseTechItems = licenseTechItems;
+        })
+    );
+
+    this.subscriptions.add(
+      this.ticklerMgmtDataService
+        .fetchStockTickler()
+        .subscribe((stockTicklerItems) => {
+          this.stockTicklerItems = stockTicklerItems;
+        })
     );
   }
 

@@ -6,7 +6,7 @@
           <tr style="background-color: whitesmoke">
             <th scope="col" style="width: 15rem">Due Date</th>
             <th scope="col">Message</th>
-            <th scope="col" style="width: 8rem">ACTION</th>
+            <th scope="col" class="text-center" style="width: 10rem">ACTION</th>
           </tr>
         </thead>
         <tbody>
@@ -32,6 +32,17 @@
               <div
                 class="d-flex align-middle justify-content-between mb-3 me-4"
               >
+              <button
+                  class="icon-close-button me-5"
+                  (click)="
+                  onEditTicklerItem(item);
+                      ticklerMgmtDataService.storeTicklerInfo('EDIT', item);
+                      modalService.open('modal-edit-tickler')
+                    "
+                  title="Edit Tickler"
+                >
+                  <span class="material-symbols-outlined"> edit </span>
+                </button>
                 <button
                   class="icon-close-button me-5"
                   (click)="onCloseTicklerItem(item)"

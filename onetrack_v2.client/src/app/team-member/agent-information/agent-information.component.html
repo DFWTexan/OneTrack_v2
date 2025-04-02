@@ -247,3 +247,24 @@
     </div>
   </div>
 </modal>
+
+<!-- Modal: EDIT-TICKLER -->
+<modal id="modal-edit-tickler">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      <strong>{{ ticklerMgmtComService.modeTicklerMgmt }}</strong> - Tickler
+      Entry
+    </h1>
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-edit-tickler-info
+          [licenseTechItems]="licenseTechItems"
+          [stockTicklerItems]="stockTicklerItems"
+          (callParentRefreshData)="onChildCallRefreshData()"
+        ></app-edit-tickler-info>
+      </div>
+    </div>
+  </div>
+</modal>

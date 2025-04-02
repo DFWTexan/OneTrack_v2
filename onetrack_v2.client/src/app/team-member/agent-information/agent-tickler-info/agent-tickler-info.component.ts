@@ -8,7 +8,7 @@ import {
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { AgentDataService, TicklerMgmtDataService, UserAcctInfoDataService } from '../../../_services';
+import { AgentDataService, ModalService, TicklerMgmtDataService, UserAcctInfoDataService } from '../../../_services';
 import { ConfirmDialogComponent } from '../../../_components';
 import { MatDialog } from '@angular/material/dialog';
 
@@ -28,6 +28,7 @@ export class AgentTicklerInfoComponent implements OnInit, OnDestroy {
     private agentDataService: AgentDataService,
     public ticklerMgmtDataService: TicklerMgmtDataService,
     public dialog: MatDialog,
+    protected modalService: ModalService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {
     this.ticklerItems = this.agentDataService.agentInformation.ticklerItems;
@@ -44,6 +45,14 @@ export class AgentTicklerInfoComponent implements OnInit, OnDestroy {
   isOverdue(ticklerDueDate: string | Date): boolean {
     const dueDate = new Date(ticklerDueDate);
     return dueDate < this.today;
+  }
+
+  onEditTicklerItem(ticklerInfo: any): void {
+    const modalDiv = document.getElementById('modal-agent-tickler-info');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+    
   }
 
   onCloseTicklerItem(ticklerInfo: any): void {
