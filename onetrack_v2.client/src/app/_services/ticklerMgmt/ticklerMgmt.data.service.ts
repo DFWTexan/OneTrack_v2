@@ -181,9 +181,6 @@ export class TicklerMgmtDataService {
   }
 
   storeTicklerInfo(mode: string | '', ticklerInfo: any | null) {
-
-console.log('EMFTEST (storeTicklerInfo) ticklerInfo => \n', ticklerInfo);
-
     this.ticklerMgmtComService.modeTicklerMgmtModal(mode);
     this.ticklerInfo = ticklerInfo || {};
     this.ticklerInfoChanged.next(this.ticklerInfo);
