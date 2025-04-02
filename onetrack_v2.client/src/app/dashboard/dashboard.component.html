@@ -276,6 +276,7 @@
               <th scope="col">&nbsp;</th>
               <th scope="col">Due Date</th>
               <th scope="col">Type</th>
+              <th scope="col">TM Name</th>
               <th scope="col">Description</th>
               <th scope="col" class="text-center" style="width: 10rem">
                 ACTION
@@ -310,6 +311,14 @@
                 }"
               >
                 {{ item.lkpValue }}
+              </td>
+              <td
+                class="align-middle"
+                [ngStyle]="{
+                  color: isOverdue(item.ticklerDueDate) ? '#FF6347' : 'inherit'
+                }"
+              >
+                {{ item.teamMemberName }}
               </td>
               <td
                 class="align-middle"
