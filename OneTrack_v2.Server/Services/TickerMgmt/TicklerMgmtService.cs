@@ -93,16 +93,16 @@ namespace OneTrak_v2.Services
                                 t.LicenseTechId,
                                 t.EmploymentId,
                                 t.EmployeeLicenseId,
-                                e.EmployeeId,
-                                loa.LineOfAuthorityName,
-                                e.Geid,
-                                TeamMemberName = e.LastName + ", " + e.FirstName,
+                                EmployeeId = e != null ? e.EmployeeId : 0,
+                                LineOfAuthorityName = loa.LineOfAuthorityName ?? string.Empty,
+                                Geid = e.Geid ?? string.Empty,
+                                TeamMemberName = (e.LastName ?? string.Empty) + ", " + (e.FirstName ?? string.Empty),
                                 t.TicklerCloseDate,
                                 t.TicklerCloseByLicenseTechId,
                                 //Message = (e.FirstName + " " + e.LastName + "\r\n" + "TM-" + e.Geid + "\r\n" ?? "") +
                                 //                      (loa.LineOfAuthorityName + "\r\n" ?? "") +
                                 //                      (t.LkpValue == "Other" ? t.Message : t.LkpValue),
-                                Message = t.Message,
+                                Message = t.Message ?? string.Empty,
                                 t.LkpValue
                             };
 
