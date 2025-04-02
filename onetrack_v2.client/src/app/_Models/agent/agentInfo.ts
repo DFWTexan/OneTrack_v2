@@ -186,12 +186,18 @@ export interface AppointmentItem {
 }
 
 export interface TicklerItem {
-  ticklerID: number;
-  licenseTechID?: number;
-  employmentID?: number;
-  employeeLicenseID?: number;
-  ticklerMessage?: string;
+  ticklerId: number;
+  ticklerDate?: Date;
   ticklerDueDate?: Date;
+  licenseTechId?: number;
+  employmentId?: number;
+  employeeLicenseId?: number;
+  employeeId?: number;
+  geid?: string;
+  message?: string;
+  teamMemberName?: string;
+  lkpValue?: string;
+  lineOfAuthorityName?: string;
 }
 
 export interface WorklistItem {

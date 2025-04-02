@@ -2847,18 +2847,37 @@ namespace OneTrack_v2.Services
         }
         private List<TicklerItem> FillTicklerItems(int vEmploymentID)
         {
-            var ticklerItems = _db.Ticklers
-                .Where(t => t.EmploymentId == vEmploymentID && t.TicklerCloseByLicenseTechId == null)
-                .OrderByDescending(t => t.TicklerDate)
-                .Select(t => new TicklerItem
-                {
-                    TicklerID = t.TicklerId,
-                    LicenseTechID = t.LicenseTechId,
-                    EmploymentID = t.EmploymentId,
-                    EmployeeLicenseID = t.EmployeeLicenseId,
-                    TicklerMessage = t.Message,
-                    TicklerDueDate = t.TicklerDueDate,
-                }).ToList();
+            var query = from t in _db.Ticklers
+                        where t.EmploymentId == vEmploymentID && t.TicklerCloseByLicenseTechId == null
+                        join lt in _db.LicenseTeches on t.LicenseTechId equals lt.LicenseTechId
+                        join m in _db.Employments on t.EmploymentId equals m.EmploymentId into mGroup
+                        from m in mGroup.DefaultIfEmpty()
+                        join e in _db.Employees on m.EmployeeId equals e.EmployeeId into eGroup
+                        from e in eGroup.DefaultIfEmpty()
+                        join el in _db.EmployeeLicenses on t.EmployeeLicenseId equals el.EmployeeLicenseId into elGroup
+                        from el in elGroup.DefaultIfEmpty()
+                        join l in _db.Licenses on el.LicenseId equals l.LicenseId into lGroup
+                        from l in lGroup.DefaultIfEmpty()
+                        join loa in _db.LineOfAuthorities on l.LineOfAuthorityId equals loa.LineOfAuthorityId into loaGroup
+                        from loa in loaGroup.DefaultIfEmpty()
+                        orderby t.TicklerDate descending
+                        select new TicklerItem
+                        {
+                            TicklerId = t.TicklerId,
+                            TicklerDate = t.TicklerDate,
+                            TicklerDueDate = t.TicklerDueDate,
+                            LicenseTechId = t.LicenseTechId,
+                            EmploymentId = t.EmploymentId,
+                            EmployeeLicenseId = t.EmployeeLicenseId,
+                            EmployeeId = e.EmployeeId,
+                            LineOfAuthorityName = loa.LineOfAuthorityAbv,
+                            TeamMemberName = e.LastName + ", " + e.FirstName,
+                            Geid = e.Geid,
+                            Message = t.Message,
+                            LkpValue = t.LkpValue,
+                        };
+
+            var ticklerItems = query.AsNoTracking().ToList();
 
             return ticklerItems;
         }

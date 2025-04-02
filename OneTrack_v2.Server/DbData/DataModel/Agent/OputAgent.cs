@@ -139,12 +139,20 @@ namespace OneTrack_v2.DataModel
     }
 
     public class TicklerItem {         
-        public int TicklerID { get; set; }
-        public int? LicenseTechID { get; set; }
-        public int? EmploymentID { get; set; }
-        public int? EmployeeLicenseID { get; set;}
-        public string? TicklerMessage { get; set; }
+        public int TicklerId { get; set; }
+        public DateTime? TicklerDate { get; set; }
         public DateTime? TicklerDueDate { get; set; }
+        public int? LicenseTechId { get; set; }
+        public int? EmploymentId { get; set; }
+        public int? EmployeeId { get; set; }
+        public int? EmployeeLicenseId { get; set;}
+        public string? Geid { get; set; }
+        public string? TeamMemberName { get; set; }
+        public string? LineOfAuthorityName { get; set; }
+        public string? Message { get; set; }
+        public string? LkpValue { get; set; }
+
+
     }
 
     public class WorklistItem
