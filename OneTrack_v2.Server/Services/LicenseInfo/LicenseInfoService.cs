@@ -1032,9 +1032,9 @@ namespace OneTrak_v2.Services
                         cmd.CommandType = CommandType.StoredProcedure;
 
                         cmd.Parameters.Add(new SqlParameter("@EmploymentLicenseIncentiveID", vInput.EmploymentLicenseIncentiveID));
-                        cmd.Parameters.Add(new SqlParameter("@RollOutGroup", vInput.RollOutGroup));
-                        cmd.Parameters.Add(new SqlParameter("@DMEmploymentID", vInput.DMEmploymentID));
-                        cmd.Parameters.Add(new SqlParameter("@CCdBMEmploymentID", vInput.CCd2BMEmploymentID));
+                        cmd.Parameters.Add(new SqlParameter("@RollOutGroup", vInput.RollOutGroup ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@DMEmploymentID", vInput.DMEmploymentID ?? (object)DBNull.Value));
+                        cmd.Parameters.Add(new SqlParameter("@CCdBMEmploymentID", vInput.CCd2BMEmploymentID ?? (object)DBNull.Value));
                         cmd.Parameters.Add(new SqlParameter("@DMSentBySOEID", vInput.DMSentBySOEID ?? (object)DBNull.Value));
                         cmd.Parameters.Add(new SqlParameter("@DMSentDate", vInput.DMSentDate ?? (object)DBNull.Value));
                         cmd.Parameters.Add(new SqlParameter("@DMApprovalDate", vInput.DMApprovalDate ?? (object)DBNull.Value));
@@ -1046,7 +1046,7 @@ namespace OneTrak_v2.Services
                         cmd.Parameters.Add(new SqlParameter("@DMComment", vInput.DMComment ?? (object)DBNull.Value));
                         cmd.Parameters.Add(new SqlParameter("@TMSentBySOEID", vInput.TMSentBySOEID ?? (object)DBNull.Value));
                         cmd.Parameters.Add(new SqlParameter("@TMSentDate", vInput.TMSentDate ?? (object)DBNull.Value));
-                        cmd.Parameters.Add(new SqlParameter("@CCd2BMEmploymentID", vInput.CCd2BMEmploymentID));
+                        cmd.Parameters.Add(new SqlParameter("@CCd2BMEmploymentID", vInput.CCd2BMEmploymentID ?? (object)DBNull.Value));
                         cmd.Parameters.Add(new SqlParameter("@TMApprovalDate", vInput.TMApprovalDate ?? (object)DBNull.Value));
                         cmd.Parameters.Add(new SqlParameter("@TMDeclinedDate", vInput.TMDeclinedDate ?? (object)DBNull.Value));
                         cmd.Parameters.Add(new SqlParameter("@TM10DaySentDate", vInput.TM10DaySentDate ?? (object)DBNull.Value));
@@ -1058,13 +1058,13 @@ namespace OneTrak_v2.Services
                         cmd.Parameters.Add(new SqlParameter("@TMComment", vInput.TMComment ?? (object)DBNull.Value));
                         cmd.Parameters.Add(new SqlParameter("@TMOkToSellSentBySOEID", vInput.TMOkToSellSentBySOEID ?? (object)DBNull.Value));
                         cmd.Parameters.Add(new SqlParameter("@TMOkToSellSentDate", vInput.TMOkToSellSentDate ?? (object)DBNull.Value));
-                        cmd.Parameters.Add(new SqlParameter("@CCOkToSellBMEmploymentID", vInput.CCOkToSellBMEmploymentID));
+                        cmd.Parameters.Add(new SqlParameter("@CCOkToSellBMEmploymentID", vInput.CCOkToSellBMEmploymentID ?? (object)DBNull.Value));
                         cmd.Parameters.Add(new SqlParameter("@TMOMSApprtoSendToHRDate", vInput.TMOMSApprtoSendToHRDate ?? (object)DBNull.Value));
                         cmd.Parameters.Add(new SqlParameter("@TMSentToHRDate", vInput.TMSentToHRDate ?? (object)DBNull.Value));
                         cmd.Parameters.Add(new SqlParameter("@IncetivePeriodDate", vInput.IncetivePeriodDate ?? (object)DBNull.Value));
                         cmd.Parameters.Add(new SqlParameter("@IncentiveStatus", vInput.IncentiveStatus ?? (object)DBNull.Value));
                         cmd.Parameters.Add(new SqlParameter("@Notes", vInput.Notes ?? (object)DBNull.Value));
-                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID ?? (object)DBNull.Value));
 
                         conn.Open();
                         cmd.ExecuteNonQuery();
