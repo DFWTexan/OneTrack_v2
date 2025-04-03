@@ -75,10 +75,13 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
       }
     });
 
+    this.agentInfo = this.agentDataService.agentInformation;
     this.subscriptions.add(
       this.agentDataService.agentInfoChanged.subscribe(
         (agentInfo: AgentInfo) => {
           this.isLoading = false;
+          this.ticklerCount = agentInfo.ticklerItems.length;
+          this.worklistCount = agentInfo.worklistItems.length;
           this.agentInfo = agentInfo;
         }
       )

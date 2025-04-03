@@ -8,6 +8,7 @@ import { StockTickler, TicklerInfo, TicklerLicTech } from '../../_Models';
 import { TicklerMgmtComService } from './ticklerMgmt.com.service';
 import { AppComService } from '../common/app.com.service';
 import { UserAcctInfoDataService } from '../userAcctInfo/userAcctInfo.data.Service';
+import { AgentDataService } from '../agent/agent.data.service';
 
 @Injectable({
   providedIn: 'root',
@@ -31,6 +32,7 @@ export class TicklerMgmtDataService {
     private http: HttpClient,
     public appComService: AppComService,
     private ticklerMgmtComService: TicklerMgmtComService,
+    private agentDataService: AgentDataService,
     private userInfoService: UserAcctInfoDataService
   ) {}
 
@@ -128,8 +130,21 @@ export class TicklerMgmtDataService {
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
-            this.ticklerInfo = response.objData;
-            this.ticklerInfoChanged.next(this.ticklerInfo);
+            // this.ticklerInfo = response.objData;
+            // this.ticklerInfoChanged.next(this.ticklerInfo);
+  
+            console.log('EMFTEST Go FetchAgent.... ', ticklerInfo.employeeID);
+  
+            // Ensure fetchAgentInformation is properly called
+            // this.agentDataService.fetchAgentInformation(ticklerInfo.employeeID).subscribe({
+            //   next: (agentInfo) => {
+            //     console.log('Agent information fetched successfully:', agentInfo);
+            //   },
+            //   error: (error) => {
+            //     console.error('Error fetching agent information:', error);
+            //   },
+            // });
+  
             return response.objData;
           } else {
             throw new Error(response.errMessage || 'Unknown error');

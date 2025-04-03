@@ -138,7 +138,21 @@ export class InsertMemberLoaTicklerComponent implements OnInit, OnDestroy {
       this.ticklerDataService.upsertTickerItem(ticklerItem).subscribe({
         next: (response) => {
           alert('Tickler has been successfully added');
-          this.callParentRefreshData.emit(response);
+
+// console.log('EMFTEST (InsertMemberLoaTicklerComponent: onSubmit) - response => \n', response);
+         
+          // const agent = this.agentDataService.fetchAgentInformation(this.agentInfo.employeeID);
+
+          // this.callParentRefreshData.emit(agent);
+           this.agentDataService.fetchAgentInformation(this.agentInfo.employeeID).subscribe({
+              next: (agentInfo) => {
+                console.log('Agent information fetched successfully:', agentInfo);
+                this.callParentRefreshData.emit(agentInfo);
+              },
+              error: (error) => {
+                console.error('Error fetching agent information:', error);
+              },
+            });
           this.onCancel();
         },
         error: (error) => {
