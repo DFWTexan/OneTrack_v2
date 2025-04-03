@@ -168,6 +168,7 @@ export class ConstantsDataService {
     'PE',
     'QC',
     'SK',
+    'XX',
     'YT',
   ];
 
