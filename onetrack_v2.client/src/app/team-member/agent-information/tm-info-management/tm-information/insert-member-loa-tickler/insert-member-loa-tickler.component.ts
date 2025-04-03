@@ -147,7 +147,7 @@ export class InsertMemberLoaTicklerComponent implements OnInit, OnDestroy {
            this.agentDataService.fetchAgentInformation(this.agentInfo.employeeID).subscribe({
               next: (agentInfo) => {
                 console.log('Agent information fetched successfully:', agentInfo);
-                this.callParentRefreshData.emit(agentInfo);
+                // this.callParentRefreshData.emit(agentInfo);
               },
               error: (error) => {
                 console.error('Error fetching agent information:', error);

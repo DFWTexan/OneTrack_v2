@@ -107,8 +107,6 @@ export class AgentDataService {
           if (response.success && response.statusCode === 200) {
             this.agentInformation = response.objData;
 
-console.log('EMFTEST () Got to  -> Agent Information');
-
             this.agentInfoChanged.next(this.agentInformation);
 
             this.diaryItems = this.agentInformation.diaryItems;

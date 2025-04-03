@@ -132,9 +132,7 @@ export class TicklerMgmtDataService {
           if (response.success && response.statusCode === 200) {
             // this.ticklerInfo = response.objData;
             // this.ticklerInfoChanged.next(this.ticklerInfo);
-  
-            console.log('EMFTEST Go FetchAgent.... ', ticklerInfo.employeeID);
-  
+                
             // Ensure fetchAgentInformation is properly called
             // this.agentDataService.fetchAgentInformation(ticklerInfo.employeeID).subscribe({
             //   next: (agentInfo) => {

@@ -99,10 +99,10 @@ namespace OneTrak_v2.Services
                                 TeamMemberName = (e.LastName ?? string.Empty) + ", " + (e.FirstName ?? string.Empty),
                                 t.TicklerCloseDate,
                                 t.TicklerCloseByLicenseTechId,
-                                //Message = (e.FirstName + " " + e.LastName + "\r\n" + "TM-" + e.Geid + "\r\n" ?? "") +
-                                //                      (loa.LineOfAuthorityName + "\r\n" ?? "") +
-                                //                      (t.LkpValue == "Other" ? t.Message : t.LkpValue),
-                                Message = t.Message ?? string.Empty,
+                                Message = (e.FirstName + " " + e.LastName + "\r\n" + "TM-" + e.Geid + "\r\n" ?? "") +
+                                                      (loa.LineOfAuthorityName + "\r\n" ?? "") +
+                                                      (t.LkpValue == "Other" ? t.Message : t.LkpValue),
+                                //Message = t.Message ?? string.Empty,
                                 t.LkpValue
                             };
 

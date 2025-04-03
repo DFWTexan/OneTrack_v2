@@ -2873,7 +2873,10 @@ namespace OneTrack_v2.Services
                             LineOfAuthorityName = loa.LineOfAuthorityAbv,
                             TeamMemberName = e.LastName + ", " + e.FirstName,
                             Geid = e.Geid,
-                            Message = t.Message,
+                            //Message = t.Message,
+                            Message = (e.FirstName + " " + e.LastName + "\r\n" + "TM-" + e.Geid + "\r\n" ?? "") +
+                                                      (loa.LineOfAuthorityName + "\r\n" ?? "") +
+                                                      (t.LkpValue == "Other" ? t.Message : t.LkpValue),
                             LkpValue = t.LkpValue,
                         };
 
