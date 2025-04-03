@@ -171,9 +171,12 @@
                 class="icon-edit-delete-button"
                 type="button"
                 title="Add Tickler"
-                (click)="modalService.open('modal-new-tickler')"
+                (click)="
+                  modalService.open('modal-new-tickler');
+                  appComService.updateTypeTickler({ type: 'MEMBER', loa: null })
+                "
               >
-                <span class="material-symbols-outlined" style="font-size: 3rem;">
+                <span class="material-symbols-outlined" style="font-size: 3rem">
                   notification_add
                 </span>
               </button>

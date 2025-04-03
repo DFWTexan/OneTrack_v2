@@ -2,8 +2,19 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { DropdownDataService, EmployeeDataService, ErrorMessageService, TicklerMgmtDataService, UserAcctInfoDataService } from '../../../_services';
-import { EmployeeSearchResult, StockTickler } from '../../../_Models';
+import {
+  AgentDataService,
+  DropdownDataService,
+  EmployeeDataService,
+  ErrorMessageService,
+  TicklerMgmtDataService,
+  UserAcctInfoDataService,
+} from '../../../_services';
+import {
+  AgentInfo,
+  EmployeeSearchResult,
+  StockTickler,
+} from '../../../_Models';
 
 @Component({
   selector: 'app-add-tickler',
@@ -18,6 +29,7 @@ export class AddTicklerComponent implements OnInit, OnDestroy {
   employee: EmployeeSearchResult | null = null;
   today: string = new Date().toISOString().split('T')[0];
   isDisplayOtherMsg: boolean = false;
+  agentInfo: AgentInfo = {} as AgentInfo;
 
   private subscriptionData = new Subscription();
 
@@ -25,6 +37,7 @@ export class AddTicklerComponent implements OnInit, OnDestroy {
     public errorMessageService: ErrorMessageService,
     public ticklerMgmtDataService: TicklerMgmtDataService,
     private employeeDataService: EmployeeDataService,
+    private agentDataService: AgentDataService,
     private fb: FormBuilder,
     private drpdwnDataService: DropdownDataService,
     private userAcctInfoDataService: UserAcctInfoDataService
@@ -52,12 +65,14 @@ export class AddTicklerComponent implements OnInit, OnDestroy {
       this.isDisplayOtherMsg = true;
     } else {
       this.isDisplayOtherMsg = false;
-    } 
+    }
   }
 
   ngOnInit() {
-    this.licenseTechs = [{ value: 0, label: 'Select' },
-    ...this.drpdwnDataService.licenseTechs];
+    this.licenseTechs = [
+      { value: 0, label: 'Select' },
+      ...this.drpdwnDataService.licenseTechs,
+    ];
     this.employee = this.employeeDataService.selectedEmployee;
     this.subscriptionData.add(
       this.employeeDataService.selectedEmployeeChanged.subscribe(
@@ -72,18 +87,52 @@ export class AddTicklerComponent implements OnInit, OnDestroy {
       this.ticklerMgmtDataService
         .fetchStockTickler()
         .subscribe((stockTicklerItems) => {
-          this.stockTicklerItems = [{ lkpField: 'Tickler', lkpValue: 'Select' }, ...stockTicklerItems];
+          this.stockTicklerItems = [
+            { lkpField: 'Tickler', lkpValue: 'Select' },
+            ...stockTicklerItems,
+          ];
         })
     );
     this.ticklerForm.reset({ lkpValue: 'Select', licenseTechId: 0 });
+
+    this.agentInfo = this.agentDataService.agentInformation;
+    this.subscriptionData.add(
+      this.agentDataService.agentInfoChanged
+        // .subscribe(
+        //   (agentInfo: AgentInfo) => {
+        //     this.isLoading = false;
+        //     this.agentInfo = agentInfo;
+        //   }
+        // )
+        .subscribe({
+          next: (agentInfo: AgentInfo) => {
+            // this.isLoading = false;
+            this.agentInfo = agentInfo;
+            // this.sortedLicenseItems = [...agentInfo.licenseItems];
+            // this.sortedAppointmentItems = [...agentInfo.appointmentItems];
+          },
+          error: (error) => {
+            if (error.error && error.error.errMessage) {
+              this.errorMessageService.setErrorMessage(error.error.errMessage);
+            }
+          },
+        })
+    );
   }
 
   onSubmit() {
     this.isFormSubmitted = true;
     let ticklerItem: any = this.ticklerForm.value;
     ticklerItem.PreEducationID = 0;
-    ticklerItem.ticklerID = this.ticklerForm.get('ticklerId')?.value
+    ticklerItem.EmployeeID = this.agentInfo.employeeID;
+    ticklerItem.EmploymentID = this.agentInfo.employmentID;
+    ticklerItem.ticklerID = this.ticklerForm.get('ticklerId')?.value;
     ticklerItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+
+    console.log(
+      'EMFTEST (AddTicklerComponent: onSubmit) - ticklerItem => \n',
+      ticklerItem
+    );
 
     if (this.ticklerForm.invalid) {
       this.ticklerForm.setErrors({ invalid: true });

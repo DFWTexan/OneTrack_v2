@@ -34,6 +34,7 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
   worklistCount: number = 0;
   isShowLicenseMgmt: boolean = false;
   isShowTickle: boolean = false;
+  typeTickler: any = {};
 
   stockTicklerItems: StockTickler[] = [];
   licenseTechItems: any = ['Loading...'];
@@ -130,6 +131,10 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
   //     this.router.navigate(['team/agent-info', this.id, 'tm-license-mgmt']);
   //   });
   // }
+
+  onSetTypeTickler(typeTickler: any) {
+    this.typeTickler = typeTickler;
+  }
 
   private getAgentInfo(employeeId: number) {
     this.subscriptions.add(

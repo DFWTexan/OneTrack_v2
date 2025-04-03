@@ -337,7 +337,7 @@
                     class="icon-edit-delete-button"
                     (click)="
                       modalService.open('modal-new-tickler');
-                      onSetTypeTickler({ type: 'MEMBER', loa: null })
+                      appComService.updateTypeTickler({ type: 'MEMBER', loa: null })
                     "
                     title="Tickle Member"
                   >
@@ -349,7 +349,7 @@
                     class="icon-edit-delete-button"
                     (click)="
                       modalService.open('modal-new-tickler');
-                      onSetTypeTickler({
+                      appComService.updateTypeTickler({
                         type: 'LOA',
                         loa: license.lineOfAuthority
                       })
@@ -726,7 +726,7 @@
                             class="icon-edit-delete-button"
                             (click)="
                               modalService.open('modal-new-tickler');
-                              onSetTypeTickler({ type: 'MEMBER', loa: null })
+                              appComService.updateTypeTickler({ type: 'MEMBER', loa: null })
                             "
                             title="Tickle Member"
                           >
@@ -736,7 +736,7 @@
                             class="icon-edit-delete-button"
                             (click)="
                               modalService.open('modal-new-tickler');
-                              onSetTypeTickler({
+                              appComService.updateTypeTickler({
                                 type: 'LOA',
                                 loa: license.lineOfAuthority
                               })
@@ -1152,7 +1152,7 @@
     <div>
       <div>
         <app-insert-member-loa-tickler
-          [typeTickler]="typeTickler"
+          (callParentRefreshData)="onChildCallRefreshData($event)"
         ></app-insert-member-loa-tickler>
       </div>
     </div>

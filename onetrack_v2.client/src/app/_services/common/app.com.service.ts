@@ -63,6 +63,8 @@ export class AppComService {
   selectAllAgentsIndexChanged = new Subject<number>();
   selectedEmploymentCommunicationID: number = 0;
   selectedEmploymentCommunicationIDChanged = new Subject<number>();
+  typeTickler: any = {};
+  typeTicklerChanged = new Subject<any>();
 
   subscriptions: Subscription = new Subscription();
 
@@ -156,6 +158,11 @@ export class AppComService {
   updateSelectedEmploymentCommunicationID(selectedEmploymentCommunicationID: number) {
     this.selectedEmploymentCommunicationID = selectedEmploymentCommunicationID;
     this.selectedEmploymentCommunicationIDChanged.next(this.selectedEmploymentCommunicationID);
+  }
+
+  updateTypeTickler(typeTickler: any) {
+    this.typeTickler = typeTickler;
+    this.typeTicklerChanged.next(this.typeTickler);
   }
 
   openDocument(url: string): Observable<Blob> {
