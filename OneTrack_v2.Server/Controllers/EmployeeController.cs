@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OneTrack_v2.DataModel;
 using OneTrack_v2.Services;
+using OneTrak_v2.DataModel;
+using OneTrak_v2.Services.Employee.Model;
 
 namespace OneTrack_v2.Controllers
 {
@@ -62,6 +64,14 @@ namespace OneTrack_v2.Controllers
         public async Task<ActionResult> GetEmploymentCommunication(int employmentCommunicationID)
         {
             var result = await Task.Run(() => _employeeService.GetEmploymentCommunication(employmentCommunicationID));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> Index([FromBody] EmployeeIndex input)
+        {
+            var result = await Task.Run(() => _employeeService.Index(input));
 
             return StatusCode(result.StatusCode, result);
         }

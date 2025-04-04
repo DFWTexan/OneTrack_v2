@@ -87,7 +87,29 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    // some code here
+    this.isFormSubmitted = true;
+    let indexer: any = this.indexForm.value;
+    
+    if (this.indexForm.valid) {
+      const formData = new FormData();
+      formData.append('documentType', this.selectedDocumentType || '');
+      formData.append('documentSubType', this.document || '');
+      formData.append('file', this.file as Blob);
+
+      // Call the service to upload the file and handle the response
+      // this.miscDataService.uploadDocument(formData).subscribe(
+      //   (response) => {
+      //     // Handle success response
+      //     console.log('File uploaded successfully:', response);
+      //   },
+      //   (error) => {
+      //     // Handle error response
+      //     console.error('File upload failed:', error);
+      //   }
+      // );
+    } else {
+      // this.errorMessageService.showErrorMessage('Please fill all required fields.');
+    }
   }
 
   onFileSelected(event: any) {

@@ -1,6 +1,8 @@
 ﻿using DataModel.Response;
 using Microsoft.AspNetCore.Mvc;
 using OneTrack_v2.DataModel;
+using OneTrak_v2.DataModel;
+using OneTrak_v2.Services.Employee.Model;
 
 namespace OneTrack_v2.Services
 {
@@ -12,6 +14,7 @@ namespace OneTrack_v2.Services
         public Task<ReturnResult> SearchEmployeeName(string vInput);
         public Task<ReturnResult> SearchEmployeeTMNumber(string vInput);
         public Task<ReturnResult> GetEmploymentCommunication(int vInput);
+        public ReturnResult Index([FromBody] EmployeeIndex vInput);
         //public DataModel.Response.ReturnResult GetEmployee(int vEmployeeID);
     }
 }

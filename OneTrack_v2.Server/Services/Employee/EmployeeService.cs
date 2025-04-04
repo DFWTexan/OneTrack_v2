@@ -7,6 +7,8 @@ using OneTrak_v2.DataModel;
 using System;
 using NuGet.Packaging;
 using Microsoft.Data.SqlClient;
+using Microsoft.AspNetCore.Mvc;
+using OneTrak_v2.Services.Employee.Model;
 
 namespace OneTrack_v2.Services
 {
@@ -299,6 +301,43 @@ namespace OneTrack_v2.Services
 
             return Task.FromResult(result);
 
+        }
+
+        public ReturnResult Index([FromBody] EmployeeIndex vInput)
+        {
+            String txt = String.Empty;
+            int intSec = 1;
+            DateTime dtDateTime = System.DateTime.Now;
+            char[] delimiterChars = { '|' };
+
+            //string[] docs = Session["strEmailAttachment"].ToString().Split(delimiterChars);
+
+            var result = new ReturnResult();
+            try
+            {
+                //var query = _db.Employees
+                //    .Where(e => e.EmployeeId == vInput.EmployeeID)
+                //    .Select(e => new
+                //    {
+                //        e.EmployeeId,
+                //        e.Geid,
+                //        Name = e.LastName + ", " + e.FirstName + " " + (e.MiddleName != null ? e.MiddleName.Substring(0, 1) : ""),
+                //    })
+                //    .FirstOrDefault();
+                result.Success = true;
+                result.ObjData = null;
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result.Success = false;
+                result.StatusCode = 500;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# EMPL-1309-90412].";
+                //_logger.LogError(ex, "Error in EmployeeService.SearchEmployee()");
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EmplQuick-TM-Search");
+            }
+            return result;
         }
     }
 }

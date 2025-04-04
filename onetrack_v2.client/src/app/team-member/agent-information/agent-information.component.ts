@@ -126,6 +126,17 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
           this.stockTicklerItems = stockTicklerItems;
         })
     );
+
+    this.subscriptions.add(
+      this.appComService.typeTicklerChanged.subscribe(
+        (typeTickler: any) => {
+          this.typeTickler = typeTickler;
+          // if (this.typeTickler.type === 'LOA') {
+          //   this.ticklerForm.get('lineOfAuthorityName')?.setValue(this.typeTickler.loa);
+          // }
+        }
+      )
+    );
   }
 
   // viewLicenseMgmt() {

@@ -168,7 +168,7 @@
             </div>
             <div class="col-md-1 restricted-width">
               <button
-                class="icon-edit-delete-button"
+                class="icon-edit-delete-button me-5"
                 type="button"
                 title="Add Tickler"
                 (click)="
@@ -180,6 +180,16 @@
                   notification_add
                 </span>
               </button>
+              <button
+                  class="icon-edit-delete-button"
+                  type="button"
+                  title="Document(s) Index"
+                  (click)="
+                    modalService.open('modal-document-index');
+                  "
+                >
+                  <span class="material-symbols-outlined" style="font-size: 3rem"> list </span>
+                </button>
             </div>
           </div>
         </div>
@@ -267,6 +277,41 @@
           [stockTicklerItems]="stockTicklerItems"
           (callParentRefreshData)="onChildCallRefreshData()"
         ></app-edit-tickler-info>
+      </div>
+    </div>
+  </div>
+</modal>
+
+<!-- Modal: INSERT-TICKLER -->
+<modal id="modal-new-tickler">
+  <div class="modal-header">
+    <h1 class="modal-title">
+      <strong>{{ typeTickler.type }}</strong> - Tickler
+    </h1>
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-insert-member-loa-tickler></app-insert-member-loa-tickler>
+      </div>
+    </div>
+  </div>
+</modal>
+
+<!-- Modal: DOCUMENT-INDEX -->
+<modal id="modal-document-index">
+  <div class="modal-header">
+    <h1 class="modal-title">OneTrak Document(s) Indexer</h1>
+    <!-- <button
+              type="button"
+              class="btn-close"
+              (click)="modalService.close()"
+            ></button> -->
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-add-indexer></app-add-indexer>
       </div>
     </div>
   </div>

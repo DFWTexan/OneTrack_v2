@@ -91,16 +91,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
         })
     );
 
-    this.subscriptions.add(
-      this.appComService.typeTicklerChanged.subscribe(
-        (typeTickler: any) => {
-          this.typeTickler = typeTickler;
-          // if (this.typeTickler.type === 'LOA') {
-          //   this.ticklerForm.get('lineOfAuthorityName')?.setValue(this.typeTickler.loa);
-          // }
-        }
-      )
-    );
+    
   }
 
   onToggleView() {
@@ -288,9 +279,9 @@ export class TmInformationComponent implements OnInit, OnDestroy {
     }, 500); // Adjust the delay as needed
   }
 
-  onSetTypeTickler(typeTickler: any) {
-    this.typeTickler = typeTickler;
-  }
+  // onSetTypeTickler(typeTickler: any) {
+  //   this.typeTickler = typeTickler;
+  // }
 
   onSetWorkState(workState: string | null) {
     this.agentDataService.storeWorkState(workState);
