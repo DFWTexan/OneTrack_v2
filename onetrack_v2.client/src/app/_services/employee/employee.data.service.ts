@@ -130,4 +130,23 @@ export class EmployeeDataService {
         })
       );
   }
+
+  updateEmployeeIndexer(vIndexInfo: any): Observable<any> {
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(environment.apiUrl + 'Employee/Index', vIndexInfo)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
 }

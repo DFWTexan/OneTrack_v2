@@ -60,11 +60,17 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
         }
       )
     );
-    
-    this.branchNames = [{ value: null, label: 'Select' }, ...this.dropdownDataService.branchNames];
-    
-    this.scoreNumbers = [{ value: 0, label: 'Select' }, ...this.dropdownDataService.scoreNumbers];
-    
+
+    this.branchNames = [
+      { value: null, label: 'Select' },
+      ...this.dropdownDataService.branchNames,
+    ];
+
+    this.scoreNumbers = [
+      { value: 0, label: 'Select' },
+      ...this.dropdownDataService.scoreNumbers,
+    ];
+
     this.documentTypes = ['Select', ...this.dropdownDataService.documentTypes];
   }
 
@@ -88,25 +94,39 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.isFormSubmitted = true;
-    let indexer: any = this.indexForm.value;
-    
+  
     if (this.indexForm.valid) {
-      const formData = new FormData();
-      formData.append('documentType', this.selectedDocumentType || '');
-      formData.append('documentSubType', this.document || '');
-      formData.append('file', this.file as Blob);
-
-      // Call the service to upload the file and handle the response
-      // this.miscDataService.uploadDocument(formData).subscribe(
-      //   (response) => {
-      //     // Handle success response
-      //     console.log('File uploaded successfully:', response);
-      //   },
-      //   (error) => {
-      //     // Handle error response
-      //     console.error('File upload failed:', error);
-      //   }
-      // );
+      const formData = {
+        employeeID: this.employee?.employeeID || 0,
+        firstName: this.employee?.firstName || '',
+        lastName: this.employee?.lastName || '',
+        geid: this.employee?.geid || '',
+        workState: this.indexForm.get('workState')?.value || '',
+        licenseState: this.indexForm.get('licenseState')?.value || '',
+        branchName: this.indexForm.get('branchName')?.value || '',
+        scoreNumber: this.indexForm.get('scoreNum')?.value || '',
+        documentType: this.selectedDocumentType || '',
+        documentSubType: this.indexForm.get('docSubType')?.value || '',
+      };
+  
+      // this.errorMessageService.showLoadingMessage('Submitting data, please wait...');
+      this.employeeDataService.updateEmployeeIndexer(formData).subscribe({
+        next: (response) => {
+          if (response.success && response.statusCode === 200) {
+            // this.errorMessageService.showSuccessMessage('Data submitted successfully!');
+            this.onCancel();
+          } else {
+            // this.errorMessageService.showErrorMessage(response.errMessage || 'An unknown error occurred.');
+          }
+        },
+        error: (error) => {
+          console.error('Error submitting data:', error);
+          // this.errorMessageService.showErrorMessage('Error submitting data: ' + (error.message || 'Unknown error.'));
+        },
+        complete: () => {
+          // this.errorMessageService.hideLoadingMessage();
+        },
+      });
     } else {
       // this.errorMessageService.showErrorMessage('Please fill all required fields.');
     }
