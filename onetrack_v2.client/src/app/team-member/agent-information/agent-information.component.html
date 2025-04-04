@@ -181,15 +181,25 @@
                 </span>
               </button>
               <button
-                  class="icon-edit-delete-button"
-                  type="button"
-                  title="Document(s) Index"
-                  (click)="
-                    modalService.open('modal-document-index');
-                  "
-                >
-                  <span class="material-symbols-outlined" style="font-size: 3rem"> list </span>
-                </button>
+                class="icon-edit-delete-button"
+                type="button"
+                title="Document(s) Index"
+                (click)="
+                  modalService.open('modal-document-index');
+                  emplyService.updateSelectedEmployee({
+                    employeeID: agentInfo.employeeID,
+                    geid: agentInfo.geid,
+                    firstName: agentInfo.firstName,
+                    lastName: agentInfo.lastName,
+                    workStateAbv: agentInfo.workStateAbv,
+                    resStateAbv: agentInfo.resStateAbv
+                  })
+                "
+              >
+                <span class="material-symbols-outlined" style="font-size: 3rem">
+                  list
+                </span>
+              </button>
             </div>
           </div>
         </div>

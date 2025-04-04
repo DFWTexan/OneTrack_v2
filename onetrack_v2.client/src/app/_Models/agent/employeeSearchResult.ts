@@ -1,13 +1,14 @@
 export interface EmployeeSearchResult {
     employeeID: number;
-    geid: string;
-    name: string;
-    resStateAbv: string;
-    workStateAbv: string;
-    scoreNumber: string;
-    branchName: string;
-    employmentID: number;
-    State: string;
-    firstName: string;
-    lastName: string;
+    geid?: string | null;
+    name?: string | null;
+    resStateAbv?: string | null;
+    workStateAbv?: string | null;
+    scoreNumber?: string | null;
+    branchName?: string | null;
+    employmentID?: number | null;
+    State?: string | null;
+    firstName?: string | null;
+    lastName?: string | null;
+    branchDeptNumber?: string;
   }

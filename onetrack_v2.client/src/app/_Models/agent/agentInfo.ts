@@ -41,8 +41,8 @@ export interface AgentInfo {
   licenseLevel: string;
   isLicenseincentiveSecondChance: boolean;
   branchCode: string | null;
-  branchDeptScoreNumber: string | null;
-  branchDeptNumber: string | null;
+  branchDeptScoreNumber?: string | null;
+  branchDeptNumber?: string | null;
   branchDeptName: string | null;
   branchDeptStreet1: string | null;
   branchDeptStreet2: string | null;

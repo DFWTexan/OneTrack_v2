@@ -13,6 +13,7 @@ import {
   AgentComService,
   AgentDataService,
   AppComService,
+  EmployeeDataService,
   ModalService,
   TicklerMgmtComService,
   TicklerMgmtDataService,
@@ -43,6 +44,7 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
 
   constructor(
     private agentDataService: AgentDataService,
+    public emplyService: EmployeeDataService,
     private route: ActivatedRoute,
     public agentComService: AgentComService,
     public appComService: AppComService,
