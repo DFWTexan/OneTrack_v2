@@ -94,7 +94,7 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.isFormSubmitted = true;
-  
+
     if (this.indexForm.valid) {
       const formData = {
         employeeID: this.employee?.employeeID || 0,
@@ -108,15 +108,17 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
         documentType: this.selectedDocumentType || '',
         documentSubType: this.indexForm.get('docSubType')?.value || '',
       };
-  
+
       // this.errorMessageService.showLoadingMessage('Submitting data, please wait...');
       this.employeeDataService.updateEmployeeIndexer(formData).subscribe({
         next: (response) => {
-          if (response.success && response.statusCode === 200) {
+          if (response && response.success && response.statusCode === 200) {
             // this.errorMessageService.showSuccessMessage('Data submitted successfully!');
             this.onCancel();
           } else {
-            // this.errorMessageService.showErrorMessage(response.errMessage || 'An unknown error occurred.');
+            const errorMessage =
+              response?.errMessage || 'An unknown error occurred.';
+            // this.errorMessageService.showErrorMessage(errorMessage);
           }
         },
         error: (error) => {
