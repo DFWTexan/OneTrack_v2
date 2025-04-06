@@ -35,7 +35,7 @@ namespace OneTrak_v2.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Send([FromBody] IputSendEmail input)
+        public async Task<ActionResult> Send([FromForm] IputSendEmail input)
         {
             var result = await Task.Run(() => _emailService.Send(input));
 
