@@ -244,7 +244,7 @@
     <app-file-upload
       [filePathUri]="fileUri"
       [displayMode]="FileDisplayMode"
-      (fileSelected)="onFileSelected($event)"
+      (filesChanged)="onFilesChanged($event)"
       #fileUpload
     ></app-file-upload>
     <!-- <input

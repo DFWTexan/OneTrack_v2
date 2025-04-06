@@ -1,4 +1,4 @@
-import { Component, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from '../../_environments/environment';
@@ -14,6 +14,7 @@ export class FileUploadComponent {
   @Input() filePathUri: string | null = null;
   @Input() displayMode: string | null = null;
   @Input() isDisabled: boolean = false;
+  @Output() filesChanged = new EventEmitter<File[]>();
   files: File[] = [];
   private url: string = environment.apiUrl + 'Document/';
   fileName = '';
@@ -52,6 +53,8 @@ export class FileUploadComponent {
         //   },
         // });
       // }
+
+      this.filesChanged.emit(this.files);
 
       target.value = '';
     }

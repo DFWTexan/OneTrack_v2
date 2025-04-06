@@ -95,6 +95,10 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
     );
   }
 
+  onFilesChanged(files: File[]) {
+    this.files = files; 
+  }
+
   onSubmit() {
     this.isFormSubmitted = true;
   
