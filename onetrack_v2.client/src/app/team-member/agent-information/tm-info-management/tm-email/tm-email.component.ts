@@ -60,6 +60,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   pdfSrc: SafeResourceUrl | null = null;
   filePdfSrc: SafeResourceUrl | null = null;
   fileHtmlContent: SafeHtml | null = null;
+  files: File[] = [];
 
   private subscriptions = new Subscription();
 
@@ -206,6 +207,10 @@ export class TmEmailComponent implements OnInit, OnDestroy {
         // upload$.subscribe();
       }
     }
+  }
+
+  onFilesChanged(files: File[]) {
+    this.files = files; 
   }
 
   onSubmit() {
