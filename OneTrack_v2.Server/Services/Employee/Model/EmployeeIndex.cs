@@ -12,5 +12,6 @@
         public string? ScoreNumber { get; set; }
         public string? DocumentType { get; set; }
         public string? DocumentSubType { get; set; }
+        public List<IFormFile>? Files { get; set; } = new List<IFormFile>();
     }
 }

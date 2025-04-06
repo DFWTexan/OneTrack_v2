@@ -241,12 +241,18 @@
   </div> -->
 <div class="row ms-1 mt-1 mb-3">
   <div class="col-md-12">
-    <app-file-upload
+    <!-- <app-file-upload
       [filePathUri]="fileUri"
       [displayMode]="FileDisplayMode"
       (fileSelected)="onFileSelected($event)"
       #fileUpload
-    ></app-file-upload>
+    ></app-file-upload> -->
+    <input
+      class="file-upload button-font-size me-3"
+      type="file"
+      (change)="onFileSelected($event)"
+      #fileUpload
+    />
   </div>
 </div>
   

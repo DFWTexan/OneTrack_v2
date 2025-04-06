@@ -33,6 +33,7 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
   fileUri: string | null = null;
   document: string = '';
   employee: EmployeeSearchResult | null = null;
+  files: File[] = [];
 
   private subscriptionData = new Subscription();
 
@@ -94,21 +95,29 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.isFormSubmitted = true;
-
+  
     if (this.indexForm.valid) {
-      const formData = {
-        employeeID: this.employee?.employeeID || 0,
-        firstName: this.employee?.firstName || '',
-        lastName: this.employee?.lastName || '',
-        geid: this.employee?.geid || '',
-        workState: this.indexForm.get('workState')?.value || '',
-        licenseState: this.indexForm.get('licenseState')?.value || '',
-        branchName: this.indexForm.get('branchName')?.value || '',
-        scoreNumber: this.indexForm.get('scoreNum')?.value || '',
-        documentType: this.selectedDocumentType || '',
-        documentSubType: this.indexForm.get('docSubType')?.value || '',
-      };
-
+      const formData = new FormData();
+  
+      // Append form fields
+      formData.append('EmployeeID', this.employee?.employeeID?.toString() || '0');
+      formData.append('FirstName', this.employee?.firstName || '');
+      formData.append('LastName', this.employee?.lastName || '');
+      formData.append('Geid', this.employee?.geid || '');
+      formData.append('WorkState', this.indexForm.get('workState')?.value || '');
+      formData.append('LicenseState', this.indexForm.get('licenseState')?.value || '');
+      formData.append('BranchName', this.indexForm.get('branchName')?.value || '');
+      formData.append('ScoreNumber', this.indexForm.get('scoreNum')?.value || '');
+      formData.append('DocumentType', this.selectedDocumentType || '');
+      formData.append('DocumentSubType', this.indexForm.get('docSubType')?.value || '');
+  
+      // Append files
+      if (this.files && this.files.length > 0) {
+        this.files.forEach((file) => {
+          formData.append('Files', file, file.name);
+        });
+      }
+  
       // this.errorMessageService.showLoadingMessage('Submitting data, please wait...');
       this.employeeDataService.updateEmployeeIndexer(formData).subscribe({
         next: (response) => {
@@ -116,8 +125,7 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
             // this.errorMessageService.showSuccessMessage('Data submitted successfully!');
             this.onCancel();
           } else {
-            const errorMessage =
-              response?.errMessage || 'An unknown error occurred.';
+            const errorMessage = response?.errMessage || 'An unknown error occurred.';
             // this.errorMessageService.showErrorMessage(errorMessage);
           }
         },
@@ -135,7 +143,18 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
   }
 
   onFileSelected(event: any) {
-    // some code here
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length) {
+      const file: File = target.files[0];
+
+      this.files.push(file);
+
+      // if (file) {
+      //   this.file = file;
+      //   this.fileUri = URL.createObjectURL(file);
+      //   this.document = file.name;
+      // }
+    }
   }
 
   onCancel() {

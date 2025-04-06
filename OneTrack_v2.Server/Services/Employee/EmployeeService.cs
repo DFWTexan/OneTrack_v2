@@ -309,21 +309,41 @@ namespace OneTrack_v2.Services
             int intSec = 1;
             DateTime dtDateTime = System.DateTime.Now;
             char[] delimiterChars = { '|' };
+            string path = "\\\\corp.fin\\apps\\OMS\\ECM\\QLTY\\shared\\exportimport\\OneTrakImporter-Test\\"; // Define your path here
 
-            //string[] docs = Session["strEmailAttachment"].ToString().Split(delimiterChars);
+            string[] docs = vInput.Files.ToString().Split(delimiterChars);
 
             var result = new ReturnResult();
             try
             {
-                //var query = _db.Employees
-                //    .Where(e => e.EmployeeId == vInput.EmployeeID)
-                //    .Select(e => new
-                //    {
-                //        e.EmployeeId,
-                //        e.Geid,
-                //        Name = e.LastName + ", " + e.FirstName + " " + (e.MiddleName != null ? e.MiddleName.Substring(0, 1) : ""),
-                //    })
-                //    .FirstOrDefault();
+                foreach (var file in vInput.Files)
+                {
+                    if (file.Length > 0)
+                    {
+                        // Process the file
+                        var fileName = Path.GetFileName(file.FileName);
+                        var destinationPath = Path.Combine(path, dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + fileName);
+
+                        using (var stream = new FileStream(destinationPath, FileMode.Create))
+                        {
+                            file.CopyTo(stream);
+                        }
+
+                        FileInfo fi = new FileInfo(destinationPath);
+                        fi.CopyTo(path + dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + fi.Name);
+                        fi.Delete();
+
+                        String InFi = path + dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + ".OCR";
+                        //String InFi2 = path + dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + ".OCR";
+                        //File.Create(InFi).Dispose();
+
+                        String strNow = dtDateTime.ToString("yyyy-MM-dd");
+                        String strFilePath = path + dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + fi.Name;
+
+                        intSec++;
+                    }
+                }
+
                 result.Success = true;
                 result.ObjData = null;
                 result.StatusCode = 200;
