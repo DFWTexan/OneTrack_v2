@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from '../../_environments/environment';
@@ -14,6 +14,7 @@ export class FileUploadComponent {
   @Input() filePathUri: string | null = null;
   @Input() displayMode: string | null = null;
   @Input() isDisabled: boolean = false;
+  files: File[] = [];
   private url: string = environment.apiUrl + 'Document/';
   fileName = '';
 
@@ -27,28 +28,32 @@ export class FileUploadComponent {
     if (target.files && target.files.length) {
       const file: File = target.files[0];
 
-      if (file) {
-        this.fileName = file.name;
-        const formData = new FormData();
-        formData.append('File', file);
-        formData.append('FileName', this.fileName);
-        formData.append('FilePathType', this.uploadType || '');
+      this.files.push(file);
 
-        const upload$ = this.http.post(this.url + 'Upload', formData);
-        upload$.subscribe({
-          next: (response) => {
-            // Handle successful upload
-            // console.log('Upload successful', response);
-          },
-          error: (error) => {
-            if (error.error && error.error.errMessage) {
-              console.log('EMFTEST (UPLOAD) - error', error.error.errMessage);
+      // if (file) {
+      //   this.fileName = file.name;
+      //   const formData = new FormData();
+      //   formData.append('File', file);
+      //   formData.append('FileName', this.fileName);
+      //   formData.append('FilePathType', this.uploadType || '');
 
-              this.errorMessageService.setErrorMessage(error.error.errMessage);
-            }
-          },
-        });
-      }
+        // const upload$ = this.http.post(this.url + 'Upload', formData);
+        // upload$.subscribe({
+        //   next: (response) => {
+        //     // Handle successful upload
+        //     // console.log('Upload successful', response);
+        //   },
+        //   error: (error) => {
+        //     if (error.error && error.error.errMessage) {
+        //       console.log('EMFTEST (UPLOAD) - error', error.error.errMessage);
+
+        //       this.errorMessageService.setErrorMessage(error.error.errMessage);
+        //     }
+        //   },
+        // });
+      // }
+
+      target.value = '';
     }
   }
 

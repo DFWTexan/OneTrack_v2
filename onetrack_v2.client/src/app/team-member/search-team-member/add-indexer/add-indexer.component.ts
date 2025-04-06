@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -12,6 +12,7 @@ import {
   UserAcctInfoDataService,
 } from '../../../_services';
 import { EmployeeSearchResult } from '../../../_Models';
+import { FileUploadComponent } from '../../../_components/file-upload/file-upload.component';
 
 @Component({
   selector: 'app-add-indexer',
@@ -19,6 +20,7 @@ import { EmployeeSearchResult } from '../../../_Models';
   styleUrl: './add-indexer.component.css',
 })
 export class AddIndexerComponent implements OnInit, OnDestroy {
+  @ViewChild('fileUpload') fileUploadComponent!: FileUploadComponent;
   isFormSubmitted: boolean = false;
   indexForm: FormGroup;
   states: string[] = ['Select', ...this.conService.getStates()];
