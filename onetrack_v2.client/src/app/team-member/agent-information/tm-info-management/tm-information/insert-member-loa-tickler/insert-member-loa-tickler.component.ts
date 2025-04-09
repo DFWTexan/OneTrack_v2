@@ -138,7 +138,23 @@ export class InsertMemberLoaTicklerComponent implements OnInit, OnDestroy {
       this.ticklerDataService.upsertTickerItem(ticklerItem).subscribe({
         next: (response) => {
           alert('Tickler has been successfully added');
-
+          this.ticklerForm.reset({
+            ticklerId: null,
+            ticklerDate: null,
+            ticklerDueDate: null,
+            licenseTechId: 0,
+            employmentId: null,
+            employeeLicenseId: null,
+            employeeId: null,
+            ticklerCloseDate: null,
+            ticklerCloseByLicenseTechId: null,
+            lineOfAuthorityName: null,
+            teamMemberName: null,
+            geid: null,
+            message: null,
+            lkpValue: 'Select',
+          });
+          this.isFormSubmitted = false;
 // console.log('EMFTEST (InsertMemberLoaTicklerComponent: onSubmit) - response => \n', response);
          
           // const agent = this.agentDataService.fetchAgentInformation(this.agentInfo.employeeID);
