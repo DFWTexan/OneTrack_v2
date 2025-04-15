@@ -82,8 +82,6 @@ export class EmailDataService {
   sendEmail(sendEmailData: any): Observable<SendEmailData> {
     const formData = new FormData();
   
-console.log('EMFTEST (sendEmail) - sendEmailData => \n', sendEmailData);
-
     // Append form fields
     formData.append('communicationID', sendEmailData.communicationID);
     formData.append('emailSubject', sendEmailData.emailSubject);

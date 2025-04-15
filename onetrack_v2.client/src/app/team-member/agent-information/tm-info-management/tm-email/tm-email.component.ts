@@ -256,16 +256,9 @@ export class TmEmailComponent implements OnInit, OnDestroy {
         ? this.buildHTMLContent(this.emailForm.value.emailBody).toString()
         : this.htmlContent.toString();
 
-    console.log('EMFTEST (TM EMAIL: onSubmit) - this.files => \n', this.files);
-
     // Ensure files are valid File objects
     emailSendItem.fileAttachments = this.files.filter(
       (file) => file instanceof File
-    );
-
-    console.log(
-      'EMFTEST (TM EMAIL: onSubmit) - emailSendItem.fileAttachments => \n',
-      emailSendItem.fileAttachments
     );
 
     emailSendItem.UserSOEID = this.userInfoDataService.userAcctInfo.soeid;
