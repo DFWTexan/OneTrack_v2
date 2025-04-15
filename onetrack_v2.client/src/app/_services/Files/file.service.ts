@@ -20,8 +20,17 @@ export class FileService {
     });
   }
 
+  // getFile(path: string, filename: string): Observable<Blob> {
+  //   const queryParams = `?path=${path}&filename=${filename}`;
+  //   return this.http.get(`${this.apiUrl}GetFile${queryParams}`, {
+  //     responseType: 'blob',
+  //   });
+  // }
   getFile(path: string, filename: string): Observable<Blob> {
-    const queryParams = `?path=${path}&filename=${filename}`;
+
+console.log('EMFTEST () FileService getFile called with path: ', path, 'and filename:', filename);
+
+    const queryParams = `?path=${encodeURIComponent(path)}&filename=${encodeURIComponent(filename)}`;
     return this.http.get(`${this.apiUrl}GetFile${queryParams}`, {
       responseType: 'blob',
     });

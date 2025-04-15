@@ -8,7 +8,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { firstValueFrom, Subscription } from 'rxjs';
 import {
   DomSanitizer,
   SafeHtml,
@@ -123,6 +123,13 @@ export class TmEmailComponent implements OnInit, OnDestroy {
           this.emailComTemplates = emailComTemplates;
         })
     );
+
+    this.subscriptions.add(
+      this.emailDataService.attachedFilesChanged.subscribe((files: File[]) => {
+        this.files = [...files];
+        this.emailAttachments = files.map((file) => file.name);
+      })
+    );
   }
 
   onTemplateChange(event: Event): void {
@@ -144,6 +151,29 @@ export class TmEmailComponent implements OnInit, OnDestroy {
           this.isTemplateFound = rawHtmlContent.isTemplateFound;
           this.emailAttachments = rawHtmlContent.attachments || [];
           this.documentPath = rawHtmlContent.docAttachmentPath;
+
+          // Fetch and create File objects for each attachment
+          const attachmentPromises = (rawHtmlContent.attachments || []).map(
+            async (attachment: string) => {
+              const filePath = `${rawHtmlContent.docAttachmentPath}`;
+              try {
+                const blob = await firstValueFrom(this.fileService.getFile(filePath, attachment));
+                if (blob) {
+                  return new File([blob], attachment);
+                } else {
+                  throw new Error(`Failed to fetch file: ${attachment}`);
+                }
+              } catch (error) {
+                console.error(`Error fetching file: ${attachment}`, error);
+                throw error;
+              }
+            }
+          );
+
+          Promise.all(attachmentPromises).then((files) => {
+            this.files = files; // Store valid File objects
+            console.log('Files loaded:', this.files);
+          });
 
           if (
             rawHtmlContent.docSubType === '{MESSAGE}' ||
@@ -210,7 +240,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   }
 
   onFilesChanged(files: File[]) {
-    this.files = files; 
+    this.files = files;
   }
 
   onSubmit() {
@@ -225,22 +255,28 @@ export class TmEmailComponent implements OnInit, OnDestroy {
       this.docSubType === '{MESSAGE}'
         ? this.buildHTMLContent(this.emailForm.value.emailBody).toString()
         : this.htmlContent.toString();
+
+    console.log('EMFTEST (TM EMAIL: onSubmit) - this.files => \n', this.files);
+
+    // Ensure files are valid File objects
+    emailSendItem.fileAttachments = this.files.filter(
+      (file) => file instanceof File
+    );
+
+    console.log(
+      'EMFTEST (TM EMAIL: onSubmit) - emailSendItem.fileAttachments => \n',
+      emailSendItem.fileAttachments
+    );
+
     emailSendItem.UserSOEID = this.userInfoDataService.userAcctInfo.soeid;
 
     if (this.docSubType === '{MESSAGE}') {
-      if (
-        emailSendItem.emailSubject === '' ||
-        emailSendItem.emailSubject === null
-      ) {
-        this.emailForm.controls['emailSubject'].setErrors({
-          invalid: true,
-        });
+      if (!emailSendItem.emailSubject) {
+        this.emailForm.controls['emailSubject'].setErrors({ invalid: true });
       }
 
-      if (emailSendItem.emailBody === '' || emailSendItem.emailBody === null) {
-        this.emailForm.controls['emailBody'].setErrors({
-          invalid: true,
-        });
+      if (!emailSendItem.emailBody) {
+        this.emailForm.controls['emailBody'].setErrors({ invalid: true });
       }
     }
 

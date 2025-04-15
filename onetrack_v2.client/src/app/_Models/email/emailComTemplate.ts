@@ -8,3 +8,15 @@ export interface EmailComTemplate {
     hasNote: boolean;
     docTypeDocSubType: string;
   }
+
+  export interface SendEmailData {
+    employeeID: number;
+    employmentID: number;
+    communicationID: number;
+    emailTo: string;
+    ccEmail?: string[]; // Optional
+    emailSubject: string;
+    emailContent: string;
+    fileAttachments?: File[]; // Optional
+    userSOEID: string;
+  }

@@ -10,7 +10,9 @@ using OneTrack_v2.DbData.Models;
 using OneTrak_v2.DataModel;
 using OneTrak_v2.Server.Services.Email.Templates;
 using OneTrak_v2.Services.Model;
+using System;
 using System.Data;
+using System.IO;
 using System.Net.Mail;
 using System.Reflection;
 using System.Web;
@@ -34,6 +36,7 @@ namespace OneTrack_v2.Services
         private readonly string? _testmailToAddress;
         private readonly string? _testmailCCAddress;
         private readonly string? _testmailFromAddress;
+        private readonly string? _attachmentLocation;
         private string? _strEMAILATTACHMENT = string.Empty;
 
         public EmailService(AppDataContext db, IConfiguration config, IUtilityHelpService utilityHelpService, IEmailTemplateService emailTemplateService)
@@ -54,6 +57,7 @@ namespace OneTrack_v2.Services
             string testmailToAddressKey = $"EnvironmentSettings:{environment}:MailSettings:testmailToAddress";
             string testmailCCAddressKey = $"EnvironmentSettings:{environment}:MailSettings:testmailCCAddress";
             string testmailFromAddressKey = $"EnvironmentSettings:{environment}:MailSettings:testmailFromAddress";
+            string attachmentLocationKey = $"EnvironmentSettings:{environment}:Paths:AttachmentLoc";
 
             // Retrieve the values based on the constructed keys
             _mailServer = _config.GetValue<string>(mailServerKey);
@@ -62,6 +66,7 @@ namespace OneTrack_v2.Services
             _testmailToAddress = _config.GetValue<string>(testmailToAddressKey);
             _testmailCCAddress = _config.GetValue<string>(testmailCCAddressKey);
             _testmailFromAddress = _config.GetValue<string>(testmailFromAddressKey);
+            _attachmentLocation = _config.GetValue<string>(attachmentLocationKey);
         }
 
         public ReturnResult GetEmailComTemplates()
@@ -1075,8 +1080,36 @@ namespace OneTrack_v2.Services
                 //EmailSubjectTextBox.ReadOnly = false;
                 //EmailTemplateDropDownList.DataBind();
                 //EmailTemplateDropDownList_SelectedIndexChanged(EmailTemplateDropDownList, EventArgs.Empty);
+                //string path = "\\\\CORP.FIN\\APPS\\OMS\\ECM\\DVLP\\Shared\\License\\EmailTemp\\"; // Define your path here
 
-                result.Success = true;
+                foreach (var file in vInput.FileAttachments)
+                {
+                    if (file.Length > 0)
+                    {
+                        var fileName = Path.GetFileName(file.FileName);
+                        var destinationPath = Path.Combine(_attachmentLocation, fileName);
+
+                        // Check if the file already exists
+                        if (File.Exists(destinationPath))
+                        {
+                            // Log or handle the case where the file already exists
+                            //_utilityService.LogInfo($"File '{fileName}' already exists at '{destinationPath}'. Skipping file write.");
+                            continue; // Skip writing the file
+                        }
+
+                        // Save the file to the destination path
+                        using (var stream = new FileStream(destinationPath, FileMode.Create))
+                        {
+                            file.CopyTo(stream);
+                        }
+
+                        FileInfo fi = new FileInfo(destinationPath);
+                        fi.CopyTo(_attachmentLocation + fi.Name, overwrite: true); // Overwrite if necessary
+                        fi.Delete();
+                    }
+                }
+
+                    result.Success = true;
                 result.StatusCode = 200;
             }
             catch (Exception ex)

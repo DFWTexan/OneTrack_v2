@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from '../../_environments/environment';
-import { ErrorMessageService } from '../../_services';
+import { EmailDataService, ErrorMessageService } from '../../_services';
 
 @Component({
   selector: 'app-file-upload',
@@ -15,13 +15,14 @@ export class FileUploadComponent {
   @Input() displayMode: string | null = null;
   @Input() isDisabled: boolean = false;
   @Output() filesChanged = new EventEmitter<File[]>();
-  files: File[] = [];
+  attachedFiles: File[] = [];
   private url: string = environment.apiUrl + 'Document/';
   fileName = '';
 
   constructor(
     private http: HttpClient,
-    private errorMessageService: ErrorMessageService
+    private errorMessageService: ErrorMessageService,
+    private emailDataService: EmailDataService
   ) {}
 
   onFileSelected(event: any) {
@@ -29,7 +30,9 @@ export class FileUploadComponent {
     if (target.files && target.files.length) {
       const file: File = target.files[0];
 
-      this.files.push(file);
+      this.attachedFiles.push(file);
+
+      this.emailDataService.setAttachedFiles(this.attachedFiles);
 
       // if (file) {
       //   this.fileName = file.name;
@@ -54,7 +57,7 @@ export class FileUploadComponent {
         // });
       // }
 
-      this.filesChanged.emit(this.files);
+      this.filesChanged.emit(this.attachedFiles);
 
       target.value = '';
     }
