@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 import { AppComService, EmployeeDataService } from '../../_services';
 
@@ -12,13 +13,21 @@ export class ViewEmployeeCommunicationComponent implements OnInit, OnDestroy {
   empCommID: number = 0;
   empCommItem: any;
   attachments: any[] = [];
+  sanitizedEmailBodyHtml!: SafeHtml;
 
   private subscriptions = new Subscription();
 
   constructor(
     public appComService: AppComService,
-    private employeeDataService: EmployeeDataService
+    private employeeDataService: EmployeeDataService,
+    private sanitizer: DomSanitizer
   ) {}
+
+  // ngOnChanges(): void {
+  //   if (this.empCommItem?.emailBodyHtml) {
+  //     this.sanitizedEmailBodyHtml = this.sanitizer.bypassSecurityTrustHtml(this.empCommItem.emailBodyHtml);
+  //   }
+  // }
 
   ngOnInit(): void {
     this.empCommID = this.appComService.selectedEmploymentCommunicationID;
@@ -26,6 +35,7 @@ export class ViewEmployeeCommunicationComponent implements OnInit, OnDestroy {
       this.employeeDataService.employmentCommunicationItemChanged.subscribe(
         (response) => {
           this.empCommItem = response;
+          this.sanitizedEmailBodyHtml = this.sanitizer.bypassSecurityTrustHtml(this.empCommItem.emailBodyHtml);
   
           // Split the emailAttachments string by '|' and assign to this.attachments
           if (response.emailAttachments) {

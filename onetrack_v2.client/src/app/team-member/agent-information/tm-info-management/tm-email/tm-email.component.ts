@@ -296,6 +296,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
 
   resetForm() {
     this.emailForm.reset();
+    this.emailAttachments = [];
     this.emailForm.patchValue({
       communicationID: 33,
     });

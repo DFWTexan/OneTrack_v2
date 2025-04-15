@@ -40,8 +40,12 @@
     </div>
   </div>
   <div class="mb-2" style="border: solid 1px lightgray; border-radius: 0.5rem">
-    <div
+    <!-- <div
       [innerHTML]="empCommItem?.emailBodyHtml"
+      style="padding: 1rem; color: black"
+    ></div> -->
+    <div
+      [innerHTML]="sanitizedEmailBodyHtml"
       style="padding: 1rem; color: black"
     ></div>
   </div>
