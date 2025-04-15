@@ -96,7 +96,8 @@ export interface TransferHistory {
 export interface CompanyRequirementsHistory {
   employmentCompanyRequirementID: number;
   assetIdString: string;
-  assetSk: number
+  // assetSk: number
+  assetTitle: string;
   learningProgramStatus: string;
   learningProgramEnrollmentDate: string | null;
   learningProgramCompletionDate: string;

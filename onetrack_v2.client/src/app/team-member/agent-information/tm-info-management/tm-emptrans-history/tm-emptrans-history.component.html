@@ -13,6 +13,7 @@
   </div>
   <!-- LEGACY View -->
   <div class="row" *ngIf="isLegacyView">
+    <!-- EMPLOYMENT HISTORY -->
     <div class="row">
       <div
         class="col panel-default"
@@ -133,6 +134,7 @@
         </table>
       </div>
     </div>
+    <!-- TRANSFER HISTORY -->
     <div class="row mt-2">
       <div
         class="col panel-default"
@@ -235,6 +237,7 @@
         </table>
       </div>
     </div>
+    <!-- COMPANY REQUIREMENTS HISTORY -->
     <div class="row mt-2">
       <div
         class="col panel-default"
@@ -280,7 +283,7 @@
         >
           <thead>
             <tr style="background-color: whitesmoke">
-              <th scope="col">Asset ID</th>
+              <th scope="col">Asset Title</th>
               <th scope="col">Status</th>
               <th scope="col">Comp. Date</th>
               <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
@@ -295,7 +298,7 @@
               [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
             >
               <td class="align-middle">
-                {{ coReq.assetIdString }}
+                {{ coReq.assetTitle }}
               </td>
               <td class="align-middle">
                 {{ coReq.learningProgramStatus.toUpperCase() }}
@@ -340,6 +343,7 @@
         </table>
       </div>
     </div>
+    <!-- JOB TITLE HISTORY -->
     <div class="row mt-2">
       <div
         class="col panel-default"
@@ -726,7 +730,7 @@
                 <th scope="col" *ngIf="appComService.isShowEditID">
                   Emp. Co. Req. ID
                 </th>
-                <th scope="col">Asset ID</th>
+                <th scope="col">Asset Title</th>
                 <th scope="col">Status</th>
                 <th scope="col">Comp. Date</th>
                 <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
@@ -745,7 +749,7 @@
                   {{ coReq.employmentCompanyRequirementID }}
                 </td>
                 <td class="align-middle">
-                  {{ coReq.assetIdString }}
+                  {{ coReq.assetTitle }}
                 </td>
                 <td class="align-middle">
                   {{ coReq.learningProgramStatus.toUpperCase() }}
