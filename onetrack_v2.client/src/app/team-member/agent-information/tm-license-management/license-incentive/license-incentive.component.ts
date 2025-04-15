@@ -528,7 +528,7 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
       .updateLicenseIncentiveInfo(incentiveUpdateItem)
       .then((response) => {
 
-        console.log('EMFTEST (LicenseIncentiveComponent: onSubmit()) Update successful => \n', response);
+console.log('EMFTEST (LicenseIncentiveComponent: onSubmit()) Update successful => \n', response);
 
         this.refreshData(incentiveUpdateItem);
       })

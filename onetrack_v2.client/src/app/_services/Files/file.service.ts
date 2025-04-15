@@ -27,9 +27,6 @@ export class FileService {
   //   });
   // }
   getFile(path: string, filename: string): Observable<Blob> {
-
-console.log('EMFTEST () FileService getFile called with path: ', path, 'and filename:', filename);
-
     const queryParams = `?path=${encodeURIComponent(path)}&filename=${encodeURIComponent(filename)}`;
     return this.http.get(`${this.apiUrl}GetFile${queryParams}`, {
       responseType: 'blob',

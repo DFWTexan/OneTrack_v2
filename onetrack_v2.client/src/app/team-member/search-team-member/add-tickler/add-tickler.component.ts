@@ -129,11 +129,6 @@ export class AddTicklerComponent implements OnInit, OnDestroy {
     ticklerItem.ticklerID = this.ticklerForm.get('ticklerId')?.value;
     ticklerItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
-    console.log(
-      'EMFTEST (AddTicklerComponent: onSubmit) - ticklerItem => \n',
-      ticklerItem
-    );
-
     if (this.ticklerForm.invalid) {
       this.ticklerForm.setErrors({ invalid: true });
       return;
