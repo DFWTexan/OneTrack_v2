@@ -96,12 +96,6 @@ export class EmailDataService {
     formData.append('UserSOEID', sendEmailData.UserSOEID);
   
     // Append file attachments if any
-    // if (sendEmailData.fileAttachments && sendEmailData.fileAttachments.length > 0) {
-    //   sendEmailData.fileAttachments.forEach((file: File, index: number) => {
-    //     formData.append(`fileAttachments[${index}]`, file, file.name);
-    //   });
-    // }
-    // Append file attachments if any
     if (sendEmailData.fileAttachments && sendEmailData.fileAttachments.length > 0) {
       sendEmailData.fileAttachments.forEach((file: File, index: number) => {
           formData.append('FileAttachments', file, file.name); // Key must match the property name in .NET

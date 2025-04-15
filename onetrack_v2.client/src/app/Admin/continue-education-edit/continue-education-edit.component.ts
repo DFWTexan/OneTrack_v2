@@ -91,8 +91,6 @@ export class ContinueEducationEditComponent implements OnInit, OnDestroy {
     this.subscriptionData.add(
       this.dropdownDataService.conEduExemptionsChanged.subscribe(
         (items: any[]) => {
-          console.log('EMFTEST (ngOnInit) - exemptions => \n', items);
-
           this.exemptions = items;
         }
       )
