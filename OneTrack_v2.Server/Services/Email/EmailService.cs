@@ -1098,14 +1098,29 @@ namespace OneTrack_v2.Services
                         }
 
                         // Save the file to the destination path
-                        using (var stream = new FileStream(destinationPath, FileMode.Create))
+                        int retryCount = 3;
+                        while (retryCount > 0)
                         {
-                            file.CopyTo(stream);
+                            try
+                            {
+                                using (var stream = new FileStream(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None))
+                                {
+                                    file.CopyTo(stream);
+                                }
+                                break; // Exit loop if successful
+                            }
+                            catch (IOException)
+                            {
+                                retryCount--;
+                                Thread.Sleep(1000); // Wait 1 second before retrying
+                            }
                         }
 
-                        FileInfo fi = new FileInfo(destinationPath);
-                        fi.CopyTo(_attachmentLocation + fi.Name, overwrite: true); // Overwrite if necessary
-                        fi.Delete();
+                        //FileInfo fi = new FileInfo(destinationPath);
+                        //fi.CopyTo(_attachmentLocation + fi.Name, overwrite: true); // Overwrite if necessary
+                        //fi.Delete();
+                        File.Copy(destinationPath, Path.Combine(_attachmentLocation, Path.GetFileName(destinationPath)), overwrite: true);
+                        File.Delete(destinationPath);
                     }
                 }
 
