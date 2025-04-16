@@ -110,6 +110,7 @@ export class AddTicklerComponent implements OnInit, OnDestroy {
             this.agentInfo = agentInfo;
             // this.sortedLicenseItems = [...agentInfo.licenseItems];
             // this.sortedAppointmentItems = [...agentInfo.appointmentItems];
+            this.ticklerForm.reset({ lkpValue: 'Select', licenseTechId: 0 });
           },
           error: (error) => {
             if (error.error && error.error.errMessage) {
