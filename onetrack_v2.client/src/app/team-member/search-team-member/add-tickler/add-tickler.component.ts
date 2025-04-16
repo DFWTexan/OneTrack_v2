@@ -93,7 +93,7 @@ export class AddTicklerComponent implements OnInit, OnDestroy {
           ];
         })
     );
-    this.ticklerForm.reset({ lkpValue: 'Select', licenseTechId: 0 });
+    // this.ticklerForm.reset({ lkpValue: 'Select', licenseTechId: 0 });
 
     this.agentInfo = this.agentDataService.agentInformation;
     this.subscriptionData.add(
@@ -110,6 +110,7 @@ export class AddTicklerComponent implements OnInit, OnDestroy {
             this.agentInfo = agentInfo;
             // this.sortedLicenseItems = [...agentInfo.licenseItems];
             // this.sortedAppointmentItems = [...agentInfo.appointmentItems];
+            this.ticklerForm.reset({ lkpValue: 'Select', licenseTechId: 0 });
           },
           error: (error) => {
             if (error.error && error.error.errMessage) {
@@ -138,6 +139,7 @@ export class AddTicklerComponent implements OnInit, OnDestroy {
       this.ticklerMgmtDataService.upsertTickerItem(ticklerItem).subscribe({
         next: (response) => {
           alert('Tickler has been successfully added');
+          this.ticklerForm.reset({ lkpValue: 'Select', licenseTechId: 0 });
           this.onCancel();
         },
         error: (error) => {
