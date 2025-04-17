@@ -14,18 +14,31 @@ namespace OneTrack_v2.Services
 {
     public class EmployeeService : IEmployeeService
     {
+        private readonly IConfiguration _config;
         private readonly AppDataContext _db;
         private readonly IUtilityHelpService _utilityService;
+
+        private readonly string? _importExportLoc;
         //private readonly UtilityService.Utility _utility;
 
         //private readonly IConfiguration _config;
         //private readonly IWebHostEnvironment _env;
         //private readonly ILogger _logger;
 
-        public EmployeeService(AppDataContext db, IUtilityHelpService utilityHelpService)
+        public EmployeeService(IConfiguration config, AppDataContext db, IUtilityHelpService utilityHelpService)
         {
             _db = db;
+            _config = config;
             _utilityService = utilityHelpService;
+            // Retrieve the current environment setting
+            string environment = _config.GetValue<string>("Environment") ?? "DVLP";
+
+            // Construct the keys for accessing environment-specific settings
+            string importExportKey = $"EnvironmentSettings:{environment}:Paths:ImportExportLoc";
+
+            // Retrieve the value of the key from the configuration
+            _importExportLoc = _config.GetValue<string>(importExportKey);
+
         }
 
         /// <summary>
@@ -309,7 +322,6 @@ namespace OneTrack_v2.Services
             int intSec = 1;
             DateTime dtDateTime = System.DateTime.Now;
             char[] delimiterChars = { '|' };
-            string path = "\\\\corp.fin\\apps\\OMS\\ECM\\QLTY\\shared\\exportimport\\OneTrakImporter-Test\\"; // Define your path here
 
             string[] docs = vInput.Files.ToString().Split(delimiterChars);
 
@@ -322,7 +334,7 @@ namespace OneTrack_v2.Services
                     {
                         // Process the file
                         var fileName = Path.GetFileName(file.FileName);
-                        var destinationPath = Path.Combine(path, dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + fileName);
+                        var destinationPath = Path.Combine(_importExportLoc, dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + fileName);
 
                         using (var stream = new FileStream(destinationPath, FileMode.Create))
                         {
@@ -330,15 +342,15 @@ namespace OneTrack_v2.Services
                         }
 
                         FileInfo fi = new FileInfo(destinationPath);
-                        fi.CopyTo(path + dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + fi.Name);
+                        fi.CopyTo(_importExportLoc + dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + fi.Name);
                         fi.Delete();
 
-                        String InFi = path + dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + ".OCR";
+                        String InFi = _importExportLoc + dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + ".OCR";
                         //String InFi2 = path + dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + ".OCR";
                         //File.Create(InFi).Dispose();
 
                         String strNow = dtDateTime.ToString("yyyy-MM-dd");
-                        String strFilePath = path + dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + fi.Name;
+                        String strFilePath = _importExportLoc + dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + fi.Name;
 
                         intSec++;
                     }
