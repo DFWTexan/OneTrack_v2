@@ -2687,7 +2687,7 @@ namespace OneTrack_v2.Services
                                                     CompanyRequirementID = ecr.EmploymentCompanyRequirementId,
                                                     EmploymentCompanyRequirementID = ecr.EmploymentCompanyRequirementId,
                                                     AssetIdString = ecr.AssetId,
-                                                    AssetSk = (int)ecr.AssetSk,
+                                                    AssetSk = ecr.AssetSk,
                                                     LearningProgramStatus = ecr.LearningProgramStatus,
                                                     LearningProgramEnrollmentDate = ecr.LearningProgramEnrollmentDate,
                                                     LearningProgramCompletionDate = ecr.LearningProgramCompletionDate
