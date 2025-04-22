@@ -187,6 +187,22 @@ namespace OneTrack_v2.Controllers
         }
 
         [HttpPost]
+        public async Task<IActionResult> UpsertCompanyRequirement([FromBody] IputDeleteCompanyRequirement companyRequirement)
+        {
+            var result = await Task.Run(() => _adminService.UpsertCompanyRequirement(companyRequirement));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> DeleteCompanyRequirement([FromBody] IputDeleteCompanyRequirement input)
+        {
+            var result = await Task.Run(() => _adminService.DeleteCompanyRequirement(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpPost]
         public async Task<IActionResult> UpsertEducationRule([FromBody] IputUpsertEducationRule input)
         {
             var result = await Task.Run(() => _adminService.UpsertEducationRule(input));

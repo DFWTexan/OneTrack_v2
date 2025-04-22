@@ -952,6 +952,106 @@ namespace OneTrak_v2.Services
 
             return result;
         }
+        public ReturnResult UpsertCompanyRequirement([FromBody] IputDeleteCompanyRequirement vCoRequirement)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                if (vCoRequirement.CompanyRequirementId == 0)
+                {
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspCompanyRequirementInsert", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@CompanyRequirementID", vCoRequirement.CompanyRequirementId));
+                            cmd.Parameters.Add(new SqlParameter("@WorkStateAbv", vCoRequirement.WorkStateAbv));
+                            cmd.Parameters.Add(new SqlParameter("@ResStateAbv", vCoRequirement.ResStateAbv));
+                            cmd.Parameters.Add(new SqlParameter("@RequirementType", vCoRequirement.RequirementType));
+                            cmd.Parameters.Add(new SqlParameter("@LicLevel1", vCoRequirement.LicLevel1));
+                            cmd.Parameters.Add(new SqlParameter("@LicLevel2", vCoRequirement.LicLevel2));
+                            cmd.Parameters.Add(new SqlParameter("@LicLevel3", vCoRequirement.LicLevel3));
+                            cmd.Parameters.Add(new SqlParameter("@LicLevel4", vCoRequirement.LicLevel4));
+                            cmd.Parameters.Add(new SqlParameter("@StartAfterDate", vCoRequirement.StartAfterDate));
+                            cmd.Parameters.Add(new SqlParameter("@Document", vCoRequirement.Document));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vCoRequirement.UserSOEID));
+                            
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                else
+                {
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspCompanyRequirementUpdate", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.Add(new SqlParameter("@CompanyRequirementID", vCoRequirement.CompanyRequirementId));
+                            cmd.Parameters.Add(new SqlParameter("@WorkStateAbv", vCoRequirement.WorkStateAbv));
+                            cmd.Parameters.Add(new SqlParameter("@ResStateAbv", vCoRequirement.ResStateAbv));
+                            cmd.Parameters.Add(new SqlParameter("@RequirementType", vCoRequirement.RequirementType));
+                            cmd.Parameters.Add(new SqlParameter("@LicLevel1", vCoRequirement.LicLevel1));
+                            cmd.Parameters.Add(new SqlParameter("@LicLevel2", vCoRequirement.LicLevel2));
+                            cmd.Parameters.Add(new SqlParameter("@LicLevel3", vCoRequirement.LicLevel3));
+                            cmd.Parameters.Add(new SqlParameter("@LicLevel4", vCoRequirement.LicLevel4));
+                            cmd.Parameters.Add(new SqlParameter("@StartAfterDate", vCoRequirement.StartAfterDate));
+                            cmd.Parameters.Add(new SqlParameter("@Document", vCoRequirement.Document));
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", vCoRequirement.UserSOEID));
+
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+                }
+                
+                result.Success = true;
+                result.ObjData = new { Message = "Company Requirement Created/Updated Successfully." };
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49597].";
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
+            }
+            return result;
+        }
+        public ReturnResult DeleteCompanyRequirement([FromBody] IputDeleteCompanyRequirement vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspCompanyRequirementDelete", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("@CompanyRequirementID", vInput.CompanyRequirementId));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                result.Success = true;
+                result.ObjData = new { Message = "Company Requirement Deleted Successfully." };
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49597].";
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
+            }
+            return result;
+        }
         public ReturnResult UpsertEducationRule([FromBody] IputUpsertEducationRule vInput)
         {
             var result = new ReturnResult();
