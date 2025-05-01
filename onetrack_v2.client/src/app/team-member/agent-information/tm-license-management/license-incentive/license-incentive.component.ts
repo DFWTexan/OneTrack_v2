@@ -136,11 +136,14 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
       )
     );
 
+
+    console.log('EMFTEST (LicenseIncentiveComponent: ngOnInit()) licenseMgmtData => \n', this.licenseMgmtData);
+
     this.subscriptions.add(
       this.licIncentiveInfoDataService
         .fetchLicIncentiveInfo(
-          // this.licenseMgmtData[this.currentIndex].employeeLicenseId
-          this.employeeLicenseID
+          this.licenseMgmtData[this.currentIndex].employeeLicenseId
+          // this.employeeLicenseID
         )
         .subscribe((licenseIncentiveInfo: LicenseIncentiveInfo) => {
 

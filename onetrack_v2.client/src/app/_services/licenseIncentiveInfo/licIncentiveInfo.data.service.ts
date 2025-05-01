@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, Subject, throwError } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 
 import { environment } from '../../_environments/environment';
@@ -252,16 +252,54 @@ export class LicIncentiveInfoDataService {
       );
   }
 
-  upsertLicenseApplicationItem(licApplicationItem: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'LicenseInfo/UpsertLicenseApplication';
+  // upsertLicenseApplicationItem(licApplicationItem: any): Observable<any> {
+  //   const apiUrl = `${environment.apiUrl}LicenseInfo/UpsertLicenseApplication`;
 
+  //   return this.http
+  //     .post<{
+  //       success: boolean;
+  //       statusCode: number;
+  //       objData: any;
+  //       errMessage: string;
+  //     }>(apiUrl, licApplicationItem)
+  //     .pipe(
+  //       switchMap((response) => {
+  //         if (response.success && response.statusCode === 200) {
+  //           return this.agentDataService.fetchAgentInformation(
+  //             this.agentDataService.agentInformation.employeeID
+  //           );
+  //         } else {
+  //           return throwError(
+  //             () => new Error(response.errMessage || 'Unknown error')
+  //           );
+  //         }
+  //       }),
+  //       map((licApplications) => licApplications), // Pass through the data
+  //       catchError((error) => {
+  //         console.error('Error in upsertLicenseApplicationItem:', error);
+  //         return throwError(() => error); // Re-throw the error for the caller to handle
+  //       })
+  //     );
+  // }
+  upsertLicenseApplicationItem(licApplicationItem: any): Observable<any> {
+    const apiUrl = `${environment.apiUrl}LicenseInfo/UpsertLicenseApplication`;
+  
+    // Ensure nullable fields are set to null instead of empty strings
+    const sanitizedPayload = {
+      ...licApplicationItem,
+      recFromStateDate: licApplicationItem.recFromStateDate || null,
+      renewalDate: licApplicationItem.renewalDate || null,
+      sentToStateDate: licApplicationItem.sentToStateDate || null,
+      renewalMethod: licApplicationItem.renewalMethod || null,
+    };
+  
     return this.http
       .post<{
         success: boolean;
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl, licApplicationItem)
+      }>(apiUrl, sanitizedPayload)
       .pipe(
         switchMap((response) => {
           if (response.success && response.statusCode === 200) {
@@ -269,18 +307,13 @@ export class LicIncentiveInfoDataService {
               this.agentDataService.agentInformation.employeeID
             );
           } else {
-            throw new Error(response.errMessage || 'Unknown error');
+            return throwError(() => new Error(response.errMessage || 'Unknown error'));
           }
         }),
-        map((licApplications) => {
-          // this.agentDataService.agentInformation.agentLicenseApplications =
-          //   licApplications;
-          // this.agentDataService.agentLicenseApplicationsChanged.next(
-          //   this.agentDataService.agentInformation.agentLicenseApplications
-          // );
-
-          // this.agentDataService.updateAgentLicenseApplications(licApplications);
-          return licApplications;
+        map((licApplications) => licApplications),
+        catchError((error) => {
+          console.error('Error in upsertLicenseApplicationItem:', error);
+          return throwError(() => error);
         })
       );
   }
@@ -501,10 +534,15 @@ export class LicIncentiveInfoDataService {
   //       })
   //     );
   // }
-  updateLicenseIncentiveInfo(licenseIncentiveInfo: LicenseIncentiveInfo): Promise<any> {
+  updateLicenseIncentiveInfo(
+    licenseIncentiveInfo: LicenseIncentiveInfo
+  ): Promise<any> {
     const apiUrl = `${environment.apiUrl}LicenseInfo/UpdateLicenseIncentive`;
-  
-console.log('EMFTEST (updateLicenseIncentiveInfo) - licenseIncentiveInfo => \n ', licenseIncentiveInfo);
+
+    console.log(
+      'EMFTEST (updateLicenseIncentiveInfo) - licenseIncentiveInfo => \n ',
+      licenseIncentiveInfo
+    );
 
     return this.http
       .post<{
@@ -516,7 +554,9 @@ console.log('EMFTEST (updateLicenseIncentiveInfo) - licenseIncentiveInfo => \n '
       .pipe(
         switchMap((response) => {
           if (response.success && response.statusCode === 200) {
-            return this.fetchLicIncentiveInfo(licenseIncentiveInfo.employeeLicenseID);
+            return this.fetchLicIncentiveInfo(
+              licenseIncentiveInfo.employeeLicenseID
+            );
           } else {
             throw new Error(response.errMessage || 'Unknown error');
           }

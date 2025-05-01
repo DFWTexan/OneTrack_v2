@@ -742,10 +742,10 @@ namespace OneTrak_v2.Services
                             cmd.Parameters.Add(new SqlParameter("@ApplicationType", vInput.ApplicationType));
                             cmd.Parameters.Add(new SqlParameter("@RenewalDate", vInput.RenewalDate));
                             cmd.Parameters.Add(new SqlParameter("@RenewalMethod", vInput.RenewalMethod));
-                            cmd.Parameters.Add(new SqlParameter("@SentToAgentDate", vInput.SentToAgentDate));
-                            cmd.Parameters.Add(new SqlParameter("@RecFromAgentDate", vInput.RecFromAgentDate));
-                            cmd.Parameters.Add(new SqlParameter("@SentToStateDate", vInput.SentToStateDate));
-                            cmd.Parameters.Add(new SqlParameter("@RecFromStateDate", vInput.RecFromStateDate));
+                            cmd.Parameters.Add(new SqlParameter("@SentToAgentDate", vInput.SentToAgentDate ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@RecFromAgentDate", vInput.RecFromAgentDate ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@SentToStateDate", vInput.SentToStateDate ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@RecFromStateDate", vInput.RecFromStateDate ?? (object)DBNull.Value));
                             cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
 
                             conn.Open();

@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { formatDate } from '@angular/common';
-import { Subscription } from 'rxjs';
+import { EMPTY, Subscription, switchMap } from 'rxjs';
 
 import {
   AgentComService,
@@ -96,47 +96,88 @@ export class EditLicPreEduComponent implements OnInit, OnDestroy {
         })
     );
 
+    // this.subscriptions.add(
+    //   this.agentComService.modeLicPreEduChanged.subscribe((mode: string) => {
+    //     if (mode === 'EDIT') {
+    //       this.subscriptions.add(
+    //         this.agentDataService.licensePreEducationItemChanged.subscribe(
+    //           (licPreEdu: any) => {
+    //             this.licPreEduForm.patchValue({
+    //               employeeLicensePreEducationID:
+    //                 licPreEdu.employeeLicensePreEducationID,
+    //               status: licPreEdu.status,
+    //               educationStartDate: licPreEdu.educationStartDate
+    //                 ? formatDate(
+    //                     licPreEdu.educationStartDate,
+    //                     'yyyy-MM-dd',
+    //                     'en-US'
+    //                   )
+    //                 : null,
+    //               educationEndDate: licPreEdu.educationEndDate
+    //                 ? formatDate(
+    //                     licPreEdu.educationEndDate,
+    //                     'yyyy-MM-dd',
+    //                     'en-US'
+    //                   )
+    //                 : null,
+    //               preEducationID: licPreEdu.preEducationID,
+    //               // companyID: licPreEdu.companyID,
+    //               // educationName: licPreEdu.educationName,
+    //               employeeLicenseID: licPreEdu.employeeLicenseID,
+    //               additionalNotes: licPreEdu.additionalNotes,
+    //             });
+    //           }
+    //         )
+    //       );
+    //     } else {
+    //       this.licPreEduForm.reset();
+    //       this.licPreEduForm.patchValue({
+    //         status: 'Select',
+    //         preEducationID: 0,
+    //       });
+    //     }
+    //   })
+    // );
     this.subscriptions.add(
-      this.agentComService.modeLicPreEduChanged.subscribe((mode: string) => {
-        if (mode === 'EDIT') {
-          this.subscriptions.add(
-            this.agentDataService.licensePreEducationItemChanged.subscribe(
-              (licPreEdu: any) => {
-                this.licPreEduForm.patchValue({
-                  employeeLicensePreEducationID:
-                    licPreEdu.employeeLicensePreEducationID,
-                  status: licPreEdu.status,
-                  educationStartDate: licPreEdu.educationStartDate
-                    ? formatDate(
-                        licPreEdu.educationStartDate,
-                        'yyyy-MM-dd',
-                        'en-US'
-                      )
-                    : null,
-                  educationEndDate: licPreEdu.educationEndDate
-                    ? formatDate(
-                        licPreEdu.educationEndDate,
-                        'yyyy-MM-dd',
-                        'en-US'
-                      )
-                    : null,
-                  preEducationID: licPreEdu.preEducationID,
-                  // companyID: licPreEdu.companyID,
-                  // educationName: licPreEdu.educationName,
-                  employeeLicenseID: licPreEdu.employeeLicenseID,
-                  additionalNotes: licPreEdu.additionalNotes,
-                });
-              }
-            )
-          );
-        } else {
-          this.licPreEduForm.reset();
+      this.agentComService.modeLicPreEduChanged
+        .pipe(
+          switchMap((mode: string) => {
+            if (mode === 'EDIT') {
+              return this.agentDataService.licensePreEducationItemChanged;
+            } else {
+              this.licPreEduForm.reset();
+              this.licPreEduForm.patchValue({
+                status: 'Select',
+                preEducationID: 0,
+              });
+              return EMPTY; // RxJS EMPTY observable
+            }
+          })
+        )
+        .subscribe((licPreEdu: any) => {
           this.licPreEduForm.patchValue({
-            status: 'Select',
-            preEducationID: 0,
+            employeeLicensePreEducationID:
+              licPreEdu.employeeLicensePreEducationID,
+            status: licPreEdu.status,
+            educationStartDate: licPreEdu.educationStartDate
+              ? formatDate(
+                  licPreEdu.educationStartDate,
+                  'yyyy-MM-dd',
+                  'en-US'
+                )
+              : null,
+            educationEndDate: licPreEdu.educationEndDate
+              ? formatDate(
+                  licPreEdu.educationEndDate,
+                  'yyyy-MM-dd',
+                  'en-US'
+                )
+              : null,
+            preEducationID: licPreEdu.preEducationID,
+            employeeLicenseID: licPreEdu.employeeLicenseID,
+            additionalNotes: licPreEdu.additionalNotes,
           });
-        }
-      })
+        })
     );
   }
 
