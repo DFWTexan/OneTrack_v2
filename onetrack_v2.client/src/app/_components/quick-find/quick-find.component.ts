@@ -1,5 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import {
   AgentComService,
@@ -22,6 +23,8 @@ export class QuickFindComponent {
 
   isByTMDisabled: boolean = false;
   isByAgentNameDisabled: boolean = false;
+
+  subscriptionData: Subscription = new Subscription();
 
   constructor(
     public employeeDataService: EmployeeDataService,
@@ -66,31 +69,34 @@ export class QuickFindComponent {
     if (this.tmNumber.length > 0) {
       this.isLoading = true;
 
-      this.employeeDataService
-        .fetchEmployeeByTmNumber(this.tmNumber.trim())
-        .subscribe((response) => {
-          this.isLoading = false;
-          this.tmNumber = '';
+      this.subscriptionData.add(
+        this.employeeDataService
+          .fetchEmployeeByTmNumber(this.tmNumber.trim())
+          .subscribe((response) => {
+            this.isLoading = false;
+            this.tmNumber = '';
 
-          this.isByAgentNameDisabled = false;
-          this.isByTMDisabled = false;
+            this.isByAgentNameDisabled = false;
+            this.isByTMDisabled = false;
 
-          this.agentComService.updateShowLicenseMgmt(false);
-          if (response === null) {
-            alert('Employee not found');
-          } else {
-            this.appComService.updateIsAllAgentsSelected(false);
-            this.router.navigate([
-              '../../team/agent-info',
-              response.employeeId,
-              'tm-info-mgmt',
-            ]);
-          }
-        });
+            this.agentComService.updateShowLicenseMgmt(false);
+            if (response === null) {
+              alert('Employee not found');
+            } else {
+              this.appComService.updateIsAllAgentsSelected(false);
+              this.router.navigate([
+                '../../team/agent-info',
+                response.employeeId,
+                'tm-info-mgmt',
+              ]);
+            }
+          })
+      );
     } else if (this.agentName.length > 0) {
       this.isLoading = true;
 
-      this.employeeDataService
+      this.subscriptionData.add(
+        this.employeeDataService
         .fetchEmployeeByAgentName(this.agentName.trim())
         .subscribe((response) => {
           this.agentName = '';
@@ -122,7 +128,9 @@ export class QuickFindComponent {
             this.agents = response;
             this.openModal();
           }
-        });
+        })
+      );
+      
     }
   }
 
