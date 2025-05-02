@@ -1089,7 +1089,9 @@
   <div class="modal-body">
     <div>
       <div>
-        <app-edit-license-appointment></app-edit-license-appointment>
+        <app-edit-license-appointment
+          (callParentRefreshData)="onChildCallRefreshData($event)"
+        ></app-edit-license-appointment>
       </div>
     </div>
   </div>

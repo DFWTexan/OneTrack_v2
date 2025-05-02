@@ -7,6 +7,8 @@ import {
   AfterViewInit,
   SimpleChanges,
   OnChanges,
+  EventEmitter,
+  Output,
 } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder } from '@angular/forms';
 import { Subject, Subscription, switchMap, tap } from 'rxjs';
@@ -20,7 +22,7 @@ import {
   LicIncentiveInfoDataService,
   UserAcctInfoDataService,
 } from '../../../../../_services';
-import { LicenseAppointment } from '../../../../../_Models';
+import { AgentInfo, LicenseAppointment } from '../../../../../_Models';
 import { formatDate } from '@angular/common';
 import { dateValidator } from '../../../../../_shared';
 
@@ -33,6 +35,7 @@ import { dateValidator } from '../../../../../_shared';
 export class EditLicenseAppointmentComponent
   implements OnInit, AfterViewInit, OnChanges, OnDestroy
 {
+  @Output() callParentRefreshData = new EventEmitter<any>();
   isFormSubmitted: boolean = false;
   companyAbbreviations: { value: number; label: string }[] = [];
   licenseAppointment: LicenseAppointment = {} as LicenseAppointment;
@@ -242,6 +245,18 @@ export class EditLicenseAppointmentComponent
             // if (modalDiv != null) {
             //   modalDiv.style.display = 'none';
             // }
+            this.agentDataService
+              .fetchAgentInformation(
+                this.agentDataService.agentInformation.employeeID
+              )
+              .subscribe((agentInfo: AgentInfo) => {
+                // this.isLoading = false;
+                // this.ticklerCount = agentInfo.ticklerItems.length;
+                // this.worklistCount = agentInfo.worklistItems.length;
+                // this.agentInfo = agentInfo;
+                this.callParentRefreshData.emit(agentInfo);
+              });
+
             this.forceCloseModal();
           },
           error: (error) => {

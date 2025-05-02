@@ -90,8 +90,6 @@ export class TmInformationComponent implements OnInit, OnDestroy {
           },
         })
     );
-
-    
   }
 
   onToggleView() {
@@ -175,6 +173,18 @@ export class TmInformationComponent implements OnInit, OnDestroy {
                 .subscribe({
                   next: (response) => {
                     alert('License Appointment Deleted');
+
+                    this.agentDataService
+                    .fetchAgentInformation(
+                      this.agentDataService.agentInformation.employeeID
+                    )
+                    .subscribe((agentInfo: AgentInfo) => {
+                      // this.isLoading = false;
+                      // this.ticklerCount = agentInfo.ticklerItems.length;
+                      // this.worklistCount = agentInfo.worklistItems.length;
+                      this.agentInfo = agentInfo;
+                      // this.callParentRefreshData.emit(agentInfo);
+                    });
                   },
                   error: (error) => {
                     if (error.error && error.error.errMessage) {

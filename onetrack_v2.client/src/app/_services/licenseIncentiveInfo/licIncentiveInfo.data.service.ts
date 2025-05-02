@@ -124,103 +124,207 @@ export class LicIncentiveInfoDataService {
     this.licenseTechesChanged.next(this.licenseTeches);
   }
 
+  // addLicenseAppointment(appointment: LicenseAppointment): Observable<any> {
+  //   this.apiUrl = environment.apiUrl + 'LicenseInfo/AddLicenseAppointment';
+
+  //   return this.http
+  //     .post<{
+  //       success: boolean;
+  //       statusCode: number;
+  //       objData: any;
+  //       errMessage: string;
+  //     }>(this.apiUrl, appointment)
+  //     .pipe(
+  //       switchMap((response) => {
+  //         if (response.success && response.statusCode === 200) {
+  //           return this.agentDataService.fetchAgentLicenseAppointments(
+  //             this.agentDataService.agentInformation.employmentID
+  //           );
+  //         } else {
+  //           throw new Error(response.errMessage || 'Unknown error');
+  //         }
+  //       }),
+  //       map((appointments) => {
+  //         // this.agentDataService.agentInformation.agentLicenseAppointments =
+  //         //   appointments;
+  //         // this.agentDataService.agentLicenseAppointmentsChanged.next(
+  //         //   this.agentDataService.agentInformation.agentLicenseAppointments
+  //         // );
+  //         return appointments;
+  //       })
+  //     );
+  // }
   addLicenseAppointment(appointment: LicenseAppointment): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'LicenseInfo/AddLicenseAppointment';
-
+    const apiUrl = `${environment.apiUrl}LicenseInfo/AddLicenseAppointment`;
+  
     return this.http
       .post<{
         success: boolean;
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl, appointment)
+      }>(apiUrl, appointment)
       .pipe(
-        switchMap((response) => {
+        map((response) => {
           if (response.success && response.statusCode === 200) {
-            return this.agentDataService.fetchAgentLicenseAppointments(
-              this.agentDataService.agentInformation.employmentID
-            );
+            return response.objData; // Return the response data if successful
           } else {
             throw new Error(response.errMessage || 'Unknown error');
           }
         }),
-        map((appointments) => {
-          // this.agentDataService.agentInformation.agentLicenseAppointments =
-          //   appointments;
-          // this.agentDataService.agentLicenseAppointmentsChanged.next(
-          //   this.agentDataService.agentInformation.agentLicenseAppointments
-          // );
-          return appointments;
+        catchError((error) => {
+          console.error('Error in addLicenseAppointment:', error);
+          return throwError(() => error); // Re-throw the error for the caller to handle
         })
       );
   }
 
+  // updateLicenseAppointment(appointment: LicenseAppointment): Observable<any> {
+  //   this.apiUrl = environment.apiUrl + 'LicenseInfo/UpdateLicenseAppointment';
+  //   return this.http
+  //     .post<{
+  //       success: boolean;
+  //       statusCode: number;
+  //       objData: any;
+  //       errMessage: string;
+  //     }>(this.apiUrl, appointment)
+  //     .pipe(
+  //       switchMap((response) => {
+  //         if (response.success && response.statusCode === 200) {
+  //           return this.agentDataService.fetchAgentLicenseAppointments(
+  //             this.agentDataService.agentInformation.employmentID
+  //           );
+  //         } else {
+  //           throw new Error(response.errMessage || 'Unknown error');
+  //         }
+  //       }),
+  //       map((appointments) => {
+  //         // this.agentDataService.agentInformation.agentLicenseAppointments =
+  //         //   appointments;
+  //         // this.agentDataService.agentLicenseAppointmentsChanged.next(
+  //         //   this.agentDataService.agentInformation.agentLicenseAppointments
+  //         // );
+
+  //         // this.agentDataService.updateAgentLicenseAppointments(appointments);
+  //         return appointments;
+  //       })
+  //     );
+  // }
   updateLicenseAppointment(appointment: LicenseAppointment): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'LicenseInfo/UpdateLicenseAppointment';
+    const apiUrl = `${environment.apiUrl}LicenseInfo/UpdateLicenseAppointment`;
+
     return this.http
       .post<{
         success: boolean;
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl, appointment)
+      }>(apiUrl, appointment)
       .pipe(
-        switchMap((response) => {
+        map((response) => {
           if (response.success && response.statusCode === 200) {
-            return this.agentDataService.fetchAgentLicenseAppointments(
-              this.agentDataService.agentInformation.employmentID
-            );
+            return response.objData; // Return the response data if successful
           } else {
             throw new Error(response.errMessage || 'Unknown error');
           }
         }),
-        map((appointments) => {
-          // this.agentDataService.agentInformation.agentLicenseAppointments =
-          //   appointments;
-          // this.agentDataService.agentLicenseAppointmentsChanged.next(
-          //   this.agentDataService.agentInformation.agentLicenseAppointments
-          // );
-
-          // this.agentDataService.updateAgentLicenseAppointments(appointments);
-          return appointments;
+        catchError((error) => {
+          console.error('Error in updateLicenseAppointment:', error);
+          return throwError(() => error); // Re-throw the error for the caller to handle
         })
       );
   }
 
+  // upsertLicenseAppointment(appointment: LicenseAppointment): Observable<any> {
+  //   this.apiUrl = environment.apiUrl + 'LicenseInfo/UpsertLicenseAppointment';
+  //   return this.http
+  //     .post<{
+  //       success: boolean;
+  //       statusCode: number;
+  //       objData: any;
+  //       errMessage: string;
+  //     }>(this.apiUrl, appointment)
+  //     .pipe(
+  //       switchMap((response) => {
+  //         if (response.success && response.statusCode === 200) {
+  //           return this.agentDataService.fetchAgentLicenseAppointments(
+  //             this.agentDataService.agentInformation.employmentID
+  //           );
+  //         } else {
+  //           throw new Error(response.errMessage || 'Unknown error');
+  //         }
+  //       }),
+  //       map((appointments) => {
+  //         // this.agentDataService.agentInformation.agentLicenseAppointments =
+  //         //   appointments;
+  //         // this.agentDataService.agentLicenseAppointmentsChanged.next(
+  //         //   this.agentDataService.agentInformation.agentLicenseAppointments
+  //         // );
+
+  //         // this.agentDataService.updateAgentLicenseAppointments(appointments);
+  //         return appointments;
+  //       })
+  //     );
+  // }
   upsertLicenseAppointment(appointment: LicenseAppointment): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'LicenseInfo/UpsertLicenseAppointment';
+    const apiUrl = `${environment.apiUrl}LicenseInfo/UpsertLicenseAppointment`;
+
     return this.http
       .post<{
         success: boolean;
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl, appointment)
+      }>(apiUrl, appointment)
       .pipe(
-        switchMap((response) => {
+        map((response) => {
           if (response.success && response.statusCode === 200) {
-            return this.agentDataService.fetchAgentLicenseAppointments(
-              this.agentDataService.agentInformation.employmentID
-            );
+            return response.objData; // Return the response data if successful
           } else {
             throw new Error(response.errMessage || 'Unknown error');
           }
         }),
-        map((appointments) => {
-          // this.agentDataService.agentInformation.agentLicenseAppointments =
-          //   appointments;
-          // this.agentDataService.agentLicenseAppointmentsChanged.next(
-          //   this.agentDataService.agentInformation.agentLicenseAppointments
-          // );
-
-          // this.agentDataService.updateAgentLicenseAppointments(appointments);
-          return appointments;
+        catchError((error) => {
+          console.error('Error in upsertLicenseAppointment:', error);
+          return throwError(() => error); // Re-throw the error for the caller to handle
         })
       );
   }
 
+  // deleteLicenseAppointment(appointment: any): Observable<any> {
+  //   this.apiUrl = environment.apiUrl + 'LicenseInfo/DeleteLicenseAppointment';
+
+  //   return this.http
+  //     .put<{
+  //       success: boolean;
+  //       statusCode: number;
+  //       objData: any;
+  //       errMessage: string;
+  //     }>(this.apiUrl, appointment)
+  //     .pipe(
+  //       switchMap((response) => {
+  //         if (response.success && response.statusCode === 200) {
+  //           return this.agentDataService.fetchAgentLicenseAppointments(
+  //             this.agentDataService.agentInformation.employmentID
+  //           );
+  //         } else {
+  //           throw new Error(response.errMessage || 'Unknown error');
+  //         }
+  //       }),
+  //       map((appointments) => {
+  //         // this.agentDataService.agentInformation.agentLicenseAppointments =
+  //         //   appointments;
+  //         // this.agentDataService.agentLicenseAppointmentsChanged.next(
+  //         //   this.agentDataService.agentInformation.agentLicenseAppointments
+  //         // );
+
+  //         // this.agentDataService.updateAgentLicenseAppointments(appointments);
+  //         return appointments;
+  //       })
+  //     );
+  // }
   deleteLicenseAppointment(appointment: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'LicenseInfo/DeleteLicenseAppointment';
+    const apiUrl = `${environment.apiUrl}LicenseInfo/DeleteLicenseAppointment`;
 
     return this.http
       .put<{
@@ -228,26 +332,18 @@ export class LicIncentiveInfoDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl, appointment)
+      }>(apiUrl, appointment)
       .pipe(
-        switchMap((response) => {
+        map((response) => {
           if (response.success && response.statusCode === 200) {
-            return this.agentDataService.fetchAgentLicenseAppointments(
-              this.agentDataService.agentInformation.employmentID
-            );
+            return response.objData; // Return the response data if successful
           } else {
             throw new Error(response.errMessage || 'Unknown error');
           }
         }),
-        map((appointments) => {
-          // this.agentDataService.agentInformation.agentLicenseAppointments =
-          //   appointments;
-          // this.agentDataService.agentLicenseAppointmentsChanged.next(
-          //   this.agentDataService.agentInformation.agentLicenseAppointments
-          // );
-
-          // this.agentDataService.updateAgentLicenseAppointments(appointments);
-          return appointments;
+        catchError((error) => {
+          console.error('Error in deleteLicenseAppointment:', error);
+          return throwError(() => error); // Re-throw the error for the caller to handle
         })
       );
   }
@@ -281,18 +377,55 @@ export class LicIncentiveInfoDataService {
   //       })
   //     );
   // }
+  // upsertLicenseApplicationItem(licApplicationItem: any): Observable<any> {
+  //   const apiUrl = `${environment.apiUrl}LicenseInfo/UpsertLicenseApplication`;
+
+  //   // Ensure nullable fields are set to null instead of empty strings
+  //   const sanitizedPayload = {
+  //     ...licApplicationItem,
+  //     recFromStateDate: licApplicationItem.recFromStateDate || null,
+  //     renewalDate: licApplicationItem.renewalDate || null,
+  //     sentToStateDate: licApplicationItem.sentToStateDate || null,
+  //     renewalMethod: licApplicationItem.renewalMethod || null,
+  //   };
+
+  //   return this.http
+  //     .post<{
+  //       success: boolean;
+  //       statusCode: number;
+  //       objData: any;
+  //       errMessage: string;
+  //     }>(apiUrl, sanitizedPayload)
+  //     .pipe(
+  //       switchMap((response) => {
+  //         if (response.success && response.statusCode === 200) {
+  //           return this.agentDataService.fetchAgentInformation(
+  //             this.agentDataService.agentInformation.employeeID
+  //           );
+  //         } else {
+  //           return throwError(() => new Error(response.errMessage || 'Unknown error'));
+  //         }
+  //       }),
+  //       map((licApplications) => licApplications),
+  //       catchError((error) => {
+  //         console.error('Error in upsertLicenseApplicationItem:', error);
+  //         return throwError(() => error);
+  //       })
+  //     );
+  // }
   upsertLicenseApplicationItem(licApplicationItem: any): Observable<any> {
     const apiUrl = `${environment.apiUrl}LicenseInfo/UpsertLicenseApplication`;
-  
+
     // Ensure nullable fields are set to null instead of empty strings
     const sanitizedPayload = {
       ...licApplicationItem,
+      recFromAgentDate: licApplicationItem.recFromAgentDate || null,
       recFromStateDate: licApplicationItem.recFromStateDate || null,
       renewalDate: licApplicationItem.renewalDate || null,
       sentToStateDate: licApplicationItem.sentToStateDate || null,
       renewalMethod: licApplicationItem.renewalMethod || null,
     };
-  
+
     return this.http
       .post<{
         success: boolean;
@@ -301,25 +434,54 @@ export class LicIncentiveInfoDataService {
         errMessage: string;
       }>(apiUrl, sanitizedPayload)
       .pipe(
-        switchMap((response) => {
+        map((response) => {
           if (response.success && response.statusCode === 200) {
-            return this.agentDataService.fetchAgentInformation(
-              this.agentDataService.agentInformation.employeeID
-            );
+            return response.objData; // Return the response data if successful
           } else {
-            return throwError(() => new Error(response.errMessage || 'Unknown error'));
+            throw new Error(response.errMessage || 'Unknown error');
           }
         }),
-        map((licApplications) => licApplications),
         catchError((error) => {
           console.error('Error in upsertLicenseApplicationItem:', error);
-          return throwError(() => error);
+          return throwError(() => error); // Re-throw the error for the caller to handle
         })
       );
   }
 
+  // deleteLicenseApplicationItem(licApplicationItem: any): Observable<any> {
+  //   this.apiUrl = environment.apiUrl + 'LicenseInfo/DeleteLicenseApplication';
+
+  //   return this.http
+  //     .put<{
+  //       success: boolean;
+  //       statusCode: number;
+  //       objData: any;
+  //       errMessage: string;
+  //     }>(this.apiUrl, licApplicationItem)
+  //     .pipe(
+  //       switchMap((response) => {
+  //         if (response.success && response.statusCode === 200) {
+  //           return this.agentDataService.fetchAgentInformation(
+  //             this.agentDataService.agentInformation.employeeID
+  //           );
+  //         } else {
+  //           throw new Error(response.errMessage || 'Unknown error');
+  //         }
+  //       }),
+  //       map((licApplications) => {
+  //         // this.agentDataService.agentInformation.agentLicenseApplications =
+  //         //   licApplications;
+  //         // this.agentDataService.agentLicenseApplicationsChanged.next(
+  //         //   this.agentDataService.agentInformation.agentLicenseApplications
+  //         // );
+
+  //         // this.agentDataService.updateAgentLicenseApplications(licApplications);
+  //         return licApplications;
+  //       })
+  //     );
+  // }
   deleteLicenseApplicationItem(licApplicationItem: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'LicenseInfo/DeleteLicenseApplication';
+    const apiUrl = `${environment.apiUrl}LicenseInfo/DeleteLicenseApplication`;
 
     return this.http
       .put<{
@@ -327,32 +489,56 @@ export class LicIncentiveInfoDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl, licApplicationItem)
+      }>(apiUrl, licApplicationItem)
       .pipe(
-        switchMap((response) => {
+        map((response) => {
           if (response.success && response.statusCode === 200) {
-            return this.agentDataService.fetchAgentInformation(
-              this.agentDataService.agentInformation.employeeID
-            );
+            return response.objData; // Return the response data if successful
           } else {
             throw new Error(response.errMessage || 'Unknown error');
           }
         }),
-        map((licApplications) => {
-          // this.agentDataService.agentInformation.agentLicenseApplications =
-          //   licApplications;
-          // this.agentDataService.agentLicenseApplicationsChanged.next(
-          //   this.agentDataService.agentInformation.agentLicenseApplications
-          // );
-
-          // this.agentDataService.updateAgentLicenseApplications(licApplications);
-          return licApplications;
+        catchError((error) => {
+          console.error('Error in deleteLicenseApplicationItem:', error);
+          return throwError(() => error); // Re-throw the error for the caller to handle
         })
       );
   }
 
+  // upsertLicensePreEducationItem(licPreEduItem: any): Observable<any> {
+  //   this.apiUrl = environment.apiUrl + 'LicenseInfo/UpsertLicensePreEducation';
+
+  //   return this.http
+  //     .post<{
+  //       success: boolean;
+  //       statusCode: number;
+  //       objData: any;
+  //       errMessage: string;
+  //     }>(this.apiUrl, licPreEduItem)
+  //     .pipe(
+  //       switchMap((response) => {
+  //         if (response.success && response.statusCode === 200) {
+  //           return this.agentDataService.fetchAgentInformation(
+  //             this.agentDataService.agentInformation.employeeID
+  //           );
+  //         } else {
+  //           throw new Error(response.errMessage || 'Unknown error');
+  //         }
+  //       }),
+  //       map((licPreEdus) => {
+  //         // this.agentDataService.agentInformation.agentLicensePreEducations =
+  //         //   licPreEdus;
+  //         // this.agentDataService.agentLicensePreEducationsChanged.next(
+  //         //   this.agentDataService.agentInformation.agentLicensePreEducations
+  //         // );
+
+  //         // this.agentDataService.updateAgentLicensePreEducations(licPreEdus);
+  //         return licPreEdus;
+  //       })
+  //     );
+  // }
   upsertLicensePreEducationItem(licPreEduItem: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'LicenseInfo/UpsertLicensePreEducation';
+    const apiUrl = `${environment.apiUrl}LicenseInfo/UpsertLicensePreEducation`;
 
     return this.http
       .post<{
@@ -360,32 +546,56 @@ export class LicIncentiveInfoDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl, licPreEduItem)
+      }>(apiUrl, licPreEduItem)
       .pipe(
-        switchMap((response) => {
+        map((response) => {
           if (response.success && response.statusCode === 200) {
-            return this.agentDataService.fetchAgentInformation(
-              this.agentDataService.agentInformation.employeeID
-            );
+            return response.objData; // Return the response data if successful
           } else {
             throw new Error(response.errMessage || 'Unknown error');
           }
         }),
-        map((licPreEdus) => {
-          // this.agentDataService.agentInformation.agentLicensePreEducations =
-          //   licPreEdus;
-          // this.agentDataService.agentLicensePreEducationsChanged.next(
-          //   this.agentDataService.agentInformation.agentLicensePreEducations
-          // );
-
-          // this.agentDataService.updateAgentLicensePreEducations(licPreEdus);
-          return licPreEdus;
+        catchError((error) => {
+          console.error('Error in upsertLicensePreEducationItem:', error);
+          return throwError(() => error); // Re-throw the error for the caller to handle
         })
       );
   }
 
+  // deleteLicensePreEducationItem(licPreEduItem: any): Observable<any> {
+  //   this.apiUrl = environment.apiUrl + 'LicenseInfo/DeleteLicensePreEducation';
+
+  //   return this.http
+  //     .put<{
+  //       success: boolean;
+  //       statusCode: number;
+  //       objData: any;
+  //       errMessage: string;
+  //     }>(this.apiUrl, licPreEduItem)
+  //     .pipe(
+  //       switchMap((response) => {
+  //         if (response.success && response.statusCode === 200) {
+  //           return this.agentDataService.fetchAgentInformation(
+  //             this.agentDataService.agentInformation.employeeID
+  //           );
+  //         } else {
+  //           throw new Error(response.errMessage || 'Unknown error');
+  //         }
+  //       }),
+  //       map((licPreEdus) => {
+  //         // this.agentDataService.agentInformation.agentLicensePreEducations =
+  //         //   licPreEdus;
+  //         // this.agentDataService.agentLicensePreEducationsChanged.next(
+  //         //   this.agentDataService.agentInformation.agentLicensePreEducations
+  //         // );
+
+  //         // this.agentDataService.updateAgentLicensePreEducations(licPreEdus);
+  //         return licPreEdus;
+  //       })
+  //     );
+  // }
   deleteLicensePreEducationItem(licPreEduItem: any): Observable<any> {
-    this.apiUrl = environment.apiUrl + 'LicenseInfo/DeleteLicensePreEducation';
+    const apiUrl = `${environment.apiUrl}LicenseInfo/DeleteLicensePreEducation`;
 
     return this.http
       .put<{
@@ -393,26 +603,18 @@ export class LicIncentiveInfoDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl, licPreEduItem)
+      }>(apiUrl, licPreEduItem)
       .pipe(
-        switchMap((response) => {
+        map((response) => {
           if (response.success && response.statusCode === 200) {
-            return this.agentDataService.fetchAgentInformation(
-              this.agentDataService.agentInformation.employeeID
-            );
+            return response.objData; // Return the response data if successful
           } else {
             throw new Error(response.errMessage || 'Unknown error');
           }
         }),
-        map((licPreEdus) => {
-          // this.agentDataService.agentInformation.agentLicensePreEducations =
-          //   licPreEdus;
-          // this.agentDataService.agentLicensePreEducationsChanged.next(
-          //   this.agentDataService.agentInformation.agentLicensePreEducations
-          // );
-
-          // this.agentDataService.updateAgentLicensePreEducations(licPreEdus);
-          return licPreEdus;
+        catchError((error) => {
+          console.error('Error in deleteLicensePreEducationItem:', error);
+          return throwError(() => error); // Re-throw the error for the caller to handle
         })
       );
   }
