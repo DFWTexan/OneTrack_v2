@@ -126,6 +126,11 @@ export class AgentDataService {
       );
   }
 
+  updAgentInfo(agentInfo: AgentInfo): void {
+    this.agentInformation = agentInfo;
+    this.agentInfoChanged.next(this.agentInformation);
+  }
+
   // fetchAgentInfoByMemberID(memberID: number): Observable<AgentInfo> {
   //   this.apiUrl = this.configService.config.apiUrl + 'Agent/GetAgentByTMemberID/';
 

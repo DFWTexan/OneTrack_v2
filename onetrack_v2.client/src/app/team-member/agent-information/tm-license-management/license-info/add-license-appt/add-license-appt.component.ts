@@ -12,6 +12,7 @@ import {
   UserAcctInfoDataService,
 } from '../../../../../_services';
 import { dateValidator } from '../../../../../_shared';
+import { AgentInfo } from '../../../../../_Models';
 
 @Component({
   selector: 'app-add-license-appt',
@@ -133,6 +134,18 @@ export class AddLicenseApptComponent implements OnInit, OnDestroy {
             //   'EMFTEST () - Agent License added successfully response => \n ',
             //   response
             // );
+            this.agentDataService
+              .fetchAgentInformation(
+                this.agentDataService.agentInformation.employeeID
+              )
+              .subscribe((agentInfo: AgentInfo) => {
+                // this.isLoading = false;
+                // this.ticklerCount = agentInfo.ticklerItems.length;
+                // this.worklistCount = agentInfo.worklistItems.length;
+                // this.agentInfo = agentInfo;
+                // this.callParentRefreshData.emit(agentInfo);
+                this.agentDataService.updAgentInfo(agentInfo);
+              });
           },
           error: (error) => {
             if (error.error && error.error.errMessage) {
