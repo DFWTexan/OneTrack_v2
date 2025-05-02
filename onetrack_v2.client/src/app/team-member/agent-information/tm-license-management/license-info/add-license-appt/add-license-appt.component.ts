@@ -129,21 +129,11 @@ export class AddLicenseApptComponent implements OnInit, OnDestroy {
             if (modalDiv != null) {
               modalDiv.style.display = 'none';
             }
-            // handle the response here
-            // console.log(
-            //   'EMFTEST () - Agent License added successfully response => \n ',
-            //   response
-            // );
             this.agentDataService
               .fetchAgentInformation(
                 this.agentDataService.agentInformation.employeeID
               )
               .subscribe((agentInfo: AgentInfo) => {
-                // this.isLoading = false;
-                // this.ticklerCount = agentInfo.ticklerItems.length;
-                // this.worklistCount = agentInfo.worklistItems.length;
-                // this.agentInfo = agentInfo;
-                // this.callParentRefreshData.emit(agentInfo);
                 this.agentDataService.updAgentInfo(agentInfo);
               });
           },
