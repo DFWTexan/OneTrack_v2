@@ -91,7 +91,8 @@ export class EmailDataService {
     formData.append('EmploymentID', sendEmailData.EmploymentID.toString());
     formData.append('CommunicationID', sendEmailData.CommunicationID.toString());
     formData.append('EmailTo', sendEmailData.EmailTo);
-    formData.append('CcEmail', JSON.stringify(sendEmailData.CcEmail || []));
+    // formData.append('CcEmail', JSON.stringify(sendEmailData.CcEmail || []));
+    formData.append('CcEmail', (sendEmailData.CcEmail || []).join(','));
     formData.append('EmailContent', sendEmailData.EmailContent);
     formData.append('UserSOEID', sendEmailData.UserSOEID);
   
