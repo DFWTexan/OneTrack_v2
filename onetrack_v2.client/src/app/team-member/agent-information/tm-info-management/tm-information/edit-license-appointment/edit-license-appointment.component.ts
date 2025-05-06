@@ -112,6 +112,21 @@ export class EditLicenseAppointmentComponent
               );
             } else {
               // MODE: INSERT
+              this.form.reset({
+                licenseID: 0,
+                employeeLicenseId: 0,
+                employeeAppointmentID: 0,
+                appointmentStatus: 'Select',
+                companyID: 0,
+                carrierDate: null,
+                appointmentEffectiveDate: null,
+                appointmentExpireDate: null,
+                appointmentTerminationDate: null,
+              });
+              this.companyAbbreviations = [
+                { value: 0, label: 'Select' },
+              ];
+
               return this.agentDataService.agentLicApptLicenseIDChanged.pipe(
                 switchMap((agentLicApptLicenseID: any) => {
                   return this.dropdownDataService
@@ -254,6 +269,11 @@ export class EditLicenseAppointmentComponent
                 // this.ticklerCount = agentInfo.ticklerItems.length;
                 // this.worklistCount = agentInfo.worklistItems.length;
                 // this.agentInfo = agentInfo;
+                this.agentDataService.storeLicenseAppt('',null);
+                this.agentDataService.storeLicenseInfo(
+                  'INSERT',
+                  null
+                );
                 this.callParentRefreshData.emit(agentInfo);
               });
 

@@ -139,6 +139,7 @@ export class AddTicklerComponent implements OnInit, OnDestroy {
       this.ticklerMgmtDataService.upsertTickerItem(ticklerItem).subscribe({
         next: (response) => {
           alert('Tickler has been successfully added');
+          this.ticklerForm.reset({ lkpValue: 'Select', licenseTechId: 0 });
           this.onCancel();
         },
         error: (error) => {

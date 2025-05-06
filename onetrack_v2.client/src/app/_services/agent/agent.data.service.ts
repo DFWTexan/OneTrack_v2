@@ -857,8 +857,8 @@ export class AgentDataService {
     this.licenseAppointmentChanged.next(this.licenseAppointment);
   }
 
-  storeLicApptLicenseID(licenseID: number) {
-    this.agentLicApptLicenseID = licenseID;
+  storeLicApptLicenseID(licenseID: number | null) {
+    this.agentLicApptLicenseID = licenseID !== null ? licenseID : 0;
     this.agentLicApptLicenseIDChanged.next(this.agentLicApptLicenseID);
   }
 
