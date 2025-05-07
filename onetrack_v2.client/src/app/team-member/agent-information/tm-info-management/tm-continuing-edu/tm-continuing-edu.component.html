@@ -32,8 +32,8 @@
             class="no-hover-bg"
           >
             <td>{{ ce.contEducationRequirementID }}</td>
-            <td>{{ ce.educationStartDate | date }}</td>
-            <td>{{ ce.educationEndDate | date }}</td>
+            <td>{{ ce.educationStartDate | date : "MM/dd/yyyy" }}</td>
+            <td>{{ ce.educationEndDate | date : "MM/dd/yyyy" }}</td>
             <td style="font-size: large">{{ ce.requiredCreditHours }}</td>
           </tr>
         </tbody>
