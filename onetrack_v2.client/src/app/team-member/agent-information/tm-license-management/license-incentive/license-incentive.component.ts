@@ -589,6 +589,8 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
     )?.label;
     this.licenseIncentiveInfo.tmApprovalDate =
       licenseIncentiveUpd.TMApprovalDate;
+    this.licenseIncentiveInfo.tmApprovalStatus =
+      licenseIncentiveUpd.TMApprovalStatus;
     this.licenseIncentiveInfo.tmDeclinedDate =
       licenseIncentiveUpd.TMDeclinedDate;
     this.licenseIncentiveInfo.tM10DaySentDate =
