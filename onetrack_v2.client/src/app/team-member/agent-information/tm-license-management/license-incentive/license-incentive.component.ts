@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { Subscription, forkJoin, switchMap } from 'rxjs';
 
 import {
+  AgentInfo,
   // AgentLicApplicationInfo,
   AgentLicenseAppointments,
   LicenseIncentiveInfo,
@@ -136,8 +137,7 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
       )
     );
 
-
-    console.log('EMFTEST (LicenseIncentiveComponent: ngOnInit()) licenseMgmtData => \n', this.licenseMgmtData);
+    // console.log('EMFTEST (LicenseIncentiveComponent: ngOnInit()) licenseMgmtData => \n', this.licenseMgmtData);
 
     this.subscriptions.add(
       this.licIncentiveInfoDataService
@@ -146,7 +146,6 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
           // this.employeeLicenseID
         )
         .subscribe((licenseIncentiveInfo: LicenseIncentiveInfo) => {
-
           this.licenseIncentiveInfo = licenseIncentiveInfo;
           this.employmentLicenseIncentiveID =
             licenseIncentiveInfo.employmentLicenseIncentiveID;
@@ -294,7 +293,8 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
                 )
               : null,
             IncentiveStatus: licenseIncentiveInfo.incentiveStatus,
-            TMOkToSellSentBySOEID: licenseIncentiveInfo.tmOkToSellSentBy || null,
+            TMOkToSellSentBySOEID:
+              licenseIncentiveInfo.tmOkToSellSentBy || null,
             Notes: licenseIncentiveInfo.notes,
           });
         })
@@ -496,12 +496,14 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.isFormSubmitted = true;
-  
+
     let incentiveUpdateItem: any = this.incentiveUpdateForm.value;
     incentiveUpdateItem.employeeLicenseID = this.employeeLicenseID;
-    incentiveUpdateItem.EmploymentLicenseIncentiveID = this.employmentLicenseIncentiveID;
-    incentiveUpdateItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
-  
+    incentiveUpdateItem.EmploymentLicenseIncentiveID =
+      this.employmentLicenseIncentiveID;
+    incentiveUpdateItem.userSOEID =
+      this.userAcctInfoDataService.userAcctInfo.soeid;
+
     // Ensure nullable string fields are set to null if empty
     const nullableFields = [
       'DMSentBySOEID',
@@ -510,28 +512,35 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
       'TMSentBySOEID',
       'TMOkToSellSentBySOEID',
     ];
-  
+
     nullableFields.forEach((field) => {
       if (!incentiveUpdateItem[field] || incentiveUpdateItem[field] === '0') {
         incentiveUpdateItem[field] = null;
       }
     });
-  
+
     // Handle default date for IncetivePeriodDate
     if (!incentiveUpdateItem.IncetivePeriodDate) {
       incentiveUpdateItem.IncetivePeriodDate = '1900-01-01';
     }
-  
+
     if (this.incentiveUpdateForm.invalid) {
       this.incentiveUpdateForm.setErrors({ invalid: true });
       return;
     }
-  
+
     this.licIncentiveInfoDataService
       .updateLicenseIncentiveInfo(incentiveUpdateItem)
       .then((response) => {
+        // console.log('EMFTEST (LicenseIncentiveComponent: onSubmit()) Update successful => \n', response);
 
-console.log('EMFTEST (LicenseIncentiveComponent: onSubmit()) Update successful => \n', response);
+        // this.agentDataService
+        //   .fetchAgentInformation(
+        //     this.agentDataService.agentInformation.employeeID
+        //   )
+        //   .subscribe((agentInfo: AgentInfo) => {
+        //     this.agentDataService.agentInfoChanged.next(agentInfo);
+        //   });
 
         this.refreshData(incentiveUpdateItem);
       })

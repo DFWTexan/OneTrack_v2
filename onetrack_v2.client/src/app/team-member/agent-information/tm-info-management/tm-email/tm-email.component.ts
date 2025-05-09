@@ -283,6 +283,14 @@ export class TmEmailComponent implements OnInit, OnDestroy {
           this.isSubmitted = false;
           this.resetForm();
           alert('Email sent successfully');
+
+          this.agentDataService
+              .fetchAgentInformation(
+                this.agentDataService.agentInformation.employeeID
+              )
+              .subscribe((agentInfo: AgentInfo) => {
+                this.agentDataService.agentInfoChanged.next(agentInfo);
+              });
         },
         error: (error) => {
           if (error.error && error.error.errMessage) {

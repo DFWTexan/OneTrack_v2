@@ -73,7 +73,7 @@
               {{ diary.diaryID }}
             </td>
             <td class="align-middle text-nowrap">
-              {{ diary.diaryDate | date }}
+              {{ diary.diaryDate | date : "MM/dd/yyyy" }}
             </td>
             <td class="align-middle" style="width: max-content">
               {{ diary.notes }}
