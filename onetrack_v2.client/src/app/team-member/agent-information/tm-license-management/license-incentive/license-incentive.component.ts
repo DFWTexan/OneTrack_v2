@@ -534,15 +534,26 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
       .then((response) => {
         // console.log('EMFTEST (LicenseIncentiveComponent: onSubmit()) Update successful => \n', response);
 
-        // this.agentDataService
-        //   .fetchAgentInformation(
-        //     this.agentDataService.agentInformation.employeeID
-        //   )
-        //   .subscribe((agentInfo: AgentInfo) => {
-        //     this.agentDataService.agentInfoChanged.next(agentInfo);
-        //   });
+        this.licIncentiveInfoDataService
+          .fetchLicIncentiveInfo(
+            this.licenseMgmtData[this.currentIndex].employeeLicenseId
+            // this.employeeLicenseID
+          )
+          .subscribe((licenseIncentiveUpd: LicenseIncentiveInfo) => {
 
-        this.refreshData(incentiveUpdateItem);
+console.log(
+          'EMFTEST (LicenseIncentiveComponent: onSubmit()) licenseIncentiveUpd => \n',
+          licenseIncentiveUpd
+        );
+
+            this.licenseIncentiveInfo = licenseIncentiveUpd;
+            this.employmentLicenseIncentiveID =
+              licenseIncentiveUpd.employmentLicenseIncentiveID;
+            // this.licIncentiveInfoDataService.licenseIncentiveInfoChanged.next(
+            //   this.licenseIncentiveInfo
+            // );
+            // this.refreshData(licenseIncentiveUpd);
+          });
       })
       .catch((error) => {
         if (error.error && error.error.errMessage) {
@@ -551,79 +562,82 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
       });
   }
 
-  refreshData(licenseIncentiveUpd: any) {
-    this.licenseIncentiveInfo.rollOutGroup = licenseIncentiveUpd.RollOutGroup;
-    this.licenseIncentiveInfo.dmMgrName =
-      this.dmManagers.find(
-        (mgr) => mgr.value === licenseIncentiveUpd.DMEmploymentID
-      )?.label || '';
-    this.licenseIncentiveInfo.cCdBRMgrName =
-      this.bmManagers.find(
-        (mgr) => mgr.value === licenseIncentiveUpd.CCdBMEmploymentID
-      )?.label || '';
-    this.licenseIncentiveInfo.dmSentDate = licenseIncentiveUpd.DMSentDate;
-    this.licenseIncentiveInfo.dmApprovalDate =
-      licenseIncentiveUpd.DMApprovalDate;
-    this.licenseIncentiveInfo.dmDeclinedDate =
-      licenseIncentiveUpd.DMDeclinedDate;
-    this.licenseIncentiveInfo.dM10DaySentDate =
-      licenseIncentiveUpd.DM10DaySentDate;
-    this.licenseIncentiveInfo.dM20DaySentDate =
-      licenseIncentiveUpd.DM20DaySentDate;
-    this.licenseIncentiveInfo.dmComment = licenseIncentiveUpd.DMComment;
-    this.licenseIncentiveInfo.dmSentBy =
-      this.licenseTeches.find(
-        (tech) => tech.value === licenseIncentiveUpd.DMSentBySOEID
-      )?.label || '';
-    this.licenseIncentiveInfo.dM10DaySentBy =
-      this.licenseTeches.find(
-        (tech) => tech.value === licenseIncentiveUpd.DM10DaySentBySOEID
-      )?.label || '';
-    this.licenseIncentiveInfo.dM20DaySentBy =
-      this.licenseTeches.find(
-        (tech) => tech.value === licenseIncentiveUpd.DM20DaySentBySOEID
-      )?.label || '';
-    this.licenseIncentiveInfo.tmSentDate = licenseIncentiveUpd.TMSentDate;
-    this.licenseIncentiveInfo.cCd2BRMgrName = this.bmManagers.find(
-      (mgr) => mgr.value === licenseIncentiveUpd.CCd2BMEmploymentID
-    )?.label;
-    this.licenseIncentiveInfo.tmApprovalDate =
-      licenseIncentiveUpd.TMApprovalDate;
-    this.licenseIncentiveInfo.tmApprovalStatus =
-      licenseIncentiveUpd.TMApprovalStatus;
-    this.licenseIncentiveInfo.tmDeclinedDate =
-      licenseIncentiveUpd.TMDeclinedDate;
-    this.licenseIncentiveInfo.tM10DaySentDate =
-      licenseIncentiveUpd.TM10DaySentDate;
-    this.licenseIncentiveInfo.tM45DaySentDate =
-      licenseIncentiveUpd.TM45DaySentDate;
-    this.licenseIncentiveInfo.tmExceptionDate =
-      licenseIncentiveUpd.TMExceptionDate;
-    this.licenseIncentiveInfo.tmSentBy =
-      this.licenseTeches.find(
-        (tech) => tech.value === licenseIncentiveUpd.TMSentBySOEID
-      )?.label || '';
-    this.licenseIncentiveInfo.tmComment = licenseIncentiveUpd.TMComment;
-    this.licenseIncentiveInfo.tmException = licenseIncentiveUpd.TMException;
-    this.licenseIncentiveInfo.tmOkToSellSentDate =
-      licenseIncentiveUpd.TMOkToSellSentDate;
-    this.licenseIncentiveInfo.cCdOkToSellBRMgrName = this.bmManagers.find(
-      (mgr) => mgr.value === licenseIncentiveUpd.CCOkToSellBMEmploymentID
-    )?.label;
-    this.licenseIncentiveInfo.tmomsApprtoSendToHRDate =
-      licenseIncentiveUpd.TMOMSApprtoSendToHRDate;
-    this.licenseIncentiveInfo.incetivePeriodDate =
-      licenseIncentiveUpd.IncetivePeriodDate;
-    this.licenseIncentiveInfo.incentiveStatus =
-      licenseIncentiveUpd.IncentiveStatus;
-    this.licenseIncentiveInfo.tmOkToSellSentBy =
-      this.licenseTeches.find(
-        (tech) => tech.value === licenseIncentiveUpd.TMOkToSellSentBySOEID
-      )?.label || '';
-    this.licenseIncentiveInfo.notes = licenseIncentiveUpd.Notes;
+  // refreshData(licenseIncentiveUpd: any) {
+  //   this.licenseIncentiveInfo.rollOutGroup = licenseIncentiveUpd.RollOutGroup;
+  //   this.licenseIncentiveInfo.dmMgrName =
+  //     this.dmManagers.find(
+  //       (mgr) => mgr.value === licenseIncentiveUpd.DMEmploymentID
+  //     )?.label || '';
+  //   this.licenseIncentiveInfo.cCdBRMgrName =
+  //     this.bmManagers.find(
+  //       (mgr) => mgr.value === licenseIncentiveUpd.CCdBMEmploymentID
+  //     )?.label || '';
+  //   this.licenseIncentiveInfo.dmSentDate = licenseIncentiveUpd.DMSentDate;
+  //   this.licenseIncentiveInfo.dmApprovalDate =
+  //     licenseIncentiveUpd.DMApprovalDate;
+  //   this.licenseIncentiveInfo.dmDeclinedDate =
+  //     licenseIncentiveUpd.DMDeclinedDate;
+  //   this.licenseIncentiveInfo.dM10DaySentDate =
+  //     licenseIncentiveUpd.DM10DaySentDate;
+  //   this.licenseIncentiveInfo.dM20DaySentDate =
+  //     licenseIncentiveUpd.DM20DaySentDate;
+  //   this.licenseIncentiveInfo.dmComment = licenseIncentiveUpd.DMComment;
+  //   this.licenseIncentiveInfo.dmSentBy =
+  //     this.licenseTeches.find(
+  //       (tech) => tech.value === licenseIncentiveUpd.DMSentBySOEID
+  //     )?.label || '';
+  //   this.licenseIncentiveInfo.dM10DaySentBy =
+  //     this.licenseTeches.find(
+  //       (tech) => tech.value === licenseIncentiveUpd.DM10DaySentBySOEID
+  //     )?.label || '';
+  //   this.licenseIncentiveInfo.dM20DaySentBy =
+  //     this.licenseTeches.find(
+  //       (tech) => tech.value === licenseIncentiveUpd.DM20DaySentBySOEID
+  //     )?.label || '';
+  //   this.licenseIncentiveInfo.tmSentDate = licenseIncentiveUpd.TMSentDate;
+  //   this.licenseIncentiveInfo.cCd2BRMgrName = this.bmManagers.find(
+  //     (mgr) => mgr.value === licenseIncentiveUpd.CCd2BMEmploymentID
+  //   )?.label;
+  //   this.licenseIncentiveInfo.tmApprovalDate =
+  //     licenseIncentiveUpd.TMApprovalDate;
+  //   this.licenseIncentiveInfo.tmApprovalStatus =
+  //     licenseIncentiveUpd.TMApprovalStatus &&
+  //     licenseIncentiveUpd.TMApprovalStatus.trim() !== ''
+  //       ? licenseIncentiveUpd.TMApprovalStatus
+  //       : 'N/A';
+  //   this.licenseIncentiveInfo.tmDeclinedDate =
+  //     licenseIncentiveUpd.TMDeclinedDate;
+  //   this.licenseIncentiveInfo.tM10DaySentDate =
+  //     licenseIncentiveUpd.TM10DaySentDate;
+  //   this.licenseIncentiveInfo.tM45DaySentDate =
+  //     licenseIncentiveUpd.TM45DaySentDate;
+  //   this.licenseIncentiveInfo.tmExceptionDate =
+  //     licenseIncentiveUpd.TMExceptionDate;
+  //   this.licenseIncentiveInfo.tmSentBy =
+  //     this.licenseTeches.find(
+  //       (tech) => tech.value === licenseIncentiveUpd.TMSentBySOEID
+  //     )?.label || '';
+  //   this.licenseIncentiveInfo.tmComment = licenseIncentiveUpd.TMComment;
+  //   this.licenseIncentiveInfo.tmException = licenseIncentiveUpd.TMException;
+  //   this.licenseIncentiveInfo.tmOkToSellSentDate =
+  //     licenseIncentiveUpd.TMOkToSellSentDate;
+  //   this.licenseIncentiveInfo.cCdOkToSellBRMgrName = this.bmManagers.find(
+  //     (mgr) => mgr.value === licenseIncentiveUpd.CCOkToSellBMEmploymentID
+  //   )?.label;
+  //   this.licenseIncentiveInfo.tmomsApprtoSendToHRDate =
+  //     licenseIncentiveUpd.TMOMSApprtoSendToHRDate;
+  //   this.licenseIncentiveInfo.incetivePeriodDate =
+  //     licenseIncentiveUpd.IncetivePeriodDate;
+  //   this.licenseIncentiveInfo.incentiveStatus =
+  //     licenseIncentiveUpd.IncentiveStatus;
+  //   this.licenseIncentiveInfo.tmOkToSellSentBy =
+  //     this.licenseTeches.find(
+  //       (tech) => tech.value === licenseIncentiveUpd.TMOkToSellSentBySOEID
+  //     )?.label || '';
+  //   this.licenseIncentiveInfo.notes = licenseIncentiveUpd.Notes;
 
-    this.modeEdit = false;
-  }
+  //   this.modeEdit = false;
+  // }
 
   // Pagination
   // nextPage() {

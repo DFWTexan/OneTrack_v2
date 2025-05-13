@@ -736,38 +736,81 @@ export class LicIncentiveInfoDataService {
   //       })
   //     );
   // }
+  // updateLicenseIncentiveInfo(
+  //   licenseIncentiveInfo: LicenseIncentiveInfo
+  // ): Promise<any> {
+  //   const apiUrl = `${environment.apiUrl}LicenseInfo/UpdateLicenseIncentive`;
+
+  //   console.log(
+  //     'EMFTEST (updateLicenseIncentiveInfo) - licenseIncentiveInfo => \n ',
+  //     licenseIncentiveInfo
+  //   );
+
+  //   return this.http
+  //     .post<{
+  //       success: boolean;
+  //       statusCode: number;
+  //       objData: any;
+  //       errMessage: string;
+  //     }>(apiUrl, licenseIncentiveInfo)
+  //     .pipe(
+  //       switchMap((response) => {
+  //         if (response.success && response.statusCode === 200) {
+  //           return this.fetchLicIncentiveInfo(
+  //             licenseIncentiveInfo.employeeLicenseID
+  //           );
+  //         } else {
+  //           throw new Error(response.errMessage || 'Unknown error');
+  //         }
+  //       }),
+  //       catchError((error) => {
+  //         console.error('EMFTEST (ERROR) - Server error: ', error);
+  //         throw error;
+  //       })
+  //     )
+  //     .toPromise();
+  // }
   updateLicenseIncentiveInfo(
-    licenseIncentiveInfo: LicenseIncentiveInfo
-  ): Promise<any> {
-    const apiUrl = `${environment.apiUrl}LicenseInfo/UpdateLicenseIncentive`;
+  licenseIncentiveInfo: LicenseIncentiveInfo
+): Promise<any> {
+  const apiUrl = `${environment.apiUrl}LicenseInfo/UpdateLicenseIncentive`;
 
-    console.log(
-      'EMFTEST (updateLicenseIncentiveInfo) - licenseIncentiveInfo => \n ',
-      licenseIncentiveInfo
-    );
+  console.log(
+    'EMFTEST (updateLicenseIncentiveInfo) - licenseIncentiveInfo => \n ',
+    licenseIncentiveInfo
+  );
 
-    return this.http
-      .post<{
-        success: boolean;
-        statusCode: number;
-        objData: any;
-        errMessage: string;
-      }>(apiUrl, licenseIncentiveInfo)
-      .pipe(
-        switchMap((response) => {
-          if (response.success && response.statusCode === 200) {
-            return this.fetchLicIncentiveInfo(
-              licenseIncentiveInfo.employeeLicenseID
-            );
-          } else {
-            throw new Error(response.errMessage || 'Unknown error');
-          }
-        }),
-        catchError((error) => {
-          console.error('EMFTEST (ERROR) - Server error: ', error);
-          throw error;
-        })
-      )
-      .toPromise();
-  }
+  return this.http
+    .post<{
+      success: boolean;
+      statusCode: number;
+      objData: any;
+      errMessage: string;
+    }>(apiUrl, licenseIncentiveInfo)
+    .pipe(
+      map((response) => {
+        if (response.success && response.statusCode === 200) {
+          return response.objData; // Return the response data if successful
+        } else {
+          throw new Error(response.errMessage || 'Unknown error');
+        }
+      }),
+      catchError((error) => {
+        console.error('EMFTEST (ERROR) - Server error: ', error);
+        throw error;
+      })
+    )
+    .toPromise();
+    // .toPromise()
+    // .then((response) => {
+    //   // Fetch updated license incentive info after the update
+    //   return this.fetchLicIncentiveInfo(licenseIncentiveInfo.employeeLicenseID)
+    //     .toPromise()
+    //     .then((updatedInfo) => updatedInfo)
+    //     .catch((fetchError) => {
+    //       console.error('Error fetching updated license incentive info:', fetchError);
+    //       throw fetchError;
+    //     });
+    // });
+}
 }
