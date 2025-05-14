@@ -540,12 +540,6 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
             // this.employeeLicenseID
           )
           .subscribe((licenseIncentiveUpd: LicenseIncentiveInfo) => {
-
-console.log(
-          'EMFTEST (LicenseIncentiveComponent: onSubmit()) licenseIncentiveUpd => \n',
-          licenseIncentiveUpd
-        );
-
             this.licenseIncentiveInfo = licenseIncentiveUpd;
             this.employmentLicenseIncentiveID =
               licenseIncentiveUpd.employmentLicenseIncentiveID;
@@ -553,6 +547,8 @@ console.log(
             //   this.licenseIncentiveInfo
             // );
             // this.refreshData(licenseIncentiveUpd);
+            this.isFormSubmitted = false;
+            this.onEditToggle();
           });
       })
       .catch((error) => {
