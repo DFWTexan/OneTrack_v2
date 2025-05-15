@@ -1,0 +1,270 @@
+<form [formGroup]="indexForm" (ngSubmit)="onSubmit()">
+  <div class="row ms-1">
+    <div class="col">
+      <div class="form-group" *ngIf="appComService.isShowEditID">
+        <label for="employeeId">EmployeeID:</label><br />
+        {{ employee?.employeeID }}
+      </div>
+      <div class="form-group">
+        <label for="employeeId">First Name:</label><br />
+        {{  employee?.firstName }}
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <label for="employeeId">Last Name:</label><br />
+        {{ employee?.lastName }}
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <label for="employeeId">Team #:</label><br />
+        {{ employee?.geid }}
+      </div>
+    </div>
+  </div>
+  <div class="row ms-1">
+    <div class="col">
+      <div class="form-group">
+        <label for="branchName">Work State:</label>
+        <select
+          class="form-select select-size-x-small"
+          type="text"
+          id="companyType"
+        >
+          <option *ngFor="let state of states" [value]="state">
+            {{ state }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <label for="branchName">License State:</label>
+        <select
+          class="form-select select-size-x-small"
+          type="text"
+          id="companyType"
+        >
+          <option *ngFor="let state of states" [value]="state">
+            {{ state }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <label for="branchName">Branch Name:</label>
+        <select
+          class="form-select select-size-medium"
+          type="text"
+          id="companyType"
+        >
+          <option *ngFor="let branch of branchNames" [value]="branch.value">
+            {{ branch.label }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div class="row ms-1">
+    <div class="col">
+      <div class="form-group">
+        <label for="branchName">SCORE #:</label>
+        <select
+          class="form-select select-size-small"
+          type="text"
+          id="companyType"
+        >
+          <option *ngFor="let score of scoreNumbers" [value]="score.value">
+            {{ score.label }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <label for="branchName">Doc Type:</label>
+        <select
+          class="form-select select-size-medium"
+          type="text"
+          id="companyType"
+          [value]="defaultDocumentType"
+          (change)="onDocumentTypeChange($event)"
+        >
+          <option *ngFor="let type of documentTypes" [value]="type">
+            {{ type }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <div class="col">
+      <div class="form-group">
+        <label for="branchName">Doc Sub Type:</label>
+        <select
+          class="form-select select-size-medium"
+          type="text"
+          id="companyType"
+          [disabled]="!selectedDocumentType"
+        >
+          <option *ngFor="let type of documentSubTypes" [value]="type">
+            {{ type }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <!-- <div class="form-group">
+    <label for="employeeId">EmployeeID:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="employeeId"
+      name="employeeId"
+      [(ngModel)]="employee.employeeId"
+      required
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="tmFirstName">TM First Name:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="tmFirstName"
+      name="tmFirstName"
+      [(ngModel)]="employee.tmFirstName"
+      required
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="tmLastName">TM Last Name:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="tmLastName"
+      name="tmLastName"
+      [(ngModel)]="employee.tmLastName"
+      required
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="tmNumber">TM Number:</label>
+    <input
+      type="text"
+      class="form-control"
+      id="tmNumber"
+      name="tmNumber"
+      [(ngModel)]="employee.tmNumber"
+      required
+    />
+  </div>
+
+  <div class="form-group">
+    <label for="workState">Work State:</label>
+    <select
+      class="form-control"
+      id="workState"
+      name="workState"
+      [(ngModel)]="employee.workState"
+      required
+    >
+      <option value="">Select State</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="licenseState">License State:</label>
+    <select
+      class="form-control"
+      id="licenseState"
+      name="licenseState"
+      [(ngModel)]="employee.licenseState"
+      required
+    >
+      <option value="">Select State</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="branchName">Branch Name:</label>
+    <select
+      class="form-control"
+      id="branchName"
+      name="branchName"
+      [(ngModel)]="employee.branchName"
+      required
+    >
+      <option value="">Select Branch</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="scoreNum">SCORE Num:</label>
+    <select
+      class="form-control"
+      id="scoreNum"
+      name="scoreNum"
+      [(ngModel)]="employee.scoreNum"
+      required
+    >
+      <option value="">Select Score Number</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="docType">Doc Type:</label>
+    <select
+      class="form-control"
+      id="docType"
+      name="docType"
+      [(ngModel)]="employee.docType"
+      required
+    >
+      <option value="">Select Doc Type</option>
+    </select>
+  </div>
+
+  <div class="form-group">
+    <label for="docSubType">Doc Sub Type:</label>
+    <select
+      class="form-control"
+      id="docSubType"
+      name="docSubType"
+      [(ngModel)]="employee.docSubType"
+      required
+    >
+      <option value="">Select Doc Sub Type</option>
+    </select>
+  </div> -->
+<div class="row ms-1 mt-1 mb-3">
+  <div class="col-md-12">
+    <app-file-upload
+      [filePathUri]="fileUri"
+      [displayMode]="FileDisplayMode"
+      (filesChanged)="onFilesChanged($event)"
+      #fileUpload
+    ></app-file-upload>
+    <!-- <input
+      class="file-upload button-font-size me-3"
+      type="file"
+      (change)="onFileSelected($event)"
+      #fileUpload
+    /> -->
+  </div>
+</div>
+  
+
+  <mat-divider></mat-divider>
+
+  <div class="row mt-3">
+    <div class="col d-flex justify-content-end">
+      <button type="button" class="btn btn-secondary me-4" (click)="onCancel()">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-primary">Insert</button>
+    </div>
+  </div>
+</form>
