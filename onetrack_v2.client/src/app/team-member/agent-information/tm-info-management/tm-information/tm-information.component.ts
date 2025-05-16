@@ -172,19 +172,22 @@ export class TmInformationComponent implements OnInit, OnDestroy {
                 })
                 .subscribe({
                   next: (response) => {
-                    alert('License Appointment Deleted');
+                    // alert('License Appointment Deleted');
+                    this.appComService.updateAppMessage(
+                      'License Appointment Deleted successfully.' // 'Data submitted successfully.'
+                    );
 
                     this.agentDataService
-                    .fetchAgentInformation(
-                      this.agentDataService.agentInformation.employeeID
-                    )
-                    .subscribe((agentInfo: AgentInfo) => {
-                      // this.isLoading = false;
-                      // this.ticklerCount = agentInfo.ticklerItems.length;
-                      // this.worklistCount = agentInfo.worklistItems.length;
-                      this.agentInfo = agentInfo;
-                      // this.callParentRefreshData.emit(agentInfo);
-                    });
+                      .fetchAgentInformation(
+                        this.agentDataService.agentInformation.employeeID
+                      )
+                      .subscribe((agentInfo: AgentInfo) => {
+                        // this.isLoading = false;
+                        // this.ticklerCount = agentInfo.ticklerItems.length;
+                        // this.worklistCount = agentInfo.worklistItems.length;
+                        this.agentInfo = agentInfo;
+                        // this.callParentRefreshData.emit(agentInfo);
+                      });
                   },
                   error: (error) => {
                     if (error.error && error.error.errMessage) {
@@ -223,6 +226,9 @@ export class TmInformationComponent implements OnInit, OnDestroy {
                 })
                 .subscribe({
                   next: (response) => {
+                    this.appComService.updateAppMessage(
+                      'License Deleted successfully.' // 'Data submitted successfully.'
+                    );
                     // this.router
                     //   .navigateByUrl('/', { skipLocationChange: true })
                     //   .then(() => {

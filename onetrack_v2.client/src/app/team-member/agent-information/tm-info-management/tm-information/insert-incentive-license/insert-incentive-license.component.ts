@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 import {
   AgentComService,
   AgentDataService,
+  AppComService,
   ConstantsDataService,
   DropdownDataService,
   ErrorMessageService,
@@ -38,6 +39,7 @@ export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
     private drpdwnDataService: DropdownDataService,
     private agentDataService: AgentDataService,
     private agentComService: AgentComService,
+    private appComService: AppComService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {
     this.createForm();
@@ -142,6 +144,9 @@ export class InsertIncentiveLicenseComponent implements OnInit, OnDestroy {
             licenseID: 0,
             licenseStatus: 'Incentive',
           });
+          this.appComService.updateAppMessage(
+              'Data submitted successfully.' 
+            );
           this.onCloseModal();
         },
         error: (error) => {

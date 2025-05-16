@@ -65,6 +65,8 @@ export class AppComService {
   selectedEmploymentCommunicationIDChanged = new Subject<number>();
   typeTickler: any = {};
   typeTicklerChanged = new Subject<any>();
+  appMessage: string = '';
+  appMessageChanged = new Subject<string>();
 
   subscriptions: Subscription = new Subscription();
 
@@ -169,6 +171,16 @@ export class AppComService {
     return this.http
       .get(url, { responseType: 'blob' })
       .pipe(catchError(this.handleError));
+  }
+
+  updateAppMessage(appMessage: string) {
+    this.appMessage = appMessage;
+    this.appMessageChanged.next(this.appMessage);
+    // Clear the app message after 5 seconds
+    setTimeout(() => {
+      this.appMessage = '';
+      this.appMessageChanged.next(this.appMessage);
+    }, 5000);
   }
 
   private handleError(error: any) {

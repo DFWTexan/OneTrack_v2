@@ -11,6 +11,7 @@ import {
 import {
   AgentComService,
   AgentDataService,
+  AppComService,
   ConstantsDataService,
   DropdownDataService,
   ErrorMessageService,
@@ -56,6 +57,7 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
     public licIncentiveInfoDataService: LicIncentiveInfoDataService,
     protected modalService: ModalService,
     private userAcctInfoDataService: UserAcctInfoDataService,
+    public appComService: AppComService,
     private fb: FormBuilder
   ) {
     this.incentiveUpdateForm = this.fb.group({
@@ -548,6 +550,9 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
             // );
             // this.refreshData(licenseIncentiveUpd);
             this.isFormSubmitted = false;
+            this.appComService.updateAppMessage(
+              'Data submitted successfully.' // 'Data submitted successfully.'
+            );
             this.onEditToggle();
           });
       })

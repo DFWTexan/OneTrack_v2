@@ -157,7 +157,9 @@ export class TmEmailComponent implements OnInit, OnDestroy {
             async (attachment: string) => {
               const filePath = `${rawHtmlContent.docAttachmentPath}`;
               try {
-                const blob = await firstValueFrom(this.fileService.getFile(filePath, attachment));
+                const blob = await firstValueFrom(
+                  this.fileService.getFile(filePath, attachment)
+                );
                 if (blob) {
                   return new File([blob], attachment);
                 } else {
@@ -282,15 +284,17 @@ export class TmEmailComponent implements OnInit, OnDestroy {
         next: (response) => {
           this.isSubmitted = false;
           this.resetForm();
-          alert('Email sent successfully');
+          this.appComService.updateAppMessage(
+            'Email Sent successfully.' // 'Data submitted successfully.'
+          );
 
           this.agentDataService
-              .fetchAgentInformation(
-                this.agentDataService.agentInformation.employeeID
-              )
-              .subscribe((agentInfo: AgentInfo) => {
-                this.agentDataService.agentInfoChanged.next(agentInfo);
-              });
+            .fetchAgentInformation(
+              this.agentDataService.agentInformation.employeeID
+            )
+            .subscribe((agentInfo: AgentInfo) => {
+              this.agentDataService.agentInfoChanged.next(agentInfo);
+            });
         },
         error: (error) => {
           if (error.error && error.error.errMessage) {

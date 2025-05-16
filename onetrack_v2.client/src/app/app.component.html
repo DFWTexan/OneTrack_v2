@@ -389,6 +389,13 @@
     >
       {{ errorMessageService.errorMessage }}
     </div>
+    <div
+      class="alert alert-success d-flex justify-content-center"
+      role="alert"
+      *ngIf="appComService.appMessage"
+    >
+      <span style="font-size: large; font-weight: 600">{{ appComService.appMessage }}</span>
+    </div>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>

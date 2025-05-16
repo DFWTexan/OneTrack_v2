@@ -22,6 +22,7 @@ import { FileUploadComponent } from '../../../_components/file-upload/file-uploa
 export class AddIndexerComponent implements OnInit, OnDestroy {
   @ViewChild('fileUpload') fileUploadComponent!: FileUploadComponent;
   isFormSubmitted: boolean = false;
+  savedMessage: string | null = null;
   indexForm: FormGroup;
   states: string[] = ['Select', ...this.conService.getStates()];
   branchNames: { value: any; label: string }[] = [];
@@ -96,44 +97,64 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
   }
 
   onFilesChanged(files: File[]) {
-    this.files = files; 
+    this.files = files;
   }
 
   onSubmit() {
     this.isFormSubmitted = true;
-  
+
     if (this.indexForm.valid) {
       const formData = new FormData();
-  
+
       // Append form fields
-      formData.append('EmployeeID', this.employee?.employeeID?.toString() || '0');
+      formData.append(
+        'EmployeeID',
+        this.employee?.employeeID?.toString() || '0'
+      );
       formData.append('FirstName', this.employee?.firstName || '');
       formData.append('LastName', this.employee?.lastName || '');
       formData.append('Geid', this.employee?.geid || '');
-      formData.append('WorkState', this.indexForm.get('workState')?.value || '');
-      formData.append('LicenseState', this.indexForm.get('licenseState')?.value || '');
-      formData.append('BranchName', this.indexForm.get('branchName')?.value || '');
-      formData.append('ScoreNumber', this.indexForm.get('scoreNum')?.value || '');
+      formData.append(
+        'WorkState',
+        this.indexForm.get('workState')?.value || ''
+      );
+      formData.append(
+        'LicenseState',
+        this.indexForm.get('licenseState')?.value || ''
+      );
+      formData.append(
+        'BranchName',
+        this.indexForm.get('branchName')?.value || ''
+      );
+      formData.append(
+        'ScoreNumber',
+        this.indexForm.get('scoreNum')?.value || ''
+      );
       formData.append('DocumentType', this.selectedDocumentType || '');
-      formData.append('DocumentSubType', this.indexForm.get('docSubType')?.value || '');
-  
+      formData.append(
+        'DocumentSubType',
+        this.indexForm.get('docSubType')?.value || ''
+      );
+
       // Append files
       if (this.files && this.files.length > 0) {
         this.files.forEach((file) => {
           formData.append('Files', file, file.name);
         });
       }
-  
+
       // this.errorMessageService.showLoadingMessage('Submitting data, please wait...');
       this.employeeDataService.updateEmployeeIndexer(formData).subscribe({
         next: (response) => {
-          if (response && response.success && response.statusCode === 200) {
-            // this.errorMessageService.showSuccessMessage('Data submitted successfully!');
-            this.onCancel();
-          } else {
-            const errorMessage = response?.errMessage || 'An unknown error occurred.';
-            // this.errorMessageService.showErrorMessage(errorMessage);
+          // this.onCancel();
+          const modalDiv = document.getElementById('modal-document-index');
+          if (modalDiv != null) {
+            modalDiv.style.display = 'none';
           }
+
+          this.appComService.updateAppMessage(
+            'Data submitted successfully.' // 'Data submitted successfully.'
+          );
         },
         error: (error) => {
           console.error('Error submitting data:', error);

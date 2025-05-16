@@ -16,6 +16,7 @@ import { Subject, Subscription, switchMap, tap } from 'rxjs';
 import {
   AgentComService,
   AgentDataService,
+  AppComService,
   ConstantsDataService,
   DropdownDataService,
   ErrorMessageService,
@@ -68,6 +69,7 @@ export class EditLicenseAppointmentComponent
     private licIncentiveInfoDataService: LicIncentiveInfoDataService,
     private userInfoDataService: UserAcctInfoDataService,
     private dropdownDataService: DropdownDataService,
+    private appComService: AppComService,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef
   ) {}
@@ -123,9 +125,7 @@ export class EditLicenseAppointmentComponent
                 appointmentExpireDate: null,
                 appointmentTerminationDate: null,
               });
-              this.companyAbbreviations = [
-                { value: 0, label: 'Select' },
-              ];
+              this.companyAbbreviations = [{ value: 0, label: 'Select' }];
 
               return this.agentDataService.agentLicApptLicenseIDChanged.pipe(
                 switchMap((agentLicApptLicenseID: any) => {
@@ -256,6 +256,9 @@ export class EditLicenseAppointmentComponent
         .upsertLicenseAppointment(licenseApptItem)
         .subscribe({
           next: (response) => {
+            this.appComService.updateAppMessage(
+              'Data submitted successfully.' // 'Data submitted successfully.'
+            );
             // const modalDiv = document.getElementById('modal-edit-license-appt');
             // if (modalDiv != null) {
             //   modalDiv.style.display = 'none';
@@ -269,11 +272,8 @@ export class EditLicenseAppointmentComponent
                 // this.ticklerCount = agentInfo.ticklerItems.length;
                 // this.worklistCount = agentInfo.worklistItems.length;
                 // this.agentInfo = agentInfo;
-                this.agentDataService.storeLicenseAppt('',null);
-                this.agentDataService.storeLicenseInfo(
-                  'INSERT',
-                  null
-                );
+                this.agentDataService.storeLicenseAppt('', null);
+                this.agentDataService.storeLicenseInfo('INSERT', null);
                 this.callParentRefreshData.emit(agentInfo);
               });
 
