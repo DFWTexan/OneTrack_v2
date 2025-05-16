@@ -5,6 +5,7 @@ import { Subscription } from 'rxjs';
 
 import {
   AgentDataService,
+  AppComService,
   ConstantsDataService,
   ErrorMessageService,
   UserAcctInfoDataService,
@@ -50,6 +51,7 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
     private errorMessageService: ErrorMessageService,
     private conService: ConstantsDataService,
     private agentService: AgentDataService,
+    private appComService: AppComService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
@@ -169,6 +171,9 @@ export class EditTmDetailComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.agentService.updateAgent(agent).subscribe({
         next: (response) => {
+          this.appComService.updateAppMessage(
+            'Data submitted successfully.' // 'Data submitted successfully.'
+          );
           this.forceCloseModal();
         },
         error: (error) => {
