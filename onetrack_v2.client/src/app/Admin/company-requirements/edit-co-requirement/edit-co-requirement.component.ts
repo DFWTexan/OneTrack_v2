@@ -1,4 +1,4 @@
-import { Component, Injectable, OnInit, OnDestroy, Input } from '@angular/core';
+import { Component, Injectable, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -8,6 +8,7 @@ import {
   AppComService,
   ConstantsDataService,
   ErrorMessageService,
+  UserAcctInfoDataService,
 } from '../../../_services';
 import { CompanyRequirement } from '../../../_Models';
 import { formatDate } from '@angular/common';
@@ -19,8 +20,10 @@ import { formatDate } from '@angular/common';
 })
 @Injectable()
 export class EditCoRequirementComponent implements OnInit, OnDestroy {
+  @Output() callParentRefreshData = new EventEmitter<any>();
   @Input() workState: string | null = null;
   @Input() resState: string | null = null;
+  isFormSubmitted = false;
   companyReqForm!: FormGroup;
   states: string[] = [];
   requirementTypes: string[] = ['New Hire'];
@@ -37,7 +40,8 @@ export class EditCoRequirementComponent implements OnInit, OnDestroy {
     private conService: ConstantsDataService,
     public appComService: AppComService,
     public adminDataService: AdminDataService,
-    public adminComService: AdminComService
+    public adminComService: AdminComService,
+    private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {
@@ -78,7 +82,7 @@ export class EditCoRequirementComponent implements OnInit, OnDestroy {
                         'en-US'
                       )
                     : null,
-                    
+
                   document: companyReq.document ? companyReq.document : '',
                 });
               }
@@ -86,7 +90,7 @@ export class EditCoRequirementComponent implements OnInit, OnDestroy {
           } else {
             this.companyReqForm.reset();
             this.companyReqForm.patchValue({
-              workStateAbv: this.workState ? this.workState : 'Select' ,
+              workStateAbv: this.workState ? this.workState : 'Select',
               resStateAbv: this.resState ? this.resState : 'Select',
               requirementType: 'New Hire',
             });
@@ -96,11 +100,31 @@ export class EditCoRequirementComponent implements OnInit, OnDestroy {
   }
 
   onSubmit() {
-    // if (this.adminComService.modes.coRequirement.mode === 'ADD') {
-    //   this.adminDataService.addCompanyRequirement(this.companyReqForm.value);
-    // } else {
-    //   this.adminDataService.updateCompanyRequirement(this.companyReqForm.value);
-    // }
+    this.isFormSubmitted = true;
+    let companyRequirement: CompanyRequirement = this.companyReqForm.value;
+    companyRequirement.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+    
+    if (this.companyReqForm.valid) {
+      
+      this.subscriptionData.add(
+        this.adminDataService
+          .upsertConpanyRequirement(companyRequirement)
+          .subscribe({
+            next: (response) => {
+              this.callParentRefreshData.emit();
+              this.isDocumentUploaded = true;
+              this.appComService.updateAppMessage(
+                'Company Requirement saved successfully'
+              );
+              this.closeModal();
+            },
+            error: (error) => {
+              this.errorMessageService.setErrorMessage(error.message);
+            },
+          })
+      );
+      // If file upload is required, handle it separately here.
+    }
   }
 
   onFileSelected(event: any) {

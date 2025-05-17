@@ -187,7 +187,7 @@ namespace OneTrack_v2.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> UpsertCompanyRequirement([FromForm] IputDeleteCompanyRequirement companyRequirement)
+        public async Task<IActionResult> UpsertCompanyRequirement([FromBody] IputUpsertCompanyRequirement companyRequirement)
         {
             var result = await Task.Run(() => _adminService.UpsertCompanyRequirement(companyRequirement));
 

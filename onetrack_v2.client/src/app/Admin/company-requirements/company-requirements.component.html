@@ -140,7 +140,7 @@
               <td class="align-middle">
                 <button
                   class="btn btn-link hover-pointer"
-                  (click)="fileService.downloadFile(company.document)"
+                  (click)="fileService.downloadFile(company.document ?? '')"
                   style="font-size: medium"
                   title="Download Document"
                 >
@@ -195,6 +195,7 @@
           <app-edit-co-requirement
             [workState]="selectedWorkState"
             [resState]="selectedResState"
+            (callParentRefreshData)="onChildCallRefreshData()"
           ></app-edit-co-requirement>
         </div>
       </div>

@@ -230,6 +230,27 @@ export class AdminDataService {
         })
       );
   }
+  upsertConpanyRequirement(companyRequirement: CompanyRequirement) {
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: CompanyRequirement;
+        errMessage: string;
+      }>(this.configService.config.apiUrl + 'Admin/UpsertCompanyRequirement', companyRequirement, {
+        observe: 'response',
+      })
+      .pipe(
+        tap({
+          next: (response) => {
+            console.log(response.status);
+          },
+          error: (error) => {
+            console.error(error);
+          },
+        })
+      );
+  }
 
   // CONTINUE EDUCATION
   fetchLicenseTypes(stateProv: string | null = null) {

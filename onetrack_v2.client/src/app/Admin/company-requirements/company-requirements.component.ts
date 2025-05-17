@@ -38,6 +38,10 @@ export class CompanyRequirementsComponent implements OnInit, OnDestroy {
     public modalService: ModalService
   ) {}
 
+  onChildCallRefreshData() {
+    this.fetchCompanyRequirements();
+  }
+
   ngOnInit(): void {
     this.states = ['Select', ...this.conService.getStates()];
     this.stateRes = ['All', ...this.conService.getStates()];

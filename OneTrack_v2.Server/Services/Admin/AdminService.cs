@@ -952,7 +952,7 @@ namespace OneTrak_v2.Services
 
             return result;
         }
-        public ReturnResult UpsertCompanyRequirement([FromBody] IputDeleteCompanyRequirement vCoRequirement)
+        public ReturnResult UpsertCompanyRequirement([FromBody] IputUpsertCompanyRequirement vCoRequirement)
         {
             var result = new ReturnResult();
             try
