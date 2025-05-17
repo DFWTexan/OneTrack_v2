@@ -965,7 +965,6 @@ namespace OneTrak_v2.Services
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
 
-                            cmd.Parameters.Add(new SqlParameter("@CompanyRequirementID", vCoRequirement.CompanyRequirementId));
                             cmd.Parameters.Add(new SqlParameter("@WorkStateAbv", vCoRequirement.WorkStateAbv));
                             cmd.Parameters.Add(new SqlParameter("@ResStateAbv", vCoRequirement.ResStateAbv));
                             cmd.Parameters.Add(new SqlParameter("@RequirementType", vCoRequirement.RequirementType));
@@ -974,7 +973,7 @@ namespace OneTrak_v2.Services
                             cmd.Parameters.Add(new SqlParameter("@LicLevel3", vCoRequirement.LicLevel3));
                             cmd.Parameters.Add(new SqlParameter("@LicLevel4", vCoRequirement.LicLevel4));
                             cmd.Parameters.Add(new SqlParameter("@StartAfterDate", vCoRequirement.StartAfterDate));
-                            cmd.Parameters.Add(new SqlParameter("@Document", vCoRequirement.Document));
+                            cmd.Parameters.Add(new SqlParameter("@Document", vCoRequirement.Document ?? (object)DBNull.Value));
                             cmd.Parameters.Add(new SqlParameter("@UserSOEID", vCoRequirement.UserSOEID));
                             
                             conn.Open();
@@ -999,7 +998,7 @@ namespace OneTrak_v2.Services
                             cmd.Parameters.Add(new SqlParameter("@LicLevel3", vCoRequirement.LicLevel3));
                             cmd.Parameters.Add(new SqlParameter("@LicLevel4", vCoRequirement.LicLevel4));
                             cmd.Parameters.Add(new SqlParameter("@StartAfterDate", vCoRequirement.StartAfterDate));
-                            cmd.Parameters.Add(new SqlParameter("@Document", vCoRequirement.Document));
+                            cmd.Parameters.Add(new SqlParameter("@Document", vCoRequirement.Document ?? (object)DBNull.Value));
                             cmd.Parameters.Add(new SqlParameter("@UserSOEID", vCoRequirement.UserSOEID));
 
                             conn.Open();

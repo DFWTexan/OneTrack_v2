@@ -103,6 +103,26 @@ export class EditCoRequirementComponent implements OnInit, OnDestroy {
     this.isFormSubmitted = true;
     let companyRequirement: CompanyRequirement = this.companyReqForm.value;
     companyRequirement.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+
+    if (this.adminComService.modes.coRequirement.mode === 'INSERT') {
+      companyRequirement.companyRequirementId = 0;
+    }
+
+    if (companyRequirement.licLevel1 === null) {
+      companyRequirement.licLevel1 = false;
+    }
+
+    if (companyRequirement.licLevel2 === null) {
+      companyRequirement.licLevel2 = false;
+    }
+
+    if (companyRequirement.licLevel3 === null) {
+      companyRequirement.licLevel3 = false;
+    }
+
+    if (companyRequirement.licLevel4 === null) {
+      companyRequirement.licLevel4 = false;
+    }
     
     if (this.companyReqForm.valid) {
       
