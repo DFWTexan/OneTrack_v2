@@ -25,43 +25,37 @@ export class FileUploadComponent {
     private emailDataService: EmailDataService
   ) {}
 
-  onFileSelected(event: any) {
-    const target = event.target as HTMLInputElement;
-    if (target.files && target.files.length) {
-      const file: File = target.files[0];
+ onFileSelected(event: any) {
+  const target = event.target as HTMLInputElement;
+  if (target.files && target.files.length) {
+    const file: File = target.files[0];
 
-      this.attachedFiles.push(file);
+    if (file) {
+      this.fileName = file.name;
+      const formData = new FormData();
+      formData.append('file', file); // must match [FromForm] IFormFile file
+      formData.append('fileName', this.fileName); // must match [FromForm] string fileName
+      formData.append('filePathType', this.uploadType || ''); // must match [FromForm] string filePathType
 
-      this.emailDataService.setAttachedFiles(this.attachedFiles);
+      console.log('EMFTEST (UPLOAD) - formData => \n', formData);
 
-      // if (file) {
-      //   this.fileName = file.name;
-      //   const formData = new FormData();
-      //   formData.append('File', file);
-      //   formData.append('FileName', this.fileName);
-      //   formData.append('FilePathType', this.uploadType || '');
-
-        // const upload$ = this.http.post(this.url + 'Upload', formData);
-        // upload$.subscribe({
-        //   next: (response) => {
-        //     // Handle successful upload
-        //     // console.log('Upload successful', response);
-        //   },
-        //   error: (error) => {
-        //     if (error.error && error.error.errMessage) {
-        //       console.log('EMFTEST (UPLOAD) - error', error.error.errMessage);
-
-        //       this.errorMessageService.setErrorMessage(error.error.errMessage);
-        //     }
-        //   },
-        // });
-      // }
-
-      this.filesChanged.emit(this.attachedFiles);
-
-      target.value = '';
+      const upload$ = this.http.post(this.url + 'Upload', formData);
+      upload$.subscribe({
+        next: (response) => {
+          // Handle successful upload
+        },
+        error: (error) => {
+          if (error.error && error.error.errMessage) {
+            console.log('EMFTEST (UPLOAD) - error', error.error.errMessage);
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+          }
+        },
+      });
     }
+
+    target.value = '';
   }
+}
 
   onFileChange(event: Event): void {
     const target = event.target as HTMLInputElement;
