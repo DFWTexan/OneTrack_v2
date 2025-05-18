@@ -214,12 +214,18 @@
               id="emailAttachment"
               name="emailAttachment"
             /> -->
-            <app-file-upload
+            <!-- <app-file-upload
               [uploadType]="uploadType"
               [filePathUri]="fileUri"
               [displayMode]="FileDisplayMode"
               #fileUpload
-            ></app-file-upload>
+            ></app-file-upload> -->
+            <app-file-attachment
+              [uploadType]="uploadType"
+              [filePathUri]="fileUri"
+              [displayMode]="FileDisplayMode"
+              #fileUpload
+            ></app-file-attachment>
           </div>
         </div>
       </div>

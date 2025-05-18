@@ -1,0 +1,52 @@
+<div *ngIf="displayMode && displayMode == 'ATTACHMENT'; else chooseFileBlock">
+  <input
+    type="file"
+    class="file-input"
+    (change)="onFileSelected($event)"
+    #fileUpload
+  />
+  <div class="file-upload">
+    <button
+      mat-mini-fab
+      color="primary"
+      class="upload-btn"
+      (click)="fileUpload.click()"
+      [disabled]="isDisabled"
+    >
+      <mat-icon>attach_file</mat-icon>
+    </button>
+    <div class="mt-1">
+      <span class="ms-3" style="font-weight: 400">
+        <ng-container *ngIf="attachedFiles.length > 0; else noFiles">
+          <div *ngFor="let file of attachedFiles">
+            {{ file.name }}
+          </div>
+        </ng-container>
+        <ng-template #noFiles>No file attached.</ng-template>
+      </span>
+    </div>
+  </div>
+</div>
+
+<ng-template #chooseFileBlock>
+  <div class="mb-3">
+    <input
+      class="file-upload button-font-size me-5"
+      type="file"
+      (change)="onFileSelected($event)"
+      [disabled]="isDisabled"
+      multiple
+      #fileUpload
+    />
+  </div>
+  <div>
+    <span class="ms-3" style="font-size: large; font-weight: 400">
+      <ng-container *ngIf="attachedFiles.length > 0; else noFiles">
+        <div *ngFor="let file of attachedFiles">
+          {{ file.name }}
+        </div>
+      </ng-container>
+      <ng-template #noFiles>No file attached.</ng-template>
+    </span>
+  </div>
+</ng-template>
