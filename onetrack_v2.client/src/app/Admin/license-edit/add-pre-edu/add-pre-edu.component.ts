@@ -43,7 +43,10 @@ export class AddPreEduComponent implements OnInit, OnDestroy {
     this.subscriptionData.add(
       this.adminDataService.addLicenseEducation(item).subscribe({
         next: (response) => {
-          alert('PreEducation added successfully');
+          // alert('PreEducation added successfully');
+          this.appComService.updateAppMessage(
+            'PreEducation saved successfully'
+          );
           this.callParentRefreshData.emit();
           // console.log(
           //   'EMFTEST (app-tm-emptrans-history: deleteJobTitle) - COMPLETED DELETE response => \n',

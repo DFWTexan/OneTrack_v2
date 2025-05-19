@@ -1,4 +1,4 @@
-<div *ngIf="displayMode && displayMode == 'ATTACHMENT'; else chooseFileBlock">
+<!-- <div *ngIf="displayMode && displayMode == 'ATTACHMENT'; else chooseFileBlock">
   <input
     type="file"
     class="file-input"
@@ -15,9 +15,6 @@
     >
       <mat-icon>attach_file</mat-icon>
     </button>
-    <!-- <span class="ms-3" style="font-size: larger; font-weight: 400">
-      {{ fileName || "No file attached." }}
-    </span> -->
     <div class="mt-1">
       <span class="ms-3" style="font-weight: 400">
         <ng-container *ngIf="attachedFiles.length > 0; else noFiles">
@@ -29,9 +26,9 @@
       </span>
     </div>
   </div>
-</div>
+</div> -->
 
-<ng-template #chooseFileBlock>
+<!-- <ng-template #chooseFileBlock> -->
   <div class="mb-3">
     <input
       class="file-upload button-font-size me-5"
@@ -61,4 +58,4 @@
       <!-- <ng-template #noFiles>No file attached.</ng-template> -->
     </span>
   </div>
-</ng-template>
+<!-- </ng-template> -->

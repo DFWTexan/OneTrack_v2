@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 import {
   AdminComService,
   AdminDataService,
+  AppComService,
   ErrorMessageService,
   UserAcctInfoDataService,
 } from '../../../_services';
@@ -36,6 +37,7 @@ export class EditLicenseComponent implements OnInit, OnDestroy {
     private errorMessageService: ErrorMessageService,
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
+    public appComService: AppComService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
@@ -128,6 +130,8 @@ export class EditLicenseComponent implements OnInit, OnDestroy {
       this.adminDataService.upsertLicenseItem(licenseItem).subscribe({
         next: (response) => {
           this.callParentRefreshData.emit();
+          this.appComService.updateAppMessage(
+            'License Item updated successfully.');
           this.forceCloseModal();
         },
         error: (error) => {

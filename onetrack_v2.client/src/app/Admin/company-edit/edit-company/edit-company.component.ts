@@ -140,6 +140,9 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
     this.adminDataService.upSertCompany(company).subscribe({
       next: (response) => {
         this.callParentRefreshData.emit();
+        this.appComService.updateAppMessage(
+            'Company saved successfully'
+          );
         this.forceCloseModal();
       },
       error: (error) => {

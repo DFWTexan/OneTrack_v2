@@ -12,6 +12,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import {
   AdminComService,
   AdminDataService,
+  AppComService,
   ErrorMessageService,
   UserAcctInfoDataService,
 } from '../../../_services';
@@ -34,6 +35,7 @@ export class EditJobTitleComponent implements OnInit, OnDestroy {
     private errorMessageService: ErrorMessageService,
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
+    public appComService: AppComService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
@@ -87,6 +89,9 @@ export class EditJobTitleComponent implements OnInit, OnDestroy {
       this.adminDataService.upsertJobTitle(jobTitleItem).subscribe({
         next: (response) => {
           this.callParentRefreshData.emit();
+          this.appComService.updateAppMessage(
+            'Job Title saved successfully'
+          );
           this.forceCloseModal();
         },
         error: (error) => {

@@ -38,6 +38,7 @@ export class EditPreEducationComponent implements OnInit, OnDestroy {
     private errorMessageService: ErrorMessageService,
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
+    public appComService: AppComService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
@@ -155,6 +156,9 @@ export class EditPreEducationComponent implements OnInit, OnDestroy {
       this.adminDataService.upsertPreEducationItem(preEduItem).subscribe({
         next: (response) => {
           this.callParentRefreshData.emit();
+          this.appComService.updateAppMessage(
+            'Pre-Education saved successfully'
+          );
           this.forceCloseModal();
         },
         error: (error) => {

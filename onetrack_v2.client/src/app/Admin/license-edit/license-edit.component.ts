@@ -201,6 +201,9 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
       this.adminDataService.deleteLicenseCompany(item).subscribe({
         next: (response) => {
           this.fetchLicenseItems();
+          this.appComService.updateAppMessage(
+            'Company Item Deleted successfully'
+          );
         },
         error: (error) => {
           if (error.error && error.error.errMessage) {
@@ -217,6 +220,9 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
       this.adminDataService.deleteLicenseExam(item).subscribe({
         next: (response) => {
           this.fetchLicenseItems();
+          this.appComService.updateAppMessage(
+            'Pre Exam Item Deleted successfully'
+          );
         },
         error: (error) => {
           if (error.error && error.error.errMessage) {
@@ -233,6 +239,9 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
       this.adminDataService.deleteLicenseEducation(item).subscribe({
         next: (response) => {
           this.fetchLicenseItems();
+          this.appComService.updateAppMessage(
+            'PreEdu Item Deleted successfully'
+          );
         },
         error: (error) => {
           if (error.error && error.error.errMessage) {

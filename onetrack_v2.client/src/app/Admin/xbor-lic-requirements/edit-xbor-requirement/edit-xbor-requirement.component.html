@@ -187,6 +187,7 @@
         [displayMode]="FileDisplayMode"
         (fileSelected)="onFileSelected($event)"
         [isDisabled]="isStartDocUploaded"
+        (fullFilePathUri)="startFileUploadCompleted($event)"
         #fileUpload
       ></app-file-upload>
     </div>
@@ -230,6 +231,7 @@
         [displayMode]="FileDisplayMode"
         (fileSelected)="onFileSelected($event)"
         [isDisabled]="isRenewalDocUploaded"
+        (fullFilePathUri)="renewalFileUploadCompleted($event)"
         #fileUpload
       ></app-file-upload>
     </div>

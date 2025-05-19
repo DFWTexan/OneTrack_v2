@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 import {
   AdminComService,
   AdminDataService,
+  AppComService,
   DropdownDataService,
   ErrorMessageService,
   MiscDataService,
@@ -47,6 +48,7 @@ export class EditStateRequirementComponent implements OnInit, OnDestroy {
     private errorMessageService: ErrorMessageService,
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
+    public appComService: AppComService,
     public dropDownDataService: DropdownDataService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
@@ -169,6 +171,9 @@ export class EditStateRequirementComponent implements OnInit, OnDestroy {
       this.adminDataService.upSertStateRequirement(stateReqItem).subscribe({
         next: (response) => {
           this.callParentRefreshData.emit();
+          this.appComService.updateAppMessage(
+            'State Requirement saved successfully'
+          );
           this.forceCloseModal();
         },
         error: (error) => {

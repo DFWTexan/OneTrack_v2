@@ -2,7 +2,7 @@ import { Component, Injectable, OnInit, OnDestroy, EventEmitter, Output } from '
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { AdminComService, AdminDataService, ErrorMessageService, UserAcctInfoDataService } from '../../../_services';
+import { AdminComService, AdminDataService, AppComService, ErrorMessageService, UserAcctInfoDataService } from '../../../_services';
 
 @Component({
   selector: 'app-edit-product-item',
@@ -21,6 +21,7 @@ export class EditProductItemComponent implements OnInit, OnDestroy {
     private errorMessageService: ErrorMessageService,
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
+    public appComService: AppComService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
@@ -86,6 +87,9 @@ export class EditProductItemComponent implements OnInit, OnDestroy {
       this.adminDataService.updateLicenseProduct(productItem).subscribe({
         next: (response) => {
           this.callParentRefreshData.emit();
+          this.appComService.updateAppMessage(
+            'License Product Saved successfully'
+          );
           this.onCloseModal();
         },
         error: (error) => {

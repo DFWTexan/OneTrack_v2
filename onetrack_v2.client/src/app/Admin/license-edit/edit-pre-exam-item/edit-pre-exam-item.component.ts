@@ -2,7 +2,7 @@ import { Component, Injectable, OnInit, OnDestroy, EventEmitter, Output } from '
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
-import { AdminComService, AdminDataService, ErrorMessageService, UserAcctInfoDataService } from '../../../_services';
+import { AdminComService, AdminDataService, AppComService, ErrorMessageService, UserAcctInfoDataService } from '../../../_services';
 
 @Component({
   selector: 'app-edit-pre-exam-item',
@@ -20,6 +20,7 @@ export class EditPreExamItemComponent implements OnInit, OnDestroy {
     private errorMessageService: ErrorMessageService,
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
+    public appComService: AppComService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
@@ -95,6 +96,9 @@ export class EditPreExamItemComponent implements OnInit, OnDestroy {
       this.adminDataService.updateLicenseExam(licExamItem).subscribe({
         next: (response) => {
           this.callParentRefreshData.emit();
+          this.appComService.updateAppMessage(
+            'Pre Exam Saved successfully'
+          );
           this.onCloseModal();
         },
         error: (error) => {

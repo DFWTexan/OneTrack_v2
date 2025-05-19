@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 import {
   AdminComService,
   AdminDataService,
+  AppComService,
   ErrorMessageService,
   UserAcctInfoDataService,
 } from '../../../_services';
@@ -37,6 +38,7 @@ export class EditExamComponent implements OnInit, OnDestroy {
     private errorMessageService: ErrorMessageService,
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
+    public appComService: AppComService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
@@ -115,6 +117,9 @@ export class EditExamComponent implements OnInit, OnDestroy {
       this.adminDataService.upSertExamItem(examItem).subscribe({
         next: (response) => {
           this.callParentRefreshData.emit();
+          this.appComService.updateAppMessage(
+            'Exam saved successfully'
+          );
           this.forceCloseModal();
         },
         error: (error) => {

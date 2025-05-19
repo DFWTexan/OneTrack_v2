@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 import {
   AdminComService,
   AdminDataService,
+  AppComService,
   ErrorMessageService,
   UserAcctInfoDataService,
 } from '../../../_services';
@@ -34,6 +35,7 @@ export class EditStateProvinceComponent implements OnInit, OnDestroy {
     private errorMessageService: ErrorMessageService,
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
+    public appComService: AppComService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
@@ -164,6 +166,9 @@ export class EditStateProvinceComponent implements OnInit, OnDestroy {
       this.adminDataService.upSertStateProvince(stateProvinceItem).subscribe({
         next: (response) => {
           this.callParentRefreshData.emit();
+          this.appComService.updateAppMessage(
+            'State Province saved successfully'
+          );
           this.forceCloseModal();
         },
         error: (error) => {

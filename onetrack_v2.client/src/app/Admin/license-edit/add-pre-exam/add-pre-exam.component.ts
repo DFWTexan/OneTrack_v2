@@ -44,7 +44,10 @@ export class AddPreExamComponent implements OnInit, OnDestroy {
     this.subscriptionData.add(
       this.adminDataService.addLicenseExam(item).subscribe({
         next: (response) => {
-          alert('PreExam added successfully');
+          // alert('PreExam added successfully');
+          this.appComService.updateAppMessage(
+            'License Exam saved successfully'
+          );
           this.callParentRefreshData.emit();
           // console.log(
           //   'EMFTEST (app-tm-emptrans-history: deleteJobTitle) - COMPLETED DELETE response => \n',

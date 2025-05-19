@@ -45,7 +45,10 @@ export class AddCompanyComponent implements OnInit, OnDestroy {
     this.subscriptionData.add(
       this.adminDataService.addLicenseCompany(item).subscribe({
         next: (response) => {
-          alert('Company added successfully');
+          // alert('Company added successfully');
+          this.appComService.updateAppMessage(
+            'License Company saved successfully'
+          );
           this.callParentRefreshData.emit();
           // console.log(
           //   'EMFTEST (app-tm-emptrans-history: deleteJobTitle) - COMPLETED DELETE response => \n',

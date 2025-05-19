@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 import {
   AdminComService,
   AdminDataService,
+  AppComService,
   DropdownDataService,
   ErrorMessageService,
   UserAcctInfoDataService,
@@ -37,6 +38,8 @@ export class EditXborRequirementComponent implements OnInit, OnDestroy {
   FileDisplayMode = 'CHOOSEFILE'; //--> CHOSEFILE / ATTACHMENT
   file: File | null = null;
   fileUri: string | null = null;
+  startFullFilePathUri: string | null = null;
+  renewalFullFilePathUri: string | null = null;
   document: string = '';
   uploadStartNewType: string = 'StateNewStartPDF';
   uploadRenewalType: string = 'SateRenewalPDF';
@@ -47,9 +50,26 @@ export class EditXborRequirementComponent implements OnInit, OnDestroy {
     private errorMessageService: ErrorMessageService,
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
+    public appComService: AppComService,
     public dropDownDataService: DropdownDataService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
+
+  startFileUploadCompleted(filePath: string) {
+    this.startFullFilePathUri = filePath;
+    this.xborLicenseRequirementForm.patchValue({
+      startDocument: filePath,
+    });
+    this.xborLicenseRequirementForm.markAsDirty();
+  }
+
+  renewalFileUploadCompleted(filePath: string) {
+    this.renewalFullFilePathUri = filePath;
+    this.xborLicenseRequirementForm.patchValue({
+      renewalDocument: filePath,
+    });
+    this.xborLicenseRequirementForm.markAsDirty();
+  }
 
   ngOnInit(): void {
     this.xborLicenseRequirementForm = new FormGroup({
@@ -163,6 +183,9 @@ export class EditXborRequirementComponent implements OnInit, OnDestroy {
       this.adminDataService.upSertStateRequirement(xBorReqItem).subscribe({
         next: (response) => {
           this.callParentRefreshData.emit();
+          this.appComService.updateAppMessage(
+            'XBor License saved successfully'
+          );
           this.forceCloseModal();
         },
         error: (error) => {

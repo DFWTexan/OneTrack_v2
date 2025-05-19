@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 import {
   AdminComService,
   AdminDataService,
+  AppComService,
   ErrorMessageService,
   UserAcctInfoDataService,
 } from '../../../_services';
@@ -37,6 +38,7 @@ export class EditDropdownItemComponent implements OnInit, OnDestroy {
     private errorMessageService: ErrorMessageService,
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
+    public appComService: AppComService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
@@ -74,13 +76,13 @@ export class EditDropdownItemComponent implements OnInit, OnDestroy {
     lkpTypeItem.upSertType = this.upSertType;
     lkpTypeItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
-    console.log(
-      'EMFTEST () this.adminComService.modes.dropdownItem.mode: ',
-      this.adminComService.modes.dropdownItem.mode
-    );
+    // console.log(
+    //   'EMFTEST () this.adminComService.modes.dropdownItem.mode: ',
+    //   this.adminComService.modes.dropdownItem.mode
+    // );
 
     if (this.adminComService.modes.dropdownItem.mode == 'INSERT') {
-      if ((lkpTypeItem.lkpValue = '' || lkpTypeItem.lkpValue == null)) {
+      if (lkpTypeItem.lkpValue === '' || lkpTypeItem.lkpValue == null) {
         this.dropdownItemForm.controls['lkpValue'].setErrors({
           required: true,
         });
@@ -95,6 +97,9 @@ export class EditDropdownItemComponent implements OnInit, OnDestroy {
     this.adminDataService.upSertLkpType(lkpTypeItem).subscribe({
       next: (response) => {
         this.callParentRefreshData.emit();
+        this.appComService.updateAppMessage(
+            'Dropdown Item saved successfully'
+          );
         this.forceCloseModal();
       },
       error: (error) => {

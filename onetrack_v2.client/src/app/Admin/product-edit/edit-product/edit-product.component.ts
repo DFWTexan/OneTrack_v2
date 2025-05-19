@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 import {
   AdminComService,
   AdminDataService,
+  AppComService,
   ErrorMessageService,
   UserAcctInfoDataService,
 } from '../../../_services';
@@ -33,6 +34,7 @@ export class EditProductComponent implements OnInit, OnDestroy {
     private errorMessageService: ErrorMessageService,
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
+    // public appComService: AppComService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
@@ -95,6 +97,9 @@ export class EditProductComponent implements OnInit, OnDestroy {
       this.adminDataService.upsertProduct(productItem).subscribe({
         next: (response) => {
           this.callParentRefreshData.emit();
+          // this.appComService.updateAppMessage(
+          //   'Product saved successfully'
+          // );
           this.forceCloseModal();
         },
         error: (error) => {

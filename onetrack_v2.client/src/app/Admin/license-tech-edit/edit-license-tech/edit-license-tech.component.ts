@@ -12,6 +12,7 @@ import { Subscription } from 'rxjs';
 import {
   AdminComService,
   AdminDataService,
+  AppComService,
   ErrorMessageService,
   UserAcctInfoDataService,
 } from '../../../_services';
@@ -34,6 +35,7 @@ export class EditLicenseTechComponent implements OnInit, OnDestroy {
     private errorMessageService: ErrorMessageService,
     public adminDataService: AdminDataService,
     public adminComService: AdminComService,
+    public appComService: AppComService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
@@ -111,6 +113,9 @@ export class EditLicenseTechComponent implements OnInit, OnDestroy {
       this.adminDataService.upSertLicenseTech(licenseTechItem).subscribe({
         next: (response) => {
           this.callParentRefreshData.emit();
+          this.appComService.updateAppMessage(
+            'License Tech saved successfully'
+          );
           this.forceCloseModal();
         },
         error: (error) => {
