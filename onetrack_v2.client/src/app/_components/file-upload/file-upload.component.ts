@@ -15,6 +15,7 @@ export class FileUploadComponent {
   @Input() displayMode: string | null = null;
   @Input() isDisabled: boolean = false;
   @Output() filesChanged = new EventEmitter<File[]>();
+  @Output() fullFilePathUri = new EventEmitter<string>();
   attachedFiles: File[] = [];
   private url: string = environment.apiUrl + 'Document/';
   fileName = '';
@@ -39,10 +40,19 @@ export class FileUploadComponent {
 
       console.log('EMFTEST (UPLOAD) - formData => \n', formData);
 
-      const upload$ = this.http.post(this.url + 'Upload', formData);
+      interface UploadResponse {
+        objData: { fullPath: string };
+        [key: string]: any;
+      }
+
+      const upload$ = this.http.post<UploadResponse>(this.url + 'Upload', formData);
       upload$.subscribe({
         next: (response) => {
           // Handle successful upload
+          console.log('EMFTEST (UPLOAD: onFileSelected) - response => \n', response);
+
+          this.filePathUri = response.objData.fullPath;
+          this.fullFilePathUri.emit(this.filePathUri);
         },
         error: (error) => {
           if (error.error && error.error.errMessage) {

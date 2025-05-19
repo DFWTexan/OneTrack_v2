@@ -1,4 +1,12 @@
-import { Component, Injectable, OnInit, OnDestroy, Input, EventEmitter, Output } from '@angular/core';
+import {
+  Component,
+  Injectable,
+  OnInit,
+  OnDestroy,
+  Input,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -31,7 +39,9 @@ export class EditCoRequirementComponent implements OnInit, OnDestroy {
   FileDisplayMode = 'CHOOSEFILE'; //--> CHOSEFILE / ATTACHMENT
   file: File | null = null;
   fileUri: string | null = null;
+  fullFilePathUri: string | null = null;
   document: string = '';
+  uploadType: string = 'StateNewStartPDF';
 
   subscriptionData: Subscription = new Subscription();
 
@@ -43,6 +53,23 @@ export class EditCoRequirementComponent implements OnInit, OnDestroy {
     public adminComService: AdminComService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
+
+  fileUploadCompleted(filePath: string) {
+    this.fullFilePathUri = filePath;
+    this.companyReqForm.patchValue({
+      document: filePath,
+    });
+    this.companyReqForm.markAsDirty();
+  }
+
+  onDeleteDocument() {
+    this.isDocumentUploaded = false;
+    this.companyReqForm.patchValue({
+      document: null,
+    });
+    this.companyReqForm.markAsDirty();
+    this.fullFilePathUri = null;
+  }
 
   ngOnInit(): void {
     this.companyReqForm = new FormGroup({
@@ -102,7 +129,9 @@ export class EditCoRequirementComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.isFormSubmitted = true;
     let companyRequirement: CompanyRequirement = this.companyReqForm.value;
-    companyRequirement.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+    companyRequirement.document = this.fullFilePathUri;
+    companyRequirement.userSOEID =
+      this.userAcctInfoDataService.userAcctInfo.soeid;
 
     if (this.adminComService.modes.coRequirement.mode === 'INSERT') {
       companyRequirement.companyRequirementId = 0;
@@ -123,9 +152,8 @@ export class EditCoRequirementComponent implements OnInit, OnDestroy {
     if (companyRequirement.licLevel4 === null) {
       companyRequirement.licLevel4 = false;
     }
-    
+
     if (this.companyReqForm.valid) {
-      
       this.subscriptionData.add(
         this.adminDataService
           .upsertConpanyRequirement(companyRequirement)

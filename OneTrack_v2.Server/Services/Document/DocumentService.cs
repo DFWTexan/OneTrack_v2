@@ -119,10 +119,10 @@ namespace OneTrak_v2.Services
                 {
                     StatusCode = 200,
                     Success = true,
-                    ObjData = new { Message = "File Upload Successful" }
+                    ObjData = new { Message = "File Upload Successful", FullPath = fullPath }
                 };
             }
-            catch (Exception ex)
+            catch (Exception           )
             {
                 return new ReturnResult
                 {

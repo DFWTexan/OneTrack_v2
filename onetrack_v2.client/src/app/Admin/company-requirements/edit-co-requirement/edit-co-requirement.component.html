@@ -122,11 +122,16 @@
         border-color: lightgray;
         border-width: 1px;
         border-style: solid;
-        border-radius: .5rem;
+        border-radius: 0.5rem;
       "
     >
       <!-- Use Flexbox here -->
-      <button class="icon-edit-delete-button" type="button" style="padding-bottom: 3rem;">
+      <button
+        class="icon-edit-delete-button"
+        type="button"
+        style="padding-bottom: 3rem"
+        (click)="onDeleteDocument()"
+      >
         <span class="material-symbols-outlined me-3">delete_forever</span>
       </button>
       <!-- <span
@@ -135,22 +140,24 @@
         >{{ companyReqForm.get("document")?.value }}
       </span> -->
       <button
-                class="btn btn-link hover-pointer"
-                (click)="onOpenDocument(companyReqForm.get('document')?.value)"
-                style="font-size: medium"
-              >
-                {{ companyReqForm.get("document")?.value }}
-              </button>
+        class="btn btn-link hover-pointer"
+        (click)="onOpenDocument(companyReqForm.get('document')?.value)"
+        style="font-size: medium"
+      >
+        {{ companyReqForm.get("document")?.value }}
+      </button>
     </div>
   </div>
 
   <div class="row mt-5 mb-3">
     <div class="col-md-12">
       <app-file-upload
+        [uploadType]="uploadType"
         [filePathUri]="fileUri"
         [displayMode]="FileDisplayMode"
         (fileSelected)="onFileSelected($event)"
         [isDisabled]="isDocumentUploaded"
+        (fullFilePathUri)="fileUploadCompleted($event)"
         #fileUpload
       ></app-file-upload>
     </div>
@@ -167,7 +174,13 @@
       >
         Cancel
       </button>
-      <button type="submit" class="btn btn-primary save-button" [disabled]="companyReqForm.pristine">Save</button>
+      <button
+        type="submit"
+        class="btn btn-primary save-button"
+        [disabled]="companyReqForm.pristine"
+      >
+        Save
+      </button>
     </div>
   </div>
 </form>

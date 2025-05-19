@@ -38,7 +38,6 @@
       type="file"
       (change)="onFileSelected($event)"
       [disabled]="isDisabled"
-      multiple
       #fileUpload
     />
     <!-- <input
@@ -54,12 +53,12 @@
   </div>
   <div>
     <span class="ms-3" style="font-size: large; font-weight: 400">
-      <ng-container *ngIf="attachedFiles.length > 0; else noFiles">
+      <ng-container *ngIf="attachedFiles.length > 0">
         <div *ngFor="let file of attachedFiles">
           {{ file.name }}
         </div>
       </ng-container>
-      <ng-template #noFiles>No file attached.</ng-template>
+      <!-- <ng-template #noFiles>No file attached.</ng-template> -->
     </span>
   </div>
 </ng-template>
