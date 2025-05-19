@@ -2340,8 +2340,8 @@ namespace OneTrak_v2.Services
                             cmd.Parameters.Add(new SqlParameter("@PLS_Incentive1", vInput.PLS_Incentive1));
                             cmd.Parameters.Add(new SqlParameter("@Incentive2_Plus", vInput.Incentive2_Plus));
                             cmd.Parameters.Add(new SqlParameter("@LicIncentive3", vInput.LicIncentive3));
-                            cmd.Parameters.Add(new SqlParameter("@StartDocument", vInput.StartDocument));
-                            cmd.Parameters.Add(new SqlParameter("@RenewalDocument", vInput.RenewalDocument));
+                            cmd.Parameters.Add(new SqlParameter("@StartDocument", vInput.StartDocument ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@RenewalDocument", vInput.RenewalDocument ?? (object)DBNull.Value));
                             cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
 
                             conn.Open();
@@ -2371,8 +2371,8 @@ namespace OneTrak_v2.Services
                             cmd.Parameters.Add(new SqlParameter("@PLS_Incentive1", vInput.PLS_Incentive1));
                             cmd.Parameters.Add(new SqlParameter("@Incentive2_Plus", vInput.Incentive2_Plus));
                             cmd.Parameters.Add(new SqlParameter("@LicIncentive3", vInput.LicIncentive3));
-                            cmd.Parameters.Add(new SqlParameter("@StartDocument", vInput.StartDocument));
-                            cmd.Parameters.Add(new SqlParameter("@RenewalDocument", vInput.RenewalDocument));
+                            cmd.Parameters.Add(new SqlParameter("@StartDocument", vInput.StartDocument ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@RenewalDocument", vInput.RenewalDocument ?? (object)DBNull.Value));
                             cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
 
                             conn.Open();

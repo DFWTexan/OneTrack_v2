@@ -51,6 +51,11 @@ export class XborLicRequirementsComponent implements OnInit, OnDestroy {
     });
   }
 
+  refreshData() {
+    this.isLoading = true;
+    this.fetchXBorLicRequirementItems();
+  }
+
   private fetchXBorLicRequirementItems() {
     this.isLoading = true;
 

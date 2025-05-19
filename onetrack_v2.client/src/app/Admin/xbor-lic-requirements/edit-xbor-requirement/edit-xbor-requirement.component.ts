@@ -71,6 +71,21 @@ export class EditXborRequirementComponent implements OnInit, OnDestroy {
     this.xborLicenseRequirementForm.markAsDirty();
   }
 
+  onDeleteStartDocument() {
+    this.xborLicenseRequirementForm.patchValue({
+      startDocument: null,
+    });
+    this.xborLicenseRequirementForm.markAsDirty();
+    this.startFullFilePathUri = null;
+  }
+  onDeleteRenewalDocument() {
+    this.xborLicenseRequirementForm.patchValue({
+      renewalDocument: null,
+    });
+    this.xborLicenseRequirementForm.markAsDirty();
+    this.renewalFullFilePathUri = null;
+  }
+  
   ngOnInit(): void {
     this.xborLicenseRequirementForm = new FormGroup({
       requiredLicenseId: new FormControl(''),
