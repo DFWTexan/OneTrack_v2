@@ -6,6 +6,7 @@
       type="text"
       id="licenseTech"
       [value]="ticklerForm.get('licenseTechId')?.value"
+      formControlName="licenseTechId"
     >
       <option
         *ngFor="let item of licenseTechItems"

@@ -149,6 +149,9 @@ export class EditTicklerInfoComponent implements OnInit, OnDestroy {
       this.ticklerDataService.upsertTickerItem(ticklerItem).subscribe({
         next: (response) => {
           this.callParentRefreshData.emit();
+          this.appComService.updateAppMessage(
+            'Tickler Info saved successfully'
+          );
           this.forceCloseModal();
         },
         error: (error) => {
