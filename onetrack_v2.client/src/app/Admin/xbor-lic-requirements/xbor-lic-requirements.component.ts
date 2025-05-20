@@ -29,6 +29,10 @@ export class XborLicRequirementsComponent implements OnInit, OnDestroy {
   xborLicRequirements: XborLicenseRequirement[] = [];
   eventAction: string = '';
   vObject: any = {};
+  startFullFilePathUri: string | null = null;
+  renewalFullFilePathUri: string | null = null;
+  uploadStartNewType: string = 'StateNewStartPDF';
+  uploadRenewalType: string = 'SateRenewalPDF';
 
   subscriptionData: Subscription = new Subscription();
 
@@ -43,6 +47,37 @@ export class XborLicRequirementsComponent implements OnInit, OnDestroy {
     public fileService: FileService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
+
+// startFileUploadCompleted(filePath: string) {
+//     this.startFullFilePathUri = filePath;
+//     this.xborLicenseRequirementForm.patchValue({
+//       startDocument: filePath,
+//     });
+//     this.xborLicenseRequirementForm.markAsDirty();
+//   }
+
+//   renewalFileUploadCompleted(filePath: string) {
+//     this.renewalFullFilePathUri = filePath;
+//     this.xborLicenseRequirementForm.patchValue({
+//       renewalDocument: filePath,
+//     });
+//     this.xborLicenseRequirementForm.markAsDirty();
+//   }
+
+//   onDeleteStartDocument() {
+//     this.xborLicenseRequirementForm.patchValue({
+//       startDocument: null,
+//     });
+//     this.xborLicenseRequirementForm.markAsDirty();
+//     this.startFullFilePathUri = null;
+//   }
+//   onDeleteRenewalDocument() {
+//     this.xborLicenseRequirementForm.patchValue({
+//       renewalDocument: null,
+//     });
+//     this.xborLicenseRequirementForm.markAsDirty();
+//     this.renewalFullFilePathUri = null;
+//   }
 
   ngOnInit(): void {
     this.states = ['Select', ...this.conService.getStates()];

@@ -38,6 +38,8 @@ export class EditStateRequirementComponent implements OnInit, OnDestroy {
   FileDisplayMode = 'CHOOSEFILE'; //--> CHOSEFILE / ATTACHMENT
   file: File | null = null;
   fileUri: string | null = null;
+  startFullFilePathUri: string | null = null;
+  renewalFullFilePathUri: string | null = null;
   document: string = '';
   uploadStartNewType: string = 'StateNewStartPDF';
   uploadRenewalType: string = 'SateRenewalPDF';
@@ -52,6 +54,37 @@ export class EditStateRequirementComponent implements OnInit, OnDestroy {
     public dropDownDataService: DropdownDataService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
+
+  startFileUploadCompleted(filePath: string) {
+    this.startFullFilePathUri = filePath;
+    this.stateRequirementForm.patchValue({
+      startDocument: filePath,
+    });
+    this.stateRequirementForm.markAsDirty();
+  }
+
+  renewalFileUploadCompleted(filePath: string) {
+    this.renewalFullFilePathUri = filePath;
+    this.stateRequirementForm.patchValue({
+      renewalDocument: filePath,
+    });
+    this.stateRequirementForm.markAsDirty();
+  }
+
+  onDeleteStartDocument() {
+    this.stateRequirementForm.patchValue({
+      startDocument: null,
+    });
+    this.stateRequirementForm.markAsDirty();
+    this.startFullFilePathUri = null;
+  }
+  onDeleteRenewalDocument() {
+    this.stateRequirementForm.patchValue({
+      renewalDocument: null,
+    });
+    this.stateRequirementForm.markAsDirty();
+    this.renewalFullFilePathUri = null;
+  }
 
   ngOnInit(): void {
     this.stateRequirementForm = new FormGroup({
@@ -133,6 +166,7 @@ export class EditStateRequirementComponent implements OnInit, OnDestroy {
     );
   }
 
+ 
   onFileSelected(event: any) {
     const target = event.target as HTMLInputElement;
     if (target.files && target.files.length) {
