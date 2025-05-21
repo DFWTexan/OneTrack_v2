@@ -276,10 +276,10 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.isFormSubmitted = true;
 
-    console.log(
-      'EMFTEST (GOT HERE - ! - ! - !) - onSubmit() => \n ',
-      this.licenseForm.value
-    );
+    // console.log(
+    //   'EMFTEST (GOT HERE - ! - ! - !) - onSubmit() => \n ',
+    //   this.licenseForm.value
+    // );
 
     let licenseDataInfo: LicenseInfo = this.licenseForm.value;
     licenseDataInfo.employeeID =
