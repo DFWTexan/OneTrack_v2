@@ -77,8 +77,14 @@ export class AddLicenseApptComponent implements OnInit, OnDestroy {
     //     }
     //   )
     // );
+
     this.licenseApptForm.patchValue({
       companyID: 0,
+      appointmentStatus: 'Select',
+      carrierDate: '',
+      appointmentEffectiveDate: '',
+      appointmentExpireDate: '',
+      appointmentTerminationDate: '',
     });
   }
 
@@ -129,6 +135,18 @@ export class AddLicenseApptComponent implements OnInit, OnDestroy {
             if (modalDiv != null) {
               modalDiv.style.display = 'none';
             }
+            this.appComService.updateAppMessage(
+              'Data submitted successfully.' // 'Data submitted successfully.'
+            );
+            this.licenseApptForm.reset();
+            this.licenseApptForm.patchValue({
+              companyID: 0,
+              appointmentStatus: 'Select',
+              carrierDate: '',
+              appointmentEffectiveDate: '',
+              appointmentExpireDate: '',
+              appointmentTerminationDate: '',
+            });
             this.agentDataService
               .fetchAgentInformation(
                 this.agentDataService.agentInformation.employeeID
