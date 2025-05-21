@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { AgentLicenseAppointments } from '../../../../_Models';
+import { AgentInfo, AgentLicenseAppointments } from '../../../../_Models';
 import {
   AgentComService,
   AgentDataService,
@@ -115,30 +115,29 @@ export class LicenseInfoComponent implements OnInit, OnDestroy {
           if (result) {
             this.subscriptions.add(
               this.agentDataService
-              .deleteAgentLicense({
-                employmentID: this.vObject.employmentID,
-                employeeLicenseID: this.vObject.employeeLicenseID,
-                userSOEID: this.userInfoDataService.userAcctInfo.soeid,
-              })
-              .subscribe({
-                next: (response) => {
-                  this.router
-                    .navigateByUrl('/', { skipLocationChange: true })
-                    .then(() => {
-                      this.router.navigate([
-                        'team/agent-info',
-                        this.agentDataService.agentInformation.employeeID,
-                        'tm-license-mgmt',
-                      ]);
-                    });
-                },
-                error: (error) => {
-                  console.error(error);
-                  // handle the error here
-                },
-              })
+                .deleteAgentLicense({
+                  employmentID: this.vObject.employmentID,
+                  employeeLicenseID: this.vObject.employeeLicenseID,
+                  userSOEID: this.userInfoDataService.userAcctInfo.soeid,
+                })
+                .subscribe({
+                  next: (response) => {
+                    this.router
+                      .navigateByUrl('/', { skipLocationChange: true })
+                      .then(() => {
+                        this.router.navigate([
+                          'team/agent-info',
+                          this.agentDataService.agentInformation.employeeID,
+                          'tm-license-mgmt',
+                        ]);
+                      });
+                  },
+                  error: (error) => {
+                    console.error(error);
+                    // handle the error here
+                  },
+                })
             );
-            
           }
         });
         break;
@@ -173,6 +172,13 @@ export class LicenseInfoComponent implements OnInit, OnDestroy {
                   //       'tm-license-mgmt',
                   //     ]);
                   //   });
+                  this.agentDataService
+                    .fetchAgentInformation(
+                      this.agentDataService.agentInformation.employeeID
+                    )
+                    .subscribe((agentInfo: AgentInfo) => {
+                      this.agentDataService.updAgentInfo(agentInfo);
+                    });
                 },
                 error: (error) => {
                   console.error(error);
