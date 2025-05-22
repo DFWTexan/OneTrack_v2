@@ -2045,22 +2045,22 @@ namespace OneTrack_v2.Services
                             cmd.Parameters.Add(new SqlParameter("@EmployeeID", vInput.EmployeeID));
                             cmd.Parameters.Add(new SqlParameter("@AscEmployeeLicenseID", vInput.AscEmployeeLicenseID ?? 0));
                             cmd.Parameters.Add(new SqlParameter("@LicenseID", vInput.LicenseID ?? 0));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseExpireDate", vInput.LicenseExpireDate));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseStatus", vInput.LicenseStatus ?? ""));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseNumber", vInput.LicenseNumber));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseExpireDate", vInput.LicenseExpireDate ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseStatus", vInput.LicenseStatus ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseNumber", vInput.LicenseNumber ?? (object)DBNull.Value));
                             cmd.Parameters.Add(new SqlParameter("@Reinstatement", vInput.Reinstatement ?? false));
                             cmd.Parameters.Add(new SqlParameter("@Required", vInput.Required ?? false));
                             cmd.Parameters.Add(new SqlParameter("@NonResident", vInput.NonResident ?? false));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseEffectiveDate", vInput.LicenseEffectiveDate));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseEffectiveDate", vInput.LicenseEffectiveDate ?? (object)DBNull.Value));
                             cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseIssueDate", vInput.LicenseIssueDate));
-                            cmd.Parameters.Add(new SqlParameter("@LineOfAuthorityIssueDate", vInput.LineOfAuthorityIssueDate));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseIssueDate", vInput.LicenseIssueDate ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@LineOfAuthorityIssueDate", vInput.LineOfAuthorityIssueDate ?? (object)DBNull.Value));
                             //cmd.Parameters.Add(new SqlParameter("@SentToAgentDate", vInput.SentToAgentDate));
                             cmd.Parameters.Add(new SqlParameter("@SentToAgentDate",
                                 string.IsNullOrEmpty(vInput.SentToAgentDate?.ToString()) ? (object)DBNull.Value : vInput.SentToAgentDate));
 
                             cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseNote", vInput.LicenseNote));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseNote", vInput.LicenseNote ?? (object)DBNull.Value));
                             conn.Open();
                             cmd.ExecuteNonQuery();
                         }
@@ -2116,22 +2116,22 @@ namespace OneTrack_v2.Services
                             cmd.Parameters.Add(new SqlParameter("@EmployeeLicenseID", vInput.EmployeeLicenseID));
                             cmd.Parameters.Add(new SqlParameter("@AscEmployeeLicenseID", vInput.AscEmployeeLicenseID));
                             cmd.Parameters.Add(new SqlParameter("@LicenseID", vInput.LicenseID));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseExpireDate", vInput.LicenseExpireDate));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseExpireDate", vInput.LicenseExpireDate ?? (object)DBNull.Value));
                             cmd.Parameters.Add(new SqlParameter("@LicenseStatus", vInput.LicenseStatus));
                             cmd.Parameters.Add(new SqlParameter("@LicenseNumber", vInput.LicenseNumber));
                             cmd.Parameters.Add(new SqlParameter("@Reinstatement", vInput.Reinstatement));
                             cmd.Parameters.Add(new SqlParameter("@Required", vInput.Required));
                             cmd.Parameters.Add(new SqlParameter("@NonResident", vInput.NonResident));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseEffectiveDate", vInput.LicenseEffectiveDate));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseIssueDate", vInput.LicenseIssueDate));
-                            cmd.Parameters.Add(new SqlParameter("@LineOfAuthorityIssueDate", vInput.LineOfAuthorityIssueDate));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseNote", vInput.LicenseNote));
-                            cmd.Parameters.Add(new SqlParameter("@AppointmentStatus", vInput.AppointmentStatus));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseEffectiveDate", vInput.LicenseEffectiveDate ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseIssueDate", vInput.LicenseIssueDate ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@LineOfAuthorityIssueDate", vInput.LineOfAuthorityIssueDate ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseNote", vInput.LicenseNote ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@AppointmentStatus", vInput.AppointmentStatus ?? (object)DBNull.Value));
                             cmd.Parameters.Add(new SqlParameter("@CompanyID", vInput.CompanyID));
-                            cmd.Parameters.Add(new SqlParameter("@CarrierDate", vInput.CarrierDate));
-                            cmd.Parameters.Add(new SqlParameter("@AppointmentEffectiveDate", vInput.AppointmentEffectiveDate));
-                            cmd.Parameters.Add(new SqlParameter("@AppointmentExpireDate", vInput.AppointmentExpireDate));
-                            cmd.Parameters.Add(new SqlParameter("@AppointmentTerminationDate", vInput.AppointmentTerminationDate));
+                            cmd.Parameters.Add(new SqlParameter("@CarrierDate", vInput.CarrierDate ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@AppointmentEffectiveDate", vInput.AppointmentEffectiveDate ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@AppointmentExpireDate", vInput.AppointmentExpireDate ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@AppointmentTerminationDate", vInput.AppointmentTerminationDate ?? (object)DBNull.Value));
                             cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
 
                             conn.Open();
