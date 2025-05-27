@@ -1019,7 +1019,17 @@
                       >
                         Term. Date
                       </th>
-                      <th scope="col" class="text-center" style="width: 10rem">
+                      <th
+                        scope="col"
+                        class="text-center"
+                        style="width: 10rem"
+                        *ngIf="
+                          userInfoDataService.userAcctInfo.isSuperUser ||
+                          userInfoDataService.userAcctInfo.isQARole ||
+                          userInfoDataService.userAcctInfo.isAdminRole ||
+                          userInfoDataService.userAcctInfo.isTechRole
+                        "
+                      >
                         ACTION
                       </th>
                     </tr>
@@ -1083,7 +1093,14 @@
                             | date : "MM/dd/yyyy"
                         }}
                       </td>
-                      <td>
+                      <td
+                        *ngIf="
+                          userInfoDataService.userAcctInfo.isSuperUser ||
+                          userInfoDataService.userAcctInfo.isQARole ||
+                          userInfoDataService.userAcctInfo.isAdminRole ||
+                          userInfoDataService.userAcctInfo.isTechRole
+                        "
+                      >
                         <div class="d-flex justify-content-between mb-3 me-4">
                           <button
                             class="icon-edit-delete-button"
