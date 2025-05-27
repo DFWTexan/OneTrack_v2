@@ -2,7 +2,15 @@
   <div class="row">
     <div class="col-md-12">
       <!-- DELETE/EDIT Buttons -->
-      <div class="row d-flex justify-content-start">
+      <div
+        class="row d-flex justify-content-start"
+        *ngIf="
+          userInfoDataService.userAcctInfo.isSuperUser ||
+          userInfoDataService.userAcctInfo.isQARole ||
+          userInfoDataService.userAcctInfo.isAdminRole ||
+          userInfoDataService.userAcctInfo.isTechRole
+        "
+      >
         <div class="col d-flex justify-content-center">
           <button
             class="btn btn-danger w-100 button-font-size"
@@ -84,7 +92,15 @@
     <div class="col-md-12">
       <!-- INSERT Buttons -->
       <div class="row" *ngIf="!isLoading">
-        <div class="col d-flex justify-content-end">
+        <div
+          class="col d-flex justify-content-end"
+          *ngIf="
+            userInfoDataService.userAcctInfo.isSuperUser ||
+            userInfoDataService.userAcctInfo.isQARole ||
+            userInfoDataService.userAcctInfo.isAdminRole ||
+            userInfoDataService.userAcctInfo.isTechRole
+          "
+        >
           <button
             class="btn btn-success button-font-size"
             (click)="
@@ -95,7 +111,15 @@
             Insert - New License
           </button>
         </div>
-        <div class="col d-flex justify-content-start">
+        <div
+          class="col d-flex justify-content-start"
+          *ngIf="
+            userInfoDataService.userAcctInfo.isSuperUser ||
+            userInfoDataService.userAcctInfo.isQARole ||
+            userInfoDataService.userAcctInfo.isAdminRole ||
+            userInfoDataService.userAcctInfo.isTechRole
+          "
+        >
           <button
             class="btn btn-success button-font-size"
             (click)="
@@ -183,6 +207,12 @@
                     >
                       <!-- EDIT/DELETE & ADD Appointment Buttons -->
                       <button
+                        *ngIf="
+                          userInfoDataService.userAcctInfo.isSuperUser ||
+                          userInfoDataService.userAcctInfo.isQARole ||
+                          userInfoDataService.userAcctInfo.isAdminRole ||
+                          userInfoDataService.userAcctInfo.isTechRole
+                        "
                         class="icon-edit-delete-button"
                         style="opacity: 0.75"
                         (click)="
@@ -196,7 +226,15 @@
                       >
                         <span class="material-symbols-outlined"> edit </span>
                       </button>
-                      <button class="icon-edit-delete-button">
+                      <button
+                        class="icon-edit-delete-button"
+                        *ngIf="
+                          userInfoDataService.userAcctInfo.isSuperUser ||
+                          userInfoDataService.userAcctInfo.isQARole ||
+                          userInfoDataService.userAcctInfo.isAdminRole ||
+                          userInfoDataService.userAcctInfo.isTechRole
+                        "
+                      >
                         <span
                           class="material-symbols-outlined"
                           (click)="
@@ -214,6 +252,12 @@
                       </button>
                       <button
                         class="icon-add-button me-5"
+                        *ngIf="
+                          userInfoDataService.userAcctInfo.isSuperUser ||
+                          userInfoDataService.userAcctInfo.isQARole ||
+                          userInfoDataService.userAcctInfo.isAdminRole ||
+                          userInfoDataService.userAcctInfo.isTechRole
+                        "
                         (click)="
                           onSetOpenLicenseID(license.employeeLicenseId);
                           agentDataService.storeLicenseAppt('INSERT', null);
@@ -334,10 +378,19 @@
                 </div>
                 <div class="col d-flex justify-content-end">
                   <button
+                    *ngIf="
+                      userInfoDataService.userAcctInfo.isSuperUser ||
+                      userInfoDataService.userAcctInfo.isQARole ||
+                      userInfoDataService.userAcctInfo.isAdminRole ||
+                      userInfoDataService.userAcctInfo.isTechRole
+                    "
                     class="icon-edit-delete-button"
                     (click)="
                       modalService.open('modal-new-tickler');
-                      appComService.updateTypeTickler({ type: 'MEMBER', loa: null })
+                      appComService.updateTypeTickler({
+                        type: 'MEMBER',
+                        loa: null
+                      })
                     "
                     title="Tickle Member"
                   >
@@ -346,6 +399,12 @@
                 </div>
                 <div class="col d-flex justify-content-end">
                   <button
+                    *ngIf="
+                      userInfoDataService.userAcctInfo.isSuperUser ||
+                      userInfoDataService.userAcctInfo.isQARole ||
+                      userInfoDataService.userAcctInfo.isAdminRole ||
+                      userInfoDataService.userAcctInfo.isTechRole
+                    "
                     class="icon-edit-delete-button"
                     (click)="
                       modalService.open('modal-new-tickler');
@@ -396,7 +455,17 @@
                       <th scope="col">Eff. Date</th>
                       <th scope="col">Exp. Date</th>
                       <th scope="col">Term Date</th>
-                      <th scope="col" class="text-center" style="width: 10rem">
+                      <th
+                        scope="col"
+                        class="text-center"
+                        style="width: 10rem"
+                        *ngIf="
+                          userInfoDataService.userAcctInfo.isSuperUser ||
+                          userInfoDataService.userAcctInfo.isQARole ||
+                          userInfoDataService.userAcctInfo.isAdminRole ||
+                          userInfoDataService.userAcctInfo.isTechRole
+                        "
+                      >
                         ACTION
                       </th>
                     </tr>
@@ -449,7 +518,14 @@
                             | date : "MM/dd/yyyy"
                         }}
                       </td>
-                      <td>
+                      <td
+                        *ngIf="
+                          userInfoDataService.userAcctInfo.isSuperUser ||
+                          userInfoDataService.userAcctInfo.isQARole ||
+                          userInfoDataService.userAcctInfo.isAdminRole ||
+                          userInfoDataService.userAcctInfo.isTechRole
+                        "
+                      >
                         <div class="d-flex justify-content-between mb-3 me-4">
                           <button
                             class="icon-edit-delete-button"
@@ -667,7 +743,17 @@
                       >
                         Exp. Date
                       </th>
-                      <th scope="col" class="text-center" style="width: 10rem">
+                      <th
+                        scope="col"
+                        class="text-center"
+                        style="width: 10rem"
+                        *ngIf="
+                          userInfoDataService.userAcctInfo.isSuperUser ||
+                          userInfoDataService.userAcctInfo.isQARole ||
+                          userInfoDataService.userAcctInfo.isAdminRole ||
+                          userInfoDataService.userAcctInfo.isTechRole
+                        "
+                      >
                         ACTION
                       </th>
                     </tr>
@@ -718,7 +804,15 @@
                           license.licenseExpirationDate | date : "MM/dd/yyyy"
                         }}
                       </td>
-                      <td class="align-middle">
+                      <td
+                        class="align-middle"
+                        *ngIf="
+                          userInfoDataService.userAcctInfo.isSuperUser ||
+                          userInfoDataService.userAcctInfo.isQARole ||
+                          userInfoDataService.userAcctInfo.isAdminRole ||
+                          userInfoDataService.userAcctInfo.isTechRole
+                        "
+                      >
                         <div
                           class="d-flex align-middle justify-content-between mb-3 me-4"
                         >
@@ -726,7 +820,10 @@
                             class="icon-edit-delete-button"
                             (click)="
                               modalService.open('modal-new-tickler');
-                              appComService.updateTypeTickler({ type: 'MEMBER', loa: null })
+                              appComService.updateTypeTickler({
+                                type: 'MEMBER',
+                                loa: null
+                              })
                             "
                             title="Tickle Member"
                           >

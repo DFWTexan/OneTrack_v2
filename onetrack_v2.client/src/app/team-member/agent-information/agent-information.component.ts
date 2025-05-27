@@ -17,6 +17,7 @@ import {
   ModalService,
   TicklerMgmtComService,
   TicklerMgmtDataService,
+  UserAcctInfoDataService,
 } from '../../_services';
 
 @Component({
@@ -51,6 +52,7 @@ export class AgentInformationComponent implements OnInit, OnDestroy {
     public ticklerMgmtComService: TicklerMgmtComService,
     public ticklerMgmtDataService: TicklerMgmtDataService,
     protected modalService: ModalService,
+    public userAcctInfoDataService: UserAcctInfoDataService,
     private router: Router
   ) {}
 

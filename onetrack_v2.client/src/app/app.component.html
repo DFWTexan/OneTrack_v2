@@ -300,6 +300,11 @@
         </mat-expansion-panel-header>
         <mat-nav-list>
           <a
+            *ngIf="
+              userAcctInfoDataService.userAcctInfo.isSuperUser ||
+              userAcctInfoDataService.userAcctInfo.isQARole ||
+              userAcctInfoDataService.userAcctInfo.isAdminRole
+            "
             mat-list-item
             routerLinkActive="active"
             (click)="
@@ -394,7 +399,9 @@
       role="alert"
       *ngIf="appComService.appMessage"
     >
-      <span style="font-size: large; font-weight: 600">{{ appComService.appMessage }}</span>
+      <span style="font-size: large; font-weight: 600">{{
+        appComService.appMessage
+      }}</span>
     </div>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

@@ -8,6 +8,7 @@ import {
   EmployeeDataService,
   ModalService,
   PaginationComService,
+  UserAcctInfoDataService,
 } from '../../../_services';
 
 @Component({
@@ -23,7 +24,8 @@ export class SearchListComponent implements OnInit, OnDestroy {
     public emplyService: EmployeeDataService,
     public modalService: ModalService,
     public appComService: AppComService,
-    public paginationComService: PaginationComService
+    public paginationComService: PaginationComService,
+    public userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit() {

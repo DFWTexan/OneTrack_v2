@@ -166,7 +166,15 @@
                 {{ agentInfo.nationalProdercerNumber || "" }}
               </p>
             </div>
-            <div class="col-md-1 restricted-width">
+            <div
+              class="col-md-1 restricted-width"
+              *ngIf="
+                userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                userAcctInfoDataService.userAcctInfo.isQARole ||
+                userAcctInfoDataService.userAcctInfo.isAdminRole ||
+                userAcctInfoDataService.userAcctInfo.isTechRole
+              "
+            >
               <button
                 class="icon-edit-delete-button me-5"
                 type="button"

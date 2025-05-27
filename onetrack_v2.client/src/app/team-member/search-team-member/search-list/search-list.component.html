@@ -30,8 +30,26 @@
               <th>Branch Name</th>
               <th>Score #</th>
               <th>Employment ID</th>
-              <th>Tickle</th>
-              <th>Indexer</th>
+              <th
+                *ngIf="
+                  userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                  userAcctInfoDataService.userAcctInfo.isQARole ||
+                  userAcctInfoDataService.userAcctInfo.isAdminRole ||
+                  userAcctInfoDataService.userAcctInfo.isTechRole
+                "
+              >
+                Tickle
+              </th>
+              <th
+                *ngIf="
+                  userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                  userAcctInfoDataService.userAcctInfo.isQARole ||
+                  userAcctInfoDataService.userAcctInfo.isAdminRole ||
+                  userAcctInfoDataService.userAcctInfo.isTechRole
+                "
+              >
+                Indexer
+              </th>
             </tr>
           </thead>
           <tbody class="bg-body">
@@ -46,7 +64,7 @@
                     teamMember.employeeID,
                     'tm-info-mgmt'
                   ]"
-                  (click)="appComService.updateIsAllAgentsSelected(false);"
+                  (click)="appComService.updateIsAllAgentsSelected(false)"
                   >Select</a
                 >
               </td>
@@ -58,7 +76,15 @@
               <td class="align-middle">{{ teamMember.branchName }}</td>
               <td class="align-middle">{{ teamMember.scoreNumber }}</td>
               <td class="align-middle">{{ teamMember.employmentID }}</td>
-              <td class="align-middle">
+              <td
+                class="align-middle"
+                *ngIf="
+                  userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                  userAcctInfoDataService.userAcctInfo.isQARole ||
+                  userAcctInfoDataService.userAcctInfo.isAdminRole ||
+                  userAcctInfoDataService.userAcctInfo.isTechRole
+                "
+              >
                 <button
                   class="icon-edit-delete-button"
                   type="button"
@@ -71,7 +97,15 @@
                   <span class="material-symbols-outlined"> chat </span>
                 </button>
               </td>
-              <td class="align-middle">
+              <td
+                class="align-middle"
+                *ngIf="
+                  userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                  userAcctInfoDataService.userAcctInfo.isQARole ||
+                  userAcctInfoDataService.userAcctInfo.isAdminRole ||
+                  userAcctInfoDataService.userAcctInfo.isTechRole
+                "
+              >
                 <button
                   class="icon-edit-delete-button"
                   type="button"

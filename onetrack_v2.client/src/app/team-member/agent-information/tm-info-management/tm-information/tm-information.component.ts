@@ -51,7 +51,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
     protected modalService: ModalService,
     public appComService: AppComService,
     private licenseIncentiveInfoDataService: LicIncentiveInfoDataService,
-    private userInfoDataService: UserAcctInfoDataService,
+    public userInfoDataService: UserAcctInfoDataService,
     public dialog: MatDialog,
     private router: Router,
     private location: Location

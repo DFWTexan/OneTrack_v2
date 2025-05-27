@@ -240,7 +240,15 @@
               </option>
             </select>
           </div>
-          <div class="col d-flex justify-content-end align-items-center mt-2">
+          <div
+            class="col d-flex justify-content-end align-items-center mt-2"
+            *ngIf="
+              userAcctInfoDataService.userAcctInfo.isSuperUser ||
+              userAcctInfoDataService.userAcctInfo.isQARole ||
+              userAcctInfoDataService.userAcctInfo.isAdminRole ||
+              userAcctInfoDataService.userAcctInfo.isTechRole
+            "
+          >
             <button
               class="btn btn-success button-font-size"
               type="button"
@@ -278,7 +286,17 @@
               <th scope="col">Type</th>
               <th scope="col">TM Name</th>
               <th scope="col">Description</th>
-              <th scope="col" class="text-center" style="width: 10rem">
+              <th
+                scope="col"
+                class="text-center"
+                style="width: 10rem"
+                *ngIf="
+                  userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                  userAcctInfoDataService.userAcctInfo.isQARole ||
+                  userAcctInfoDataService.userAcctInfo.isAdminRole ||
+                  userAcctInfoDataService.userAcctInfo.isTechRole
+                "
+              >
                 ACTION
               </th>
             </tr>
@@ -328,7 +346,15 @@
               >
                 {{ item.message }}
               </td>
-              <td class="align-middle">
+              <td
+                class="align-middle"
+                *ngIf="
+                  userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                  userAcctInfoDataService.userAcctInfo.isQARole ||
+                  userAcctInfoDataService.userAcctInfo.isAdminRole ||
+                  userAcctInfoDataService.userAcctInfo.isTechRole
+                "
+              >
                 <div
                   class="d-flex align-middle justify-content-between mb-3 me-4"
                 >
