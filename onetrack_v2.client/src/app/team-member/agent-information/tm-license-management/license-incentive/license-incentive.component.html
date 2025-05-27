@@ -9,7 +9,12 @@
       >
       {{ licenseMgmtData[currentIndex].licenseName }}
       <button
-        *ngIf="!modeEdit"
+        *ngIf="
+          (!modeEdit && userAcctInfoDataService.userAcctInfo.isSuperUser) ||
+          userAcctInfoDataService.userAcctInfo.isQARole ||
+          userAcctInfoDataService.userAcctInfo.isAdminRole ||
+          userAcctInfoDataService.userAcctInfo.isTechRole
+        "
         class="icon-edit-delete-button ms-3 mb-5"
         (click)="onEditToggle()"
       >
@@ -38,7 +43,15 @@
       <div class="mb-3">
         {{ licenseIncentiveInfo.licenseIncentive }}
       </div>
-      <button class="icon-edit-delete-button mb-5">
+      <button
+        class="icon-edit-delete-button mb-5"
+        *ngIf="
+          userAcctInfoDataService.userAcctInfo.isSuperUser ||
+          userAcctInfoDataService.userAcctInfo.isQARole ||
+          userAcctInfoDataService.userAcctInfo.isAdminRole ||
+          userAcctInfoDataService.userAcctInfo.isTechRole
+        "
+      >
         <span class="material-symbols-outlined"> delete </span>
       </button>
     </div>
@@ -111,7 +124,8 @@
             <td colspan="4">
               <div>
                 <span style="font-weight: 600; color: grey"> DM Comment: </span>
-                <div *ngIf="licenseIncentiveInfo.dmComment"
+                <div
+                  *ngIf="licenseIncentiveInfo.dmComment"
                   style="
                     border-color: gainsboro;
                     border-width: 1px;
@@ -181,7 +195,8 @@
               <div>
                 <span style="font-weight: 600; color: grey"> TM Comment: </span
                 ><br />
-                <div *ngIf="licenseIncentiveInfo.tmComment"
+                <div
+                  *ngIf="licenseIncentiveInfo.tmComment"
                   style="
                     border-color: gainsboro;
                     border-width: 1px;
@@ -205,7 +220,8 @@
                 <span style="font-weight: 600; color: grey"
                   >Exception Reason: </span
                 ><br />
-                <div *ngIf="licenseIncentiveInfo.tmException"
+                <div
+                  *ngIf="licenseIncentiveInfo.tmException"
                   style="
                     border-color: gainsboro;
                     border-width: 1px;
@@ -264,7 +280,8 @@
             <td colspan="4">
               <div>
                 <span style="font-weight: 600; color: grey">Notes: </span><br />
-                <div *ngIf="licenseIncentiveInfo.notes"
+                <div
+                  *ngIf="licenseIncentiveInfo.notes"
                   style="
                     border-color: gainsboro;
                     border-width: 1px;

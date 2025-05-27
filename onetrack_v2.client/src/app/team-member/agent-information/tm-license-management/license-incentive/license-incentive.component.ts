@@ -56,7 +56,7 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
     private drpdwnDataService: DropdownDataService,
     public licIncentiveInfoDataService: LicIncentiveInfoDataService,
     protected modalService: ModalService,
-    private userAcctInfoDataService: UserAcctInfoDataService,
+    public userAcctInfoDataService: UserAcctInfoDataService,
     public appComService: AppComService,
     private fb: FormBuilder
   ) {
