@@ -9,6 +9,7 @@ import {
   ErrorMessageService,
   FileService,
   ModalService,
+  UserAcctInfoDataService,
 } from '../../_services';
 import { CompanyRequirement } from '../../_Models';
 
@@ -35,7 +36,8 @@ export class CompanyRequirementsComponent implements OnInit, OnDestroy {
     public adminComService: AdminComService,
     public appComService: AppComService,
     public fileService: FileService,
-    public modalService: ModalService
+    public modalService: ModalService,
+    public userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   onChildCallRefreshData() {

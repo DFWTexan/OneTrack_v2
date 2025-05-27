@@ -20,7 +20,14 @@
         </option>
       </select>
     </div>
-    <div class="col d-flex justify-content-center align-items-end">
+    <div
+      class="col d-flex justify-content-center align-items-end"
+      *ngIf="
+        userAcctInfoDataService.userAcctInfo.isSuperUser ||
+        userAcctInfoDataService.userAcctInfo.isQARole ||
+        userAcctInfoDataService.userAcctInfo.isAdminRole
+      "
+    >
       <button
         class="btn btn-success button-font-size"
         type="button"
@@ -63,7 +70,18 @@
             <th scope="col">TIN</th>
             <th scope="col">NAIC #</th>
             <th scope="col">Street Address</th>
-            <th scope="col" class="text-center" style="width: 10rem">ACTION</th>
+            <th
+              scope="col"
+              class="text-center"
+              style="width: 10rem"
+              *ngIf="
+                userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                userAcctInfoDataService.userAcctInfo.isQARole ||
+                userAcctInfoDataService.userAcctInfo.isAdminRole
+              "
+            >
+              ACTION
+            </th>
           </tr>
         </thead>
         <tbody class="bg-body">
@@ -89,7 +107,15 @@
             <td class="align-middle" style="width: max-content">
               {{ company.address1 }}
             </td>
-            <td class="align-middle" style="width: 10rem">
+            <td
+              class="align-middle"
+              style="width: 10rem"
+              *ngIf="
+                userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                userAcctInfoDataService.userAcctInfo.isQARole ||
+                userAcctInfoDataService.userAcctInfo.isAdminRole
+              "
+            >
               <div class="d-flex justify-content-between mb-3 me-4">
                 <button
                   class="icon-edit-delete-button"

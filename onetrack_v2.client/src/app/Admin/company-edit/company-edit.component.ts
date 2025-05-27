@@ -37,7 +37,7 @@ export class CompanyEditComponent implements OnInit, OnDestroy {
     public appComService: AppComService,
     public modalService: ModalService,
     public dialog: MatDialog,
-    private userAcctInfoDataService: UserAcctInfoDataService
+    public userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {

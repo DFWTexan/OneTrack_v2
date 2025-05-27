@@ -44,7 +44,7 @@ export class ContinueEducationEditComponent implements OnInit, OnDestroy {
     private dropdownDataService: DropdownDataService,
     public dialog: MatDialog,
     public modalService: ModalService,
-    private userAcctInfoDataService: UserAcctInfoDataService
+    public userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {

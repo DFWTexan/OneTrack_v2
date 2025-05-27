@@ -1,4 +1,4 @@
-<div class="container app-component-container" >
+<div class="container app-component-container">
   <div class="row">
     <div class="col">
       <h1 class="text-end" style="font-style: italic; color: lightgrey">
@@ -34,7 +34,14 @@
         </option>
       </select>
     </div>
-    <div class="col d-flex justify-content-center align-items-end">
+    <div
+      class="col d-flex justify-content-center align-items-end"
+      *ngIf="
+        userAcctInfoDataService.userAcctInfo.isSuperUser ||
+        userAcctInfoDataService.userAcctInfo.isQARole ||
+        userAcctInfoDataService.userAcctInfo.isAdminRole
+      "
+    >
       <button
         class="btn btn-success button-font-size"
         type="button"
@@ -73,7 +80,17 @@
               <th scope="col">Lic4</th>
               <th scope="col">Start After Date</th>
               <th scope="col">Document</th>
-              <th scope="col" class="text-center">ACTION</th>
+              <th
+                scope="col"
+                class="text-center"
+                *ngIf="
+                  userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                  userAcctInfoDataService.userAcctInfo.isQARole ||
+                  userAcctInfoDataService.userAcctInfo.isAdminRole
+                "
+              >
+                ACTION
+              </th>
             </tr>
           </thead>
           <tbody class="bg-body">
@@ -147,7 +164,15 @@
                   {{ company.document }}
                 </button>
               </td>
-              <td class="align-middle" style="width: 15rem">
+              <td
+                class="align-middle"
+                style="width: 15rem"
+                *ngIf="
+                  userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                  userAcctInfoDataService.userAcctInfo.isQARole ||
+                  userAcctInfoDataService.userAcctInfo.isAdminRole
+                "
+              >
                 <div class="d-flex justify-content-between mb-3 me-4">
                   <button
                     class="icon-edit-delete-button"
