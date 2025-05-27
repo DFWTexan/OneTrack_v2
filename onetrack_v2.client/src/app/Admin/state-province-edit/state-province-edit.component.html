@@ -146,6 +146,7 @@
         <app-edit-state-province
           [licenseTeches]="licenseTeches"
           [stateProvinces]="states"
+          (callParentRefreshData)="fetchStateProvinceItems()"
         ></app-edit-state-province>
       </div>
     </div>

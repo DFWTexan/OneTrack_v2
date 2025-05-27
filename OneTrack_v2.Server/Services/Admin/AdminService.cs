@@ -2448,21 +2448,21 @@ namespace OneTrak_v2.Services
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
 
-                            cmd.Parameters.Add(new SqlParameter("@StateProvinceCode", vInput.StateProvinceCode));
-                            cmd.Parameters.Add(new SqlParameter("@StateProvinceName", vInput.StateProvinceName));
-                            cmd.Parameters.Add(new SqlParameter("@Country", vInput.Country));
-                            cmd.Parameters.Add(new SqlParameter("@StateProvinceAbv", vInput.StateProvinceAbv));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseTechID", vInput.LicenseTechID));
-                            cmd.Parameters.Add(new SqlParameter("@DOIName", vInput.DOIName));
-                            cmd.Parameters.Add(new SqlParameter("@IsActive", vInput.IsActive));
-                            cmd.Parameters.Add(new SqlParameter("@AddressType", vInput.AddressType));
-                            cmd.Parameters.Add(new SqlParameter("@Address1", vInput.Address1));
-                            cmd.Parameters.Add(new SqlParameter("@Address2", vInput.Address2));
-                            cmd.Parameters.Add(new SqlParameter("@City", vInput.City));
-                            cmd.Parameters.Add(new SqlParameter("@State", vInput.State));
-                            cmd.Parameters.Add(new SqlParameter("@Phone", vInput.Phone));
-                            cmd.Parameters.Add(new SqlParameter("@Zip", vInput.Zip));
-                            cmd.Parameters.Add(new SqlParameter("@Fax", vInput.Fax));
+                            cmd.Parameters.Add(new SqlParameter("@StateProvinceCode", vInput.StateProvinceCode ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@StateProvinceName", vInput.StateProvinceName ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@Country", vInput.Country ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@StateProvinceAbv", vInput.StateProvinceAbv ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseTechID", vInput.LicenseTechID ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@DOIName", vInput.DOIName ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@IsActive", vInput.IsActive ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@AddressType", vInput.AddressType ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@Address1", vInput.Address1 ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@Address2", vInput.Address2 ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@City", vInput.City ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@State", vInput.State ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@Phone", vInput.Phone ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@Zip", vInput.Zip ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@Fax", vInput.Fax ?? (object)DBNull.Value));
                             cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
 
                             conn.Open();
@@ -2479,21 +2479,22 @@ namespace OneTrak_v2.Services
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
 
-                            cmd.Parameters.Add(new SqlParameter("@StateProvinceCode", vInput.StateProvinceCode));
-                            cmd.Parameters.Add(new SqlParameter("@StateProvinceName", vInput.StateProvinceName));
-                            cmd.Parameters.Add(new SqlParameter("@Country", vInput.Country));
-                            cmd.Parameters.Add(new SqlParameter("@StateProvinceAbv", vInput.StateProvinceAbv));
-                            cmd.Parameters.Add(new SqlParameter("@LicenseTechID", vInput.LicenseTechID));
-                            cmd.Parameters.Add(new SqlParameter("@DOIName", vInput.DOIName));
-                            cmd.Parameters.Add(new SqlParameter("@IsActive", vInput.IsActive));
-                            cmd.Parameters.Add(new SqlParameter("@AddressType", vInput.AddressType));
-                            cmd.Parameters.Add(new SqlParameter("@Address1", vInput.Address1));
-                            cmd.Parameters.Add(new SqlParameter("@Address2", vInput.Address2));
-                            cmd.Parameters.Add(new SqlParameter("@City", vInput.City));
-                            cmd.Parameters.Add(new SqlParameter("@State", vInput.State));
-                            cmd.Parameters.Add(new SqlParameter("@Phone", vInput.Phone));
-                            cmd.Parameters.Add(new SqlParameter("@Zip", vInput.Zip));
-                            cmd.Parameters.Add(new SqlParameter("@Fax", vInput.Fax));
+                            cmd.Parameters.Add(new SqlParameter("@StateProvinceCode", vInput.StateProvinceCode ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@StateProvinceName", vInput.StateProvinceName ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@Country", vInput.Country ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@StateProvinceAbv", vInput.StateProvinceAbv ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@DOIAddressID", (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@LicenseTechID", vInput.LicenseTechID ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@IsActive", vInput.IsActive ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@DOIName", vInput.DOIName ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@AddressType", vInput.AddressType ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@Address1", vInput.Address1 ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@Address2", vInput.Address2 ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@City", vInput.City ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@State", vInput.State ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@Phone", vInput.Phone ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@Zip", vInput.Zip ?? (object)DBNull.Value));
+                            cmd.Parameters.Add(new SqlParameter("@Fax", vInput.Fax ?? (object)DBNull.Value));
                             cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
 
                             conn.Open();

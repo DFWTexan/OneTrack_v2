@@ -46,7 +46,7 @@ export class StateProvinceEditComponent implements OnInit, OnDestroy {
     this.fetchEditInfo();
   }
 
-  private fetchStateProvinceItems() {
+  public fetchStateProvinceItems() {
     this.subscriptionData.add(
       this.adminDataService.fetchStateProvinces().subscribe((response) => {
         this.stateProvinces = response;
