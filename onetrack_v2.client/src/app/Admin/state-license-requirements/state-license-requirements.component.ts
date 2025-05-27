@@ -42,7 +42,7 @@ export class StateLicenseRequirementsComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     public modalService: ModalService,
     public fileService: FileService,
-    private userAcctInfoDataService: UserAcctInfoDataService
+    public userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {}

@@ -45,7 +45,7 @@ export class XborLicRequirementsComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     public modalService: ModalService,
     public fileService: FileService,
-    private userAcctInfoDataService: UserAcctInfoDataService
+    public userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
 // startFileUploadCompleted(filePath: string) {
