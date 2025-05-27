@@ -42,7 +42,7 @@ export class ExamEditComponent implements OnInit, OnDestroy {
     public appComService: AppComService,
     public dialog: MatDialog,
     public modalService: ModalService,
-    private userAcctInfoDataService: UserAcctInfoDataService
+    public userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {

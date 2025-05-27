@@ -39,7 +39,7 @@ export class JobTitleLicenseComponent implements OnInit, OnDestroy {
     public modalService: ModalService,
     public appComService: AppComService,
     public paginationComService: PaginationComService,
-    private userAcctInfoDataService: UserAcctInfoDataService
+    public userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {

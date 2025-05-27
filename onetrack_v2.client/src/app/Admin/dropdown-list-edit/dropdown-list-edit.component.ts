@@ -33,7 +33,7 @@ export class DropdownListEditComponent implements OnInit, OnDestroy {
     public adminComService: AdminComService,
     public dialog: MatDialog,
     public modalService: ModalService,
-    private userAcctInfoDataService: UserAcctInfoDataService
+    public userAcctInfoDataService: UserAcctInfoDataService,
   ) {}
 
   ngOnInit(): void {

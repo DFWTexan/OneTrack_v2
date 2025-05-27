@@ -20,7 +20,14 @@
         </option>
       </select>
     </div>
-    <div class="col d-flex justify-content-center align-items-end">
+    <div
+      class="col d-flex justify-content-center align-items-end"
+      *ngIf="
+        userAcctInfoDataService.userAcctInfo.isSuperUser ||
+        userAcctInfoDataService.userAcctInfo.isQARole ||
+        userAcctInfoDataService.userAcctInfo.isAdminRole
+      "
+    >
       <button
         class="btn btn-success button-font-size"
         type="button"
@@ -61,7 +68,17 @@
             <th scope="col">Exam Name</th>
             <th scope="col">Delivery Method</th>
             <th scope="col">Exam Provider</th>
-            <th scope="col" class="text-center">ACTION</th>
+            <th
+              scope="col"
+              class="text-center"
+              *ngIf="
+                userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                userAcctInfoDataService.userAcctInfo.isQARole ||
+                userAcctInfoDataService.userAcctInfo.isAdminRole
+              "
+            >
+              ACTION
+            </th>
           </tr>
         </thead>
         <tbody class="bg-body">
@@ -80,7 +97,15 @@
             <td class="align-middle" style="width: 100rem">
               {{ exam.companyName }}
             </td>
-            <td class="align-middle" style="width: 10rem">
+            <td
+              class="align-middle"
+              style="width: 10rem"
+              *ngIf="
+                userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                userAcctInfoDataService.userAcctInfo.isQARole ||
+                userAcctInfoDataService.userAcctInfo.isAdminRole
+              "
+            >
               <div class="d-flex justify-content-between mb-3 me-4">
                 <button
                   class="icon-edit-delete-button"

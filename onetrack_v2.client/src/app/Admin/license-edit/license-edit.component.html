@@ -20,7 +20,14 @@
         </option>
       </select>
     </div>
-    <div class="col d-flex justify-content-center align-items-end">
+    <div
+      class="col d-flex justify-content-center align-items-end"
+      *ngIf="
+        userAcctInfoDataService.userAcctInfo.isSuperUser ||
+        userAcctInfoDataService.userAcctInfo.isQARole ||
+        userAcctInfoDataService.userAcctInfo.isAdminRole
+      "
+    >
       <button
         class="btn btn-success button-font-size"
         type="button"
@@ -138,6 +145,11 @@
               <div
                 class="d-flex justify-content-end mb-3 me-4"
                 style="width: 15rem"
+                *ngIf="
+                  userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                  userAcctInfoDataService.userAcctInfo.isQARole ||
+                  userAcctInfoDataService.userAcctInfo.isAdminRole
+                "
               >
                 <button
                   class="icon-edit-delete-button me-5"
@@ -185,7 +197,14 @@
               >
                 Company(s)
               </div>
-              <div class="col d-flex justify-content-end align-middle">
+              <div
+                class="col d-flex justify-content-end align-middle"
+                *ngIf="
+                  userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                  userAcctInfoDataService.userAcctInfo.isQARole ||
+                  userAcctInfoDataService.userAcctInfo.isAdminRole
+                "
+              >
                 <button
                   class="btn btn-success button-font-size"
                   (click)="
@@ -226,7 +245,16 @@
                       <th scope="col">TIN</th>
                       <th scope="col">NAIC Number</th>
                       <th scope="col" class="text-center">isActive</th>
-                      <th scope="col" class="text-center" style="width: 10rem">
+                      <th
+                        scope="col"
+                        class="text-center"
+                        style="width: 10rem"
+                        *ngIf="
+                          userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                          userAcctInfoDataService.userAcctInfo.isQARole ||
+                          userAcctInfoDataService.userAcctInfo.isAdminRole
+                        "
+                      >
                         ACTION
                       </th>
                     </tr>
@@ -279,7 +307,15 @@
                           />
                         </div>
                       </td>
-                      <td class="align-middle" style="width: 10rem">
+                      <td
+                        class="align-middle"
+                        style="width: 10rem"
+                        *ngIf="
+                          userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                          userAcctInfoDataService.userAcctInfo.isQARole ||
+                          userAcctInfoDataService.userAcctInfo.isAdminRole
+                        "
+                      >
                         <div class="d-flex justify-content-between mb-3 me-4">
                           <button
                             class="icon-edit-delete-button"
@@ -337,7 +373,14 @@
               >
                 Pre-Exam(s)
               </div>
-              <div class="col d-flex justify-content-end align-middle">
+              <div
+                class="col d-flex justify-content-end align-middle"
+                *ngIf="
+                  userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                  userAcctInfoDataService.userAcctInfo.isQARole ||
+                  userAcctInfoDataService.userAcctInfo.isAdminRole
+                "
+              >
                 <button
                   class="btn btn-success button-font-size"
                   (click)="
@@ -373,11 +416,22 @@
                         ExamID
                       </th>
                       <th scope="col">Exam Name</th>
-                      <th scope="col" *ngIf="appComService.isShowEditID">Exam Provider ID</th>
+                      <th scope="col" *ngIf="appComService.isShowEditID">
+                        Exam Provider ID
+                      </th>
                       <th scope="col">Exam Provider</th>
                       <th scope="col">Delivery Method</th>
                       <th scope="col" class="text-center">isActive</th>
-                      <th scope="col" class="text-center" style="width: 10rem">
+                      <th
+                        scope="col"
+                        class="text-center"
+                        style="width: 10rem"
+                        *ngIf="
+                          userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                          userAcctInfoDataService.userAcctInfo.isQARole ||
+                          userAcctInfoDataService.userAcctInfo.isAdminRole
+                        "
+                      >
                         ACTION
                       </th>
                     </tr>
@@ -406,7 +460,11 @@
                       <td class="align-middle text-nowrap">
                         {{ preExam.examName }}
                       </td>
-                      <td *ngIf="appComService.isShowEditID" class="align-middle" style="width: max-content">
+                      <td
+                        *ngIf="appComService.isShowEditID"
+                        class="align-middle"
+                        style="width: max-content"
+                      >
                         {{ preExam.examProviderID }}
                       </td>
                       <td class="align-middle" style="width: max-content">
@@ -428,7 +486,15 @@
                           />
                         </div>
                       </td>
-                      <td class="align-middle" style="width: 10rem">
+                      <td
+                        class="align-middle"
+                        style="width: 10rem"
+                        *ngIf="
+                          userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                          userAcctInfoDataService.userAcctInfo.isQARole ||
+                          userAcctInfoDataService.userAcctInfo.isAdminRole
+                        "
+                      >
                         <div class="d-flex justify-content-between mb-3 me-4">
                           <button
                             class="icon-edit-delete-button"
@@ -485,7 +551,14 @@
               >
                 Pre-Education(s)
               </div>
-              <div class="col d-flex justify-content-end align-middle">
+              <div
+                class="col d-flex justify-content-end align-middle"
+                *ngIf="
+                  userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                  userAcctInfoDataService.userAcctInfo.isQARole ||
+                  userAcctInfoDataService.userAcctInfo.isAdminRole
+                "
+              >
                 <button
                   class="btn btn-success button-font-size"
                   (click)="
@@ -524,7 +597,16 @@
                       <th scope="col">Pre-Edu Provider</th>
                       <th scope="col">Delivery Method</th>
                       <th scope="col" class="text-center">isActive</th>
-                      <th scope="col" class="text-center" style="width: 10rem">
+                      <th
+                        scope="col"
+                        class="text-center"
+                        style="width: 10rem"
+                        *ngIf="
+                          userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                          userAcctInfoDataService.userAcctInfo.isQARole ||
+                          userAcctInfoDataService.userAcctInfo.isAdminRole
+                        "
+                      >
                         ACTION
                       </th>
                     </tr>
@@ -569,7 +651,15 @@
                           />
                         </div>
                       </td>
-                      <td class="align-middle" style="width: 10rem">
+                      <td
+                        class="align-middle"
+                        style="width: 10rem"
+                        *ngIf="
+                          userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                          userAcctInfoDataService.userAcctInfo.isQARole ||
+                          userAcctInfoDataService.userAcctInfo.isAdminRole
+                        "
+                      >
                         <div class="d-flex justify-content-between mb-3 me-4">
                           <button
                             class="icon-edit-delete-button"
@@ -623,7 +713,14 @@
               >
                 Product(s)
               </div>
-              <div class="col d-flex justify-content-end align-middle">
+              <div
+                class="col d-flex justify-content-end align-middle"
+                *ngIf="
+                  userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                  userAcctInfoDataService.userAcctInfo.isQARole ||
+                  userAcctInfoDataService.userAcctInfo.isAdminRole
+                "
+              >
                 <button
                   class="btn btn-success button-font-size"
                   (click)="
@@ -661,7 +758,16 @@
                       <th scope="col">Product Name</th>
                       <th scope="col">Product Abv</th>
                       <th scope="col" class="text-center">isActive</th>
-                      <th scope="col" class="text-center" style="width: 10rem">
+                      <th
+                        scope="col"
+                        class="text-center"
+                        style="width: 10rem"
+                        *ngIf="
+                          userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                          userAcctInfoDataService.userAcctInfo.isQARole ||
+                          userAcctInfoDataService.userAcctInfo.isAdminRole
+                        "
+                      >
                         ACTION
                       </th>
                     </tr>
@@ -703,7 +809,15 @@
                           />
                         </div>
                       </td>
-                      <td class="align-middle" style="width: 10rem">
+                      <td
+                        class="align-middle"
+                        style="width: 10rem"
+                        *ngIf="
+                          userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                          userAcctInfoDataService.userAcctInfo.isQARole ||
+                          userAcctInfoDataService.userAcctInfo.isAdminRole
+                        "
+                      >
                         <div class="d-flex justify-content-between mb-3 me-4">
                           <button
                             class="icon-edit-delete-button"

@@ -47,7 +47,7 @@ export class LicenseEditComponent implements OnInit, OnDestroy {
     private dropDownDataService: DropdownDataService,
     public modalService: ModalService,
     public dialog: MatDialog,
-    private userAcctInfoDataService: UserAcctInfoDataService
+    public userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {
