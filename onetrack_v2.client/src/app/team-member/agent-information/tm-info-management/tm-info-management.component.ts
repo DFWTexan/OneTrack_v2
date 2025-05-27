@@ -1,12 +1,15 @@
-import { Component } from '@angular/core';
+import { Component, Injectable } from '@angular/core';
+
+import { UserAcctInfoDataService } from '../../../_services';
 
 @Component({
   selector: 'app-tm-info-management',
   templateUrl: './tm-info-management.component.html',
   styleUrl: './tm-info-management.component.css',
 })
+@Injectable()
 export class TmInfoManagementComponent {
   isLoading: boolean = false;
 
-  constructor() {}
+  constructor(public userAcctInfoDataService: UserAcctInfoDataService) {}
 }
