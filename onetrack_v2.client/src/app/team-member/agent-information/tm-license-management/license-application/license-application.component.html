@@ -69,7 +69,15 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
         <div class="row mb-3">
-          <div class="col">
+          <div
+            class="col"
+            *ngIf="
+              userInfoDataService.userAcctInfo.isSuperUser ||
+              userInfoDataService.userAcctInfo.isQARole ||
+              userInfoDataService.userAcctInfo.isAdminRole ||
+              userInfoDataService.userAcctInfo.isTechRole
+            "
+          >
             <button
               class="btn btn-success"
               (click)="
@@ -107,7 +115,17 @@
                 <th scope="col">Rec. From Agent</th>
                 <th scope="col">Sent to State</th>
                 <th scope="col">Rec. From State</th>
-                <th scope="col" class="text-center" style="width: 10rem">
+                <th
+                  scope="col"
+                  class="text-center"
+                  style="width: 10rem"
+                  *ngIf="
+                    userInfoDataService.userAcctInfo.isSuperUser ||
+                    userInfoDataService.userAcctInfo.isQARole ||
+                    userInfoDataService.userAcctInfo.isAdminRole ||
+                    userInfoDataService.userAcctInfo.isTechRole
+                  "
+                >
                   Action
                 </th>
               </tr>
@@ -137,7 +155,15 @@
                 <td class="align-middle">
                   {{ licApplication.recFromStateDate | date : "MM/dd/yyyy" }}
                 </td>
-                <td style="width: 10rem">
+                <td
+                  style="width: 10rem"
+                  *ngIf="
+                    userInfoDataService.userAcctInfo.isSuperUser ||
+                    userInfoDataService.userAcctInfo.isQARole ||
+                    userInfoDataService.userAcctInfo.isAdminRole ||
+                    userInfoDataService.userAcctInfo.isTechRole
+                  "
+                >
                   <div class="d-flex justify-content-between mb-3 me-4">
                     <button
                       class="icon-edit-delete-button"
@@ -195,6 +221,12 @@
         <div class="row mb-3">
           <div class="col">
             <button
+              *ngIf="
+                userInfoDataService.userAcctInfo.isSuperUser ||
+                userInfoDataService.userAcctInfo.isQARole ||
+                userInfoDataService.userAcctInfo.isAdminRole ||
+                userInfoDataService.userAcctInfo.isTechRole
+              "
               class="btn btn-success"
               (click)="
                 agentDataService.storeLicPreEdu('INSERT', null);
@@ -231,7 +263,17 @@
                 <th scope="col">Scheduled Date</th>
                 <th scope="col">Taken Date</th>
                 <th scope="col">PreEdu Notes</th>
-                <th scope="col" class="text-center" style="width: 10rem">
+                <th
+                  scope="col"
+                  class="text-center"
+                  style="width: 10rem"
+                  *ngIf="
+                    userInfoDataService.userAcctInfo.isSuperUser ||
+                    userInfoDataService.userAcctInfo.isQARole ||
+                    userInfoDataService.userAcctInfo.isAdminRole ||
+                    userInfoDataService.userAcctInfo.isTechRole
+                  "
+                >
                   Action
                 </th>
               </tr>
@@ -261,7 +303,15 @@
                 <td class="align-middle">
                   {{ licPreEdu.additionalNotes }}
                 </td>
-                <td style="min-width: 10rem; max-width: 10rem">
+                <td
+                  style="min-width: 10rem; max-width: 10rem"
+                  *ngIf="
+                    userInfoDataService.userAcctInfo.isSuperUser ||
+                    userInfoDataService.userAcctInfo.isQARole ||
+                    userInfoDataService.userAcctInfo.isAdminRole ||
+                    userInfoDataService.userAcctInfo.isTechRole
+                  "
+                >
                   <div class="d-flex justify-content-between mb-3 me-4">
                     <button
                       class="icon-edit-delete-button"
@@ -314,6 +364,12 @@
         <div class="row mb-3">
           <div class="col">
             <button
+              *ngIf="
+                userInfoDataService.userAcctInfo.isSuperUser ||
+                userInfoDataService.userAcctInfo.isQARole ||
+                userInfoDataService.userAcctInfo.isAdminRole ||
+                userInfoDataService.userAcctInfo.isTechRole
+              "
               class="btn btn-success"
               (click)="
                 agentDataService.storeLicPreExam('INSERT', null);
@@ -350,7 +406,17 @@
                 <th scope="col">Scheduled Date</th>
                 <th scope="col">Taken Date</th>
                 <th scope="col">Exam Notes</th>
-                <th scope="col" class="text-center" style="width: 10rem">
+                <th
+                  scope="col"
+                  class="text-center"
+                  style="width: 10rem"
+                  *ngIf="
+                    userInfoDataService.userAcctInfo.isSuperUser ||
+                    userInfoDataService.userAcctInfo.isQARole ||
+                    userInfoDataService.userAcctInfo.isAdminRole ||
+                    userInfoDataService.userAcctInfo.isTechRole
+                  "
+                >
                   Action
                 </th>
               </tr>
@@ -380,7 +446,15 @@
                 <td class="align-middle">
                   {{ preExam.additionalNotes }}
                 </td>
-                <td style="min-width: 10rem; max-width: 10rem">
+                <td
+                  style="min-width: 10rem; max-width: 10rem"
+                  *ngIf="
+                    userInfoDataService.userAcctInfo.isSuperUser ||
+                    userInfoDataService.userAcctInfo.isQARole ||
+                    userInfoDataService.userAcctInfo.isAdminRole ||
+                    userInfoDataService.userAcctInfo.isTechRole
+                  "
+                >
                   <div class="d-flex justify-content-between mb-3 me-4">
                     <button
                       class="icon-edit-delete-button"
@@ -422,6 +496,12 @@
     <div class="row">
       <div class="col">
         <button
+          *ngIf="
+            userInfoDataService.userAcctInfo.isSuperUser ||
+            userInfoDataService.userAcctInfo.isQARole ||
+            userInfoDataService.userAcctInfo.isAdminRole ||
+            userInfoDataService.userAcctInfo.isTechRole
+          "
           class="btn btn-success"
           (click)="
             agentDataService.storeLicAppInfo('INSERT', null);
@@ -455,7 +535,17 @@
               <th scope="col">Rec. From Agent</th>
               <th scope="col">Sent to State</th>
               <th scope="col">Rec. From State</th>
-              <th scope="col">Action</th>
+              <th
+                scope="col"
+                *ngIf="
+                  userInfoDataService.userAcctInfo.isSuperUser ||
+                  userInfoDataService.userAcctInfo.isQARole ||
+                  userInfoDataService.userAcctInfo.isAdminRole ||
+                  userInfoDataService.userAcctInfo.isTechRole
+                "
+              >
+                Action
+              </th>
             </tr>
           </thead>
           <tbody class="tbody" style="background-color: white">
@@ -485,7 +575,16 @@
               <td class="align-middle">
                 {{ licApplication.recFromStateDate | date : "MM/dd/yyyy" }}
               </td>
-              <td class="align-middle" style="width: 10rem">
+              <td
+                class="align-middle"
+                style="width: 10rem"
+                *ngIf="
+                  userInfoDataService.userAcctInfo.isSuperUser ||
+                  userInfoDataService.userAcctInfo.isQARole ||
+                  userInfoDataService.userAcctInfo.isAdminRole ||
+                  userInfoDataService.userAcctInfo.isTechRole
+                "
+              >
                 <div class="d-flex justify-content-between mb-3 me-4">
                   <button
                     class="icon-edit-delete-button"
@@ -528,6 +627,12 @@
     <div class="row mt-3">
       <div class="col">
         <button
+          *ngIf="
+            userInfoDataService.userAcctInfo.isSuperUser ||
+            userInfoDataService.userAcctInfo.isQARole ||
+            userInfoDataService.userAcctInfo.isAdminRole ||
+            userInfoDataService.userAcctInfo.isTechRole
+          "
           class="btn btn-success"
           (click)="
             agentDataService.storeLicPreEdu('INSERT', null);
@@ -561,7 +666,17 @@
               <th scope="col">Scheduled Date</th>
               <th scope="col">Taken Date</th>
               <th scope="col">PreEdu Notes</th>
-              <th scope="col">Action</th>
+              <th
+                scope="col"
+                *ngIf="
+                  userInfoDataService.userAcctInfo.isSuperUser ||
+                  userInfoDataService.userAcctInfo.isQARole ||
+                  userInfoDataService.userAcctInfo.isAdminRole ||
+                  userInfoDataService.userAcctInfo.isTechRole
+                "
+              >
+                Action
+              </th>
             </tr>
           </thead>
           <tbody class="tbody" style="background-color: white">
@@ -585,7 +700,16 @@
                 {{ licPreEdu.educationEndDate | date : "MM/dd/yyyy" }}
               </td>
               <td class="align-middle">{{ licPreEdu.additionalNotes }}</td>
-              <td class="align-middle" style="width: 10rem">
+              <td
+                class="align-middle"
+                style="width: 10rem"
+                *ngIf="
+                  userInfoDataService.userAcctInfo.isSuperUser ||
+                  userInfoDataService.userAcctInfo.isQARole ||
+                  userInfoDataService.userAcctInfo.isAdminRole ||
+                  userInfoDataService.userAcctInfo.isTechRole
+                "
+              >
                 <div class="d-flex justify-content-between mb-3 me-4">
                   <button
                     class="icon-edit-delete-button"
@@ -629,6 +753,12 @@
     <div class="row mt-3">
       <div class="col">
         <button
+          *ngIf="
+            userInfoDataService.userAcctInfo.isSuperUser ||
+            userInfoDataService.userAcctInfo.isQARole ||
+            userInfoDataService.userAcctInfo.isAdminRole ||
+            userInfoDataService.userAcctInfo.isTechRole
+          "
           class="btn btn-success"
           (click)="
             agentDataService.storeLicPreExam('INSERT', null);
@@ -662,7 +792,17 @@
               <th scope="col">Scheduled Date</th>
               <th scope="col">Taken Date</th>
               <th scope="col">Exam Notes</th>
-              <th scope="col">Action</th>
+              <th
+                scope="col"
+                *ngIf="
+                  userInfoDataService.userAcctInfo.isSuperUser ||
+                  userInfoDataService.userAcctInfo.isQARole ||
+                  userInfoDataService.userAcctInfo.isAdminRole ||
+                  userInfoDataService.userAcctInfo.isTechRole
+                "
+              >
+                Action
+              </th>
             </tr>
           </thead>
           <tbody class="tbody" style="background-color: white">
@@ -686,7 +826,16 @@
                 {{ preExam.examTakenDate | date : "MM/dd/yyyy" }}
               </td>
               <td class="align-middle">{{ preExam.additionalNotes }}</td>
-              <td class="align-middle" style="width: 10rem">
+              <td
+                class="align-middle"
+                style="width: 10rem"
+                *ngIf="
+                  userInfoDataService.userAcctInfo.isSuperUser ||
+                  userInfoDataService.userAcctInfo.isQARole ||
+                  userInfoDataService.userAcctInfo.isAdminRole ||
+                  userInfoDataService.userAcctInfo.isTechRole
+                "
+              >
                 <div class="d-flex justify-content-between mb-3 me-4">
                   <button
                     class="icon-edit-delete-button"

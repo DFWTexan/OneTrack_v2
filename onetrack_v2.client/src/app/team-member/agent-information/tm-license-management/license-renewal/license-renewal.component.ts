@@ -38,7 +38,7 @@ export class LicenseRenewalComponent implements OnInit, OnDestroy {
     public agentComService: AgentComService,
     private licenseDataService: LicIncentiveInfoDataService,
     protected modalService: ModalService,
-    private userInfoDataService: UserAcctInfoDataService,
+    public userInfoDataService: UserAcctInfoDataService,
     public dialog: MatDialog
   ) {
     this.agentDataService.agentLicApplicationInfo.licenseRenewalItems = [];

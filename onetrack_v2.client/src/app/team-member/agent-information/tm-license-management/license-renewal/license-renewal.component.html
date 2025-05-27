@@ -42,6 +42,12 @@
   <div class="row mb-3">
     <div class="col">
       <button
+        *ngIf="
+          userInfoDataService.userAcctInfo.isSuperUser ||
+          userInfoDataService.userAcctInfo.isQARole ||
+          userInfoDataService.userAcctInfo.isAdminRole ||
+          userInfoDataService.userAcctInfo.isTechRole
+        "
         class="btn btn-success"
         (click)="
           agentDataService.storeLicRenewal('INSERT', null);
@@ -79,7 +85,18 @@
           <th>Sent to State</th>
           <th>Renewal Date</th>
           <th>Renewal Method</th>
-          <th class="text-center" style="width: 10rem">Action</th>
+          <th
+            class="text-center"
+            style="width: 10rem"
+            *ngIf="
+              userInfoDataService.userAcctInfo.isSuperUser ||
+              userInfoDataService.userAcctInfo.isQARole ||
+              userInfoDataService.userAcctInfo.isAdminRole ||
+              userInfoDataService.userAcctInfo.isTechRole
+            "
+          >
+            Action
+          </th>
         </tr>
       </thead>
       <tbody class="bg-body">
@@ -107,7 +124,14 @@
           <td class="align-middle">
             {{ licRenewal.renewalMethod }}
           </td>
-          <td>
+          <td
+            *ngIf="
+              userInfoDataService.userAcctInfo.isSuperUser ||
+              userInfoDataService.userAcctInfo.isQARole ||
+              userInfoDataService.userAcctInfo.isAdminRole ||
+              userInfoDataService.userAcctInfo.isTechRole
+            "
+          >
             <div class="d-flex justify-content-between mb-3 me-4">
               <button
                 class="icon-edit-delete-button"

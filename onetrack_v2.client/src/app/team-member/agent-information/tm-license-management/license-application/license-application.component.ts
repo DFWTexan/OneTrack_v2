@@ -41,7 +41,7 @@ export class LicenseApplicationComponent implements OnInit, OnDestroy {
     public agentComService: AgentComService,
     public appComService: AppComService,
     protected modalService: ModalService,
-    private userInfoDataService: UserAcctInfoDataService,
+    public userInfoDataService: UserAcctInfoDataService,
     private licenseDataService: LicIncentiveInfoDataService,
     public dialog: MatDialog
   ) {
