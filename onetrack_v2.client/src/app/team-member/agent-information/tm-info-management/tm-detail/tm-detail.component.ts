@@ -1,7 +1,7 @@
 import { Component, Injectable, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { AgentDataService, ModalService } from '../../../../_services';
+import { AgentDataService, ModalService, UserAcctInfoDataService } from '../../../../_services';
 import { AgentInfo } from '../../../../_Models';
 
 @Component({
@@ -17,7 +17,8 @@ export class TmDetailComponent implements OnInit, OnDestroy {
 
   constructor(
     private agentDataService: AgentDataService,
-    protected modalService: ModalService
+    protected modalService: ModalService,
+    public userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
   ngOnInit(): void {

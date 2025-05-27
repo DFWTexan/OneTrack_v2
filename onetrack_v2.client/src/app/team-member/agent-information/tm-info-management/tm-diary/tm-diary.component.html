@@ -25,6 +25,12 @@
 
     <div class="col d-flex align-items-end justify-content-end me-5">
       <button
+        *ngIf="
+          userInfoDataService.userAcctInfo.isSuperUser ||
+          userInfoDataService.userAcctInfo.isQARole ||
+          userInfoDataService.userAcctInfo.isAdminRole ||
+          userInfoDataService.userAcctInfo.isTechRole
+        "
         class="btn btn-success button-font-size"
         type="button"
         (click)="
@@ -55,7 +61,19 @@
             <th scope="col" *ngIf="appComService.isShowEditID">DiaryID</th>
             <th scope="col" style="width: 10rem">DiaryDate</th>
             <th scope="col">Notes</th>
-            <th scope="col" class="text-center" style="width: 10rem">Action</th>
+            <th
+              scope="col"
+              class="text-center"
+              style="width: 10rem"
+              *ngIf="
+                userInfoDataService.userAcctInfo.isSuperUser ||
+                userInfoDataService.userAcctInfo.isQARole ||
+                userInfoDataService.userAcctInfo.isAdminRole ||
+                userInfoDataService.userAcctInfo.isTechRole
+              "
+            >
+              Action
+            </th>
           </tr>
         </thead>
         <tbody class="bg-body">
@@ -66,7 +84,7 @@
             "
             [ngClass]="{ 'alternate-row': i % 2 !== 0 }"
           >
-            <td class="align-middle" style="font-weight: 500;">
+            <td class="align-middle" style="font-weight: 500">
               {{ diary.techName }}
             </td>
             <td class="align-middle" *ngIf="appComService.isShowEditID">
@@ -78,7 +96,16 @@
             <td class="align-middle" style="width: max-content">
               {{ diary.notes }}
             </td>
-            <td class="align-middle" style="width: 10rem">
+            <td
+              class="align-middle"
+              style="width: 10rem"
+              *ngIf="
+                userInfoDataService.userAcctInfo.isSuperUser ||
+                userInfoDataService.userAcctInfo.isQARole ||
+                userInfoDataService.userAcctInfo.isAdminRole ||
+                userInfoDataService.userAcctInfo.isTechRole
+              "
+            >
               <div class="d-flex justify-content-between mb-3 me-4">
                 <button
                   class="icon-edit-delete-button"

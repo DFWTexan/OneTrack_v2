@@ -61,7 +61,17 @@
               <th scope="col">Background Check Status</th>
               <th scope="col">Background Check Notes</th>
               <th scope="col">Is Current</th>
-              <th scope="col" class="text-center" style="width: 10rem">
+              <th
+                scope="col"
+                class="text-center"
+                style="width: 10rem"
+                *ngIf="
+                  userInfoDataService.userAcctInfo.isSuperUser ||
+                  userInfoDataService.userAcctInfo.isQARole ||
+                  userInfoDataService.userAcctInfo.isAdminRole ||
+                  userInfoDataService.userAcctInfo.isTechRole
+                "
+              >
                 ACTION
               </th>
             </tr>
@@ -97,7 +107,14 @@
               <td class="align-middle">
                 {{ emp.isCurrent ? "Yes" : "No" }}
               </td>
-              <td style="width: 10rem">
+              <td
+                style="width: 10rem"
+                *ngIf="
+                  userInfoDataService.userAcctInfo.isSuperUser ||
+                  userInfoDataService.userAcctInfo.isQARole ||
+                  userInfoDataService.userAcctInfo.isAdminRole
+                "
+              >
                 <div class="d-flex justify-content-center mb-3 me-4">
                   <button
                     class="icon-edit-delete-button"
@@ -258,6 +275,11 @@
             >Co. Requirement History</span
           >
           <button
+            *ngIf="
+              userInfoDataService.userAcctInfo.isSuperUser ||
+              userInfoDataService.userAcctInfo.isQARole ||
+              userInfoDataService.userAcctInfo.isAdminRole
+            "
             class="btn btn-success button-font-size mb-3"
             (click)="
               agentDataService.storeCompanyRequirementsHistory('INSERT', null);
@@ -462,7 +484,7 @@
       <div class="mat-description">
         <div class="row mb-3">
           <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
-           <!-- <div class="col">
+          <!-- <div class="col">
             <button
               class="btn btn-success button-font-size"
               (click)="
@@ -498,9 +520,18 @@
                   <th scope="col">Background Check Status</th>
                   <th scope="col">Background Check Notes</th>
                   <th scope="col">Is Current</th>
-                  <th scope="col" class="text-center" style="width: 10rem">
+                  <th
+                    scope="col"
+                    class="text-center"
+                    style="width: 10rem"
+                    *ngIf="
+                      userInfoDataService.userAcctInfo.isSuperUser ||
+                      userInfoDataService.userAcctInfo.isQARole ||
+                      userInfoDataService.userAcctInfo.isAdminRole
+                    "
+                  >
                     ACTION
-                  </th> 
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -535,7 +566,14 @@
                   <td class="align-middle">
                     {{ emp.isCurrent ? "Yes" : "No" }}
                   </td>
-                  <td style="width: 10rem">
+                  <td
+                    style="width: 10rem"
+                    *ngIf="
+                      userInfoDataService.userAcctInfo.isSuperUser ||
+                      userInfoDataService.userAcctInfo.isQARole ||
+                      userInfoDataService.userAcctInfo.isAdminRole
+                    "
+                  >
                     <div class="d-flex justify-content-center mb-3 me-4">
                       <button
                         class="icon-edit-delete-button"
@@ -699,6 +737,11 @@
         <div class="row mb-3">
           <div class="col">
             <button
+              *ngIf="
+                userInfoDataService.userAcctInfo.isSuperUser ||
+                userInfoDataService.userAcctInfo.isQARole ||
+                userInfoDataService.userAcctInfo.isAdminRole
+              "
               class="btn btn-success button-font-size"
               (click)="
                 agentDataService.storeCompanyRequirementsHistory(

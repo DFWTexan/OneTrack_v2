@@ -73,7 +73,15 @@
       </p>
     </div>
     <div class="col">
-      <div class="d-flex me-5 justify-content-end">
+      <div
+        class="d-flex me-5 justify-content-end"
+        *ngIf="
+          userAcctInfoDataService.userAcctInfo.isSuperUser ||
+          userAcctInfoDataService.userAcctInfo.isQARole ||
+          userAcctInfoDataService.userAcctInfo.isAdminRole ||
+          userAcctInfoDataService.userAcctInfo.isTechRole
+        "
+      >
         <button
           class="icon-edit-delete-button"
           (click)="modalService.open('modal-edit-tm-detail')"
