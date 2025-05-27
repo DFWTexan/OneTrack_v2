@@ -20,7 +20,14 @@
         </option>
       </select>
     </div>
-    <div class="col d-flex justify-content-center align-items-end">
+    <div
+      class="col d-flex justify-content-center align-items-end"
+      *ngIf="
+        userAcctInfoDataService.userAcctInfo.isSuperUser ||
+        userAcctInfoDataService.userAcctInfo.isQARole ||
+        userAcctInfoDataService.userAcctInfo.isAdminRole
+      "
+    >
       <button
         class="btn btn-success button-font-size"
         type="button"
@@ -69,7 +76,17 @@
             <th scope="col">StateProvinceAbv</th>
             <th scope="col">CreditHours</th>
             <th scope="col">DeliveryMethod</th>
-            <th scope="col" class="text-center">ACTION</th>
+            <th
+              scope="col"
+              class="text-center"
+              *ngIf="
+                userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                userAcctInfoDataService.userAcctInfo.isQARole ||
+                userAcctInfoDataService.userAcctInfo.isAdminRole
+              "
+            >
+              ACTION
+            </th>
           </tr>
         </thead>
         <tbody class="bg-body">
@@ -91,7 +108,15 @@
             <td class="align-middle" style="width: max-content">
               {{ preEdu.deliveryMethod }}
             </td>
-            <td class="align-middle" style="width: 10rem">
+            <td
+              class="align-middle"
+              style="width: 10rem"
+              *ngIf="
+                userAcctInfoDataService.userAcctInfo.isSuperUser ||
+                userAcctInfoDataService.userAcctInfo.isQARole ||
+                userAcctInfoDataService.userAcctInfo.isAdminRole
+              "
+            >
               <div class="d-flex justify-content-between mb-3 me-4">
                 <button
                   class="icon-edit-delete-button"
@@ -104,9 +129,14 @@
                   <span class="material-symbols-outlined"> edit </span>
                 </button>
                 <button class="icon-edit-delete-button" type="button">
-                  <span class="material-symbols-outlined" (click)="
-                  openConfirmDialog('deletePreEducation', 'Pre-Edu', preEdu)
-                "> delete </span>
+                  <span
+                    class="material-symbols-outlined"
+                    (click)="
+                      openConfirmDialog('deletePreEducation', 'Pre-Edu', preEdu)
+                    "
+                  >
+                    delete
+                  </span>
                 </button>
               </div>
             </td>
