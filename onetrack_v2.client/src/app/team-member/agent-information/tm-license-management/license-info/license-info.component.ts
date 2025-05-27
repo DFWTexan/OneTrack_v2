@@ -36,7 +36,7 @@ export class LicenseInfoComponent implements OnInit, OnDestroy {
     public agentComService: AgentComService,
     protected modalService: ModalService,
     public appComService: AppComService,
-    private userInfoDataService: UserAcctInfoDataService,
+    public userInfoDataService: UserAcctInfoDataService,
     private licenseIncentiveInfoDataService: LicIncentiveInfoDataService,
     public dialog: MatDialog,
     private router: Router

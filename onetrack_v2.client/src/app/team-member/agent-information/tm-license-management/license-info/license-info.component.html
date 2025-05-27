@@ -34,6 +34,12 @@
 
     <div class="col d-flex justify-content-end me-5">
       <button
+        *ngIf="
+          userInfoDataService.userAcctInfo.isSuperUser ||
+          userInfoDataService.userAcctInfo.isQARole ||
+          userInfoDataService.userAcctInfo.isAdminRole ||
+          userInfoDataService.userAcctInfo.isTechRole
+        "
         class="icon-edit-delete-button me-5"
         (click)="
           setModeLicenseMgmt('ADD');
@@ -44,6 +50,12 @@
         <span class="material-symbols-outlined"> add </span>
       </button>
       <button
+        *ngIf="
+          userInfoDataService.userAcctInfo.isSuperUser ||
+          userInfoDataService.userAcctInfo.isQARole ||
+          userInfoDataService.userAcctInfo.isAdminRole ||
+          userInfoDataService.userAcctInfo.isTechRole
+        "
         class="icon-edit-delete-button me-5"
         (click)="
           setModeLicenseMgmt('EDIT');
@@ -54,6 +66,12 @@
         <span class="material-symbols-outlined"> edit </span>
       </button>
       <button
+        *ngIf="
+          userInfoDataService.userAcctInfo.isSuperUser ||
+          userInfoDataService.userAcctInfo.isQARole ||
+          userInfoDataService.userAcctInfo.isAdminRole ||
+          userInfoDataService.userAcctInfo.isTechRole
+        "
         class="icon-edit-delete-button"
         (click)="
           openConfirmDialog('deleteAgentLicense', 'Agent License', {
@@ -169,6 +187,12 @@
     </div>
     <div class="col d-flex justify-content-end mt-3 mb-3">
       <button
+        *ngIf="
+          userInfoDataService.userAcctInfo.isSuperUser ||
+          userInfoDataService.userAcctInfo.isQARole ||
+          userInfoDataService.userAcctInfo.isAdminRole ||
+          userInfoDataService.userAcctInfo.isTechRole
+        "
         class="btn btn-success"
         (click)="modalService.open('modal-add-license-appt')"
       >
@@ -188,7 +212,18 @@
           <th>Effective Date</th>
           <th>Expire Date</th>
           <th>Termination Date</th>
-          <th class="text-center" style="width: 10rem">ACTION</th>
+          <th
+            class="text-center"
+            style="width: 10rem"
+            *ngIf="
+              userInfoDataService.userAcctInfo.isSuperUser ||
+              userInfoDataService.userAcctInfo.isQARole ||
+              userInfoDataService.userAcctInfo.isAdminRole ||
+              userInfoDataService.userAcctInfo.isTechRole
+            "
+          >
+            ACTION
+          </th>
         </tr>
       </thead>
       <tbody class="bg-body">
@@ -219,7 +254,16 @@
           <td class="align-middle">
             {{ appointment.appointmentTerminationDate | date : "MM/dd/yyyy" }}
           </td>
-          <td class="align-middle" style="min-width: 10rem">
+          <td
+            class="align-middle"
+            style="min-width: 10rem"
+            *ngIf="
+              userInfoDataService.userAcctInfo.isSuperUser ||
+              userInfoDataService.userAcctInfo.isQARole ||
+              userInfoDataService.userAcctInfo.isAdminRole ||
+              userInfoDataService.userAcctInfo.isTechRole
+            "
+          >
             <div class="d-flex justify-content-between me-4">
               <!-- <button
                 class="icon-edit-delete-button"
