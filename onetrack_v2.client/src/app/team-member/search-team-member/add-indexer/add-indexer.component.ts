@@ -37,6 +37,9 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
   document: string = '';
   employee: EmployeeSearchResult | null = null;
   files: File[] = [];
+  fullFilePathUri: string | null = null;
+  isDocumentUploaded: boolean = false;
+  uploadType: string = 'AttachmentLoc';
 
   private subscriptionData = new Subscription();
 
@@ -76,6 +79,15 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
     ];
 
     this.documentTypes = ['Select', ...this.dropdownDataService.documentTypes];
+  }
+
+  fileUploadCompleted(filePath: string) {
+    this.fullFilePathUri = filePath;
+    // this.companyReqForm.patchValue({
+    //   document: filePath,
+    // });
+    // this.companyReqForm.markAsDirty();
+    this.files.push(new File([filePath], 'uploaded-file', { type: 'application/pdf' }));
   }
 
   onDocumentTypeChange(event: any) {

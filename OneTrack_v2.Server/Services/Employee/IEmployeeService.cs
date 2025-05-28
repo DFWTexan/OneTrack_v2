@@ -15,6 +15,7 @@ namespace OneTrack_v2.Services
         public Task<ReturnResult> SearchEmployeeTMNumber(string vInput);
         public Task<ReturnResult> GetEmploymentCommunication(int vInput);
         public ReturnResult Index([FromBody] EmployeeIndex vInput);
+        public ReturnResult IndexV2([FromBody] EmployeeIndex vInput);
         //public DataModel.Response.ReturnResult GetEmployee(int vEmployeeID);
     }
 }

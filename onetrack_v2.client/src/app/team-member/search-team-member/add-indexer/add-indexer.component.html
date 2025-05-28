@@ -243,11 +243,14 @@
 <div class="row ms-1 mt-1 mb-3">
   <div class="col-md-12">
     <app-file-upload
-      [filePathUri]="fileUri"
-      [displayMode]="FileDisplayMode"
-      (filesChanged)="onFilesChanged($event)"
-      #fileUpload
-    ></app-file-upload>
+        [uploadType]="uploadType"
+        [filePathUri]="fileUri"
+        [displayMode]="FileDisplayMode"
+        (fileSelected)="onFileSelected($event)"
+        [isDisabled]="isDocumentUploaded"
+        (fullFilePathUri)="fileUploadCompleted($event)"
+        #fileUpload
+      ></app-file-upload>
     <!-- <input
       class="file-upload button-font-size me-3"
       type="file"
