@@ -521,6 +521,48 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
       }
     });
 
+    if(incentiveUpdateItem.DMSentDate == "") {
+      incentiveUpdateItem.DMSentDate = null;
+    }
+    if(incentiveUpdateItem.DMApprovalDate == "") {
+      incentiveUpdateItem.DMApprovalDate = null;
+    }
+    if(incentiveUpdateItem.DMDeclinedDate == "") {
+      incentiveUpdateItem.DMDeclinedDate = null;
+    }
+    if(incentiveUpdateItem.DM10DaySentDate == "") {
+      incentiveUpdateItem.DM10DaySentDate = null;
+    }
+    if(incentiveUpdateItem.DM20DaySentDate == "") {
+      incentiveUpdateItem.DM20DaySentDate = null;
+    }
+
+    if(incentiveUpdateItem.TMSentDate == "") {
+      incentiveUpdateItem.TMSentDate = null;
+    }
+    if(incentiveUpdateItem.TMApprovalDate == "") {
+      incentiveUpdateItem.TMApprovalDate = null;
+    }
+    if(incentiveUpdateItem.TMDeclinedDate == "") {
+      incentiveUpdateItem.TMDeclinedDate = null;
+    }
+    if(incentiveUpdateItem.TM10DaySentDate == "") {
+      incentiveUpdateItem.TM10DaySentDate = null;
+    }
+    if(incentiveUpdateItem.TM45DaySentDate == "") {
+      incentiveUpdateItem.TM45DaySentDate = null;
+    }
+    if(incentiveUpdateItem.TMExceptionDate == "") {
+      incentiveUpdateItem.TMExceptionDate = null;
+    }
+    if(incentiveUpdateItem.TMOkToSellSentDate == "") {
+      incentiveUpdateItem.TMOkToSellSentDate = null;
+    }
+    if(incentiveUpdateItem.TMOMSApprtoSendToHRDate == "") {
+      incentiveUpdateItem.TMOMSApprtoSendToHRDate = null;
+    }
+    
+
     // Handle default date for IncetivePeriodDate
     if (!incentiveUpdateItem.IncetivePeriodDate) {
       incentiveUpdateItem.IncetivePeriodDate = '1900-01-01';
