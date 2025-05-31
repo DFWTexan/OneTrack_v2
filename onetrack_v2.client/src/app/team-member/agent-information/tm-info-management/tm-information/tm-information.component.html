@@ -378,6 +378,14 @@
                 </div>
                 <div class="col d-flex justify-content-end">
                   <button
+                    class="icon-edit-delete-button"
+                    title="Incentive Information"
+                  >
+                    <span class="material-symbols-outlined"> paid </span>
+                  </button>
+                </div>
+                <div class="col d-flex justify-content-end">
+                  <button
                     *ngIf="
                       userInfoDataService.userAcctInfo.isSuperUser ||
                       userInfoDataService.userAcctInfo.isQARole ||
@@ -816,6 +824,14 @@
                         <div
                           class="d-flex align-middle justify-content-between mb-3 me-4"
                         >
+                          <button
+                            class="icon-edit-delete-button"
+                            title="Incentive Information"
+                          >
+                            <span class="material-symbols-outlined">
+                              paid
+                            </span>
+                          </button>
                           <button
                             class="icon-edit-delete-button"
                             (click)="
