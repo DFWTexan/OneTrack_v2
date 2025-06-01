@@ -379,6 +379,7 @@
                 <div class="col d-flex justify-content-end">
                   <button
                     class="icon-edit-delete-button"
+                    (click)="modalService.open('modal-incentive-info')"
                     title="Incentive Information"
                   >
                     <span class="material-symbols-outlined"> paid </span>
@@ -826,6 +827,7 @@
                         >
                           <button
                             class="icon-edit-delete-button"
+                            (click)="modalService.open('modal-incentive-info')"
                             title="Incentive Information"
                           >
                             <span class="material-symbols-outlined">
@@ -1306,6 +1308,20 @@
           [isIndex]="isIndex"
           [modeCloseModal]="'EDIT'"
         ></app-edit-license-info>
+      </div>
+    </div>
+  </div>
+</modal>
+
+<!-- Modal: INCENTIVE-INFO  -->
+<modal id="modal-incentive-info" [width]="'700px'">
+  <div class="modal-header">
+    <h1 class="modal-title">Incentive Information</h1>
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-incentive-info></app-incentive-info>
       </div>
     </div>
   </div>

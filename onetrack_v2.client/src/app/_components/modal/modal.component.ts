@@ -10,7 +10,7 @@ import { ModalService } from '../../_services';
 })
 export class ModalComponent implements OnInit, OnDestroy {
     @Input() id?: string;
-    @Input() width?: string = '500px';
+    @Input() width?: string = '700px'; // Default width
     isOpen = false;
     private element: any;
 
