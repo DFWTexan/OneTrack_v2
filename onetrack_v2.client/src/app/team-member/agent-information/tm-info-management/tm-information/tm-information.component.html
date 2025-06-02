@@ -379,7 +379,7 @@
                 <div class="col d-flex justify-content-end">
                   <button
                     class="icon-edit-delete-button"
-                    (click)="modalService.open('modal-incentive-info')"
+                    (click)="openModal()"
                     title="Incentive Information"
                   >
                     <span class="material-symbols-outlined"> paid </span>
@@ -827,7 +827,7 @@
                         >
                           <button
                             class="icon-edit-delete-button"
-                            (click)="modalService.open('modal-incentive-info')"
+                            (click)="openModal()"
                             title="Incentive Information"
                           >
                             <span class="material-symbols-outlined">
@@ -1326,3 +1326,39 @@
     </div>
   </div>
 </modal>
+
+<!-- The Modal -->
+<div class="modal" id="myModal">
+  <div class="modal-dialog modal-95w">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">EMF Modal Heading</h4>
+        <button
+          type="button"
+          class="btn-close"
+          (click)="closeModal()"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">EMF body..</div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .modal-dialog.modal-95w {
+    max-width: 90vw !important;
+    width: 90vw !important;
+    margin: 1.75rem auto;
+  }
+</style>

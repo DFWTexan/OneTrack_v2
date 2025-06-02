@@ -341,6 +341,19 @@ export class TmInformationComponent implements OnInit, OnDestroy {
     }
   }
 
+   openModal() {
+    const modalDiv = document.getElementById('myModal');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'block';
+    }
+  }
+  closeModal() {
+    const modalDiv = document.getElementById('myModal');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
+  }
+
   ngOnDestroy() {
     this.subscriptions.unsubscribe();
   }
