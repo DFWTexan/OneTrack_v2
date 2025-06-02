@@ -33,6 +33,7 @@ import { ImpersonationComponent } from './_components/impersonation/impersonatio
 import { TechWorklistComponent } from './_appModals/tech-worklist/tech-worklist.component';
 import { TechTicklerItemsComponent } from './_appModals/tech-tickler-items/tech-tickler-items.component';
 // import { FileAttachmentComponent } from './_components/file-attachment/file-attachment.component';
+import { IncentiveInfoComponent } from './team-member/agent-information/tm-info-management/tm-information/incentive-info/incentive-info.component';
 
 export function initializeApp(configService: ConfigService) {
   return () => configService.loadConfig();
@@ -50,7 +51,7 @@ export function initializeApp(configService: ConfigService) {
     ImpersonationComponent,
     TechWorklistComponent,
     TechTicklerItemsComponent,
-    
+    IncentiveInfoComponent,
   ],
   imports: [
     AppRoutingModule,

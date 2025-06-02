@@ -445,8 +445,8 @@
   </div>
 </modal>
 
-<!-- The Modal -->
-<div class="modal" id="myModal" *ngIf="isShowModalIncentiveInfo">
+<!-- Modal: INCENTIVE-INFO -->
+<div class="modal" id="modal-incentive-info" *ngIf="isShowModalIncentiveInfo">
   <div class="modal-dialog modal-95w">
     <div class="modal-content">
       <!-- Modal Header -->
@@ -461,13 +461,13 @@
       </div>
 
       <!-- Modal body -->
-      <div class="modal-body">EMF body..</div>
+      <app-incentive-info></app-incentive-info>
 
       <!-- Modal footer -->
       <div class="modal-footer">
-        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+        <!-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
           Close
-        </button>
+        </button> -->
       </div>
     </div>
   </div>
