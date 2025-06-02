@@ -444,3 +444,66 @@
     </div>
   </div>
 </modal>
+
+<!-- The Modal -->
+<div class="modal" id="myModal" *ngIf="isShowModalIncentiveInfo">
+  <div class="modal-dialog modal-95w">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h4 class="modal-title">EMF Modal Heading</h4>
+        <button
+          type="button"
+          class="btn-close"
+          (click)="appComService.updateIsShowModalIncentiveInfo(false)"
+          data-bs-dismiss="modal"
+        ></button>
+      </div>
+
+      <!-- Modal body -->
+      <div class="modal-body">EMF body..</div>
+
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <style>
+  .modal-dialog.modal-95w {
+    max-width: 80vw !important;
+    width: 80vw !important;
+    margin: 1.75rem auto;
+    
+  }
+  .modal {
+    z-index: 99999 !important;
+  }
+  .modal-backdrop {
+    position: fixed !important;
+    z-index: 99998 !important;
+  }
+</style> -->
+
+<style>
+  .modal {
+    position: fixed !important;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99999 !important;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0,0,0,0.4); /* optional: darken background */
+  }
+  .modal-dialog.modal-95w {
+    max-width: 95vw !important;
+    width: 95vw !important;
+    margin: 0 auto;
+  }
+</style>

@@ -67,7 +67,9 @@ export class AppComService {
   typeTicklerChanged = new Subject<any>();
   appMessage: string = '';
   appMessageChanged = new Subject<string>();
-
+  isShowModalIncentiveInfo: boolean = false;
+  isShowModalIncentiveInfoChanged = new Subject<boolean>();
+  
   subscriptions: Subscription = new Subscription();
 
   constructor(
@@ -85,6 +87,11 @@ export class AppComService {
       this.isLoggedInChanged.next(this.config.isDevLoginEnabled);
       this.isShowEditID = this.config.isShowEditID;
     }
+  }
+  
+  updateIsShowModalIncentiveInfo(isShowModalIncentiveInfo: boolean) {
+    this.isShowModalIncentiveInfo = isShowModalIncentiveInfo;
+    this.isShowModalIncentiveInfoChanged.next(this.isShowModalIncentiveInfo);
   }
 
   updateSearchEmployeeFilter(searchEmployeeFilter: SearchEmployeeFilter) {

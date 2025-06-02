@@ -46,6 +46,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
   isDevLoginEnabled = null;
   isLoggedIn: boolean | null = null;
   isImpersonationEnabled: boolean | null = null;
+  isShowModalIncentiveInfo = false;
 
   title = 'onetrack_v2';
   private subscriptions = new Subscription();
@@ -99,6 +100,15 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     // setTimeout(() => {
     //   this.cdr.detectChanges();
     // }, 0);
+
+    this.subscriptions.add(
+      this.appComService.isShowModalIncentiveInfoChanged.subscribe(
+        (isShowModalIncentiveInfo: boolean) => {
+          this.isShowModalIncentiveInfo = isShowModalIncentiveInfo;
+          this.cdr.detectChanges(); // Explicitly trigger change detection
+        }
+      )
+    );
 
     this.subscriptions.add(
       this.appComService.openTicklerCountChanged.subscribe(
@@ -439,6 +449,19 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
       });
       dialogRef.close();
     }, 100);
+  }
+
+   openModal() {
+    const modalDiv = document.getElementById('myModal');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'block';
+    }
+  }
+  closeModal() {
+    const modalDiv = document.getElementById('myModal');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
+    }
   }
 
   ngOnDestroy(): void {
