@@ -379,7 +379,12 @@
                 <div class="col d-flex justify-content-end">
                   <button
                     class="icon-edit-delete-button"
-                    (click)="appComService.updateIsShowModalIncentiveInfo(true)"
+                    (click)="
+                      agentDataService.storeEmployeeLicenseID(
+                        license.employeeLicenseId
+                      );
+                      appComService.updateIsShowModalIncentiveInfo(true)
+                    "
                     title="Incentive Information"
                   >
                     <span class="material-symbols-outlined"> paid </span>
@@ -827,7 +832,12 @@
                         >
                           <button
                             class="icon-edit-delete-button"
-                            (click)="appComService.updateIsShowModalIncentiveInfo(true)"
+                            (click)="
+                              agentDataService.storeEmployeeLicenseID(
+                                license.employeeLicenseId
+                              );
+                              appComService.updateIsShowModalIncentiveInfo(true)
+                            "
                             title="Incentive Information"
                           >
                             <span class="material-symbols-outlined">
@@ -1312,6 +1322,3 @@
     </div>
   </div>
 </modal>
-
-
-
