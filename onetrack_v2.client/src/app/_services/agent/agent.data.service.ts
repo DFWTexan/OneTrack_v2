@@ -863,6 +863,9 @@ export class AgentDataService {
   }
 
   storeEmployeeLicenseID(employeeLicenseID: number) {
+
+console.log('EMFTEST (AgentDataService: storeEmployeeLicenseID) - storeEmployeeLicenseID: ', employeeLicenseID);
+
     this.agentEmployeeLicenseID = employeeLicenseID;
     this.agentEmployeeLicenseIDChanged.next(this.agentEmployeeLicenseID);
   }

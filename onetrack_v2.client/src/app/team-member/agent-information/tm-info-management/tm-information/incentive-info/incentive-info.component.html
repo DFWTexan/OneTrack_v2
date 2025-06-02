@@ -7,7 +7,7 @@
       <strong style="margin-left: 0.5rem; margin-right: 1rem"
         >License Name:</strong
       >
-      <!-- {{ licenseMgmtData[currentIndex].licenseName }} -->
+      {{ licenseInfo.licenseName }}
       <button
         *ngIf="
           (!modeEdit && userAcctInfoDataService.userAcctInfo.isSuperUser) ||

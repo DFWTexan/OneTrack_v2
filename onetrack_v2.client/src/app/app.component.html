@@ -454,7 +454,7 @@
         <h1 class="modal-title w-100 text-center m-0">Incentive Information</h1>
         <button
           type="button"
-          class="btn-close"
+          class="btn-close me-3"
           (click)="appComService.updateIsShowModalIncentiveInfo(false)"
           data-bs-dismiss="modal"
           title="Close"
@@ -463,14 +463,17 @@
       </div>
 
       <!-- Modal body -->
-      <app-incentive-info></app-incentive-info>
+      <div class="modal-body">
+        <div class="d-flex justify-content-center">
+          <!-- <span style="font-size: large; font-weight: 600"
+            >Please review the information below before proceeding.</span
+          > -->
+        </div>
+        <app-incentive-info></app-incentive-info>
+      </div>
 
       <!-- Modal footer -->
-      <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-danger" data-bs-dismiss="modal">
-          Close
-        </button> -->
-      </div>
+      <!-- <div class="modal-footer"></div> -->
     </div>
   </div>
 </div>
@@ -478,14 +481,15 @@
 <style>
   .modal {
     position: fixed !important;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
     z-index: 99999 !important;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,0.4); /* optional: darken background */
+    background: rgba(0, 0, 0, 0.4); /* optional: darken background */
   }
   .modal-dialog.modal-95w {
     max-width: 95vw !important;
