@@ -392,7 +392,7 @@
                   </button>
                 </div>
                 <div class="col d-flex justify-content-end">
-                  <button
+                  <!-- <button
                     *ngIf="
                       userInfoDataService.userAcctInfo.isSuperUser ||
                       userInfoDataService.userAcctInfo.isQARole ||
@@ -410,10 +410,16 @@
                     title="Tickle Member"
                   >
                     <span class="material-symbols-outlined"> 3p </span>
+                  </button> -->
+                  <button
+                    class="icon-edit-delete-button"
+                    title="License Application"
+                  >
+                    <span class="material-symbols-outlined"> description </span>
                   </button>
                 </div>
                 <div class="col d-flex justify-content-end">
-                  <button
+                  <!-- <button
                     *ngIf="
                       userInfoDataService.userAcctInfo.isSuperUser ||
                       userInfoDataService.userAcctInfo.isQARole ||
@@ -432,6 +438,14 @@
                   >
                     <span class="material-symbols-outlined">
                       speaker_notes
+                    </span>
+                  </button> -->
+                  <button
+                    class="icon-edit-delete-button"
+                    title="License Renewal"
+                  >
+                    <span class="material-symbols-outlined">
+                      source_notes
                     </span>
                   </button>
                 </div>
@@ -837,7 +851,7 @@
                               agentDataService.storeEmployeeLicenseID(
                                 license.employeeLicenseId
                               );
-                              agentDataService.storeLicenseInfo('',license);
+                              agentDataService.storeLicenseInfo('', license);
                               appComService.updateIsShowModalIncentiveInfo(true)
                             "
                             title="Incentive Information"
@@ -846,7 +860,7 @@
                               paid
                             </span>
                           </button>
-                          <button
+                          <!-- <button
                             class="icon-edit-delete-button"
                             (click)="
                               modalService.open('modal-new-tickler');
@@ -858,8 +872,16 @@
                             title="Tickle Member"
                           >
                             <span class="material-symbols-outlined"> 3p </span>
-                          </button>
+                          </button> -->
                           <button
+                            class="icon-edit-delete-button"
+                            title="License Application"
+                          >
+                            <span class="material-symbols-outlined">
+                              description
+                            </span>
+                          </button>
+                          <!-- <button
                             class="icon-edit-delete-button"
                             (click)="
                               modalService.open('modal-new-tickler');
@@ -872,6 +894,14 @@
                           >
                             <span class="material-symbols-outlined">
                               speaker_notes
+                            </span>
+                          </button> -->
+                          <button
+                            class="icon-edit-delete-button"
+                            title="License Renewal"
+                          >
+                            <span class="material-symbols-outlined">
+                              source_notes
                             </span>
                           </button>
                           <button
