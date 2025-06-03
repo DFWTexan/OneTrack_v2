@@ -392,7 +392,7 @@
                   </button>
                 </div>
                 <div class="col d-flex justify-content-end">
-                  <button
+                  <!-- <button
                     *ngIf="
                       userInfoDataService.userAcctInfo.isSuperUser ||
                       userInfoDataService.userAcctInfo.isQARole ||
@@ -410,13 +410,14 @@
                     title="Tickle Member"
                   >
                     <span class="material-symbols-outlined"> 3p </span>
-                  </button>
-                  <!-- <button
+                  </button> -->
+                  <button
                     class="icon-edit-delete-button"
+                    (click)="modalService.open('modal-license-appl-info')"
                     title="License Application"
                   >
                     <span class="material-symbols-outlined"> description </span>
-                  </button> -->
+                  </button>
                 </div>
                 <div class="col d-flex justify-content-end">
                   <button
@@ -860,7 +861,7 @@
                               paid
                             </span>
                           </button>
-                          <button
+                          <!-- <button
                             class="icon-edit-delete-button"
                             (click)="
                               modalService.open('modal-new-tickler');
@@ -872,16 +873,19 @@
                             title="Tickle Member"
                           >
                             <span class="material-symbols-outlined"> 3p </span>
-                          </button>
-                          <!-- <button
+                          </button> -->
+                          <button
                             class="icon-edit-delete-button"
+                            (click)="
+                              modalService.open('modal-license-appl-info')
+                            "
                             title="License Application"
                           >
                             <span class="material-symbols-outlined">
                               description
                             </span>
-                          </button> -->
-                          <button
+                          </button>
+                          <!-- <button
                             class="icon-edit-delete-button"
                             (click)="
                               modalService.open('modal-new-tickler');
@@ -895,7 +899,7 @@
                             <span class="material-symbols-outlined">
                               speaker_notes
                             </span>
-                          </button>
+                          </button> -->
                           <!-- <button
                             class="icon-edit-delete-button"
                             title="License Renewal"
@@ -1355,17 +1359,29 @@
   </div>
 </modal>
 
-<!-- Modal: LICENSE-APPLICATION -->
-<modal id="modal-license-appl-icon">
+<!-- Modal: LICENSE-APPLICATION-INFORMATION -->
+<modal id="modal-license-appl-info">
   <div class="modal-header">
-    <h1 class="modal-title">
-      <strong>ADD</strong> - Incentive License Information
-    </h1>
+    <h1 class="modal-title">License Application Information</h1>
   </div>
   <div class="modal-body">
     <div>
       <div>
-        <!-- <app-license-appl-icon></app-license-appl-icon> -->
+        <app-license-appl-info></app-license-appl-info>
+      </div>
+    </div>
+  </div>
+</modal>
+
+<!-- Modal: LICENSE-RENEWAL-INFORMATION -->
+<modal id="modal-license-renewal-info">
+  <div class="modal-header">
+    <h1 class="modal-title">License Renewal Information</h1>
+  </div>
+  <div class="modal-body">
+    <div>
+      <div>
+        <app-license-renewal-info></app-license-renewal-info>
       </div>
     </div>
   </div>
