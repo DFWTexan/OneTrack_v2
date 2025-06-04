@@ -36,6 +36,7 @@ import { FileUploadComponent } from '../_components/file-upload/file-upload.comp
 import { FileViewerComponent } from '../_components/file-viewer/file-viewer.component';
 import { FileAttachmentComponent } from '../_components/file-attachment/file-attachment.component';
 import { ViewEmployeeCommunicationComponent } from '../_components/view-employee-communication/view-employee-communication.component';
+// import { IMaskModule } from 'angular-imask';
 
 @NgModule({
   declarations: [

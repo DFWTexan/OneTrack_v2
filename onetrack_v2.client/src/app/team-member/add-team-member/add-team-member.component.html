@@ -14,7 +14,9 @@
       <div class="col">
         <div class="form-row">
           <div class="form-group col-md-4">
-            <label for="firstName">First Name: <span class="text-danger">*</span></label>
+            <label for="firstName"
+              >First Name: <span class="text-danger">*</span></label
+            >
             <input
               type="text"
               class="form-control input-size-medium"
@@ -43,7 +45,9 @@
             />
           </div>
           <div class="form-group col-md-4">
-            <label for="lastName">Last Name: <span class="text-danger">*</span></label>
+            <label for="lastName"
+              >Last Name: <span class="text-danger">*</span></label
+            >
             <input
               type="text"
               class="form-control input-size-medium"
@@ -101,6 +105,7 @@
               id="employeeSSN"
               formControlName="EmployeeSSN"
               placeholder="###-##-####"
+              [imask]="{ mask: '000-00-0000' }"
             />
           </div>
         </div>
@@ -147,7 +152,9 @@
 
         <div class="form-row">
           <div class="form-group col-md-4">
-            <label for="employerAgency">Employer/Agency: <span class="text-danger">*</span></label>
+            <label for="employerAgency"
+              >Employer/Agency: <span class="text-danger">*</span></label
+            >
             <select
               class="form-select select-size-med-large"
               id="employerAgency"
@@ -162,8 +169,7 @@
             </select>
             <div
               *ngIf="
-                (newAgentForm.controls['CompanyID'].touched ||
-                  formSubmitted) &&
+                (newAgentForm.controls['CompanyID'].touched || formSubmitted) &&
                 newAgentForm.controls['CompanyID'].errors &&
                 newAgentForm.controls['CompanyID'].errors['invalid']
               "
@@ -173,7 +179,9 @@
             </div>
           </div>
           <div class="form-group col-md-4">
-            <label for="workState">Work State: <span class="text-danger">*</span></label>
+            <label for="workState"
+              >Work State: <span class="text-danger">*</span></label
+            >
             <select
               class="form-select select-size-small"
               id="workState"
@@ -196,7 +204,9 @@
             </div>
           </div>
           <div class="form-group col-md-4">
-            <label for="ResStateAbv">Res State: <span class="text-danger">*</span></label>
+            <label for="ResStateAbv"
+              >Res State: <span class="text-danger">*</span></label
+            >
             <select
               class="form-select select-size-small"
               id="ResStateAbv"
@@ -241,7 +251,9 @@
             </select>
           </div>
           <div class="form-group col-md-4">
-            <label for="hireDate">Hire Date: <span class="text-danger">*</span></label>
+            <label for="hireDate"
+              >Hire Date: <span class="text-danger">*</span></label
+            >
             <input
               type="date"
               class="form-control input-size-small"
@@ -251,8 +263,7 @@
             />
             <div
               *ngIf="
-                (newAgentForm.controls['HireDate'].touched ||
-                  formSubmitted) &&
+                (newAgentForm.controls['HireDate'].touched || formSubmitted) &&
                 newAgentForm.controls['HireDate'].errors &&
                 newAgentForm.controls['HireDate'].errors['invalid']
               "
@@ -326,6 +337,7 @@
               id="zip"
               formControlName="Zip"
               placeholder="#####-###"
+              [imask]="{ mask: '00000-0000' }"
             />
           </div>
           <div class="form-group col-md-4">
@@ -349,6 +361,7 @@
               id="homePhone"
               formControlName="Phone"
               placeholder="(###)###-####"
+              [imask]="{ mask: '(000)000-0000' }"
             />
           </div>
           <div class="form-group col-md-4">
@@ -359,6 +372,7 @@
               id="workPhone"
               formControlName="WorkPhone"
               placeholder="(###)###-####"
+              [imask]="{ mask: '(000)000-0000' }"
             />
           </div>
           <div class="form-group col-md-4">
@@ -369,6 +383,7 @@
               id="fax"
               formControlName="Fax"
               placeholder="(###)###-####"
+              [imask]="{ mask: '(000)000-0000' }"
             />
           </div>
         </div>
