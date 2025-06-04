@@ -39,7 +39,7 @@ export class FileUploadComponent {
       formData.append('fileName', this.fileName); // must match [FromForm] string fileName
       formData.append('filePathType', this.uploadType || ''); // must match [FromForm] string filePathType
 
-      console.log('EMFTEST (UPLOAD) - formData => \n', formData);
+      // console.log('EMFTEST (UPLOAD) - formData => \n', formData);
 
       interface UploadResponse {
         objData: { fullPath: string };
