@@ -9,6 +9,7 @@ import { Subscription, zip } from 'rxjs';
 
 import {
   AgentDataService,
+  AppComService,
   ConstantsDataService,
   DropdownDataService,
   ErrorMessageService,
@@ -36,6 +37,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     private conService: ConstantsDataService,
     private drpdwnDataService: DropdownDataService,
     private agentDataService: AgentDataService,
+    public appComService: AppComService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {
     this.newAgentForm = this.fb.group({
@@ -162,6 +164,7 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
     this.formSubmitted = true;
 
     let agent: any = this.newAgentForm.value;
+    agent.emoloyeeID = 0;
     agent.UserSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
     if (agent.employerAgency === 0 || agent.employerAgency === '') {
@@ -198,6 +201,9 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
         //   'EMFTEST () - Agent added successfully response => \n ',
         //   response
         // );
+        this.appComService.updateAppMessage(
+          'Data submitted successfully.' // 'Data submitted successfully.'
+        );
       },
       error: (error) => {
         if (error.error && error.error.errMessage) {

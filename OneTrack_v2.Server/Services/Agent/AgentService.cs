@@ -1168,66 +1168,55 @@ namespace OneTrack_v2.Services
                 if (vInput.EmployeeID == 0)
                 {
                     // INSERT
-                    //using (SqlConnection conn = new SqlConnection(_connectionString))
-                    //{
-                    //using (SqlCommand cmd = new SqlCommand("uspAgentInsert", conn))
-                    //{
-                    //    cmd.CommandType = CommandType.StoredProcedure;
+                    using (SqlConnection conn = new SqlConnection(_connectionString))
+                    {
+                        using (SqlCommand cmd = new SqlCommand("uspAgentInsert", conn))
+                        {
+                            cmd.CommandType = CommandType.StoredProcedure;
 
-                    //    cmd.Parameters.Add(new SqlParameter("@EmployeeSSN", SqlDbType.VarChar, 12) { Value = vInput.EmployeeSSN ?? string.Empty });
-                    //    cmd.Parameters.Add(new SqlParameter("@NationalProducerNumber", SqlDbType.Int) { Value = vInput.NationalProducerNumber });
-                    //    cmd.Parameters.Add(new SqlParameter("@GEID", SqlDbType.VarChar, 15) { Value = vInput.GEID ?? string.Empty });
-                    //    cmd.Parameters.Add(new SqlParameter("@Alias", SqlDbType.VarChar, 50) { Value = vInput.Alias ?? string.Empty });
-                    //    cmd.Parameters.Add(new SqlParameter("@LastName", SqlDbType.VarChar, 50) { Value = vInput.LastName ?? string.Empty });
-                    //    cmd.Parameters.Add(new SqlParameter("@FirstName", SqlDbType.VarChar, 50) { Value = vInput.FirstName ?? string.Empty });
-                    //    cmd.Parameters.Add(new SqlParameter("@MiddleName", SqlDbType.VarChar, 50) { Value = vInput.MiddleName ?? string.Empty });
-                    //    //cmd.Parameters.Add(new SqlParameter("@DateOfBirth", SqlDbType.DateTime) { Value = vInput.DateOfBirth });
-                    //    if (vInput.DateOfBirth != DateTime.MinValue)
-                    //    {
-                    //        cmd.Parameters.Add(new SqlParameter("@DateOfBirth", SqlDbType.DateTime) { Value = vInput.DateOfBirth });
-                    //    }
-                    //    else
-                    //    {
-                    //        cmd.Parameters.Add(new SqlParameter("@DateOfBirth", SqlDbType.DateTime) { Value = DBNull.Value });
-                    //    }
-                    //    cmd.Parameters.Add(new SqlParameter("@SOEID", SqlDbType.VarChar, 15) { Value = vInput.SOEID ?? string.Empty });
-                    //    cmd.Parameters.Add(new SqlParameter("@ExcludeFromRpts", SqlDbType.Bit) { Value = vInput.ExcludeFromRpts });
-                    //    cmd.Parameters.Add(new SqlParameter("@EmployeeStatus", SqlDbType.VarChar, 25) { Value = vInput.EmployeeStatus ?? string.Empty });
-                    //    cmd.Parameters.Add(new SqlParameter("@CompanyID", SqlDbType.Int) { Value = vInput.CompanyID });
-                    //    cmd.Parameters.Add(new SqlParameter("@WorkPhone", SqlDbType.VarChar, 13) { Value = vInput.WorkPhone ?? string.Empty });
-                    //    cmd.Parameters.Add(new SqlParameter("@Email", SqlDbType.VarChar, 50) { Value = vInput.Email ?? string.Empty });
-                    //    cmd.Parameters.Add(new SqlParameter("@LicenseIncentive", SqlDbType.VarChar, 25) { Value = vInput.LicenseIncentive ?? string.Empty });
-                    //    cmd.Parameters.Add(new SqlParameter("@LicenseLevel", SqlDbType.VarChar, 25) { Value = vInput.LicenseLevel ?? string.Empty });
-                    //    cmd.Parameters.Add(new SqlParameter("@Address1", SqlDbType.VarChar, 50) { Value = vInput.Address1 ?? string.Empty });
-                    //    cmd.Parameters.Add(new SqlParameter("@Address2", SqlDbType.VarChar, 50) { Value = vInput.Address2 ?? string.Empty });
-                    //    cmd.Parameters.Add(new SqlParameter("@City", SqlDbType.VarChar, 50) { Value = vInput.City ?? string.Empty });
-                    //    cmd.Parameters.Add(new SqlParameter("@State", SqlDbType.Char, 2) { Value = vInput.State ?? string.Empty });
-                    //    cmd.Parameters.Add(new SqlParameter("@Zip", SqlDbType.VarChar, 12) { Value = vInput.Zip ?? string.Empty });
-                    //    cmd.Parameters.Add(new SqlParameter("@Phone", SqlDbType.VarChar, 13) { Value = vInput.Phone ?? string.Empty });
-                    //    cmd.Parameters.Add(new SqlParameter("@Fax", SqlDbType.VarChar, 13) { Value = vInput.Fax ?? string.Empty });
-                    //    //cmd.Parameters.Add(new SqlParameter("@HireDate", SqlDbType.DateTime) { Value = vInput.HireDate.Date});
-                    //    if (vInput.HireDate != DateTime.MinValue)
-                    //    {
-                    //        cmd.Parameters.Add(new SqlParameter("@HireDate", SqlDbType.DateTime) { Value = vInput.HireDate });
-                    //    }
-                    //    else
-                    //    {
-                    //        cmd.Parameters.Add(new SqlParameter("@HireDate", SqlDbType.DateTime) { Value = DBNull.Value });
-                    //    }
-                    //    cmd.Parameters.Add(new SqlParameter("@UserSOEID", SqlDbType.VarChar, 50) { Value = vInput.UserSOEID ?? string.Empty });
-                    //    cmd.Parameters.Add(new SqlParameter("@BackgroundCheckStatus", SqlDbType.VarChar, 50) { Value = vInput.BackgroundCheckStatus ?? string.Empty });
-                    //    cmd.Parameters.Add(new SqlParameter("@BackgroundCheckNote", SqlDbType.VarChar, 500) { Value = vInput.BackgroundCheckNote ?? string.Empty });
-                    //    cmd.Parameters.Add(new SqlParameter("@BranchCode", SqlDbType.VarChar, 10) { Value = vInput.BranchCode ?? string.Empty });
-                    //    cmd.Parameters.Add(new SqlParameter("@WorkStateAbv", SqlDbType.Char, 2) { Value = vInput.WorkStateAbv ?? string.Empty });
-                    //    cmd.Parameters.Add(new SqlParameter("@ResStateAbv", SqlDbType.Char, 2) { Value = vInput.ResStateAbv ?? string.Empty });
-                    //    cmd.Parameters.Add(new SqlParameter("@JobTitleID", SqlDbType.Int) { Value = vInput.JobTitleID });
-                    //    cmd.Parameters.Add(new SqlParameter("@JobTitleDate", SqlDbType.DateTime) { Value = vInput.JobTitleDate });
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeSSN", SqlDbType.VarChar, 12) { Value = vInput.EmployeeSSN ?? string.Empty });
+                            //cmd.Parameters.Add(new SqlParameter("@EmployeeID", SqlDbType.VarChar, 25) { Value = vInput.EmployeeID });
+                            cmd.Parameters.Add(new SqlParameter("@LastName", SqlDbType.VarChar, 50) { Value = vInput.LastName ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@FirstName", SqlDbType.VarChar, 50) { Value = vInput.FirstName ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@MiddleName", SqlDbType.VarChar, 50) { Value = vInput.MiddleName ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@SOEID", SqlDbType.VarChar, 15) { Value = vInput.SOEID ?? string.Empty });
+                            //cmd.Parameters.Add(new SqlParameter("@DateOfBirth", SqlDbType.DateTime) { Value = vInput.DateOfBirth ?? DateTime.MinValue });
+                            if (vInput.DateOfBirth != DateTime.MinValue)
+                            {
+                                cmd.Parameters.Add(new SqlParameter("@DateOfBirth", SqlDbType.DateTime) { Value = vInput.DateOfBirth });
+                            }
+                            else
+                            {
+                                cmd.Parameters.Add(new SqlParameter("@DateOfBirth", SqlDbType.DateTime) { Value = DBNull.Value });
+                            }
+                            cmd.Parameters.Add(new SqlParameter("@NationalProducerNumber", SqlDbType.Int) { Value = vInput.NationalProducerNumber });
+                            cmd.Parameters.Add(new SqlParameter("@GEID", SqlDbType.VarChar, 15) { Value = vInput.GEID ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@Alias", SqlDbType.VarChar, 50) { Value = vInput.Alias ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@ExcludeFromRpts", SqlDbType.Bit) { Value = vInput.ExcludeFromRpts });
+                            cmd.Parameters.Add(new SqlParameter("@Address1", SqlDbType.VarChar, 50) { Value = vInput.Address1 ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@Address2", SqlDbType.VarChar, 50) { Value = vInput.Address2 ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@City", SqlDbType.VarChar, 50) { Value = vInput.City ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@State", SqlDbType.Char, 2) { Value = vInput.State ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@Zip", SqlDbType.VarChar, 12) { Value = vInput.Zip ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@Phone", SqlDbType.VarChar, 13) { Value = vInput.Phone ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@Fax", SqlDbType.VarChar, 13) { Value = vInput.Fax ?? string.Empty });
+                            //cmd.Parameters.Add(new SqlParameter("@EmploymentID", SqlDbType.Int) { Value = vInput.EmploymentID });
+                            cmd.Parameters.Add(new SqlParameter("@Email", SqlDbType.VarChar, 50) { Value = vInput.Email ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@WorkPhone", SqlDbType.VarChar, 13) { Value = vInput.WorkPhone ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@EmployeeStatus", SqlDbType.VarChar, 25) { Value = vInput.EmployeeStatus ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@CompanyID", SqlDbType.Int) { Value = vInput.CompanyID });
+                            //cmd.Parameters.Add(new SqlParameter("@CERequired", SqlDbType.Bit) { Value = vInput.CERequired });
+                            cmd.Parameters.Add(new SqlParameter("@LicenseLevel", SqlDbType.VarChar, 25) { Value = vInput.LicenseLevel ?? string.Empty });
+                            cmd.Parameters.Add(new SqlParameter("@LicenseIncentive", SqlDbType.VarChar, 25) { Value = vInput.LicenseIncentive ?? string.Empty });
+                            //cmd.Parameters.Add(new SqlParameter("@SecondChance", SqlDbType.Bit) { Value = vInput.SecondChance });
+                            cmd.Parameters.Add(new SqlParameter("@UserSOEID", SqlDbType.VarChar, 50) { Value = vInput.UserSOEID ?? string.Empty });
 
 
-                    //    conn.Open();
-                    //    cmd.ExecuteNonQuery();
-                    //}
-                    //}
+                            conn.Open();
+                            cmd.ExecuteNonQuery();
+                        }
+                    }
+
                     result = InsertAgent_v2(vInput);
                 }
                 else
