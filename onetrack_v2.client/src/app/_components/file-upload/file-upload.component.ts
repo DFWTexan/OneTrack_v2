@@ -33,6 +33,7 @@ export class FileUploadComponent {
 
     if (file) {
       this.fileName = file.name;
+      this.attachedFiles.push(file);
       const formData = new FormData();
       formData.append('file', file); // must match [FromForm] IFormFile file
       formData.append('fileName', this.fileName); // must match [FromForm] string fileName

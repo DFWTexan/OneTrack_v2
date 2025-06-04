@@ -908,7 +908,7 @@ namespace OneTrak_v2.Services
             {
                 result.Success = false;
                 result.ObjData = null;
-                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49597].";
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-41527].";
 
                 _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
             }
@@ -1016,7 +1016,7 @@ namespace OneTrak_v2.Services
                 result.StatusCode = 500;
                 result.Success = false;
                 result.ObjData = null;
-                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49597].";
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-40095].";
                 _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }
             return result;
@@ -1046,7 +1046,7 @@ namespace OneTrak_v2.Services
                 result.StatusCode = 500;
                 result.Success = false;
                 result.ObjData = null;
-                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49597].";
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-09597].";
                 _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
             }
             return result;
@@ -1114,7 +1114,7 @@ namespace OneTrak_v2.Services
                 result.StatusCode = 500;
                 result.Success = false;
                 result.ObjData = null;
-                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49597].";
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49511].";
 
                 _utilityService.LogError(ex.Message, result.ErrMessage, new { }, vInput.UserSOEID);
             }
@@ -1152,7 +1152,7 @@ namespace OneTrak_v2.Services
                 result.StatusCode = 500;
                 result.Success = false;
                 result.ObjData = null;
-                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49597].";
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-49320].";
 
                 _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
             }

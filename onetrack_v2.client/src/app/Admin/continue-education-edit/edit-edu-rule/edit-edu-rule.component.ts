@@ -13,6 +13,7 @@ import { Subscription } from 'rxjs';
 import {
   AdminComService,
   AdminDataService,
+  AppComService,
   DropdownDataService,
   ErrorMessageService,
   UserAcctInfoDataService,
@@ -51,6 +52,7 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
     public adminDataService: AdminDataService,
     // private dropdownDataService: DropdownDataService,
     public adminComService: AdminComService,
+    public appComService: AppComService,
     private userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
@@ -66,7 +68,7 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
 
   private initializeForm(): void {
     this.eduRuleForm = new FormGroup({
-      ruleNumber: new FormControl(''),
+      ruleNumber: new FormControl(0),
       stateProvince: new FormControl(''),
       licenseType: new FormControl(''),
       requiredCreditHours: new FormControl(''),
@@ -235,6 +237,10 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
     eduRuleItem.exemptionID = this.selectedExemptionValues.join(',');
     eduRuleItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
+    // if( eduRuleItem.ruleNumber === '' || eduRuleItem.ruleNumber === null) {
+    //   eduRuleItem.ruleNumber = 0;
+    // }
+
     if (
       eduRuleItem.stateProvince === 'Select' ||
       eduRuleItem.stateProvince === ''
@@ -266,6 +272,9 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
     this.subscriptionData.add(
       this.adminDataService.upSertEducationRule(eduRuleItem).subscribe({
         next: (response) => {
+          this.appComService.updateAppMessage(
+              'Data submitted successfully.' // 'Data submitted successfully.'
+            );
           this.callParentRefreshData.emit();
           this.forceCloseModal();
         },
