@@ -73,6 +73,7 @@ export class EditDropdownItemComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.isFormSubmitted = true;
     let lkpTypeItem: any = this.dropdownItemForm.value;
+    lkpTypeItem.lkpField = this.selectedDropdownListType;
     lkpTypeItem.upSertType = this.upSertType;
     lkpTypeItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 

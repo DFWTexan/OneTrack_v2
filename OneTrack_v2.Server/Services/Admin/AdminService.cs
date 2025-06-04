@@ -1168,6 +1168,7 @@ namespace OneTrak_v2.Services
                 if (vInput.LkpField == null || vInput.LkpValue == null)
                 {
                     result.Success = false;
+                    result.StatusCode = 500;
                     result.ObjData = null;
                     result.ErrMessage = "Invalid Input - Please provide LkpField and LkpValue.";
 
@@ -1185,6 +1186,7 @@ namespace OneTrak_v2.Services
 
                             cmd.Parameters.Add(new SqlParameter("@LkpField", vInput.LkpField));
                             cmd.Parameters.Add(new SqlParameter("@LkpValue", vInput.LkpValue));
+                            cmd.Parameters.Add(new SqlParameter("@SortOrder", vInput.SortOrder));
                             cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
 
                             conn.Open();
