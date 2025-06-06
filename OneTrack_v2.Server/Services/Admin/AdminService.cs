@@ -847,19 +847,17 @@ namespace OneTrak_v2.Services
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
 
-                            cmd.Parameters.Add(new SqlParameter("@CompanyID", vInput.CompanyId));
                             cmd.Parameters.Add(new SqlParameter("@CompanyAbv", vInput.CompanyAbv));
                             cmd.Parameters.Add(new SqlParameter("@CompanyType", vInput.CompanyType));
                             cmd.Parameters.Add(new SqlParameter("@CompanyName", vInput.CompanyName));
                             cmd.Parameters.Add(new SqlParameter("@TIN", vInput.Tin));
                             cmd.Parameters.Add(new SqlParameter("@NAICNumber", vInput.Naicnumber));
-                            cmd.Parameters.Add(new SqlParameter("@AddressID", vInput.AddressId));
                             cmd.Parameters.Add(new SqlParameter("@Address1", vInput.Address1));
                             cmd.Parameters.Add(new SqlParameter("@Address2", vInput.Address2));
                             cmd.Parameters.Add(new SqlParameter("@City", vInput.City));
                             cmd.Parameters.Add(new SqlParameter("@State", vInput.State));
-                            cmd.Parameters.Add(new SqlParameter("@Phone", vInput.Phone));
                             cmd.Parameters.Add(new SqlParameter("@Zip", vInput.Zip));
+                            cmd.Parameters.Add(new SqlParameter("@Phone", vInput.Phone));
                             cmd.Parameters.Add(new SqlParameter("@Fax", vInput.Fax));
                             cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
 
@@ -907,6 +905,7 @@ namespace OneTrak_v2.Services
             catch (Exception ex)
             {
                 result.Success = false;
+                result.StatusCode = 500;
                 result.ObjData = null;
                 result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1509-41527].";
 
