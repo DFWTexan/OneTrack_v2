@@ -76,4 +76,10 @@ export class FileUploadComponent {
       // Now you can use the file variable as needed
     }
   }
+
+   deleteFile(index: number) {
+    this.attachedFiles.splice(index, 1);
+    this.emailDataService.setAttachedFiles(this.attachedFiles);
+    this.filesChanged.emit(this.attachedFiles);
+  }
 }

@@ -51,8 +51,17 @@
   <div>
     <span class="ms-3" style="font-size: large; font-weight: 400">
       <ng-container *ngIf="attachedFiles.length > 0">
-        <div *ngFor="let file of attachedFiles">
+        <div *ngFor="let file of attachedFiles; let i = index">
           {{ file.name }}
+          <button
+            type="button"
+            class="btn btn-link hover-pointer ms-2"
+            (click)="deleteFile(i)"
+            [disabled]="isDisabled"
+            title="Remove file"
+          >
+            <span class="material-symbols-outlined"> close </span>
+          </button>
         </div>
       </ng-container>
       <!-- <ng-template #noFiles>No file attached.</ng-template> -->
