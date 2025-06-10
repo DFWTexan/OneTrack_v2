@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -6,6 +6,7 @@ import {
   AppComService,
   ConstantsDataService,
   DropdownDataService,
+  EmailDataService,
   EmployeeDataService,
   ErrorMessageService,
   MiscDataService,
@@ -51,7 +52,9 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
     public appComService: AppComService,
     private dropdownDataService: DropdownDataService,
     private fb: FormBuilder,
-    private userInfoDataService: UserAcctInfoDataService
+    private userInfoDataService: UserAcctInfoDataService,
+    private emailDataService: EmailDataService,
+    private cdr: ChangeDetectorRef,
   ) {
     this.indexForm = this.fb.group({
       workState: ['Select'],
@@ -69,6 +72,7 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
         (employee: EmployeeSearchResult | null) => {
           if (employee !== null) {
             this.employee = employee;
+            this.cdr.detectChanges();
           }
         }
       )
@@ -188,6 +192,21 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
           this.indexForm.get('workState')?.setValue('Select');
 
           this.selectedDocumentType = 'Select'; // Reset DocumentType select
+
+          // (document.getElementsByName('workState')[0] as HTMLInputElement).value = 'Select';
+          // (document.getElementsByName('licenseState')[0] as HTMLInputElement).value = 'Select';
+          // (document.getElementsByName('branchName')[0] as HTMLInputElement).value = '';
+          // (document.getElementsByName('scoreNum')[0] as HTMLInputElement).value = '0';
+          // (document.getElementsByName('docSubType')[0] as HTMLInputElement).value = '';
+          
+          this.indexForm.get('workState')?.setValue('Select');
+          this.indexForm.get('licenseState')?.setValue('Select');
+          this.indexForm.get('branchName')?.setValue(null);
+          this.indexForm.get('scoreNum')?.setValue(0);
+          this.indexForm.get('docSubType')?.setValue(null);
+          this.emailDataService.setAttachedFiles([]); 
+          this.files = []; // Reset files array
+          this.cdr.detectChanges();
 
           this.appComService.updateAppMessage(
             'Data submitted successfully.' // 'Data submitted successfully.'

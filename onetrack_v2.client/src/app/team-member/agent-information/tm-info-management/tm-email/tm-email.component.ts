@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   ElementRef,
   Injectable,
@@ -82,7 +83,8 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     public userInfoDataService: UserAcctInfoDataService,
     private fileService: FileService,
     private sanitizer: DomSanitizer,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -102,6 +104,14 @@ export class TmEmailComponent implements OnInit, OnDestroy {
           this.emailAttachments = [];
           this.file = null;
           this.files = [];
+          this.ccEmail = [];
+          // this.chkMgr = false;
+          // this.chkDM = false;
+          // this.chkRD = false;
+          (document.getElementsByName('chkMgr')[0] as HTMLInputElement).checked = false;
+          (document.getElementsByName('chkDM')[0] as HTMLInputElement).checked = false;
+          (document.getElementsByName('chkRD')[0] as HTMLInputElement).checked = false;
+          this.cdr.detectChanges();
 
           this.subscriptions.add(
             this.emailDataService
