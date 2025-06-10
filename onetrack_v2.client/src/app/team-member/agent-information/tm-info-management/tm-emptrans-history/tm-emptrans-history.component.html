@@ -571,7 +571,8 @@
                     *ngIf="
                       userInfoDataService.userAcctInfo.isSuperUser ||
                       userInfoDataService.userAcctInfo.isQARole ||
-                      userInfoDataService.userAcctInfo.isAdminRole
+                      userInfoDataService.userAcctInfo.isAdminRole ||
+                      userInfoDataService.userAcctInfo.isTechRole
                     "
                   >
                     <div class="d-flex justify-content-center mb-3 me-4">
@@ -740,7 +741,8 @@
               *ngIf="
                 userInfoDataService.userAcctInfo.isSuperUser ||
                 userInfoDataService.userAcctInfo.isQARole ||
-                userInfoDataService.userAcctInfo.isAdminRole
+                userInfoDataService.userAcctInfo.isAdminRole ||
+                userInfoDataService.userAcctInfo.isTechRole
               "
               class="btn btn-success button-font-size"
               (click)="
