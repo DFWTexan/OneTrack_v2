@@ -2310,7 +2310,7 @@ namespace OneTrack_v2.Services
 
                             cmd.Parameters.Add(new SqlParameter("@EmploymentID", vInput.EmploymentID));
                             cmd.Parameters.Add(new SqlParameter("@SOEID", vInput.SOEID));
-                            cmd.Parameters.Add(new SqlParameter("@DiaryDate", vInput.DiaryDate));
+                            cmd.Parameters.Add(new SqlParameter("@DiaryDate", DateTime.Now));
                             cmd.Parameters.Add(new SqlParameter("@DiaryName", vInput.DiaryName));
                             cmd.Parameters.Add(new SqlParameter("@Notes", vInput.Notes));
                             cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
