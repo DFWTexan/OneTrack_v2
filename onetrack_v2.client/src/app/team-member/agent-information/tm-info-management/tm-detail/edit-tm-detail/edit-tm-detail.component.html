@@ -12,6 +12,7 @@
             type="text"
             class="form-control input-size-small"
             formControlName="firstName"
+            readonly
           />
         </label>
         <div
@@ -33,6 +34,7 @@
             type="text"
             class="form-control input-size-small"
             formControlName="middleName"
+            readonly
           />
         </label>
       </div>
@@ -45,6 +47,7 @@
             type="text"
             class="form-control input-size-small"
             formControlName="lastName"
+            readonly
           />
         </label>
         <div
@@ -66,6 +69,7 @@
             type="date"
             class="form-control input-size-small"
             formControlName="dateOfBirth"
+            readonly
           />
         </label>
       </div>
@@ -80,6 +84,7 @@
           type="text"
           class="form-control input-size-small"
           formControlName="employeeID"
+          readonly
         />
       </div>
     </div>
@@ -91,6 +96,7 @@
             type="text"
             class="form-control input-size-small"
             formControlName="geid"
+            readonly
           />
         </label>
       </div>
@@ -103,6 +109,8 @@
             type="text"
             class="form-control input-size-small"
             formControlName="employeeSSN"
+            readonly
+            [imask]="{ mask: '000-00-0000' }"
           />
         </label>
       </div>
@@ -171,6 +179,7 @@
             type="text"
             class="form-control input-size-large"
             formControlName="address1"
+            readonly
           />
         </label>
       </div>
@@ -183,6 +192,7 @@
             type="text"
             class="form-control input-size-large"
             formControlName="address2"
+            readonly
           />
         </label>
       </div>
@@ -198,6 +208,7 @@
             type="text"
             class="form-control input-size-small"
             formControlName="city"
+            readonly
           />
         </label>
       </div>
@@ -206,15 +217,22 @@
       <div class="mb-3">
         <label class="form-label">
           State:
-          <select
+          <!-- <select
             class="form-select select-size-x-small"
             id="state"
             formControlName="state"
+            [disabled]="true"
           >
             <option *ngFor="let state of states" [value]="state">
               {{ state }}
             </option>
-          </select>
+          </select> -->
+          <input
+            type="text"
+            class="form-control input-size-small"
+            formControlName="state"
+            readonly
+          />
         </label>
       </div>
     </div>
@@ -226,6 +244,8 @@
             type="text"
             class="form-control input-size-small"
             formControlName="zip"
+            readonly
+            [imask]="{ mask: '00000-0000' }"
           />
         </label>
       </div>
@@ -241,6 +261,8 @@
             type="text"
             class="form-control input-size-small"
             formControlName="phone"
+            readonly
+            [imask]="{ mask: '(000)000-0000' }"
           />
         </label>
       </div>
@@ -253,6 +275,7 @@
             type="email"
             class="form-control input-size-medium"
             formControlName="email"
+            readonly
           />
         </label>
       </div>
