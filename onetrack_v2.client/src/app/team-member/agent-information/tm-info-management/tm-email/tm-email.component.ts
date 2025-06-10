@@ -98,6 +98,11 @@ export class TmEmailComponent implements OnInit, OnDestroy {
         (agentInfo: AgentInfo) => {
           this.agentInfo = agentInfo;
 
+          this.resetForm();
+          this.emailAttachments = [];
+          this.file = null;
+          this.files = [];
+
           this.subscriptions.add(
             this.emailDataService
               .fetchEmailComTemplateByID(33, this.agentInfo.employmentID)
@@ -284,6 +289,9 @@ export class TmEmailComponent implements OnInit, OnDestroy {
         next: (response) => {
           this.isSubmitted = false;
           this.resetForm();
+          this.emailAttachments = [];
+          this.file = null;
+          this.files = [];
           this.appComService.updateAppMessage(
             'Email Sent successfully.' // 'Data submitted successfully.'
           );
@@ -342,6 +350,15 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   //     })
   //   );
   // }
+
+  removeAttachment(index: number): void {
+    if (index >= 0 && index < this.emailAttachments.length) {
+      const fileName = this.emailAttachments[index];
+      this.emailAttachments.splice(index, 1);
+      this.files = this.files.filter((file) => file.name !== fileName);
+      this.emailDataService.deleteAttachedFile(index);
+    }
+  }
 
   viewFile(path: string, filename: string): void {
     this.fileService.getFile(path, filename).subscribe(

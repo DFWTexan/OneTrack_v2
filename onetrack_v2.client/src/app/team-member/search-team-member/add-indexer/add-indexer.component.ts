@@ -53,7 +53,13 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private userInfoDataService: UserAcctInfoDataService
   ) {
-    this.indexForm = this.fb.group({});
+    this.indexForm = this.fb.group({
+      workState: ['Select'],
+      licenseState: ['Select'],
+      branchName: [null],
+      scoreNum: [0],
+      docSubType: [null],
+    });
   }
 
   ngOnInit() {
@@ -79,6 +85,14 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
     ];
 
     this.documentTypes = ['Select', ...this.dropdownDataService.documentTypes];
+
+    this.indexForm.reset({
+      workState: 'Select',
+      licenseState: 'Select',
+      branchName: null,
+      scoreNum: 0,
+      docSubType: null,
+    });
   }
 
   fileUploadCompleted(filePath: string) {
@@ -87,7 +101,9 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
     //   document: filePath,
     // });
     // this.companyReqForm.markAsDirty();
-    this.files.push(new File([filePath], 'uploaded-file', { type: 'application/pdf' }));
+    this.files.push(
+      new File([filePath], 'uploaded-file', { type: 'application/pdf' })
+    );
   }
 
   onDocumentTypeChange(event: any) {
@@ -130,10 +146,15 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
         'WorkState',
         this.indexForm.get('workState')?.value || ''
       );
+      // reset the form control workState to 'Select' after append
+      this.indexForm.get('workState')?.setValue('Select');
+
       formData.append(
         'LicenseState',
         this.indexForm.get('licenseState')?.value || ''
       );
+      this.indexForm.get('licenseState')?.setValue('Select');
+
       formData.append(
         'BranchName',
         this.indexForm.get('branchName')?.value || ''
@@ -155,18 +176,27 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
         });
       }
 
-      // this.errorMessageService.showLoadingMessage('Submitting data, please wait...');
       this.employeeDataService.updateEmployeeIndexer(formData).subscribe({
         next: (response) => {
-          // this.onCancel();
-          const modalDiv = document.getElementById('modal-document-index');
-          if (modalDiv != null) {
-            modalDiv.style.display = 'none';
-          }
+          this.indexForm.reset({
+            workState: 'Select',
+            licenseState: 'Select',
+            branchName: null,
+            scoreNum: 0,
+            docSubType: null,
+          });
+          this.indexForm.get('workState')?.setValue('Select');
+
+          this.selectedDocumentType = 'Select'; // Reset DocumentType select
 
           this.appComService.updateAppMessage(
             'Data submitted successfully.' // 'Data submitted successfully.'
           );
+
+          const modalDiv = document.getElementById('modal-document-index');
+          if (modalDiv != null) {
+            modalDiv.style.display = 'none';
+          }
         },
         error: (error) => {
           console.error('Error submitting data:', error);

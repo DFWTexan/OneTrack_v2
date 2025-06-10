@@ -28,6 +28,14 @@ export class EmailDataService {
     this.attachedFiles = files;
     this.attachedFilesChanged.next(this.attachedFiles);
   }
+
+  deleteAttachedFile(index: number): void {
+    if (index >= 0 && index < this.attachedFiles.length) {
+      this.attachedFiles.splice(index, 1);
+      this.attachedFilesChanged.next(this.attachedFiles);
+    }
+  }
+  
   getAttachedFiles(): File[] {
     return this.attachedFiles;
   }
