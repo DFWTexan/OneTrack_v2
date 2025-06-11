@@ -68,6 +68,15 @@ export class WorkListComponent implements OnInit, OnDestroy {
   }
 
   fetchWorkListData(): void {
+
+
+console.log(
+  'EMFTEST () - Fetching work list data for:',
+  this.selectedWorkListName,
+  this.selectedDate,
+  this.selectedLicenseTech
+);
+
     this.workListDataService
       .fetchWorkListData(
         this.selectedWorkListName,
@@ -130,18 +139,18 @@ export class WorkListComponent implements OnInit, OnDestroy {
       });
 
       // Delay the execution of the blocking operation
-      setTimeout(() => {
-        this.router
-          .navigateByUrl('/', { skipLocationChange: true })
-          .then(() => {
-            this.router.navigate([
-              '../../team/agent-info',
-              rowDataEmployeeID,
-              'tm-info-mgmt',
-            ]);
-          });
-        dialogRef.close();
-      }, 100);
+      // setTimeout(() => {
+      //   this.router
+      //     .navigateByUrl('/', { skipLocationChange: true })
+      //     .then(() => {
+      //       this.router.navigate([
+      //         '../../team/agent-info',
+      //         rowDataEmployeeID,
+      //         'tm-info-mgmt',
+      //       ]);
+      //     });
+      //   dialogRef.close();
+      // }, 100);
     }
   }
 
@@ -188,7 +197,7 @@ export class WorkListComponent implements OnInit, OnDestroy {
                 })
                 .subscribe({
                   next: (response) => {
-                    // this.callParentRefreshData.emit();
+                    this.fetchWorkListData();
                   },
                   error: (error) => {
                     if (error.error && error.error.errMessage) {

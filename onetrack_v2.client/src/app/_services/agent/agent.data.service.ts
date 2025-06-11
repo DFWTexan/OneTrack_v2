@@ -93,7 +93,8 @@ export class AgentDataService {
   }
 
   fetchAgentInformation(employeeID: number): Observable<AgentInfo> {
-    this.apiUrl = this.configService.config.apiUrl + 'Agent/GetAgentByEmployeeID/';
+    this.apiUrl =
+      this.configService.config.apiUrl + 'Agent/GetAgentByEmployeeID/';
 
     return this.http
       .get<{
@@ -165,7 +166,8 @@ export class AgentDataService {
   // }
 
   fetchAgentLicenseAppointments(employmentID: number) {
-    this.apiUrl = this.configService.config.apiUrl + 'Agent/GetLicenseAppointments/';
+    this.apiUrl =
+      this.configService.config.apiUrl + 'Agent/GetLicenseAppointments/';
 
     return this.http
       .get<{
@@ -190,7 +192,8 @@ export class AgentDataService {
   }
 
   fetchAgentLicApplicationInfo(employeeLicenseID: number) {
-    this.apiUrl = this.configService.config.apiUrl + 'Agent/GetLicenseApplcationInfo/';
+    this.apiUrl =
+      this.configService.config.apiUrl + 'Agent/GetLicenseApplcationInfo/';
 
     return this.http
       .get<{
@@ -240,7 +243,8 @@ export class AgentDataService {
   }
 
   fetchCoReqAssetIDs() {
-    this.apiUrl = this.configService.config.apiUrl + 'Agent/GetCoRequirementAssetIDs';
+    this.apiUrl =
+      this.configService.config.apiUrl + 'Agent/GetCoRequirementAssetIDs';
 
     return this.http
       .get<{
@@ -261,7 +265,8 @@ export class AgentDataService {
   }
 
   fetchCoReqStatuses() {
-    this.apiUrl = this.configService.config.apiUrl + 'Agent/GetCoRequirementStatuses';
+    this.apiUrl =
+      this.configService.config.apiUrl + 'Agent/GetCoRequirementStatuses';
 
     return this.http
       .get<{
@@ -372,7 +377,8 @@ export class AgentDataService {
   }
 
   updateAgentNatNumber(agent: any): Observable<any> {
-    this.apiUrl = this.configService.config.apiUrl + 'Agent/UpdateAgentNatNumber';
+    this.apiUrl =
+      this.configService.config.apiUrl + 'Agent/UpdateAgentNatNumber';
 
     return this.http
       .post<{
@@ -400,7 +406,8 @@ export class AgentDataService {
   }
 
   deleteAgent(agent: any): Observable<any> {
-    this.apiUrl = this.configService.config.apiUrl + 'Agent/DeleteAgentEmployee';
+    this.apiUrl =
+      this.configService.config.apiUrl + 'Agent/DeleteAgentEmployee';
 
     return this.http
       .put<{
@@ -473,7 +480,8 @@ export class AgentDataService {
 
   // AGENT - EDITS for EMPLOYMENT HISTORY
   upsertEmploymentHistItem(employmentHistItem: any): Observable<any> {
-    this.apiUrl = this.configService.config.apiUrl + 'Agent/UpsertEmploymentHistItem';
+    this.apiUrl =
+      this.configService.config.apiUrl + 'Agent/UpsertEmploymentHistItem';
 
     return this.http
       .post<{
@@ -499,7 +507,8 @@ export class AgentDataService {
   }
 
   deleteEmploymentHistItem(employmentHistItem: any): Observable<any> {
-    this.apiUrl = this.configService.config.apiUrl + 'Agent/DeleteEmploymentHistItem';
+    this.apiUrl =
+      this.configService.config.apiUrl + 'Agent/DeleteEmploymentHistItem';
 
     return this.http
       .put<{
@@ -556,7 +565,8 @@ export class AgentDataService {
   // }
 
   upsertTransferHistItem(transferHistItem: any): Observable<any> {
-    this.apiUrl = this.configService.config.apiUrl + 'Agent/UpsertTranserHistItem';
+    this.apiUrl =
+      this.configService.config.apiUrl + 'Agent/UpsertTranserHistItem';
 
     return this.http
       .post<{
@@ -582,7 +592,8 @@ export class AgentDataService {
   }
 
   deleteTransferHistItem(transferHistItem: any): Observable<any> {
-    this.apiUrl = this.configService.config.apiUrl + 'Agent/DeleteTransferHistItem';
+    this.apiUrl =
+      this.configService.config.apiUrl + 'Agent/DeleteTransferHistItem';
 
     return this.http
       .put<{
@@ -610,7 +621,8 @@ export class AgentDataService {
   upsertCompanyRequirementsHistItem(
     companyRequirementsHistItem: any
   ): Observable<any> {
-    this.apiUrl = this.configService.config.apiUrl + 'Agent/UpsertCoRequirementItem';
+    this.apiUrl =
+      this.configService.config.apiUrl + 'Agent/UpsertCoRequirementItem';
 
     return this.http
       .post<{
@@ -638,7 +650,8 @@ export class AgentDataService {
   deleteCompanyRequirementsHistItem(
     companyRequirementsItem: any
   ): Observable<any> {
-    this.apiUrl = this.configService.config.apiUrl + 'Agent/DeleteCoRequirementItem';
+    this.apiUrl =
+      this.configService.config.apiUrl + 'Agent/DeleteCoRequirementItem';
 
     return this.http
       .put<{
@@ -666,7 +679,8 @@ export class AgentDataService {
   upsertEmploymentJobTitleHistItem(
     employmentJobTitleHistItem: any
   ): Observable<any> {
-    this.apiUrl = this.configService.config.apiUrl + 'Agent/UpsertEmploymentJobTitleItem';
+    this.apiUrl =
+      this.configService.config.apiUrl + 'Agent/UpsertEmploymentJobTitleItem';
 
     return this.http
       .post<{
@@ -695,7 +709,8 @@ export class AgentDataService {
   deleteEmploymentJobTitleHistItem(
     employmentJobTitleHistItem: any
   ): Observable<any> {
-    this.apiUrl = this.configService.config.apiUrl + 'Agent/DeleteEmploymentJobTitleItem';
+    this.apiUrl =
+      this.configService.config.apiUrl + 'Agent/DeleteEmploymentJobTitleItem';
 
     return this.http
       .put<{
@@ -825,6 +840,31 @@ export class AgentDataService {
       );
   }
 
+  // closeWorklistItem(wishlistItem: any): Observable<any> {
+  //   this.apiUrl = this.configService.config.apiUrl + 'Agent/CloseWorklistItem';
+
+  //   return this.http
+  //     .put<{
+  //       success: boolean;
+  //       statusCode: number;
+  //       objData: any;
+  //       errMessage: string;
+  //     }>(this.apiUrl, wishlistItem)
+  //     .pipe(
+  //       switchMap((response) => {
+  //         if (response.success && response.statusCode === 200) {
+  //           return this.fetchAgentInformation(this.agentInformation.employeeID);
+  //         } else {
+  //           throw new Error(response.errMessage || 'Unknown error');
+  //         }
+  //       }),
+  //       map((agentInfo) => {
+  //         this.agentInformation = agentInfo;
+  //         this.agentInfoChanged.next(this.agentInformation);
+  //         return this.agentInformation;
+  //       })
+  //     );
+  // }
   closeWorklistItem(wishlistItem: any): Observable<any> {
     this.apiUrl = this.configService.config.apiUrl + 'Agent/CloseWorklistItem';
 
@@ -836,17 +876,13 @@ export class AgentDataService {
         errMessage: string;
       }>(this.apiUrl, wishlistItem)
       .pipe(
-        switchMap((response) => {
+        map((response) => {
           if (response.success && response.statusCode === 200) {
-            return this.fetchAgentInformation(this.agentInformation.employeeID);
+            // Optionally update agentInformation here if needed
+            return response.objData;
           } else {
             throw new Error(response.errMessage || 'Unknown error');
           }
-        }),
-        map((agentInfo) => {
-          this.agentInformation = agentInfo;
-          this.agentInfoChanged.next(this.agentInformation);
-          return this.agentInformation;
         })
       );
   }
@@ -863,8 +899,10 @@ export class AgentDataService {
   }
 
   storeEmployeeLicenseID(employeeLicenseID: number) {
-
-console.log('EMFTEST (AgentDataService: storeEmployeeLicenseID) - storeEmployeeLicenseID: ', employeeLicenseID);
+    console.log(
+      'EMFTEST (AgentDataService: storeEmployeeLicenseID) - storeEmployeeLicenseID: ',
+      employeeLicenseID
+    );
 
     this.agentEmployeeLicenseID = employeeLicenseID;
     this.agentEmployeeLicenseIDChanged.next(this.agentEmployeeLicenseID);
