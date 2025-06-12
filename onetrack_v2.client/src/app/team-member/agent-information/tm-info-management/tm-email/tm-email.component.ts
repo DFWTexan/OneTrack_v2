@@ -108,9 +108,22 @@ export class TmEmailComponent implements OnInit, OnDestroy {
           // this.chkMgr = false;
           // this.chkDM = false;
           // this.chkRD = false;
-          (document.getElementsByName('chkMgr')[0] as HTMLInputElement).checked = false;
-          (document.getElementsByName('chkDM')[0] as HTMLInputElement).checked = false;
-          (document.getElementsByName('chkRD')[0] as HTMLInputElement).checked = false;
+          // (document.getElementsByName('chkMgr')[0] as HTMLInputElement).checked = false;
+          // (document.getElementsByName('chkDM')[0] as HTMLInputElement).checked = false;
+          // (document.getElementsByName('chkRD')[0] as HTMLInputElement).checked = false;
+          const chkMgr = document.getElementsByName('chkMgr')[0] as
+            | HTMLInputElement
+            | undefined;
+          if (chkMgr) chkMgr.checked = false;
+          const chkDM = document.getElementsByName('chkDM')[0] as
+            | HTMLInputElement
+            | undefined;
+          if (chkDM) chkDM.checked = false;
+          const chkRD = document.getElementsByName('chkRD')[0] as
+            | HTMLInputElement
+            | undefined;
+          if (chkRD) chkRD.checked = false;
+          this.cdr.detectChanges();
           this.cdr.detectChanges();
 
           this.subscriptions.add(
