@@ -1,6 +1,6 @@
 import { Component, OnInit, Injectable, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
-import { Subscription, forkJoin, switchMap } from 'rxjs';
+import { Subscription } from 'rxjs';
 
 import {
   AgentInfo,
