@@ -2,8 +2,8 @@
 {
     public class IputUpsertEducationRule
     {
-        public int RuleNumber { get; set; }
-        public string StateProvince { get; set; } = string.Empty;
+        public int? RuleNumber { get; set; }
+        public string? StateProvince { get; set; } = string.Empty;
         public string? LicenseType { get; set; } = string.Empty;
         public int? EducationStartDateID { get; set; }
         public int? EducationEndDateID { get; set; }

@@ -237,6 +237,10 @@ export class EditEduRuleComponent implements OnInit, OnDestroy {
     eduRuleItem.exemptionID = this.selectedExemptionValues.join(',');
     eduRuleItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
+    if (this.adminComService.modes.educationRule.mode !== 'EDIT') {
+      eduRuleItem.ruleNumber = 0;
+    }
+
     if (
       eduRuleItem.stateProvince === 'Select' ||
       eduRuleItem.stateProvince === ''
