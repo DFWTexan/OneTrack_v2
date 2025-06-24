@@ -251,6 +251,30 @@ export class AdminDataService {
         })
       );
   }
+  deleteCompanyRequirement(companyRequirement: any) {
+    return this.http
+      .put<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
+        errMessage: string;
+      }>(this.configService.config.apiUrl + 'Admin/DeleteCompanyRequirement', companyRequirement)
+      .pipe(
+        tap({
+          next: (response) => {
+            if (response.success && response.statusCode === 200) {
+              // return response;
+            } else {
+              throw new Error(response.errMessage || 'Unknown error');
+            }
+          },
+          error: (error) => {
+            // console.error(error);
+            // throw error;
+          },
+        })
+      );
+  }
 
   // CONTINUE EDUCATION
   fetchLicenseTypes(stateProv: string | null = null) {

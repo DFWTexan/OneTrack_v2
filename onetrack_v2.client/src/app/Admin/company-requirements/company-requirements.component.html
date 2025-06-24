@@ -188,6 +188,9 @@
                   <button
                     class="icon-edit-delete-button"
                     type="button"
+                    (click)="
+                      openConfirmDialog('deleteCoReq', 'Compay Requirement', company)
+                    "
                     title="Delete Company Requirement"
                   >
                     <span class="material-symbols-outlined"> delete </span>

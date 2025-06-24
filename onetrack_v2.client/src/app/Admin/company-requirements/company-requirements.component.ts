@@ -12,6 +12,8 @@ import {
   UserAcctInfoDataService,
 } from '../../_services';
 import { CompanyRequirement } from '../../_Models';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../_components';
 
 @Component({
   selector: 'app-company-requirements',
@@ -26,6 +28,8 @@ export class CompanyRequirementsComponent implements OnInit, OnDestroy {
   selectedWorkState: string | null = null;
   selectedResState: string | null = null;
   companyRequirements: CompanyRequirement[] = [];
+  eventAction: string = '';
+  vObject: any = {};
 
   subscriptionData: Subscription = new Subscription();
 
@@ -37,6 +41,7 @@ export class CompanyRequirementsComponent implements OnInit, OnDestroy {
     public appComService: AppComService,
     public fileService: FileService,
     public modalService: ModalService,
+    public dialog: MatDialog,
     public userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
@@ -128,6 +133,44 @@ export class CompanyRequirementsComponent implements OnInit, OnDestroy {
       })
     );
   }
+
+  openConfirmDialog(eventAction: string, msg: string, vObject: CompanyRequirement): void {
+      this.eventAction = eventAction;
+      this.vObject = vObject;
+  
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '250px',
+        data: {
+          title: 'Confirm Action',
+          message: 'You are about to DELETE Co. Requirement. \n',
+        },
+      });
+  
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          this.subscriptionData.add(
+            this.adminDataService
+              .deleteCompanyRequirement({
+                companyRequirementId: vObject.companyRequirementId,
+                userSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
+              })
+              .subscribe({
+                next: (response) => {
+                  // this.location.back();
+                  // this.fetchCompanyItems();
+                },
+                error: (error) => {
+                  if (error.error && error.error.errMessage) {
+                    this.errorMessageService.setErrorMessage(
+                      error.error.errMessage
+                    );
+                  }
+                },
+              })
+          );
+        }
+      });
+    }
 
   ngOnDestroy(): void {
     this.subscriptionData.unsubscribe();
