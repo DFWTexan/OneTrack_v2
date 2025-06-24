@@ -557,14 +557,16 @@
                   </td>
                   <td class="align-middle">{{ emp.hrTermCode }}</td>
                   <td class="align-middle">
-                    {{ emp.isForCause ? "Yes" : "No" }}
+                    <!-- {{ emp.isForCause ? "Yes" : "No" }} -->
+                      <input type="checkbox" [checked]="emp.isForCause" disabled />
                   </td>
                   <td class="align-middle">
                     {{ emp.backgroundCheckStatus.toUpperCase() }}
                   </td>
                   <td class="align-middle">{{ emp.backGroundCheckNotes }}</td>
                   <td class="align-middle">
-                    {{ emp.isCurrent ? "Yes" : "No" }}
+                    <!-- {{ emp.isCurrent ? "Yes" : "No" }} -->
+                      <input type="checkbox" [checked]="emp.isCurrent" disabled />
                   </td>
                   <td
                     style="width: 10rem"
