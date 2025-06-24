@@ -158,6 +158,7 @@ export class CompanyRequirementsComponent implements OnInit, OnDestroy {
                 next: (response) => {
                   // this.location.back();
                   // this.fetchCompanyItems();
+                  this.fetchCompanyRequirements();
                 },
                 error: (error) => {
                   if (error.error && error.error.errMessage) {
