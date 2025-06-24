@@ -142,9 +142,7 @@
           type="text"
           id="phone"
           formControlName="phone"
-          mask="(000) 000-0000"
-          [pattern]="phonePattern"
-          maxlength="14"
+          [imask]="{ mask: '(000) 000-0000' }"
         />
         <div
           *ngIf="
@@ -219,6 +217,7 @@
           type="text"
           id="zip"
           formControlName="zip"
+          [imask]="{ mask: '00000-0000' }"
         />
         <div
           *ngIf="
@@ -243,7 +242,7 @@
           type="text"
           id="fax"
           formControlName="fax"
-          pattern="\(\d{3}\) \d{3}-\d{4}"
+          [imask]="{ mask: '(000)000-0000' }"
         />
       </div>
     </div>
@@ -263,7 +262,7 @@
       <button
         type="submit"
         class="btn btn-primary save-button"
-        [disabled]="companyForm.pristine || companyForm.invalid"
+        [disabled]="companyForm.pristine"
       >
         Save
       </button>

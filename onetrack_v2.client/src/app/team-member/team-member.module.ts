@@ -53,7 +53,7 @@ import { TmInfoManagementComponent } from '../team-member/agent-information/tm-i
 import { InsertMemberLoaTicklerComponent } from './agent-information/tm-info-management/tm-information/insert-member-loa-tickler/insert-member-loa-tickler.component';
 import { AgentTicklerInfoComponent } from './agent-information/agent-tickler-info/agent-tickler-info.component';
 import { AgentWishlistItemsComponent } from './agent-information/agent-wishlist-items/agent-wishlist-items.component';
-import { IMaskModule } from 'angular-imask';
+// import { IMaskModule } from 'angular-imask';
 
 @NgModule({
   declarations: [
@@ -110,7 +110,7 @@ import { IMaskModule } from 'angular-imask';
     SharedModule,
     TeamMemberRoutingModule,
     MatFormFieldModule,
-    IMaskModule,
+    // IMaskModule,
   ],
   exports: [
     AgentInformationComponent,
