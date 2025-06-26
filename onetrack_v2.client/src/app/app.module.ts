@@ -12,7 +12,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { SharedModule } from './_shared/shared.module';
 import { AppRoutingModule } from './app-routing.module';
 import { TeamMemberModule } from './team-member/team-member.module';
-import { AdminModule } from './admin/admin.module';
+import { AdminModule } from './Admin/admin.module';
 
 // App components
 import { AppComponent } from './app.component';

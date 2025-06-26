@@ -111,6 +111,17 @@
                   "with": "src/app/_environments/environment.qlty.ts"
                 }
               ]
+            },
+            "prod": {
+              "optimization": true,
+              "extractLicenses": true,
+              "sourceMap": false,
+              "fileReplacements": [
+                {
+                  "replace": "src/app/_environments/environment.ts",
+                  "with": "src/app/_environments/environment.prod.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"
