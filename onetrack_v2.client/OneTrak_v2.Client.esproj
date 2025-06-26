@@ -7,4 +7,8 @@
     <!-- Folder where production build objects will be placed -->
     <PublishAssetsDirectory>$(MSBuildProjectDirectory)\dist\onetrack_v2.client\</PublishAssetsDirectory>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="Change-Log\" />
+    <Folder Include="Delpoyment-Info\" />
+  </ItemGroup>
 </Project>

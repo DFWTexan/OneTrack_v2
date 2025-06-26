@@ -32,4 +32,9 @@
     </ProjectReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Deployment-Info\" />
+    <Folder Include="Change-Log\" />
+  </ItemGroup>
+
 </Project>
