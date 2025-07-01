@@ -13,6 +13,7 @@
   </div>
   <!-- LEGACY View -->
   <div class="row" *ngIf="isLegacyView">
+    <!-- COMPANY REQUIREMENTS HISTORY -->
     <div class="row">
       <div
         class="col panel-default"
@@ -150,6 +151,7 @@
         </table>
       </div>
     </div>
+    <!-- TRANSFER HISTORY -->
     <div class="row mt-2">
       <div
         class="col panel-default"
@@ -252,6 +254,7 @@
         </table>
       </div>
     </div>
+    <!-- COMPANY REQUIREMENTS HISTORY -->
     <div class="row mt-2">
       <div
         class="col panel-default"
@@ -305,10 +308,9 @@
               <th scope="col">Asset ID</th>
               <th scope="col">Status</th>
               <th scope="col">Comp. Date</th>
-              <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
-              <!-- <th scope="col" class="text-center" style="width: 10rem">
+              <th scope="col" class="text-center" style="width: 10rem">
                 ACTION
-              </th> -->
+              </th>
             </tr>
           </thead>
           <tbody class="tbody" style="background-color: white">
@@ -325,11 +327,11 @@
               <td class="align-middle">
                 {{ coReq.learningProgramCompletionDate | date : "MM/dd/yyyy" }}
               </td>
-              <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
-              <!-- <td style="width: 10rem">
+
+              <td style="width: 10rem">
                 <div class="d-flex justify-content-center mb-3 me-4">
-                  
-                   <button
+                  <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
+                  <!-- <button
                     class="icon-edit-delete-button"
                     (click)="
                       agentDataService.storeCompanyRequirementsHistory(
@@ -341,8 +343,13 @@
                     title="Edit Co. Requirement"
                   >
                     <span class="material-symbols-outlined"> edit </span>
-                  </button> 
+                  </button>  -->
                   <button
+                    *ngIf="
+                      userInfoDataService.userAcctInfo.isSuperUser ||
+                      userInfoDataService.userAcctInfo.isQARole ||
+                      userInfoDataService.userAcctInfo.isAdminRole
+                    "
                     class="icon-edit-delete-button"
                     (click)="
                       onOpenConfirmDialog(
@@ -354,14 +361,15 @@
                     title="Delete Co. Requirement"
                   >
                     <span class="material-symbols-outlined"> delete </span>
-                  </button> 
+                  </button>
                 </div>
-              </td> -->
+              </td>
             </tr>
           </tbody>
         </table>
       </div>
     </div>
+    <!-- JOB TITLE HISTORY -->
     <div class="row mt-2">
       <div
         class="col panel-default"
@@ -558,7 +566,11 @@
                   <td class="align-middle">{{ emp.hrTermCode }}</td>
                   <td class="align-middle">
                     <!-- {{ emp.isForCause ? "Yes" : "No" }} -->
-                      <input type="checkbox" [checked]="emp.isForCause" disabled />
+                    <input
+                      type="checkbox"
+                      [checked]="emp.isForCause"
+                      disabled
+                    />
                   </td>
                   <td class="align-middle">
                     {{ emp.backgroundCheckStatus.toUpperCase() }}
@@ -566,7 +578,7 @@
                   <td class="align-middle">{{ emp.backGroundCheckNotes }}</td>
                   <td class="align-middle">
                     <!-- {{ emp.isCurrent ? "Yes" : "No" }} -->
-                      <input type="checkbox" [checked]="emp.isCurrent" disabled />
+                    <input type="checkbox" [checked]="emp.isCurrent" disabled />
                   </td>
                   <td
                     style="width: 10rem"
@@ -776,10 +788,9 @@
                 <th scope="col">Asset ID</th>
                 <th scope="col">Status</th>
                 <th scope="col">Comp. Date</th>
-                <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
-                <!-- <th scope="col" class="text-center" style="width: 10rem">
+                <th scope="col" class="text-center" style="width: 10rem">
                   ACTION
-                </th> -->
+                </th>
               </tr>
             </thead>
             <tbody>
@@ -802,10 +813,9 @@
                     coReq.learningProgramCompletionDate | date : "MM/dd/yyyy"
                   }}
                 </td>
-                <!-- REMOVED Due to License Techs not having Authority to INSERT, UPDATE or DELETE -->
-                <!-- <td style="width: 10rem">
+                <td style="width: 10rem">
                   <div class="d-flex justify-content-center mb-3 me-4">
-                    <button
+                    <!-- <button
                       class="icon-edit-delete-button"
                       (click)="
                         agentDataService.storeCompanyRequirementsHistory(
@@ -817,8 +827,16 @@
                       title="Edit Co. Requirement"
                     >
                       <span class="material-symbols-outlined"> edit </span>
-                    </button> 
-                    <button class="icon-edit-delete-button">
+                    </button>  -->
+                    <button
+                      class="icon-edit-delete-button"
+                      *ngIf="
+                        userInfoDataService.userAcctInfo.isSuperUser ||
+                        userInfoDataService.userAcctInfo.isQARole ||
+                        userInfoDataService.userAcctInfo.isAdminRole ||
+                        userInfoDataService.userAcctInfo.isTechRole
+                      "
+                    >
                       <span
                         class="material-symbols-outlined"
                         (click)="
@@ -834,7 +852,7 @@
                       </span>
                     </button>
                   </div>
-                </td> -->
+                </td>
               </tr>
             </tbody>
           </table>
