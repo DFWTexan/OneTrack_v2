@@ -69,6 +69,8 @@ export class AppComService {
   appMessageChanged = new Subject<string>();
   isShowModalIncentiveInfo: boolean = false;
   isShowModalIncentiveInfoChanged = new Subject<boolean>();
+  indexInfoResetToggle: boolean = false;
+  indexInfoResetToggleChanged = new Subject<boolean>();
   
   subscriptions: Subscription = new Subscription();
 
@@ -87,6 +89,11 @@ export class AppComService {
       this.isLoggedInChanged.next(this.config.isDevLoginEnabled);
       this.isShowEditID = this.config.isShowEditID;
     }
+  }
+
+  updateIndexInfoResetToggle() {
+    this.indexInfoResetToggle = !this.indexInfoResetToggle;
+    this.indexInfoResetToggleChanged.next(this.indexInfoResetToggle);
   }
   
   updateIsShowModalIncentiveInfo(isShowModalIncentiveInfo: boolean) {

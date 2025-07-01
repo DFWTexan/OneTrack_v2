@@ -66,6 +66,20 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+this.subscriptionData.add(
+  this.appComService.indexInfoResetToggleChanged.subscribe(
+    (indexInfoResetToggle: boolean) => {
+      this.indexForm.reset({
+        workState: 'Select',
+        licenseState: 'Select',
+        branchName: null,
+        scoreNum: 0,
+        docSubType: null,
+      });
+    }
+  )
+);
+
     this.employee = this.employeeDataService.selectedEmployee;
     this.subscriptionData.add(
       this.employeeDataService.selectedEmployeeChanged.subscribe(
@@ -181,6 +195,7 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
         next: (response) => {
           // Reset form submission state
           this.isFormSubmitted = false;
+          this.appComService.updateIndexInfoResetToggle();
           
           // Reset the reactive form
           this.indexForm.reset({
@@ -246,6 +261,36 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
   }
 
   onCancel() {
+    // Reset form submission state
+    this.isFormSubmitted = false;
+    this.appComService.updateIndexInfoResetToggle();
+    
+    // Reset the reactive form
+    this.indexForm.reset({
+      workState: 'Select',
+      licenseState: 'Select',
+      branchName: null,
+      scoreNum: 0,
+      docSubType: null,
+    });
+
+    // Reset component properties
+    this.selectedDocumentType = 'Select';
+    this.documentSubTypes = [];
+    this.files = [];
+    
+    // Clear attached files in email service
+    this.emailDataService.setAttachedFiles([]);
+    
+    // Reset file upload component if it exists
+    if (this.fileUploadComponent) {
+      // Reset file upload component - adjust method name as needed
+      // this.fileUploadComponent.reset();
+    }
+    
+    // Trigger change detection
+    this.cdr.detectChanges();
+
     const modalDiv = document.getElementById('modal-document-index');
     if (modalDiv != null) {
       modalDiv.style.display = 'none';
