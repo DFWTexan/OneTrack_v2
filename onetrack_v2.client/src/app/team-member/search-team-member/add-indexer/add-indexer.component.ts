@@ -150,14 +150,11 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
         'WorkState',
         this.indexForm.get('workState')?.value || ''
       );
-      // reset the form control workState to 'Select' after append
-      this.indexForm.get('workState')?.setValue('Select');
 
       formData.append(
         'LicenseState',
         this.indexForm.get('licenseState')?.value || ''
       );
-      this.indexForm.get('licenseState')?.setValue('Select');
 
       formData.append(
         'BranchName',
@@ -182,6 +179,10 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
 
       this.employeeDataService.updateEmployeeIndexer(formData).subscribe({
         next: (response) => {
+          // Reset form submission state
+          this.isFormSubmitted = false;
+          
+          // Reset the reactive form
           this.indexForm.reset({
             workState: 'Select',
             licenseState: 'Select',
@@ -189,27 +190,26 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
             scoreNum: 0,
             docSubType: null,
           });
-          this.indexForm.get('workState')?.setValue('Select');
 
-          this.selectedDocumentType = 'Select'; // Reset DocumentType select
-
-          // (document.getElementsByName('workState')[0] as HTMLInputElement).value = 'Select';
-          // (document.getElementsByName('licenseState')[0] as HTMLInputElement).value = 'Select';
-          // (document.getElementsByName('branchName')[0] as HTMLInputElement).value = '';
-          // (document.getElementsByName('scoreNum')[0] as HTMLInputElement).value = '0';
-          // (document.getElementsByName('docSubType')[0] as HTMLInputElement).value = '';
+          // Reset component properties
+          this.selectedDocumentType = 'Select';
+          this.documentSubTypes = [];
+          this.files = [];
           
-          this.indexForm.get('workState')?.setValue('Select');
-          this.indexForm.get('licenseState')?.setValue('Select');
-          this.indexForm.get('branchName')?.setValue(null);
-          this.indexForm.get('scoreNum')?.setValue(0);
-          this.indexForm.get('docSubType')?.setValue(null);
-          this.emailDataService.setAttachedFiles([]); 
-          this.files = []; // Reset files array
+          // Clear attached files in email service
+          this.emailDataService.setAttachedFiles([]);
+          
+          // Reset file upload component if it exists
+          if (this.fileUploadComponent) {
+            // Reset file upload component - adjust method name as needed
+            // this.fileUploadComponent.reset();
+          }
+          
+          // Trigger change detection
           this.cdr.detectChanges();
 
           this.appComService.updateAppMessage(
-            'Data submitted successfully.' // 'Data submitted successfully.'
+            'Data submitted successfully.'
           );
 
           const modalDiv = document.getElementById('modal-document-index');

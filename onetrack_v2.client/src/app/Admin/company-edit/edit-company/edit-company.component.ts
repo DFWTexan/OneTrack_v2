@@ -35,7 +35,7 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
   subscriptionData: Subscription = new Subscription();
   defaultCompanyType: string = 'Select Company Type';
   defaultState: string = 'Select State';
-  phonePattern: string = '\\(\\d{3}\\) \\d{3}-\\d{4}';
+  phonePattern: string = '\\(\\d{3}\\)\\d{3}-\\d{4}';
 
   @Input() companyTypes: any[] = ['Loading...'];
 
@@ -69,7 +69,7 @@ export class EditCompanyComponent implements OnInit, OnDestroy {
       state: new FormControl('', Validators.required),
       phone: new FormControl('', [
         Validators.pattern(
-          '^\\(\\d{3}\\) \\d{3}-\\d{4}$|^\\d{3}-\\d{3}-\\d{4}$'
+          '^\\(\\d{3}\\)\\d{3}-\\d{4}$|^\\d{3}-\\d{3}-\\d{4}$'
         ),
       ]),
       country: new FormControl(''),
