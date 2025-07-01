@@ -346,9 +346,10 @@
                   </button>  -->
                   <button
                     *ngIf="
-                      userInfoDataService.userAcctInfo.isSuperUser ||
+                      (userInfoDataService.userAcctInfo.isSuperUser ||
                       userInfoDataService.userAcctInfo.isQARole ||
-                      userInfoDataService.userAcctInfo.isAdminRole
+                      userInfoDataService.userAcctInfo.isAdminRole) &&
+                      coReq.assetSk === 0
                     "
                     class="icon-edit-delete-button"
                     (click)="
@@ -831,10 +832,11 @@
                     <button
                       class="icon-edit-delete-button"
                       *ngIf="
-                        userInfoDataService.userAcctInfo.isSuperUser ||
+                        (userInfoDataService.userAcctInfo.isSuperUser ||
                         userInfoDataService.userAcctInfo.isQARole ||
                         userInfoDataService.userAcctInfo.isAdminRole ||
-                        userInfoDataService.userAcctInfo.isTechRole
+                        userInfoDataService.userAcctInfo.isTechRole) &&
+                        coReq.assetSk === 0
                       "
                     >
                       <span
