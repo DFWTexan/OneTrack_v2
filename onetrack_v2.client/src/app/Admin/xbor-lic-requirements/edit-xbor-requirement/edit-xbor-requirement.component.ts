@@ -126,6 +126,11 @@ export class EditXborRequirementComponent implements OnInit, OnDestroy {
                     this.selectedLicenseState = xborLicenseRequirement.licState;
                     this.fetchStateLicenseItems();
                   }
+
+// console.log('EMFTEST (ngOnInit) - xborLicenseRequirement', xborLicenseRequirement);
+                  
+                  this.xborLicenseRequirementForm.reset();
+
                   this.xborLicenseRequirementForm.patchValue({
                     requiredLicenseId: xborLicenseRequirement.requiredLicenseId,
                     workStateAbv: xborLicenseRequirement.workStateAbv,

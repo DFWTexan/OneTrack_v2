@@ -11,7 +11,7 @@ const routes: Routes = [
   // Dashboard
   { path: 'dashboard', component: DashboardComponent },
   // Admin
-  { path: 'admin', loadChildren: () => import('./Admin/admin.module').then(m => m.AdminModule) },
+  { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
   // Team Member
   { path: 'team-member', loadChildren: () => import('./team-member/team-member.module').then(m => m.TeamMemberModule) },
   // Reports
