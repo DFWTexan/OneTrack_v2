@@ -310,13 +310,50 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.emailDataService.sendEmail(emailSendItem).subscribe({
         next: (response) => {
+          // Reset form submission state
           this.isSubmitted = false;
+          
+          // Reset the form to initial state
           this.resetForm();
+          
+          // Reset all component properties to initial state
           this.emailAttachments = [];
           this.file = null;
           this.files = [];
+          this.ccEmail = [];
+          this.selectedTemplate = 33;
+          this.emailTemplateID = 33;
+          
+          // Reset template-related properties
+          this.docSubType = '{MESSAGE}';
+          this.subject = '';
+          this.isSubjectReadOnly = false;
+          this.isTemplateFound = true;
+          this.htmlHeaderContent = '' as SafeHtml;
+          this.htmlFooterContent = '' as SafeHtml;
+          this.htmlContent = '' as SafeHtml;
+          
+          // Reset file viewer properties
+          this.filePdfSrc = null;
+          this.fileHtmlContent = null;
+          this.documentPath = '';
+          
+          // Reset CC checkboxes
+          const chkMgr = document.getElementsByName('chkMgr')[0] as HTMLInputElement | undefined;
+          if (chkMgr) chkMgr.checked = false;
+          const chkDM = document.getElementsByName('chkDM')[0] as HTMLInputElement | undefined;
+          if (chkDM) chkDM.checked = false;
+          const chkRD = document.getElementsByName('chkRD')[0] as HTMLInputElement | undefined;
+          if (chkRD) chkRD.checked = false;
+          
+          // Clear attached files in email service
+          this.emailDataService.setAttachedFiles([]);
+          
+          // Trigger change detection
+          this.cdr.detectChanges();
+          
           this.appComService.updateAppMessage(
-            'Email Sent successfully.' // 'Data submitted successfully.'
+            'Email Sent successfully.'
           );
 
           this.agentDataService
