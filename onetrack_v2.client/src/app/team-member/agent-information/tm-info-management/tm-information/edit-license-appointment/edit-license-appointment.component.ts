@@ -46,6 +46,7 @@ export class EditLicenseAppointmentComponent
   ];
   employeeAppointmentID: number = 0;
   employeeLicenseID: number = 0;
+  mode: string = '';
   form = this.fb.group({
     licenseID: new FormControl({ value: 0, disabled: true }),
     employeeLicenseId: new FormControl(0),
@@ -87,6 +88,7 @@ export class EditLicenseAppointmentComponent
       this.agentComService.modeLicenseApptChanged
         .pipe(
           switchMap((mode: string) => {
+            this.mode = mode;
             if (mode === 'EDIT') {
               // MODE: EDIT
               return this.agentDataService.licenseAppointmentChanged.pipe(
@@ -114,6 +116,8 @@ export class EditLicenseAppointmentComponent
               );
             } else {
               // MODE: INSERT
+              this.employeeAppointmentID = 0;
+              this.licenseAppointment = {} as LicenseAppointment;
               this.form.reset({
                 licenseID: 0,
                 employeeLicenseId: 0,
@@ -218,7 +222,11 @@ export class EditLicenseAppointmentComponent
     let licenseApptItem: any = this.form.value;
     licenseApptItem.employeeID =
       this.agentDataService.agentInformation.employeeID;
-    licenseApptItem.employeeAppointmentID = this.employeeAppointmentID;
+    if (this.mode === 'EDIT') {
+      licenseApptItem.employeeAppointmentID = this.employeeAppointmentID;
+    } else {
+      licenseApptItem.employeeAppointmentID = 0;
+    }
     licenseApptItem.employeeLicenseID = this.employeeLicenseID;
     licenseApptItem.UserSOEID = this.userInfoDataService.userAcctInfo.soeid;
 
