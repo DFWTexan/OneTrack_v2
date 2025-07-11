@@ -10,5 +10,6 @@ namespace OneTrack_v2.Services
         public ReturnResult GetEmailComTemplates();
         public ReturnResult GetEmailTemplate(int vCommunicationID, int vEmploymentID);
         public ReturnResult Send([FromBody] IputSendEmail vInput);
+        //public ReturnResult SendIncentive([FromBody] IputSendEmail vInput);
     }
 }

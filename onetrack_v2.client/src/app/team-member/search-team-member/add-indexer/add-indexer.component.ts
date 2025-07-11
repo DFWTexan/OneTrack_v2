@@ -1,4 +1,10 @@
-import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+ import {
+  ChangeDetectorRef,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
 import { Subscription } from 'rxjs';
 
@@ -54,31 +60,41 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private userInfoDataService: UserAcctInfoDataService,
     private emailDataService: EmailDataService,
-    private cdr: ChangeDetectorRef,
+    private cdr: ChangeDetectorRef
   ) {
     this.indexForm = this.fb.group({
       workState: ['Select'],
       licenseState: ['Select'],
       branchName: [null],
       scoreNum: [0],
-      docSubType: [null],
+      docType: [null],
     });
   }
 
   ngOnInit() {
-this.subscriptionData.add(
-  this.appComService.indexInfoResetToggleChanged.subscribe(
-    (indexInfoResetToggle: boolean) => {
-      this.indexForm.reset({
-        workState: 'Select',
-        licenseState: 'Select',
-        branchName: null,
-        scoreNum: 0,
-        docSubType: null,
-      });
-    }
-  )
-);
+    this.subscriptionData.add(
+      this.appComService.indexInfoResetToggleChanged.subscribe(
+        (indexInfoResetToggle: boolean) => {
+          this.file = null;
+          this.files = [];
+          this.fileUri = null;
+          this.fullFilePathUri = null;
+          this.defaultDocumentType = 'Select';
+          this.indexForm.reset({
+            workState: 'Select',
+            licenseState: 'Select',
+            branchName: null,
+            scoreNum: 0,
+            docType: 'Select',
+          });
+          
+          // Reset file upload component
+          if (this.fileUploadComponent) {
+            this.fileUploadComponent.resetComponent();
+          }
+        }
+      )
+    );
 
     this.employee = this.employeeDataService.selectedEmployee;
     this.subscriptionData.add(
@@ -86,6 +102,26 @@ this.subscriptionData.add(
         (employee: EmployeeSearchResult | null) => {
           if (employee !== null) {
             this.employee = employee;
+
+            this.file = null;
+            this.files = [];
+            this.fileUri = null;
+            this.fullFilePathUri = null;  
+            this.defaultDocumentType = 'Select';
+
+            this.indexForm.reset({
+              workState: 'Select',
+              licenseState: 'Select',
+              branchName: null,
+              scoreNum: 0,
+              docType: 'Select',
+            });
+
+            // Reset file upload component
+            if (this.fileUploadComponent) {
+              this.fileUploadComponent.resetComponent();
+            }
+
             this.cdr.detectChanges();
           }
         }
@@ -196,7 +232,7 @@ this.subscriptionData.add(
           // Reset form submission state
           this.isFormSubmitted = false;
           this.appComService.updateIndexInfoResetToggle();
-          
+
           // Reset the reactive form
           this.indexForm.reset({
             workState: 'Select',
@@ -210,22 +246,19 @@ this.subscriptionData.add(
           this.selectedDocumentType = 'Select';
           this.documentSubTypes = [];
           this.files = [];
-          
+
           // Clear attached files in email service
           this.emailDataService.setAttachedFiles([]);
-          
+
           // Reset file upload component if it exists
           if (this.fileUploadComponent) {
-            // Reset file upload component - adjust method name as needed
-            // this.fileUploadComponent.reset();
+            this.fileUploadComponent.resetComponent();
           }
-          
+
           // Trigger change detection
           this.cdr.detectChanges();
 
-          this.appComService.updateAppMessage(
-            'Data submitted successfully.'
-          );
+          this.appComService.updateAppMessage('Data submitted successfully.');
 
           const modalDiv = document.getElementById('modal-document-index');
           if (modalDiv != null) {
@@ -264,7 +297,7 @@ this.subscriptionData.add(
     // Reset form submission state
     this.isFormSubmitted = false;
     this.appComService.updateIndexInfoResetToggle();
-    
+
     // Reset the reactive form
     this.indexForm.reset({
       workState: 'Select',
@@ -278,16 +311,15 @@ this.subscriptionData.add(
     this.selectedDocumentType = 'Select';
     this.documentSubTypes = [];
     this.files = [];
-    
+
     // Clear attached files in email service
     this.emailDataService.setAttachedFiles([]);
-    
+
     // Reset file upload component if it exists
     if (this.fileUploadComponent) {
-      // Reset file upload component - adjust method name as needed
-      // this.fileUploadComponent.reset();
+      this.fileUploadComponent.resetComponent();
     }
-    
+
     // Trigger change detection
     this.cdr.detectChanges();
 

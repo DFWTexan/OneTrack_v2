@@ -31,7 +31,9 @@
         <select
           class="form-select select-size-x-small"
           type="text"
-          id="companyType"
+          id="workState"
+          formControlName="workState"
+
         >
           <option *ngFor="let state of states" [value]="state">
             {{ state }}
@@ -45,7 +47,8 @@
         <select
           class="form-select select-size-x-small"
           type="text"
-          id="companyType"
+          id="licenseState"
+          formControlName="licenseState"
         >
           <option *ngFor="let state of states" [value]="state">
             {{ state }}
@@ -89,7 +92,8 @@
         <select
           class="form-select select-size-medium"
           type="text"
-          id="companyType"
+          id="docType"
+          formControlName="docType"
           [value]="defaultDocumentType"
           (change)="onDocumentTypeChange($event)"
         >
@@ -105,7 +109,7 @@
         <select
           class="form-select select-size-medium"
           type="text"
-          id="companyType"
+          id="docSubType"
           [disabled]="!selectedDocumentType"
         >
           <option *ngFor="let type of documentSubTypes" [value]="type">

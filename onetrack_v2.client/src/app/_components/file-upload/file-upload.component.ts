@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from '../../_environments/environment';
@@ -9,11 +9,12 @@ import { EmailDataService, ErrorMessageService } from '../../_services';
   templateUrl: './file-upload.component.html',
   styleUrl: './file-upload.component.css',
 })
-export class FileUploadComponent {
+export class FileUploadComponent implements OnChanges {
   @Input() uploadType: string | null = null;
   @Input() filePathUri: string | null = null;
   @Input() displayMode: string | null = null;
   @Input() isDisabled: boolean = false;
+  @Input() resetFiles: boolean = false; // New input property
   @Output() filesChanged = new EventEmitter<File[]>();
   @Output() fullFilePathUri = new EventEmitter<string>();
   attachedFiles: File[] = [];
@@ -26,47 +27,61 @@ export class FileUploadComponent {
     private emailDataService: EmailDataService
   ) {}
 
- onFileSelected(event: any) {
-  const target = event.target as HTMLInputElement;
-  if (target.files && target.files.length) {
-    const file: File = target.files[0];
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['resetFiles'] && changes['resetFiles'].currentValue === true) {
+      this.clearFiles();
+    }
+  }
 
-    if (file) {
-      this.fileName = file.name;
-      this.attachedFiles.push(file);
-      const formData = new FormData();
-      formData.append('file', file); // must match [FromForm] IFormFile file
-      formData.append('fileName', this.fileName); // must match [FromForm] string fileName
-      formData.append('filePathType', this.uploadType || ''); // must match [FromForm] string filePathType
+  clearFiles(): void {
+    this.attachedFiles = [];
+    this.fileName = '';
+    this.filePathUri = null;
+    this.emailDataService.setAttachedFiles(this.attachedFiles);
+    this.filesChanged.emit(this.attachedFiles);
+  }
 
-      // console.log('EMFTEST (UPLOAD) - formData => \n', formData);
+  onFileSelected(event: any) {
+    const target = event.target as HTMLInputElement;
+    if (target.files && target.files.length) {
+      const file: File = target.files[0];
 
-      interface UploadResponse {
-        objData: { fullPath: string };
-        [key: string]: any;
+      if (file) {
+        this.fileName = file.name;
+        this.attachedFiles.push(file);
+        const formData = new FormData();
+        formData.append('file', file); // must match [FromForm] IFormFile file
+        formData.append('fileName', this.fileName); // must match [FromForm] string fileName
+        formData.append('filePathType', this.uploadType || ''); // must match [FromForm] string filePathType
+
+        // console.log('EMFTEST (UPLOAD) - formData => \n', formData);
+
+        interface UploadResponse {
+          objData: { fullPath: string };
+          [key: string]: any;
+        }
+
+        const upload$ = this.http.post<UploadResponse>(this.url + 'Upload', formData);
+        upload$.subscribe({
+          next: (response) => {
+            // Handle successful upload
+            // console.log('EMFTEST (UPLOAD: onFileSelected) - response => \n', response);
+
+            this.filePathUri = response.objData.fullPath;
+            this.fullFilePathUri.emit(this.filePathUri);
+          },
+          error: (error) => {
+            if (error.error && error.error.errMessage) {
+              console.log('EMFTEST (UPLOAD) - error', error.error.errMessage);
+              this.errorMessageService.setErrorMessage(error.error.errMessage);
+            }
+          },
+        });
       }
 
-      const upload$ = this.http.post<UploadResponse>(this.url + 'Upload', formData);
-      upload$.subscribe({
-        next: (response) => {
-          // Handle successful upload
-          console.log('EMFTEST (UPLOAD: onFileSelected) - response => \n', response);
-
-          this.filePathUri = response.objData.fullPath;
-          this.fullFilePathUri.emit(this.filePathUri);
-        },
-        error: (error) => {
-          if (error.error && error.error.errMessage) {
-            console.log('EMFTEST (UPLOAD) - error', error.error.errMessage);
-            this.errorMessageService.setErrorMessage(error.error.errMessage);
-          }
-        },
-      });
+      target.value = '';
     }
-
-    target.value = '';
   }
-}
 
   onFileChange(event: Event): void {
     const target = event.target as HTMLInputElement;
@@ -77,8 +92,17 @@ export class FileUploadComponent {
     }
   }
 
-   deleteFile(index: number) {
+  deleteFile(index: number) {
     this.attachedFiles.splice(index, 1);
+    this.emailDataService.setAttachedFiles(this.attachedFiles);
+    this.filesChanged.emit(this.attachedFiles);
+  }
+
+  // Add this public method to FileUploadComponent
+  resetComponent(): void {
+    this.attachedFiles = [];
+    this.fileName = '';
+    this.filePathUri = null;
     this.emailDataService.setAttachedFiles(this.attachedFiles);
     this.filesChanged.emit(this.attachedFiles);
   }
