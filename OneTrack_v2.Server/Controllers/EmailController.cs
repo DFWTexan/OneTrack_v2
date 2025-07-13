@@ -41,5 +41,13 @@ namespace OneTrak_v2.Controllers
 
             return StatusCode(result.StatusCode, result);
         }
+
+        [HttpPost]
+        public async Task<ActionResult> SendIncentiveEmail([FromForm] IputSendIncentiveEmail input)
+        {
+            var result = await Task.Run(() => _emailService.SendIncentiveEmail(input));
+
+            return StatusCode(result.StatusCode, result);
+        }
     }
 }

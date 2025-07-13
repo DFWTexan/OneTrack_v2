@@ -1124,7 +1124,29 @@ namespace OneTrack_v2.Services
                     }
                 }
 
-                    result.Success = true;
+                result.Success = true;
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = ex.Message;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# EMAIL-7519-49734].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
+            }
+
+            return result;
+        }
+
+        public ReturnResult SendIncentiveEmail([FromBody] IputSendIncentiveEmail vInput)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                result.Success = true;
                 result.StatusCode = 200;
             }
             catch (Exception ex)
