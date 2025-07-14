@@ -1068,7 +1068,7 @@ namespace OneTrack_v2.Services
                 }
 
                 //strEmploymentCommunicationID = GetEmploymentCommunicationID(vInput.EmployeeID, vInput.EmploymentID, strEmailTo.ToString(), _mailFromAddress ?? "", strSubject.ToString() + @" - Ref#" + strEmploymentCommunicationID, strBody.ToString(), strCommunicationID, vInput.UserSOEID ?? "");
-                intEmploymentCommunicationID = InsertEmploymentCommunication(vInput.EmployeeID, vInput.EmploymentID, strEmailTo, _mailFromAddress ?? "", string.Format("{0} - Ref# {1}", strSubject, intEmploymentCommunicationID.ToString() == "0" ? "" : intEmploymentCommunicationID.ToString()), strBody, vInput.CommunicationID, vInput.UserSOEID ?? "");
+                intEmploymentCommunicationID = InsertEmploymentCommunication(vInput.EmployeeID, vInput.EmploymentID, vInput.CommunicationID, vInput.UserSOEID ?? "", strEmailTo, _mailFromAddress ?? "", string.Format("{0} - Ref# {1}", strSubject, intEmploymentCommunicationID.ToString() == "0" ? "" : intEmploymentCommunicationID.ToString()), strBody);
                 strEmploymentCommunicationID = ("000000000000000" + intEmploymentCommunicationID.ToString()).Substring(("000000000000000" + intEmploymentCommunicationID.ToString()).Length - 15).ToString();
 
                 sendHtmlEmail(_mailFromAddress, strEmailTo.ToString(), strEmailCC.ToString(), strBody.ToString(), "Licensing Department", strSubject.ToString() + @" - Ref#" + strEmploymentCommunicationID, _strEMAILATTACHMENT, strEmploymentCommunicationID, vInput.UserSOEID);
@@ -1143,9 +1143,116 @@ namespace OneTrack_v2.Services
 
         public ReturnResult SendIncentiveEmail([FromBody] IputSendIncentiveEmail vInput)
         {
+            string strCommuntcationID = string.Empty;
+            int intEmploymentCommunicationID = 0;
+
             var result = new ReturnResult();
             try
             {
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspAgentLicenseInsert", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("@AscEmployeeLicenseID", vInput.EmployeeLicenseID));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                switch (vInput.IncentiveEmailType)
+                {
+                    case "Email DM":
+                        strCommuntcationID = "82";
+                        break;
+                    case "Email DM 10":
+                        strCommuntcationID = "83";
+                        break;
+                    case "Email DM 20":
+                        strCommuntcationID = "84";
+                        break;
+                    case "Email TM":
+                        if (vInput.TypeOfIncentive == "PLS_Incentive1")
+                        {
+                            strCommuntcationID = "91";
+                        }
+                        else
+                        {
+                            //Incentive2_Plus
+                            strCommuntcationID = "127";
+                        }
+                        break;
+                    case "Email TM 10":
+                        strCommuntcationID = "92";
+                        break;
+                    case "Email TM 45":
+                        strCommuntcationID = "93";
+                        break;
+                    default:
+                        break;
+                }
+
+                intEmploymentCommunicationID = InsertEmploymentCommunication((int)vInput.EmployeeID, vInput.EmploymentID, Convert.ToInt32(strCommuntcationID), vInput.UserSOEID ?? "");
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspEmploymentCommunicationDetailInsert", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("@EmploymentCommunicationID", intEmploymentCommunicationID.ToString()));
+                        cmd.Parameters.Add(new SqlParameter("@EmployeeLicenseID", vInput.EmployeeLicenseID.ToString()));
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
+                using (SqlConnection conn = new SqlConnection(_connectionString))
+                {
+                    using (SqlCommand cmd = new SqlCommand("uspEmploymentLicenseIncentiveEmailUpdate", conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add(new SqlParameter("@EmploymentLicenseIncentiveID", vInput.IncentiveID));
+                        switch (vInput.IncentiveEmailType)
+                        {
+                            case "Email DM":
+                                cmd.Parameters.Add(new SqlParameter("@DMSentBySOEID", vInput.UserSOEID));
+                                cmd.Parameters.Add(new SqlParameter("@DMSentDate", System.DateTime.Now));
+                                //cmd.Parameters.Add(new SqlParameter("@DMEmploymentID", intMgr2));
+                                //cmd.Parameters.Add(new SqlParameter("@CCdBMEmploymentID", intMgr));
+                                break;
+                            case "Email DM 10":
+                                cmd.Parameters.Add(new SqlParameter("@DM10DaySentDate", System.DateTime.Now));
+                                cmd.Parameters.Add(new SqlParameter("@DM10DaySentBySOEID", vInput.UserSOEID));
+
+                                break;
+                            case "Email DM 20":
+                                cmd.Parameters.Add(new SqlParameter("@DM20DaySentDate", System.DateTime.Now));
+                                cmd.Parameters.Add(new SqlParameter("@DM20DaySentBySOEID", vInput.UserSOEID));
+                                break;
+                            case "Email TM":
+                                cmd.Parameters.Add(new SqlParameter("@TMSentBySOEID", vInput.UserSOEID));
+                                cmd.Parameters.Add(new SqlParameter("@TMSentDate", System.DateTime.Now));
+                                //cmd.Parameters.Add(new SqlParameter("@CCd2BMEmploymentID", intMgr));
+                                break;
+                            case "Email TM 10":
+                                cmd.Parameters.Add(new SqlParameter("@TM10DaySentDate", System.DateTime.Now));
+                                cmd.Parameters.Add(new SqlParameter("@TM10DaySentBySOEID", vInput.UserSOEID));
+                                break;
+                            case "Email TM 45":
+                                cmd.Parameters.Add(new SqlParameter("@TM45DaySentDate", System.DateTime.Now));
+                                cmd.Parameters.Add(new SqlParameter("@TM45DaySentBySOEID", vInput.UserSOEID));
+                                break;
+                            default:
+
+                                break;
+                        }
+                        cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
+                        conn.Open();
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+
                 result.Success = true;
                 result.StatusCode = 200;
             }
@@ -1230,7 +1337,7 @@ namespace OneTrack_v2.Services
 
         //    return intEmploymentCommunicationID.ToString();
         //}
-        private int InsertEmploymentCommunication(int vEmployeeID, int vEmploymentID, String strEmailTo, String strMailFromAddress, String strSubject, String strBody, int strCommunicationID, String strUserSOEID)
+        private int InsertEmploymentCommunication(int vEmployeeID, int vEmploymentID, int strCommunicationID, string strUserSOEID, string? strEmailTo = null, string? strMailFromAddress = null, string? strSubject = null, string? strBody = null)
         {
             using (var transaction = _db.Database.BeginTransaction())
             {

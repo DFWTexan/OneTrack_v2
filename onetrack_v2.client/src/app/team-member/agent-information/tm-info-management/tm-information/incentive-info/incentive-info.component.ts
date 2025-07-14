@@ -17,6 +17,8 @@ import {
   AgentLicenseAppointments,
   LicenseIncentiveInfo,
 } from '../../../../../_Models';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../../../../_components';
 
 @Component({
   selector: 'app-incentive-info',
@@ -43,6 +45,8 @@ export class IncentiveInfoComponent implements OnInit, OnDestroy {
   ccdBMEmploymentIDValue: any = 0;
   licenseTeches: { value: string; label: string }[] = [];
   incentiveStatuses: string[] = this.conService.getIncentiveStatuses();
+  eventAction: string = '';
+  vObject: any = {};
 
   private subscriptions = new Subscription();
 
@@ -53,7 +57,7 @@ export class IncentiveInfoComponent implements OnInit, OnDestroy {
     public agentComService: AgentComService,
     private drpdwnDataService: DropdownDataService,
     public licIncentiveInfoDataService: LicIncentiveInfoDataService,
-    // protected modalService: ModalService,
+    public dialog: MatDialog,
     public userAcctInfoDataService: UserAcctInfoDataService,
     public appComService: AppComService,
     private fb: FormBuilder
@@ -737,12 +741,44 @@ export class IncentiveInfoComponent implements OnInit, OnDestroy {
       });
   }
 
-  // onCloseModal() {
-  //   const modalDiv = document.getElementById('modal-incentive-info');
-  //   if (modalDiv != null) {
-  //     modalDiv.style.display = 'none';
-  //   }
-  // }
+  openConfirmDialog(eventAction: string, msg: string, vType?: string): void {
+      this.eventAction = eventAction;
+      // this.vObject = vObject;
+  
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '250px',
+        data: {
+          title: 'Confirm Action',
+          message: 'You are about to DELETE \n' + msg + '\n\nAre you sure?',
+        },
+      });
+  
+      dialogRef.afterClosed().subscribe((result) => {
+        if (result) {
+          // this.subscriptions.add(
+          //   this.adminDataService
+          //     .deleteCompany({
+          //       companyId: vObject.companyId,
+          //       addressId: vObject.addressId,
+          //       userSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
+          //     })
+          //     .subscribe({
+          //       next: (response) => {
+          //         // this.location.back();
+          //         // this.fetchCompanyItems();
+          //       },
+          //       error: (error) => {
+          //         if (error.error && error.error.errMessage) {
+          //           this.errorMessageService.setErrorMessage(
+          //             error.error.errMessage
+          //           );
+          //         }
+          //       },
+          //     })
+          // );
+        }
+      });
+    }
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();

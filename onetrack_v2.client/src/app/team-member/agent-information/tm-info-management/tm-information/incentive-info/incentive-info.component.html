@@ -173,7 +173,18 @@
             <td>{{ licenseIncentiveInfo.tmProgramEligable }}</td>
             <td>
               {{ licenseIncentiveInfo.tmSentDate }} <br />
-              {{ licenseIncentiveInfo.tmSentBy }}
+              {{ licenseIncentiveInfo.tmSentBy }} <br />
+              <button
+                *ngIf="licenseIncentiveInfo.tmApprovalStatus === 'P'"
+                type="button"
+                class="btn btn-secondary"
+                (click)="
+                      openConfirmDialog('emailTM', 'Email TM', undefined);
+                      appComService.updateIsShowModalIncentiveInfo(false);
+                    "
+              >
+                Email TM
+              </button>
             </td>
             <td>
               {{ licenseIncentiveInfo.cCdBRMgrName }}<br />{{
@@ -182,8 +193,28 @@
             </td>
             <td>{{ licenseIncentiveInfo.tmApprovalDate }}</td>
             <td>{{ licenseIncentiveInfo.tmDeclinedDate }}</td>
-            <td>{{ licenseIncentiveInfo.tM10DaySentDate }}</td>
-            <td>{{ licenseIncentiveInfo.tM45DaySentDate }}</td>
+            <td>
+              {{ licenseIncentiveInfo.tM10DaySentDate }}<br />
+              {{ licenseIncentiveInfo.tM10DaySentBy }}<br />
+              <button
+                *ngIf="licenseIncentiveInfo.tmApprovalStatus === 'P'"
+                type="button"
+                class="btn btn-secondary"
+              >
+                Email TM 10
+              </button>
+            </td>
+            <td>
+              {{ licenseIncentiveInfo.tM45DaySentDate }}<br />
+              {{ licenseIncentiveInfo.tM45DaySentBy }}<br />
+              <button
+                *ngIf="licenseIncentiveInfo.tmApprovalStatus === 'P'"
+                type="button"
+                class="btn btn-secondary"
+              >
+                Email TM 45
+              </button>
+            </td>
             <td>{{ licenseIncentiveInfo.tmApprovalStatus }}</td>
             <td>{{ licenseIncentiveInfo.enrollDate }}</td>
             <td>{{ licenseIncentiveInfo.tmExceptionDate }}</td>
@@ -743,5 +774,3 @@
     </div>
   </form>
 </div>
-
-
