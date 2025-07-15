@@ -145,6 +145,7 @@ namespace OneTrack_v2.Services
 
                 var sql = @"
                        SELECT TOP 1 1 AS Hierarchy,
+                        m1.EmploymentID,
                         rtrim(e1.lastname) + ', ' + e1.FirstName AS MgrName, j.JobTitle AS MgrTitle,
                         h1.BranchCode AS MgrDeptCode, b1.Name AS MgrDeptName, b1.Address1 AS MgrDeptAddress1, b1.Address2 AS MgrDeptAddress2, 
                         b1.City AS MgrDeptCity, b1.State AS MgrDeptState, b1.Zip_Code AS MgrDeptZip, b1.Phone AS MgrDeptPhone, b1.Fax AS MgrDeptFax, m1.Email AS MgrEmail
@@ -159,6 +160,7 @@ namespace OneTrack_v2.Services
                         UNION
 
                         SELECT TOP 1 2 AS Hierarchy,
+                        m1.EmploymentID,            
                         rtrim(e1.lastname) + ', ' + e1.FirstName AS MgrName, j.JobTitle AS MgrTitle,
                         h1.BranchCode AS MgrDeptCode, b1.Name AS MgrDeptName, b1.Address1 AS MgrDeptAddress1, b1.Address2 AS MgrDeptAddress2, 
                         b1.City AS MgrDeptCity, b1.State AS MgrDeptState, b1.Zip_Code AS MgrDeptZip, b1.Phone AS MgrDeptPhone, b1.Fax AS MgrDeptFax, m1.Email AS MgrEmail
@@ -173,6 +175,7 @@ namespace OneTrack_v2.Services
                         UNION
 
                         SELECT TOP 1 3 AS Hierarchy,
+                        m1.EmploymentID,
                         rtrim(e1.lastname) + ', ' + e1.FirstName AS MgrName, j.JobTitle AS MgrTitle,
                         h1.BranchCode AS MgrDeptCode, b1.Name AS MgrDeptName, b1.Address1 AS MgrDeptAddress1, b1.Address2 AS MgrDeptAddress2, 
                         b1.City AS MgrDeptCity, b1.State AS MgrDeptState, b1.Zip_Code AS MgrDeptZip, b1.Phone AS MgrDeptPhone, b1.Fax AS MgrDeptFax, m1.Email AS MgrEmail
@@ -187,6 +190,7 @@ namespace OneTrack_v2.Services
                         UNION
 
                         SELECT TOP 1 4 AS Hierarchy,
+                        m1.EmploymentID,
                         rtrim(e1.lastname) + ', ' + e1.FirstName AS MgrName, j.JobTitle AS MgrTitle,
                         h1.BranchCode AS MgrDeptCode, b1.Name AS MgrDeptName, b1.Address1 AS MgrDeptAddress1, b1.Address2 AS MgrDeptAddress2, 
                         b1.City AS MgrDeptCity, b1.State AS MgrDeptState, b1.Zip_Code AS MgrDeptZip, b1.Phone AS MgrDeptPhone, b1.Fax AS MgrDeptFax, m1.Email AS MgrEmail
@@ -201,6 +205,7 @@ namespace OneTrack_v2.Services
                         UNION
 
                         SELECT TOP 1 5 AS Hierarchy,
+                        m1.EmploymentID,
                         rtrim(e1.lastname) + ', ' + e1.FirstName AS MgrName, j.JobTitle AS MgrTitle,
                         h1.BranchCode AS MgrDeptCode, b1.Name AS MgrDeptName, b1.Address1 AS MgrDeptAddress1, b1.Address2 AS MgrDeptAddress2, 
                         b1.City AS MgrDeptCity, b1.State AS MgrDeptState, b1.Zip_Code AS MgrDeptZip, b1.Phone AS MgrDeptPhone, b1.Fax AS MgrDeptFax, m1.Email AS MgrEmail
@@ -215,6 +220,7 @@ namespace OneTrack_v2.Services
                         UNION
 
                         SELECT TOP 1 6 AS Hierarchy,
+                        m1.EmploymentID,
                         rtrim(e1.lastname) + ', ' + e1.FirstName AS MgrName, j.JobTitle AS MgrTitle,
                         h1.BranchCode AS MgrDeptCode, b1.Name AS MgrDeptName, b1.Address1 AS MgrDeptAddress1, b1.Address2 AS MgrDeptAddress2, 
                         b1.City AS MgrDeptCity, b1.State AS MgrDeptState, b1.Zip_Code AS MgrDeptZip, b1.Phone AS MgrDeptPhone, b1.Fax AS MgrDeptFax, m1.Email AS MgrEmail

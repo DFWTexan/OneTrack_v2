@@ -1,7 +1,8 @@
 export interface ManagerHierarchy {
-    hierarchy: number;
-    mgrName: string;
-    mgrTitle: string;
-    mgrDeptPhone: string;
-    mgrEmail: string;
-  }
+  hierarchy: number;
+  employmentID: number;
+  mgrName: string;
+  mgrTitle: string;
+  mgrDeptPhone: string;
+  mgrEmail: string;
+}

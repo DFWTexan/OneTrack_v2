@@ -47,6 +47,8 @@ export class IncentiveInfoComponent implements OnInit, OnDestroy {
   incentiveStatuses: string[] = this.conService.getIncentiveStatuses();
   eventAction: string = '';
   vObject: any = {};
+  branchMgrEmploymentID: number = 0;
+  distMgrEmploymentID: number = 0;  
 
   private subscriptions = new Subscription();
 
@@ -95,9 +97,11 @@ export class IncentiveInfoComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {
+    ngOnInit() {
     this.isFormSubmitted = false;
     this.isPageDirty = false;
+    this.branchMgrEmploymentID = this.agentDataService.agentInformation.mgrHiearchy[0]?.employmentID || 0;
+    this.distMgrEmploymentID = this.agentDataService.agentInformation.mgrHiearchy[1]?.employmentID || 0;
 
     this.licenseInfo = this.agentDataService.licenseInfo;
     this.employeeLicenseID = this.agentDataService.agentEmployeeLicenseID;
@@ -741,44 +745,59 @@ export class IncentiveInfoComponent implements OnInit, OnDestroy {
       });
   }
 
-  openConfirmDialog(eventAction: string, msg: string, vType?: string): void {
-      this.eventAction = eventAction;
-      // this.vObject = vObject;
-  
-      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-        width: '250px',
-        data: {
-          title: 'Confirm Action',
-          message: 'You are about to DELETE \n' + msg + '\n\nAre you sure?',
-        },
-      });
-  
-      dialogRef.afterClosed().subscribe((result) => {
-        if (result) {
-          // this.subscriptions.add(
-          //   this.adminDataService
-          //     .deleteCompany({
-          //       companyId: vObject.companyId,
-          //       addressId: vObject.addressId,
-          //       userSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
-          //     })
-          //     .subscribe({
-          //       next: (response) => {
-          //         // this.location.back();
-          //         // this.fetchCompanyItems();
-          //       },
-          //       error: (error) => {
-          //         if (error.error && error.error.errMessage) {
-          //           this.errorMessageService.setErrorMessage(
-          //             error.error.errMessage
-          //           );
-          //         }
-          //       },
-          //     })
-          // );
-        }
-      });
+  closeModal() {
+    const modalDiv = document.getElementById('myModal');
+    if (modalDiv != null) {
+      modalDiv.style.display = 'none';
     }
+  }
+
+  openConfirmDialog(eventAction: string, msg: string, vObject?: LicenseIncentiveInfo): void {
+    this.eventAction = eventAction;
+    this.vObject = vObject;
+
+// console.log(
+//       'EMFTEST (IncentiveInfo - openConfirmDialog) - IncentiveInfoComponent - openConfirmDialog: ',
+//       this.eventAction,
+//       this.vObject
+//     );
+// console.log('EMFTEST (IncentiveInfo - openConfirmDialog) - IncentiveInfoComponent - this.branchMgrEmploymentID: ', this.branchMgrEmploymentID);
+// console.log('EMFTEST (IncentiveInfo - openConfirmDialog) - IncentiveInfoComponent - this.distMgrEmploymentID: ', this.distMgrEmploymentID);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+        title: 'Confirm Action',
+        message: 'You are about to send \n' + msg + '\n \n Are you sure?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        // this.subscriptions.add(
+        //   this.adminDataService
+        //     .deleteCompany({
+        //       companyId: vObject.companyId,
+        //       addressId: vObject.addressId,
+        //       userSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
+        //     })
+        //     .subscribe({
+        //       next: (response) => {
+        //         // this.location.back();
+        //         // this.fetchCompanyItems();
+        //       },
+        //       error: (error) => {
+        //         if (error.error && error.error.errMessage) {
+        //           this.errorMessageService.setErrorMessage(
+        //             error.error.errMessage
+        //           );
+        //         }
+        //       },
+        //     })
+        // );
+      }
+    });
+  }
 
   ngOnDestroy() {
     this.subscriptions.unsubscribe();

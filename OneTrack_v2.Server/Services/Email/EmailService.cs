@@ -1215,31 +1215,31 @@ namespace OneTrack_v2.Services
                         cmd.Parameters.Add(new SqlParameter("@EmploymentLicenseIncentiveID", vInput.IncentiveID));
                         switch (vInput.IncentiveEmailType)
                         {
-                            case "Email DM":
+                            case "Email-DM":
                                 cmd.Parameters.Add(new SqlParameter("@DMSentBySOEID", vInput.UserSOEID));
                                 cmd.Parameters.Add(new SqlParameter("@DMSentDate", System.DateTime.Now));
                                 //cmd.Parameters.Add(new SqlParameter("@DMEmploymentID", intMgr2));
                                 //cmd.Parameters.Add(new SqlParameter("@CCdBMEmploymentID", intMgr));
                                 break;
-                            case "Email DM 10":
+                            case "Email-DM-10":
                                 cmd.Parameters.Add(new SqlParameter("@DM10DaySentDate", System.DateTime.Now));
                                 cmd.Parameters.Add(new SqlParameter("@DM10DaySentBySOEID", vInput.UserSOEID));
 
                                 break;
-                            case "Email DM 20":
+                            case "Email-DM-20":
                                 cmd.Parameters.Add(new SqlParameter("@DM20DaySentDate", System.DateTime.Now));
                                 cmd.Parameters.Add(new SqlParameter("@DM20DaySentBySOEID", vInput.UserSOEID));
                                 break;
-                            case "Email TM":
+                            case "Email-TM":
                                 cmd.Parameters.Add(new SqlParameter("@TMSentBySOEID", vInput.UserSOEID));
                                 cmd.Parameters.Add(new SqlParameter("@TMSentDate", System.DateTime.Now));
                                 //cmd.Parameters.Add(new SqlParameter("@CCd2BMEmploymentID", intMgr));
                                 break;
-                            case "Email TM 10":
+                            case "Email-TM-10":
                                 cmd.Parameters.Add(new SqlParameter("@TM10DaySentDate", System.DateTime.Now));
                                 cmd.Parameters.Add(new SqlParameter("@TM10DaySentBySOEID", vInput.UserSOEID));
                                 break;
-                            case "Email TM 45":
+                            case "Email-TM-45":
                                 cmd.Parameters.Add(new SqlParameter("@TM45DaySentDate", System.DateTime.Now));
                                 cmd.Parameters.Add(new SqlParameter("@TM45DaySentBySOEID", vInput.UserSOEID));
                                 break;

@@ -2,6 +2,7 @@
 {
     public class OputAgentHiearchy
     {
+        public int EmploymentID { get; set; }
         public int? Hierarchy { get; set; }
         public string? MgrName { get; set; }
         public string? MgrTitle { get; set; }

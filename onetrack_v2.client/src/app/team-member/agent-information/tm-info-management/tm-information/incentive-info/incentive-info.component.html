@@ -179,9 +179,14 @@
                 type="button"
                 class="btn btn-secondary"
                 (click)="
-                      openConfirmDialog('emailTM', 'Email TM', undefined);
-                      appComService.updateIsShowModalIncentiveInfo(false);
-                    "
+                  openConfirmDialog(
+                    'Email-TM',
+                    'Email TM',
+                    licenseIncentiveInfo
+                  );
+                  appComService.updateIsShowModalIncentiveInfo(false)
+                "
+                title="Email TM"
               >
                 Email TM
               </button>
@@ -200,6 +205,15 @@
                 *ngIf="licenseIncentiveInfo.tmApprovalStatus === 'P'"
                 type="button"
                 class="btn btn-secondary"
+                (click)="
+                  openConfirmDialog(
+                    'Email-TM-10',
+                    'Email TM 10',
+                    licenseIncentiveInfo
+                  );
+                  appComService.updateIsShowModalIncentiveInfo(false)
+                "
+                title="Email TM 10"
               >
                 Email TM 10
               </button>
@@ -210,6 +224,15 @@
               <button
                 *ngIf="licenseIncentiveInfo.tmApprovalStatus === 'P'"
                 type="button"
+                (click)="
+                  openConfirmDialog(
+                    'Email-TM-45',
+                    'Email TM 45',
+                    licenseIncentiveInfo
+                  );
+                  appComService.updateIsShowModalIncentiveInfo(false)
+                "
+                title="Email TM 45"
                 class="btn btn-secondary"
               >
                 Email TM 45
