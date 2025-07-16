@@ -1151,10 +1151,10 @@ namespace OneTrack_v2.Services
             {
                 using (SqlConnection conn = new SqlConnection(_connectionString))
                 {
-                    using (SqlCommand cmd = new SqlCommand("uspAgentLicenseInsert", conn))
+                    using (SqlCommand cmd = new SqlCommand("uspEmploymentLicenseIncentiveInsert", conn))
                     {
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add(new SqlParameter("@AscEmployeeLicenseID", vInput.EmployeeLicenseID));
+                        cmd.Parameters.Add(new SqlParameter("@EmployeeLicenseID", vInput.EmployeeLicenseID));
                         cmd.Parameters.Add(new SqlParameter("@UserSOEID", vInput.UserSOEID));
                         conn.Open();
                         cmd.ExecuteNonQuery();
@@ -1163,16 +1163,16 @@ namespace OneTrack_v2.Services
 
                 switch (vInput.IncentiveEmailType)
                 {
-                    case "Email DM":
+                    case "Email-DM":
                         strCommuntcationID = "82";
                         break;
-                    case "Email DM 10":
+                    case "Email-DM-10":
                         strCommuntcationID = "83";
                         break;
-                    case "Email DM 20":
+                    case "Email-DM-20":
                         strCommuntcationID = "84";
                         break;
-                    case "Email TM":
+                    case "Email-TM":
                         if (vInput.TypeOfIncentive == "PLS_Incentive1")
                         {
                             strCommuntcationID = "91";
@@ -1183,10 +1183,10 @@ namespace OneTrack_v2.Services
                             strCommuntcationID = "127";
                         }
                         break;
-                    case "Email TM 10":
+                    case "Email-TM-10":
                         strCommuntcationID = "92";
                         break;
-                    case "Email TM 45":
+                    case "Email-TM-45":
                         strCommuntcationID = "93";
                         break;
                     default:
@@ -1218,8 +1218,8 @@ namespace OneTrack_v2.Services
                             case "Email-DM":
                                 cmd.Parameters.Add(new SqlParameter("@DMSentBySOEID", vInput.UserSOEID));
                                 cmd.Parameters.Add(new SqlParameter("@DMSentDate", System.DateTime.Now));
-                                //cmd.Parameters.Add(new SqlParameter("@DMEmploymentID", intMgr2));
-                                //cmd.Parameters.Add(new SqlParameter("@CCdBMEmploymentID", intMgr));
+                                cmd.Parameters.Add(new SqlParameter("@DMEmploymentID", vInput.DistMgrEmploymentID));
+                                cmd.Parameters.Add(new SqlParameter("@CCdBMEmploymentID", vInput.BranchMgrEmploymentID));
                                 break;
                             case "Email-DM-10":
                                 cmd.Parameters.Add(new SqlParameter("@DM10DaySentDate", System.DateTime.Now));
@@ -1233,7 +1233,7 @@ namespace OneTrack_v2.Services
                             case "Email-TM":
                                 cmd.Parameters.Add(new SqlParameter("@TMSentBySOEID", vInput.UserSOEID));
                                 cmd.Parameters.Add(new SqlParameter("@TMSentDate", System.DateTime.Now));
-                                //cmd.Parameters.Add(new SqlParameter("@CCd2BMEmploymentID", intMgr));
+                                cmd.Parameters.Add(new SqlParameter("@CCd2BMEmploymentID", vInput.BranchMgrEmploymentID));
                                 break;
                             case "Email-TM-10":
                                 cmd.Parameters.Add(new SqlParameter("@TM10DaySentDate", System.DateTime.Now));

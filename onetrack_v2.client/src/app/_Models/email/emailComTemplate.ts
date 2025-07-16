@@ -20,3 +20,15 @@ export interface EmailComTemplate {
     fileAttachments?: File[]; // Optional
     userSOEID: string;
   }
+
+  export interface SendIncentiveEmail {
+    employeeID: number;
+    employmentID: number;
+    employeeLicenseID: number;
+    incentiveID?: number; // Optional (nullable in C#)
+    typeOfIncentive?: string; // Optional with default empty string
+    incentiveEmailType?: string; // Optional with default empty string
+    branchMgrEmploymentID?: number; // Optional (nullable in C#)
+    distMgrEmploymentID?: number; // Optional (nullable in C#)
+    userSOEID: string; // Required with default empty string
+  }

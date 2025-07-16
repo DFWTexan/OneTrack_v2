@@ -28,6 +28,7 @@ import {
 export class EditXborRequirementComponent implements OnInit, OnDestroy {
   @Output() callParentRefreshData = new EventEmitter<any>();
   @Input() stateProvinces: any[] = [];
+  @Input() selectedBranchCode: string = 'Select';
   isFormSubmitted = false;
   xborLicenseRequirementForm!: FormGroup;
   stateLicenseItems: { value: number; label: string }[] = [];
@@ -94,7 +95,7 @@ export class EditXborRequirementComponent implements OnInit, OnDestroy {
       licenseId: new FormControl({ value: 0, disabled: true }),
       branchCode: new FormControl(''),
       requirementType: new FormControl(''),
-      licLevel1: new FormControl(''),
+      licLevel1: new FormControl(false),
       licLevel2: new FormControl(''),
       licLevel3: new FormControl(''),
       licLevel4: new FormControl(''),
@@ -138,7 +139,7 @@ export class EditXborRequirementComponent implements OnInit, OnDestroy {
                     licenseId: xborLicenseRequirement.licenseId,
                     branchCode: xborLicenseRequirement.branchCode,
                     requirementType: xborLicenseRequirement.requirementType,
-                    licLevel1: xborLicenseRequirement.licLevel1,
+                    licLevel1: xborLicenseRequirement.licLevel1 === 1, // Convert number to boolean
                     licLevel2: xborLicenseRequirement.licLevel2,
                     licLevel3: xborLicenseRequirement.licLevel3,
                     licLevel4: xborLicenseRequirement.licLevel4,
@@ -193,7 +194,18 @@ export class EditXborRequirementComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     this.isFormSubmitted = true;
     let xBorReqItem: any = this.xborLicenseRequirementForm.value;
+    xBorReqItem.branchCode = this.selectedBranchCode;
+    xBorReqItem.requirementType = 'X-Border';
     xBorReqItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
+
+    // Convert checkbox boolean to number (true = 1, false = 0)
+    xBorReqItem.licLevel1 = this.xborLicenseRequirementForm.get('licLevel1')?.value ? true : false;
+    xBorReqItem.licLevel2 = this.xborLicenseRequirementForm.get('licLevel2')?.value ? true : false;
+    xBorReqItem.licLevel3 = this.xborLicenseRequirementForm.get('licLevel3')?.value ? true : false;
+    xBorReqItem.licLevel4 = this.xborLicenseRequirementForm.get('licLevel4')?.value ? true : false;
+    xBorReqItem.plS_Incentive1 = this.xborLicenseRequirementForm.get('plS_Incentive1')?.value ? true : false;
+    xBorReqItem.incentive2_Plus = this.xborLicenseRequirementForm.get('incentive2_Plus')?.value ? true : false;
+    xBorReqItem.licIncentive3 = this.xborLicenseRequirementForm.get('licIncentive3')?.value || false;
 
     if (this.adminComService.modes.xborLicenseRequirement.mode === 'INSERT') {
       xBorReqItem.requiredLicenseID = 0;

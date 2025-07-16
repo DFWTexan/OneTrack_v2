@@ -9,10 +9,8 @@
         public int? IncentiveID { get; set; }
         public string? TypeOfIncentive { get; set; } = string.Empty;
         public string? IncentiveEmailType { get; set; } = string.Empty;
-        public int? CommunicationID { get; set; }
-        public int? DMEmploymentID { get; set; }
-        public int? CCdBMEmploymentID { get; set; }
-        public int? CCd2BMEmploymentID { get; set; }
+        public int? BranchMgrEmploymentID { get; set; }
+        public int? DistMgrEmploymentID { get; set; }
         public string UserSOEID { get; set; } = string.Empty;
     }
 }

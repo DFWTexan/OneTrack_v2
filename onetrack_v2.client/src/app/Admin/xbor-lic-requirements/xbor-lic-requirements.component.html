@@ -34,6 +34,7 @@
       <button
         class="btn btn-success button-font-size"
         type="button"
+        [disabled]="selectedBranchCode === 'Select'"
         (click)="
           adminDataService.storeXBorRequirement('INSERT', null);
           modalService.open('modal-edit-xBor-requirement')
@@ -247,6 +248,7 @@
       <div>
         <app-edit-xbor-requirement
           [stateProvinces]="states"
+          [selectedBranchCode]="selectedBranchCode"
           (callParentRefreshData)="refreshData()"
         ></app-edit-xbor-requirement>
       </div>

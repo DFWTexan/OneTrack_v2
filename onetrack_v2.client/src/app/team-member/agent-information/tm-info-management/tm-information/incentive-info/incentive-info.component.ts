@@ -9,6 +9,7 @@ import {
   AppComService,
   ConstantsDataService,
   DropdownDataService,
+  EmailDataService,
   ErrorMessageService,
   LicIncentiveInfoDataService,
   UserAcctInfoDataService,
@@ -48,7 +49,7 @@ export class IncentiveInfoComponent implements OnInit, OnDestroy {
   eventAction: string = '';
   vObject: any = {};
   branchMgrEmploymentID: number = 0;
-  distMgrEmploymentID: number = 0;  
+  distMgrEmploymentID: number = 0;
 
   private subscriptions = new Subscription();
 
@@ -62,6 +63,7 @@ export class IncentiveInfoComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     public userAcctInfoDataService: UserAcctInfoDataService,
     public appComService: AppComService,
+    public emailDataService: EmailDataService,
     private fb: FormBuilder
   ) {
     this.incentiveUpdateForm = this.fb.group({
@@ -97,11 +99,13 @@ export class IncentiveInfoComponent implements OnInit, OnDestroy {
     });
   }
 
-    ngOnInit() {
+  ngOnInit() {
     this.isFormSubmitted = false;
     this.isPageDirty = false;
-    this.branchMgrEmploymentID = this.agentDataService.agentInformation.mgrHiearchy[0]?.employmentID || 0;
-    this.distMgrEmploymentID = this.agentDataService.agentInformation.mgrHiearchy[1]?.employmentID || 0;
+    this.branchMgrEmploymentID =
+      this.agentDataService.agentInformation.mgrHiearchy[0]?.employmentID || 0;
+    this.distMgrEmploymentID =
+      this.agentDataService.agentInformation.mgrHiearchy[1]?.employmentID || 0;
 
     this.licenseInfo = this.agentDataService.licenseInfo;
     this.employeeLicenseID = this.agentDataService.agentEmployeeLicenseID;
@@ -752,17 +756,21 @@ export class IncentiveInfoComponent implements OnInit, OnDestroy {
     }
   }
 
-  openConfirmDialog(eventAction: string, msg: string, vObject?: LicenseIncentiveInfo): void {
+  openConfirmDialog(
+    eventAction: string,
+    msg: string,
+    vObject?: LicenseIncentiveInfo
+  ): void {
     this.eventAction = eventAction;
     this.vObject = vObject;
 
-// console.log(
-//       'EMFTEST (IncentiveInfo - openConfirmDialog) - IncentiveInfoComponent - openConfirmDialog: ',
-//       this.eventAction,
-//       this.vObject
-//     );
-// console.log('EMFTEST (IncentiveInfo - openConfirmDialog) - IncentiveInfoComponent - this.branchMgrEmploymentID: ', this.branchMgrEmploymentID);
-// console.log('EMFTEST (IncentiveInfo - openConfirmDialog) - IncentiveInfoComponent - this.distMgrEmploymentID: ', this.distMgrEmploymentID);
+    console.log(
+      'EMFTEST (IncentiveInfo - openConfirmDialog) - IncentiveInfoComponent - openConfirmDialog: ',
+      this.eventAction,
+      this.vObject
+    );
+    // console.log('EMFTEST (IncentiveInfo - openConfirmDialog) - IncentiveInfoComponent - this.branchMgrEmploymentID: ', this.branchMgrEmploymentID);
+    // console.log('EMFTEST (IncentiveInfo - openConfirmDialog) - IncentiveInfoComponent - this.distMgrEmploymentID: ', this.distMgrEmploymentID);
 
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '250px',
@@ -773,28 +781,48 @@ export class IncentiveInfoComponent implements OnInit, OnDestroy {
     });
 
     dialogRef.afterClosed().subscribe((result) => {
+      
+      console.log(
+        'EMFTEST (IncentiveInfo - openConfirmDialog) - IncentiveInfoComponent - afterClosed result: ',
+        result
+      );
+
       if (result) {
-        // this.subscriptions.add(
-        //   this.adminDataService
-        //     .deleteCompany({
-        //       companyId: vObject.companyId,
-        //       addressId: vObject.addressId,
-        //       userSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
-        //     })
-        //     .subscribe({
-        //       next: (response) => {
-        //         // this.location.back();
-        //         // this.fetchCompanyItems();
-        //       },
-        //       error: (error) => {
-        //         if (error.error && error.error.errMessage) {
-        //           this.errorMessageService.setErrorMessage(
-        //             error.error.errMessage
-        //           );
-        //         }
-        //       },
-        //     })
-        // );
+        this.subscriptions.add(
+          this.emailDataService
+            .sendIncentiveEmail({
+              employeeID: this.agentDataService.agentInformation.employeeID,
+              employmentID: this.agentDataService.agentInformation.employmentID,
+              employeeLicenseID: this.vObject.employeeLicenseID,
+              incentiveID: this.vObject.employmentLicenseIncentiveID,
+              typeOfIncentive: this.vObject.licenseIncentive,
+              incentiveEmailType: this.eventAction,
+              branchMgrEmploymentID: this.branchMgrEmploymentID,
+              distMgrEmploymentID: this.distMgrEmploymentID,
+              userSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
+            })
+            .subscribe({
+              next: (response) => {
+                this.agentDataService
+                  .fetchAgentInformation(
+                    this.agentDataService.agentInformation.employeeID
+                  )
+                  .subscribe((agentInfo) => {
+                    this.agentDataService.updAgentInfo(agentInfo);
+                  });
+                this.appComService.updateAppMessage(
+                  'Incentive email sent successfully'
+                );
+              },
+              error: (error) => {
+                if (error.error && error.error.errMessage) {
+                  this.errorMessageService.setErrorMessage(
+                    error.error.errMessage
+                  );
+                }
+              },
+            })
+        );
       }
     });
   }

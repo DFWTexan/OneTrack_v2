@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 
 import { environment } from '../../_environments/environment';
 import { AgentComService } from '../agent/agentInfo.com.service';
-import { EmailComTemplate, SendEmailData } from '../../_Models';
+import { EmailComTemplate, SendEmailData, SendIncentiveEmail } from '../../_Models';
 
 @Injectable({
   providedIn: 'root',
@@ -35,7 +35,7 @@ export class EmailDataService {
       this.attachedFilesChanged.next(this.attachedFiles);
     }
   }
-  
+
   getAttachedFiles(): File[] {
     return this.attachedFiles;
   }
@@ -89,7 +89,7 @@ export class EmailDataService {
 
   sendEmail(sendEmailData: any): Observable<SendEmailData> {
     const formData = new FormData();
-  
+
     // Append form fields
     formData.append('communicationID', sendEmailData.communicationID);
     formData.append('emailSubject', sendEmailData.emailSubject);
@@ -97,20 +97,26 @@ export class EmailDataService {
     formData.append('emailAttachments', sendEmailData.emailAttachments || '');
     formData.append('employeeID', sendEmailData.employeeID.toString());
     formData.append('EmploymentID', sendEmailData.EmploymentID.toString());
-    formData.append('CommunicationID', sendEmailData.CommunicationID.toString());
+    formData.append(
+      'CommunicationID',
+      sendEmailData.CommunicationID.toString()
+    );
     formData.append('EmailTo', sendEmailData.EmailTo);
     // formData.append('CcEmail', JSON.stringify(sendEmailData.CcEmail || []));
     formData.append('CcEmail', (sendEmailData.CcEmail || []).join(','));
     formData.append('EmailContent', sendEmailData.EmailContent);
     formData.append('UserSOEID', sendEmailData.UserSOEID);
-  
+
     // Append file attachments if any
-    if (sendEmailData.fileAttachments && sendEmailData.fileAttachments.length > 0) {
+    if (
+      sendEmailData.fileAttachments &&
+      sendEmailData.fileAttachments.length > 0
+    ) {
       sendEmailData.fileAttachments.forEach((file: File, index: number) => {
-          formData.append('FileAttachments', file, file.name); // Key must match the property name in .NET
+        formData.append('FileAttachments', file, file.name); // Key must match the property name in .NET
       });
-  }
-  
+    }
+
     // Send the FormData to the endpoint
     return this.http
       .post<{
@@ -119,6 +125,46 @@ export class EmailDataService {
         objData: SendEmailData;
         errMessage: string;
       }>(this.apiUrl + 'Send', formData)
+      .pipe(
+        map((response) => {
+          if (response.success && response.statusCode === 200) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  sendIncentiveEmail(sendEmailData: SendIncentiveEmail): Observable<SendIncentiveEmail> {
+    const formData = new FormData();
+    formData.append('employeeID', sendEmailData.employeeID.toString());
+    formData.append('EmploymentID', sendEmailData.employmentID.toString());
+    formData.append('employeeLicenseID', sendEmailData.employeeLicenseID.toString());
+    if (sendEmailData.incentiveID) {
+      formData.append('incentiveID', sendEmailData.incentiveID.toString());
+    }
+    if (sendEmailData.typeOfIncentive) {
+      formData.append('typeOfIncentive', sendEmailData.typeOfIncentive);
+    }
+    if (sendEmailData.incentiveEmailType) {
+      formData.append('incentiveEmailType', sendEmailData.incentiveEmailType);
+    }
+    if (sendEmailData.branchMgrEmploymentID) {
+      formData.append('branchMgrEmploymentID', sendEmailData.branchMgrEmploymentID.toString());
+    }
+    if (sendEmailData.distMgrEmploymentID) {
+      formData.append('distMgrEmploymentID', sendEmailData.distMgrEmploymentID.toString());
+    }
+    formData.append('userSOEID', sendEmailData.userSOEID);
+    
+    return this.http
+      .post<{
+        success: boolean;
+        statusCode: number;
+        objData: SendIncentiveEmail;
+        errMessage: string;
+      }>(this.apiUrl + 'SendIncentiveEmail', formData)
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {

@@ -61,8 +61,6 @@ namespace OneTrack_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        
-
         [HttpGet("{state}")]
         public async Task<IActionResult> GetExamByState(string state)
         {
