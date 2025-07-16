@@ -14,12 +14,15 @@ import {
   AppComService,
   ConstantsDataService,
   DropdownDataService,
+  EmailDataService,
   ErrorMessageService,
   LicIncentiveInfoDataService,
   ModalService,
   UserAcctInfoDataService,
 } from '../../../../_services';
 import { formatDate } from '@angular/common';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmDialogComponent } from '../../../../_components';
 
 @Component({
   selector: 'app-license-incentive',
@@ -45,6 +48,10 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
   ccdBMEmploymentIDValue: any = 0;
   licenseTeches: { value: string; label: string }[] = [];
   incentiveStatuses: string[] = this.conService.getIncentiveStatuses();
+  eventAction: string = '';
+  vObject: any = {};
+  branchMgrEmploymentID: number = 0;
+  distMgrEmploymentID: number = 0;
 
   private subscriptions = new Subscription();
 
@@ -58,6 +65,8 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
     protected modalService: ModalService,
     public userAcctInfoDataService: UserAcctInfoDataService,
     public appComService: AppComService,
+    public dialog: MatDialog,
+    public emailDataService: EmailDataService,
     private fb: FormBuilder
   ) {
     this.incentiveUpdateForm = this.fb.group({
@@ -94,6 +103,11 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+this.branchMgrEmploymentID =
+      this.agentDataService.agentInformation.mgrHiearchy[0]?.employmentID || 0;
+    this.distMgrEmploymentID =
+      this.agentDataService.agentInformation.mgrHiearchy[1]?.employmentID || 0;
+
     this.currentIndex = this.agentDataService.licenseMgmtDataIndex;
     this.subscriptions.add(
       this.agentDataService.licenseMgmtDataIndexChanged.subscribe(
@@ -708,6 +722,76 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
   // isDisplayNext(): boolean {
   //   return this.currentIndex < this.licenseMgmtData.length - 1;
   // }
+  openConfirmDialog(
+      eventAction: string,
+      msg: string,
+      vObject?: LicenseIncentiveInfo
+    ): void {
+      this.eventAction = eventAction;
+      this.vObject = vObject;
+  
+      console.log(
+        'EMFTEST (IncentiveInfo - openConfirmDialog) - IncentiveInfoComponent - openConfirmDialog: ',
+        this.eventAction,
+        this.vObject
+      );
+      // console.log('EMFTEST (IncentiveInfo - openConfirmDialog) - IncentiveInfoComponent - this.branchMgrEmploymentID: ', this.branchMgrEmploymentID);
+      // console.log('EMFTEST (IncentiveInfo - openConfirmDialog) - IncentiveInfoComponent - this.distMgrEmploymentID: ', this.distMgrEmploymentID);
+  
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        width: '250px',
+        data: {
+          title: 'Confirm Action',
+          message: 'You are about to send \n' + msg + '\n \n Are you sure?',
+        },
+      });
+  
+      dialogRef.afterClosed().subscribe((result) => {
+        
+        console.log(
+          'EMFTEST (IncentiveInfo - openConfirmDialog) - IncentiveInfoComponent - afterClosed result: ',
+          result
+        );
+  
+        if (result) {
+          this.subscriptions.add(
+            this.emailDataService
+              .sendIncentiveEmail({
+                employeeID: this.agentDataService.agentInformation.employeeID,
+                employmentID: this.agentDataService.agentInformation.employmentID,
+                employeeLicenseID: this.vObject.employeeLicenseID,
+                incentiveID: this.vObject.employmentLicenseIncentiveID,
+                typeOfIncentive: this.vObject.licenseIncentive,
+                incentiveEmailType: this.eventAction,
+                branchMgrEmploymentID: this.branchMgrEmploymentID,
+                distMgrEmploymentID: this.distMgrEmploymentID,
+                userSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
+              })
+              .subscribe({
+                next: (response) => {
+                  this.agentDataService
+                    .fetchAgentInformation(
+                      this.agentDataService.agentInformation.employeeID
+                    )
+                    .subscribe((agentInfo) => {
+                      this.agentDataService.updAgentInfo(agentInfo);
+                    });
+                  this.appComService.updateAppMessage(
+                    'Incentive email sent successfully'
+                  );
+                },
+                error: (error) => {
+                  if (error.error && error.error.errMessage) {
+                    this.errorMessageService.setErrorMessage(
+                      error.error.errMessage
+                    );
+                  }
+                },
+              })
+          );
+        }
+      });
+    }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
