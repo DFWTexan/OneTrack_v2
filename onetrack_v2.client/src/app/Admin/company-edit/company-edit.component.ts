@@ -106,7 +106,7 @@ export class CompanyEditComponent implements OnInit, OnDestroy {
             .subscribe({
               next: (response) => {
                 // this.location.back();
-                // this.fetchCompanyItems();
+                this.fetchCompanyItems();
               },
               error: (error) => {
                 if (error.error && error.error.errMessage) {

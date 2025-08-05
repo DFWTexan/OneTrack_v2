@@ -103,7 +103,7 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-this.branchMgrEmploymentID =
+    this.branchMgrEmploymentID =
       this.agentDataService.agentInformation.mgrHiearchy[0]?.employmentID || 0;
     this.distMgrEmploymentID =
       this.agentDataService.agentInformation.mgrHiearchy[1]?.employmentID || 0;
@@ -535,47 +535,46 @@ this.branchMgrEmploymentID =
       }
     });
 
-    if(incentiveUpdateItem.DMSentDate == "") {
+    if (incentiveUpdateItem.DMSentDate == '') {
       incentiveUpdateItem.DMSentDate = null;
     }
-    if(incentiveUpdateItem.DMApprovalDate == "") {
+    if (incentiveUpdateItem.DMApprovalDate == '') {
       incentiveUpdateItem.DMApprovalDate = null;
     }
-    if(incentiveUpdateItem.DMDeclinedDate == "") {
+    if (incentiveUpdateItem.DMDeclinedDate == '') {
       incentiveUpdateItem.DMDeclinedDate = null;
     }
-    if(incentiveUpdateItem.DM10DaySentDate == "") {
+    if (incentiveUpdateItem.DM10DaySentDate == '') {
       incentiveUpdateItem.DM10DaySentDate = null;
     }
-    if(incentiveUpdateItem.DM20DaySentDate == "") {
+    if (incentiveUpdateItem.DM20DaySentDate == '') {
       incentiveUpdateItem.DM20DaySentDate = null;
     }
 
-    if(incentiveUpdateItem.TMSentDate == "") {
+    if (incentiveUpdateItem.TMSentDate == '') {
       incentiveUpdateItem.TMSentDate = null;
     }
-    if(incentiveUpdateItem.TMApprovalDate == "") {
+    if (incentiveUpdateItem.TMApprovalDate == '') {
       incentiveUpdateItem.TMApprovalDate = null;
     }
-    if(incentiveUpdateItem.TMDeclinedDate == "") {
+    if (incentiveUpdateItem.TMDeclinedDate == '') {
       incentiveUpdateItem.TMDeclinedDate = null;
     }
-    if(incentiveUpdateItem.TM10DaySentDate == "") {
+    if (incentiveUpdateItem.TM10DaySentDate == '') {
       incentiveUpdateItem.TM10DaySentDate = null;
     }
-    if(incentiveUpdateItem.TM45DaySentDate == "") {
+    if (incentiveUpdateItem.TM45DaySentDate == '') {
       incentiveUpdateItem.TM45DaySentDate = null;
     }
-    if(incentiveUpdateItem.TMExceptionDate == "") {
+    if (incentiveUpdateItem.TMExceptionDate == '') {
       incentiveUpdateItem.TMExceptionDate = null;
     }
-    if(incentiveUpdateItem.TMOkToSellSentDate == "") {
+    if (incentiveUpdateItem.TMOkToSellSentDate == '') {
       incentiveUpdateItem.TMOkToSellSentDate = null;
     }
-    if(incentiveUpdateItem.TMOMSApprtoSendToHRDate == "") {
+    if (incentiveUpdateItem.TMOMSApprtoSendToHRDate == '') {
       incentiveUpdateItem.TMOMSApprtoSendToHRDate = null;
     }
-    
 
     // Handle default date for IncetivePeriodDate
     if (!incentiveUpdateItem.IncetivePeriodDate) {
@@ -723,75 +722,85 @@ this.branchMgrEmploymentID =
   //   return this.currentIndex < this.licenseMgmtData.length - 1;
   // }
   openConfirmDialog(
-      eventAction: string,
-      msg: string,
-      vObject?: LicenseIncentiveInfo
-    ): void {
-      this.eventAction = eventAction;
-      this.vObject = vObject;
-  
-      console.log(
-        'EMFTEST (IncentiveInfo - openConfirmDialog) - IncentiveInfoComponent - openConfirmDialog: ',
-        this.eventAction,
-        this.vObject
-      );
-      // console.log('EMFTEST (IncentiveInfo - openConfirmDialog) - IncentiveInfoComponent - this.branchMgrEmploymentID: ', this.branchMgrEmploymentID);
-      // console.log('EMFTEST (IncentiveInfo - openConfirmDialog) - IncentiveInfoComponent - this.distMgrEmploymentID: ', this.distMgrEmploymentID);
-  
-      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-        width: '250px',
-        data: {
-          title: 'Confirm Action',
-          message: 'You are about to send \n' + msg + '\n \n Are you sure?',
-        },
-      });
-  
-      dialogRef.afterClosed().subscribe((result) => {
-        
-        console.log(
-          'EMFTEST (IncentiveInfo - openConfirmDialog) - IncentiveInfoComponent - afterClosed result: ',
-          result
-        );
-  
-        if (result) {
-          this.subscriptions.add(
-            this.emailDataService
-              .sendIncentiveEmail({
-                employeeID: this.agentDataService.agentInformation.employeeID,
-                employmentID: this.agentDataService.agentInformation.employmentID,
-                employeeLicenseID: this.vObject.employeeLicenseID,
-                incentiveID: this.vObject.employmentLicenseIncentiveID,
-                typeOfIncentive: this.vObject.licenseIncentive,
-                incentiveEmailType: this.eventAction,
-                branchMgrEmploymentID: this.branchMgrEmploymentID,
-                distMgrEmploymentID: this.distMgrEmploymentID,
-                userSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
-              })
-              .subscribe({
-                next: (response) => {
-                  this.agentDataService
-                    .fetchAgentInformation(
-                      this.agentDataService.agentInformation.employeeID
-                    )
-                    .subscribe((agentInfo) => {
-                      this.agentDataService.updAgentInfo(agentInfo);
-                    });
-                  this.appComService.updateAppMessage(
-                    'Incentive email sent successfully'
-                  );
-                },
-                error: (error) => {
-                  if (error.error && error.error.errMessage) {
-                    this.errorMessageService.setErrorMessage(
-                      error.error.errMessage
+    eventAction: string,
+    msg: string,
+    vObject?: LicenseIncentiveInfo
+  ): void {
+    this.eventAction = eventAction;
+    this.vObject = vObject;
+
+    // console.log(
+    //   'EMFTEST (IncentiveInfo - openConfirmDialog) - IncentiveInfoComponent - openConfirmDialog: ',
+    //   this.eventAction,
+    //   this.vObject
+    // );
+    // console.log('EMFTEST (IncentiveInfo - openConfirmDialog) - IncentiveInfoComponent - this.branchMgrEmploymentID: ', this.branchMgrEmploymentID);
+    // console.log('EMFTEST (IncentiveInfo - openConfirmDialog) - IncentiveInfoComponent - this.distMgrEmploymentID: ', this.distMgrEmploymentID);
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      width: '250px',
+      data: {
+        title: 'Confirm Action',
+        message: 'You are about to send \n' + msg + '\n \n Are you sure?',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      // console.log(
+      //   'EMFTEST (IncentiveInfo - openConfirmDialog) - IncentiveInfoComponent - afterClosed result: ',
+      //   result
+      // );
+
+      if (result) {
+        this.subscriptions.add(
+          this.emailDataService
+            .sendIncentiveEmail({
+              employeeID: this.agentDataService.agentInformation.employeeID,
+              employmentID: this.agentDataService.agentInformation.employmentID,
+              employeeLicenseID: this.vObject.employeeLicenseID,
+              incentiveID: this.vObject.employmentLicenseIncentiveID,
+              typeOfIncentive: this.vObject.licenseIncentive,
+              incentiveEmailType: this.eventAction,
+              branchMgrEmploymentID: this.branchMgrEmploymentID,
+              distMgrEmploymentID: this.distMgrEmploymentID,
+              userSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
+            })
+            .subscribe({
+              next: (response) => {
+                // this.agentDataService
+                //   .fetchAgentInformation(
+                //     this.agentDataService.agentInformation.employeeID
+                //   )
+                //   .subscribe((agentInfo) => {
+                //     this.agentDataService.updAgentInfo(agentInfo);
+                //   });
+                this.licIncentiveInfoDataService
+                  .fetchLicIncentiveInfo(
+                    this.licenseMgmtData[this.currentIndex].employeeLicenseId
+                  )
+                  .subscribe((licenseIncentiveUpd: LicenseIncentiveInfo) => {
+                    this.licenseIncentiveInfo = licenseIncentiveUpd;
+                    this.employmentLicenseIncentiveID =
+                      licenseIncentiveUpd.employmentLicenseIncentiveID;
+                    this.appComService.updateAppMessage(
+                      'Incentive email sent successfully'
                     );
-                  }
-                },
-              })
-          );
-        }
-      });
-    }
+                    // this.isFormSubmitted = false;
+                    // this.onEditToggle();
+                  });
+              },
+              error: (error) => {
+                if (error.error && error.error.errMessage) {
+                  this.errorMessageService.setErrorMessage(
+                    error.error.errMessage
+                  );
+                }
+              },
+            })
+        );
+      }
+    });
+  }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
