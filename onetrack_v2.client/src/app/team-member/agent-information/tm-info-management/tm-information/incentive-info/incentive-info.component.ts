@@ -99,7 +99,7 @@ export class IncentiveInfoComponent implements OnInit, OnDestroy {
     });
   }
 
-  private fetchData() {
+  fetchData() {
     this.licIncentiveInfoDataService
       .fetchLicIncentiveInfo(this.employeeLicenseID)
       .subscribe((licenseIncentiveInfo: LicenseIncentiveInfo) => {
