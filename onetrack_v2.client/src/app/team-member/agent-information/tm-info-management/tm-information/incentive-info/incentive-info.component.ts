@@ -99,23 +99,7 @@ export class IncentiveInfoComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngOnInit() {
-    this.isFormSubmitted = false;
-    this.isPageDirty = false;
-    this.branchMgrEmploymentID =
-      this.agentDataService.agentInformation.mgrHiearchy[0]?.employmentID || 0;
-    this.distMgrEmploymentID =
-      this.agentDataService.agentInformation.mgrHiearchy[1]?.employmentID || 0;
-
-    this.licenseInfo = this.agentDataService.licenseInfo;
-    this.employeeLicenseID = this.agentDataService.agentEmployeeLicenseID;
-    if (this.employeeLicenseID === 0) {
-      this.errorMessageService.setErrorMessage(
-        'Employee License ID is not set.'
-      );
-      return;
-    }
-
+  private fetchData() {
     this.licIncentiveInfoDataService
       .fetchLicIncentiveInfo(this.employeeLicenseID)
       .subscribe((licenseIncentiveInfo: LicenseIncentiveInfo) => {
@@ -261,6 +245,171 @@ export class IncentiveInfoComponent implements OnInit, OnDestroy {
           Notes: licenseIncentiveInfo.notes,
         });
       });
+  }
+
+  ngOnInit() {
+    this.isFormSubmitted = false;
+    this.isPageDirty = false;
+    this.branchMgrEmploymentID =
+      this.agentDataService.agentInformation.mgrHiearchy[0]?.employmentID || 0;
+    this.distMgrEmploymentID =
+      this.agentDataService.agentInformation.mgrHiearchy[1]?.employmentID || 0;
+
+    this.licenseInfo = this.agentDataService.licenseInfo;
+    this.employeeLicenseID = this.agentDataService.agentEmployeeLicenseID;
+    if (this.employeeLicenseID === 0) {
+      this.errorMessageService.setErrorMessage(
+        'Employee License ID is not set.'
+      );
+      return;
+    }
+
+    // this.licIncentiveInfoDataService
+    //   .fetchLicIncentiveInfo(this.employeeLicenseID)
+    //   .subscribe((licenseIncentiveInfo: LicenseIncentiveInfo) => {
+    //     this.licenseIncentiveInfo = licenseIncentiveInfo;
+    //     this.employmentLicenseIncentiveID =
+    //       licenseIncentiveInfo.employmentLicenseIncentiveID;
+
+    //     // Set the dropdown values
+    //     this.dmEmploymentIDValue = this.dmManagers.find(
+    //       (mgr) => mgr.label === licenseIncentiveInfo.dmMgrName
+    //     )?.value;
+    //     this.ccdBMEmploymentIDValue = this.bmManagers.find(
+    //       (mgr) => mgr.label === licenseIncentiveInfo.cCdBRMgrName
+    //     )?.value;
+    //     let dmSentByValue = this.licenseTeches.find(
+    //       (tech) => tech.label === licenseIncentiveInfo.dmSentBy
+    //     )?.value;
+    //     let dM10DaySentByValue = this.licenseTeches.find(
+    //       (tech) => tech.label === licenseIncentiveInfo.dM10DaySentBy
+    //     )?.value;
+    //     let dM20DaySentByValue = this.licenseTeches.find(
+    //       (tech) => tech.label === licenseIncentiveInfo.dM20DaySentBy
+    //     )?.value;
+    //     let ccd2BmEmploymentIdValue = this.bmManagers.find(
+    //       (mgr) => mgr.label === licenseIncentiveInfo.cCd2BRMgrName
+    //     )?.value;
+    //     let tmSentByValue = this.licenseTeches.find(
+    //       (tech) => tech.label === licenseIncentiveInfo.tmSentBy
+    //     )?.value;
+    //     let tmOkToSellSentByValue = this.licenseTeches.find(
+    //       (tech) => tech.label === licenseIncentiveInfo.tmOkToSellSentBy
+    //     )?.value;
+    //     let ccOkToSellBmEmploymentIdValue = this.bmManagers.find(
+    //       (mgr) => mgr.label === licenseIncentiveInfo.cCdOkToSellBRMgrName
+    //     )?.value;
+
+    //     this.incentiveUpdateForm.patchValue({
+    //       RollOutGroup: licenseIncentiveInfo.rollOutGroup,
+    //       DMEmploymentID: this.dmEmploymentIDValue || 0,
+    //       CCdBMEmploymentID: this.ccdBMEmploymentIDValue || 0,
+    //       DMSentDate: licenseIncentiveInfo.dmSentDate
+    //         ? formatDate(licenseIncentiveInfo.dmSentDate, 'yyyy-MM-dd', 'en-US')
+    //         : null,
+    //       DMApprovalDate: licenseIncentiveInfo.dmApprovalDate
+    //         ? formatDate(
+    //             licenseIncentiveInfo.dmApprovalDate,
+    //             'yyyy-MM-dd',
+    //             'en-US'
+    //           )
+    //         : null,
+    //       DMDeclinedDate: licenseIncentiveInfo.dmDeclinedDate
+    //         ? formatDate(
+    //             licenseIncentiveInfo.dmDeclinedDate,
+    //             'yyyy-MM-dd',
+    //             'en-US'
+    //           )
+    //         : null,
+    //       DM10DaySentDate: licenseIncentiveInfo.dM10DaySentDate
+    //         ? formatDate(
+    //             licenseIncentiveInfo.dM10DaySentDate,
+    //             'yyyy-MM-dd',
+    //             'en-US'
+    //           )
+    //         : null,
+    //       DM20DaySentDate: licenseIncentiveInfo.dM20DaySentDate
+    //         ? formatDate(
+    //             licenseIncentiveInfo.dM20DaySentDate,
+    //             'yyyy-MM-dd',
+    //             'en-US'
+    //           )
+    //         : null,
+    //       DMComment: licenseIncentiveInfo.dmComment,
+    //       // DMSentBySOEID: dmSentByValue || null,
+    //       DMSentBySOEID: licenseIncentiveInfo.dmSentBy || null,
+    //       DM10DaySentBySOEID: licenseIncentiveInfo.dM10DaySentBy || null,
+    //       DM20DaySentBySOEID: licenseIncentiveInfo.dM20DaySentBy || null,
+    //       TMSentDate: licenseIncentiveInfo.tmSentDate
+    //         ? formatDate(licenseIncentiveInfo.tmSentDate, 'yyyy-MM-dd', 'en-US')
+    //         : null,
+    //       CCd2BMEmploymentID: ccd2BmEmploymentIdValue || 0,
+    //       TMApprovalDate: licenseIncentiveInfo.tmApprovalDate
+    //         ? formatDate(
+    //             licenseIncentiveInfo.tmApprovalDate,
+    //             'yyyy-MM-dd',
+    //             'en-US'
+    //           )
+    //         : null,
+    //       TMDeclinedDate: licenseIncentiveInfo.tmDeclinedDate
+    //         ? formatDate(
+    //             licenseIncentiveInfo.tmDeclinedDate,
+    //             'yyyy-MM-dd',
+    //             'en-US'
+    //           )
+    //         : null,
+    //       TM10DaySentDate: licenseIncentiveInfo.tM10DaySentDate
+    //         ? formatDate(
+    //             licenseIncentiveInfo.tM10DaySentDate,
+    //             'yyyy-MM-dd',
+    //             'en-US'
+    //           )
+    //         : null,
+    //       TM45DaySentDate: licenseIncentiveInfo.tM45DaySentDate
+    //         ? formatDate(
+    //             licenseIncentiveInfo.tM45DaySentDate,
+    //             'yyyy-MM-dd',
+    //             'en-US'
+    //           )
+    //         : null,
+    //       TMExceptionDate: licenseIncentiveInfo.tmExceptionDate
+    //         ? formatDate(
+    //             licenseIncentiveInfo.tmExceptionDate,
+    //             'yyyy-MM-dd',
+    //             'en-US'
+    //           )
+    //         : null,
+    //       TMSentBySOEID: licenseIncentiveInfo.tmSentBy || null,
+    //       TMComment: licenseIncentiveInfo.tmComment,
+    //       TMException: licenseIncentiveInfo.tmException,
+    //       TMOkToSellSentDate: licenseIncentiveInfo.tmOkToSellSentDate
+    //         ? formatDate(
+    //             licenseIncentiveInfo.tmOkToSellSentDate,
+    //             'yyyy-MM-dd',
+    //             'en-US'
+    //           )
+    //         : null,
+    //       CCOkToSellBMEmploymentID: ccOkToSellBmEmploymentIdValue || 0,
+    //       TMOMSApprtoSendToHRDate: licenseIncentiveInfo.tmomsApprtoSendToHRDate
+    //         ? formatDate(
+    //             licenseIncentiveInfo.tmomsApprtoSendToHRDate,
+    //             'yyyy-MM-dd',
+    //             'en-US'
+    //           )
+    //         : null,
+    //       IncetivePeriodDate: licenseIncentiveInfo.incetivePeriodDate
+    //         ? formatDate(
+    //             licenseIncentiveInfo.incetivePeriodDate,
+    //             'yyyy-MM-dd',
+    //             'en-US'
+    //           )
+    //         : null,
+    //       IncentiveStatus: licenseIncentiveInfo.incentiveStatus,
+    //       TMOkToSellSentBySOEID: licenseIncentiveInfo.tmOkToSellSentBy || null,
+    //       Notes: licenseIncentiveInfo.notes,
+    //     });
+    //   });
+    this.fetchData();
 
     //     this.subscriptions.add(
     //       this.agentDataService.agentEmployeeLicenseIDChanged.subscribe(
@@ -739,6 +888,7 @@ export class IncentiveInfoComponent implements OnInit, OnDestroy {
             this.appComService.updateAppMessage(
               'Data submitted successfully.' // 'Data submitted successfully.'
             );
+            this.fetchData();
             this.onEditToggle();
           });
       })
