@@ -204,6 +204,12 @@ export class AddTeamMemberComponent implements OnInit, OnDestroy {
         this.appComService.updateAppMessage(
           'Data submitted successfully.' // 'Data submitted successfully.'
         );
+
+        this.newAgentForm.reset();
+        this.newAgentForm.get('workState')?.setValue('Select State');
+        this.newAgentForm.get('resState')?.setValue('Select State');
+        this.newAgentForm.get('employerAgency')?.setValue(0);
+        this.newAgentForm.get('branchCode')?.setValue('Select Branch Code');
       },
       error: (error) => {
         if (error.error && error.error.errMessage) {
