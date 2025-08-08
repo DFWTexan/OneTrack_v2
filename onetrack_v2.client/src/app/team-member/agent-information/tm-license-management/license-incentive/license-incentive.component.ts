@@ -102,6 +102,23 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
     });
   }
 
+  refreshData() {
+    this.licIncentiveInfoDataService
+      .fetchLicIncentiveInfo(
+        this.licenseMgmtData[this.currentIndex].employeeLicenseId
+        // this.employeeLicenseID
+      )
+      .subscribe((licenseIncentiveUpd: LicenseIncentiveInfo) => {
+        this.licenseIncentiveInfo = licenseIncentiveUpd;
+        this.employmentLicenseIncentiveID =
+          licenseIncentiveUpd.employmentLicenseIncentiveID;
+        // this.licIncentiveInfoDataService.licenseIncentiveInfoChanged.next(
+        //   this.licenseIncentiveInfo
+        // );
+        // this.refreshData(licenseIncentiveUpd);
+      });
+  }
+
   ngOnInit(): void {
     this.branchMgrEmploymentID =
       this.agentDataService.agentInformation.mgrHiearchy[0]?.employmentID || 0;
@@ -591,25 +608,28 @@ export class LicenseIncentiveComponent implements OnInit, OnDestroy {
       .then((response) => {
         // console.log('EMFTEST (LicenseIncentiveComponent: onSubmit()) Update successful => \n', response);
 
-        this.licIncentiveInfoDataService
-          .fetchLicIncentiveInfo(
-            this.licenseMgmtData[this.currentIndex].employeeLicenseId
-            // this.employeeLicenseID
-          )
-          .subscribe((licenseIncentiveUpd: LicenseIncentiveInfo) => {
-            this.licenseIncentiveInfo = licenseIncentiveUpd;
-            this.employmentLicenseIncentiveID =
-              licenseIncentiveUpd.employmentLicenseIncentiveID;
-            // this.licIncentiveInfoDataService.licenseIncentiveInfoChanged.next(
-            //   this.licenseIncentiveInfo
-            // );
-            // this.refreshData(licenseIncentiveUpd);
-            this.isFormSubmitted = false;
-            this.appComService.updateAppMessage(
-              'Data submitted successfully.' // 'Data submitted successfully.'
-            );
-            this.onEditToggle();
-          });
+        this.appComService.updateAppMessage(
+          'Data submitted successfully.' // 'Data submitted successfully.'
+        );
+        this.isFormSubmitted = false;
+
+        // this.licIncentiveInfoDataService
+        //   .fetchLicIncentiveInfo(
+        //     this.licenseMgmtData[this.currentIndex].employeeLicenseId
+        //     // this.employeeLicenseID
+        //   )
+        //   .subscribe((licenseIncentiveUpd: LicenseIncentiveInfo) => {
+        //     this.licenseIncentiveInfo = licenseIncentiveUpd;
+        //     this.employmentLicenseIncentiveID =
+        //       licenseIncentiveUpd.employmentLicenseIncentiveID;
+        //     // this.licIncentiveInfoDataService.licenseIncentiveInfoChanged.next(
+        //     //   this.licenseIncentiveInfo
+        //     // );
+        //     // this.refreshData(licenseIncentiveUpd);
+        //     this.onEditToggle();
+        //   });
+        this.refreshData();
+        this.onEditToggle();
       })
       .catch((error) => {
         if (error.error && error.error.errMessage) {

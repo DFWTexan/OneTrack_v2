@@ -17,8 +17,18 @@
         "
         class="icon-edit-delete-button ms-3 mb-5"
         (click)="onEditToggle()"
+        title="Edit Incentive Info"
       >
         <span class="material-symbols-outlined"> edit </span>
+      </button>
+
+      <button
+        class="icon-edit-delete-button ms-3 mb-5"
+        title="Refresh Incentive Info"
+        (click)="refreshData()"
+        *ngIf="!modeEdit"
+      >
+        <span class="material-symbols-outlined"> refresh </span>
       </button>
     </div>
 
