@@ -35,3 +35,39 @@ GO
 
 ALTER TABLE [dbo].[stg_ADBankerImport] ADD  CONSTRAINT [DF_stg_ADBankerImport_ModifyDate]  DEFAULT (NULL) FOR [ModifyDate]
 GO
+
+INSERT INTO [dbo].[Communications]
+           ([CommunicationName]
+           ,[DocTypeAbv]
+           ,[DocType]
+           ,[DocSubType]
+           ,[DocAppType]
+           ,[EmailAttachments]
+           ,[HasNote]
+           ,[IsActive])
+VALUES
+           ('Licensing Offer Letter'
+           , 'APP'
+           , 'Application'
+           , 'Application'
+           , 'Docfinity'
+           , NULL
+           , 0
+           , 1),
+           ('Registration Confirmation'
+           , 'APP'
+           , 'Application'
+           , 'Application'
+           , 'Docfinity'
+           , NULL
+           , 0
+           , 1),
+           ('Universal Pending License Notice'
+           , 'APP'
+           , 'Application'
+           , 'Application'
+           , 'Docfinity'
+           , NULL
+           , 0
+           , 1)
+GO
