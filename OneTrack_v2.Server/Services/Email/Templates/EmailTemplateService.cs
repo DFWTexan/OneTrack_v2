@@ -14197,6 +14197,60 @@ namespace OneTrak_v2.Server.Services.Email.Templates
 
             return new Tuple<string, string, string, string>(strHTML, string.Empty, string.Empty, string.Empty);
         }
+        public Tuple<string, string, string, string> GetADBankerRegistrationConfirmationHTML(int vEmploymentID)
+        {
+            string strHTML = @"
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset='UTF-8'>
+                    <title>A.D. Banker Registration Confirmation</title>
+                    <style>
+                        body { font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #333; }
+                        h2 { color: #2E6DA4; }
+                        ul { margin-top: 0; }
+                        ol { margin-top: 0; }
+                        strong { font-weight: bold; }
+                        .note { color: #B22222; font-weight: bold; }
+                    </style>
+                </head>
+                <body>
+                <div style='text-align: left; background-color: #F69200; padding: 5px;'>
+                    <span style='font-family: Arial; color: #FFFFFF; font-size: 16pt; font-weight: bold;'>OneMain Insurance Licensing Department</span>
+                </div>
+                    <p>Your registration with the <strong>A.D. Banker online course</strong> is now active.</p>
+
+                    <ul>
+                        <li>Most students need a minimum of <strong>15 hours</strong> to read the insurance topics and an additional <strong>5 hours</strong> for Chapter and Comprehensive Exams.</li>
+                        <li>Training/Course study time is paid and should be completed during normal company hours or pre-approved overtime.</li>
+                        <li>The company requires <strong>80%</strong> on the Comprehensive and Certification Exams (if applicable) to schedule the state license exam.</li>
+                    </ul>
+
+                    <p>In addition, you will receive an email from <strong>OneMainLearning@csod.com</strong> when you are enrolled in the Insurance Learning Lab. The Insurance University instructor will assist you in navigating the A.D. Banker course.</p>
+
+                    <h3>A.D. Banker Instructions:</h3>
+                    <ol>
+                        <li>Access the course at <a href='http://www.adbanker.com' target='_blank'>www.adbanker.com</a></li>
+                        <li>Log in using your business e-mail address. Example: <em>jane.doe@omf.com</em> (NOT @onemainfinancial.com)</li>
+                        <li>Your password is your first initial upper case, last initial lower case, the # symbol then your 7-digit team member number.<br/>
+                            Example: Jane Doe would be <strong>Jd#1234567</strong>.
+                        </li>
+                        <li class='note'>DO NOT CHANGE THE ASSIGNED BUSINESS EMAIL OR PASSWORD</li>
+                        <li>Launch the Life Online Course</li>
+                        <li>Read state-specific and course requirements</li>
+                        <li>Contact A.D. Banker at <strong>800-866-2468</strong> if you have difficulty accessing the website or need information about the content.</li>
+                    </ol>
+
+                    <p>See additional information in the attached <strong>Passing the Life Exam – AD Banker</strong>.</p>
+
+                    <p>If you have questions, please reply to this email ONLY without copying your Licensing Specialist or call your Licensing Specialist shown below.</p>
+                </body>
+                </html>
+                ";
+
+            return new Tuple<string, string, string, string>(strHTML, string.Empty, string.Empty, string.Empty);
+        }
+
 
 
 

@@ -414,10 +414,10 @@ namespace OneTrack_v2.Services
                         var appLicensing_Offer_LetterHTML = _emailTemplateService.GetLicensingOfferLetterHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appLicensing_Offer_LetterHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "LICENSING OFFER LETTER", isTemplateFound = true };
                         break;
-                    //case 129: // "Registration Confirmation"
-                    //    var appRegistration_ConfirmationHTML = _emailTemplateService.GetRegistrationConfirmationHTML(vEmploymentID);
-                    //    result.ObjData = new { HTMLContent = appRegistration_ConfirmationHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "REGISTRATION CONFIRMATION", isTemplateFound = true };
-                    //    break;
+                    case 129: // "ADBanker Registration Confirmation"
+                        var appADBankerRegistration_ConfirmationHTML = _emailTemplateService.GetADBankerRegistrationConfirmationHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appADBankerRegistration_ConfirmationHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "AD BANKER REGISTRATION CONFIRMATION", isTemplateFound = true };
+                        break;
                     //case 130: // "Universal Pending License Notice"
                     //    var appUniversal_Pending_License_NoticeHTML = _emailTemplateService.GeUniversalPendingLicenseNoticeHTML(vEmploymentID);
                     //    result.ObjData = new { HTMLContent = appUniversal_Pending_License_NoticeHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "UNIVERSAL PENDING LICENSE NOTICE", isTemplateFound = true };

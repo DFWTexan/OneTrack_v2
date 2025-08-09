@@ -49,15 +49,15 @@ VALUES
            ('Licensing Offer Letter'
            , 'APP'
            , 'Application'
-           , 'Application'
+           , 'Licensing Offer Letter'
            , 'Template'
            , NULL
            , 0
            , 1),
-           ('Registration Confirmation'
+           ('AD Banker Registration Confirmation'
            , 'APP'
            , 'Application'
-           , 'Application'
+           , 'AD Banker Registration Confirmation'
            , 'Template'
            , NULL
            , 0
@@ -65,8 +65,8 @@ VALUES
            ('Universal Pending License Notice'
            , 'APP'
            , 'Application'
-           , 'Application'
-           , 'Template'
+           , 'Universal Pending License'
+           , 'OneTrakEmail'
            , NULL
            , 0
            , 1)
