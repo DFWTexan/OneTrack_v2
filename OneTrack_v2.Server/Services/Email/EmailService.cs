@@ -410,6 +410,19 @@ namespace OneTrack_v2.Services
                         var appADBankerRegistrationLifeHealthHTML = _emailTemplateService.GetADBankerRegistrationLifeHealthHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appADBankerRegistrationLifeHealthHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "AD BANKER REGISTRATION CONFIRMATION_LIFE AND HEALTH", isTemplateFound = true, DocAttachmentPath = _docAttPath + "Templates\\", Attachments = _attachments };
                         break;
+                    case 128: // "Licensing Offer Letter"
+                        var appLicensing_Offer_LetterHTML = _emailTemplateService.GetLicensingOfferLetterHTML(vEmploymentID);
+                        result.ObjData = new { HTMLContent = appLicensing_Offer_LetterHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "LICENSING OFFER LETTER", isTemplateFound = true };
+                        break;
+                    //case 129: // "Registration Confirmation"
+                    //    var appRegistration_ConfirmationHTML = _emailTemplateService.GetRegistrationConfirmationHTML(vEmploymentID);
+                    //    result.ObjData = new { HTMLContent = appRegistration_ConfirmationHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "REGISTRATION CONFIRMATION", isTemplateFound = true };
+                    //    break;
+                    //case 130: // "Universal Pending License Notice"
+                    //    var appUniversal_Pending_License_NoticeHTML = _emailTemplateService.GeUniversalPendingLicenseNoticeHTML(vEmploymentID);
+                    //    result.ObjData = new { HTMLContent = appUniversal_Pending_License_NoticeHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "UNIVERSAL PENDING LICENSE NOTICE", isTemplateFound = true };
+                    //    break;
+
                     default:
                         result.ObjData = new { htmlContent = @"<div class=""col d-flex justify-content-center mt-5"">
                                                 <span class=""material-symbols-outlined"">unknown_document</span>

@@ -50,7 +50,7 @@ VALUES
            , 'APP'
            , 'Application'
            , 'Application'
-           , 'Docfinity'
+           , 'Template'
            , NULL
            , 0
            , 1),
@@ -58,7 +58,7 @@ VALUES
            , 'APP'
            , 'Application'
            , 'Application'
-           , 'Docfinity'
+           , 'Template'
            , NULL
            , 0
            , 1),
@@ -66,7 +66,7 @@ VALUES
            , 'APP'
            , 'Application'
            , 'Application'
-           , 'Docfinity'
+           , 'Template'
            , NULL
            , 0
            , 1)

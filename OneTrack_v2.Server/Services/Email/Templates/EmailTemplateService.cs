@@ -14106,6 +14106,99 @@ namespace OneTrak_v2.Server.Services.Email.Templates
             return new Tuple<string, string, string, string>(strHTML, string.Empty, string.Empty, string.Empty);
         }
 
+        public Tuple<string, string, string, string> GetLicensingOfferLetterHTML(int vEmploymentID)
+        {
+            string strHTML = string.Empty;
+
+            try
+            {
+                var managerInfo = GetManagerInfo(vEmploymentID);
+                string strTMName = managerInfo.TMName ?? "";
+                string strTMNumber = managerInfo.TMNumber ?? "";
+                string strTMTitle = managerInfo.TMTitle ?? "";
+
+                strHTML += @"<html>";
+                strHTML += @"<table style=""width: 800px;"">";
+
+                // Header
+                strHTML += @"<tr><td style=""text-align: left; background-color: #F69200; padding: 5px;"" colspan=""3"">";
+                strHTML += @"<span style=""font-family: Arial; color: #FFFFFF; font-size: 16pt; font-weight: bold;"">OneMain Insurance Licensing Department</span>";
+                strHTML += @"</td></tr>";
+
+                strHTML += @"<tr><td colspan=""3"">&nbsp;</td></tr>";
+
+                // TO line
+                strHTML += @"<tr><td colspan=""3"">";
+                strHTML += @"<span style=""font-family: Arial; font-size: 12pt; font-weight: bold;"">To: </span>";
+                strHTML += @"<span style=""font-family: Arial; font-size: 12pt; font-weight: bold;"">" + strTMName + " - " + strTMNumber + " - " + strTMTitle + @"</span>";
+                strHTML += @"</td></tr>";
+
+                strHTML += @"<tr><td colspan=""3"">&nbsp;</td></tr>";
+
+                // Subject
+                strHTML += @"<tr><td colspan=""3""><span style=""font-family: Arial; font-size: 12pt; color: #FF0000; font-weight: bold;"">Subject line: Insurance Licensing Opportunity</span></td></tr>";
+
+                strHTML += @"<tr><td colspan=""3"">&nbsp;</td></tr>";
+
+                // Intro paragraph
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">";
+                strHTML += @"Are you ready to take your career to the next level? Congratulations, we have a licensing opportunity that will help you do just that. This is your chance to elevate your career, ignite your path to success and achieve professional growth.";
+                strHTML += @"</td></tr>";
+
+                strHTML += @"<tr><td colspan=""3"">&nbsp;</td></tr>";
+
+                // Why You Shouldn't Miss This
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; font-weight: bold;"">Why You Shouldn't Miss This:</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">💸 Potential to Increase Your Salary and Earning Opportunities: Obtaining your new license(s) could result in a salary increase. It would also give you more opportunities to earn commissions, further boosting your earning potential! For more information, please consult your manager.</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">📈 Career Advancement: Unlock new career growth opportunities and take a significant step forward in your professional journey.</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">🛠️ Skill Enhancement: Gain valuable knowledge and skills to be more customer-focused and better equipped to identify customers’ life insurance needs.</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">🏅 Professional Credibility: Obtain a state insurance license that enhances your professional credentials and career opportunities.</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">🤝 Support and Guidance: Benefit from group sessions and 1:1 support throughout the process; setting you up for success!</td></tr>";
+
+                strHTML += @"<tr><td colspan=""3"">&nbsp;</td></tr>";
+
+                // A.D. Banker course details
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">We provide an online training course with A.D. Banker, one of the leaders in the industry to help prepare you for the state license exam. They recommend the student routinely dedicate at least one to two hours each day of concentrated study to complete the course quickly for maximum retention. This course includes:</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">• Video Lectures, Flash Cards, Unlimited Chapter and Comprehensive Exams</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">• Simulated Licensing Exams, Drag & Drop Learning Activities, Guarantee to Pass</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">• Online Note Taking, Mobile friendly, Audio Enabled</td></tr>";
+
+                strHTML += @"<tr><td colspan=""3"">&nbsp;</td></tr>";
+
+                // Licensing University
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">In addition, you will be enrolled in the quarterly Licensing University. This instructor-led training program accompanies the A.D. Banker online training and teaches study best practices and proven test-taking tips. An outline of this program is attached.</td></tr>";
+
+                strHTML += @"<tr><td colspan=""3"">&nbsp;</td></tr>";
+
+                // Reply instructions
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">Please reply to this email with “Yes” or “No” by [30 days before class].</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">• A “Yes” will begin your registration in the next quarterly Licensing University. Watch your inbox for more information.</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">• If you want to wait until a later date to take advantage of this opportunity that’s okay, just reply “No”. With your DM’s approval, you can enroll when you are ready, subject to program continuance.</td></tr>";
+
+                strHTML += @"<tr><td colspan=""3"">&nbsp;</td></tr>";
+
+                // Questions
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">If you have questions, we’re here to help. Reply to this email with your questions.</td></tr>";
+
+                strHTML += @"<tr><td colspan=""3"">&nbsp;</td></tr>";
+
+                // Note section
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; color: #FF0000; font-weight: bold;"">NOTE:</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">You are prohibited from offering any insurance product until you receive our authorization for that line of insurance. Offering products without the appropriate license subjects you to fines, penalties and/or disciplinary action imposed by the Department of Insurance.</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">Hourly Team Members: Training/course study time is paid and should be completed during normal company hours or pre-approved overtime. You are not allowed to study at home.</td></tr>";
+
+                strHTML += @"</table></html>";
+            }
+            catch (Exception ex)
+            {
+                //strHTML = "Error creating HTML: " + ex.Message;
+                return new Tuple<string, string, string, string>(string.Empty, string.Empty, string.Empty, string.Empty);
+            }
+
+            return new Tuple<string, string, string, string>(strHTML, string.Empty, string.Empty, string.Empty);
+        }
+
+
 
 
         #region "Get Local Data"

@@ -1,4 +1,6 @@
-﻿namespace OneTrak_v2.Server.Services.Email.Templates
+﻿using System;
+
+namespace OneTrak_v2.Server.Services.Email.Templates
 {
     public interface IEmailTemplateService
     {
@@ -73,5 +75,8 @@
         public Tuple<string, string, string, string> GetADBankerRegistrationHealthHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetADBankerRegistrationLifeHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetADBankerRegistrationLifeHealthHTML(int vEmploymentID);
+        public Tuple<string, string, string, string> GetLicensingOfferLetterHTML(int vEmploymentID);
+        //public Tuple<string, string, string, string> GetRegistrationConfirmationHTML(int vEmploymentID);
+        //public Tuple<string, string, string, string> GeUniversalPendingLicenseNoticeHTML(int vEmploymentID);
     }
 }
