@@ -14149,19 +14149,19 @@ namespace OneTrak_v2.Server.Services.Email.Templates
 
                 // Why You Shouldn't Miss This
                 strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; font-weight: bold;"">Why You Shouldn't Miss This:</td></tr>";
-                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">💸 Potential to Increase Your Salary and Earning Opportunities: Obtaining your new license(s) could result in a salary increase. It would also give you more opportunities to earn commissions, further boosting your earning potential! For more information, please consult your manager.</td></tr>";
-                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">📈 Career Advancement: Unlock new career growth opportunities and take a significant step forward in your professional journey.</td></tr>";
-                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">🛠️ Skill Enhancement: Gain valuable knowledge and skills to be more customer-focused and better equipped to identify customers’ life insurance needs.</td></tr>";
-                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">🏅 Professional Credibility: Obtain a state insurance license that enhances your professional credentials and career opportunities.</td></tr>";
-                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">🤝 Support and Guidance: Benefit from group sessions and 1:1 support throughout the process; setting you up for success!</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;""><span style=""color: #4682B4"">💸 Potential to Increase Your Salary and Earning Opportunities:</span> Obtaining your new license(s) could result in a salary increase. It would also give you more opportunities to earn commissions, further boosting your earning potential! For more information, please consult your manager.</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;""><span style=""color: #4682B4"">📈 Career Advancement:</span> Unlock new career growth opportunities and take a significant step forward in your professional journey.</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;""><span style=""color: #4682B4"">🛠️ Skill Enhancement:</span> Gain valuable knowledge and skills to be more customer-focused and better equipped to identify customers’ life insurance needs.</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;""><span style=""color: #4682B4"">🏅 Professional Credibility:</span> Obtain a state insurance license that enhances your professional credentials and career opportunities.</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;""><span style=""color: #4682B4"">🤝 Support and Guidance:</span> Benefit from group sessions and 1:1 support throughout the process; setting you up for success!</td></tr>";
 
                 strHTML += @"<tr><td colspan=""3"">&nbsp;</td></tr>";
 
                 // A.D. Banker course details
                 strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">We provide an online training course with A.D. Banker, one of the leaders in the industry to help prepare you for the state license exam. They recommend the student routinely dedicate at least one to two hours each day of concentrated study to complete the course quickly for maximum retention. This course includes:</td></tr>";
-                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">• Video Lectures, Flash Cards, Unlimited Chapter and Comprehensive Exams</td></tr>";
-                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">• Simulated Licensing Exams, Drag & Drop Learning Activities, Guarantee to Pass</td></tr>";
-                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">• Online Note Taking, Mobile friendly, Audio Enabled</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; padding-left: 15px"">• Video Lectures, Flash Cards, Unlimited Chapter and Comprehensive Exams</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; padding-left: 15px"">• Simulated Licensing Exams, Drag & Drop Learning Activities, Guarantee to Pass</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; padding-left: 15px"">• Online Note Taking, Mobile friendly, Audio Enabled</td></tr>";
 
                 strHTML += @"<tr><td colspan=""3"">&nbsp;</td></tr>";
 
@@ -14171,9 +14171,9 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                 strHTML += @"<tr><td colspan=""3"">&nbsp;</td></tr>";
 
                 // Reply instructions
-                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">Please reply to this email with “Yes” or “No” by [30 days before class].</td></tr>";
-                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">• A “Yes” will begin your registration in the next quarterly Licensing University. Watch your inbox for more information.</td></tr>";
-                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">• If you want to wait until a later date to take advantage of this opportunity that’s okay, just reply “No”. With your DM’s approval, you can enroll when you are ready, subject to program continuance.</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; font-weight: bold;"">Please reply to this email with “Yes” or “No” by [30 days before class].</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; padding-left: 15px"">• A “Yes” will begin your registration in the next quarterly Licensing University. Watch your inbox for more information.</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; padding-left: 15px"">• If you want to wait until a later date to take advantage of this opportunity that’s okay, just reply “No”. With your DM’s approval, you can enroll when you are ready, subject to program continuance.</td></tr>";
 
                 strHTML += @"<tr><td colspan=""3"">&nbsp;</td></tr>";
 
@@ -14183,9 +14183,9 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                 strHTML += @"<tr><td colspan=""3"">&nbsp;</td></tr>";
 
                 // Note section
-                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; color: #FF0000; font-weight: bold;"">NOTE:</td></tr>";
-                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">You are prohibited from offering any insurance product until you receive our authorization for that line of insurance. Offering products without the appropriate license subjects you to fines, penalties and/or disciplinary action imposed by the Department of Insurance.</td></tr>";
-                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt;"">Hourly Team Members: Training/course study time is paid and should be completed during normal company hours or pre-approved overtime. You are not allowed to study at home.</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; font-weight: bold; font-style: italic;""><u>NOTE:</u></td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; font-style: italic;"">You are prohibited from offering any insurance product until you receive our authorization for that line of insurance. Offering products without the appropriate license subjects you to fines, penalties and/or disciplinary action imposed by the Department of Insurance.</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; font-style: italic;"">Hourly Team Members: Training/course study time is paid and should be completed during normal company hours or pre-approved overtime. You are not allowed to study at home.</td></tr>";
 
                 strHTML += @"</table></html>";
             }
@@ -14250,10 +14250,6 @@ namespace OneTrak_v2.Server.Services.Email.Templates
 
             return new Tuple<string, string, string, string>(strHTML, string.Empty, string.Empty, string.Empty);
         }
-
-
-
-
 
         #region "Get Local Data"
         protected ManagerInfo GetManagerInfo(int vEmploymentID)
