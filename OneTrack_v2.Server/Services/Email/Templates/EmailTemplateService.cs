@@ -14136,7 +14136,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                 strHTML += @"<tr><td colspan=""3"">&nbsp;</td></tr>";
 
                 // Subject
-                strHTML += @"<tr><td colspan=""3""><span style=""font-family: Arial; font-size: 12pt; color: #FF0000; font-weight: bold;"">Subject line: Insurance Licensing Opportunity</span></td></tr>";
+                //strHTML += @"<tr><td colspan=""3""><span style=""font-family: Arial; font-size: 12pt; color: #FF0000; font-weight: bold;"">Subject line: Insurance Licensing Opportunity</span></td></tr>";
 
                 strHTML += @"<tr><td colspan=""3"">&nbsp;</td></tr>";
 

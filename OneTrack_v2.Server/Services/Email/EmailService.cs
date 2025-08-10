@@ -412,7 +412,7 @@ namespace OneTrack_v2.Services
                         break;
                     case 128: // "Licensing Offer Letter"
                         var appLicensing_Offer_LetterHTML = _emailTemplateService.GetLicensingOfferLetterHTML(vEmploymentID);
-                        result.ObjData = new { HTMLContent = appLicensing_Offer_LetterHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "LICENSING OFFER LETTER", isTemplateFound = true };
+                        result.ObjData = new { HTMLContent = appLicensing_Offer_LetterHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "INSURANCE LICENSING OPPORTUNITY", isTemplateFound = true };
                         break;
                     case 129: // "ADBanker Registration Confirmation"
                         var appADBankerRegistration_ConfirmationHTML = _emailTemplateService.GetADBankerRegistrationConfirmationHTML(vEmploymentID);
