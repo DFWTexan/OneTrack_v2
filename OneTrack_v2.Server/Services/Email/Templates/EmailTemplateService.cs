@@ -14116,6 +14116,9 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                 string strTMName = managerInfo.TMName ?? "";
                 string strTMNumber = managerInfo.TMNumber ?? "";
                 string strTMTitle = managerInfo.TMTitle ?? "";
+                string strLicenseTechName = managerInfo.LicTechName ?? "";
+                string strLicenseTechTitle = managerInfo.LicTechTitle ?? "";
+                string strLicenseTechPhone = managerInfo.LicTechPhone ?? "";
 
                 strHTML += @"<html>";
                 strHTML += @"<table style=""width: 800px;"">";
@@ -14186,6 +14189,37 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                 strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; font-weight: bold; font-style: italic;""><u>NOTE:</u></td></tr>";
                 strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; font-style: italic;"">You are prohibited from offering any insurance product until you receive our authorization for that line of insurance. Offering products without the appropriate license subjects you to fines, penalties and/or disciplinary action imposed by the Department of Insurance.</td></tr>";
                 strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; font-style: italic;"">Hourly Team Members: Training/course study time is paid and should be completed during normal company hours or pre-approved overtime. You are not allowed to study at home.</td></tr>";
+
+                // Closing
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<td><span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"" >Thank You,</span></td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td><img alt = """" src = ""pictures/OneMainSolutionsHorizontal.jpg"" width = ""100""/></td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<tr> ";
+                strHTML = strHTML + @"<td>&nbsp;</td> ";
+                strHTML = strHTML + @"<td>&nbsp;</td> ";
+                strHTML = strHTML + @"<td>&nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
+                strHTML = strHTML + @"<td colspan = ""3"" > ";
+                strHTML = strHTML + @"<span style = ""font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;"" >" + strLicenseTechName + " - " + strLicenseTechTitle + " - " + strLicenseTechPhone + " </span></td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"<td> &nbsp;</td> ";
+                strHTML = strHTML + @"</tr> ";
 
                 strHTML += @"</table></html>";
             }
