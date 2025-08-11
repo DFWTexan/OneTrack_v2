@@ -62,6 +62,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   filePdfSrc: SafeResourceUrl | null = null;
   fileHtmlContent: SafeHtml | null = null;
   files: File[] = [];
+  emailDate: Date | null = null;
 
   private subscriptions = new Subscription();
 

@@ -14233,6 +14233,15 @@ namespace OneTrak_v2.Server.Services.Email.Templates
         }
         public Tuple<string, string, string, string> GetADBankerRegistrationConfirmationHTML(int vEmploymentID)
         {
+            var managerInfo = GetManagerInfo(vEmploymentID);
+
+            string strTMName = managerInfo.TMName ?? "";
+            string strTMNumber = managerInfo.TMNumber ?? "";
+            string strTMTitle = managerInfo.TMTitle ?? "";
+            string strLicenseTechName = managerInfo.LicTechName ?? "";
+            string strLicenseTechTitle = managerInfo.LicTechTitle ?? "";
+            string strLicenseTechPhone = managerInfo.LicTechPhone ?? "";
+
             string strHTML = @"
                 <!DOCTYPE html>
                 <html>
@@ -14240,7 +14249,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                     <meta charset='UTF-8'>
                     <title>A.D. Banker Registration Confirmation</title>
                     <style>
-                        body { font-family: Arial, sans-serif; font-size: 14px; line-height: 1.6; color: #333; }
+                        body { font-family: Arial, sans-serif; font-size: 12pt; line-height: 1.6; color: #333; }
                         h2 { color: #2E6DA4; }
                         ul { margin-top: 0; }
                         ol { margin-top: 0; }
@@ -14252,7 +14261,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                 <div style='text-align: left; background-color: #F69200; padding: 5px;'>
                     <span style='font-family: Arial; color: #FFFFFF; font-size: 16pt; font-weight: bold;'>OneMain Insurance Licensing Department</span>
                 </div>
-                    <p>Your registration with the <strong>A.D. Banker online course</strong> is now active.</p>
+                    <p style='padding-top: 10px;'>Your registration with the <strong>A.D. Banker online course</strong> is now active.</p>
 
                     <ul>
                         <li>Most students need a minimum of <strong>15 hours</strong> to read the insurance topics and an additional <strong>5 hours</strong> for Chapter and Comprehensive Exams.</li>
@@ -14269,7 +14278,9 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                         <li>Your password is your first initial upper case, last initial lower case, the # symbol then your 7-digit team member number.<br/>
                             Example: Jane Doe would be <strong>Jd#1234567</strong>.
                         </li>
-                        <li class='note'>DO NOT CHANGE THE ASSIGNED BUSINESS EMAIL OR PASSWORD</li>
+                            <div style='padding-left: 10px; margin-top: 10px; margin-bottom: 5px'>
+                                <span style='background-color: #FFFF00;'><u>DO NOT CHANGE THE ASSIGNED BUSINESS EMAIL OR PASSWORD</u></span>
+                            </div>
                         <li>Launch the Life Online Course</li>
                         <li>Read state-specific and course requirements</li>
                         <li>Contact A.D. Banker at <strong>800-866-2468</strong> if you have difficulty accessing the website or need information about the content.</li>
@@ -14278,6 +14289,12 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                     <p>See additional information in the attached <strong>Passing the Life Exam – AD Banker</strong>.</p>
 
                     <p>If you have questions, please reply to this email ONLY without copying your Licensing Specialist or call your Licensing Specialist shown below.</p>
+                    <div style='margin-top: 10px; margin-bottom;'>
+                        <img alt = """" src = ""pictures/OneMainSolutionsHorizontal.jpg"" width = ""100""/>
+                    </div>
+                    <div>
+                        <span style = 'font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;' >'' + strLicenseTechName + "" - "" + strLicenseTechTitle + "" - "" + strLicenseTechPhone + "" </span>
+                    </div>
                 </body>
                 </html>
                 ";
