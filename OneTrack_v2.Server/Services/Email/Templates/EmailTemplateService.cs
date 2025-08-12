@@ -14174,7 +14174,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                 strHTML += @"<tr><td colspan=""3"">&nbsp;</td></tr>";
 
                 // Reply instructions
-                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; font-weight: bold;"">Please reply to this email with “Yes” or “No” by " + vDate + @".</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; font-weight: bold;"">Please reply to this email with “Yes” or “No” by <span style=""background-color: #FFFF00;"">" + vDate + @"</span>.</td></tr>";
                 strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; padding-left: 15px"">• A “Yes” will begin your registration in the next quarterly Licensing University. Watch your inbox for more information.</td></tr>";
                 strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; padding-left: 15px"">• If you want to wait until a later date to take advantage of this opportunity that’s okay, just reply “No”. With your DM’s approval, you can enroll when you are ready, subject to program continuance.</td></tr>";
 
@@ -14187,7 +14187,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
 
                 // Note section
                 strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; font-weight: bold; font-style: italic;""><u>NOTE:</u></td></tr>";
-                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; font-style: italic; margin-bottom: 10px;"">You are prohibited from offering any insurance product until you receive our authorization for that line of insurance. Offering products without the appropriate license subjects you to fines, penalties and/or disciplinary action imposed by the Department of Insurance.</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; font-style: italic; padding-bottom: 15px;"">You are prohibited from offering any insurance product until you receive our authorization for that line of insurance. Offering products without the appropriate license subjects you to fines, penalties and/or disciplinary action imposed by the Department of Insurance.</td></tr>";
                 strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; font-style: italic;"">Hourly Team Members: Training/course study time is paid and should be completed during normal company hours or pre-approved overtime. You are not allowed to study at home.</td></tr>";
 
                 // Closing
