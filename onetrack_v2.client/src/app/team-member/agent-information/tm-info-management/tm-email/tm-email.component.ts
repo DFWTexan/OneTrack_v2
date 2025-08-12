@@ -62,7 +62,8 @@ export class TmEmailComponent implements OnInit, OnDestroy {
   filePdfSrc: SafeResourceUrl | null = null;
   fileHtmlContent: SafeHtml | null = null;
   files: File[] = [];
-  emailDate: Date | null = null;
+  isDisplayDate: boolean = false;
+  emailDate: Date | null = this.getNextBusinessDate();
 
   private subscriptions = new Subscription();
 
@@ -94,7 +95,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
       emailSubject: [''],
       emailBody: [''],
       emailAttachment: [''],
-      emailDate: [null],
+      emailDate: [this.formatDateForInput(this.emailDate)],
     });
 
     this.subscriptions.add(
@@ -167,6 +168,14 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     const value = target.value;
 
     this.emailTemplateID = +value;
+    if (this.emailTemplateID === 128) {
+      this.isDisplayDate = true;
+      this.emailForm.patchValue({
+        emailDate: this.formatDateForInput(this.getNextBusinessDate()),
+      });
+    } else {
+      this.isDisplayDate = false;
+    }
 
     this.htmlHeaderContent = '';
     this.htmlContent = '';
@@ -273,6 +282,15 @@ export class TmEmailComponent implements OnInit, OnDestroy {
 
   onFilesChanged(files: File[]) {
     this.files = files;
+  }
+
+  onChangeDate(event: Event): void {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+
+    this.emailForm.patchValue({
+      emailDate: value
+    });
   }
 
   onSubmit() {
@@ -465,6 +483,29 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     // this.pdfSrc = null;
     this.filePdfSrc = null;
     this.fileHtmlContent = null;
+  }
+
+  private getNextBusinessDate(): Date {
+    const today = new Date();
+    let nextBusinessDate = new Date(today);
+    nextBusinessDate.setDate(today.getDate() + 1);
+
+    // Skip weekends (Saturday = 6, Sunday = 0)
+    while (nextBusinessDate.getDay() === 0 || nextBusinessDate.getDay() === 6) {
+      nextBusinessDate.setDate(nextBusinessDate.getDate() + 1);
+    }
+
+    return nextBusinessDate;
+  }
+
+  private formatDateForInput(date: Date | null): string | null {
+    if (!date) return null;
+    
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    
+    return `${year}-${month}-${day}`;
   }
 
   ngOnDestroy(): void {
