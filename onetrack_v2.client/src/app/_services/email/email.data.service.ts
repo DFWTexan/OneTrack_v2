@@ -68,8 +68,6 @@ export class EmailDataService {
   ): Observable<string> {
     const dateParam = emailDate ? emailDate : ' ';
 
-// console.log('EMFTEST (fetchEmailComTemplateByID) - Fetching email template with date:', dateParam);
-
     return this.http
       .get<{
         success: boolean;

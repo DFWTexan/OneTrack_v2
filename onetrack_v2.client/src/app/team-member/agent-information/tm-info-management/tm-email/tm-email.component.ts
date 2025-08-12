@@ -292,7 +292,8 @@ export class TmEmailComponent implements OnInit, OnDestroy {
       emailDate: value
     });
 
-    const dateValue = value ? new Date(value) : null;
+    const dateValue = value ? new Date(value + 'T00:00:00') : null;
+
     this.subscriptions.add(
       this.emailDataService
         .fetchEmailComTemplateByID(this.emailTemplateID, this.agentInfo.employmentID, this.formatDateForAPI(dateValue))
