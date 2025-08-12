@@ -75,7 +75,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
         public Tuple<string, string, string, string> GetADBankerRegistrationHealthHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetADBankerRegistrationLifeHTML(int vEmploymentID);
         public Tuple<string, string, string, string> GetADBankerRegistrationLifeHealthHTML(int vEmploymentID);
-        public Tuple<string, string, string, string> GetLicensingOfferLetterHTML(int vEmploymentID, DateOnly? vDate = null);
+        public Tuple<string, string, string, string> GetLicensingOfferLetterHTML(int vEmploymentID, string? vDate = null);
         public Tuple<string, string, string, string> GetADBankerRegistrationConfirmationHTML(int vEmploymentID);
         //public Tuple<string, string, string, string> GeUniversalPendingLicenseNoticeHTML(int vEmploymentID);
     }

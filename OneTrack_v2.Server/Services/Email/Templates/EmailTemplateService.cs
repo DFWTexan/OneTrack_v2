@@ -14106,7 +14106,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
             return new Tuple<string, string, string, string>(strHTML, string.Empty, string.Empty, string.Empty);
         }
 
-        public Tuple<string, string, string, string> GetLicensingOfferLetterHTML(int vEmploymentID, DateOnly? vDate = null)
+        public Tuple<string, string, string, string> GetLicensingOfferLetterHTML(int vEmploymentID, string? vDate = null)
         {
             string strHTML = string.Empty;
 

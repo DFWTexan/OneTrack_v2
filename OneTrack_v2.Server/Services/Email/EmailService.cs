@@ -104,7 +104,7 @@ namespace OneTrack_v2.Services
             }
         }
 
-        public ReturnResult GetEmailTemplate(int vCommunicationID, int vEmploymentID, DateOnly? vDate = null)
+        public ReturnResult GetEmailTemplate(int vCommunicationID, int vEmploymentID, string? vDate = null)
         {
             var comms = _db.Communications
                             .Where(c => c.CommunicationId == vCommunicationID)

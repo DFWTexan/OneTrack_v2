@@ -63,8 +63,13 @@ export class EmailDataService {
 
   fetchEmailComTemplateByID(
     communicationID: number,
-    employmentID: number
+    employmentID: number,
+    emailDate: string | null = null
   ): Observable<string> {
+    const dateParam = emailDate ? emailDate : ' ';
+
+console.log('EMFTEST (fetchEmailComTemplateByID) - Fetching email template with date:', dateParam);
+
     return this.http
       .get<{
         success: boolean;
@@ -72,7 +77,7 @@ export class EmailDataService {
         objData: any;
         errMessage: string;
       }>(
-        this.apiUrl + 'GetEmailTemplate/' + communicationID + '/' + employmentID
+        this.apiUrl + 'GetEmailTemplate/' + communicationID + '/' + employmentID + '/' + dateParam
       )
       .pipe(
         map((response) => {

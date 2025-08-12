@@ -26,10 +26,10 @@ namespace OneTrak_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
 
-        [HttpGet("{communicationID}/{employmentID}")]
-        public async Task<ActionResult> GetEmailTemplate(int communicationID, int employmentID, DateOnly? vDate = null)
+        [HttpGet("{communicationID}/{employmentID}/{emailDate?}")]
+        public async Task<ActionResult> GetEmailTemplate(int communicationID, int employmentID, string? emailDate = null)
         {
-            var result = await Task.Run(() => _emailService.GetEmailTemplate(communicationID, employmentID, vDate));
+            var result = await Task.Run(() => _emailService.GetEmailTemplate(communicationID, employmentID, emailDate));
 
             return StatusCode(result.StatusCode, result);
         }

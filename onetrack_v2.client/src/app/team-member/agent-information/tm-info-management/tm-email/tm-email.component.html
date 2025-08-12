@@ -43,7 +43,7 @@
           {{ emailForm.controls["communicationID"].value }}
         </div>
       </div>
-      <div class="col">
+      <div class="col" *ngIf="isDisplayDate">
         <div class="d-flex align-items-center">
           <div>
             <label for="emailDate">Date:</label>
