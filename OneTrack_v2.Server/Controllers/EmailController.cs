@@ -27,9 +27,9 @@ namespace OneTrak_v2.Controllers
         }
 
         [HttpGet("{communicationID}/{employmentID}")]
-        public async Task<ActionResult> GetEmailTemplate(int communicationID, int employmentID)
+        public async Task<ActionResult> GetEmailTemplate(int communicationID, int employmentID, DateOnly? vDate = null)
         {
-            var result = await Task.Run(() => _emailService.GetEmailTemplate(communicationID, employmentID));
+            var result = await Task.Run(() => _emailService.GetEmailTemplate(communicationID, employmentID, vDate));
 
             return StatusCode(result.StatusCode, result);
         }

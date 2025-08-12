@@ -94,6 +94,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
       emailSubject: [''],
       emailBody: [''],
       emailAttachment: [''],
+      emailDate: [null],
     });
 
     this.subscriptions.add(
@@ -313,10 +314,10 @@ export class TmEmailComponent implements OnInit, OnDestroy {
         next: (response) => {
           // Reset form submission state
           this.isSubmitted = false;
-          
+
           // Reset the form to initial state
           this.resetForm();
-          
+
           // Reset all component properties to initial state
           this.emailAttachments = [];
           this.file = null;
@@ -324,7 +325,7 @@ export class TmEmailComponent implements OnInit, OnDestroy {
           this.ccEmail = [];
           this.selectedTemplate = 33;
           this.emailTemplateID = 33;
-          
+
           // Reset template-related properties
           this.docSubType = '{MESSAGE}';
           this.subject = '';
@@ -333,29 +334,33 @@ export class TmEmailComponent implements OnInit, OnDestroy {
           this.htmlHeaderContent = '' as SafeHtml;
           this.htmlFooterContent = '' as SafeHtml;
           this.htmlContent = '' as SafeHtml;
-          
+
           // Reset file viewer properties
           this.filePdfSrc = null;
           this.fileHtmlContent = null;
           this.documentPath = '';
-          
+
           // Reset CC checkboxes
-          const chkMgr = document.getElementsByName('chkMgr')[0] as HTMLInputElement | undefined;
+          const chkMgr = document.getElementsByName('chkMgr')[0] as
+            | HTMLInputElement
+            | undefined;
           if (chkMgr) chkMgr.checked = false;
-          const chkDM = document.getElementsByName('chkDM')[0] as HTMLInputElement | undefined;
+          const chkDM = document.getElementsByName('chkDM')[0] as
+            | HTMLInputElement
+            | undefined;
           if (chkDM) chkDM.checked = false;
-          const chkRD = document.getElementsByName('chkRD')[0] as HTMLInputElement | undefined;
+          const chkRD = document.getElementsByName('chkRD')[0] as
+            | HTMLInputElement
+            | undefined;
           if (chkRD) chkRD.checked = false;
-          
+
           // Clear attached files in email service
           this.emailDataService.setAttachedFiles([]);
-          
+
           // Trigger change detection
           this.cdr.detectChanges();
-          
-          this.appComService.updateAppMessage(
-            'Email Sent successfully.'
-          );
+
+          this.appComService.updateAppMessage('Email Sent successfully.');
 
           this.agentDataService
             .fetchAgentInformation(

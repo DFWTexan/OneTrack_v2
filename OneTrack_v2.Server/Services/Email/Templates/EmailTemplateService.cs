@@ -14106,7 +14106,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
             return new Tuple<string, string, string, string>(strHTML, string.Empty, string.Empty, string.Empty);
         }
 
-        public Tuple<string, string, string, string> GetLicensingOfferLetterHTML(int vEmploymentID)
+        public Tuple<string, string, string, string> GetLicensingOfferLetterHTML(int vEmploymentID, DateOnly? vDate = null)
         {
             string strHTML = string.Empty;
 
@@ -14174,7 +14174,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                 strHTML += @"<tr><td colspan=""3"">&nbsp;</td></tr>";
 
                 // Reply instructions
-                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; font-weight: bold;"">Please reply to this email with “Yes” or “No” by [30 days before class].</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; font-weight: bold;"">Please reply to this email with “Yes” or “No” by " + vDate + @".</td></tr>";
                 strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; padding-left: 15px"">• A “Yes” will begin your registration in the next quarterly Licensing University. Watch your inbox for more information.</td></tr>";
                 strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; padding-left: 15px"">• If you want to wait until a later date to take advantage of this opportunity that’s okay, just reply “No”. With your DM’s approval, you can enroll when you are ready, subject to program continuance.</td></tr>";
 
@@ -14187,7 +14187,7 @@ namespace OneTrak_v2.Server.Services.Email.Templates
 
                 // Note section
                 strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; font-weight: bold; font-style: italic;""><u>NOTE:</u></td></tr>";
-                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; font-style: italic;"">You are prohibited from offering any insurance product until you receive our authorization for that line of insurance. Offering products without the appropriate license subjects you to fines, penalties and/or disciplinary action imposed by the Department of Insurance.</td></tr>";
+                strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; font-style: italic; margin-bottom: 10px;"">You are prohibited from offering any insurance product until you receive our authorization for that line of insurance. Offering products without the appropriate license subjects you to fines, penalties and/or disciplinary action imposed by the Department of Insurance.</td></tr>";
                 strHTML += @"<tr><td colspan=""3"" style=""font-family: Arial; font-size: 12pt; font-style: italic;"">Hourly Team Members: Training/course study time is paid and should be completed during normal company hours or pre-approved overtime. You are not allowed to study at home.</td></tr>";
 
                 // Closing
@@ -14289,11 +14289,11 @@ namespace OneTrak_v2.Server.Services.Email.Templates
                     <p>See additional information in the attached <strong>Passing the Life Exam – AD Banker</strong>.</p>
 
                     <p>If you have questions, please reply to this email ONLY without copying your Licensing Specialist or call your Licensing Specialist shown below.</p>
-                    <div style='margin-top: 10px; margin-bottom;'>
+                    <div style='margin-top: 10px; margin-bottom: 10px;'>
                         <img alt = """" src = ""pictures/OneMainSolutionsHorizontal.jpg"" width = ""100""/>
                     </div>
                     <div>
-                        <span style = 'font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;' >'' + strLicenseTechName + "" - "" + strLicenseTechTitle + "" - "" + strLicenseTechPhone + "" </span>
+                        <span style = 'font-family: Arial; color: #000000; font-size: 12pt; font-weight: bold; font-style: normal; text-decoration: none;' >"  + strLicenseTechName + @" - " + strLicenseTechTitle + @" - " + strLicenseTechPhone + @" </span>
                     </div>
                 </body>
                 </html>

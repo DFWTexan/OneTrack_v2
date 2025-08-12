@@ -104,7 +104,7 @@ namespace OneTrack_v2.Services
             }
         }
 
-        public ReturnResult GetEmailTemplate(int vCommunicationID, int vEmploymentID)
+        public ReturnResult GetEmailTemplate(int vCommunicationID, int vEmploymentID, DateOnly? vDate = null)
         {
             var comms = _db.Communications
                             .Where(c => c.CommunicationId == vCommunicationID)
@@ -411,7 +411,7 @@ namespace OneTrack_v2.Services
                         result.ObjData = new { HTMLContent = appADBankerRegistrationLifeHealthHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "AD BANKER REGISTRATION CONFIRMATION_LIFE AND HEALTH", isTemplateFound = true, DocAttachmentPath = _docAttPath + "Templates\\", Attachments = _attachments };
                         break;
                     case 128: // "Licensing Offer Letter"
-                        var appLicensing_Offer_LetterHTML = _emailTemplateService.GetLicensingOfferLetterHTML(vEmploymentID);
+                        var appLicensing_Offer_LetterHTML = _emailTemplateService.GetLicensingOfferLetterHTML(vEmploymentID, vDate);
                         result.ObjData = new { HTMLContent = appLicensing_Offer_LetterHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "INSURANCE LICENSING OPPORTUNITY", isTemplateFound = true };
                         break;
                     case 129: // "ADBanker Registration Confirmation"
