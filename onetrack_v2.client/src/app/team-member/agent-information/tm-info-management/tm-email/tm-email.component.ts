@@ -291,6 +291,76 @@ export class TmEmailComponent implements OnInit, OnDestroy {
     this.emailForm.patchValue({
       emailDate: value
     });
+
+    const dateValue = value ? new Date(value) : null;
+    this.subscriptions.add(
+      this.emailDataService
+        .fetchEmailComTemplateByID(this.emailTemplateID, this.agentInfo.employmentID, this.formatDateForAPI(dateValue))
+        .subscribe((rawHtmlContent: any) => {
+          this.docSubType = rawHtmlContent.docSubType;
+          this.subject = rawHtmlContent.subject;
+          this.isTemplateFound = rawHtmlContent.isTemplateFound;
+          this.emailAttachments = rawHtmlContent.attachments || [];
+          this.documentPath = rawHtmlContent.docAttachmentPath;
+
+          // Fetch and create File objects for each attachment
+          const attachmentPromises = (rawHtmlContent.attachments || []).map(
+            async (attachment: string) => {
+              const filePath = `${rawHtmlContent.docAttachmentPath}`;
+              try {
+                const blob = await firstValueFrom(
+                  this.fileService.getFile(filePath, attachment)
+                );
+                if (blob) {
+                  return new File([blob], attachment);
+                } else {
+                  throw new Error(`Failed to fetch file: ${attachment}`);
+                }
+              } catch (error) {
+                console.error(`Error fetching file: ${attachment}`, error);
+                throw error;
+              }
+            }
+          );
+
+          Promise.all(attachmentPromises).then((files) => {
+            this.files = files; // Store valid File objects
+            console.log('Files loaded:', this.files);
+          });
+
+          if (
+            rawHtmlContent.docSubType === '{MESSAGE}' ||
+            rawHtmlContent.docSubType === 'Incomplete' ||
+            rawHtmlContent.docSubType === 'Employment History'
+          ) {
+            this.isSubjectReadOnly =
+              rawHtmlContent.docSubType == '{MESSAGE}' ? false : true;
+            this.emailForm.patchValue({
+              emailSubject:
+                rawHtmlContent.docSubType == '{MESSAGE}'
+                  ? ''
+                  : rawHtmlContent.subject,
+            });
+            this.htmlHeaderContent = this.sanitizer.bypassSecurityTrustHtml(
+              rawHtmlContent.header
+            );
+            this.htmlFooterContent = this.sanitizer.bypassSecurityTrustHtml(
+              rawHtmlContent.footer
+            );
+          } else {
+            this.isSubjectReadOnly = true;
+            this.emailForm.patchValue({
+              emailSubject: rawHtmlContent.subject,
+            });
+            this.htmlContent = this.sanitizer.bypassSecurityTrustHtml(
+              rawHtmlContent.htmlContent
+            );
+            if (rawHtmlContent.docSubType === null) {
+              this.emailForm.setErrors({ invalidForm: true });
+            }
+          }
+        })
+    );
   }
 
   onSubmit() {
