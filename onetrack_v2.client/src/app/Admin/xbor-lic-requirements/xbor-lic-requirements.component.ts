@@ -18,7 +18,7 @@ import { ConfirmDialogComponent } from '../../_components';
 @Component({
   selector: 'app-xbor-lic-requirements',
   templateUrl: './xbor-lic-requirements.component.html',
-  styleUrl: './xbor-lic-requirements.component.css'
+  styleUrl: './xbor-lic-requirements.component.css',
 })
 @Injectable()
 export class XborLicRequirementsComponent implements OnInit, OnDestroy {
@@ -48,36 +48,36 @@ export class XborLicRequirementsComponent implements OnInit, OnDestroy {
     public userAcctInfoDataService: UserAcctInfoDataService
   ) {}
 
-// startFileUploadCompleted(filePath: string) {
-//     this.startFullFilePathUri = filePath;
-//     this.xborLicenseRequirementForm.patchValue({
-//       startDocument: filePath,
-//     });
-//     this.xborLicenseRequirementForm.markAsDirty();
-//   }
+  // startFileUploadCompleted(filePath: string) {
+  //     this.startFullFilePathUri = filePath;
+  //     this.xborLicenseRequirementForm.patchValue({
+  //       startDocument: filePath,
+  //     });
+  //     this.xborLicenseRequirementForm.markAsDirty();
+  //   }
 
-//   renewalFileUploadCompleted(filePath: string) {
-//     this.renewalFullFilePathUri = filePath;
-//     this.xborLicenseRequirementForm.patchValue({
-//       renewalDocument: filePath,
-//     });
-//     this.xborLicenseRequirementForm.markAsDirty();
-//   }
+  //   renewalFileUploadCompleted(filePath: string) {
+  //     this.renewalFullFilePathUri = filePath;
+  //     this.xborLicenseRequirementForm.patchValue({
+  //       renewalDocument: filePath,
+  //     });
+  //     this.xborLicenseRequirementForm.markAsDirty();
+  //   }
 
-//   onDeleteStartDocument() {
-//     this.xborLicenseRequirementForm.patchValue({
-//       startDocument: null,
-//     });
-//     this.xborLicenseRequirementForm.markAsDirty();
-//     this.startFullFilePathUri = null;
-//   }
-//   onDeleteRenewalDocument() {
-//     this.xborLicenseRequirementForm.patchValue({
-//       renewalDocument: null,
-//     });
-//     this.xborLicenseRequirementForm.markAsDirty();
-//     this.renewalFullFilePathUri = null;
-//   }
+  //   onDeleteStartDocument() {
+  //     this.xborLicenseRequirementForm.patchValue({
+  //       startDocument: null,
+  //     });
+  //     this.xborLicenseRequirementForm.markAsDirty();
+  //     this.startFullFilePathUri = null;
+  //   }
+  //   onDeleteRenewalDocument() {
+  //     this.xborLicenseRequirementForm.patchValue({
+  //       renewalDocument: null,
+  //     });
+  //     this.xborLicenseRequirementForm.markAsDirty();
+  //     this.renewalFullFilePathUri = null;
+  //   }
 
   ngOnInit(): void {
     this.states = ['Select', ...this.conService.getStates()];
@@ -86,9 +86,14 @@ export class XborLicRequirementsComponent implements OnInit, OnDestroy {
     });
   }
 
-  refreshData() {
+  refreshData(data: any) {
+    this.selectedBranchCode = data;
     this.isLoading = true;
     this.fetchXBorLicRequirementItems();
+
+    this.adminDataService.fetchXBorBranchCodes().subscribe((response) => {
+      this.branchCodes = ['Select', ...response];
+    });
   }
 
   private fetchXBorLicRequirementItems() {
@@ -96,13 +101,12 @@ export class XborLicRequirementsComponent implements OnInit, OnDestroy {
 
     this.subscriptionData.add(
       this.adminDataService
-      .fetchXBorLicRequirements(this.selectedBranchCode)
-      .subscribe((response) => {
-        this.xborLicRequirements = response;
-        this.isLoading = false;
-      })
+        .fetchXBorLicRequirements(this.selectedBranchCode)
+        .subscribe((response) => {
+          this.xborLicRequirements = response;
+          this.isLoading = false;
+        })
     );
-    
   }
 
   changeBranchCode(event: any) {
@@ -135,7 +139,11 @@ export class XborLicRequirementsComponent implements OnInit, OnDestroy {
         title: 'Confirm Action',
         message:
           'You are about to DELETE XBor Requirement Item (' +
-          vObject.branchCode + ' - Work State: ' + vObject.workStateAbv + ' - Res State: ' + vObject.resStateAbv +
+          vObject.branchCode +
+          ' - Work State: ' +
+          vObject.workStateAbv +
+          ' - Res State: ' +
+          vObject.resStateAbv +
           '). Click "Yes" to confirm?',
       },
     });

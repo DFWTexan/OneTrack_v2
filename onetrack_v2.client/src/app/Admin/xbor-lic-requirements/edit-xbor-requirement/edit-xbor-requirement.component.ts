@@ -30,6 +30,7 @@ export class EditXborRequirementComponent implements OnInit, OnDestroy {
   @Input() stateProvinces: any[] = [];
   @Input() selectedBranchCode: string = 'Select';
   isFormSubmitted = false;
+  newXborBranchCode: string = '';
   xborLicenseRequirementForm!: FormGroup;
   stateLicenseItems: { value: number; label: string }[] = [];
   branches: { value: string; label: string }[] = [];
@@ -87,7 +88,10 @@ export class EditXborRequirementComponent implements OnInit, OnDestroy {
     this.xborLicenseRequirementForm.markAsDirty();
     this.renewalFullFilePathUri = null;
   }
-  
+  onChangeXborBranchCode(event: any) {
+    this.newXborBranchCode = event.value;
+  }
+
   ngOnInit(): void {
     this.xborLicenseRequirementForm = new FormGroup({
       requiredLicenseId: new FormControl(''),
@@ -129,7 +133,7 @@ export class EditXborRequirementComponent implements OnInit, OnDestroy {
                     this.selectedLicenseState = xborLicenseRequirement.licState;
                     this.fetchStateLicenseItems();
                   }
-                  
+
                   this.xborLicenseRequirementForm.reset();
 
                   this.xborLicenseRequirementForm.patchValue({
@@ -194,18 +198,45 @@ export class EditXborRequirementComponent implements OnInit, OnDestroy {
   onSubmit(): void {
     this.isFormSubmitted = true;
     let xBorReqItem: any = this.xborLicenseRequirementForm.value;
-    xBorReqItem.branchCode = this.selectedBranchCode;
+    if (this.adminComService.modes.xborLicenseRequirement.mode === 'INSERT') {
+      xBorReqItem.branchCode =
+        this.xborLicenseRequirementForm.get('branchCode')?.value;
+    } else {
+      xBorReqItem.branchCode = this.selectedBranchCode;
+    }
+
     xBorReqItem.requirementType = 'X-Border';
     xBorReqItem.userSOEID = this.userAcctInfoDataService.userAcctInfo.soeid;
 
     // Convert checkbox boolean to number (true = 1, false = 0)
-    xBorReqItem.licLevel1 = this.xborLicenseRequirementForm.get('licLevel1')?.value ? true : false;
-    xBorReqItem.licLevel2 = this.xborLicenseRequirementForm.get('licLevel2')?.value ? true : false;
-    xBorReqItem.licLevel3 = this.xborLicenseRequirementForm.get('licLevel3')?.value ? true : false;
-    xBorReqItem.licLevel4 = this.xborLicenseRequirementForm.get('licLevel4')?.value ? true : false;
-    xBorReqItem.plS_Incentive1 = this.xborLicenseRequirementForm.get('plS_Incentive1')?.value ? true : false;
-    xBorReqItem.incentive2_Plus = this.xborLicenseRequirementForm.get('incentive2_Plus')?.value ? true : false;
-    xBorReqItem.licIncentive3 = this.xborLicenseRequirementForm.get('licIncentive3')?.value || false;
+    xBorReqItem.licLevel1 = this.xborLicenseRequirementForm.get('licLevel1')
+      ?.value
+      ? true
+      : false;
+    xBorReqItem.licLevel2 = this.xborLicenseRequirementForm.get('licLevel2')
+      ?.value
+      ? true
+      : false;
+    xBorReqItem.licLevel3 = this.xborLicenseRequirementForm.get('licLevel3')
+      ?.value
+      ? true
+      : false;
+    xBorReqItem.licLevel4 = this.xborLicenseRequirementForm.get('licLevel4')
+      ?.value
+      ? true
+      : false;
+    xBorReqItem.plS_Incentive1 = this.xborLicenseRequirementForm.get(
+      'plS_Incentive1'
+    )?.value
+      ? true
+      : false;
+    xBorReqItem.incentive2_Plus = this.xborLicenseRequirementForm.get(
+      'incentive2_Plus'
+    )?.value
+      ? true
+      : false;
+    xBorReqItem.licIncentive3 =
+      this.xborLicenseRequirementForm.get('licIncentive3')?.value || false;
 
     if (this.adminComService.modes.xborLicenseRequirement.mode === 'INSERT') {
       xBorReqItem.requiredLicenseID = 0;
@@ -214,7 +245,7 @@ export class EditXborRequirementComponent implements OnInit, OnDestroy {
     this.subscriptionData.add(
       this.adminDataService.upSertStateRequirement(xBorReqItem).subscribe({
         next: (response) => {
-          this.callParentRefreshData.emit();
+          this.callParentRefreshData.emit(this.xborLicenseRequirementForm.get('branchCode')?.value);
           this.appComService.updateAppMessage(
             'XBor License saved successfully'
           );
@@ -251,25 +282,20 @@ export class EditXborRequirementComponent implements OnInit, OnDestroy {
   }
 
   private fetchBranchItems(): void {
+    console.log('EMFTEST (fetchBranchItems) - fetching branches');
 
-console.log('EMFTEST (fetchBranchItems) - fetching branches');
-
-    this.dropDownDataService
-      .fetchDropdownData(
-        'GetBranches'
-      )
-      .subscribe({
-        next: (response) => {
-          this.branches = [{ value: '', label: 'Select' }, ...response];
-          // this.xborLicenseRequirementForm.get('branchId')?.enable();
-        },
-        error: (error) => {
-          if (error.error && error.error.errMessage) {
-            this.errorMessageService.setErrorMessage(error.error.errMessage);
-            this.forceCloseModal();
-          }
-        },
-      });
+    this.dropDownDataService.fetchDropdownData('GetBranches').subscribe({
+      next: (response) => {
+        this.branches = [{ value: '', label: 'Select' }, ...response];
+        // this.xborLicenseRequirementForm.get('branchId')?.enable();
+      },
+      error: (error) => {
+        if (error.error && error.error.errMessage) {
+          this.errorMessageService.setErrorMessage(error.error.errMessage);
+          this.forceCloseModal();
+        }
+      },
+    });
   }
 
   private forceCloseModal() {

@@ -6,12 +6,13 @@
   <div class="row" *ngIf="adminComService.modes.xborLicenseRequirement.mode === 'INSERT'">
     <div class="col">
       <div class="mb-3">
-        <label for="workStateAbv" class="form-label">Branch:</label>
+        <label for="branchCode" class="form-label">XBorder Branch:</label>
         <select
-          class="form-select select-size-small"
+          class="form-select select-size-medium"
           type="text"
-          id="workStateAbv"
-          formControlName="workStateAbv"
+          id="branchCode"
+          formControlName="branchCode"
+          (change)="onChangeXborBranchCode($event)"
         >
           <option *ngFor="let branch of branches" [value]="branch.value">
             {{ branch.value }} - {{ branch.label != 'Select' ? branch.label : '' }}
