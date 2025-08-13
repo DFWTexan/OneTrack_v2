@@ -3,7 +3,7 @@
   (ngSubmit)="onSubmit()"
   class="container app-modal-container"
 >
-  <div class="row">
+  <div class="row" *ngIf="adminComService.modes.xborLicenseRequirement.mode === 'INSERT'">
     <div class="col">
       <div class="mb-3">
         <label for="workStateAbv" class="form-label">Branch:</label>
