@@ -32,6 +32,7 @@ export class EditXborRequirementComponent implements OnInit, OnDestroy {
   isFormSubmitted = false;
   xborLicenseRequirementForm!: FormGroup;
   stateLicenseItems: { value: number; label: string }[] = [];
+  branches: { value: string; label: string }[] = [];
   selectedLicenseState: string = 'Select';
   isLicenseNameDisabled = true;
   isStartDocUploaded = false;
@@ -108,6 +109,7 @@ export class EditXborRequirementComponent implements OnInit, OnDestroy {
       renewalDocument: new FormControl(''),
     });
 
+    this.fetchBranchItems();
     this.subscriptionData.add(
       this.adminComService.modes.xborLicenseRequirement.changed.subscribe(
         (mode: string) => {
@@ -127,8 +129,6 @@ export class EditXborRequirementComponent implements OnInit, OnDestroy {
                     this.selectedLicenseState = xborLicenseRequirement.licState;
                     this.fetchStateLicenseItems();
                   }
-
-// console.log('EMFTEST (ngOnInit) - xborLicenseRequirement', xborLicenseRequirement);
                   
                   this.xborLicenseRequirementForm.reset();
 
@@ -240,6 +240,28 @@ export class EditXborRequirementComponent implements OnInit, OnDestroy {
         next: (response) => {
           this.stateLicenseItems = [{ value: 0, label: 'Select' }, ...response];
           this.xborLicenseRequirementForm.get('licenseId')?.enable();
+        },
+        error: (error) => {
+          if (error.error && error.error.errMessage) {
+            this.errorMessageService.setErrorMessage(error.error.errMessage);
+            this.forceCloseModal();
+          }
+        },
+      });
+  }
+
+  private fetchBranchItems(): void {
+
+console.log('EMFTEST (fetchBranchItems) - fetching branches');
+
+    this.dropDownDataService
+      .fetchDropdownData(
+        'GetBranches'
+      )
+      .subscribe({
+        next: (response) => {
+          this.branches = [{ value: '', label: 'Select' }, ...response];
+          // this.xborLicenseRequirementForm.get('branchId')?.enable();
         },
         error: (error) => {
           if (error.error && error.error.errMessage) {
