@@ -54,6 +54,14 @@ namespace OneTrack_v2.Controllers
         }
 
         [HttpGet]
+        public async Task<ActionResult> GetConEducationRulesVsp(string? stateAbv = null, string? licenseType = null)
+        {
+            var result = await Task.Run(() => _adminService.GetConEducationRulesVsp(stateAbv, licenseType));
+
+            return StatusCode(result.StatusCode, result);
+        }
+
+        [HttpGet]
         public async Task<ActionResult> GetCompanyRequirements(string workState, string? resState = null)
         {
             var result = await Task.Run(() => _adminService.GetCompanyRequirementsAsync(workState, resState));

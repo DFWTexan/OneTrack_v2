@@ -3,6 +3,7 @@ using OneTrack_v2.DbData.Models;
 using OneTrack_v2.DataModel;
 using OneTrak_v2.DataModel;
 using OneTrak_v2.Services.Model;
+using DataModel.DTO;
 
 namespace OneTrack_v2.DbData
 {
@@ -131,6 +132,7 @@ namespace OneTrack_v2.DbData
         public virtual DbSet<WorkList> WorkLists { get; set; }
         public virtual DbSet<WorkListDatum> WorkListData { get; set; }
         public virtual DbSet<XxxEdr> XxxEdrs { get; set; }
+        
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
             => optionsBuilder.UseSqlServer("Name=DefaultConnection");
@@ -138,7 +140,7 @@ namespace OneTrack_v2.DbData
         #region STORED PROCEDURES
         //public virtual DbSet<OputEmployeeSearchResult> SPOUT_SearchEmployees { get; set; }
         //public virtual DbSet<UspAgentDetails_Result> UspAgentDetails_Results { get; set; }
-
+        public DbSet<OputEducationRulesDTO> OputEducationRulesDTO { get; set; } = default!;
         #endregion
 
         #region // Raw SQL Queries
@@ -4020,7 +4022,7 @@ namespace OneTrack_v2.DbData
 
             #region STORED PROCEDURES
             //modelBuilder.Entity<SPOUT_uspEmployeeGridSearchNew>().ToView("SPOUT_SearchEmployee", "dbo").HasNoKey();
-            //modelBuilder.Entity<OputEmployeeSearchResult>().ToTable("SPOUT_SearchEmployee").HasNoKey();
+            modelBuilder.Entity<OputEducationRulesDTO>().HasNoKey();
             #endregion
 
             #region Raw SQL Queries

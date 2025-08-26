@@ -1,4 +1,5 @@
-﻿using DataModel.Response;
+﻿using DataModel.DTO;
+using DataModel.Response;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using OneTrack_v2.Services;
 using OneTrak_v2.DataModel;
 using OneTrak_v2.Server.DbData.DataModel.Admin;
 using System.Data;
+using System.Threading.Tasks;
 
 namespace OneTrak_v2.Services
 {
@@ -180,6 +182,35 @@ namespace OneTrak_v2.Services
                                             .ToList();
 
                 result.ObjData = queryEduRulesResults;
+                result.Success = true;
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# ADMN-1237-91511].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
+            }
+            return result;
+        }
+
+        public ReturnResult GetConEducationRulesVsp(string? vState = null, string? vLicenseType = null)
+        {
+            ReturnResult result = new ReturnResult();
+            try
+            {
+                var stateParam = new SqlParameter("@StateProvince", (object?)vState ?? DBNull.Value);
+                var licenseParam = new SqlParameter("@LicenseType", (object?)vLicenseType ?? DBNull.Value);
+
+                var data = _db.OputEducationRulesDTO
+                            .FromSqlRaw("EXEC dbo.uspGetEducationRule @StateProvince, @LicenseType", stateParam, licenseParam)
+                            .AsNoTracking()
+                            .ToList();
+
+                result.ObjData = data;
                 result.Success = true;
                 result.StatusCode = 200;
             }
