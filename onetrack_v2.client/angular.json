@@ -145,7 +145,13 @@
               "proxyConfig": "src/proxy.conf.js"
             },
             "dvlp": {
-              "buildTarget": "onetrack_v2.client:build:dvlp"
+              "buildTarget": "onetrack_v2.client:build:dvlp",
+              "ssl": true,
+              "sslKey": "ssl/server.key",
+              "sslCert": "ssl/server.crt",
+              "host": "localhost",
+              "port": 4200,
+              "proxyConfig": "src/proxy.conf.js"
             },
             "qlty": {
               "buildTarget": "onetrack_v2.client:build:qlty"
