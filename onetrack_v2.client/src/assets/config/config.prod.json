@@ -3,7 +3,7 @@
     "environment": null,
     "isDevLoginEnabled": false,
     "isShowEditID": false,
-    "apiUrl": "http://ftapip101/OneTrakV2/api/",
+    "apiUrl": "https://ftapip101/OneTrakV2/api/",
     "isImpersonationEnabled": false,
     "userInfo": null
 }

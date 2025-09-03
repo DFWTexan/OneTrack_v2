@@ -75,7 +75,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/app/_environments/environment.ts",
-                  "with": "src/app/_environments/environment.dev.ts"
+                  "with": "src/app/_environments/environment.ts"
                 }
               ]
             },
@@ -132,8 +132,17 @@
             "production": {
               "buildTarget": "onetrack_v2.client:build:production"
             },
+            "development": {
+              "buildTarget": "onetrack_v2.client:build:development"
+            },
             "local": {
-              "buildTarget": "onetrack_v2.client:build:local"
+              "buildTarget": "onetrack_v2.client:build:local",
+              "ssl": true,
+              "sslKey": "ssl/server.key",
+              "sslCert": "ssl/server.crt",
+              "host": "localhost",
+              "port": 4200,
+              "proxyConfig": "src/proxy.conf.js"
             },
             "dvlp": {
               "buildTarget": "onetrack_v2.client:build:dvlp"
@@ -142,10 +151,7 @@
               "buildTarget": "onetrack_v2.client:build:qlty"
             }
           },
-          "defaultConfiguration": "development",
-          "options": {
-            "proxyConfig": "src/proxy.conf.js"
-          }
+          "defaultConfiguration": "development"
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",

@@ -3,7 +3,7 @@
     "environment": "LOCAL",
     "isDevLoginEnabled": true,
     "isShowEditID": false,
-    "apiUrl": "http://localhost:5181/api/",
+    "apiUrl": "https://localhost:5181/api/",
     "isImpersonationEnabled": true,
     "userInfo": {
         "licenseTechID": null,
