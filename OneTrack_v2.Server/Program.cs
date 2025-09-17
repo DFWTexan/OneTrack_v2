@@ -48,6 +48,13 @@ builder.Services.AddCors(options =>
                            "https://localhost:5000",
                            "https://localhost:5181",
                            "https://localhost:7249",
+                           "https://ftwebd201.corp.fin",
+                           "https://ftwebq201.corp.fin",
+                           "https://ftwebp201.corp.fin",
+                           "https://omsapps-dvlp.corp.fin",
+                           "https://omsapps-qlty.corp.fin",
+                           "https://omsapps-prod.corp.fin",
+
                            "https://ftwebd201",
                            "https://ftwebq201",
                            "https://ftwebp201")
