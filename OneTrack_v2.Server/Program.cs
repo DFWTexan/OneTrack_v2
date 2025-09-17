@@ -33,17 +33,33 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDataContext>(opt =>
     opt.UseSqlServer(connectionString));
 
+// Force HTTPS redirection
+builder.Services.AddHttpsRedirection(options =>
+{
+    options.HttpsPort = 443;
+});
+
 // Configure CORS to allow requests from specific origins
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowSpecificOrigins", policy =>
     {
-        policy.WithOrigins("http://localhost:4200",
-                           "http://localhost:5000",
-                           "http://localhost:5181",
-                           "http://ftwebd201",
-                           "http://ftwebq201",
-                           "http://ftwebp201")
+        policy.WithOrigins("https://localhost:4200",
+                           "https://localhost:5000",
+                           "https://localhost:5181",
+                           "https://localhost:7249",
+
+                           "https://ftwebd201.corp.fin",
+                           "https://ftwebq201.corp.fin",
+                           "https://ftwebp201.corp.fin",
+
+                           "https://omsapps-dvlp.corp.fin",
+                           "https://omsapps-qlty.corp.fin",
+                           "https://omsapps-prod.corp.fin",
+
+                           "https://ftwebd201",
+                           "https://ftwebq201",
+                           "https://ftwebp201")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials(); // If you need to allow credentials
@@ -77,7 +93,7 @@ app.UseRouting();
 
 // Use CORS with the specified policy
 app.UseCors("AllowSpecificOrigins");
-
+app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();

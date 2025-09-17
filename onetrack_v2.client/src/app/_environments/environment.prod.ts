@@ -4,6 +4,6 @@ export const environment = {
   isDevLoginEnabled: false,
   isShowEditID: false,
   // PRODUCTION
-  apiUrl: 'http://ftapip101/OneTrakV2/api/',
+  apiUrl: 'https://ftapip101/OneTrakV2/api/',
   configFile: 'assets/config/config.prod.json',
 };

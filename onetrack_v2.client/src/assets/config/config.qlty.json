@@ -3,7 +3,7 @@
     "environment": "QUALITY",
     "isDevLoginEnabled": false,
     "isShowEditID": false,
-    "apiUrl": "http://ftapiq101/OneTrakV2/api/",
+    "apiUrl": "https://ftapiq101/OneTrakV2/api/",
     "isImpersonationEnabled": true,
     "userInfo": {
         "licenseTechID": null,
