@@ -12,7 +12,7 @@ namespace OneTrak_v2.Services
         public ReturnResult GetCompaniesByType(string vCompanyType);
         public ReturnResult GetLicenseTypes(string? vStateAbv = null);
         public ReturnResult GetConEducationRules(string? vState = null, string? LicenesType = null);
-        public ReturnResult GetConEducationRulesVsp(string? vState = null, string? LicenesType = null);
+        public ReturnResult GetConEducationRules_sp(string? vState = null, string? LicenesType = null);
         public Task<ReturnResult> GetCompanyRequirementsAsync(string vWorkState, string? vResState = null);
         public ReturnResult GetExamByState(string vState);
         public ReturnResult GetJobTitleLicLevel();
