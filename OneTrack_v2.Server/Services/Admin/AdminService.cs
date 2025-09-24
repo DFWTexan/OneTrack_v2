@@ -197,7 +197,7 @@ namespace OneTrak_v2.Services
             return result;
         }
 
-        public ReturnResult GetConEducationRulesVsp(string? vState = null, string? vLicenseType = null)
+        public ReturnResult GetConEducationRules_sp(string? vState = null, string? vLicenseType = null)
         {
             ReturnResult result = new ReturnResult();
             try
