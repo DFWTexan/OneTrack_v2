@@ -598,7 +598,14 @@
       </div>
     </mat-expansion-panel>
     <!-- AUDIT LOG -->
-    <mat-expansion-panel class="mt-3">
+    <mat-expansion-panel
+      class="mt-3"
+      *ngIf="
+        (userAcctInfoDataService.userAcctInfo.isSuperUser ||
+          userAcctInfoDataService.userAcctInfo.isQARole ||
+          userAcctInfoDataService.userAcctInfo.isAdminRole) 
+      "
+    >
       <mat-expansion-panel-header>
         <mat-panel-title style="font-size: large"> Audit Log </mat-panel-title>
       </mat-expansion-panel-header>
