@@ -242,6 +242,8 @@ namespace OneTrak_v2.Services
 
                 var auditLog = data.Select(x => new
                 {
+                    x.BaseTableName,
+                    x.BaseTableKeyValue,
                     x.ModifyDate,
                     x.ModifiedBy,
                     x.AuditFieldName,
@@ -253,6 +255,8 @@ namespace OneTrak_v2.Services
                     .AsEnumerable()
                     .Select(x => new AuditLog
                     {
+                        BaseTableName = x.BaseTableName,
+                        BaseTableKeyValue = x.BaseTableKeyValue,
                         ModifyDate = x.ModifyDate,
                         ModifiedBy = string.IsNullOrEmpty(x.LicenseTechName) ? x.ModifiedBy : x.LicenseTechName,
                         AuditFieldName = x.AuditFieldName,
