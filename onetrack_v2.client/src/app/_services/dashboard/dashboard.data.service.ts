@@ -208,6 +208,26 @@ export class DashboardDataService {
       );
   }
 
+  fetchAuditBaseTableNames() {
+    const url = this.apiUrl + 'GetAuditBaseTableNames/';
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: Array<string>;
+        errMessage: string;
+      }>(url)
+      .pipe(
+        map((response) => {
+          if (response.success && response.objData) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
   closeWorklistItem(wishlistItem: any): Observable<any> {
     this.apiUrl = this.configService.config.apiUrl + 'Agent/CloseWorklistItem';
 

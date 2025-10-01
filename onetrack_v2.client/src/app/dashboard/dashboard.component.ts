@@ -107,6 +107,26 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedRowIndex: number | null = null;
   selectedElement: string | null = null;
 
+  baseTableNameSelected: string = 'All';
+  baseTableNames: string[] = [];
+  baseTableKeyValue: string = '';
+  auditFieldName: string = 'All';
+  auditActionSelected: string = 'All';
+  auditFieldNames: string[] = [
+    'All',
+    'Field 1',
+    'Field 2',
+    'Field 3',
+  ];
+  baseTableKeyValues: string[] = [
+    'All',
+    'Value 1',
+    'Value 2',
+    'Value 3',
+  ];  
+  
+
+
   constructor(
     private conService: ConstantsDataService,
     public errorMessageService: ErrorMessageService,
@@ -219,6 +239,14 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         .fetchAuditLog(this.startDate, this.endDate, null)
         .subscribe((auditLogData) => {
           this.auditLogData = auditLogData;
+        })
+    );
+
+    this.subscriptions.add(
+      this.dashboardDataService
+        .fetchAuditBaseTableNames()
+        .subscribe((auditLogTableData) => {
+          this.baseTableNames = auditLogTableData;
         })
     );
 
@@ -800,6 +828,54 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
             { modifiedBy: null, fullName: 'Select Tech' },
             ...modifiedBy,
           ];
+        })
+    );
+  }
+
+  onChangeBaseTableName(event: any) {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    // this.baseTableName = value;
+  }
+  onChangeBaseTableKeyValue(event: any) {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    // this.baseTableKeyValue = value;
+  }
+  onChangeAuditFieldName(event: any) {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    // this.auditFieldName = value;
+  }
+  onChangeAuditAction(event: any) {
+    const target = event.target as HTMLInputElement;
+    const value = target.value;
+    // this.auditAction = value;
+  }
+  performAdHocAuditQuery() {
+    // Implement the logic to perform ad-hoc audit query based on selected criteria
+    // You can call a service method to fetch the filtered audit log data
+    // and update the auditLogData array accordingly.
+    console.log('Performing ad-hoc audit query...');
+  }
+  clearAuditFilters() {
+    this.baseTableNameSelected = 'All';
+    this.baseTableKeyValue = '';
+    this.auditFieldName = 'All';
+    this.auditActionSelected = 'All';   
+    // Reset other filter criteria as needed
+    // Optionally, you can also refresh the audit log data to show all records
+    this.subscriptions.add(
+      this.dashboardDataService
+        .fetchAuditLog(
+          this.startDate,
+          this.endDate,
+          this.modifiedBySelected == 'Select Tech'
+            ? null
+            : this.modifiedBySelected
+        )
+        .subscribe((auditLogData) => {
+          this.auditLogData = auditLogData;
         })
     );
   }

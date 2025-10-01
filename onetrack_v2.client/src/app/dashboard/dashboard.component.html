@@ -598,7 +598,7 @@
       </div>
     </mat-expansion-panel>
     <!-- AUDIT LOG -->
-    <mat-expansion-panel
+    <!-- <mat-expansion-panel
       class="mt-3"
       *ngIf="
         (userAcctInfoDataService.userAcctInfo.isSuperUser ||
@@ -716,8 +716,214 @@
           </table>
         </div>
       </div>
-    </mat-expansion-panel>
+    </mat-expansion-panel> -->
     <!-- </mat-accordion> -->
+
+    <!-- AUDIT LOG ADHOC -->
+    <mat-expansion-panel
+      class="mt-3"
+      *ngIf="
+        userAcctInfoDataService.userAcctInfo.isSuperUser ||
+        userAcctInfoDataService.userAcctInfo.isQARole ||
+        userAcctInfoDataService.userAcctInfo.isAdminRole
+      "
+    >
+      <mat-expansion-panel-header>
+        <mat-panel-title style="font-size: large"> Audit Log </mat-panel-title>
+      </mat-expansion-panel-header>
+      <div
+        class="row align-middle mb-2"
+        style="
+          background-color: black;
+          color: white;
+          opacity: 0.75;
+          padding: 0.5rem;
+          border-radius: 1rem;
+          border-color: lightgray;
+          border-width: 1px;
+          border-style: solid;
+        "
+      >
+        <!-- First row of filters -->
+        <div class="row mb-2">
+          <div class="col-md-3">
+            <label for="startDate">Start Date:</label><br />
+            <input
+              class="form-control input-size-small"
+              type="date"
+              name="startDate"
+              [(ngModel)]="startDate"
+              (change)="onChangesStartDate($event)"
+            />
+          </div>
+          <div class="col-md-3">
+            <label for="endDate">End Date:</label><br />
+            <input
+              class="form-control input-size-small"
+              type="date"
+              name="endDate"
+              [value]="endDate"
+              [(ngModel)]="endDate"
+              (change)="onChangesEndDate($event)"
+            />
+          </div>
+          <div class="col-md-3">
+            <label for="modifiedBy">Modified By:</label><br />
+            <select
+              class="form-select select-size-med-small"
+              name="modifiedBy"
+              id="modifiedBy"
+              (change)="onChangeModifiedBy($event)"
+              [(ngModel)]="modifiedBySelected"
+            >
+              <option *ngFor="let tech of modifiedBy" [value]="tech.modifiedBy">
+                {{ tech.fullName }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-3 d-flex align-items-center">
+            <input
+              class="form-check-input me-2"
+              type="checkbox"
+              id="isTechActive"
+              (change)="onChangeTechActive($event)"
+              [(ngModel)]="isTechActive"
+            />
+            <label
+              for="isTechActive"
+              class="form-label d-flex align-items-center mt-3"
+              >Only Active Tech</label
+            >
+          </div>
+        </div>
+
+        <!-- Second row of filters - AdHoc query capabilities -->
+        <div class="row mt-2">
+          <div class="col-md-3">
+            <label for="baseTableName">Table Name:</label><br />
+            <select
+              class="form-select select-size-med-small"
+              name="baseTableName"
+              id="baseTableName"
+              (change)="onChangeBaseTableName($event)"
+              [(ngModel)]="baseTableNameSelected"
+            >
+              <option value="">All Tables</option>
+              <option *ngFor="let table of baseTableNames" [value]="table">
+                {{ table }}
+              </option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label for="keyValue">Record ID:</label><br />
+            <input
+              class="form-control input-size-med-small"
+              type="text"
+              name="baseTableKeyValue"
+              [(ngModel)]="baseTableKeyValue"
+              (input)="onChangeBaseTableKeyValue($event)"
+              placeholder="Filter by ID"
+            />
+          </div>
+          <div class="col-md-3">
+            <label for="auditFieldName">Field Name:</label><br />
+            <input
+              class="form-control input-size-med-small"
+              type="text"
+              name="auditFieldName"
+              [(ngModel)]="auditFieldName"
+              (input)="onChangeAuditFieldName($event)"
+              placeholder="Filter by field name"
+            />
+          </div>
+          <div class="col-md-3">
+            <label for="auditAction">Action Type:</label><br />
+            <select
+              class="form-select select-size-med-small"
+              name="auditAction"
+              id="auditAction"
+              (change)="onChangeAuditAction($event)"
+              [(ngModel)]="auditActionSelected"
+            >
+              <option value="">All Actions</option>
+              <option value="Insert">Insert</option>
+              <option value="Update">Update</option>
+              <option value="Delete">Delete</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Search button row -->
+        <div class="row mt-3">
+          <div class="col-md-12 d-flex justify-content-end">
+            <button
+              class="btn btn-primary button-font-size"
+              (click)="performAdHocAuditQuery()"
+            >
+              Search
+            </button>
+            <button
+              class="btn btn-outline-secondary button-font-size ms-2"
+              (click)="clearAuditFilters()"
+            >
+              Clear Filters
+            </button>
+          </div>
+        </div>
+      </div>
+      <mat-divider></mat-divider>
+      <div
+        class="div d-flex justify-content-center mt-5"
+        style="font-size: larger; color: gray"
+        *ngIf="auditLogData.length === 0"
+      >
+        No records found
+      </div>
+      <div class="row" *ngIf="auditLogData.length !== 0">
+        <div class="col mt-3">
+          <table class="table">
+            <thead>
+              <tr style="background-color: whitesmoke">
+                <th scope="col">Modify Date</th>
+                <th scope="col">Modified By</th>
+                <th scope="col">Table</th>
+                <th scope="col">Record ID</th>
+                <th scope="col" style="width: 175px">Field Name</th>
+                <th scope="col">Action</th>
+                <th scope="col">Before Value</th>
+                <th scope="col">After Value</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let log of auditLogData">
+                <td class="align-middle">
+                  {{ log.modifyDate | date : "MM/dd/yyyy, h:mm a" }}
+                </td>
+                <td class="align-middle">
+                  {{ log.modifiedBy }}
+                </td>
+                <td class="align-middle">
+                  {{ log.baseTableName }}
+                </td>
+                <td class="align-middle">
+                  {{ log.baseTableKeyValue }}
+                </td>
+                <td class="align-middle wrap-text" style="width: 175px">
+                  {{ log.auditFieldName | firstThree }}
+                </td>
+                <td class="align-middle">
+                  {{ log.auditAction }}
+                </td>
+                <td class="align-middle">
+                  {{ log.auditValueBefore }}
+                </td>
+                <td class="align-middle">{{ log.auditValueAfter }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </mat-expansion-panel>
   </div>
 </div>
 

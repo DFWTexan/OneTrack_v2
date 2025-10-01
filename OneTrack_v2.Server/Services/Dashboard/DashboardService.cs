@@ -283,6 +283,113 @@ namespace OneTrak_v2.Services
 
             return result;
         }
+        public ReturnResult GetAuditLogAdHoc(DateTime vStartDate, DateTime vEndDate, string? vModifiedBy = null, string? vBaseTableName = null, string? vBaseTableKeyValue = null, string? vAuditFieldName = null, string? vAuditAction = null)
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var query = _db.AuditLogs.AsQueryable();
+
+                // Apply date range filter
+                query = query.Where(x => x.ModifyDate >= vStartDate && x.ModifyDate <= vEndDate);
+
+                // Apply optional filters if provided
+                if (!string.IsNullOrEmpty(vModifiedBy))
+                {
+                    query = query.Where(x => x.ModifiedBy != null && x.ModifiedBy == vModifiedBy);
+                }
+
+                if (!string.IsNullOrEmpty(vBaseTableName))
+                {
+                    query = query.Where(x => x.BaseTableName != null && x.BaseTableName.Contains(vBaseTableName));
+                }
+
+                if (!string.IsNullOrEmpty(vBaseTableKeyValue))
+                {
+                    query = query.Where(x => x.BaseTableKeyValue != null && x.BaseTableKeyValue.Contains(vBaseTableKeyValue));
+                }
+
+                if (!string.IsNullOrEmpty(vAuditFieldName))
+                {
+                    query = query.Where(x => x.AuditFieldName != null && x.AuditFieldName.Contains(vAuditFieldName));
+                }
+
+                if (!string.IsNullOrEmpty(vAuditAction))
+                {
+                    query = query.Where(x => x.AuditAction != null && x.AuditAction == vAuditAction);
+                }
+
+                var data = query.ToList();
+
+                var auditLog = data.Select(x => new
+                {
+                    x.BaseTableName,
+                    x.BaseTableKeyValue,
+                    x.ModifyDate,
+                    x.ModifiedBy,
+                    x.AuditFieldName,
+                    x.AuditAction,
+                    x.AuditValueBefore,
+                    x.AuditValueAfter,
+                    LicenseTechName = GetLicensTechName(x.ModifiedBy)
+                })
+                    .AsEnumerable()
+                    .Select(x => new AuditLog
+                    {
+                        BaseTableName = x.BaseTableName,
+                        BaseTableKeyValue = x.BaseTableKeyValue,
+                        ModifyDate = x.ModifyDate,
+                        ModifiedBy = string.IsNullOrEmpty(x.LicenseTechName) ? x.ModifiedBy : x.LicenseTechName,
+                        AuditFieldName = x.AuditFieldName,
+                        AuditAction = x.AuditAction,
+                        AuditValueBefore = x.AuditValueBefore,
+                        AuditValueAfter = x.AuditValueAfter
+                    })
+                    .OrderByDescending(x => x.ModifyDate)
+                    .ToList();
+
+                result.ObjData = auditLog;
+                result.Success = true;
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# DASH-8807-12101].";
+
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
+            }
+
+            return result;
+        }
+        public async Task<ReturnResult> GetAuditBaseTableNames()
+        {
+            var result = new ReturnResult();
+            try
+            {
+                var baseTableNames = await _db.AuditLogs
+                                    .Where(x => x.BaseTableName != null)
+                                    .Select(x => x.BaseTableName)
+                                    .Distinct()
+                                    .OrderBy(x => x)
+                                    .ToListAsync();
+
+                result.ObjData = baseTableNames;
+                result.Success = true;
+                result.StatusCode = 200;
+            }
+            catch (Exception ex)
+            {
+                result.StatusCode = 500;
+                result.Success = false;
+                result.ObjData = null;
+                result.ErrMessage = "Server Error - Please Contact Support [REF# MISC-8807-32099].";
+                _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
+            }
+            return result;
+        }
         public ReturnResult GetEmployeeIdWithTMemberID(string vMemberID)
         {
             var result = new ReturnResult();
@@ -306,7 +413,7 @@ namespace OneTrak_v2.Services
 
             return result;
         }
-
+        
         private string GetLicensTechName(string vSoeid)
         {
             var licenseTech = _db.LicenseTeches.FirstOrDefault(x => x.Soeid == vSoeid);
