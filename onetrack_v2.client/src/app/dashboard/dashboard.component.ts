@@ -107,25 +107,13 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   selectedRowIndex: number | null = null;
   selectedElement: string | null = null;
 
-  baseTableNameSelected: string = 'All';
+  baseTableNameSelected: string = 'All Tables';
   baseTableNames: string[] = [];
   baseTableKeyValue: string = '';
   auditFieldName: string = 'All';
   auditActionSelected: string = 'All';
-  auditFieldNames: string[] = [
-    'All',
-    'Field 1',
-    'Field 2',
-    'Field 3',
-  ];
-  baseTableKeyValues: string[] = [
-    'All',
-    'Value 1',
-    'Value 2',
-    'Value 3',
-  ];  
-  
-
+  auditFieldNames: string[] = ['All', 'Field 1', 'Field 2', 'Field 3'];
+  baseTableKeyValues: string[] = ['All', 'Value 1', 'Value 2', 'Value 3'];
 
   constructor(
     private conService: ConstantsDataService,
@@ -414,16 +402,13 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
         })
     );
   }
-
   onChildCallRefreshData(): void {
     this.fetchTicklerInfo();
   }
-
   isOverdue(ticklerDueDate: string | Date): boolean {
     const dueDate = new Date(ticklerDueDate);
     return dueDate < this.today;
   }
-
   onCloseTicklerItem(ticklerInfo: TicklerInfo): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '250px',
@@ -458,7 +443,6 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
   }
-
   onDeleteTicklerItem(ticklerInfo: TicklerInfo): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '250px',
@@ -492,13 +476,11 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
   }
-
   onLicenseTechChange(event: Event) {
     const licenseID = (event.target as HTMLInputElement).value;
     this.selectedLicenseTechID = parseInt(licenseID);
     this.fetchTicklerInfo();
   }
-
   onGotoAgentInfo(employeeID: number): void {
     this.router.navigate(['../../team/agent-info', employeeID, 'tm-info-mgmt']);
   }
@@ -541,8 +523,7 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
       } else {
         return data.courseState === value;
       }
-    }
-    );
+    });
   }
   onChangeADBankerStartDate(event: any) {
     const target = event.target as HTMLInputElement;
@@ -850,19 +831,72 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
   onChangeAuditAction(event: any) {
     const target = event.target as HTMLInputElement;
     const value = target.value;
-    // this.auditAction = value;
+    this.auditActionSelected = value;
   }
   performAdHocAuditQuery() {
-    // Implement the logic to perform ad-hoc audit query based on selected criteria
-    // You can call a service method to fetch the filtered audit log data
-    // and update the auditLogData array accordingly.
-    console.log('Performing ad-hoc audit query...');
+    this.loading = true;
+
+    // console.log('EMFTEST () - Performing Ad-Hoc Audit Query with parameters:');
+    // console.log('Start Date:', this.startDate);
+    // console.log('End Date:', this.endDate);
+    // console.log('Modified By:', this.modifiedBySelected);
+    // console.log('Base Table Name:', this.baseTableNameSelected);
+    // console.log('Base Table Key Value:', this.baseTableKeyValue);
+    // console.log('Audit Field Name:', this.auditFieldName);
+    // console.log('Audit Action:', this.auditActionSelected);
+
+    // Prepare parameters for the query
+    let modifiedBy =
+      this.modifiedBySelected === 'Select Tech'
+        ? null
+        : this.modifiedBySelected;
+    let baseTableName =
+      this.baseTableNameSelected === 'All' ||
+      this.baseTableNameSelected === 'All Tables'
+        ? null
+        : this.baseTableNameSelected;
+    let baseTableKeyValue =
+      this.baseTableKeyValue.trim() === '' ? null : this.baseTableKeyValue;
+    let auditFieldName =
+      this.auditFieldName === 'All' ? null : this.auditFieldName;
+    let auditAction =
+      this.auditActionSelected === 'All' ? null : this.auditActionSelected;
+
+    // Call the service method
+    this.subscriptions.add(
+      this.dashboardDataService
+        .fetchAuditAdhocQuery(
+          this.startDate,
+          this.endDate,
+          modifiedBy,
+          baseTableName,
+          baseTableKeyValue,
+          auditFieldName,
+          auditAction
+        )
+        .subscribe({
+          next: (auditLogData) => {
+            this.auditLogData = auditLogData.data;
+            this.loading = false;
+          },
+          error: (error) => {
+            this.loading = false;
+            if (error.error && error.error.errMessage) {
+              this.errorMessageService.setErrorMessage(error.error.errMessage);
+            } else {
+              this.errorMessageService.setErrorMessage(
+                'Error fetching audit log data.'
+              );
+            }
+          },
+        })
+    );
   }
   clearAuditFilters() {
     this.baseTableNameSelected = 'All';
     this.baseTableKeyValue = '';
     this.auditFieldName = 'All';
-    this.auditActionSelected = 'All';   
+    this.auditActionSelected = 'All';
     // Reset other filter criteria as needed
     // Optionally, you can also refresh the audit log data to show all records
     this.subscriptions.add(

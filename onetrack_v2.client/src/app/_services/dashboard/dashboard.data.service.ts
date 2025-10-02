@@ -33,7 +33,12 @@ export class DashboardDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.configService.config.apiUrl + 'Worklist/' + 'GetWorklistDataByLicenseTech?licenseTech=' + vLicenseTech)
+      }>(
+        this.configService.config.apiUrl +
+          'Worklist/' +
+          'GetWorklistDataByLicenseTech?licenseTech=' +
+          vLicenseTech
+      )
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -133,7 +138,7 @@ export class DashboardDataService {
         statusCode: number;
         objData: any;
         errMessage: string;
-      }>(this.apiUrl + 'GetEmployeeIdWithTMemberID/' + memberID )
+      }>(this.apiUrl + 'GetEmployeeIdWithTMemberID/' + memberID)
       .pipe(
         map((response) => {
           if (response.success && response.statusCode === 200) {
@@ -215,6 +220,46 @@ export class DashboardDataService {
         success: boolean;
         statusCode: number;
         objData: Array<string>;
+        errMessage: string;
+      }>(url)
+      .pipe(
+        map((response) => {
+          if (response.success && response.objData) {
+            return response.objData;
+          } else {
+            throw new Error(response.errMessage || 'Unknown error');
+          }
+        })
+      );
+  }
+
+  fetchAuditAdhocQuery(
+    startDate: string,
+    endDate: string,
+    modifiedBy: string | null = null,
+    baseTableName: string | null = null,
+    baseTableKeyValue: string | null = null,
+    auditFieldName: string | null = null,
+    auditAction: string | null = null
+  ) {
+    // Create the query parameters
+    let queryParams = `?startDate=${startDate}&endDate=${endDate}`;
+
+    // Add optional parameters if they exist
+    if (modifiedBy) queryParams += `&modifiedBy=${modifiedBy}`;
+    if (baseTableName) queryParams += `&baseTableName=${baseTableName}`;
+    if (baseTableKeyValue)
+      queryParams += `&baseTableKeyValue=${baseTableKeyValue}`;
+    if (auditFieldName) queryParams += `&auditFieldName=${auditFieldName}`;
+    if (auditAction) queryParams += `&auditAction=${auditAction}`;
+
+    const url = this.apiUrl + 'GetAuditLogAdHoc' + queryParams;
+
+    return this.http
+      .get<{
+        success: boolean;
+        statusCode: number;
+        objData: any;
         errMessage: string;
       }>(url)
       .pipe(

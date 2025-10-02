@@ -12,8 +12,23 @@ namespace OneTrak_v2.Services
         public ReturnResult CompleteImportStatus([FromBody] IputADBankerImportStatus vInput);
         public ReturnResult GetAuditModifiedBy(bool vIsActive = true);
         public ReturnResult GetAuditLog(DateTime vStartDate, DateTime vEndDate, string? vModifiedBy = null);
-        public ReturnResult GetAuditLogAdHoc(DateTime vStartDate, DateTime vEndDate, string? vModifiedBy = null, string? vBaseTableName = null, string? vBaseTableKeyValue = null, string? vAuditFieldName = null, string? vAuditAction = null);
+        public ReturnResult GetAuditLogAdHoc(DateTime vStartDate, DateTime vEndDate,
+                string? vModifiedBy = null, string? vBaseTableName = null,
+                string? vBaseTableKeyValue = null, string? vAuditFieldName = null,
+                string? vAuditAction = null, int pageNumber = 1, int pageSize = 100);
         public Task<ReturnResult> GetAuditBaseTableNames();
         public ReturnResult GetEmployeeIdWithTMemberID(string vMemberID);
+
+        
+
+        //public ReturnResult GetAuditLogAdHocStoredProc(DateTime vStartDate, DateTime vEndDate,
+        //    string? vModifiedBy = null, string? vBaseTableName = null,
+        //    string? vBaseTableKeyValue = null, string? vAuditFieldName = null,
+        //    string? vAuditAction = null, int pageNumber = 1, int pageSize = 100);
+
+        //public ReturnResult GetAuditLogAdHocCompiled(DateTime vStartDate, DateTime vEndDate,
+        //    string? vModifiedBy = null, string? vBaseTableName = null,
+        //    string? vBaseTableKeyValue = null, string? vAuditFieldName = null,
+        //    string? vAuditAction = null, int pageNumber = 1, int pageSize = 100);
     }
 }

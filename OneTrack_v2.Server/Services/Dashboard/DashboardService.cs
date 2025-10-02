@@ -283,74 +283,154 @@ namespace OneTrak_v2.Services
 
             return result;
         }
-        public ReturnResult GetAuditLogAdHoc(DateTime vStartDate, DateTime vEndDate, string? vModifiedBy = null, string? vBaseTableName = null, string? vBaseTableKeyValue = null, string? vAuditFieldName = null, string? vAuditAction = null)
+        public ReturnResult GetAuditLogAdHoc(DateTime vStartDate, DateTime vEndDate,
+                string? vModifiedBy = null, string? vBaseTableName = null,
+                string? vBaseTableKeyValue = null, string? vAuditFieldName = null,
+                string? vAuditAction = null, int pageNumber = 1, int pageSize = 100)
         {
             var result = new ReturnResult();
             try
             {
-                var query = _db.AuditLogs.AsQueryable();
+                // Option 1: Use direct SQL for better performance with pagination
+                // Build SQL with parameters to avoid SQL injection
+                var sql = @"
+                    SELECT * FROM (
+                        SELECT 
+                            al.BaseTableName, 
+                            al.BaseTableKeyValue, 
+                            al.ModifyDate, 
+                            al.ModifiedBy, 
+                            al.AuditFieldName, 
+                            al.AuditAction, 
+                            al.AuditValueBefore, 
+                            al.AuditValueAfter,
+                            ROW_NUMBER() OVER (ORDER BY al.ModifyDate DESC) AS RowNum
+                        FROM dbo.AuditLog al
+                        WHERE al.ModifyDate >= @StartDate AND al.ModifyDate <= @EndDate
+                            AND (@ModifiedBy IS NULL OR al.ModifiedBy = @ModifiedBy)
+                            AND (@BaseTableName IS NULL OR al.BaseTableName LIKE '%' + @BaseTableName + '%')
+                            AND (@BaseTableKeyValue IS NULL OR al.BaseTableKeyValue LIKE '%' + @BaseTableKeyValue + '%')
+                            AND (@AuditFieldName IS NULL OR al.AuditFieldName LIKE '%' + @AuditFieldName + '%')
+                            AND (@AuditAction IS NULL OR al.AuditAction = @AuditAction)
+                    ) AS FilteredResults
+                    WHERE RowNum BETWEEN @StartRow AND @EndRow";
 
-                // Apply date range filter
-                query = query.Where(x => x.ModifyDate >= vStartDate && x.ModifyDate <= vEndDate);
+                // Build the count query separately for pagination metadata
+                var countSql = @"
+                    SELECT COUNT(*)
+                    FROM dbo.AuditLog al
+                    WHERE al.ModifyDate >= @StartDate AND al.ModifyDate <= @EndDate
+                        AND (@ModifiedBy IS NULL OR al.ModifiedBy = @ModifiedBy)
+                        AND (@BaseTableName IS NULL OR al.BaseTableName LIKE '%' + @BaseTableName + '%')
+                        AND (@BaseTableKeyValue IS NULL OR al.BaseTableKeyValue LIKE '%' + @BaseTableKeyValue + '%')
+                        AND (@AuditFieldName IS NULL OR al.AuditFieldName LIKE '%' + @AuditFieldName + '%')
+                        AND (@AuditAction IS NULL OR al.AuditAction = @AuditAction)";
 
-                // Apply optional filters if provided
-                if (!string.IsNullOrEmpty(vModifiedBy))
+                // Calculate pagination values
+                int startRow = (pageNumber - 1) * pageSize + 1;
+                int endRow = startRow + pageSize - 1;
+
+                var parameters = new[]
                 {
-                    query = query.Where(x => x.ModifiedBy != null && x.ModifiedBy == vModifiedBy);
-                }
+                    new SqlParameter("@StartDate", vStartDate),
+                    new SqlParameter("@EndDate", vEndDate),
+                    new SqlParameter("@ModifiedBy", vModifiedBy ?? (object)DBNull.Value),
+                    new SqlParameter("@BaseTableName", vBaseTableName ?? (object)DBNull.Value),
+                    new SqlParameter("@BaseTableKeyValue", vBaseTableKeyValue ?? (object)DBNull.Value),
+                    new SqlParameter("@AuditFieldName", vAuditFieldName ?? (object)DBNull.Value),
+                    new SqlParameter("@AuditAction", vAuditAction ?? (object)DBNull.Value),
+                    new SqlParameter("@StartRow", startRow),
+                    new SqlParameter("@EndRow", endRow)
+                };
 
-                if (!string.IsNullOrEmpty(vBaseTableName))
+                // Execute count query first to get total records
+                var countParameters = new[]
                 {
-                    query = query.Where(x => x.BaseTableName != null && x.BaseTableName.Contains(vBaseTableName));
-                }
+                    new SqlParameter("@StartDate", vStartDate),
+                    new SqlParameter("@EndDate", vEndDate),
+                    new SqlParameter("@ModifiedBy", vModifiedBy ?? (object)DBNull.Value),
+                    new SqlParameter("@BaseTableName", vBaseTableName ?? (object)DBNull.Value),
+                    new SqlParameter("@BaseTableKeyValue", vBaseTableKeyValue ?? (object)DBNull.Value),
+                    new SqlParameter("@AuditFieldName", vAuditFieldName ?? (object)DBNull.Value),
+                    new SqlParameter("@AuditAction", vAuditAction ?? (object)DBNull.Value)
+                };
 
-                if (!string.IsNullOrEmpty(vBaseTableKeyValue))
+                // Use connection directly for better control of the query execution
+                var totalCount = 0;
+                using (var connection = new SqlConnection(_db.Database.GetConnectionString()))
                 {
-                    query = query.Where(x => x.BaseTableKeyValue != null && x.BaseTableKeyValue.Contains(vBaseTableKeyValue));
-                }
-
-                if (!string.IsNullOrEmpty(vAuditFieldName))
-                {
-                    query = query.Where(x => x.AuditFieldName != null && x.AuditFieldName.Contains(vAuditFieldName));
-                }
-
-                if (!string.IsNullOrEmpty(vAuditAction))
-                {
-                    query = query.Where(x => x.AuditAction != null && x.AuditAction == vAuditAction);
-                }
-
-                var data = query.ToList();
-
-                var auditLog = data.Select(x => new
-                {
-                    x.BaseTableName,
-                    x.BaseTableKeyValue,
-                    x.ModifyDate,
-                    x.ModifiedBy,
-                    x.AuditFieldName,
-                    x.AuditAction,
-                    x.AuditValueBefore,
-                    x.AuditValueAfter,
-                    LicenseTechName = GetLicensTechName(x.ModifiedBy)
-                })
-                    .AsEnumerable()
-                    .Select(x => new AuditLog
+                    connection.Open();
+                    
+                    // Get total count
+                    using (var command = new SqlCommand(countSql, connection))
                     {
-                        BaseTableName = x.BaseTableName,
-                        BaseTableKeyValue = x.BaseTableKeyValue,
-                        ModifyDate = x.ModifyDate,
-                        ModifiedBy = string.IsNullOrEmpty(x.LicenseTechName) ? x.ModifiedBy : x.LicenseTechName,
-                        AuditFieldName = x.AuditFieldName,
-                        AuditAction = x.AuditAction,
-                        AuditValueBefore = x.AuditValueBefore,
-                        AuditValueAfter = x.AuditValueAfter
-                    })
-                    .OrderByDescending(x => x.ModifyDate)
-                    .ToList();
-
-                result.ObjData = auditLog;
-                result.Success = true;
-                result.StatusCode = 200;
+                        foreach (var param in countParameters)
+                        {
+                            command.Parameters.Add(param);
+                        }
+                        
+                        totalCount = (int)command.ExecuteScalar();
+                    }
+                    
+                    // Get paginated data with a separate command
+                    var auditLogs = new List<AuditLog>();
+                    
+                    using (var command = new SqlCommand(sql, connection))
+                    {
+                        foreach (var param in parameters)
+                        {
+                            command.Parameters.Add(param);
+                        }
+                        
+                        using (var reader = command.ExecuteReader())
+                        {
+                            while (reader.Read())
+                            {
+                                var baseTableName = reader["BaseTableName"] as string;
+                                var baseTableKeyValue = reader["BaseTableKeyValue"] as string;
+                                var modifyDate = (DateTime)reader["ModifyDate"];
+                                var modifiedBy = reader["ModifiedBy"] as string;
+                                var auditFieldName = reader["AuditFieldName"] as string;
+                                var auditAction = reader["AuditAction"] as string;
+                                var auditValueBefore = reader["AuditValueBefore"] as string;
+                                var auditValueAfter = reader["AuditValueAfter"] as string;
+                                
+                                // Get license tech name efficiently
+                                var licenseTechName = GetLicensTechName(modifiedBy);
+                                
+                                auditLogs.Add(new AuditLog
+                                {
+                                    BaseTableName = baseTableName,
+                                    BaseTableKeyValue = baseTableKeyValue,
+                                    ModifyDate = modifyDate,
+                                    ModifiedBy = string.IsNullOrEmpty(licenseTechName) ? modifiedBy : licenseTechName,
+                                    AuditFieldName = auditFieldName,
+                                    AuditAction = auditAction,
+                                    AuditValueBefore = auditValueBefore,
+                                    AuditValueAfter = auditValueAfter
+                                });
+                            }
+                        }
+                    }
+                    
+                    // Create a result object that includes pagination metadata
+                    var paginatedResult = new
+                    {
+                        TotalCount = totalCount,
+                        PageSize = pageSize,
+                        CurrentPage = pageNumber,
+                        TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize),
+                        Data = auditLogs
+                    };
+                    
+                    result.ObjData = paginatedResult;
+                    result.Success = true;
+                    result.StatusCode = 200;
+                    
+                    _utilityService.LogError("AuditLogAdHoc Results",
+                        $"Total Records: {totalCount}, Page {pageNumber} of {(int)Math.Ceiling(totalCount / (double)pageSize)}, Showing {auditLogs.Count} records",
+                        new { }, null);
+                }
             }
             catch (Exception ex)
             {
@@ -364,6 +444,190 @@ namespace OneTrak_v2.Services
 
             return result;
         }
+
+        // Option 2: Using stored procedure - create this method to call a stored procedure
+        //public ReturnResult GetAuditLogAdHocStoredProc(DateTime vStartDate, DateTime vEndDate,
+        //    string? vModifiedBy = null, string? vBaseTableName = null,
+        //    string? vBaseTableKeyValue = null, string? vAuditFieldName = null,
+        //    string? vAuditAction = null, int pageNumber = 1, int pageSize = 100)
+        //{
+        //    var result = new ReturnResult();
+        //    try
+        //    {
+        //        // Create parameters for stored procedure
+        //        var parameters = new[]
+        //        {
+        //            new SqlParameter("@StartDate", vStartDate),
+        //            new SqlParameter("@EndDate", vEndDate),
+        //            new SqlParameter("@ModifiedBy", vModifiedBy ?? (object)DBNull.Value),
+        //            new SqlParameter("@BaseTableName", vBaseTableName ?? (object)DBNull.Value),
+        //            new SqlParameter("@BaseTableKeyValue", vBaseTableKeyValue ?? (object)DBNull.Value),
+        //            new SqlParameter("@AuditFieldName", vAuditFieldName ?? (object)DBNull.Value),
+        //            new SqlParameter("@AuditAction", vAuditAction ?? (object)DBNull.Value),
+        //            new SqlParameter("@PageNumber", pageNumber),
+        //            new SqlParameter("@PageSize", pageSize),
+        //            new SqlParameter("@TotalCount", SqlDbType.Int) { Direction = ParameterDirection.Output }
+        //        };
+
+        //        // Execute stored procedure and map to DTO
+        //        var auditLogs = new List<AuditLog>();
+                
+        //        using (var connection = new SqlConnection(_db.Database.GetConnectionString()))
+        //        {
+        //            connection.Open();
+        //            using (var command = new SqlCommand("uspGetAuditLogAdHoc", connection))
+        //            {
+        //                command.CommandType = CommandType.StoredProcedure;
+        //                foreach (var param in parameters)
+        //                {
+        //                    command.Parameters.Add(param);
+        //                }
+
+        //                using (var reader = command.ExecuteReader())
+        //                {
+        //                    while (reader.Read())
+        //                    {
+        //                        var baseTableName = reader["BaseTableName"] as string;
+        //                        var baseTableKeyValue = reader["BaseTableKeyValue"] as string;
+        //                        var modifyDate = (DateTime)reader["ModifyDate"];
+        //                        var modifiedBy = reader["ModifiedBy"] as string;
+        //                        var auditFieldName = reader["AuditFieldName"] as string;
+        //                        var auditAction = reader["AuditAction"] as string;
+        //                        var auditValueBefore = reader["AuditValueBefore"] as string;
+        //                        var auditValueAfter = reader["AuditValueAfter"] as string;
+                                
+        //                        // Get license tech name efficiently
+        //                        var licenseTechName = GetLicensTechName(modifiedBy);
+                                
+        //                        auditLogs.Add(new AuditLog
+        //                        {
+        //                            BaseTableName = baseTableName,
+        //                            BaseTableKeyValue = baseTableKeyValue,
+        //                            ModifyDate = modifyDate,
+        //                            ModifiedBy = string.IsNullOrEmpty(licenseTechName) ? modifiedBy : licenseTechName,
+        //                            AuditFieldName = auditFieldName,
+        //                            AuditAction = auditAction,
+        //                            AuditValueBefore = auditValueBefore,
+        //                            AuditValueAfter = auditValueAfter
+        //                        });
+        //                    }
+        //                }
+        //            }
+                    
+        //            // Get total count from output parameter
+        //            int totalCount = (int)parameters.First(p => p.ParameterName == "@TotalCount").Value;
+                    
+        //            // Create a result object that includes pagination metadata
+        //            var paginatedResult = new
+        //            {
+        //                TotalCount = totalCount,
+        //                PageSize = pageSize,
+        //                CurrentPage = pageNumber,
+        //                TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize),
+        //                Data = auditLogs
+        //            };
+                    
+        //            result.ObjData = paginatedResult;
+        //            result.Success = true;
+        //            result.StatusCode = 200;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        result.StatusCode = 500;
+        //        result.Success = false;
+        //        result.ObjData = null;
+        //        result.ErrMessage = "Server Error - Please Contact Support [REF# DASH-8807-12102].";
+
+        //        _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
+        //    }
+
+        //    return result;
+        //}
+
+        // Option 3: Add a compiled query for better performance
+        //private static Func<AppDataContext, DateTime, DateTime, string, string, string, string, string, IQueryable<AuditLog>> _compiledAuditLogQuery = 
+        //    EF.CompileQuery((AppDataContext context, DateTime startDate, DateTime endDate, string modifiedBy, 
+        //    string baseTableName, string baseTableKeyValue, string auditFieldName, string auditAction) =>
+        //        from log in context.AuditLogs
+        //        where log.ModifyDate >= startDate && log.ModifyDate <= endDate
+        //          && (string.IsNullOrEmpty(modifiedBy) || log.ModifiedBy == modifiedBy)
+        //          && (string.IsNullOrEmpty(baseTableName) || log.BaseTableName.Contains(baseTableName))
+        //          && (string.IsNullOrEmpty(baseTableKeyValue) || log.BaseTableKeyValue.Contains(baseTableKeyValue))
+        //          && (string.IsNullOrEmpty(auditFieldName) || log.AuditFieldName.Contains(auditFieldName))
+        //          && (string.IsNullOrEmpty(auditAction) || log.AuditAction == auditAction)
+        //        orderby log.ModifyDate descending
+        //        select new AuditLog
+        //        {
+        //            BaseTableName = log.BaseTableName,
+        //            BaseTableKeyValue = log.BaseTableKeyValue,
+        //            ModifyDate = log.ModifyDate,
+        //            ModifiedBy = log.ModifiedBy,
+        //            AuditFieldName = log.AuditFieldName,
+        //            AuditAction = log.AuditAction,
+        //            AuditValueBefore = log.AuditValueBefore,
+        //            AuditValueAfter = log.AuditValueAfter
+        //        });
+
+        //public ReturnResult GetAuditLogAdHocCompiled(DateTime vStartDate, DateTime vEndDate,
+        //    string? vModifiedBy = null, string? vBaseTableName = null,
+        //    string? vBaseTableKeyValue = null, string? vAuditFieldName = null,
+        //    string? vAuditAction = null, int pageNumber = 1, int pageSize = 100)
+        //{
+        //    var result = new ReturnResult();
+        //    try
+        //    {
+        //        // Use compiled query for better performance
+        //        var query = _compiledAuditLogQuery(_db, vStartDate, vEndDate, 
+        //            vModifiedBy ?? "", vBaseTableName ?? "", vBaseTableKeyValue ?? "", 
+        //            vAuditFieldName ?? "", vAuditAction ?? "");
+                
+        //        // Count query cannot be optimized further without separate compilation
+        //        var totalCount = query.Count();
+                
+        //        // Apply pagination
+        //        var paginatedData = query
+        //            .Skip((pageNumber - 1) * pageSize)
+        //            .Take(pageSize)
+        //            .ToList();
+                
+        //        // Post-process to add license tech names
+        //        foreach (var item in paginatedData)
+        //        {
+        //            var licenseTechName = GetLicensTechName(item.ModifiedBy);
+        //            if (!string.IsNullOrEmpty(licenseTechName))
+        //            {
+        //                item.ModifiedBy = licenseTechName;
+        //            }
+        //        }
+                
+        //        // Create a result object that includes pagination metadata
+        //        var paginatedResult = new
+        //        {
+        //            TotalCount = totalCount,
+        //            PageSize = pageSize,
+        //            CurrentPage = pageNumber,
+        //            TotalPages = (int)Math.Ceiling(totalCount / (double)pageSize),
+        //            Data = paginatedData
+        //        };
+                
+        //        result.ObjData = paginatedResult;
+        //        result.Success = true;
+        //        result.StatusCode = 200;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        result.StatusCode = 500;
+        //        result.Success = false;
+        //        result.ObjData = null;
+        //        result.ErrMessage = "Server Error - Please Contact Support [REF# DASH-8807-12103].";
+
+        //        _utilityService.LogError(ex.Message, result.ErrMessage, new { }, null);
+        //    }
+
+        //    return result;
+        //}
+
         public async Task<ReturnResult> GetAuditBaseTableNames()
         {
             var result = new ReturnResult();

@@ -61,9 +61,9 @@ namespace OneTrak_v2.Controllers
             return StatusCode(result.StatusCode, result);
         }
         [HttpGet]
-        public async Task<ActionResult> GetAuditLogAdHoc(DateTime startDate, DateTime endDate, string? modifiedBy = null, string? baseTableName = null, string? baseTableKeyValue = null, string? auditFieldName = null, string? auditAction = null)
+        public async Task<ActionResult> GetAuditLogAdhoc(DateTime startDate, DateTime endDate, string? modifiedBy = null, string? baseTableName = null, string? baseTableKeyValue = null, string? auditFieldName = null, string? auditAction = null)
         {
-            var result = await Task.Run(() => _dashboardService.GetAuditLogAdHoc(startDate, endDate, modifiedBy = null, baseTableName = null, baseTableKeyValue = null, auditFieldName = null, auditAction = null));
+            var result = await Task.Run(() => _dashboardService.GetAuditLogAdHoc(startDate, endDate, modifiedBy, baseTableName, baseTableKeyValue, auditFieldName, auditAction));
 
             return StatusCode(result.StatusCode, result);
         }
