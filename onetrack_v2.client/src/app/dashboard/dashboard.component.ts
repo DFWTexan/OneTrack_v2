@@ -258,6 +258,18 @@ export class DashboardComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
+  //AUTHORIZATION
+  canViewAuditLog(): boolean {
+    const userInfo = this.userAcctInfoDataService.userAcctInfo;
+    if (!userInfo) return false;
+
+    return (
+      (userInfo.isSuperUser ?? false) ||
+      (userInfo.isQARole ?? false) ||
+      (userInfo.isAdminRole ?? false)
+    );
+  }
+
   // WORKLIST
   selectRow(
     event: MouseEvent,

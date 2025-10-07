@@ -3,7 +3,20 @@
     "environment": null,
     "isDevLoginEnabled": false,
     "isShowEditID": false,
-    "apiUrl": "https://ftapip101/OneTrakV2/api/",
+    "apiUrl": "https://ftapiprod1/OneTrakV2/api/",
     "isImpersonationEnabled": false,
-    "userInfo": null
+    "userInfo": {
+        "licenseTechID": null,
+        "displayName": null,
+        "soeid": null,
+        "email": null,
+        "enabled": true,
+        "employeeId": null,
+        "homeDirectory": null,
+        "isAdminRole": null,
+        "isTechRole": null,
+        "isReadRole": null,
+        "isQARole": null,
+        "isSuperUser": null
+    }
 }

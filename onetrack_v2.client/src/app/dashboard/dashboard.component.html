@@ -722,11 +722,7 @@
     <!-- AUDIT LOG ADHOC -->
     <mat-expansion-panel
       class="mt-3"
-      *ngIf="
-        userAcctInfoDataService.userAcctInfo.isSuperUser ||
-        userAcctInfoDataService.userAcctInfo.isQARole ||
-        userAcctInfoDataService.userAcctInfo.isAdminRole
-      "
+      *ngIf="canViewAuditLog()"
     >
       <mat-expansion-panel-header>
         <mat-panel-title style="font-size: large"> Audit Log </mat-panel-title>

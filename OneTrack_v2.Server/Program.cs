@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+    using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using OneTrack_v2.DbData;
 using OneTrack_v2.Services;
@@ -53,13 +53,17 @@ builder.Services.AddCors(options =>
                            "https://ftwebq201.corp.fin",
                            "https://ftwebp201.corp.fin",
 
+                           "https://ftwebdvlp2.corp.fin",
+                           "https://ftwebqlty2.corp.fin",
+                           "https://ftwebprod2.corp.fin",
+
                            "https://omsapps-dvlp.corp.fin",
                            "https://omsapps-qlty.corp.fin",
-                           "https://omsapps-prod.corp.fin",
+                           "https://omsapps.corp.fin",
 
-                           "https://ftwebd201",
-                           "https://ftwebq201",
-                           "https://ftwebp201")
+                           "https://ftwebdvlp2",
+                           "https://ftwebqlty2",
+                           "https://ftwebprod2")
               .AllowAnyHeader()
               .AllowAnyMethod()
               .AllowCredentials(); // If you need to allow credentials
