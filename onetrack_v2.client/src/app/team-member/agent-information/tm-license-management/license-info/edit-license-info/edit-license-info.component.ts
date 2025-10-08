@@ -39,7 +39,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
   affiliatedLicenses: string[] = ['None'];
   defaultLicenseState: string = 'Select';
   licenseState: string = '';
-
+   
   private subscriptions = new Subscription();
 
   constructor(
@@ -85,8 +85,8 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.licenseStates = ['Select', ...this.conService.getStates()];
     this.subscriptions.add(
-      this.agentDataService.agentInfoChanged.subscribe((agentInfo: any) => {
-        this.getStateLicenseNames(agentInfo.workStateAbv);
+      this.agentDataService.licenseInfoChanged.subscribe((licenseInfo: any) => {
+        this.getStateLicenseNames(licenseInfo.licenseState);
       })
     );
 

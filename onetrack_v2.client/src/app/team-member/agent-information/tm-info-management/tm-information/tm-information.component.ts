@@ -92,6 +92,19 @@ export class TmInformationComponent implements OnInit, OnDestroy {
     );
   }
 
+  //AUTHORIZATION
+  canEditAgentInfo(): boolean {
+    const userInfo = this.userInfoDataService.userAcctInfo;
+    if (!userInfo) return false;
+
+    return (
+      (userInfo.isSuperUser ?? false) ||
+      (userInfo.isQARole ?? false) ||
+      (userInfo.isAdminRole ?? false) ||
+      (userInfo.isTechRole ?? false)
+    );
+  }
+
   onToggleView() {
     this.appComService.updateIsLegacyView(!this.isLegacyView);
   }
@@ -341,7 +354,7 @@ export class TmInformationComponent implements OnInit, OnDestroy {
     }
   }
 
-   openModal() {
+  openModal() {
     const modalDiv = document.getElementById('myModal');
     if (modalDiv != null) {
       modalDiv.style.display = 'block';
