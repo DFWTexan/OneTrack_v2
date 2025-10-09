@@ -963,12 +963,6 @@ export class AgentDataService {
 
   // TM LICENSE APPLICATION INFORMATION
   storeLicenseInfo(mode: string | '', licenseInfo: any | null) {
-
-console.log(
-      'EMFTEST (AgentDataService: storeLicenseInfo) - licenseInfo => \n ',
-      licenseInfo
-    );
-
     this.agentComService.modeLicenseInfoModal(mode);
     this.licenseInfo = licenseInfo || {};
     this.licenseInfoChanged.next(this.licenseInfo);
