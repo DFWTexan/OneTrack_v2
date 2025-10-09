@@ -89,7 +89,7 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
 
             this.ticklerMgmtDataService
               .fetchTicklerInfo(0, licenseTechItems[0].licenseTechId, 0)
-              .subscribe((ticklerInfoItems: any) => {
+              .subscribe((ticklerInfoItems: TicklerInfo[]) => {
                 this.loading = false;
                 this.ticklerInfoItems = ticklerInfoItems;
               });
@@ -103,7 +103,7 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
             0,
             this.agentDataService.agentInformation.employmentID
           )
-          .subscribe((ticklerInfoItems: any) => {
+          .subscribe((ticklerInfoItems: TicklerInfo[]) => {
             this.loading = false;
             this.ticklerInfoItems = ticklerInfoItems;
           })
@@ -119,7 +119,7 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
     this.subscriptionData.add(
       this.ticklerMgmtDataService
         .fetchTicklerInfo(0, this.selectedLicenseTechID, 0)
-        .subscribe((ticklerInfoItems: any) => {
+        .subscribe((ticklerInfoItems: TicklerInfo[]) => {
           this.ticklerInfoItems = ticklerInfoItems;
           this.loading = false;
         })
@@ -145,6 +145,9 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
   }
 
   onCloseTicklerItem(ticklerInfo: TicklerInfo): void {
+
+console.log('EMFTEST (onCloseTicklerItem) - Tickler info in onCloseTicklerItem:', JSON.stringify(ticklerInfo));
+
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '250px',
       data: {
