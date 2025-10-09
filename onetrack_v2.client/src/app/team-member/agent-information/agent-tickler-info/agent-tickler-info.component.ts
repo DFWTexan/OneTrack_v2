@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 import { AgentDataService, ModalService, TicklerMgmtDataService, UserAcctInfoDataService } from '../../../_services';
 import { ConfirmDialogComponent } from '../../../_components';
 import { MatDialog } from '@angular/material/dialog';
+import { TicklerInfo } from '../../../_Models';
 
 @Component({
   selector: 'app-agent-tickler-info',
@@ -55,7 +56,7 @@ export class AgentTicklerInfoComponent implements OnInit, OnDestroy {
     
   }
 
-  onCloseTicklerItem(ticklerInfo: any): void {
+  onCloseTicklerItem(ticklerInfo: TicklerInfo): void {
     this.onCloseModal();
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '250px',
@@ -63,7 +64,7 @@ export class AgentTicklerInfoComponent implements OnInit, OnDestroy {
         title: 'Confirm Action',
         message:
           'You are about to CLOSE Tickler Item (' +
-          ticklerInfo.ticklerID +
+          ticklerInfo.ticklerId +
           ')' +
           // ticklerInfo.lkpValue +
           '. Do you want to proceed?',
@@ -74,8 +75,8 @@ export class AgentTicklerInfoComponent implements OnInit, OnDestroy {
       if (result) {
        this.ticklerMgmtDataService
           .closeTicklerItem({
-            TicklerID: ticklerInfo.ticklerID,
-            TicklerCloseByLicenseTechID: ticklerInfo.licenseTechID,
+            TicklerID: ticklerInfo.ticklerId,
+            TicklerCloseByLicenseTechID: ticklerInfo.licenseTechId,
             UserSOEID: this.userAcctInfoDataService.userAcctInfo.soeid,
           })
           .subscribe({

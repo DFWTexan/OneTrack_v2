@@ -145,9 +145,6 @@ export class TicklerInfoComponent implements OnInit, OnDestroy {
   }
 
   onCloseTicklerItem(ticklerInfo: TicklerInfo): void {
-
-console.log('EMFTEST (onCloseTicklerItem) - Tickler info in onCloseTicklerItem:', JSON.stringify(ticklerInfo));
-
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '250px',
       data: {
