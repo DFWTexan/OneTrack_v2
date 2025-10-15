@@ -1,7 +1,14 @@
-import { Component, OnInit, Injectable, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { FormBuilder, FormGroup, NgForm } from '@angular/forms';
+import { Component, OnInit, OnDestroy, ChangeDetectorRef, inject } from '@angular/core';
+import { FormBuilder, FormGroup, NgForm, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectChange } from '@angular/material/select';
 import { Subscription } from 'rxjs';
+import { CommonModule } from '@angular/common';
+import { Router, RouterModule } from '@angular/router';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatSelectModule } from '@angular/material/select';
+import { MatInputModule } from '@angular/material/input';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import {
   EmployeeDataService,
@@ -16,18 +23,40 @@ import {
   SearchEmployeeFilter,
   UserAcctInfo,
 } from '../../_Models';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search-team-member',
   templateUrl: './search-team-member.component.html',
-  styleUrl: './search-team-member.component.css',
+  styleUrls: ['./search-team-member.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    RouterModule,
+    MatFormFieldModule,
+    MatSelectModule,
+    MatInputModule,
+    MatButtonModule,
+    MatProgressSpinnerModule
+    // Import any other components used in your template
+  ]
 })
-@Injectable()
 export class SearchTeamMemberComponent implements OnInit, OnDestroy {
   searchForm: FormGroup;
   loading = false;
   isSubmitted = false;
+
+  // Inject services
+  private conService = inject(ConstantsDataService);
+  private drpdwnDataService = inject(DropdownDataService);
+  private emplyService = inject(EmployeeDataService);
+  private appComService = inject(AppComService);
+  public paginationComService = inject(PaginationComService);
+  private userInfoService = inject(UserAcctInfoDataService);
+  private fb = inject(FormBuilder);
+  private router = inject(Router);
+  private cdr = inject(ChangeDetectorRef);
 
   agentStatuses: string[] = ['All', ...this.conService.getAgentStatuses()];
   states: string[] = this.conService.getStates();
@@ -51,17 +80,7 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
   searchEmployeeResult: EmployeeSearchResult[] = [];
   selectAllAgentsFirstemployeeID: number = 0;
 
-  constructor(
-    private conService: ConstantsDataService,
-    private drpdwnDataService: DropdownDataService,
-    private emplyService: EmployeeDataService,
-    private appComService: AppComService,
-    public paginationComService: PaginationComService,
-    private userInfoService: UserAcctInfoDataService,
-    private fb: FormBuilder,
-    private router: Router,
-    private cdr: ChangeDetectorRef
-  ) {
+  constructor() {
     this.searchForm = this.fb.group({
       EmployeeSSN: [''],
       TeamMemberGEID: [''],
@@ -87,7 +106,6 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
     if(this.appComService.searchEmployeeResult.length > 0) {
       this.onSubmit();
     }
-
   }
 
   fetchData() {
@@ -165,23 +183,6 @@ export class SearchTeamMemberComponent implements OnInit, OnDestroy {
     let searchFilter: SearchEmployeeFilter = this.searchForm.value;
     this.appComService.updateSearchEmployeeFilter(searchFilter);
 
-    // const searchFilter: SearchEmployeeFilter = {
-    //   EmployeeSSN: form.value.searchFilter.EmployeeSSN || null,
-    //   TeamMemberGEID: form.value.searchFilter.TeamMemberGEID || null,
-    //   NationalProducerNumber:
-    //     form.value.searchFilter.NationalProducerNumber || 0,
-    //   LastName: form.value.searchFilter.LastName || null,
-    //   FirstName: form.value.searchFilter.FirstName || null,
-    //   ResState: form.value.searchFilter.ResState || null,
-    //   WrkState: form.value.searchFilter.WrkState || null,
-    //   BranchCode: form.value.searchFilter.BranchCode || null,
-    //   AgentStatus: this.selectedAgentStatuses || null,
-    //   ScoreNumber: form.value.searchFilter.ScoreNumber || null,
-    //   CompanyID: form.value.searchFilter.EmployerAgency || 0,
-    //   LicStatus: this.selectedLicenseStatuses || null,
-    //   LicState: form.value.searchFilter.LicState || null,
-    //   LicenseName: form.value.searchFilter.LicenseName || null,
-    // };
     searchFilter.EmployeeSSN = searchFilter.EmployeeSSN || null;
     searchFilter.TeamMemberGEID = searchFilter.TeamMemberGEID || null;
     searchFilter.NationalProducerNumber =

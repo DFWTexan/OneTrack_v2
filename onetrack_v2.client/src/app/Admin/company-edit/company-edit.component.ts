@@ -1,4 +1,9 @@
-import { Component, Injectable, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import {
   AdminComService,
@@ -12,13 +17,22 @@ import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../_components';
 import { Subscription } from 'rxjs';
 import { Company } from '../../_Models';
+import { EditCompanyComponent } from './edit-company/edit-company.component';
 
 @Component({
   selector: 'app-company-edit',
   templateUrl: './company-edit.component.html',
-  styleUrl: './company-edit.component.css',
+  styleUrls: ['./company-edit.component.css'],
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatProgressSpinnerModule,
+    EditCompanyComponent
+  ]
 })
-@Injectable()
 export class CompanyEditComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   companyType: string = '';
@@ -30,15 +44,14 @@ export class CompanyEditComponent implements OnInit, OnDestroy {
 
   private subscriptions = new Subscription();
 
-  constructor(
-    private errorMessageService: ErrorMessageService,
-    public adminDataService: AdminDataService,
-    public adminComService: AdminComService,
-    public appComService: AppComService,
-    public modalService: ModalService,
-    public dialog: MatDialog,
-    public userAcctInfoDataService: UserAcctInfoDataService
-  ) {}
+  // Using inject instead of constructor DI
+  private errorMessageService = inject(ErrorMessageService);
+  public adminDataService = inject(AdminDataService);
+  public adminComService = inject(AdminComService);
+  public appComService = inject(AppComService);
+  public modalService = inject(ModalService);
+  public dialog = inject(MatDialog);
+  public userAcctInfoDataService = inject(UserAcctInfoDataService);
 
   ngOnInit(): void {
     this.isLoading = true;
