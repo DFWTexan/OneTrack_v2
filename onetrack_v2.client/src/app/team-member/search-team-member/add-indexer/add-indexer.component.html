@@ -110,6 +110,7 @@
           class="form-select select-size-medium"
           type="text"
           id="docSubType"
+          formControlName="docSubType"
           [disabled]="!selectedDocumentType"
         >
           <option *ngFor="let type of documentSubTypes" [value]="type">

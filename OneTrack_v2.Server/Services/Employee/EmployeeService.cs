@@ -375,14 +375,141 @@ namespace OneTrack_v2.Services
             }
             return result;
         }
+        //public ReturnResult IndexV2([FromBody] EmployeeIndex vInput)
+        //{
+        //    String txt = String.Empty;
+        //    int intSec = 1;
+        //    DateTime dtDateTime = System.DateTime.Now;
+        //    char[] delimiterChars = { '|' };
+
+        //    string[] docs = vInput.Files.ToString().Split(delimiterChars);
+
+        //    var result = new ReturnResult();
+        //    try
+        //    {
+        //        foreach (var doc in vInput.Files)
+        //        {
+        //            txt = String.Empty;
+        //            intSec = intSec + 1;
+
+        //            if (doc.Length > 0)
+        //            {
+        //                // Process the file
+        //                var fileName = Path.GetFileName(doc.FileName);
+        //                var destinationPath = Path.Combine(_importExportLoc, dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + fileName + ".OCR");
+
+        //                using (var stream = new FileStream(destinationPath, FileMode.Create))
+        //                {
+        //                    doc.CopyTo(stream);
+        //                }
+
+        //                FileInfo fi = new FileInfo(destinationPath);
+        //                fi.CopyTo(_importExportLoc + dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + fi.Name);
+        //                fi.Delete();
+
+        //                String InFi = _importExportLoc + dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + ".OCR";
+        //                //String InFi2 = path + dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + ".OCR";
+        //                //File.Create(InFi).Dispose();
+
+        //                String strNow = dtDateTime.ToString("yyyy-MM-dd");
+        //                String strFilePath = destinationPath + dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + fi.Name;
+        //                String strTMFirstName = vInput.FirstName.ToUpper();
+        //                String strTMLastName = vInput.LastName.ToUpper();
+
+        //                String? strBranchNumber = String.Empty;
+        //                if (vInput.BranchName != "{Branch}")
+        //                {
+        //                    strBranchNumber = vInput.BranchName;
+        //                }
+        //                else
+        //                {
+        //                    strBranchNumber = "00000000";
+        //                }
+        //                String? strScoreNumber = String.Empty;
+        //                if (vInput.ScoreNumber != "{ScoreNumber}")
+        //                {
+        //                    strScoreNumber = vInput.ScoreNumber;
+        //                }
+        //                else
+        //                {
+        //                    strScoreNumber = "0000";
+        //                }
+        //                String? strDocType = String.Empty;
+        //                if (vInput.DocumentType!= "{DocType}")
+        //                {
+        //                    strDocType = vInput.DocumentType;
+        //                }
+        //                String? strDocSubType = String.Empty;
+        //                if (vInput.DocumentSubType != "{DocSubType}")
+        //                {
+        //                    strDocSubType = vInput.DocumentSubType;
+        //                }
+        //                String? strEmployeeID = vInput.EmployeeID.ToString();
+        //                String? strWorkState = String.Empty;
+        //                if (vInput.WorkState != "{StateProv}")
+        //                {
+        //                    strWorkState = vInput.WorkState;
+        //                }
+        //                String? strTMNumber = vInput.Geid;
+
+        //                String? strLicState = String.Empty;
+        //                if (vInput.LicenseState != "{StateProv}")
+        //                {
+        //                    strLicState = vInput.LicenseState;
+        //                }
+
+        //                //Tab = \t
+        //                txt = txt + strNow + "\t"; //"2020-08-26" + "\t";
+        //                txt = txt + strFilePath + "\t"; //FilePath
+        //                txt = txt + strTMFirstName + "\t"; //TMFirstName
+        //                txt = txt + strTMLastName + "\t"; //TMLastName
+        //                txt = txt + strBranchNumber + "\t"; //BranchNumber
+        //                txt = txt + strScoreNumber + "\t";  //ScoreNumber
+        //                txt = txt + strDocType + "\t"; //DocType
+        //                txt = txt + strDocSubType + "\t"; //DocSubType
+        //                txt = txt + strEmployeeID + "\t"; //EmployeeID
+        //                txt = txt + strWorkState + "\t"; //WorkState
+        //                txt = txt + strTMNumber + "\t"; //TM Number
+        //                txt = txt + strLicState;  //LicState 
+
+        //                TextWriter tw = new StreamWriter(InFi);
+        //                tw.WriteLine(txt);
+        //                tw.Close();
+
+        //                intSec++;
+        //            }
+        //        }
+
+        //        result.Success = true;
+        //        result.ObjData = null;
+        //        result.StatusCode = 200;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        result.Success = false;
+        //        result.StatusCode = 500;
+        //        result.ObjData = null;
+        //        result.ErrMessage = "Server Error - Please Contact Support [REF# EMPL-1309-90412].";
+        //        //_logger.LogError(ex, "Error in EmployeeService.SearchEmployee()");
+        //        _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EmplQuick-TM-Search");
+        //    }
+        //    //finally
+        //    //{
+        //    //    // Ensure that the import/export location exists
+        //    //    if (!Directory.Exists(_importExportLoc))
+        //    //    {
+        //    //        Directory.CreateDirectory(_importExportLoc);
+        //    //    }
+        //    //}
+
+        //    return result;
+        //}
         public ReturnResult IndexV2([FromBody] EmployeeIndex vInput)
         {
             String txt = String.Empty;
             int intSec = 1;
             DateTime dtDateTime = System.DateTime.Now;
             char[] delimiterChars = { '|' };
-
-            string[] docs = vInput.Files.ToString().Split(delimiterChars);
 
             var result = new ReturnResult();
             try
@@ -394,87 +521,100 @@ namespace OneTrack_v2.Services
 
                     if (doc.Length > 0)
                     {
-                        // Process the file
+                        // Process the file - save it temporarily first
                         var fileName = Path.GetFileName(doc.FileName);
-                        var destinationPath = Path.Combine(_importExportLoc, dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + fileName + ".OCR");
+                        var tempPath = Path.Combine(Path.GetTempPath(), fileName);
 
-                        using (var stream = new FileStream(destinationPath, FileMode.Create))
+                        // Save uploaded file to temporary location
+                        using (var stream = new FileStream(tempPath, FileMode.Create))
                         {
                             doc.CopyTo(stream);
                         }
 
-                        FileInfo fi = new FileInfo(destinationPath);
-                        fi.CopyTo(_importExportLoc + dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + fi.Name);
-                        fi.Delete();
+                        // Now process like IndexButton_Click does
+                        if (File.Exists(tempPath))
+                        {
+                            FileInfo fi = new FileInfo(tempPath);
 
-                        String InFi = _importExportLoc + dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + ".OCR";
-                        //String InFi2 = path + dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + ".OCR";
-                        //File.Create(InFi).Dispose();
+                            // Copy file to final destination with timestamp
+                            var finalFilePath = _importExportLoc + dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + fi.Name;
+                            fi.CopyTo(finalFilePath);
+                            fi.Delete(); // Delete the temp file
 
-                        String strNow = dtDateTime.ToString("yyyy-MM-dd");
-                        String strFilePath = destinationPath + dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + fi.Name;
-                        String strTMFirstName = vInput.FirstName.ToUpper();
-                        String strTMLastName = vInput.LastName.ToUpper();
+                            // Create the .OCR file path (same as IndexButton_Click)
+                            String InFi = _importExportLoc + dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss") + ".OCR";
 
-                        String? strBranchNumber = String.Empty;
-                        if (vInput.BranchName != "{Branch}")
-                        {
-                            strBranchNumber = vInput.BranchName;
-                        }
-                        else
-                        {
-                            strBranchNumber = "00000000";
-                        }
-                        String? strScoreNumber = String.Empty;
-                        if (vInput.ScoreNumber != "{ScoreNumber}")
-                        {
-                            strScoreNumber = vInput.ScoreNumber;
-                        }
-                        else
-                        {
-                            strScoreNumber = "0000";
-                        }
-                        String? strDocType = String.Empty;
-                        if (vInput.DocumentType!= "{DocType}")
-                        {
-                            strDocType = vInput.DocumentType;
-                        }
-                        String? strDocSubType = String.Empty;
-                        if (vInput.DocumentSubType != "{DocSubType}")
-                        {
-                            strDocSubType = vInput.DocumentSubType;
-                        }
-                        String? strEmployeeID = vInput.EmployeeID.ToString();
-                        String? strWorkState = String.Empty;
-                        if (vInput.WorkState != "{StateProv}")
-                        {
-                            strWorkState = vInput.WorkState;
-                        }
-                        String? strTMNumber = vInput.Geid;
+                            String strNow = dtDateTime.ToString("yyyy-MM-dd");
+                            String strFilePath = finalFilePath; // Use the actual final file path
+                            String strTMFirstName = vInput.FirstName.ToUpper();
+                            String strTMLastName = vInput.LastName.ToUpper();
 
-                        String? strLicState = String.Empty;
-                        if (vInput.LicenseState != "{StateProv}")
-                        {
-                            strLicState = vInput.LicenseState;
+                            String? strBranchNumber = String.Empty;
+                            if (vInput.BranchName != "{Branch}")
+                            {
+                                strBranchNumber = vInput.BranchName;
+                            }
+                            else
+                            {
+                                strBranchNumber = "00000000";
+                            }
+
+                            String? strScoreNumber = String.Empty;
+                            if (vInput.ScoreNumber != "{ScoreNumber}")
+                            {
+                                strScoreNumber = vInput.ScoreNumber;
+                            }
+                            else
+                            {
+                                strScoreNumber = "0000";
+                            }
+
+                            String? strDocType = String.Empty;
+                            if (vInput.DocumentType != "{DocType}")
+                            {
+                                strDocType = vInput.DocumentType.ToUpper(); // Added ToUpper() like IndexButton_Click
+                            }
+
+                            String? strDocSubType = String.Empty;
+                            if (vInput.DocumentSubType != "{DocSubType}")
+                            {
+                                strDocSubType = vInput.DocumentSubType.ToUpper(); // Added ToUpper() like IndexButton_Click
+                            }
+
+                            String? strEmployeeID = vInput.EmployeeID.ToString();
+
+                            String? strWorkState = String.Empty;
+                            if (vInput.WorkState != "{StateProv}")
+                            {
+                                strWorkState = vInput.WorkState;
+                            }
+
+                            String? strTMNumber = vInput.Geid;
+
+                            String? strLicState = String.Empty;
+                            if (vInput.LicenseState != "{StateProv}")
+                            {
+                                strLicState = vInput.LicenseState;
+                            }
+
+                            //Tab = \t (same format as IndexButton_Click)
+                            txt = txt + strNow + "\t"; //"2020-08-26" + "\t";
+                            txt = txt + strFilePath + "\t"; //FilePath
+                            txt = txt + strTMFirstName + "\t"; //TMFirstName
+                            txt = txt + strTMLastName + "\t"; //TMLastName
+                            txt = txt + strBranchNumber + "\t"; //BranchNumber
+                            txt = txt + strScoreNumber + "\t";  //ScoreNumber
+                            txt = txt + strDocType + "\t"; //DocType
+                            txt = txt + strDocSubType + "\t"; //DocSubType
+                            txt = txt + strEmployeeID + "\t"; //EmployeeID
+                            txt = txt + strWorkState + "\t"; //WorkState
+                            txt = txt + strTMNumber + "\t"; //TM Number
+                            txt = txt + strLicState;  //LicState 
+
+                            TextWriter tw = new StreamWriter(InFi);
+                            tw.WriteLine(txt);
+                            tw.Close();
                         }
-
-                        //Tab = \t
-                        txt = txt + strNow + "\t"; //"2020-08-26" + "\t";
-                        txt = txt + strFilePath + "\t"; //FilePath
-                        txt = txt + strTMFirstName + "\t"; //TMFirstName
-                        txt = txt + strTMLastName + "\t"; //TMLastName
-                        txt = txt + strBranchNumber + "\t"; //BranchNumber
-                        txt = txt + strScoreNumber + "\t";  //ScoreNumber
-                        txt = txt + strDocType + "\t"; //DocType
-                        txt = txt + strDocSubType + "\t"; //DocSubType
-                        txt = txt + strEmployeeID + "\t"; //EmployeeID
-                        txt = txt + strWorkState + "\t"; //WorkState
-                        txt = txt + strTMNumber + "\t"; //TM Number
-                        txt = txt + strLicState;  //LicState 
-
-                        TextWriter tw = new StreamWriter(InFi);
-                        tw.WriteLine(txt);
-                        tw.Close();
 
                         intSec++;
                     }
@@ -490,17 +630,8 @@ namespace OneTrack_v2.Services
                 result.StatusCode = 500;
                 result.ObjData = null;
                 result.ErrMessage = "Server Error - Please Contact Support [REF# EMPL-1309-90412].";
-                //_logger.LogError(ex, "Error in EmployeeService.SearchEmployee()");
                 _utilityService.LogError(ex.Message, result.ErrMessage, new { }, "EmplQuick-TM-Search");
             }
-            //finally
-            //{
-            //    // Ensure that the import/export location exists
-            //    if (!Directory.Exists(_importExportLoc))
-            //    {
-            //        Directory.CreateDirectory(_importExportLoc);
-            //    }
-            //}
 
             return result;
         }

@@ -68,6 +68,7 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
       branchName: [null],
       scoreNum: [0],
       docType: [null],
+      docSubType: [null],
     });
   }
 
@@ -150,15 +151,15 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
   }
 
   fileUploadCompleted(filePath: string) {
-    this.fullFilePathUri = filePath;
-    // this.companyReqForm.patchValue({
-    //   document: filePath,
-    // });
-    // this.companyReqForm.markAsDirty();
-    this.files.push(
-      new File([filePath], 'uploaded-file', { type: 'application/pdf' })
-    );
-  }
+  this.fullFilePathUri = filePath;
+  
+  // Extract the file name from the path
+  const fileName = filePath.split('\\').pop()?.split('/').pop() || 'file';
+  
+  this.files.push(
+    new File([filePath], fileName, { type: 'application/pdf' })
+  );
+}
 
   onDocumentTypeChange(event: any) {
     const target = event.target as HTMLInputElement;
