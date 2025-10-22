@@ -515,8 +515,7 @@ namespace OneTrack_v2.Services
             try
             {
                 foreach (var doc in vInput.Files)
-                {
-                    txt = String.Empty;
+                {                    txt = String.Empty;
                     intSec = intSec + 1;
 
                     if (doc.Length > 0)

@@ -1512,7 +1512,7 @@ namespace OneTrack_v2.Services
             }
             catch (System.Exception myex)
             {
-                //Response.Write(myex.Message);
+                _utilityService.LogError(myex.Message, "Server Error - Please Contact Support [REF# EMAIL-7519-49214].", new { }, null);
             }
         }
         private void EmailSentUpdate(int vIntEmploymentCommunicationID, string vUserSOEID)
