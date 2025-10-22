@@ -1436,15 +1436,19 @@ namespace OneTrack_v2.Services
                 AlternateView htmlView = AlternateView.CreateAlternateViewFromString(vBody, null, "text/html");
 
                 //Add Image
-                //var outPutDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
-                var outPutDirectory = AppContext.BaseDirectory;
-                var logoimage = Path.Combine(outPutDirectory, "Pictures\\OneMainSolutionsHorizontal.jpg");
-                string relLogo = new Uri(logoimage).LocalPath;
-                LinkedResource theEmailImage = new LinkedResource(relLogo);
-                theEmailImage.ContentId = "myImageID";
+                string logoPath = GetLogoImagePath();
 
-                //Add the Image to the Alternate view
-                htmlView.LinkedResources.Add(theEmailImage);
+                if (File.Exists(logoPath))
+                {
+                    LinkedResource theEmailImage = new LinkedResource(logoPath);
+                    theEmailImage.ContentId = "myImageID";
+                    htmlView.LinkedResources.Add(theEmailImage);
+                }
+                else
+                {
+                    _utilityService.LogError($"Logo image not found at path: {logoPath}", "Email Service - Logo Missing", new { }, vUserSOEID);
+                }
+
                 //Add view to the Email Message
                 mail.AlternateViews.Add(htmlView);
 
@@ -1466,7 +1470,6 @@ namespace OneTrack_v2.Services
 
                 //set the Email subject
                 mail.Subject = vSubject;
-
 
                 string[] paths = vStrAttachment.Split('|');
                 System.Net.Mail.Attachment attachment;
@@ -1514,6 +1517,43 @@ namespace OneTrack_v2.Services
             {
                 //Response.Write(myex.Message);
             }
+        }
+        private string GetLogoImagePath()
+        {
+            // Try multiple possible locations
+            var possiblePaths = new[]
+            {
+                Path.Combine(AppContext.BaseDirectory, "Pictures", "OneMainSolutionsHorizontal.jpg"),
+                Path.Combine(AppContext.BaseDirectory, "wwwroot", "Pictures", "OneMainSolutionsHorizontal.jpg"),
+                Path.Combine(Directory.GetCurrentDirectory(), "Pictures", "OneMainSolutionsHorizontal.jpg"),
+                Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Pictures", "OneMainSolutionsHorizontal.jpg")
+            };
+
+            foreach (var path in possiblePaths)
+            {
+                if (File.Exists(path))
+                {
+                    return path;
+                }
+            }
+
+            // Return a default path if none found (will be handled by the File.Exists check)
+            return possiblePaths[0];
+        }
+        private LinkedResource GetEmbeddedLogoImage()
+        {
+            var assembly = Assembly.GetExecutingAssembly();
+            var resourceName = "OneTrack_v2.Server.Pictures.OneMainSolutionsHorizontal.jpg";
+
+            var stream = assembly.GetManifestResourceStream(resourceName);
+            if (stream != null)
+            {
+                var linkedResource = new LinkedResource(stream, "image/jpeg");
+                linkedResource.ContentId = "myImageID";
+                return linkedResource;
+            }
+
+            throw new FileNotFoundException($"Embedded resource {resourceName} not found");
         }
         private void EmailSentUpdate(int vIntEmploymentCommunicationID, string vUserSOEID)
         {
