@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using OneTrack_v2.DbData;
 using OneTrack_v2.DbData.Models;
+using OneTrack_v2.Services.Email;
 using OneTrak_v2.DataModel;
 using OneTrak_v2.Server.Services.Email.Templates;
 using OneTrak_v2.Services.Model;
@@ -452,7 +453,7 @@ namespace OneTrack_v2.Services
             return result;
         }
 
-        public ReturnResult Send([FromBody] IputSendEmail vInput)
+        public async Task<ReturnResult> Send([FromBody] IputSendEmail vInput)
         {
             var comType = _db.Communications
                             .Where(c => c.CommunicationId == vInput.CommunicationID)
@@ -477,7 +478,7 @@ namespace OneTrack_v2.Services
                 strEmailTo = vInput.EmailTo ?? "";
                 strEmailCC = vInput.CcEmail != null ? string.Join(", ", vInput.CcEmail) : "";
                 strSubject = vInput.EmailSubject ?? "";
-                strBody = vInput.EmailContent ?? "";
+                strBody = vInput.EmailContent?.CleanAngularBindings() ?? "";
 
                 switch (comType)
                 {
@@ -1112,7 +1113,7 @@ namespace OneTrack_v2.Services
                     _strEMAILATTACHMENT = string.Join("|", attachmentPaths);
                 }
 
-                sendHtmlEmail(_mailFromAddress, strEmailTo.ToString(), strEmailCC.ToString(), strBody.ToString(), "Licensing Department", strSubject.ToString() + @" - Ref#" + strEmploymentCommunicationID, _strEMAILATTACHMENT, strEmploymentCommunicationID, vInput.UserSOEID);
+                await sendHtmlEmail(_mailFromAddress, strEmailTo.ToString(), strEmailCC.ToString(), strBody.ToString(), "Licensing Department", strSubject.ToString() + @" - Ref#" + strEmploymentCommunicationID, _strEMAILATTACHMENT, strEmploymentCommunicationID, vInput.UserSOEID);
 
                 //Session["strEmailAttachment"] = String.Empty;
                 //EmailCCLabel.Text = string.Empty;
@@ -1391,7 +1392,7 @@ namespace OneTrack_v2.Services
                         EmailTo = strEmailTo,
                         EmailFrom = strMailFromAddress,
                         EmailSubject = strSubject,
-                        EmailBodyHtml = strBody,
+                        EmailBodyHtml = strBody?.CleanAngularBindings(),
                         CompareXml = "<Communication>Message</Communication>",
                         EmailAttachments = _strEMAILATTACHMENT,
                         CommunicationId = strCommunicationID,
@@ -1435,170 +1436,42 @@ namespace OneTrack_v2.Services
         }
         private async Task sendHtmlEmail(string vFrom_Email, string vTo_Email, string vCc_Email, string vBody, string vFrom_Name, string vSubject, string vStrAttachment, string vStrEmploymentCommunicationID, string vUserSOEID)
         {
-            using var mail = new MailMessage();
-            using var smtp = new SmtpClient(_mailServer);
-            var attachments = new List<Attachment>();
-
             try
             {
                 _utilityService.LogInfo("Send email for CommunicationID: " + vStrEmploymentCommunicationID, null);
 
-                mail.IsBodyHtml = true;
-                vBody = vBody.Replace(@"<img alt = """" src = ""pictures/OneMainSolutionsHorizontal.jpg""", 
-                    @"<img src = cid:myImageID ");
-
-                using (var htmlView = AlternateView.CreateAlternateViewFromString(vBody, null, "text/html"))
+                var emailMessage = new EmailMessage
                 {
-                    var logoPath = GetLogoImagePath();
-                    if (File.Exists(logoPath))
-                    {
-                        using var theEmailImage = new LinkedResource(logoPath)
-                        {
-                            ContentId = "myImageID"
-                        };
-                        htmlView.LinkedResources.Add(theEmailImage);
-                    }
-                    else
-                    {
-                        _utilityService.LogError($"Logo image not found at path: {logoPath}", 
-                            "Email Service - Logo Missing", new { }, vUserSOEID);
-                    }
+                    FromEmail = vFrom_Email,
+                    ToEmail = vTo_Email,
+                    CcEmail = vCc_Email,
+                    FromName = vFrom_Name,
+                    Subject = vSubject,
+                    Body = vBody,
+                    Attachments = vStrAttachment,
+                    UserSOEID = vUserSOEID,
+                    CommunicationID = vStrEmploymentCommunicationID
+                };
 
-                    mail.AlternateViews.Add(htmlView);
-                }
+                var emailConfig = new EmailConfiguration(_config, 
+                    _config.GetValue<string>("Environment") ?? "DVLP");
+                var emailSender = new AsyncEmailSender(emailConfig, _utilityService);
+                
+                await emailSender.SendEmailAsync(emailMessage);
 
-                // Set email addresses
-                mail.From = new MailAddress(
-                    (bool)_isSendtoTest ? _testmailFromAddress ?? string.Empty : vFrom_Email,
-                    (bool)_isSendtoTest ? "OneTrakV2-TEST" : vFrom_Name);
-
-                mail.To.Add(vTo_Email);
-
-                var ccEmail = (bool)_isSendtoTest ? _testmailCCAddress ?? string.Empty : vCc_Email;
-                if (!string.IsNullOrEmpty(ccEmail))
-                {
-                    mail.CC.Add(ccEmail);
-                }
-
-                mail.Bcc.Add((bool)_isSendtoTest ? _testmailFromAddress ?? string.Empty : vFrom_Email);
-                mail.Subject = vSubject;
-
-                // Handle attachments with retry logic
-                if (!string.IsNullOrEmpty(vStrAttachment))
-                {
-                    foreach (var path in vStrAttachment.Split('|', StringSplitOptions.RemoveEmptyEntries))
-                    {
-                        await AttachFileWithRetryAsync(mail, path, vUserSOEID);
-                    }
-                }
-
-                smtp.Send(mail);
-
-                var intEmploymentCommunicationID = !string.IsNullOrEmpty(vStrEmploymentCommunicationID) 
-                    ? Convert.ToInt32(vStrEmploymentCommunicationID) 
+                var intEmploymentCommunicationID = !string.IsNullOrEmpty(vStrEmploymentCommunicationID)
+                    ? Convert.ToInt32(vStrEmploymentCommunicationID)
                     : 0;
 
                 EmailSentUpdate(intEmploymentCommunicationID, vUserSOEID);
             }
             catch (Exception ex)
             {
-                _utilityService.LogError(ex.Message, 
-                    "Server Error - Please Contact Support [REF# EMAIL-7519-197240].", new { }, vUserSOEID);
+                _utilityService.LogError(ex.Message,
+                    "Server Error - Please Contact Support [REF# EMAIL-7519-197240].", 
+                    new { }, vUserSOEID);
                 throw;
             }
-        }
-
-        private async Task AttachFileWithRetryAsync(MailMessage mail, string path, string userSOEID, 
-            int maxRetries = 3)
-        {
-            if (!File.Exists(path))
-            {
-                _utilityService.LogError($"Attachment file not found: {path}", 
-                    "Email Attachment Missing", new { }, userSOEID);
-                return;
-            }
-
-            var retryCount = 0;
-            var baseDelay = TimeSpan.FromMilliseconds(100);
-
-            while (retryCount < maxRetries)
-            {
-                try
-                {
-                    using var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
-                    using var memoryStream = new MemoryStream();
-                    await fileStream.CopyToAsync(memoryStream);
-                    memoryStream.Position = 0;
-
-                    var attachment = new Attachment(memoryStream, Path.GetFileName(path));
-                    mail.Attachments.Add(attachment);
-                    return;
-                }
-                catch (IOException ex) when (IsFileLocked(ex))
-                {
-                    retryCount++;
-                    if (retryCount >= maxRetries)
-                    {
-                        _utilityService.LogError($"Failed to attach file after {maxRetries} retries: {path}", 
-                            "Email Attachment Error", new { }, userSOEID);
-                        throw;
-                    }
-
-                    var jitter = new Random().Next(50);
-                    var delay = TimeSpan.FromMilliseconds(Math.Pow(2, retryCount) * baseDelay.TotalMilliseconds + jitter);
-                    await Task.Delay(delay);
-                }
-            }
-        }
-
-        private bool IsFileLocked(IOException ex)
-        {
-            const int ERROR_SHARING_VIOLATION = 0x20;
-            const int ERROR_LOCK_VIOLATION = 0x21;
-
-            var errorCode = ex.HResult & 0x0000FFFF;
-            return errorCode == ERROR_SHARING_VIOLATION || 
-                   errorCode == ERROR_LOCK_VIOLATION ||
-                   ex.Message.Contains("being used by another process");
-        }
-
-        private string GetLogoImagePath()
-        {
-            // Try multiple possible locations
-            var possiblePaths = new[]
-            {
-                Path.Combine(AppContext.BaseDirectory, "Pictures", "OneMainSolutionsHorizontal.jpg"),
-                Path.Combine(AppContext.BaseDirectory, "wwwroot", "Pictures", "OneMainSolutionsHorizontal.jpg"),
-                Path.Combine(Directory.GetCurrentDirectory(), "Pictures", "OneMainSolutionsHorizontal.jpg"),
-                Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Pictures", "OneMainSolutionsHorizontal.jpg")
-            };
-
-            foreach (var path in possiblePaths)
-            {
-                if (File.Exists(path))
-                {
-                    return path;
-                }
-            }
-
-            // Return a default path if none found (will be handled by the File.Exists check)
-            return possiblePaths[0];
-        }
-
-        private LinkedResource GetEmbeddedLogoImage()
-        {
-            var assembly = Assembly.GetExecutingAssembly();
-            var resourceName = "OneTrack_v2.Server.Pictures.OneMainSolutionsHorizontal.jpg";
-
-            var stream = assembly.GetManifestResourceStream(resourceName);
-            if (stream != null)
-            {
-                var linkedResource = new LinkedResource(stream, "image/jpeg");
-                linkedResource.ContentId = "myImageID";
-                return linkedResource;
-            }
-
-            throw new FileNotFoundException($"Embedded resource {resourceName} not found");
         }
 
         private void EmailSentUpdate(int vIntEmploymentCommunicationID, string vUserSOEID)
