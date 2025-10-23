@@ -1084,6 +1084,34 @@ namespace OneTrack_v2.Services
                 intEmploymentCommunicationID = InsertEmploymentCommunication(vInput.EmployeeID, vInput.EmploymentID, vInput.CommunicationID, vInput.UserSOEID ?? "", strEmailTo, _mailFromAddress ?? "", string.Format("{0} - Ref# {1}", strSubject, intEmploymentCommunicationID.ToString() == "0" ? "" : intEmploymentCommunicationID.ToString()), strBody);
                 strEmploymentCommunicationID = ("000000000000000" + intEmploymentCommunicationID.ToString()).Substring(("000000000000000" + intEmploymentCommunicationID.ToString()).Length - 15).ToString();
 
+                if (vInput.FileAttachments?.Any() == true)
+                {
+                    var attachmentPaths = new List<string>();
+                    foreach (var file in vInput.FileAttachments)
+                    {
+                        if (file.Length <= 0) continue;
+
+                        var uniqueFileName = $"{DateTime.Now:yyyyMMddHHmmssfff}_{Path.GetFileName(file.FileName)}";
+                        var destinationPath = Path.Combine(_attachmentLocation, uniqueFileName);
+
+                        try
+                        {
+                            using (var fileStream = new FileStream(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None))
+                            {
+                                file.CopyTo(fileStream);
+                            }
+                            attachmentPaths.Add(destinationPath);
+                        }
+                        catch (Exception ex)
+                        {
+                            _utilityService.LogError($"Failed to save attachment {file.FileName}: {ex.Message}", 
+                                "Email Attachment Error", new { }, vInput.UserSOEID);
+                        }
+                    }
+
+                    _strEMAILATTACHMENT = string.Join("|", attachmentPaths);
+                }
+
                 sendHtmlEmail(_mailFromAddress, strEmailTo.ToString(), strEmailCC.ToString(), strBody.ToString(), "Licensing Department", strSubject.ToString() + @" - Ref#" + strEmploymentCommunicationID, _strEMAILATTACHMENT, strEmploymentCommunicationID, vInput.UserSOEID);
 
                 //Session["strEmailAttachment"] = String.Empty;
@@ -1095,47 +1123,47 @@ namespace OneTrack_v2.Services
                 //EmailTemplateDropDownList_SelectedIndexChanged(EmailTemplateDropDownList, EventArgs.Empty);
                 //string path = "\\\\CORP.FIN\\APPS\\OMS\\ECM\\DVLP\\Shared\\License\\EmailTemp\\"; // Define your path here
 
-                foreach (var file in vInput.FileAttachments)
-                {
-                    if (file.Length > 0)
-                    {
-                        var fileName = Path.GetFileName(file.FileName);
-                        var destinationPath = Path.Combine(_attachmentLocation, fileName);
+                //foreach (var file in vInput.FileAttachments)
+                //{
+                //    if (file.Length > 0)
+                //    {
+                //        var fileName = Path.GetFileName(file.FileName);
+                //        var destinationPath = Path.Combine(_attachmentLocation, fileName);
 
-                        // Check if the file already exists
-                        if (File.Exists(destinationPath))
-                        {
-                            // Log or handle the case where the file already exists
-                            //_utilityService.LogInfo($"File '{fileName}' already exists at '{destinationPath}'. Skipping file write.");
-                            continue; // Skip writing the file
-                        }
+                //        // Check if the file already exists
+                //        if (File.Exists(destinationPath))
+                //        {
+                //            // Log or handle the case where the file already exists
+                //            //_utilityService.LogInfo($"File '{fileName}' already exists at '{destinationPath}'. Skipping file write.");
+                //            continue; // Skip writing the file
+                //        }
 
-                        // Save the file to the destination path
-                        int retryCount = 3;
-                        while (retryCount > 0)
-                        {
-                            try
-                            {
-                                using (var stream = new FileStream(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None))
-                                {
-                                    file.CopyTo(stream);
-                                }
-                                break; // Exit loop if successful
-                            }
-                            catch (IOException)
-                            {
-                                retryCount--;
-                                Thread.Sleep(1000); // Wait 1 second before retrying
-                            }
-                        }
+                //        // Save the file to the destination path
+                //        int retryCount = 3;
+                //        while (retryCount > 0)
+                //        {
+                //            try
+                //            {
+                //                using (var stream = new FileStream(destinationPath, FileMode.Create, FileAccess.Write, FileShare.None))
+                //                {
+                //                    file.CopyTo(stream);
+                //                }
+                //                break; // Exit loop if successful
+                //            }
+                //            catch (IOException)
+                //            {
+                //                retryCount--;
+                //                Thread.Sleep(1000); // Wait 1 second before retrying
+                //            }
+                //        }
 
-                        //FileInfo fi = new FileInfo(destinationPath);
-                        //fi.CopyTo(_attachmentLocation + fi.Name, overwrite: true); // Overwrite if necessary
-                        //fi.Delete();
-                        File.Copy(destinationPath, Path.Combine(_attachmentLocation, Path.GetFileName(destinationPath)), overwrite: true);
-                        File.Delete(destinationPath);
-                    }
-                }
+                //        //FileInfo fi = new FileInfo(destinationPath);
+                //        //fi.CopyTo(_attachmentLocation + fi.Name, overwrite: true); // Overwrite if necessary
+                //        //fi.Delete();
+                //        File.Copy(destinationPath, Path.Combine(_attachmentLocation, Path.GetFileName(destinationPath)), overwrite: true);
+                //        File.Delete(destinationPath);
+                //    }
+                //}
 
                 result.Success = true;
                 result.StatusCode = 200;
@@ -1405,119 +1433,135 @@ namespace OneTrack_v2.Services
                 }
             }
         }
-        private void sendHtmlEmail(string vFrom_Email, string vTo_Email, string vCc_Email, string vBody, string vFrom_Name, string vSubject, string vStrAttachment, string vStrEmploymentCommunicationID, string vUserSOEID)
+        private async Task sendHtmlEmail(string vFrom_Email, string vTo_Email, string vCc_Email, string vBody, string vFrom_Name, string vSubject, string vStrAttachment, string vStrEmploymentCommunicationID, string vUserSOEID)
         {
+            using var mail = new MailMessage();
+            using var smtp = new SmtpClient(_mailServer);
+            var attachments = new List<Attachment>();
+
             try
             {
-
-                //Global.CreateLog("   Send email for CommunicationID: " + strEmploymentCommunicationID);
                 _utilityService.LogInfo("Send email for CommunicationID: " + vStrEmploymentCommunicationID, null);
 
-                //if ((bool)_isSendtoTest)
-                //{
-                //    from_Email = _testmailToAddress ?? "";
-                //    to_Email = _testmailFromAddress ?? "";
-                //    cc_Email = _testmailCCAddress ?? "";
-                //}
-
-                vBody = vBody.Replace(@"<img alt = """" src = ""pictures/OneMainSolutionsHorizontal.jpg""", @"<img src = cid:myImageID ");
-
-                //@"<img alt = """" src = ""../Pictures/OneMain Solutions_Horizontal.jpg""" 
-                //@"<img src = cid:myImageID>"
-
-
-                //create an instance of new mail message
-                MailMessage mail = new MailMessage();
-
-                //set the HTML format to true
                 mail.IsBodyHtml = true;
+                vBody = vBody.Replace(@"<img alt = """" src = ""pictures/OneMainSolutionsHorizontal.jpg""", 
+                    @"<img src = cid:myImageID ");
 
-                ////create Alrternative HTML view
-                AlternateView htmlView = AlternateView.CreateAlternateViewFromString(vBody, null, "text/html");
-
-                //Add Image
-                string logoPath = GetLogoImagePath();
-
-                if (File.Exists(logoPath))
+                using (var htmlView = AlternateView.CreateAlternateViewFromString(vBody, null, "text/html"))
                 {
-                    LinkedResource theEmailImage = new LinkedResource(logoPath);
-                    theEmailImage.ContentId = "myImageID";
-                    htmlView.LinkedResources.Add(theEmailImage);
+                    var logoPath = GetLogoImagePath();
+                    if (File.Exists(logoPath))
+                    {
+                        using var theEmailImage = new LinkedResource(logoPath)
+                        {
+                            ContentId = "myImageID"
+                        };
+                        htmlView.LinkedResources.Add(theEmailImage);
+                    }
+                    else
+                    {
+                        _utilityService.LogError($"Logo image not found at path: {logoPath}", 
+                            "Email Service - Logo Missing", new { }, vUserSOEID);
+                    }
+
+                    mail.AlternateViews.Add(htmlView);
                 }
-                else
-                {
-                    _utilityService.LogError($"Logo image not found at path: {logoPath}", "Email Service - Logo Missing", new { }, vUserSOEID);
-                }
 
-                //Add view to the Email Message
-                mail.AlternateViews.Add(htmlView);
+                // Set email addresses
+                mail.From = new MailAddress(
+                    (bool)_isSendtoTest ? _testmailFromAddress ?? string.Empty : vFrom_Email,
+                    (bool)_isSendtoTest ? "OneTrakV2-TEST" : vFrom_Name);
 
-                //set the "from email" address and specify a friendly 'from' name
-                mail.From = new MailAddress((bool)_isSendtoTest ? _testmailFromAddress != null ? _testmailFromAddress : string.Empty : vFrom_Email, (bool)_isSendtoTest ? "OneTrakV2-TEST" : vFrom_Name);
-
-                //set the "to" email address
                 mail.To.Add(vTo_Email);
 
-                //CC
-                string strCcEmail = (bool)_isSendtoTest ? _testmailCCAddress != null ? _testmailCCAddress : string.Empty : vCc_Email;
-                if (!(strCcEmail == String.Empty))
+                var ccEmail = (bool)_isSendtoTest ? _testmailCCAddress ?? string.Empty : vCc_Email;
+                if (!string.IsNullOrEmpty(ccEmail))
                 {
-                    mail.CC.Add(strCcEmail);
+                    mail.CC.Add(ccEmail);
                 }
 
-                //Bcc to group box for Teleform
-                mail.Bcc.Add((bool)_isSendtoTest ? _testmailFromAddress != null ? _testmailFromAddress : string.Empty : vFrom_Email);
-
-                //set the Email subject
+                mail.Bcc.Add((bool)_isSendtoTest ? _testmailFromAddress ?? string.Empty : vFrom_Email);
                 mail.Subject = vSubject;
 
-                string[] paths = vStrAttachment.Split('|');
-                System.Net.Mail.Attachment attachment;
-                foreach (var path in paths)
+                // Handle attachments with retry logic
+                if (!string.IsNullOrEmpty(vStrAttachment))
                 {
-                    if (path.Length > 0)
+                    foreach (var path in vStrAttachment.Split('|', StringSplitOptions.RemoveEmptyEntries))
                     {
-                        attachment = new System.Net.Mail.Attachment(path);
-                        //string test = attachment.Name.Substring(36, attachment.Name.Length - 36);
-                        //attachment.Name = attachment.Name.Substring(36, attachment.Name.Length - 36);
-                        String test = attachment.Name;
-                        mail.Attachments.Add(attachment);
+                        await AttachFileWithRetryAsync(mail, path, vUserSOEID);
                     }
                 }
 
-                //System.Net.Mail.Attachment attach6ment;
-                //attachment = new System.Net.Mail.Attachment(strAttachment);
-                //string test = attachment.Name;
-
-                //mail.Attachments.Add(attachment);
-
-                //set the SMTP info
-                SmtpClient smtp = new SmtpClient(_mailServer);
-
-                //send the email
                 smtp.Send(mail);
 
-                // NOT SURE IF NEEDED...
-                //DIV2.InnerHtml = vBody;
-
-                int intEmploymentCommunicationID = 0;
-                if (vStrEmploymentCommunicationID != string.Empty)
-                {
-                    intEmploymentCommunicationID = Convert.ToInt32(vStrEmploymentCommunicationID);
-                }
-                else
-                {
-                    intEmploymentCommunicationID = 0;
-                }
+                var intEmploymentCommunicationID = !string.IsNullOrEmpty(vStrEmploymentCommunicationID) 
+                    ? Convert.ToInt32(vStrEmploymentCommunicationID) 
+                    : 0;
 
                 EmailSentUpdate(intEmploymentCommunicationID, vUserSOEID);
-
             }
-            catch (System.Exception myex)
+            catch (Exception ex)
             {
-                _utilityService.LogError(myex.Message, "Server Error - Please Contact Support [REF# EMAIL-7519-197240.", new { }, null);
+                _utilityService.LogError(ex.Message, 
+                    "Server Error - Please Contact Support [REF# EMAIL-7519-197240].", new { }, vUserSOEID);
+                throw;
             }
         }
+
+        private async Task AttachFileWithRetryAsync(MailMessage mail, string path, string userSOEID, 
+            int maxRetries = 3)
+        {
+            if (!File.Exists(path))
+            {
+                _utilityService.LogError($"Attachment file not found: {path}", 
+                    "Email Attachment Missing", new { }, userSOEID);
+                return;
+            }
+
+            var retryCount = 0;
+            var baseDelay = TimeSpan.FromMilliseconds(100);
+
+            while (retryCount < maxRetries)
+            {
+                try
+                {
+                    using var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
+                    using var memoryStream = new MemoryStream();
+                    await fileStream.CopyToAsync(memoryStream);
+                    memoryStream.Position = 0;
+
+                    var attachment = new Attachment(memoryStream, Path.GetFileName(path));
+                    mail.Attachments.Add(attachment);
+                    return;
+                }
+                catch (IOException ex) when (IsFileLocked(ex))
+                {
+                    retryCount++;
+                    if (retryCount >= maxRetries)
+                    {
+                        _utilityService.LogError($"Failed to attach file after {maxRetries} retries: {path}", 
+                            "Email Attachment Error", new { }, userSOEID);
+                        throw;
+                    }
+
+                    var jitter = new Random().Next(50);
+                    var delay = TimeSpan.FromMilliseconds(Math.Pow(2, retryCount) * baseDelay.TotalMilliseconds + jitter);
+                    await Task.Delay(delay);
+                }
+            }
+        }
+
+        private bool IsFileLocked(IOException ex)
+        {
+            const int ERROR_SHARING_VIOLATION = 0x20;
+            const int ERROR_LOCK_VIOLATION = 0x21;
+
+            var errorCode = ex.HResult & 0x0000FFFF;
+            return errorCode == ERROR_SHARING_VIOLATION || 
+                   errorCode == ERROR_LOCK_VIOLATION ||
+                   ex.Message.Contains("being used by another process");
+        }
+
         private string GetLogoImagePath()
         {
             // Try multiple possible locations
@@ -1540,6 +1584,7 @@ namespace OneTrack_v2.Services
             // Return a default path if none found (will be handled by the File.Exists check)
             return possiblePaths[0];
         }
+
         private LinkedResource GetEmbeddedLogoImage()
         {
             var assembly = Assembly.GetExecutingAssembly();
@@ -1555,44 +1600,9 @@ namespace OneTrack_v2.Services
 
             throw new FileNotFoundException($"Embedded resource {resourceName} not found");
         }
+
         private void EmailSentUpdate(int vIntEmploymentCommunicationID, string vUserSOEID)
         {
-            //SqlConnection conn = null;
-            //SqlCommand cmd = null;
-            //DataSet ds = new DataSet();
-
-            //try
-            //{
-            //    conn = new SqlConnection(_connectionString);
-            //    conn.Open();
-            //    cmd = new SqlCommand("uspEmploymentCommunicationUpdate", conn);
-            //    cmd.CommandType = CommandType.StoredProcedure;
-            //    cmd.Parameters.Add(new SqlParameter("@EmploymentCommunicationID", vIntEmploymentCommunicationID));
-            //    cmd.Parameters.Add(new SqlParameter("@UserSOEID", vUserSOEID));
-
-            //    cmd.ExecuteNonQuery();
-
-            //}
-            //catch (SqlException mySQLEx)
-            //{
-            //    //Response.Write(mySQLEx.Message);
-            //}
-            //catch (System.Exception myex)
-            //{
-            //    //Response.Write(myex.Message);
-            //}
-            //finally
-            //{
-            //    if (conn != null)
-            //    {
-            //        conn.Close();
-            //    }
-            //    if (cmd != null)
-            //    {
-            //        cmd = null;
-            //    }
-            //}
-
             using (SqlConnection conn = new SqlConnection(_connectionString))
             {
                 using (SqlCommand cmd = new SqlCommand("uspEmploymentCommunicationUpdate", conn))
@@ -1606,8 +1616,8 @@ namespace OneTrack_v2.Services
                     cmd.ExecuteNonQuery();
                 }
             }
-
         }
+
         protected List<string> GetAttachments(string vEmailTemplate)
         {
             switch (vEmailTemplate)
