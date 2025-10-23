@@ -1515,7 +1515,7 @@ namespace OneTrack_v2.Services
             }
             catch (System.Exception myex)
             {
-                //Response.Write(myex.Message);
+                _utilityService.LogError(myex.Message, "Server Error - Please Contact Support [REF# EMAIL-7519-197240.", new { }, null);
             }
         }
         private string GetLogoImagePath()
