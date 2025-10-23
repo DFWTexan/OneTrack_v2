@@ -26,7 +26,7 @@ namespace OneTrack_v2.Services.Email
             }
             catch (Exception ex)
             {
-                _utilityService.LogError($"Failed to send email: {ex.Message}", 
+                _utilityService.LogError($"Failed to send email REF# SEND-8519-197543: {ex.Message}", 
                     "Email Send Error", new { message.Subject }, message.UserSOEID);
                 throw;
             }
@@ -65,8 +65,8 @@ namespace OneTrack_v2.Services.Email
         private string ProcessEmailBody(string body)
         {
             return body.Replace(
-                @"<img alt = """" src = ""pictures/OneMainSolutionsHorizontal.jpg""",
-                @"<img src = cid:myImageID");
+                @"<img alt = """" src = ""pictures/OneMainSolutionsHorizontal.jpg""", 
+                @"<img src=""cid:myImageID""");
         }
 
         private async Task AddEmailAttachmentsAsync(MailMessage mail, EmailMessage message)
@@ -158,13 +158,22 @@ namespace OneTrack_v2.Services.Email
         {
             var possiblePaths = new[]
             {
-                Path.Combine(AppContext.BaseDirectory, "Pictures", "OneMainSolutionsHorizontal.jpg"),
-                Path.Combine(AppContext.BaseDirectory, "wwwroot", "Pictures", "OneMainSolutionsHorizontal.jpg"),
-                Path.Combine(Directory.GetCurrentDirectory(), "Pictures", "OneMainSolutionsHorizontal.jpg"),
-                Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "Pictures", "OneMainSolutionsHorizontal.jpg")
+                Path.Combine(AppContext.BaseDirectory, "wwwroot", "images", "OneMainSolutionsHorizontal.jpg"),
+                Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "OneMainSolutionsHorizontal.jpg"), 
+                Path.Combine(AppContext.BaseDirectory, "images", "OneMainSolutionsHorizontal.jpg"),
+                Path.Combine(Directory.GetCurrentDirectory(), "images", "OneMainSolutionsHorizontal.jpg")
             };
 
-            return possiblePaths.FirstOrDefault(File.Exists) ?? possiblePaths[0];
+            var path = possiblePaths.FirstOrDefault(File.Exists);
+            
+            if (path == null)
+            {
+                _utilityService.LogError($"Logo image not found in any of the expected paths", 
+                    "Email Logo Missing", new { Paths = possiblePaths }, "SYSTEM");
+                return possiblePaths[0]; // Return first path as fallback
+            }
+
+            return path;
         }
     }
 
