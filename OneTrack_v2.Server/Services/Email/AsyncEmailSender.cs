@@ -12,12 +12,22 @@ namespace OneTrack_v2.Services.Email
         {
             _config = config;
             _utilityService = utilityService;
+
+            // Log SMTP configuration
+            _utilityService.LogInfo(
+                $"SMTP Server Configuration: {_config.MailServer}",
+                "Email Service Initialization");
         }
 
         public async Task SendEmailAsync(EmailMessage message)
         {
             using var mailMessage = CreateMailMessage(message);
-            using var smtpClient = new SmtpClient(_config.MailServer);
+            using var smtpClient = new SmtpClient(_config.MailServer)
+            {
+                Port = 25, // Default SMTP port if not specified
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = true  // For internal SMTP servers
+            };
 
             try
             {
@@ -26,8 +36,8 @@ namespace OneTrack_v2.Services.Email
             }
             catch (Exception ex)
             {
-                _utilityService.LogError($"Failed to send email REF# SEND-8519-197543: {ex.Message}", 
-                    "Email Send Error", new { message.Subject }, message.UserSOEID);
+                _utilityService.LogError($"Failed to send email REF# SEND-8519-197543: {ex.Message} Server: {_config.MailServer}",
+                    "Email Send Error", new { message.Subject, SmtpServer = _config.MailServer }, message.UserSOEID);
                 throw;
             }
         }

@@ -1114,6 +1114,7 @@ namespace OneTrack_v2.Services
                 }
 
                 await sendHtmlEmail(_mailFromAddress, strEmailTo.ToString(), strEmailCC.ToString(), strBody.ToString(), "Licensing Department", strSubject.ToString() + @" - Ref#" + strEmploymentCommunicationID, _strEMAILATTACHMENT, strEmploymentCommunicationID, vInput.UserSOEID);
+                //await sendHtmlEmail_v2(_mailFromAddress, strEmailTo.ToString(), strEmailCC.ToString(), strBody.ToString(), "Licensing Department", strSubject.ToString() + @" - Ref#" + strEmploymentCommunicationID, _strEMAILATTACHMENT, strEmploymentCommunicationID, vInput.UserSOEID);
 
                 //Session["strEmailAttachment"] = String.Empty;
                 //EmailCCLabel.Text = string.Empty;
@@ -1473,7 +1474,112 @@ namespace OneTrack_v2.Services
                 throw;
             }
         }
+        private async Task sendHtmlEmail_v2(string vFrom_Email, string vTo_Email, string vCc_Email, string vBody, string vFrom_Name, string vSubject, string vStrAttachment, string vStrEmploymentCommunicationID, string vUserSOEID)
+        {
+            try
+            {
+                _utilityService.LogInfo("Send email for CommunicationID: " + vStrEmploymentCommunicationID, null);
 
+                var emailMessage = new EmailMessage
+                {
+                    FromEmail = vFrom_Email,
+                    ToEmail = vTo_Email,
+                    CcEmail = vCc_Email,
+                    FromName = vFrom_Name,
+                    Subject = vSubject,
+                    Body = vBody,
+                    Attachments = vStrAttachment,
+                    UserSOEID = vUserSOEID,
+                    CommunicationID = vStrEmploymentCommunicationID
+                };
+
+                vBody = vBody.Replace(@"<img alt = """" src = ""../Pictures/OneMainSolutionsHorizontal.jpg""", @"<img src = cid:myImageID ");
+
+                //@"<img alt = """" src = ""../Pictures/OneMain Solutions_Horizontal.jpg""" 
+                //@"<img src = cid:myImageID>"
+
+
+                //create an instance of new mail message
+                MailMessage mail = new MailMessage();
+
+                //set the HTML format to true
+                mail.IsBodyHtml = true;
+
+                ////create Alrternative HTML view
+                AlternateView htmlView = AlternateView.CreateAlternateViewFromString(vBody, null, "text/html");
+
+                //Add Image
+                //var outPutDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
+                //var logoimage = Path.Combine(outPutDirectory, "Pictures\\OneMainSolutionsHorizontal.jpg");
+                //string relLogo = new Uri(logoimage).LocalPath;
+                //LinkedResource theEmailImage = new LinkedResource(relLogo);
+                //theEmailImage.ContentId = "myImageID";
+
+                //Add the Image to the Alternate view
+                //htmlView.LinkedResources.Add(theEmailImage);
+
+                //Add view to the Email Message
+                mail.AlternateViews.Add(htmlView);
+
+                //set the "from email" address and specify a friendly 'from' name
+                mail.From = new MailAddress((bool)_isSendtoTest ? _testmailToAddress : vFrom_Email, (bool)_isSendtoTest ? "OneTrakV2-Test" : vFrom_Name);
+
+                //set the "to" email address
+                mail.To.Add((bool)_isSendtoTest ? _testmailToAddress : vTo_Email);
+
+                //CC
+                if (!(vCc_Email == String.Empty))
+                {
+                    mail.CC.Add(vCc_Email);
+                }
+
+                //Bcc to group box for Teleform
+                mail.Bcc.Add(vFrom_Email);
+
+                //set the Email subject
+                mail.Subject = vSubject;
+
+
+                string[] paths = vStrAttachment.Split('|');
+                System.Net.Mail.Attachment attachment;
+                foreach (var path in paths)
+                {
+                    if (path.Length > 0)
+                    {
+                        attachment = new System.Net.Mail.Attachment(path);
+                        //string test = attachment.Name.Substring(36, attachment.Name.Length - 36);
+                        //attachment.Name = attachment.Name.Substring(36, attachment.Name.Length - 36);
+                        String test = attachment.Name;
+                        mail.Attachments.Add(attachment);
+                    }
+                }
+
+                //System.Net.Mail.Attachment attach6ment;
+                //attachment = new System.Net.Mail.Attachment(strAttachment);
+                //string test = attachment.Name;
+
+                //mail.Attachments.Add(attachment);
+
+                //set the SMTP info
+                SmtpClient smtp = new SmtpClient("SMTP.CORP.FIN");
+
+                //send the email
+                smtp.Send(mail);
+
+                var intEmploymentCommunicationID = !string.IsNullOrEmpty(vStrEmploymentCommunicationID)
+                    ? Convert.ToInt32(vStrEmploymentCommunicationID)
+                    : 0;
+
+                EmailSentUpdate(intEmploymentCommunicationID, vUserSOEID);
+            }
+            catch (Exception ex)
+            {
+                _utilityService.LogError(ex.Message,
+                    "Server Error - Please Contact Support [REF# EMAIL-7519-197240].",
+                    new { }, vUserSOEID);
+                throw;
+            }
+        }
         private void EmailSentUpdate(int vIntEmploymentCommunicationID, string vUserSOEID)
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
