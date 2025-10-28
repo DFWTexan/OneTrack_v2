@@ -22,16 +22,22 @@ namespace OneTrack_v2.Services.Email
         public async Task SendEmailAsync(EmailMessage message)
         {
             using var mailMessage = CreateMailMessage(message);
+
+            // Always embed the logo, regardless of attachments
+            await AddLogoImageAsync(mailMessage, message);
+
+            // Then (optionally) add file attachments
+            await AddEmailAttachmentsAsync(mailMessage, message);
+
             using var smtpClient = new SmtpClient(_config.MailServer)
             {
-                Port = 25, // Default SMTP port if not specified
+                Port = 25,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
-                UseDefaultCredentials = true  // For internal SMTP servers
+                UseDefaultCredentials = true
             };
 
             try
             {
-                await AddEmailAttachmentsAsync(mailMessage, message);
                 await smtpClient.SendMailAsync(mailMessage);
             }
             catch (Exception ex)
@@ -72,17 +78,19 @@ namespace OneTrack_v2.Services.Email
             return mail;
         }
 
+        // Update ProcessEmailBody method to handle more image path patterns
         private string ProcessEmailBody(string body)
         {
             return body.Replace(
-                @"<img alt = """" src = ""pictures/OneMainSolutionsHorizontal.jpg""", 
-                @"<img src=""cid:myImageID""");
+                "pictures/OneMainSolutionsHorizontal.jpg",
+                "https://omsapps.corp.fin/OneTrakV2/pictures/OneMainSolutionsHorizontal.jpg");
         }
 
         private async Task AddEmailAttachmentsAsync(MailMessage mail, EmailMessage message)
         {
             if (string.IsNullOrEmpty(message.Attachments))
                 return;
+
 
             foreach (var path in message.Attachments.Split('|', StringSplitOptions.RemoveEmptyEntries))
             {
@@ -92,47 +100,70 @@ namespace OneTrack_v2.Services.Email
             await AddLogoImageAsync(mail, message);
         }
 
+        // Update AddLogoImageAsync for better image handling
         private async Task AddLogoImageAsync(MailMessage mail, EmailMessage message)
         {
             var logoPath = GetLogoImagePath();
             if (!File.Exists(logoPath))
             {
-                _utilityService.LogError($"Logo image not found at path: {logoPath}",
-                    "Email Logo Missing", new { }, message.UserSOEID);
+                _utilityService.LogError(
+                    $"Unable to attach logo image. File not found at path: {logoPath}",
+                    "Email Logo Missing", new { LogoPath = logoPath }, message.UserSOEID);
                 return;
             }
 
-            using var htmlView = AlternateView.CreateAlternateViewFromString(mail.Body, null, "text/html");
-            using var logoStream = new FileStream(logoPath, FileMode.Open, FileAccess.Read, FileShare.Read);
-            using var logoResource = new LinkedResource(logoStream, "image/jpeg") { ContentId = "myImageID" };
-            
-            htmlView.LinkedResources.Add(logoResource);
-            mail.AlternateViews.Add(htmlView);
+            try
+            {
+                // Load bytes so we don’t hold a file lock
+                byte[] bytes = await File.ReadAllBytesAsync(logoPath);
+                var ms = new MemoryStream(bytes); // DO NOT dispose; MailMessage will own it
+
+                var contentType = new System.Net.Mime.ContentType(GetImageContentType(logoPath));
+
+                // Body already has cid:myImageID because ProcessEmailBody() ran earlier
+                var htmlView = AlternateView.CreateAlternateViewFromString(mail.Body, null, "text/html");
+
+                var logoResource = new LinkedResource(ms, contentType)
+                {
+                    ContentId = "myImageID",
+                    TransferEncoding = System.Net.Mime.TransferEncoding.Base64
+                };
+
+                htmlView.LinkedResources.Add(logoResource);
+
+                // Replace any previous views with this one
+                mail.AlternateViews.Clear();
+                mail.AlternateViews.Add(htmlView);
+            }
+            catch (Exception ex)
+            {
+                _utilityService.LogError(
+                    $"Failed to attach logo image: {ex.Message}",
+                    "Email Logo Error",
+                    new { LogoPath = logoPath, Exception = ex.ToString() },
+                    message.UserSOEID);
+            }
         }
 
-        private async Task AttachFileWithRetryAsync(MailMessage mail, string path, string userSOEID,
-            int maxRetries = 3)
+
+        private async Task AttachFileWithRetryAsync(MailMessage mail, string path, string userSOEID, int maxRetries = 3)
         {
             if (!File.Exists(path))
             {
-                _utilityService.LogError($"Attachment not found: {path}",
-                    "Email Attachment Missing", new { }, userSOEID);
+                _utilityService.LogError($"Attachment not found: {path}", "Email Attachment Missing", new { }, userSOEID);
                 return;
             }
 
-            var retryCount = 0;
+            int retryCount = 0;
             var baseDelay = TimeSpan.FromMilliseconds(100);
 
             while (retryCount < maxRetries)
             {
                 try
                 {
-                    await using var fileStream = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read);
-                    using var memoryStream = new MemoryStream();
-                    await fileStream.CopyToAsync(memoryStream);
-                    memoryStream.Position = 0;
-
-                    var attachment = new Attachment(memoryStream, Path.GetFileName(path));
+                    byte[] bytes = await File.ReadAllBytesAsync(path);
+                    var ms = new MemoryStream(bytes); // DO NOT dispose; MailMessage owns it
+                    var attachment = new Attachment(ms, Path.GetFileName(path));
                     mail.Attachments.Add(attachment);
                     return;
                 }
@@ -145,13 +176,13 @@ namespace OneTrack_v2.Services.Email
                             "Email Attachment Error", new { }, userSOEID);
                         throw;
                     }
-
                     var jitter = new Random().Next(50);
                     var delay = TimeSpan.FromMilliseconds(Math.Pow(2, retryCount) * baseDelay.TotalMilliseconds + jitter);
                     await Task.Delay(delay);
                 }
             }
         }
+
 
         private bool IsFileLocked(IOException ex)
         {
@@ -164,26 +195,48 @@ namespace OneTrack_v2.Services.Email
                    ex.Message.Contains("being used by another process");
         }
 
+        // Update GetLogoImagePath to check more locations
         private string GetLogoImagePath()
         {
             var possiblePaths = new[]
             {
+                // Check for the image in pictures folder first (to match the HTML)
+                Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "pictures", "OneMainSolutionsHorizontal.jpg"),
+                Path.Combine(Directory.GetCurrentDirectory(), "pictures", "OneMainSolutionsHorizontal.jpg"),
+                // Then check the standard wwwroot/images location
+                Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "OneMainSolutionsHorizontal.jpg"),
                 Path.Combine(AppContext.BaseDirectory, "wwwroot", "images", "OneMainSolutionsHorizontal.jpg"),
-                Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "images", "OneMainSolutionsHorizontal.jpg"), 
-                Path.Combine(AppContext.BaseDirectory, "images", "OneMainSolutionsHorizontal.jpg"),
-                Path.Combine(Directory.GetCurrentDirectory(), "images", "OneMainSolutionsHorizontal.jpg")
+                // Finally check other possible locations
+                Path.Combine(Directory.GetCurrentDirectory(), "images", "OneMainSolutionsHorizontal.jpg"),
+                Path.Combine(AppContext.BaseDirectory, "images", "OneMainSolutionsHorizontal.jpg")
             };
 
             var path = possiblePaths.FirstOrDefault(File.Exists);
             
             if (path == null)
             {
-                _utilityService.LogError($"Logo image not found in any of the expected paths", 
-                    "Email Logo Missing", new { Paths = possiblePaths }, "SYSTEM");
-                return possiblePaths[0]; // Return first path as fallback
+                _utilityService.LogError(
+                    "Logo image not found in any of the expected paths. Ensure the image exists in wwwroot/pictures or wwwroot/images directory.", 
+                    "Email Logo Missing", 
+                    new { Paths = possiblePaths }, 
+                    "SYSTEM");
+                // Return the most likely path as fallback
+                return possiblePaths[0];
             }
 
             return path;
+        }
+
+        // Update GetImageContentType to be more specific
+        private string GetImageContentType(string imagePath)
+        {
+            return Path.GetExtension(imagePath).ToLower() switch
+            {
+                ".jpg" or ".jpeg" => "image/jpeg",
+                ".png" => "image/png",
+                ".gif" => "image/gif",
+                _ => "image/jpeg" // Default to JPEG for unknown types
+            };
         }
     }
 

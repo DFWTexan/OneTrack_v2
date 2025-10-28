@@ -365,3 +365,9 @@ FodyWeavers.xsd
 
 /OneTrack_v2.Server/obj
 /OneTrak_v2.Server.Test/obj
+DeploymentInstructionNotes/OneTrakV2_ChangeLog.docx
+DeploymentInstructionNotes/OneTrakV2_Changelog.md
+DeploymentInstructionNotes/OneTrakV2_PROD_Deployment_Documentation.docx
+DeploymentInstructionNotes/OneTrakV2_PROD_Deployment_Documentation.md
+DeploymentInstructionNotes/OneTrakV2_QLTY_Deployment_Documentation.md
+DeploymentInstructionNotes/OneTrakV2_QTLY_Deployment_Documentation.docx
