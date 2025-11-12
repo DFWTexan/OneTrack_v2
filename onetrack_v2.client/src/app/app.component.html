@@ -350,15 +350,14 @@
       </mat-list-item> -->
       <mat-list-item routerLinkActive="active" [disabled]="!isLoggedIn">
         <a
-          [routerLink]="'/work-lists'"
-          target="_blank"
-          rel="noopener noreferrer"
+          (click)="openWorkListsInNewTab()"
           style="
             display: flex;
             align-items: center;
             text-decoration: none;
             color: inherit;
             width: 100%;
+            cursor: pointer;
           "
         >
           <mat-icon>list_alt</mat-icon>

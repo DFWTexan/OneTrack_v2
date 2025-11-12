@@ -268,7 +268,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
       this.drpdwnDataService
         .fetchDropdownNumericData('GetLicenseNumericNames', state)
         .subscribe((licenseNames: { value: number; label: string }[]) => {
-          this.licenseNames = [{ value: 0, label: 'Select' }, ...licenseNames];
+          this.licenseNames = [...licenseNames];
         })
     );
   }
