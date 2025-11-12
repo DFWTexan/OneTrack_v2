@@ -106,10 +106,10 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.agentDataService.licenseInfoChanged.subscribe(
         (licenseInfo: AgentLicenseAppointments) => {
-          console.log(
-            'EMFTEST - licenseInfoChanged subscription - licenseInfo => \n ',
-            licenseInfo
-          );
+          // console.log(
+          //   'EMFTEST - licenseInfoChanged subscription - licenseInfo => \n ',
+          //   licenseInfo
+          // );
 
           this.licenseInfo = licenseInfo;
 
