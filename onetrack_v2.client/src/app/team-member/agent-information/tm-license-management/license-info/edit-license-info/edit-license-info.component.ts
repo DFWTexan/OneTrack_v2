@@ -39,7 +39,7 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
   affiliatedLicenses: string[] = ['None'];
   defaultLicenseState: string = 'Select';
   licenseState: string = '';
-   
+
   private subscriptions = new Subscription();
 
   constructor(
@@ -106,57 +106,70 @@ export class EditLicenseInfoComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.agentDataService.licenseInfoChanged.subscribe(
         (licenseInfo: AgentLicenseAppointments) => {
-          // this.getStateLicenseNames(
-          //   this.agentDataService.agentInformation.workStateAbv ??
-          //     'Select'
-          // )
-          this.licenseNames = this.licenseNames.filter(
-            (item) => item.value !== 0 || item.label !== 'Select'
+          console.log(
+            'EMFTEST - licenseInfoChanged subscription - licenseInfo => \n ',
+            licenseInfo
           );
+
           this.licenseInfo = licenseInfo;
-          this.licenseForm.reset({
-            agentName:
-              this.agentDataService.agentInformation.lastName +
-              ', ' +
-              this.agentDataService.agentInformation.firstName,
-            employeeLicenseId: licenseInfo.employeeLicenseId,
-            licenseState: licenseInfo.licenseState,
-            licenseName: licenseInfo.licenseName,
-            licenseID: licenseInfo.licenseID,
-            licenseNumber: licenseInfo.licenseNumber,
-            licenseStatus: licenseInfo.licenseStatus,
-            affiliatedLicense: 'SELECT-TBD...',
-            licenseIssueDate: licenseInfo.originalIssueDate
-              ? formatDate(licenseInfo.originalIssueDate, 'yyyy-MM-dd', 'en-US')
-              : null,
-            lineOfAuthorityIssueDate: licenseInfo.lineOfAuthIssueDate
-              ? formatDate(
-                  licenseInfo.lineOfAuthIssueDate,
-                  'yyyy-MM-dd',
-                  'en-US'
-                )
-              : null,
-            licenseEffectiveDate: licenseInfo.licenseEffectiveDate
-              ? formatDate(
-                  licenseInfo.licenseEffectiveDate,
-                  'yyyy-MM-dd',
-                  'en-US'
-                )
-              : null,
-            licenseExpireDate: licenseInfo.licenseExpirationDate
-              ? formatDate(
-                  licenseInfo.licenseExpirationDate,
-                  'yyyy-MM-dd',
-                  'en-US'
-                )
-              : null,
-            licenseNote: licenseInfo.licenseNote,
-            required: licenseInfo.required,
-            // reinstatementDate: licenseInfo.reinstatementDate,
-            nonResident: licenseInfo.nonResident,
-            reinstatement: licenseInfo.reinstatement,
-            employmentID: licenseInfo.employmentID,
-          });
+
+          // Get license names for the state FIRST, then reset the form
+          this.getStateLicenseNames(licenseInfo.licenseState);
+
+          // Use setTimeout to ensure license names are loaded before resetting form
+          setTimeout(() => {
+            // Filter out the 'Select' option only after we have the license names
+            this.licenseNames = this.licenseNames.filter(
+              (item) => item.value !== 0 || item.label !== 'Select'
+            );
+
+            this.licenseForm.reset({
+              agentName:
+                this.agentDataService.agentInformation.lastName +
+                ', ' +
+                this.agentDataService.agentInformation.firstName,
+              employeeLicenseId: licenseInfo.employeeLicenseId,
+              licenseState: licenseInfo.licenseState,
+              licenseName: licenseInfo.licenseName,
+              licenseID: licenseInfo.licenseID,
+              licenseNumber: licenseInfo.licenseNumber,
+              licenseStatus: licenseInfo.licenseStatus,
+              affiliatedLicense: 'SELECT-TBD...',
+              licenseIssueDate: licenseInfo.originalIssueDate
+                ? formatDate(
+                    licenseInfo.originalIssueDate,
+                    'yyyy-MM-dd',
+                    'en-US'
+                  )
+                : null,
+              lineOfAuthorityIssueDate: licenseInfo.lineOfAuthIssueDate
+                ? formatDate(
+                    licenseInfo.lineOfAuthIssueDate,
+                    'yyyy-MM-dd',
+                    'en-US'
+                  )
+                : null,
+              licenseEffectiveDate: licenseInfo.licenseEffectiveDate
+                ? formatDate(
+                    licenseInfo.licenseEffectiveDate,
+                    'yyyy-MM-dd',
+                    'en-US'
+                  )
+                : null,
+              licenseExpireDate: licenseInfo.licenseExpirationDate
+                ? formatDate(
+                    licenseInfo.licenseExpirationDate,
+                    'yyyy-MM-dd',
+                    'en-US'
+                  )
+                : null,
+              licenseNote: licenseInfo.licenseNote,
+              required: licenseInfo.required,
+              nonResident: licenseInfo.nonResident,
+              reinstatement: licenseInfo.reinstatement,
+              employmentID: licenseInfo.employmentID,
+            });
+          }, 100); // Small delay to ensure license names are loaded
         }
       )
     );

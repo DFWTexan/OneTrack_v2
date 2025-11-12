@@ -48,14 +48,13 @@
       <div class="mb-3">
         <label for="licenseID" class="form-label"
           >License Name: <span class="text-danger">*</span></label
-        >
+        > 
         <select
           class="form-select select-size-medium"
           type="text"
           id="licenseID"
           formControlName="licenseID"
-          [value]="licenseForm.get('licenseID')?.value"
-        >
+          >
           <option *ngFor="let name of licenseNames" [value]="name.value">
             {{ name.label }}
           </option>
