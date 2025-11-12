@@ -389,6 +389,26 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.router.url === route;
   }
 
+  openWorkListsInNewTab() {
+    // const currentUrl = window.location.href;
+    // const origin = window.location.origin; // e.g., https://ftwebq201.corp.fin
+
+    // // Determine if we're on QLTY (has /OneTrakV2/) or local (no subdirectory)
+    // const isQlty = currentUrl.includes('/OneTrakV2/');
+
+    // let fullUrl: string;
+    // if (isQlty) {
+    //   fullUrl = origin + '/OneTrakV2/work-lists';
+    // } else {
+    //   fullUrl = origin + '/work-lists';
+    // }
+
+    // console.log('Opening URL:', fullUrl); // Debug: check what URL is being opened
+    // window.open(fullUrl, '_blank');
+    const url = window.location.origin + '/OneTrakV2/work-lists';
+    window.open(url, '_blank');
+  }
+
   onTechWrkListNotificationClick(event: Event, vObject: any) {
     event.preventDefault();
 
@@ -451,7 +471,7 @@ export class AppComponent implements OnInit, OnDestroy, AfterViewInit {
     }, 100);
   }
 
-   openModal() {
+  openModal() {
     const modalDiv = document.getElementById('myModal');
     if (modalDiv != null) {
       modalDiv.style.display = 'block';

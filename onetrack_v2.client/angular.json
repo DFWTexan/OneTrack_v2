@@ -83,6 +83,7 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
+              "baseHref": "/OneTrakV2/",
               "fileReplacements": [
                 {
                   "replace": "src/app/_environments/environment.ts",
@@ -94,6 +95,7 @@
               "optimization": true,
               "extractLicenses": true,
               "sourceMap": false,
+              "baseHref": "/OneTrakV2/",
               "fileReplacements": [
                 {
                   "replace": "src/app/_environments/environment.ts",
@@ -105,6 +107,7 @@
               "optimization": true,
               "extractLicenses": true,
               "sourceMap": false,
+              "baseHref": "/OneTrakV2/",
               "fileReplacements": [
                 {
                   "replace": "src/app/_environments/environment.ts",
@@ -116,6 +119,7 @@
               "optimization": true,
               "extractLicenses": true,
               "sourceMap": false,
+              "baseHref": "/OneTrakV2/",
               "fileReplacements": [
                 {
                   "replace": "src/app/_environments/environment.ts",
@@ -142,6 +146,7 @@
               "sslCert": "ssl/server.crt",
               "host": "localhost",
               "port": 4200,
+              "servePath": "/OneTrakV2/",
               "proxyConfig": "src/proxy.config.local.js"
             },
             "dvlp": {
@@ -151,6 +156,7 @@
               "sslCert": "ssl/server.crt",
               "host": "localhost",
               "port": 4200,
+              "servePath": "/OneTrakV2/",
               "proxyConfig": "src/proxy.config.dvlp.js"
             },
             "qlty": {
@@ -160,6 +166,7 @@
               "sslCert": "ssl/server.crt",
               "host": "localhost",
               "port": 4200,
+              "servePath": "/OneTrakV2/",
               "proxyConfig": "src/proxy.config.qlty.js"
             }
           },

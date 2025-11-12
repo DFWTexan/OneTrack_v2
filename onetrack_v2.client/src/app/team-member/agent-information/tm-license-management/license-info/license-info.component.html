@@ -59,6 +59,11 @@
         class="icon-edit-delete-button me-5"
         (click)="
           setModeLicenseMgmt('EDIT');
+          agentDataService.storeLicenseInfo(
+            'EDIT',
+            licenseMgmtData[currentIndex]
+          );
+          storeLicApptLicenseID(licenseMgmtData[currentIndex].licenseID);
           modalService.open('modal-edit-license-info')
         "
         title="Edit License Information"

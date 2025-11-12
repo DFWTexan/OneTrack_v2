@@ -13,7 +13,7 @@ namespace OneTrack_v2.Services.Email
         public EmailConfiguration(IConfiguration config, string environment)
         {
             MailServer = config.GetValue<string>($"EnvironmentSettings:{environment}:MailSettings:mailServer") ?? string.Empty;
-            IsSendToTest = config.GetValue<bool>($"EnvironmentSettings:{environment}:MailSettings:isSendtoTest");
+            IsSendToTest = config.GetValue<bool>($"EnvironmentSettings:{environment}:MailSettings:isSendToTest");
             MailFromAddress = config.GetValue<string>($"EnvironmentSettings:{environment}:MailSettings:mailFromAddress") ?? string.Empty;
             TestMailFromAddress = config.GetValue<string>($"EnvironmentSettings:{environment}:MailSettings:testmailFromAddress") ?? string.Empty;
             TestMailToAddress = config.GetValue<string>($"EnvironmentSettings:{environment}:MailSettings:testmailToAddress") ?? string.Empty;
