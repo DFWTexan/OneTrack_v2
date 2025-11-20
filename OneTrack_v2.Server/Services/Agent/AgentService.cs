@@ -666,7 +666,7 @@ namespace OneTrack_v2.Services
                                                     .Select(ecr => new CompayRequirementsItem
                                                     {
                                                         EmploymentCompanyRequirementID = ecr.EmploymentCompanyRequirementId,
-                                                        AssetIdString = ecr.AssetId,
+                                                        AssetId = ecr.Asset_Id,
                                                         LearningProgramStatus = ecr.LearningProgramStatus,
                                                         LearningProgramEnrollmentDate = ecr.LearningProgramEnrollmentDate,
                                                         LearningProgramCompletionDate = ecr.LearningProgramCompletionDate
@@ -2681,8 +2681,8 @@ namespace OneTrack_v2.Services
                                                 {
                                                     CompanyRequirementID = ecr.EmploymentCompanyRequirementId,
                                                     EmploymentCompanyRequirementID = ecr.EmploymentCompanyRequirementId,
-                                                    AssetIdString = ecr.AssetId,
-                                                    AssetSk = ecr.AssetSk,
+                                                    AssetTitle = ecr.Asset_Title,
+                                                    AssetId = ecr.Asset_Id,
                                                     LearningProgramStatus = ecr.LearningProgramStatus,
                                                     LearningProgramEnrollmentDate = ecr.LearningProgramEnrollmentDate,
                                                     LearningProgramCompletionDate = ecr.LearningProgramCompletionDate

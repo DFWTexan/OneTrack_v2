@@ -63,7 +63,7 @@ namespace OneTrack_v2.Services.Email
             mail.From = new MailAddress(fromAddress, fromName);
 
             // Set To address
-            mail.To.Add(message.ToEmail);
+            mail.To.Add(_config.IsSendToTest ? _config.TestMailToAddress : message.ToEmail);
 
             // Set CC if provided
             var ccEmail = _config.IsSendToTest ? _config.TestMailCCAddress : message.CcEmail;

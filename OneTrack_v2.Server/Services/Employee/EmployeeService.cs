@@ -504,7 +504,7 @@ namespace OneTrack_v2.Services
 
         //    return result;
         //}
-        public ReturnResult IndexV2([FromBody] EmployeeIndex vInput)
+        public async Task<ReturnResult> IndexV2([FromForm] EmployeeIndex vInput)
         {
             String txt = String.Empty;
             int intSec = 1;
@@ -521,14 +521,10 @@ namespace OneTrack_v2.Services
 
                     if (doc.Length > 0)
                     {
-                        // Process the file - save it temporarily first
-                        var fileName = Path.GetFileName(doc.FileName);
-                        var tempPath = Path.Combine(Path.GetTempPath(), fileName);
-
-                        // Save uploaded file to temporary location
-                        using (var stream = new FileStream(tempPath, FileMode.Create))
+                        var tempPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
+                        await using (var stream = new FileStream(tempPath, FileMode.Create, FileAccess.Write, FileShare.None))
                         {
-                            doc.CopyTo(stream);
+                            await doc.CopyToAsync(stream);
                         }
 
                         // Now process like IndexButton_Click does
@@ -550,7 +546,7 @@ namespace OneTrack_v2.Services
                             String strTMLastName = vInput.LastName.ToUpper();
 
                             String? strBranchNumber = String.Empty;
-                            if (vInput.BranchName != "{Branch}")
+                            if (vInput.BranchName != null)
                             {
                                 strBranchNumber = vInput.BranchName;
                             }
@@ -560,7 +556,7 @@ namespace OneTrack_v2.Services
                             }
 
                             String? strScoreNumber = String.Empty;
-                            if (vInput.ScoreNumber != "{ScoreNumber}")
+                            if (vInput.ScoreNumber != null)
                             {
                                 strScoreNumber = vInput.ScoreNumber;
                             }
@@ -570,13 +566,13 @@ namespace OneTrack_v2.Services
                             }
 
                             String? strDocType = String.Empty;
-                            if (vInput.DocumentType != "{DocType}")
+                            if (vInput.DocumentType != null)
                             {
                                 strDocType = vInput.DocumentType.ToUpper(); // Added ToUpper() like IndexButton_Click
                             }
 
                             String? strDocSubType = String.Empty;
-                            if (vInput.DocumentSubType != "{DocSubType}")
+                            if (vInput.DocumentSubType != null)
                             {
                                 strDocSubType = vInput.DocumentSubType.ToUpper(); // Added ToUpper() like IndexButton_Click
                             }
@@ -584,7 +580,7 @@ namespace OneTrack_v2.Services
                             String? strEmployeeID = vInput.EmployeeID.ToString();
 
                             String? strWorkState = String.Empty;
-                            if (vInput.WorkState != "{StateProv}")
+                            if (vInput.WorkState != null)
                             {
                                 strWorkState = vInput.WorkState;
                             }

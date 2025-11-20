@@ -9,9 +9,9 @@ public partial class EmploymentCompanyRequirement
 
     public int? EmploymentId { get; set; }
 
-    public int? AssetSk { get; set; }
+    public string? Asset_Title { get; set; }
 
-    public string? AssetId { get; set; }
+    public string? Asset_Id { get; set; }
 
     public string? LearningProgramStatus { get; set; }
 

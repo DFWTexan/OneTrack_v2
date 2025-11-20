@@ -71,7 +71,7 @@ namespace OneTrack_v2.Controllers
         [HttpPost]
         public async Task<ActionResult> Index([FromForm] EmployeeIndex input)
         {
-            var result = await Task.Run(() => _employeeService.IndexV2(input));
+            var result = await _employeeService.IndexV2(input);
 
             return StatusCode(result.StatusCode, result);
         }

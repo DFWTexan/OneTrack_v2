@@ -43,8 +43,8 @@ export class EditCorequirementHistComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.coRequirementsForm = this.fb.group({
       companyRequirementID: [''],
-      assetIdString: ['', Validators.required],
-      assetSk: [''],
+      assetId: ['', Validators.required],
+      assetTitle: [''],
       learningProgramStatus: ['', Validators.required],
       learningProgramEnrollmentDate: [''],
       learningProgramCompletionDate: [''],
@@ -69,9 +69,9 @@ export class EditCorequirementHistComponent implements OnInit, OnDestroy {
                     companyRequirementID: coRequirement.companyRequirementID,
                     // assetIdString: coRequirement.assetIdString,
                     assetIdString: this.coReqAssetIDs.includes(
-                      coRequirement.assetIdString
+                      coRequirement.assetId
                     )
-                      ? coRequirement.assetIdString
+                      ? coRequirement.assetId
                       : 'Select Asset ID',
                     assetSk: coRequirement.assetSk,
                     learningProgramStatus: coRequirement.learningProgramStatus,

@@ -1360,11 +1360,13 @@ namespace OneTrack_v2.DbData
                     .HasNoKey()
                     .ToTable("EmploymentCompanyRequirements", "dbo");
 
-                entity.Property(e => e.AssetId)
+                entity.Property(e => e.Asset_Title)
                     .HasMaxLength(255)
                     .IsUnicode(false)
-                    .HasColumnName("asset_id");
-                entity.Property(e => e.AssetSk).HasColumnName("asset_sk");
+                    .HasColumnName("asset_title");
+                entity.Property(e => e.Asset_Id)
+                    .HasMaxLength(60)
+                    .HasColumnName("asset_Id");
                 entity.Property(e => e.EmploymentCompanyRequirementId)
                     .ValueGeneratedOnAdd()
                     .HasColumnName("EmploymentCompanyRequirementID");
