@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using OneTrack_v2.DataModel;
 using OneTrak_v2.DataModel;
 using OneTrak_v2.Services.Employee.Model;
-using System.Security.Cryptography;
-using System.Text;
 
 namespace OneTrack_v2.Services
 {
@@ -17,7 +15,7 @@ namespace OneTrack_v2.Services
         public Task<ReturnResult> SearchEmployeeTMNumber(string vInput);
         public Task<ReturnResult> GetEmploymentCommunication(int vInput);
         public ReturnResult Index([FromBody] EmployeeIndex vInput);
-        public Task<ReturnResult> IndexV2([FromForm] EmployeeIndex vInput);
+        public ReturnResult IndexV2([FromBody] EmployeeIndex vInput);
         //public DataModel.Response.ReturnResult GetEmployee(int vEmployeeID);
     }
 }

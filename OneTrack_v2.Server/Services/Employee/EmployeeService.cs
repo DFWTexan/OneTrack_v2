@@ -504,7 +504,7 @@ namespace OneTrack_v2.Services
 
         //    return result;
         //}
-        public async Task<ReturnResult> IndexV2([FromForm] EmployeeIndex vInput)
+        public ReturnResult IndexV2([FromForm] EmployeeIndex vInput)
         {
             String txt = String.Empty;
             int intSec = 1;
@@ -521,10 +521,14 @@ namespace OneTrack_v2.Services
 
                     if (doc.Length > 0)
                     {
-                        var tempPath = Path.Combine(Path.GetTempPath(), Path.GetRandomFileName());
-                        await using (var stream = new FileStream(tempPath, FileMode.Create, FileAccess.Write, FileShare.None))
+                        // Process the file - save it temporarily first
+                        var fileName = Path.GetFileName(doc.FileName);
+                        var tempPath = Path.Combine(Path.GetTempPath(), fileName);
+
+                        // Save uploaded file to temporary location
+                        using (var stream = new FileStream(tempPath, FileMode.Create))
                         {
-                            await doc.CopyToAsync(stream);
+                            doc.CopyTo(stream);
                         }
 
                         // Now process like IndexButton_Click does
