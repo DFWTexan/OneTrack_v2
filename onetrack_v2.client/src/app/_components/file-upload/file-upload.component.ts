@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, Output, OnChanges, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  OnChanges,
+  SimpleChanges,
+} from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
 import { environment } from '../../_environments/environment';
@@ -49,28 +56,47 @@ export class FileUploadComponent implements OnChanges {
       if (file) {
         this.fileName = file.name;
         this.attachedFiles.push(file);
-        const formData = new FormData();
-        formData.append('file', file); // must match [FromForm] IFormFile file
-        formData.append('fileName', this.fileName); // must match [FromForm] string fileName
-        formData.append('filePathType', this.uploadType || ''); // must match [FromForm] string filePathType
 
-        // console.log('EMFTEST (UPLOAD) - formData => \n', formData);
+        // Emit the files array immediately when file is selected
+        this.filesChanged.emit([...this.attachedFiles]);
+
+        // Also update the email service
+        this.emailDataService.setAttachedFiles(this.attachedFiles);
+
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('fileName', this.fileName);
+        formData.append('filePathType', this.uploadType || '');
 
         interface UploadResponse {
           objData: { fullPath: string };
           [key: string]: any;
         }
 
-        const upload$ = this.http.post<UploadResponse>(this.url + 'Upload', formData);
+        const upload$ = this.http.post<UploadResponse>(
+          this.url + 'Upload',
+          formData
+        );
         upload$.subscribe({
           next: (response) => {
             // Handle successful upload
-            // console.log('EMFTEST (UPLOAD: onFileSelected) - response => \n', response);
-
             this.filePathUri = response.objData.fullPath;
             this.fullFilePathUri.emit(this.filePathUri);
+
+            // Emit files again after successful upload to ensure consistency
+            this.filesChanged.emit([...this.attachedFiles]);
           },
           error: (error) => {
+            // If upload fails, remove the file from attachedFiles
+            const fileIndex = this.attachedFiles.findIndex(
+              (f) => f.name === file.name
+            );
+            if (fileIndex > -1) {
+              this.attachedFiles.splice(fileIndex, 1);
+              this.filesChanged.emit([...this.attachedFiles]);
+              this.emailDataService.setAttachedFiles(this.attachedFiles);
+            }
+
             if (error.error && error.error.errMessage) {
               console.log('EMFTEST (UPLOAD) - error', error.error.errMessage);
               this.errorMessageService.setErrorMessage(error.error.errMessage);

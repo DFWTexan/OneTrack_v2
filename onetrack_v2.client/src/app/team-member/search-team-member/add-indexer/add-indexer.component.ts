@@ -1,4 +1,4 @@
- import {
+import {
   ChangeDetectorRef,
   Component,
   OnDestroy,
@@ -46,7 +46,7 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
   files: File[] = [];
   fullFilePathUri: string | null = null;
   isDocumentUploaded: boolean = false;
-  uploadType: string = 'AttachmentLoc';
+  uploadType: string = 'BuildLoc';
 
   private subscriptionData = new Subscription();
 
@@ -76,6 +76,7 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
     this.subscriptionData.add(
       this.appComService.indexInfoResetToggleChanged.subscribe(
         (indexInfoResetToggle: boolean) => {
+          console.log('🔴 indexInfoResetToggleChanged - clearing files');
           this.file = null;
           this.files = [];
           this.fileUri = null;
@@ -88,8 +89,7 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
             scoreNum: 0,
             docType: 'Select',
           });
-          
-          // Reset file upload component
+
           if (this.fileUploadComponent) {
             this.fileUploadComponent.resetComponent();
           }
@@ -102,28 +102,64 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
       this.employeeDataService.selectedEmployeeChanged.subscribe(
         (employee: EmployeeSearchResult | null) => {
           if (employee !== null) {
+            const previousEmployee = this.employee;
             this.employee = employee;
 
-            this.file = null;
+            // Only clear files and reset form if this is a different employee
+            if (
+              !previousEmployee ||
+              previousEmployee.employeeID !== employee.employeeID
+            ) {
+              console.log(
+                '🔴 selectedEmployeeChanged - different employee, clearing files and resetting form'
+              );
+              this.files = [];
+              this.file = null;
+              this.fileUri = null;
+              this.fullFilePathUri = null;
+              this.selectedDocumentType = 'Select';
+              this.documentSubTypes = [];
+
+              // Reset file upload component if it exists
+              if (this.fileUploadComponent) {
+                this.fileUploadComponent.resetComponent();
+              }
+
+              this.indexForm.reset({
+                workState: 'Select',
+                licenseState: 'Select',
+                branchName: null,
+                scoreNum: 0,
+                docSubType: null,
+              });
+            } else {
+              console.log(
+                '🟡 selectedEmployeeChanged - same employee, keeping files and form state'
+              );
+            }
+          } else {
+            console.log(
+              '🔴 selectedEmployeeChanged - employee is null, clearing everything'
+            );
+            this.employee = null;
             this.files = [];
+            this.file = null;
             this.fileUri = null;
-            this.fullFilePathUri = null;  
-            this.defaultDocumentType = 'Select';
+            this.fullFilePathUri = null;
+            this.selectedDocumentType = 'Select';
+            this.documentSubTypes = [];
+
+            if (this.fileUploadComponent) {
+              this.fileUploadComponent.resetComponent();
+            }
 
             this.indexForm.reset({
               workState: 'Select',
               licenseState: 'Select',
               branchName: null,
               scoreNum: 0,
-              docType: 'Select',
+              docSubType: null,
             });
-
-            // Reset file upload component
-            if (this.fileUploadComponent) {
-              this.fileUploadComponent.resetComponent();
-            }
-
-            this.cdr.detectChanges();
           }
         }
       )
@@ -149,17 +185,65 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
       docSubType: null,
     });
   }
+  // Add this method to track all file-related events
+  trackFileEvent(eventName: string, data?: any) {
+    console.log(`🔍 File Event: ${eventName}`, data);
+  }
 
-  fileUploadCompleted(filePath: string) {
-  this.fullFilePathUri = filePath;
-  
-  // Extract the file name from the path
-  const fileName = filePath.split('\\').pop()?.split('/').pop() || 'file';
-  
-  this.files.push(
-    new File([filePath], fileName, { type: 'application/pdf' })
-  );
-}
+  // async fileUploadCompleted(filePath: string) {
+  //   this.trackFileEvent('fileUploadCompleted', filePath);
+  //   console.log('🔵 fileUploadCompleted called with:', filePath);
+  //   this.fullFilePathUri = filePath;
+
+  //   try {
+  //     // Fetch the actual file content as a blob
+  //     const response = await fetch(filePath);
+  //     const blob = await response.blob();
+
+  //     // Extract the file name from the path
+  //     const fileName = filePath.split('\\').pop()?.split('/').pop() || 'file';
+
+  //     // Determine the correct MIME type based on file extension
+  //     const fileExtension = fileName.split('.').pop()?.toLowerCase();
+  //     let mimeType = 'application/octet-stream'; // default
+
+  //     switch (fileExtension) {
+  //       case 'pdf':
+  //         mimeType = 'application/pdf';
+  //         break;
+  //       case 'docx':
+  //         mimeType =
+  //           'application/vnd.openxmlformats-officedocument.wordprocessingml.document';
+  //         break;
+  //       case 'doc':
+  //         mimeType = 'application/msword';
+  //         break;
+  //       case 'txt':
+  //         mimeType = 'text/plain';
+  //         break;
+  //       case 'jpg':
+  //       case 'jpeg':
+  //         mimeType = 'image/jpeg';
+  //         break;
+  //       case 'png':
+  //         mimeType = 'image/png';
+  //         break;
+  //     }
+
+  //     // Create a proper File object with the blob content
+  //     const file = new File([blob], fileName, { type: mimeType });
+  //     this.files.push(file);
+  //     console.log(
+  //       '✅ File added to array:',
+  //       fileName,
+  //       'Total files:',
+  //       this.files.length
+  //     );
+  //   } catch (error) {
+  //     console.error('❌ Error loading file:', error);
+  //     // Optionally show error message to user
+  //   }
+  // }
 
   onDocumentTypeChange(event: any) {
     const target = event.target as HTMLInputElement;
@@ -180,11 +264,22 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
   }
 
   onFilesChanged(files: File[]) {
-    this.files = files;
-  }
+    console.log('🔵 onFilesChanged called with:', files.length, 'files');
+    this.files = [...files]; // Create a new array to avoid reference issues
+    console.log('📝 Files array updated, new length:', this.files.length);
 
+    // Log each file for debugging
+    this.files.forEach((file, index) => {
+      console.log(`File ${index + 1}:`, file.name, file.size, file.type);
+    });
+  }
   onSubmit() {
     this.isFormSubmitted = true;
+
+    // Add debugging
+    console.log('Files array length:', this.files.length);
+    console.log('Files array contents:', this.files);
+    console.log('Form valid:', this.indexForm.valid);
 
     if (this.indexForm.valid) {
       const formData = new FormData();
@@ -223,9 +318,19 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
 
       // Append files
       if (this.files && this.files.length > 0) {
-        this.files.forEach((file) => {
+        console.log('Adding files to FormData...');
+        this.files.forEach((file, index) => {
+          console.log(`Adding file ${index}:`, file.name, file.size, file.type);
           formData.append('Files', file, file.name);
         });
+      } else {
+        console.log('No files to append - files array is empty or null');
+      }
+
+      // Debug FormData contents
+      console.log('FormData contents:');
+      for (let [key, value] of (formData as any).entries()) {
+        console.log(key, value);
       }
 
       this.employeeDataService.updateEmployeeIndexer(formData).subscribe({
@@ -280,18 +385,61 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
   }
 
   onFileSelected(event: any) {
-    const target = event.target as HTMLInputElement;
-    if (target.files && target.files.length) {
-      const file: File = target.files[0];
+    this.trackFileEvent('onFileSelected', event);
+    console.log('🔵 onFileSelected called with:', event);
 
-      this.files.push(file);
-
-      // if (file) {
-      //   this.file = file;
-      //   this.fileUri = URL.createObjectURL(file);
-      //   this.document = file.name;
-      // }
+    // If event is a File object directly
+    if (event instanceof File) {
+      this.files.push(event);
+      console.log(
+        '✅ File added via fileSelected:',
+        event.name,
+        'Total files:',
+        this.files.length
+      );
+      return;
     }
+
+    // If event is an array of files
+    if (Array.isArray(event) && event.length > 0 && event[0] instanceof File) {
+      event.forEach((file: File) => {
+        this.files.push(file);
+        console.log('✅ File added from array:', file.name);
+      });
+      console.log('✅ Total files after adding array:', this.files.length);
+      return;
+    }
+
+    // If event is from input element (change event)
+    if (event && event.target) {
+      const target = event.target as HTMLInputElement;
+      if (target.files && target.files.length) {
+        for (let i = 0; i < target.files.length; i++) {
+          const file = target.files[i];
+          this.files.push(file);
+          console.log('✅ File selected from input:', file.name);
+        }
+        console.log('✅ Total files after input selection:', this.files.length);
+        return;
+      }
+    }
+
+    console.log(
+      '❌ Unhandled event type in onFileSelected:',
+      typeof event,
+      event
+    );
+  }
+
+  // Add these methods to see what's happening
+  onFileUploadEvent(event: any) {
+    console.log('🟢 File upload event received:', event);
+    this.onFileSelected(event);
+  }
+
+  onFilesChangedEvent(files: File[]) {
+    console.log('🟢 Files changed event received:', files);
+    this.onFilesChanged(files);
   }
 
   onCancel() {
@@ -328,6 +476,16 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
     if (modalDiv != null) {
       modalDiv.style.display = 'none';
     }
+  }
+
+  // Add this method for testing
+  testAddFile() {
+    const testContent = 'This is test content';
+    const testFile = new File([testContent], 'test.txt', {
+      type: 'text/plain',
+    });
+    this.files.push(testFile);
+    console.log('🧪 Test file added, total files:', this.files.length);
   }
 
   ngOnDestroy(): void {
