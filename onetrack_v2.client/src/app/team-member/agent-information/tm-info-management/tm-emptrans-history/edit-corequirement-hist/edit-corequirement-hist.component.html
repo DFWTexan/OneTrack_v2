@@ -18,15 +18,15 @@
       </div>
 
       <div class="mb-3">
-        <label for="assetIdString" class="form-label">
+        <label for="assetId" class="form-label">
           Asset ID: <span class="text-danger">*</span></label
         >
         <select
           class="form-select select-size-medium"
           type="text"
-          id="assetIdString"
-          formControlName="assetIdString"
-          [value]="coRequirementsForm.get('assetIdString')?.value"
+          id="assetId"
+          formControlName="assetId"
+          [value]="coRequirementsForm.get('assetId')?.value"
         >
           <option *ngFor="let id of coReqAssetIDs" [value]="id.lkpValue">
             {{ id.lkpValue }}
@@ -34,11 +34,11 @@
         </select>
         <div
           *ngIf="
-            (coRequirementsForm.controls['assetIdString'].touched ||
+            (coRequirementsForm.controls['assetId'].touched ||
               isFormSubmitted) &&
-            coRequirementsForm.controls['assetIdString'].errors &&
-            (coRequirementsForm.controls['assetIdString'].errors['invalid'] ||
-              coRequirementsForm.controls['assetIdString'].errors['required'])
+            coRequirementsForm.controls['assetId'].errors &&
+            (coRequirementsForm.controls['assetId'].errors['invalid'] ||
+              coRequirementsForm.controls['assetId'].errors['required'])
           "
           class="text-danger"
         >
