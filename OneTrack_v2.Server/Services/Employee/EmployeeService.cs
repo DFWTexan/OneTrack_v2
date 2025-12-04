@@ -464,113 +464,113 @@ namespace OneTrack_v2.Services
             return result;
         }
 
-        public async Task<ReturnResult> IndexV3([FromForm] EmployeeIndex vInput)
-        {
-            var result = new ReturnResult();
-            int intSec = 1;
-            DateTime dtDateTime = System.DateTime.Now;
+        //public async Task<ReturnResult> IndexV3([FromForm] EmployeeIndex vInput)
+        //{
+        //    var result = new ReturnResult();
+        //    int intSec = 1;
+        //    DateTime dtDateTime = System.DateTime.Now;
 
-            try
-            {
-                // Validate configuration
-                if (string.IsNullOrEmpty(_importExportLoc))
-                {
-                    result.Success = false;
-                    result.StatusCode = 500;
-                    result.ErrMessage = "Import/Export location not configured.";
-                    return result;
-                }
+        //    try
+        //    {
+        //        // Validate configuration
+        //        if (string.IsNullOrEmpty(_importExportLoc))
+        //        {
+        //            result.Success = false;
+        //            result.StatusCode = 500;
+        //            result.ErrMessage = "Import/Export location not configured.";
+        //            return result;
+        //        }
 
-                // Ensure directory exists with proper permissions
-                if (!Directory.Exists(_importExportLoc))
-                {
-                    Directory.CreateDirectory(_importExportLoc);
-                    _utilityService.LogError($"Created directory: {_importExportLoc}", "IndexV3-Directory", new { }, "SYSTEM");
-                }
+        //        // Ensure directory exists with proper permissions
+        //        if (!Directory.Exists(_importExportLoc))
+        //        {
+        //            Directory.CreateDirectory(_importExportLoc);
+        //            _utilityService.LogError($"Created directory: {_importExportLoc}", "IndexV3-Directory", new { }, "SYSTEM");
+        //        }
 
-                // Validate files exist
-                if (vInput.Files == null || !vInput.Files.Any())
-                {
-                    result.Success = false;
-                    result.StatusCode = 400;
-                    result.ErrMessage = "No files provided for upload.";
-                    return result;
-                }
+        //        // Validate files exist
+        //        if (vInput.Files == null || !vInput.Files.Any())
+        //        {
+        //            result.Success = false;
+        //            result.StatusCode = 400;
+        //            result.ErrMessage = "No files provided for upload.";
+        //            return result;
+        //        }
 
-                foreach (var doc in vInput.Files)
-                {
-                    intSec = intSec + 1;
+        //        foreach (var doc in vInput.Files)
+        //        {
+        //            intSec = intSec + 1;
 
-                    if (doc?.Length > 0)
-                    {
-                        var originalFileName = Path.GetFileName(doc.FileName) ?? $"document_{intSec}.pdf";
-                        var timestamp = dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss");
-                        var finalFileName = timestamp + originalFileName;
-                        var finalFilePath = Path.Combine(_importExportLoc, finalFileName);
+        //            if (doc?.Length > 0)
+        //            {
+        //                var originalFileName = Path.GetFileName(doc.FileName) ?? $"document_{intSec}.pdf";
+        //                var timestamp = dtDateTime.AddSeconds(intSec).ToString("yyyyMMddHHmmss");
+        //                var finalFileName = timestamp + originalFileName;
+        //                var finalFilePath = Path.Combine(_importExportLoc, finalFileName);
 
-                        _utilityService.LogError(
-                            $"Starting file upload: {originalFileName} ({doc.Length} bytes) -> {finalFilePath}",
-                            "IndexV3-FileStart",
-                            new { 
-                                OriginalFileName = originalFileName,
-                                FileSize = doc.Length,
-                                ContentType = doc.ContentType,
-                                FinalPath = finalFilePath 
-                            },
-                            "SYSTEM");
+        //                _utilityService.LogError(
+        //                    $"Starting file upload: {originalFileName} ({doc.Length} bytes) -> {finalFilePath}",
+        //                    "IndexV3-FileStart",
+        //                    new { 
+        //                        OriginalFileName = originalFileName,
+        //                        FileSize = doc.Length,
+        //                        ContentType = doc.ContentType,
+        //                        FinalPath = finalFilePath 
+        //                    },
+        //                    "SYSTEM");
 
-                        // Save file with robust error handling
-                        await SaveFileRobustly(doc, finalFilePath);
+        //                // Save file with robust error handling
+        //                await SaveFileRobustly(doc, finalFilePath);
 
-                        // Comprehensive file validation
-                        await ValidateUploadedFile(doc, finalFilePath, originalFileName);
+        //                // Comprehensive file validation
+        //                await ValidateUploadedFile(doc, finalFilePath, originalFileName);
 
-                        // Create OCR file
-                        var ocrFilePath = Path.Combine(_importExportLoc, timestamp + ".OCR");
-                        await CreateOcrFileRobustly(ocrFilePath, finalFilePath, vInput, dtDateTime);
+        //                // Create OCR file
+        //                var ocrFilePath = Path.Combine(_importExportLoc, timestamp + ".OCR");
+        //                await CreateOcrFileRobustly(ocrFilePath, finalFilePath, vInput, dtDateTime);
 
-                        _utilityService.LogError(
-                            $"Successfully processed: {finalFilePath}",
-                            "IndexV3-Success",
-                            new { 
-                                FileName = finalFileName,
-                                FileSize = new FileInfo(finalFilePath).Length,
-                                OcrFile = ocrFilePath 
-                            },
-                            "SYSTEM");
-                    }
-                    else
-                    {
-                        _utilityService.LogError(
-                            $"Skipped empty file: {doc?.FileName ?? "unknown"}",
-                            "IndexV3-SkippedEmpty",
-                            new { FileName = doc?.FileName, Length = doc?.Length },
-                            "SYSTEM");
-                    }
-                }
+        //                _utilityService.LogError(
+        //                    $"Successfully processed: {finalFilePath}",
+        //                    "IndexV3-Success",
+        //                    new { 
+        //                        FileName = finalFileName,
+        //                        FileSize = new FileInfo(finalFilePath).Length,
+        //                        OcrFile = ocrFilePath 
+        //                    },
+        //                    "SYSTEM");
+        //            }
+        //            else
+        //            {
+        //                _utilityService.LogError(
+        //                    $"Skipped empty file: {doc?.FileName ?? "unknown"}",
+        //                    "IndexV3-SkippedEmpty",
+        //                    new { FileName = doc?.FileName, Length = doc?.Length },
+        //                    "SYSTEM");
+        //            }
+        //        }
 
-                result.Success = true;
-                result.StatusCode = 200;
-                result.ObjData = $"Successfully processed {vInput.Files.Count} files";
-            }
-            catch (Exception ex)
-            {
-                result.Success = false;
-                result.StatusCode = 500;
-                result.ErrMessage = "Server Error - Please Contact Support [REF# EMPL-1309-90412].";
-                _utilityService.LogError(
-                    ex.Message, 
-                    "IndexV3-FileUpload-Error", 
-                    new { 
-                        StackTrace = ex.StackTrace,
-                        InnerException = ex.InnerException?.Message,
-                        ImportExportLoc = _importExportLoc
-                    }, 
-                    "SYSTEM");
-            }
+        //        result.Success = true;
+        //        result.StatusCode = 200;
+        //        result.ObjData = $"Successfully processed {vInput.Files.Count} files";
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        result.Success = false;
+        //        result.StatusCode = 500;
+        //        result.ErrMessage = "Server Error - Please Contact Support [REF# EMPL-1309-90412].";
+        //        _utilityService.LogError(
+        //            ex.Message, 
+        //            "IndexV3-FileUpload-Error", 
+        //            new { 
+        //                StackTrace = ex.StackTrace,
+        //                InnerException = ex.InnerException?.Message,
+        //                ImportExportLoc = _importExportLoc
+        //            }, 
+        //            "SYSTEM");
+        //    }
 
-            return result;
-        }
+        //    return result;
+        //}
 
         // Robust file saving with multiple fallback strategies
         private async Task SaveFileRobustly(IFormFile file, string destinationPath)
