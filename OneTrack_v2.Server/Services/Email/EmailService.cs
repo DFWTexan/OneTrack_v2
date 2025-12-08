@@ -13,9 +13,11 @@ using OneTrak_v2.Server.Services.Email.Templates;
 using OneTrak_v2.Services.Model;
 using System;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Net.Mail;
 using System.Reflection;
+using System.Text;
 using System.Web;
 
 namespace OneTrack_v2.Services
@@ -39,6 +41,8 @@ namespace OneTrack_v2.Services
         private readonly string? _testmailFromAddress;
         private readonly string? _attachmentLocation;
         private string? _strEMAILATTACHMENT = string.Empty;
+        private readonly string? _buildLoc;
+        private readonly string? _importExportLoc;
 
         public EmailService(AppDataContext db, IConfiguration config, IUtilityHelpService utilityHelpService, IEmailTemplateService emailTemplateService)
         {
@@ -59,6 +63,9 @@ namespace OneTrack_v2.Services
             string testmailCCAddressKey = $"EnvironmentSettings:{environment}:MailSettings:testmailCCAddress";
             string testmailFromAddressKey = $"EnvironmentSettings:{environment}:MailSettings:testmailFromAddress";
             string attachmentLocationKey = $"EnvironmentSettings:{environment}:Paths:AttachmentLoc";
+            string buildLocKey = $"EnvironmentSettings:{environment}:Paths:BuildLoc";
+            string importExportKey = $"EnvironmentSettings:{environment}:Paths:ImportExportLoc";
+
 
             // Retrieve the values based on the constructed keys
             _mailServer = _config.GetValue<string>(mailServerKey);
@@ -68,6 +75,8 @@ namespace OneTrack_v2.Services
             _testmailCCAddress = _config.GetValue<string>(testmailCCAddressKey);
             _testmailFromAddress = _config.GetValue<string>(testmailFromAddressKey);
             _attachmentLocation = _config.GetValue<string>(attachmentLocationKey);
+            _buildLoc = _config.GetValue<string>(buildLocKey);
+            _importExportLoc = _config.GetValue<string>(importExportKey);
         }
 
         public ReturnResult GetEmailComTemplates()
@@ -1457,8 +1466,12 @@ namespace OneTrack_v2.Services
                 var emailConfig = new EmailConfiguration(_config, 
                     _config.GetValue<string>("Environment") ?? "DVLP");
                 var emailSender = new AsyncEmailSender(emailConfig, _utilityService);
-                
-                await emailSender.SendEmailAsync(emailMessage);
+
+                // Send primary email
+                //await emailSender.SendEmailAsync(emailMessage);
+
+                // Create EML file for Docfinity
+                await CreateDocfinityEmlAsync(emailMessage, vSubject, vStrEmploymentCommunicationID, vUserSOEID);
 
                 var intEmploymentCommunicationID = !string.IsNullOrEmpty(vStrEmploymentCommunicationID)
                     ? Convert.ToInt32(vStrEmploymentCommunicationID)
@@ -1474,112 +1487,112 @@ namespace OneTrack_v2.Services
                 throw;
             }
         }
-        private async Task sendHtmlEmail_v2(string vFrom_Email, string vTo_Email, string vCc_Email, string vBody, string vFrom_Name, string vSubject, string vStrAttachment, string vStrEmploymentCommunicationID, string vUserSOEID)
-        {
-            try
-            {
-                _utilityService.LogInfo("Send email for CommunicationID: " + vStrEmploymentCommunicationID, null);
+        //private async Task sendHtmlEmail_v2(string vFrom_Email, string vTo_Email, string vCc_Email, string vBody, string vFrom_Name, string vSubject, string vStrAttachment, string vStrEmploymentCommunicationID, string vUserSOEID)
+        //{
+        //    try
+        //    {
+        //        _utilityService.LogInfo("Send email for CommunicationID: " + vStrEmploymentCommunicationID, null);
 
-                var emailMessage = new EmailMessage
-                {
-                    FromEmail = vFrom_Email,
-                    ToEmail = vTo_Email,
-                    CcEmail = vCc_Email,
-                    FromName = vFrom_Name,
-                    Subject = vSubject,
-                    Body = vBody,
-                    Attachments = vStrAttachment,
-                    UserSOEID = vUserSOEID,
-                    CommunicationID = vStrEmploymentCommunicationID
-                };
+        //        var emailMessage = new EmailMessage
+        //        {
+        //            FromEmail = vFrom_Email,
+        //            ToEmail = vTo_Email,
+        //            CcEmail = vCc_Email,
+        //            FromName = vFrom_Name,
+        //            Subject = vSubject,
+        //            Body = vBody,
+        //            Attachments = vStrAttachment,
+        //            UserSOEID = vUserSOEID,
+        //            CommunicationID = vStrEmploymentCommunicationID
+        //        };
 
-                vBody = vBody.Replace(@"<img alt = """" src = ""../Pictures/OneMainSolutionsHorizontal.jpg""", @"<img src = cid:myImageID ");
+        //        vBody = vBody.Replace(@"<img alt = """" src = ""../Pictures/OneMainSolutionsHorizontal.jpg""", @"<img src = cid:myImageID ");
 
-                //@"<img alt = """" src = ""../Pictures/OneMain Solutions_Horizontal.jpg""" 
-                //@"<img src = cid:myImageID>"
-
-
-                //create an instance of new mail message
-                MailMessage mail = new MailMessage();
-
-                //set the HTML format to true
-                mail.IsBodyHtml = true;
-
-                ////create Alrternative HTML view
-                AlternateView htmlView = AlternateView.CreateAlternateViewFromString(vBody, null, "text/html");
-
-                //Add Image
-                //var outPutDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
-                //var logoimage = Path.Combine(outPutDirectory, "Pictures\\OneMainSolutionsHorizontal.jpg");
-                //string relLogo = new Uri(logoimage).LocalPath;
-                //LinkedResource theEmailImage = new LinkedResource(relLogo);
-                //theEmailImage.ContentId = "myImageID";
-
-                //Add the Image to the Alternate view
-                //htmlView.LinkedResources.Add(theEmailImage);
-
-                //Add view to the Email Message
-                mail.AlternateViews.Add(htmlView);
-
-                //set the "from email" address and specify a friendly 'from' name
-                mail.From = new MailAddress((bool)_isSendtoTest ? _testmailToAddress : vFrom_Email, (bool)_isSendtoTest ? "OneTrakV2-Test" : vFrom_Name);
-
-                //set the "to" email address
-                mail.To.Add((bool)_isSendtoTest ? _testmailToAddress : vTo_Email);
-
-                //CC
-                if (!(vCc_Email == String.Empty))
-                {
-                    mail.CC.Add(vCc_Email);
-                }
-
-                //Bcc to group box for Teleform
-                mail.Bcc.Add(vFrom_Email);
-
-                //set the Email subject
-                mail.Subject = vSubject;
+        //        //@"<img alt = """" src = ""../Pictures/OneMain Solutions_Horizontal.jpg""" 
+        //        //@"<img src = cid:myImageID>"
 
 
-                string[] paths = vStrAttachment.Split('|');
-                System.Net.Mail.Attachment attachment;
-                foreach (var path in paths)
-                {
-                    if (path.Length > 0)
-                    {
-                        attachment = new System.Net.Mail.Attachment(path);
-                        //string test = attachment.Name.Substring(36, attachment.Name.Length - 36);
-                        //attachment.Name = attachment.Name.Substring(36, attachment.Name.Length - 36);
-                        String test = attachment.Name;
-                        mail.Attachments.Add(attachment);
-                    }
-                }
+        //        //create an instance of new mail message
+        //        MailMessage mail = new MailMessage();
 
-                //System.Net.Mail.Attachment attach6ment;
-                //attachment = new System.Net.Mail.Attachment(strAttachment);
-                //string test = attachment.Name;
+        //        //set the HTML format to true
+        //        mail.IsBodyHtml = true;
 
-                //mail.Attachments.Add(attachment);
+        //        ////create Alrternative HTML view
+        //        AlternateView htmlView = AlternateView.CreateAlternateViewFromString(vBody, null, "text/html");
 
-                //set the SMTP info
-                SmtpClient smtp = new SmtpClient("SMTP.CORP.FIN");
+        //        //Add Image
+        //        //var outPutDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().CodeBase);
+        //        //var logoimage = Path.Combine(outPutDirectory, "Pictures\\OneMainSolutionsHorizontal.jpg");
+        //        //string relLogo = new Uri(logoimage).LocalPath;
+        //        //LinkedResource theEmailImage = new LinkedResource(relLogo);
+        //        //theEmailImage.ContentId = "myImageID";
 
-                //send the email
-                smtp.Send(mail);
+        //        //Add the Image to the Alternate view
+        //        //htmlView.LinkedResources.Add(theEmailImage);
 
-                var intEmploymentCommunicationID = !string.IsNullOrEmpty(vStrEmploymentCommunicationID)
-                    ? Convert.ToInt32(vStrEmploymentCommunicationID)
-                    : 0;
+        //        //Add view to the Email Message
+        //        mail.AlternateViews.Add(htmlView);
 
-                EmailSentUpdate(intEmploymentCommunicationID, vUserSOEID);
-            }
-            catch (Exception ex)
-            {
-                _utilityService.LogError(ex.Message,
-                    "Server Error - Please Contact Support [REF# EMAIL-7519-197240].",
-                    new { }, vUserSOEID);
-                throw;
-            }
-        }
+        //        //set the "from email" address and specify a friendly 'from' name
+        //        mail.From = new MailAddress((bool)_isSendtoTest ? _testmailToAddress : vFrom_Email, (bool)_isSendtoTest ? "OneTrakV2-Test" : vFrom_Name);
+
+        //        //set the "to" email address
+        //        mail.To.Add((bool)_isSendtoTest ? _testmailToAddress : vTo_Email);
+
+        //        //CC
+        //        if (!(vCc_Email == String.Empty))
+        //        {
+        //            mail.CC.Add(vCc_Email);
+        //        }
+
+        //        //Bcc to group box for Teleform
+        //        mail.Bcc.Add(vFrom_Email);
+
+        //        //set the Email subject
+        //        mail.Subject = vSubject;
+
+
+        //        string[] paths = vStrAttachment.Split('|');
+        //        System.Net.Mail.Attachment attachment;
+        //        foreach (var path in paths)
+        //        {
+        //            if (path.Length > 0)
+        //            {
+        //                attachment = new System.Net.Mail.Attachment(path);
+        //                //string test = attachment.Name.Substring(36, attachment.Name.Length - 36);
+        //                //attachment.Name = attachment.Name.Substring(36, attachment.Name.Length - 36);
+        //                String test = attachment.Name;
+        //                mail.Attachments.Add(attachment);
+        //            }
+        //        }
+
+        //        //System.Net.Mail.Attachment attach6ment;
+        //        //attachment = new System.Net.Mail.Attachment(strAttachment);
+        //        //string test = attachment.Name;
+
+        //        //mail.Attachments.Add(attachment);
+
+        //        //set the SMTP info
+        //        SmtpClient smtp = new SmtpClient("SMTP.CORP.FIN");
+
+        //        //send the email
+        //        smtp.Send(mail);
+
+        //        var intEmploymentCommunicationID = !string.IsNullOrEmpty(vStrEmploymentCommunicationID)
+        //            ? Convert.ToInt32(vStrEmploymentCommunicationID)
+        //            : 0;
+
+        //        EmailSentUpdate(intEmploymentCommunicationID, vUserSOEID);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        _utilityService.LogError(ex.Message,
+        //            "Server Error - Please Contact Support [REF# EMAIL-7519-197240].",
+        //            new { }, vUserSOEID);
+        //        throw;
+        //    }
+        //}
         private void EmailSentUpdate(int vIntEmploymentCommunicationID, string vUserSOEID)
         {
             using (SqlConnection conn = new SqlConnection(_connectionString))
@@ -1622,5 +1635,476 @@ namespace OneTrack_v2.Services
             }
             return new List<string>();
         }
+
+        /// <summary>
+        /// Creates an EML file for Docfinity from EmailMessage object
+        /// </summary>
+        private async Task CreateDocfinityEmlAsync(EmailMessage emailMessage, string subject, string communicationId, string userSOEID)
+        {
+            try
+            {
+                // Check if Docfinity integration is enabled
+                string environment = _config.GetValue<string>("Environment") ?? "DVLP";
+                string docfinityEnabledKey = $"EnvironmentSettings:{environment}:Docfinity:Enabled";
+                //string docfinityBuildLocKey = $"EnvironmentSettings:{environment}:Docfinity:BuildLoc";
+
+                bool docfinityEnabled = _config.GetValue<bool?>(docfinityEnabledKey) ?? false;
+                //string buildLocation = _config.GetValue<string>(docfinityBuildLocKey);
+
+                if (!docfinityEnabled || string.IsNullOrWhiteSpace(_buildLoc))
+                {
+                    //_utilityService.LogInfo($"Docfinity EML creation skipped - Enabled: {docfinityEnabled}, BuildLoc configured: {!string.IsNullOrWhiteSpace(buildLocation)}",
+                    //    new { CommunicationID = communicationId });
+                    //return;
+                }
+
+                // Create EML file
+                string emlFilePath = await CreateEmlForDocfinity(emailMessage, subject, _buildLoc);
+
+                //_utilityService.LogInfo($"EML file created for Docfinity: {emlFilePath}",
+                //    new { CommunicationID = communicationId, Subject = subject });
+            }
+            catch (Exception ex)
+            {
+                _utilityService.LogError($"Failed to create Docfinity EML: {ex.Message}",
+                    "CreateDocfinityEmlAsync Error",
+                    new { Subject = subject, CommunicationID = communicationId, StackTrace = ex.StackTrace },
+                    userSOEID);
+            }
+        }
+
+        /// <summary>
+        /// Creates an EML file for Docfinity from MailMessage object
+        /// </summary>
+        private async Task CreateDocfinityEmlFromMailMessageAsync(MailMessage mailMessage, string subject, string communicationId, string userSOEID)
+        {
+            try
+            {
+                // Check if Docfinity integration is enabled
+                string environment = _config.GetValue<string>("Environment") ?? "DVLP";
+                string docfinityEnabledKey = $"EnvironmentSettings:{environment}:Docfinity:Enabled";
+                string docfinityBuildLocKey = $"EnvironmentSettings:{environment}:Docfinity:BuildLoc";
+
+                bool docfinityEnabled = _config.GetValue<bool?>(docfinityEnabledKey) ?? false;
+                string buildLocation = _config.GetValue<string>(docfinityBuildLocKey);
+
+                if (!docfinityEnabled || string.IsNullOrWhiteSpace(buildLocation))
+                {
+                    //_utilityService.LogInfo($"Docfinity EML creation skipped - Enabled: {docfinityEnabled}, BuildLoc configured: {!string.IsNullOrWhiteSpace(buildLocation)}",
+                    //    new { CommunicationID = communicationId });
+                    return;
+                }
+
+                // Create EML file from MailMessage
+                string emlFilePath = await CreateEmlFromMailMessage(mailMessage, subject, buildLocation);
+
+                //_utilityService.LogInfo($"EML file created for Docfinity: {emlFilePath}",
+                //    new { CommunicationID = communicationId, Subject = subject });
+            }
+            catch (Exception ex)
+            {
+                _utilityService.LogError($"Failed to create Docfinity EML from MailMessage: {ex.Message}",
+                    "CreateDocfinityEmlFromMailMessageAsync Error",
+                    new { Subject = subject, CommunicationID = communicationId, StackTrace = ex.StackTrace },
+                    userSOEID);
+            }
+        }
+
+        /// <summary>
+        /// Creates an EML file for Docfinity document management system from EmailMessage
+        /// </summary>
+        private async Task<string> CreateEmlForDocfinity(EmailMessage emailMessage, string subject, string buildLocation)
+        {
+            // Sanitize filename
+            string fileName = SanitizeFileName(subject) + ".eml";
+            string fileNameWithPath = Path.Combine(buildLocation, fileName);
+
+            // Ensure directory exists
+            if (!Directory.Exists(buildLocation))
+            {
+                Directory.CreateDirectory(buildLocation);
+            }
+
+            // Create EML content
+            string emlContent = BuildEmlContentFromEmailMessage(emailMessage);
+
+            // Write EML file
+            await File.WriteAllTextAsync(fileNameWithPath, emlContent, Encoding.UTF8);
+
+            return fileNameWithPath;
+        }
+
+        /// <summary>
+        /// Creates an EML file for Docfinity document management system from MailMessage
+        /// </summary>
+        private async Task<string> CreateEmlFromMailMessage(MailMessage mailMessage, string subject, string buildLocation)
+        {
+            // Sanitize filename
+            string fileName = SanitizeFileName(subject) + ".eml";
+            string fileNameWithPath = Path.Combine(buildLocation, fileName);
+
+            // Ensure directory exists
+            if (!Directory.Exists(buildLocation))
+            {
+                Directory.CreateDirectory(buildLocation);
+            }
+
+            // Create EML content
+            string emlContent = await BuildEmlContentFromMailMessage(mailMessage);
+
+            // Write EML file
+            await File.WriteAllTextAsync(fileNameWithPath, emlContent, Encoding.UTF8);
+
+            return fileNameWithPath;
+        }
+
+        /// <summary>
+        /// Builds RFC 5322 compliant EML content from EmailMessage
+        /// </summary>
+        private string BuildEmlContentFromEmailMessage(EmailMessage emailMessage)
+        {
+            var emlBuilder = new StringBuilder();
+
+            // RFC 5322 headers
+            emlBuilder.AppendLine($"Message-ID: <{Guid.NewGuid()}@{Environment.MachineName}>");
+            emlBuilder.AppendLine($"Date: {DateTime.UtcNow.ToString("ddd, dd MMM yyyy HH:mm:ss", CultureInfo.InvariantCulture)} +0000");
+            emlBuilder.AppendLine($"From: {FormatEmailAddress(emailMessage.FromEmail, emailMessage.FromName)}");
+
+            // To recipients
+            emlBuilder.AppendLine($"To: {emailMessage.ToEmail}");
+
+            // CC recipients
+            if (!string.IsNullOrWhiteSpace(emailMessage.CcEmail))
+            {
+                emlBuilder.AppendLine($"Cc: {emailMessage.CcEmail}");
+            }
+
+            // Subject
+            emlBuilder.AppendLine($"Subject: {EncodeHeaderValue(emailMessage.Subject)}");
+
+            // MIME headers
+            string boundary = $"----=_Part_{Guid.NewGuid():N}";
+            bool hasAttachments = !string.IsNullOrWhiteSpace(emailMessage.Attachments);
+
+            if (hasAttachments)
+            {
+                emlBuilder.AppendLine("MIME-Version: 1.0");
+                emlBuilder.AppendLine($"Content-Type: multipart/mixed; boundary=\"{boundary}\"");
+            }
+            else
+            {
+                emlBuilder.AppendLine("MIME-Version: 1.0");
+                emlBuilder.AppendLine("Content-Type: text/html; charset=utf-8");
+                emlBuilder.AppendLine("Content-Transfer-Encoding: base64");
+            }
+
+            // Empty line to separate headers from body
+            emlBuilder.AppendLine();
+
+            if (hasAttachments)
+            {
+                // Multipart message
+                BuildMultipartContentFromEmailMessage(emlBuilder, emailMessage, boundary);
+            }
+            else
+            {
+                // Simple message body
+                emlBuilder.AppendLine(Convert.ToBase64String(Encoding.UTF8.GetBytes(emailMessage.Body ?? "")));
+            }
+
+            return emlBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Builds RFC 5322 compliant EML content from MailMessage
+        /// </summary>
+        private async Task<string> BuildEmlContentFromMailMessage(MailMessage mailMessage)
+        {
+            var emlBuilder = new StringBuilder();
+
+            // RFC 5322 headers
+            emlBuilder.AppendLine($"Message-ID: <{Guid.NewGuid()}@{Environment.MachineName}>");
+            emlBuilder.AppendLine($"Date: {DateTime.UtcNow.ToString("ddd, dd MMM yyyy HH:mm:ss", CultureInfo.InvariantCulture)} +0000");
+            emlBuilder.AppendLine($"From: {FormatEmailAddress(mailMessage.From)}");
+
+            // To recipients
+            if (mailMessage.To.Count > 0)
+            {
+                emlBuilder.AppendLine($"To: {string.Join(", ", mailMessage.To.Select(FormatEmailAddress))}");
+            }
+
+            // CC recipients
+            if (mailMessage.CC.Count > 0)
+            {
+                emlBuilder.AppendLine($"Cc: {string.Join(", ", mailMessage.CC.Select(FormatEmailAddress))}");
+            }
+
+            // BCC recipients
+            if (mailMessage.Bcc.Count > 0)
+            {
+                emlBuilder.AppendLine($"Bcc: {string.Join(", ", mailMessage.Bcc.Select(FormatEmailAddress))}");
+            }
+
+            // Subject
+            emlBuilder.AppendLine($"Subject: {EncodeHeaderValue(mailMessage.Subject)}");
+
+            // MIME headers for multipart if attachments exist
+            string boundary = $"----=_Part_{Guid.NewGuid():N}";
+            bool hasAttachments = mailMessage.Attachments.Count > 0;
+            bool hasAlternateViews = mailMessage.AlternateViews.Count > 0;
+
+            if (hasAttachments || hasAlternateViews)
+            {
+                emlBuilder.AppendLine("MIME-Version: 1.0");
+                emlBuilder.AppendLine($"Content-Type: multipart/mixed; boundary=\"{boundary}\"");
+            }
+            else
+            {
+                emlBuilder.AppendLine("MIME-Version: 1.0");
+                if (mailMessage.IsBodyHtml)
+                {
+                    emlBuilder.AppendLine("Content-Type: text/html; charset=utf-8");
+                }
+                else
+                {
+                    emlBuilder.AppendLine("Content-Type: text/plain; charset=utf-8");
+                }
+                emlBuilder.AppendLine("Content-Transfer-Encoding: base64");
+            }
+
+            // Empty line to separate headers from body
+            emlBuilder.AppendLine();
+
+            if (hasAttachments || hasAlternateViews)
+            {
+                // Multipart message
+                await BuildMultipartContentFromMailMessage(emlBuilder, mailMessage, boundary);
+            }
+            else
+            {
+                // Simple message body
+                emlBuilder.AppendLine(Convert.ToBase64String(Encoding.UTF8.GetBytes(mailMessage.Body ?? "")));
+            }
+
+            return emlBuilder.ToString();
+        }
+
+        /// <summary>
+        /// Builds multipart content for emails with attachments from EmailMessage
+        /// </summary>
+        private void BuildMultipartContentFromEmailMessage(StringBuilder emlBuilder, EmailMessage emailMessage, string boundary)
+        {
+            // Main body part
+            emlBuilder.AppendLine($"--{boundary}");
+            emlBuilder.AppendLine("Content-Type: text/html; charset=utf-8");
+            emlBuilder.AppendLine("Content-Transfer-Encoding: base64");
+            emlBuilder.AppendLine();
+            emlBuilder.AppendLine(Convert.ToBase64String(Encoding.UTF8.GetBytes(emailMessage.Body ?? "")));
+            emlBuilder.AppendLine();
+
+            // Attachments
+            if (!string.IsNullOrWhiteSpace(emailMessage.Attachments))
+            {
+                string[] attachmentPaths = emailMessage.Attachments.Split('|');
+                foreach (string attachmentPath in attachmentPaths)
+                {
+                    if (!string.IsNullOrWhiteSpace(attachmentPath) && File.Exists(attachmentPath))
+                    {
+                        emlBuilder.AppendLine($"--{boundary}");
+
+                        string fileName = Path.GetFileName(attachmentPath);
+                        string mimeType = GetMimeType(attachmentPath);
+
+                        emlBuilder.AppendLine($"Content-Type: {mimeType}; name=\"{fileName}\"");
+                        emlBuilder.AppendLine($"Content-Disposition: attachment; filename=\"{fileName}\"");
+                        emlBuilder.AppendLine("Content-Transfer-Encoding: base64");
+                        emlBuilder.AppendLine();
+
+                        try
+                        {
+                            byte[] fileBytes = File.ReadAllBytes(attachmentPath);
+                            emlBuilder.AppendLine(Convert.ToBase64String(fileBytes));
+                        }
+                        catch (Exception ex)
+                        {
+                            _utilityService.LogError($"Failed to read attachment {attachmentPath}: {ex.Message}",
+                                "EML Attachment Error", new { }, "SYSTEM");
+                        }
+                        emlBuilder.AppendLine();
+                    }
+                }
+            }
+
+            // End boundary
+            emlBuilder.AppendLine($"--{boundary}--");
+        }
+
+        /// <summary>
+        /// Builds multipart content for emails with attachments from MailMessage
+        /// </summary>
+        private async Task BuildMultipartContentFromMailMessage(StringBuilder emlBuilder, MailMessage mailMessage, string boundary)
+        {
+            // Main body part
+            emlBuilder.AppendLine($"--{boundary}");
+            if (mailMessage.IsBodyHtml)
+            {
+                emlBuilder.AppendLine("Content-Type: text/html; charset=utf-8");
+            }
+            else
+            {
+                emlBuilder.AppendLine("Content-Type: text/plain; charset=utf-8");
+            }
+            emlBuilder.AppendLine("Content-Transfer-Encoding: base64");
+            emlBuilder.AppendLine();
+            emlBuilder.AppendLine(Convert.ToBase64String(Encoding.UTF8.GetBytes(mailMessage.Body ?? "")));
+            emlBuilder.AppendLine();
+
+            // Alternate views
+            foreach (var view in mailMessage.AlternateViews)
+            {
+                emlBuilder.AppendLine($"--{boundary}");
+                emlBuilder.AppendLine($"Content-Type: {view.ContentType}");
+                emlBuilder.AppendLine("Content-Transfer-Encoding: base64");
+                emlBuilder.AppendLine();
+
+                using var memoryStream = new MemoryStream();
+                await view.ContentStream.CopyToAsync(memoryStream);
+                emlBuilder.AppendLine(Convert.ToBase64String(memoryStream.ToArray()));
+                emlBuilder.AppendLine();
+            }
+
+            // Attachments
+            foreach (var attachment in mailMessage.Attachments)
+            {
+                emlBuilder.AppendLine($"--{boundary}");
+                emlBuilder.AppendLine($"Content-Type: {attachment.ContentType.MediaType}; name=\"{attachment.Name}\"");
+                emlBuilder.AppendLine($"Content-Disposition: attachment; filename=\"{attachment.Name}\"");
+                emlBuilder.AppendLine("Content-Transfer-Encoding: base64");
+                emlBuilder.AppendLine();
+
+                using var memoryStream = new MemoryStream();
+                await attachment.ContentStream.CopyToAsync(memoryStream);
+                emlBuilder.AppendLine(Convert.ToBase64String(memoryStream.ToArray()));
+                emlBuilder.AppendLine();
+            }
+
+            // End boundary
+            emlBuilder.AppendLine($"--{boundary}--");
+        }
+
+        /// <summary>
+        /// Formats email address for header output (overload for string inputs)
+        /// </summary>
+        private string FormatEmailAddress(string email, string displayName = null)
+        {
+            if (string.IsNullOrWhiteSpace(displayName))
+            {
+                return email ?? "";
+            }
+            return $"\"{EncodeHeaderValue(displayName)}\" <{email}>";
+        }
+
+        /// <summary>
+        /// Formats email address for header output
+        /// </summary>
+        private string FormatEmailAddress(MailAddress mailAddress)
+        {
+            if (string.IsNullOrWhiteSpace(mailAddress.DisplayName))
+            {
+                return mailAddress.Address;
+            }
+            return $"\"{EncodeHeaderValue(mailAddress.DisplayName)}\" <{mailAddress.Address}>";
+        }
+
+        /// <summary>
+        /// Encodes header values according to RFC 2047 if needed
+        /// </summary>
+        private string EncodeHeaderValue(string value)
+        {
+            if (string.IsNullOrEmpty(value))
+                return string.Empty;
+
+            // Check if encoding is needed (contains non-ASCII characters)
+            if (value.All(c => c < 128))
+                return value;
+
+            // RFC 2047 encoded-word: =?charset?encoding?encoded-text?=
+            byte[] bytes = Encoding.UTF8.GetBytes(value);
+            return $"=?UTF-8?B?{Convert.ToBase64String(bytes)}?=";
+        }
+
+        /// <summary>
+        /// Sanitizes filename for file system compatibility
+        /// </summary>
+        private string SanitizeFileName(string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+                return "email";
+
+            // Remove invalid characters
+            char[] invalidChars = Path.GetInvalidFileNameChars();
+            string sanitized = new string(fileName.Where(c => !invalidChars.Contains(c)).ToArray());
+
+            // Replace spaces and limit length
+            sanitized = sanitized.Replace(" ", "").Trim();
+            if (sanitized.Length > 50)
+                sanitized = sanitized.Substring(0, 50);
+
+            return string.IsNullOrWhiteSpace(sanitized) ? "email" : sanitized;
+        }
+
+        /// <summary>
+        /// Gets MIME type for file attachment
+        /// </summary>
+        private string GetMimeType(string filePath)
+        {
+            string extension = Path.GetExtension(filePath).ToLowerInvariant();
+            return extension switch
+            {
+                ".pdf" => "application/pdf",
+                ".doc" => "application/msword",
+                ".docx" => "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                ".xls" => "application/vnd.ms-excel",
+                ".xlsx" => "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                ".txt" => "text/plain",
+                ".html" => "text/html",
+                ".htm" => "text/html",
+                ".jpg" => "image/jpeg",
+                ".jpeg" => "image/jpeg",
+                ".png" => "image/png",
+                ".gif" => "image/gif",
+                ".zip" => "application/zip",
+                _ => "application/octet-stream"
+            };
+        }
+
+        // [Rest of existing methods remain unchanged...]
+        //protected List<string> GetAttachments(string vEmailTemplate)
+        //{
+        //    switch (vEmailTemplate)
+        //    {
+        //        case "BackgroundReleaseDocs":
+        //            return _config.GetSection("EmailAttachmentDocs:BackgroundReleaseDocs").Get<List<string>>() ?? new List<string>();
+        //        case "BackgroundDisclosureLink":
+        //            return _config.GetSection("EmailAttachmentDocs:BackgroundDisclosureLink").Get<List<string>>() ?? new List<string>();
+        //        case "ComplianceCertificate":
+        //            return _config.GetSection("EmailAttachmentDocs:ComplianceCertificate").Get<List<string>>() ?? new List<string>();
+        //        case "ComplianceCertificate-End":
+        //            return _config.GetSection("EmailAttachmentDocs:ComplianceCertificate-End").Get<List<string>>() ?? new List<string>();
+        //        case "ADBankerRegistration-FL":
+        //            return _config.GetSection("EmailAttachmentDocs:ADBankerRegistration-FL").Get<List<string>>() ?? new List<string>();
+        //        case "ADBankerRegistration-Health":
+        //            return _config.GetSection("EmailAttachmentDocs:ADBankerRegistration-Health").Get<List<string>>() ?? new List<string>();
+        //        case "ADBankerRegistration-Life":
+        //            return _config.GetSection("EmailAttachmentDocs:ADBankerRegistration-Life").Get<List<string>>() ?? new List<string>();
+        //        case "ADBankerRegistration-LifeHealth":
+        //            return _config.GetSection("EmailAttachmentDocs:ADBankerRegistration-LifeHealth").Get<List<string>>() ?? new List<string>();
+        //        default:
+        //            break;
+        //    }
+        //    return new List<string>();
+        //}
     }
 }
+    
+
