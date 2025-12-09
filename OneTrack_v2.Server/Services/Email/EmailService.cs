@@ -1468,7 +1468,8 @@ namespace OneTrack_v2.Services
                 var emailSender = new AsyncEmailSender(emailConfig, _utilityService);
 
                 // Send primary email
-                //await emailSender.SendEmailAsync(emailMessage);
+                if(!(bool)_isSendtoTest)
+                    await emailSender.SendEmailAsync(emailMessage);
 
                 // Create EML file for Docfinity
                 await CreateDocfinityEmlAsync(emailMessage, vSubject, vStrEmploymentCommunicationID, vUserSOEID);
@@ -1655,7 +1656,7 @@ namespace OneTrack_v2.Services
                 {
                     //_utilityService.LogInfo($"Docfinity EML creation skipped - Enabled: {docfinityEnabled}, BuildLoc configured: {!string.IsNullOrWhiteSpace(buildLocation)}",
                     //    new { CommunicationID = communicationId });
-                    //return;
+                    return;
                 }
 
                 // Create EML file

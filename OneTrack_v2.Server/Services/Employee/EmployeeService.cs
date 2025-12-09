@@ -10,6 +10,7 @@ using Microsoft.Data.SqlClient;
 using Microsoft.AspNetCore.Mvc;
 using OneTrak_v2.Services.Employee.Model;
 using System.IO;
+using OneTrak_v2.Services;
 
 namespace OneTrack_v2.Services
 {
@@ -18,6 +19,7 @@ namespace OneTrack_v2.Services
         private readonly IConfiguration _config;
         private readonly AppDataContext _db;
         private readonly IUtilityHelpService _utilityService;
+        private readonly IDocumentService _documentService;
 
         private readonly string? _importExportLoc;
         //private readonly UtilityService.Utility _utility;
@@ -26,11 +28,12 @@ namespace OneTrack_v2.Services
         //private readonly IWebHostEnvironment _env;
         //private readonly ILogger _logger;
 
-        public EmployeeService(IConfiguration config, AppDataContext db, IUtilityHelpService utilityHelpService)
+        public EmployeeService(IConfiguration config, AppDataContext db, IUtilityHelpService utilityHelpService, IDocumentService documentService)
         {
             _db = db;
             _config = config;
             _utilityService = utilityHelpService;
+            _documentService = documentService;
             // Retrieve the current environment setting
             string environment = _config.GetValue<string>("Environment") ?? "DVLP";
 
