@@ -10,6 +10,8 @@ using OneTrack_v2.DbData.Models;
 using OneTrack_v2.Services.Email;
 using OneTrak_v2.DataModel;
 using OneTrak_v2.Server.Services.Email.Templates;
+using OneTrak_v2.Services;
+using OneTrak_v2.Services.Employee.Model;
 using OneTrak_v2.Services.Model;
 using System;
 using System.Data;
@@ -28,6 +30,7 @@ namespace OneTrack_v2.Services
         private readonly AppDataContext _db;
         private readonly IEmailTemplateService _emailTemplateService;
         private readonly IUtilityHelpService _utilityService;
+        private readonly IDocumentService _documentService;
         private readonly string? _connectionString;
 
         private readonly string? _mailServer;
@@ -44,13 +47,14 @@ namespace OneTrack_v2.Services
         private readonly string? _buildLoc;
         private readonly string? _importExportLoc;
 
-        public EmailService(AppDataContext db, IConfiguration config, IUtilityHelpService utilityHelpService, IEmailTemplateService emailTemplateService)
+        public EmailService(AppDataContext db, IConfiguration config, IUtilityHelpService utilityHelpService, IEmailTemplateService emailTemplateService, IDocumentService documentService)
         {
             _db = db;
             _config = config;
             //_connectionString = _config.GetConnectionString(name: "DefaultConnection");
             _utilityService = utilityHelpService;
             _emailTemplateService = emailTemplateService;
+            _documentService = documentService;
             // Retrieve the current environment setting
             string environment = _config.GetValue<string>("Environment") ?? "DVLP";
             _connectionString = _config.GetSection($"EnvironmentSettings:{environment}:DefaultConnection").Value;
@@ -1640,7 +1644,7 @@ namespace OneTrack_v2.Services
         /// <summary>
         /// Creates an EML file for Docfinity from EmailMessage object
         /// </summary>
-        private async Task CreateDocfinityEmlAsync(EmailMessage emailMessage, string subject, string communicationId, string userSOEID)
+        private async Task CreateDocfinityEmlAsync(EmailMessage emailMessage, string subject, string vStrEmploymentCommunicationId, string userSOEID)
         {
             try
             {
@@ -1662,16 +1666,61 @@ namespace OneTrack_v2.Services
                 // Create EML file
                 string emlFilePath = await CreateEmlForDocfinity(emailMessage, subject, _buildLoc);
 
+                // Create minimal EmployeeIndex object for OCR content
+                int intEmploymentCommunicationId = Convert.ToInt32(vStrEmploymentCommunicationId);
+                var employeeData = GetEmployeeDataForDocfinity(intEmploymentCommunicationId);
+                
+                var resultOCR = _documentService.CreateDocfinityOCR(emlFilePath, employeeData, subject, vStrEmploymentCommunicationId, userSOEID);
+
                 //_utilityService.LogInfo($"EML file created for Docfinity: {emlFilePath}",
                 //    new { CommunicationID = communicationId, Subject = subject });
             }
             catch (Exception ex)
             {
-                _utilityService.LogError($"Failed to create Docfinity EML: {ex.Message}",
-                    "CreateDocfinityEmlAsync Error",
-                    new { Subject = subject, CommunicationID = communicationId, StackTrace = ex.StackTrace },
-                    userSOEID);
+                //_utilityService.LogError($"Failed to create Docfinity EML: {ex.Message}",
+                //    "CreateDocfinityEmlAsync Error",
+                //    new { Subject = subject, CommunicationID = communicationId, StackTrace = ex.StackTrace },
+                //    userSOEID);
             }
+        }
+
+        private EmployeeIndex GetEmployeeDataForDocfinity(int communicationId)
+        {
+            try
+            {
+                // FETCH EMPLOYEE DATA FOR DOCFINITY OCR CONTENT
+                return (from ec in _db.EmploymentCommunications
+                        join e in _db.Employees on ec.EmployeeId equals e.EmployeeId
+                        join emp in _db.Employments on ec.EmploymentId equals emp.EmploymentId
+                        join com in _db.Communications on ec.CommunicationId equals com.CommunicationId
+                        join addr in _db.Addresses on e.AddressId equals addr.AddressId into addrJoin
+                        where ec.EmploymentCommunicationId == communicationId
+                        let currentTransfer = _db.TransferHistories
+                            .Where(th => th.EmploymentId == ec.EmploymentId && th.IsCurrent == true)
+                            .FirstOrDefault()
+                        select new EmployeeIndex
+                        {
+                            EmployeeID = e.EmployeeId,
+                            FirstName = e.FirstName,
+                            LastName = e.LastName,
+                            Geid = e.Geid,
+                            WorkState = addrJoin.Select(a => a.State).FirstOrDefault(),
+                            LicenseState = null,
+                            BranchName = currentTransfer != null ? currentTransfer.BranchCode : null,
+                            ScoreNumber = currentTransfer != null ? currentTransfer.Scorenumber : null,
+                            DocumentType = com.DocType ?? "",
+                            DocumentSubType = com.DocSubType
+                        }).FirstOrDefault();
+            }
+            catch (Exception ex)
+            {
+                //_utilityService.LogError($"Failed to retrieve employee data for Docfinity: {ex.Message}",
+                //    "GetEmployeeDataForDocfinity Error",
+                //    new { CommunicationID = communicationId, StackTrace = ex.Stack
+                //    Trace });
+            }
+
+            return null;
         }
 
         /// <summary>

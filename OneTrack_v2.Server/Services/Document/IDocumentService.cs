@@ -7,5 +7,7 @@ namespace OneTrak_v2.Services
     {
         Task<ReturnResult> Upload(Stream vStream, string vFileName, string vFilePathType);
         Task<ReturnResult> CreateDocfinityOCR(IFormFile doc, EmployeeIndex employeeData, string timestamp, string vFilePathType = "ImportExportLoc");
+        Task<ReturnResult> CreateDocfinityOCR(string emlFilePath, EmployeeIndex vEmployeeData, string subject, string communicationId, string userSOEID, string vFilePathType = "ImportExportLoc");
+        //Task<ReturnResult> CreateDocfinityOCR(string emlFilePath, string subject, string communicationId, string userSOEID);
     }
 }

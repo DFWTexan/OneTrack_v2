@@ -13,6 +13,7 @@ namespace OneTrak_v2.Services
         private readonly IUtilityHelpService _utilityService;
 
         private readonly string? _attachmentLocation;
+        private readonly string? _importExportLoc;
 
         public DocumentService(IConfiguration config, AppDataContext db, IUtilityHelpService utilityHelpService)
         {
@@ -25,9 +26,11 @@ namespace OneTrak_v2.Services
 
             // Construct the keys for accessing environment-specific settings
             string attachmentLocKey = $"EnvironmentSettings:{environment}:Paths:AttachmentLoc";
+            string importExportKey = $"EnvironmentSettings:{environment}:Paths:ImportExportLoc";
 
             // Retrieve the values based on the constructed keys
             _attachmentLocation = _config.GetValue<string>(attachmentLocKey);
+            _importExportLoc = _config.GetValue<string>(importExportKey);
         }
 
         public async Task<ReturnResult> Upload(Stream vStream, string vFileName, string vFilePathType)
@@ -160,7 +163,7 @@ namespace OneTrak_v2.Services
                 string ocrFilePath = Path.Combine(importExportLoc, timestamp + ".OCR");
 
                 // Build OCR content
-                string ocrContent = BuildOcrContent(employeeData, finalFilePath);
+                string ocrContent = await BuildOcrContent(employeeData, finalFilePath);
 
                 // Write OCR file
                 await File.WriteAllTextAsync(ocrFilePath, ocrContent);
@@ -201,31 +204,117 @@ namespace OneTrak_v2.Services
                 };
             }
         }
+        /// <summary>
+        /// Creates OCR file for existing EML file (Docfinity integration)
+        /// </summary>
+        public async Task<ReturnResult> CreateDocfinityOCR(string emlFilePath, EmployeeIndex vEmployeeData, string subject, string communicationId, string userSOEID, string vFilePathType = "ImportExportLoc")
+        {
+            try
+            {
+                // Get timestamp from the EML filename or generate new one
+                string timestamp = DateTime.Now.ToString("yyyyMMddHHmmssfff");
 
+                // Create minimal EmployeeIndex object for OCR content
+                //var employeeData = new EmployeeIndex
+                //{
+                //    DocumentType = "EMAIL",
+                //    DocumentSubType = "COMMUNICATION",
+                //    FirstName = "EMAIL",
+                //    LastName = "COMMUNICATION",
+                //    // Set other required fields with defaults or extract from email data
+                //};
+
+                // Create OCR file using existing logic
+                string ocrContent = await BuildOcrContent(vEmployeeData, emlFilePath);
+
+                //string ocrFilePath = Path.Combine(
+                //    Path.GetDirectoryName(emlFilePath),
+                //    Path.GetFileNameWithoutExtension(emlFilePath) + ".OCR"
+                //);
+                String ocrFilePath = Path.Combine(_importExportLoc, timestamp + ".OCR");
+
+                await File.WriteAllTextAsync(ocrFilePath, ocrContent);
+
+                return new ReturnResult
+                {
+                    StatusCode = 200,
+                    Success = true,
+                    ObjData = new
+                    {
+                        Message = "Email OCR created successfully",
+                        OcrPath = ocrFilePath
+                    }
+                };
+            }
+            catch (Exception ex)
+            {
+                _utilityService.LogError(ex.Message, "CreateDocfinityOCR Email Error", new { }, userSOEID);
+                return new ReturnResult
+                {
+                    StatusCode = 500,
+                    Success = false,
+                    ErrMessage = "Failed to create email OCR file"
+                };
+            }
+        }
         /// <summary>
         /// Builds OCR content string from employee data
         /// </summary>
         /// <param name="employeeData">Employee index data</param>
         /// <param name="finalFilePath">Path to the uploaded document</param>
         /// <returns>Tab-delimited OCR content string</returns>
-        private string BuildOcrContent(EmployeeIndex employeeData, string finalFilePath)
+        private async Task<string> BuildOcrContent(EmployeeIndex vEmployeeData, string vEmailFilePath)
         {
             DateTime dtDateTime = DateTime.Now;
 
+            // Verify source file exists
+            if (!File.Exists(vEmailFilePath))
+            {
+                throw new FileNotFoundException($"Source file not found: {vEmailFilePath}");
+            }
+
+            // Process the file - use EXACT same approach as DocumentService.Upload
+            var fileName = Path.GetFileName(vEmailFilePath);
+            var timestamp = dtDateTime.ToString("yyyyMMddHHmmss");
+
+            // Create the timestamped filename for the final destination
+            var timestampedFileName = timestamp + fileName;
+            var finalFilePath = Path.Combine(_importExportLoc, timestampedFileName);
+
+            // Ensure directory exists (same as DocumentService)
+            if (!Directory.Exists(_importExportLoc))
+            {
+                Directory.CreateDirectory(_importExportLoc);
+            }
+
+            // Move the file from vEmailFilePath to _importExportLoc with timestamped name
+            try
+            {
+                // Copy the file to the new location
+                File.Copy(vEmailFilePath, finalFilePath, overwrite: true);
+
+                // Optionally delete the original file after successful copy
+                // File.Delete(vEmailFilePath);
+            }
+            catch (Exception ex)
+            {
+                throw new IOException($"Failed to move file from {vEmailFilePath} to {finalFilePath}: {ex.Message}", ex);
+            }
+
             string strNow = dtDateTime.ToString("yyyy-MM-dd");
-            string strTMFirstName = employeeData.FirstName?.ToUpper() ?? string.Empty;
-            string strTMLastName = employeeData.LastName?.ToUpper() ?? string.Empty;
+            string strTMFirstName = vEmployeeData.FirstName?.ToUpper() ?? string.Empty;
+            string strTMLastName = vEmployeeData.LastName?.ToUpper() ?? string.Empty;
 
-            string strBranchNumber = employeeData.BranchName ?? "00000000";
-            string strScoreNumber = employeeData.ScoreNumber ?? "0000";
-            string strDocType = employeeData.DocumentType?.ToUpper() ?? string.Empty;
-            string strDocSubType = employeeData.DocumentSubType?.ToUpper() ?? string.Empty;
-            string strEmployeeID = employeeData.EmployeeID?.ToString() ?? string.Empty;
-            string strWorkState = employeeData.WorkState ?? string.Empty;
-            string strTMNumber = employeeData.Geid ?? string.Empty;
-            string strLicState = (employeeData.LicenseState != "{StateProv}") ? employeeData.LicenseState ?? string.Empty : string.Empty;
+            string strBranchNumber = vEmployeeData.BranchName ?? "00000000";
+            string strScoreNumber = vEmployeeData.ScoreNumber ?? "0000";
+            string strDocType = vEmployeeData.DocumentType?.ToUpper() ?? string.Empty;
+            string strDocSubType = vEmployeeData.DocumentSubType?.ToUpper() ?? string.Empty;
+            string strEmployeeID = vEmployeeData.EmployeeID?.ToString() ?? string.Empty;
+            string strWorkState = vEmployeeData.WorkState ?? string.Empty;
+            string strTMNumber = vEmployeeData.Geid ?? string.Empty;
+            string strLicState = (vEmployeeData.LicenseState != "{StateProv}") ? vEmployeeData.LicenseState ?? vEmployeeData.WorkState : string.Empty;
 
-            // Build OCR content (Tab = \t)
+            // Build OCR content (Tab = \t) using final file path
             string ocrContent = strNow + "\t" +
                                finalFilePath + "\t" +
                                strTMFirstName + "\t" +
@@ -241,5 +330,27 @@ namespace OneTrak_v2.Services
 
             return ocrContent;
         }
+
+        //private string BuildOcrContentForEmail(string emlFilePath, EmployeeIndex vEmployeeData, string communicationId, string userSOEID)
+        //{
+        //    DateTime dtDateTime = DateTime.Now;
+
+        //    // Build OCR content for email (Tab = \t)
+        //    string ocrContent = dtDateTime.ToString("yyyy-MM-dd") + "\t" +
+        //                       emlFilePath + "\t" +
+        //                       vEmployeeData.FirstName + "\t" +  // FirstName
+        //                       vEmployeeData.LastName + "\t" +  // LastName
+        //                       vEmployeeData.BranchName + "\t" +  // BranchNumber
+        //                       vEmployeeData.ScoreNumber + "\t" +  // ScoreNumber
+        //                       vEmployeeData.DocumentType + "\t" +  // DocumentType
+        //                       vEmployeeData.DocumentSubType + "\t" +  // DocumentSubType
+        //                       communicationId + "\t" +  // EmployeeID (using communicationId)
+        //                       "" + "\t" +  // WorkState
+        //                       userSOEID + "\t" +  // TMNumber (using userSOEID)
+        //                       "";  // LicenseState
+
+        //    return ocrContent;
+        //}
+
     }
 }
