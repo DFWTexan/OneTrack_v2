@@ -28,7 +28,12 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
   @Output() callParentRefreshData = new EventEmitter<any>();
   isFormSubmitted: boolean = false;
   form = new FormGroup({
-    CompanyID: new FormControl({ value: 0, disabled: true }),
+    CompanyID: new FormControl({
+      value: 0,
+      disabled:
+        (!this.userAcctInfoDataService.userAcctInfo.isAdminRole ||
+        this.userAcctInfoDataService.userAcctInfo.isSuperUser) ?? false
+    }),
     Alias: new FormControl({ value: '', disabled: true }),
     GEID: new FormControl({ value: '', disabled: true }),
     NationalProducerNumber: new FormControl(''),
@@ -55,52 +60,60 @@ export class EditTmInformationComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subscriptions.add(
-        forkJoin({
-            agentInfo: this.agentDataService.agentInfoChanged.pipe(take(1)),
-            employerAgencies: this.drpdwnDataService.fetchDropdownData('GetEmployerAgencies')
-        }).subscribe(this.handleDataLoad.bind(this))
+      forkJoin({
+        agentInfo: this.agentDataService.agentInfoChanged.pipe(take(1)),
+        employerAgencies: this.drpdwnDataService.fetchDropdownData(
+          'GetEmployerAgencies'
+        ),
+      }).subscribe(this.handleDataLoad.bind(this))
     );
 
     // Subscribe to agentInfo changes
     this.subscriptions.add(
-        this.agentDataService.agentInfoChanged.subscribe(agentInfo => {
-            if (agentInfo) {
-                this.agentInfo = agentInfo;
-                this.updateForm(agentInfo);
-            }
-        })
+      this.agentDataService.agentInfoChanged.subscribe((agentInfo) => {
+        if (agentInfo) {
+          this.agentInfo = agentInfo;
+          this.updateForm(agentInfo);
+        }
+      })
     );
-}
+  }
 
-private handleDataLoad({ agentInfo, employerAgencies }: { agentInfo: AgentInfo, employerAgencies: any }): void {
+  private handleDataLoad({
+    agentInfo,
+    employerAgencies,
+  }: {
+    agentInfo: AgentInfo;
+    employerAgencies: any;
+  }): void {
     this.agentInfo = agentInfo;
     this.employerAgencies = employerAgencies;
     this.updateForm(agentInfo);
-}
+  }
 
-private updateForm(agentInfo: AgentInfo): void {
+  private updateForm(agentInfo: AgentInfo): void {
     const {
-        companyID,
-        alias,
-        geid,
-        nationalProdercerNumber,
-        employeeStatus,
-        state,
-        ceRequired,
-        excludeFromReports
+      companyID,
+      alias,
+      geid,
+      nationalProdercerNumber,
+      employeeStatus,
+      state,
+      ceRequired,
+      excludeFromReports,
     } = agentInfo;
 
     this.form.patchValue({
-        CompanyID: companyID,
-        Alias: alias,
-        GEID: geid,
-        NationalProducerNumber: nationalProdercerNumber,
-        EmployeeStatus: employeeStatus,
-        ResStateAbv: state,
-        CERequired: !!ceRequired,
-        ExcludeFromRpts: !!excludeFromReports
+      CompanyID: companyID,
+      Alias: alias,
+      GEID: geid,
+      NationalProducerNumber: nationalProdercerNumber,
+      EmployeeStatus: employeeStatus,
+      ResStateAbv: state,
+      CERequired: !!ceRequired,
+      ExcludeFromRpts: !!excludeFromReports,
     });
-}
+  }
 
   onSubmit() {
     this.isFormSubmitted = true;
