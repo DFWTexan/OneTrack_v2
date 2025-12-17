@@ -169,7 +169,7 @@ namespace OneTrack_v2.Services
                         result.ObjData = new { HTMLContent = appLicenseCopyCAHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "RENEWAL LICENSE COPY_CA", isTemplateFound = true };
                         break;
                     case 10: // "REN-License Copy"
-                        var appRENLicenseCopyHTML = _emailTemplateService.GetRENLicenseCopyCAHTML(vEmploymentID);
+                        var appRENLicenseCopyHTML = _emailTemplateService.GetRENLicenseCopyHTML(vEmploymentID);
                         result.ObjData = new { HTMLContent = appRENLicenseCopyHTML.Item1.ToString(), DocSubType = comms.DocSubType ?? null, Subject = "RENEWAL LICENSE COPY", isTemplateFound = true };
                         break;
                     case 11: // "REN-License Copy Display (GA,KY,MT,WA,WY)"
