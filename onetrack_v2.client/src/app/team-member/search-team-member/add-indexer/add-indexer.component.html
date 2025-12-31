@@ -98,6 +98,7 @@
           [value]="defaultDocumentType"
           (change)="onDocumentTypeChange($event)"
         >
+          <option value="">Select Doc Type</option>
           <option *ngFor="let type of documentTypes" [value]="type">
             {{ type }}
           </option>
@@ -112,8 +113,13 @@
           type="text"
           id="docSubType"
           formControlName="docSubType"
-          [disabled]="!selectedDocumentType"
+          [disabled]="
+            !indexForm.get('docType')?.value ||
+            indexForm.get('docType')?.value === 'Select Doc Type' ||
+            indexForm.get('docType')?.value === ''
+          "
         >
+          <option value="">Select Doc Sub Type</option>
           <option *ngFor="let type of documentSubTypes" [value]="type">
             {{ type }}
           </option>
@@ -262,7 +268,7 @@
       (change)="onFileSelected($event)"
       #fileUpload
     /> -->
-      <button type="button" (click)="testAddFile()">Add Test File</button>
+      <!-- <button type="button" (click)="testAddFile()">Add Test File</button> -->
     </div>
   </div>
 

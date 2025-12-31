@@ -126,10 +126,12 @@ export class AddIndexerComponent implements OnInit, OnDestroy {
               }
 
               this.indexForm.reset({
-                workState: 'Select',
+                workState: employee.workStateAbv || 'Select',
                 licenseState: 'Select',
-                branchName: null,
-                scoreNum: 0,
+                branchName: employee.branchName || null,
+                scoreNum: employee.scoreNumber
+                  ? parseInt(employee.scoreNumber)
+                  : 0,
                 docSubType: null,
               });
             } else {
